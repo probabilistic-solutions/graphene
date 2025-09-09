@@ -1,0 +1,3 @@
+defmodule Storybook.CodeGen.CoreComponents.Tabletoolbar do
+  use Graphene.CodeGen.Component.Story, func: &Graphene.CoreComponents.table_toolbar/1
+end

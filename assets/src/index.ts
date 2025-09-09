@@ -1,0 +1,6 @@
+// TODO: a nice way to control how many assets are generated for the components
+// If one uses just few components, we need to add just a few
+
+export * as Hooks from "./lib/hooks";
+export { WebComponentManager } from "./lib/dynamic_loader";
+export { mergeWebComponentsAttrs } from "./lib/socket_utils";

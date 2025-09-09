@@ -1,0 +1,3 @@
+defmodule Storybook.CodeGen.CoreComponents.Structuredlistrow do
+  use Graphene.CodeGen.Component.Story, func: &Graphene.CoreComponents.structured_list_row/1
+end
