@@ -25,6 +25,44 @@ defmodule Graphene.CodeGen.ComponentPatches do
 
   def patch(
         %{
+          htmltag: "cds-menu-item",
+          componentname: componentname,
+          docs: docs,
+          source: "./src/components/menu/menu-item-selectable.ts"
+        } = component
+      ) do
+    # in the documentation builder there is a bug with docs
+    # realname is "cds-menu-item-selectable"
+    # https://github.com/carbon-design-system/carbon/issues/21426
+    %{
+      component
+      | htmltag: "cds-menu-item-selectable",
+        componentname: componentname <> "_selectable",
+        docs: String.replace(docs, "<cds-menu-item>", "<cds-menu-item-selectable>")
+    }
+  end
+
+  def patch(
+        %{
+          htmltag: "cds-fluid-textarea",
+          componentname: componentname,
+          docs: docs,
+          source: "./src/components/fluid-textarea/fluid-textarea-skeleton.ts"
+        } = component
+      ) do
+    # in the documentation builder there is a bug with docs
+    # realname is "cds-fluid-textarea-skeleton"
+    # https://github.com/carbon-design-system/carbon/issues/21425
+    %{
+      component
+      | htmltag: "cds-fluid-textarea-skeleton",
+        componentname: componentname <> "_skeleton",
+        docs: String.replace(docs, "<cds-fluid-textarea>", "<cds-fluid-textarea-skeleton>")
+    }
+  end
+
+  def patch(
+        %{
           htmltag: "cds-popover",
           componentname: componentname,
           docs: docs,

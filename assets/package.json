@@ -6,7 +6,7 @@
         "build": "node build.cjs"
     },
     "dependencies": {
-        "@carbon/web-components": "==2.10.0"
+        "@carbon/web-components": "==2.47.0"
     },
     "devDependencies": {
         "@types/node": "^20.11.30",

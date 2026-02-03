@@ -5,7 +5,7 @@ defmodule Graphene.CoreComponents do
 
   use Phoenix.Component
 
-  def version(), do: ~S|2.10.0|
+  def version(), do: ~S|2.47.0|
 
   @doc """
   Component `<cds-accordion>` from `./src/components/accordion/accordion.ts`
@@ -19,6 +19,10 @@ defmodule Graphene.CoreComponents do
     default: nil,
     values: [nil, "start", "end"],
     doc: "Specify the alignment of the accordion heading title and chevron"
+
+  attr :disabled, :boolean,
+    default: false,
+    doc: "Disable all accordion items inside this accordion."
 
   attr :is_flush, :boolean,
     default: false,
@@ -38,11 +42,12 @@ defmodule Graphene.CoreComponents do
     ~H"""
     <cds-accordion
       alignment={assigns[:alignment]}
+      disabled={assigns[:disabled]}
       isFlush={assigns[:is_flush]}
       size={assigns[:size]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-accordion>
     """
   end
@@ -78,7 +83,7 @@ defmodule Graphene.CoreComponents do
       title={assigns[:title]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-accordion-item>
     """
   end
@@ -158,12 +163,16 @@ defmodule Graphene.CoreComponents do
       title={assigns[:title]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
-      <.dynamic_tag :for={s <- assigns[:"s-subtitle"]} name={Map.get(s, :tag, "div")} slot="subtitle">
-        <%= render_slot(s) %>
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:"s-subtitle"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="subtitle"
+      >
+        {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-title"]} name={Map.get(s, :tag, "div")} slot="title">
-        <%= render_slot(s) %>
+      <.dynamic_tag :for={s <- assigns[:"s-title"]} tag_name={Map.get(s, :tag, "div")} slot="title">
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-actionable-notification>
     """
@@ -189,7 +198,228 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "Specify an optional className to be added to your Button"
 
-  attr :danger_descriptor, :any,
+  attr :danger_description, :any,
+    default: nil,
+    doc: "Specify the message read by screen readers for the danger button variant"
+
+  attr :disabled, :boolean, default: false, doc: "`true` if the button should be disabled."
+
+  attr :download, :string,
+    default: nil,
+    doc: "The default file name, used if this button is rendered as `<a>`."
+
+  attr :has_main_content, :boolean, default: false, doc: "`true` if there is a non-icon content."
+
+  attr :href, :string,
+    default: nil,
+    doc: "Link `href`. If present, this button is rendered as `<a>`."
+
+  attr :hreflang, :string,
+    default: nil,
+    doc: "The language of what `href` points to, if this button is rendered as `<a>`."
+
+  attr :is_expressive, :boolean, default: false, doc: "`true` if expressive theme enabled."
+
+  attr :is_selected, :boolean,
+    default: false,
+    doc: "Specify whether the Button is currently selected.\nOnly applies to the Ghost variant."
+
+  attr :kind, :string,
+    default: "primary",
+    values: [
+      "primary",
+      "secondary",
+      "tertiary",
+      "danger",
+      "danger--tertiary",
+      "danger--ghost",
+      "ghost"
+    ],
+    doc: "Button kind."
+
+  attr :link_role, :string, default: "button", doc: "The a11y role for `<a>`."
+  attr :open_tooltip, :boolean, default: false, doc: "Boolean to determine if tooltip is open."
+  attr :ping, :string, default: nil, doc: "URLs to ping, if this button is rendered as `<a>`."
+  attr :rel, :string, default: nil, doc: "The link type, if this button is rendered as `<a>`."
+  attr :size, :string, default: "lg", doc: "Button size."
+  attr :tab_index, :string, default: "0", doc: "Specify the tabIndex of the button."
+
+  attr :target, :string,
+    default: nil,
+    doc: "The link target, if this button is rendered as `<a>`."
+
+  attr :tooltip_alignment, :string,
+    default: "",
+    values: ["left", "right", ""],
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end."
+
+  attr :tooltip_position, :string,
+    default: "top",
+    values: ["top", "bottom", "right", "left"],
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left."
+
+  attr :tooltip_text, :string,
+    default: nil,
+    doc:
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
+
+  attr :type, :string,
+    default: "button",
+    values: ["button", "reset", "submit"],
+    doc: "Button type."
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def actionable_notification_button(assigns) do
+    ~H"""
+    <cds-actionable-notification-button
+      autofocus={assigns[:autofocus]}
+      batch-action={assigns[:batch_action]}
+      button-class-name={assigns[:button_class_name]}
+      danger-description={assigns[:danger_description]}
+      disabled={assigns[:disabled]}
+      download={assigns[:download]}
+      has-main-content={assigns[:has_main_content]}
+      href={assigns[:href]}
+      hreflang={assigns[:hreflang]}
+      isExpressive={assigns[:is_expressive]}
+      isSelected={assigns[:is_selected]}
+      kind={assigns[:kind]}
+      link-role={assigns[:link_role]}
+      openTooltip={assigns[:open_tooltip]}
+      ping={assigns[:ping]}
+      rel={assigns[:rel]}
+      size={assigns[:size]}
+      tab-index={assigns[:tab_index]}
+      target={assigns[:target]}
+      tooltip-alignment={assigns[:tooltip_alignment]}
+      tooltip-position={assigns[:tooltip_position]}
+      tooltip-text={assigns[:tooltip_text]}
+      type={assigns[:type]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-actionable-notification-button>
+    """
+  end
+
+  @doc """
+  Component `<cds-ai-label>` from `./src/components/ai-label/ai-label.ts`
+
+  Basic AI Label.
+
+
+  """
+
+  attr :ai_text, :string, default: "AI", doc: "Specify the correct translation of the AI text"
+
+  attr :ai_text_label, :string,
+    default: nil,
+    doc: "Specify additional text to be rendered next to the AI label in the inline variant"
+
+  attr :alignment, :string,
+    default: "top",
+    values: [
+      "top",
+      "top-start",
+      "top-end",
+      "bottom",
+      "bottom-start",
+      "bottom-end",
+      "left",
+      "left-start",
+      "left-end",
+      "right",
+      "right-start",
+      "right-end"
+    ],
+    doc: "How the tooltip is aligned to the trigger button."
+
+  attr :alignment_axis_offset, :string,
+    default: "0",
+    doc:
+      "**Experimental:** Provide an offset value for alignment axis. Only takes effect when `autoalign` is enabled."
+
+  attr :autoalign, :boolean,
+    default: false,
+    doc: "Specify whether a auto align functionality should be applied"
+
+  attr :button_label, :string,
+    default: "Show information",
+    doc: "Specify the text that will be provided to the aria-label of the `AI Label` button"
+
+  attr :default_open, :boolean, default: false, doc: "Set whether toggletip is open by default."
+
+  attr :kind, :any,
+    default: nil,
+    doc: "Specify the type of AI Label, from the following list of types: (default, inline)"
+
+  attr :open, :boolean, default: false, doc: "Set whether toggletip is open"
+  attr :previous_value, :any, default: nil
+
+  attr :revert_active, :boolean,
+    default: false,
+    doc: "Specify whether the revert button should be visible"
+
+  attr :revert_label, :string,
+    default: "Revert to AI input",
+    doc: "Specify whether the revert button should be visible"
+
+  attr :size, :any, default: nil, doc: "AI Label size should be mini, 2xs, xs, sm, md, lg, xl."
+  attr :slot, :string, default: "ai-label"
+  attr :rest, :global
+
+  slot :inner_block
+
+  def ai_label(assigns) do
+    ~H"""
+    <cds-ai-label
+      ai-text={assigns[:ai_text]}
+      ai-text-label={assigns[:ai_text_label]}
+      alignment={assigns[:alignment]}
+      alignment-axis-offset={assigns[:alignment_axis_offset]}
+      autoalign={assigns[:autoalign]}
+      button-label={assigns[:button_label]}
+      default-open={assigns[:default_open]}
+      kind={assigns[:kind]}
+      open={assigns[:open]}
+      previousValue={assigns[:previous_value]}
+      revert-active={assigns[:revert_active]}
+      revert-label={assigns[:revert_label]}
+      size={assigns[:size]}
+      slot={assigns[:slot]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-ai-label>
+    """
+  end
+
+  @doc """
+  Component `<cds-ai-label-action-button>` from `./src/components/ai-label/ai-label-action-button.ts`
+
+  AI Label action button.
+
+
+  """
+
+  attr :autofocus, :boolean,
+    default: false,
+    doc: "`true` if the button should have input focus when the page loads."
+
+  attr :batch_action, :boolean,
+    default: false,
+    doc: "`true` if the button is being used within a data table batch action toolbar"
+
+  attr :button_class_name, :any,
+    default: nil,
+    doc: "Specify an optional className to be added to your Button"
+
+  attr :danger_description, :any,
     default: nil,
     doc: "Specify the message read by screen readers for the danger button variant"
 
@@ -234,6 +464,12 @@ defmodule Graphene.CoreComponents do
   attr :rel, :string, default: nil, doc: "The link type, if this button is rendered as `<a>`."
   attr :size, :string, default: "lg", doc: "Button size."
 
+  attr :slot, :string,
+    default: "actions",
+    doc: "The shadow slot this ai-label-action should be in."
+
+  attr :tab_index, :string, default: "0", doc: "Specify the tabIndex of the button."
+
   attr :target, :string,
     default: nil,
     doc: "The link target, if this button is rendered as `<a>`."
@@ -253,7 +489,7 @@ defmodule Graphene.CoreComponents do
   attr :tooltip_text, :string,
     default: nil,
     doc:
-      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left."
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
 
   attr :type, :string,
     default: "button",
@@ -264,13 +500,13 @@ defmodule Graphene.CoreComponents do
 
   slot :inner_block
 
-  def actionable_notification_button(assigns) do
+  def ai_label_action_button(assigns) do
     ~H"""
-    <cds-actionable-notification-button
+    <cds-ai-label-action-button
       autofocus={assigns[:autofocus]}
       batch-action={assigns[:batch_action]}
       button-class-name={assigns[:button_class_name]}
-      danger-descriptor={assigns[:danger_descriptor]}
+      danger-description={assigns[:danger_description]}
       disabled={assigns[:disabled]}
       download={assigns[:download]}
       has-main-content={assigns[:has_main_content]}
@@ -284,6 +520,8 @@ defmodule Graphene.CoreComponents do
       ping={assigns[:ping]}
       rel={assigns[:rel]}
       size={assigns[:size]}
+      slot={assigns[:slot]}
+      tab-index={assigns[:tab_index]}
       target={assigns[:target]}
       tooltip-alignment={assigns[:tooltip_alignment]}
       tooltip-position={assigns[:tooltip_position]}
@@ -291,8 +529,8 @@ defmodule Graphene.CoreComponents do
       type={assigns[:type]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
-    </cds-actionable-notification-button>
+      {render_slot(@inner_block)}
+    </cds-ai-label-action-button>
     """
   end
 
@@ -311,8 +549,11 @@ defmodule Graphene.CoreComponents do
 
   def ai_skeleton_icon(assigns) do
     ~H"""
-    <cds-ai-skeleton-icon custom-styles={assigns[:custom_styles]} {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-ai-skeleton-icon
+      custom-styles={assigns[:custom_styles]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-ai-skeleton-icon>
     """
   end
@@ -332,7 +573,7 @@ defmodule Graphene.CoreComponents do
   def ai_skeleton_placeholder(assigns) do
     ~H"""
     <cds-ai-skeleton-placeholder {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-ai-skeleton-placeholder>
     """
   end
@@ -366,8 +607,38 @@ defmodule Graphene.CoreComponents do
       width={assigns[:width]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-ai-skeleton-text>
+    """
+  end
+
+  @doc """
+  Component `<cds-badge-indicator>` from `./src/components/badge-indicator/badge-indicator.ts`
+
+  Badge Indicator.
+
+
+  """
+
+  attr :count, :any, default: nil, doc: "Count of badge indicator"
+
+  attr :slot, :string,
+    default: "badge-indicator",
+    doc: "The shadow slot the badge-indicator should be in."
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def badge_indicator(assigns) do
+    ~H"""
+    <cds-badge-indicator
+      count={assigns[:count]}
+      slot={assigns[:slot]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-badge-indicator>
     """
   end
 
@@ -383,14 +654,23 @@ defmodule Graphene.CoreComponents do
     default: false,
     doc: "Optional prop to omit the trailing slash for the breadcrumbs"
 
+  attr :size, :any,
+    default: nil,
+    doc:
+      "Specify the size of the Breadcrumb. Currently\nsupports the following: `sm` & `md` (default: 'md')"
+
   attr :rest, :global
 
   slot :inner_block
 
   def breadcrumb(assigns) do
     ~H"""
-    <cds-breadcrumb no-trailing-slash={assigns[:no_trailing_slash]} {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-breadcrumb
+      no-trailing-slash={assigns[:no_trailing_slash]}
+      size={assigns[:size]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-breadcrumb>
     """
   end
@@ -410,7 +690,7 @@ defmodule Graphene.CoreComponents do
   def breadcrumb_item(assigns) do
     ~H"""
     <cds-breadcrumb-item {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-breadcrumb-item>
     """
   end
@@ -428,6 +708,11 @@ defmodule Graphene.CoreComponents do
   attr :href, :string, default: nil, doc: "Link `href`."
   attr :hreflang, :string, default: nil, doc: "The language of what `href` points to."
   attr :inline, :boolean, default: false, doc: "`true` if the link should be inline."
+
+  attr :is_currentpage, :boolean,
+    default: false,
+    doc: "Provide if this breadcrumb item represents the current page"
+
   attr :link_role, :string, default: nil, doc: "The a11y role for `<a>`."
   attr :ping, :string, default: nil, doc: "URLs to ping."
   attr :rel, :string, default: nil, doc: "The link type."
@@ -447,6 +732,7 @@ defmodule Graphene.CoreComponents do
       href={assigns[:href]}
       hreflang={assigns[:hreflang]}
       inline={assigns[:inline]}
+      is-currentpage={assigns[:is_currentpage]}
       link-role={assigns[:link_role]}
       ping={assigns[:ping]}
       rel={assigns[:rel]}
@@ -456,7 +742,7 @@ defmodule Graphene.CoreComponents do
       visited={assigns[:visited]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-breadcrumb-link>
     """
   end
@@ -471,7 +757,7 @@ defmodule Graphene.CoreComponents do
 
   attr :align, :string,
     default: "top",
-    doc: "Specify how the trigger should align with the tooltip"
+    doc: "Checks if a badge indicator is being used with incorrect properties"
 
   attr :autoalign, :boolean,
     default: false,
@@ -485,6 +771,10 @@ defmodule Graphene.CoreComponents do
     default: false,
     doc: "`true` if the button is being used within a data table batch action toolbar"
 
+  attr :breadcrumb, :boolean,
+    default: false,
+    doc: "`true` if this overflow menu use inside breadcrumb."
+
   attr :button_class_name, :any,
     default: nil,
     doc: "Specify an optional className to be added to your Button"
@@ -494,7 +784,7 @@ defmodule Graphene.CoreComponents do
     doc:
       "Determines whether the tooltip should close when inner content is activated (click, Enter or Space)"
 
-  attr :danger_descriptor, :any,
+  attr :danger_description, :any,
     default: nil,
     doc: "Specify the message read by screen readers for the danger button variant"
 
@@ -563,6 +853,7 @@ defmodule Graphene.CoreComponents do
   attr :ping, :string, default: nil, doc: "URLs to ping, if this button is rendered as `<a>`."
   attr :rel, :string, default: nil, doc: "The link type, if this button is rendered as `<a>`."
   attr :size, :string, default: "md", values: ["sm", "md", "lg"], doc: "Overflow menu size."
+  attr :tab_index, :string, default: "0", doc: "Specify the tabIndex of the button."
 
   attr :target, :string,
     default: nil,
@@ -585,7 +876,7 @@ defmodule Graphene.CoreComponents do
   attr :tooltip_text, :string,
     default: nil,
     doc:
-      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left."
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
 
   attr :type, :string,
     default: "button",
@@ -604,9 +895,10 @@ defmodule Graphene.CoreComponents do
       autoalign={assigns[:autoalign]}
       autofocus={assigns[:autofocus]}
       batch-action={assigns[:batch_action]}
+      breadcrumb={assigns[:breadcrumb]}
       button-class-name={assigns[:button_class_name]}
       close-on-activation={assigns[:close_on_activation]}
-      danger-descriptor={assigns[:danger_descriptor]}
+      danger-description={assigns[:danger_description]}
       data-table={assigns[:data_table]}
       defaultOpen={assigns[:default_open]}
       disabled={assigns[:disabled]}
@@ -627,6 +919,7 @@ defmodule Graphene.CoreComponents do
       ping={assigns[:ping]}
       rel={assigns[:rel]}
       size={assigns[:size]}
+      tab-index={assigns[:tab_index]}
       target={assigns[:target]}
       toolbar-action={assigns[:toolbar_action]}
       tooltip-alignment={assigns[:tooltip_alignment]}
@@ -635,9 +928,9 @@ defmodule Graphene.CoreComponents do
       type={assigns[:type]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
-      <.dynamic_tag :for={s <- assigns[:"s-icon"]} name={Map.get(s, :tag, "div")} slot="icon">
-        <%= render_slot(s) %>
+      {render_slot(@inner_block)}
+      <.dynamic_tag :for={s <- assigns[:"s-icon"]} tag_name={Map.get(s, :tag, "div")} slot="icon">
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-breadcrumb-overflow-menu>
     """
@@ -663,7 +956,7 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "Specify an optional className to be added to your Button"
 
-  attr :danger_descriptor, :any,
+  attr :danger_description, :any,
     default: nil,
     doc: "Specify the message read by screen readers for the danger button variant"
 
@@ -707,6 +1000,7 @@ defmodule Graphene.CoreComponents do
   attr :ping, :string, default: nil, doc: "URLs to ping, if this button is rendered as `<a>`."
   attr :rel, :string, default: nil, doc: "The link type, if this button is rendered as `<a>`."
   attr :size, :string, default: "lg", doc: "Button size."
+  attr :tab_index, :string, default: "0", doc: "Specify the tabIndex of the button."
 
   attr :target, :string,
     default: nil,
@@ -727,7 +1021,7 @@ defmodule Graphene.CoreComponents do
   attr :tooltip_text, :string,
     default: nil,
     doc:
-      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left."
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
 
   attr :type, :string,
     default: "button",
@@ -745,7 +1039,7 @@ defmodule Graphene.CoreComponents do
       autofocus={assigns[:autofocus]}
       batch-action={assigns[:batch_action]}
       button-class-name={assigns[:button_class_name]}
-      danger-descriptor={assigns[:danger_descriptor]}
+      danger-description={assigns[:danger_description]}
       disabled={assigns[:disabled]}
       download={assigns[:download]}
       has-main-content={assigns[:has_main_content]}
@@ -759,6 +1053,7 @@ defmodule Graphene.CoreComponents do
       ping={assigns[:ping]}
       rel={assigns[:rel]}
       size={assigns[:size]}
+      tab-index={assigns[:tab_index]}
       target={assigns[:target]}
       tooltip-alignment={assigns[:tooltip_alignment]}
       tooltip-position={assigns[:tooltip_position]}
@@ -766,9 +1061,9 @@ defmodule Graphene.CoreComponents do
       type={assigns[:type]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
-      <.dynamic_tag :for={s <- assigns[:"s-icon"]} name={Map.get(s, :tag, "div")} slot="icon">
-        <%= render_slot(s) %>
+      {render_slot(@inner_block)}
+      <.dynamic_tag :for={s <- assigns[:"s-icon"]} tag_name={Map.get(s, :tag, "div")} slot="icon">
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-button>
     """
@@ -782,14 +1077,21 @@ defmodule Graphene.CoreComponents do
 
   """
 
+  attr :stacked, :boolean,
+    default: false,
+    doc: "`true` if the buttons should be stacked. Only applies to the button-set variant."
+
   attr :rest, :global
 
   slot :inner_block
 
   def button_set(assigns) do
     ~H"""
-    <cds-button-set {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-button-set
+      stacked={assigns[:stacked]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-button-set>
     """
   end
@@ -809,8 +1111,148 @@ defmodule Graphene.CoreComponents do
   def button_set_base(assigns) do
     ~H"""
     <cds-button-set-base {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-button-set-base>
+    """
+  end
+
+  @doc """
+  Component `<cds-callout-notification>` from `./src/components/notification/callout-notification.ts`
+
+  Callout notification.
+
+  ## Events
+
+  * `cds-notification-beingclosed` - The custom event fired before this notification is being closed upon a user gesture.
+  Cancellation of this event stops the user-initiated action of closing this notification.
+  * `cds-notification-closed` - The custom event fired after this notification is closed upon a user gesture.
+
+  """
+
+  attr :action_button_label, :string,
+    default: nil,
+    doc:
+      "Pass in the action button label that will be rendered within the ActionableNotification."
+
+  attr :caption, :string, default: nil, doc: "The caption."
+
+  attr :close_on_escape, :boolean,
+    default: true,
+    doc: "Specify if pressing the escape key should close notifications"
+
+  attr :has_focus, :boolean,
+    default: true,
+    doc:
+      "Specify if focus should be moved to the component when the notification contains actions"
+
+  attr :hide_close_button, :boolean, default: false, doc: "`true` to hide the close button."
+  attr :inline, :boolean, default: false, doc: "Inline notification type."
+
+  attr :kind, :string,
+    default: "info",
+    values: ["success", "info", "info-square", "warning", "warning-alt", "error"],
+    doc: "Specify the notification kind, Defaults to 'info'."
+
+  attr :low_contrast, :boolean, default: false, doc: "Low contrast mode"
+  attr :open, :boolean, default: true, doc: "`true` if the notification should be open."
+
+  attr :status_icon_description, :string,
+    default: nil,
+    doc: "Provide a description for \"status\" icon that can be read by screen readers"
+
+  attr :subtitle, :string, default: nil, doc: "The subtitle."
+
+  attr :timeout, :any,
+    default: nil,
+    doc: "Specify an optional duration the notification should be closed in"
+
+  attr :title, :string, default: nil, doc: "The title."
+  attr :title_id, :string, default: nil, doc: "Specify the id for the title element."
+  attr :rest, :global
+
+  slot :"s-", doc: "The default slot for additional content.", do: attr(:tag, :string)
+  slot :"s-action", doc: "The action button.", do: attr(:tag, :string)
+  slot :"s-subtitle", doc: "The subtitle.", do: attr(:tag, :string)
+  slot :"s-title", doc: "The title.", do: attr(:tag, :string)
+  slot :inner_block
+
+  def callout_notification(assigns) do
+    ~H"""
+    <cds-callout-notification
+      action-button-label={assigns[:action_button_label]}
+      caption={assigns[:caption]}
+      close-on-escape={assigns[:close_on_escape]}
+      has-focus={assigns[:has_focus]}
+      hide-close-button={assigns[:hide_close_button]}
+      inline={assigns[:inline]}
+      kind={assigns[:kind]}
+      low-contrast={assigns[:low_contrast]}
+      open={assigns[:open]}
+      status-icon-description={assigns[:status_icon_description]}
+      subtitle={assigns[:subtitle]}
+      timeout={assigns[:timeout]}
+      title={assigns[:title]}
+      title-id={assigns[:title_id]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag :for={s <- assigns[:"s-"]} tag_name={Map.get(s, :tag, "div")} slot="">
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag :for={s <- assigns[:"s-action"]} tag_name={Map.get(s, :tag, "div")} slot="action">
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:"s-subtitle"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="subtitle"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag :for={s <- assigns[:"s-title"]} tag_name={Map.get(s, :tag, "div")} slot="title">
+        {render_slot(s)}
+      </.dynamic_tag>
+    </cds-callout-notification>
+    """
+  end
+
+  @doc """
+  Component `<cds-chat-button>` from `./src/components/chat-button/chat-button.ts`
+
+  Chat Button
+
+
+  """
+
+  attr :disabled, :boolean, default: false, doc: "`true` if the button should be disabled."
+
+  attr :is_quick_action, :boolean,
+    default: false,
+    doc: "Specify whether the `ChatButton` should be rendered as a quick action button"
+
+  attr :is_selected, :boolean,
+    default: false,
+    doc:
+      "Specify whether the quick action `ChatButton` should be rendered as selected. This disables the input"
+
+  attr :kind, :any, default: nil, doc: "Specify whether the `ChatButton` should be disabled"
+  attr :size, :string, default: "lg", values: ["sm", "md", "lg"], doc: "Chat button size."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def chat_button(assigns) do
+    ~H"""
+    <cds-chat-button
+      disabled={assigns[:disabled]}
+      is-quick-action={assigns[:is_quick_action]}
+      is-selected={assigns[:is_selected]}
+      kind={assigns[:kind]}
+      size={assigns[:size]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-chat-button>
     """
   end
 
@@ -834,8 +1276,11 @@ defmodule Graphene.CoreComponents do
 
   def chat_button_skeleton(assigns) do
     ~H"""
-    <cds-chat-button-skeleton size={assigns[:size]} {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-chat-button-skeleton
+      size={assigns[:size]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-chat-button-skeleton>
     """
   end
@@ -859,6 +1304,10 @@ defmodule Graphene.CoreComponents do
     default: false,
     doc: "Specify if checkbox is being used in a data table"
 
+  attr :default_checked, :any,
+    default: nil,
+    doc: "Specify whether the underlying input should be checked by default"
+
   attr :disabled, :boolean, default: false, doc: "Specify whether the Checkbox should be disabled"
 
   attr :helper_text, :any,
@@ -873,6 +1322,8 @@ defmodule Graphene.CoreComponents do
   attr :hide_label, :boolean,
     default: false,
     doc: "Specify whether the label should be hidden, or not"
+
+  attr :id, :string, default: "checkbox", doc: "Specify a custom id for the checkbox"
 
   attr :indeterminate, :boolean,
     default: false,
@@ -910,10 +1361,12 @@ defmodule Graphene.CoreComponents do
     <cds-checkbox
       checked={assigns[:checked]}
       data-table={assigns[:data_table]}
+      default-checked={assigns[:default_checked]}
       disabled={assigns[:disabled]}
       helper-text={assigns[:helper_text]}
       hide-checkbox={assigns[:hide_checkbox]}
       hide-label={assigns[:hide_label]}
+      id={assigns[:id]}
       indeterminate={assigns[:indeterminate]}
       invalid={assigns[:invalid]}
       invalid-text={assigns[:invalid_text]}
@@ -926,7 +1379,7 @@ defmodule Graphene.CoreComponents do
       warn-text={assigns[:warn_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-checkbox>
     """
   end
@@ -936,9 +1389,6 @@ defmodule Graphene.CoreComponents do
 
   Check box.
 
-  ## Events
-
-  * `cds-checkbox-changed` - The custom event fired after this changebox changes its checked state.
 
   """
 
@@ -963,6 +1413,10 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "Provide the text to be rendered inside of the fieldset <legend>"
 
+  attr :orientation, :any,
+    default: nil,
+    doc: "Provide the orientation for how the checkbox should be displayed"
+
   attr :readonly, :boolean, default: false, doc: "Whether the CheckboxGroup should be read-only"
 
   attr :warn, :boolean,
@@ -986,12 +1440,13 @@ defmodule Graphene.CoreComponents do
       invalid-text={assigns[:invalid_text]}
       legend-id={assigns[:legend_id]}
       legend-text={assigns[:legend_text]}
+      orientation={assigns[:orientation]}
       readonly={assigns[:readonly]}
       warn={assigns[:warn]}
       warn-text={assigns[:warn_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-checkbox-group>
     """
   end
@@ -1004,6 +1459,7 @@ defmodule Graphene.CoreComponents do
 
   """
 
+  attr :ai_label, :boolean, default: false
   attr :color_scheme, :string, default: "", values: ["", "light"], doc: "The color scheme."
   attr :disabled, :boolean, default: false, doc: "`true` if the link should be disabled."
   attr :download, :string, default: nil, doc: "The default file name."
@@ -1011,7 +1467,7 @@ defmodule Graphene.CoreComponents do
   attr :has_rounded_corners, :boolean,
     default: false,
     doc:
-      "Specify if the `ClickableTile` component should be rendered with rounded corners.\nOnly valid when `slug` prop is present"
+      "Specify if the `ClickableTile` component should be rendered with rounded corners.\nOnly valid when `ai-label` prop is present"
 
   attr :href, :string, default: nil, doc: "Link `href`."
   attr :hreflang, :string, default: nil, doc: "The language of what `href` points to."
@@ -1020,7 +1476,7 @@ defmodule Graphene.CoreComponents do
   attr :ping, :string, default: nil, doc: "URLs to ping."
   attr :rel, :string, default: nil, doc: "The link type."
   attr :size, :string, default: "MEDIUM", doc: "Link size."
-  attr :slug, :boolean, default: false
+  attr :slug, :boolean, default: false, doc: "deprecated - remove in v12"
   attr :target, :string, default: nil, doc: "The link target."
   attr :type, :string, default: nil, doc: "MIME type of the `target`."
   attr :visited, :boolean, default: false, doc: "`true` if the link has been visited."
@@ -1031,6 +1487,7 @@ defmodule Graphene.CoreComponents do
   def clickable_tile(assigns) do
     ~H"""
     <cds-clickable-tile
+      ai-label={assigns[:ai_label]}
       color-scheme={assigns[:color_scheme]}
       disabled={assigns[:disabled]}
       download={assigns[:download]}
@@ -1048,7 +1505,7 @@ defmodule Graphene.CoreComponents do
       visited={assigns[:visited]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-clickable-tile>
     """
   end
@@ -1138,8 +1595,63 @@ defmodule Graphene.CoreComponents do
       wrap-text={assigns[:wrap_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-code-snippet>
+    """
+  end
+
+  @doc """
+  Component `<cds-column>` from `./src/components/grid/column.ts`
+
+  The column component.
+
+
+  """
+
+  attr :lg, :any, default: nil
+  attr :md, :any, default: nil
+
+  attr :sm, :any,
+    default: nil,
+    doc:
+      "Specify column size\nKeys sm, md or lg\n\nValues\n- N, P, { span:N start:S}, { start: S, end: E}\nN = number\nP = percentage\nS = Start column\nE = End column (does not reach e.g. start 1 end 3 is same as start 1 span 2)"
+
+  attr :span, :any, default: nil
+  attr :rest, :global
+
+  slot :inner_block
+
+  def column(assigns) do
+    ~H"""
+    <cds-column
+      lg={assigns[:lg]}
+      md={assigns[:md]}
+      sm={assigns[:sm]}
+      span={assigns[:span]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-column>
+    """
+  end
+
+  @doc """
+  Component `<cds-column-hang>` from `./src/components/grid/column-hang.ts`
+
+  The column component.
+
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def column_hang(assigns) do
+    ~H"""
+    <cds-column-hang {@rest}>
+      {render_slot(@inner_block)}
+    </cds-column-hang>
     """
   end
 
@@ -1162,9 +1674,18 @@ defmodule Graphene.CoreComponents do
   Cancellation of this event stops the user-initiated toggling.
   * `cds-dropdown-selected` - The custom event fired after a dropdown item is selected upon a user gesture.
   * `cds-dropdown-toggled` - The custom event fired after the open state of this dropdown is toggled upon a user gesture.
+  * `input` - Undocumented
   * `invalid` - Undocumented
 
   """
+
+  attr :allow_custom_value, :boolean,
+    default: false,
+    doc: "`true` to allow custom values that do not match any item in the list."
+
+  attr :autoalign, :boolean,
+    default: false,
+    doc: "Specify whether auto align functionality should be applied"
 
   attr :clear_selection_label, :string,
     default: "Clear selection",
@@ -1205,6 +1726,11 @@ defmodule Graphene.CoreComponents do
     default: "Please fill out this field.",
     doc: "The special validity message for `required`."
 
+  attr :should_filter_item, :any,
+    default: nil,
+    doc:
+      "Provide custom filtering behavior. This attribute will be ignored if\n`typeahead` is enabled and will default to `true`"
+
   attr :size, :string, default: "md", values: ["sm", "md", "lg"], doc: "Dropdown size."
 
   attr :title_text, :string,
@@ -1224,6 +1750,10 @@ defmodule Graphene.CoreComponents do
     values: ["", "inline"],
     doc: "`true` if this dropdown should use the inline UI variant."
 
+  attr :typeahead, :boolean,
+    default: false,
+    doc: "**Experimental**: will enable autocomplete and typeahead for the input field."
+
   attr :validity_message, :string, default: nil, doc: "The validity message."
   attr :value, :string, default: nil, doc: "The value of the selected item."
 
@@ -1242,6 +1772,8 @@ defmodule Graphene.CoreComponents do
   def combo_box(assigns) do
     ~H"""
     <cds-combo-box
+      allow-custom-value={assigns[:allow_custom_value]}
+      autoalign={assigns[:autoalign]}
       clear-selection-label={assigns[:clear_selection_label]}
       direction={assigns[:direction]}
       disabled={assigns[:disabled]}
@@ -1256,18 +1788,20 @@ defmodule Graphene.CoreComponents do
       read-only={assigns[:read_only]}
       required={assigns[:required]}
       required-validity-message={assigns[:required_validity_message]}
+      should-filter-item={assigns[:should_filter_item]}
       size={assigns[:size]}
       title-text={assigns[:title_text]}
       toggle-label-closed={assigns[:toggle_label_closed]}
       toggle-label-open={assigns[:toggle_label_open]}
       type={assigns[:type]}
+      typeahead={assigns[:typeahead]}
       validity-message={assigns[:validity_message]}
       value={assigns[:value]}
       warn={assigns[:warn]}
       warn-text={assigns[:warn_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-combo-box>
     """
   end
@@ -1303,8 +1837,191 @@ defmodule Graphene.CoreComponents do
       value={assigns[:value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-combo-box-item>
+    """
+  end
+
+  @doc """
+  Component `<cds-combo-button>` from `./src/components/combo-button/combo-button.ts`
+
+  Combo button.
+
+
+  """
+
+  attr :disabled, :any,
+    default: nil,
+    doc: "Specify whether the ComboButton should be disabled, or not."
+
+  attr :label, :string,
+    default: nil,
+    doc: "Provide the label to be rendered on the primary action button."
+
+  attr :menu_alignment, :string,
+    default: "top",
+    values: [
+      "top",
+      "top-start",
+      "top-end",
+      "bottom",
+      "bottom-start",
+      "bottom-end",
+      "left",
+      "left-start",
+      "left-end",
+      "right",
+      "right-start",
+      "right-end"
+    ],
+    doc: "Experimental property. Specify how the menu should align with the button element"
+
+  attr :on_click, :any,
+    default: nil,
+    doc: "Provide an optional function to be called when the primary action element is clicked."
+
+  attr :size, :any, default: nil, doc: "Specify the size of the button and menu."
+
+  attr :tooltip_alignment, :any,
+    default: nil,
+    doc: "Specify how the trigger tooltip should be aligned."
+
+  attr :tooltip_content, :string,
+    default: "Additional actions",
+    doc: "Provide the tooltip content for the icon button."
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def combo_button(assigns) do
+    ~H"""
+    <cds-combo-button
+      disabled={assigns[:disabled]}
+      label={assigns[:label]}
+      menu-alignment={assigns[:menu_alignment]}
+      onClick={assigns[:on_click]}
+      size={assigns[:size]}
+      tooltip-alignment={assigns[:tooltip_alignment]}
+      tooltip-content={assigns[:tooltip_content]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-combo-button>
+    """
+  end
+
+  @doc """
+  Component `<cds-contained-list>` from `./src/components/contained-list/contained-list.ts`
+
+  Contained list.
+
+
+  """
+
+  attr :is_inset, :boolean,
+    default: false,
+    doc: "Specify whether the dividing lines in between list items should be inset."
+
+  attr :kind, :any, default: nil, doc: "The kind of ContainedList you want to display"
+  attr :label, :string, default: nil, doc: "A label describing the contained list."
+  attr :size, :any, default: nil, doc: "Specify the size of the contained list."
+  attr :rest, :global
+
+  slot :"s-", doc: "The list items (cds-contained-list-item elements)", do: attr(:tag, :string)
+
+  slot :"s-action",
+    doc: "The action slot for interactive elements in header",
+    do: attr(:tag, :string)
+
+  slot :"s-label", doc: "The label text", do: attr(:tag, :string)
+  slot :inner_block
+
+  def contained_list(assigns) do
+    ~H"""
+    <cds-contained-list
+      is-inset={assigns[:is_inset]}
+      kind={assigns[:kind]}
+      label={assigns[:label]}
+      size={assigns[:size]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag :for={s <- assigns[:"s-"]} tag_name={Map.get(s, :tag, "div")} slot="">
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag :for={s <- assigns[:"s-action"]} tag_name={Map.get(s, :tag, "div")} slot="action">
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag :for={s <- assigns[:"s-label"]} tag_name={Map.get(s, :tag, "div")} slot="label">
+        {render_slot(s)}
+      </.dynamic_tag>
+    </cds-contained-list>
+    """
+  end
+
+  @doc """
+  Component `<cds-contained-list-description>` from `./src/components/contained-list/contained-list-description.ts`
+
+  Contained list description text.
+
+
+  """
+
+  attr :rest, :global
+
+  slot :"s-", doc: "The description text content", do: attr(:tag, :string)
+  slot :inner_block
+
+  def contained_list_description(assigns) do
+    ~H"""
+    <cds-contained-list-description {@rest}>
+      {render_slot(@inner_block)}
+      <.dynamic_tag :for={s <- assigns[:"s-"]} tag_name={Map.get(s, :tag, "div")} slot="">
+        {render_slot(s)}
+      </.dynamic_tag>
+    </cds-contained-list-description>
+    """
+  end
+
+  @doc """
+  Component `<cds-contained-list-item>` from `./src/components/contained-list/contained-list-item.ts`
+
+  Contained list item.
+
+  ## Events
+
+  * `cds-contained-list-item-click` - Fires when clickable item is clicked
+
+  """
+
+  attr :clickable, :boolean, default: false, doc: "Whether this item is clickable"
+  attr :disabled, :boolean, default: false, doc: "Whether this item is disabled."
+  attr :rest, :global
+
+  slot :"s-", doc: "The content of the list item", do: attr(:tag, :string)
+  slot :"s-action", doc: "The action slot for interactive elements", do: attr(:tag, :string)
+  slot :"s-icon", doc: "The icon slot for rendering an icon", do: attr(:tag, :string)
+  slot :inner_block
+
+  def contained_list_item(assigns) do
+    ~H"""
+    <cds-contained-list-item
+      clickable={assigns[:clickable]}
+      disabled={assigns[:disabled]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag :for={s <- assigns[:"s-"]} tag_name={Map.get(s, :tag, "div")} slot="">
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag :for={s <- assigns[:"s-action"]} tag_name={Map.get(s, :tag, "div")} slot="action">
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag :for={s <- assigns[:"s-icon"]} tag_name={Map.get(s, :tag, "div")} slot="icon">
+        {render_slot(s)}
+      </.dynamic_tag>
+    </cds-contained-list-item>
     """
   end
 
@@ -1322,6 +2039,16 @@ defmodule Graphene.CoreComponents do
   """
 
   attr :icon, :boolean, default: false, doc: "Icon only."
+  attr :low_contrast, :boolean, default: false, doc: "`true` to use the low contrast version."
+
+  attr :selected_index, :string,
+    default: "0",
+    doc: "Specify a selected index for the initially selected content"
+
+  attr :selection_mode, :string,
+    default: "automatic",
+    doc:
+      "Choose whether or not to automatically change selection on focus when left/right arrow pressed. Defaults to 'automatic'"
 
   attr :size, :string,
     default: nil,
@@ -1335,8 +2062,16 @@ defmodule Graphene.CoreComponents do
 
   def content_switcher(assigns) do
     ~H"""
-    <cds-content-switcher icon={assigns[:icon]} size={assigns[:size]} value={assigns[:value]} {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-content-switcher
+      icon={assigns[:icon]}
+      low-contrast={assigns[:low_contrast]}
+      selected-index={assigns[:selected_index]}
+      selection-mode={assigns[:selection_mode]}
+      size={assigns[:size]}
+      value={assigns[:value]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-content-switcher>
     """
   end
@@ -1388,7 +2123,7 @@ defmodule Graphene.CoreComponents do
       value={assigns[:value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-content-switcher-item>
     """
   end
@@ -1403,7 +2138,7 @@ defmodule Graphene.CoreComponents do
 
   attr :align, :string,
     default: "top",
-    doc: "Specify how the trigger should align with the tooltip"
+    doc: "Checks if a badge indicator is being used with incorrect properties"
 
   attr :autoalign, :boolean,
     default: false,
@@ -1426,7 +2161,7 @@ defmodule Graphene.CoreComponents do
     doc:
       "Determines whether the tooltip should close when inner content is activated (click, Enter or Space)"
 
-  attr :danger_descriptor, :any,
+  attr :danger_description, :any,
     default: nil,
     doc: "Specify the message read by screen readers for the danger button variant"
 
@@ -1490,6 +2225,7 @@ defmodule Graphene.CoreComponents do
   attr :ping, :string, default: nil, doc: "URLs to ping, if this button is rendered as `<a>`."
   attr :rel, :string, default: nil, doc: "The link type, if this button is rendered as `<a>`."
   attr :size, :string, default: "md", doc: "Specify the size of the Button. Defaults to `md`."
+  attr :tab_index, :string, default: "0", doc: "Specify the tabIndex of the button."
 
   attr :target, :string,
     default: nil,
@@ -1510,7 +2246,7 @@ defmodule Graphene.CoreComponents do
   attr :tooltip_text, :string,
     default: nil,
     doc:
-      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left."
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
 
   attr :type, :string,
     default: "button",
@@ -1530,7 +2266,7 @@ defmodule Graphene.CoreComponents do
       batch-action={assigns[:batch_action]}
       button-class-name={assigns[:button_class_name]}
       close-on-activation={assigns[:close_on_activation]}
-      danger-descriptor={assigns[:danger_descriptor]}
+      danger-description={assigns[:danger_description]}
       defaultOpen={assigns[:default_open]}
       disabled={assigns[:disabled]}
       download={assigns[:download]}
@@ -1549,6 +2285,7 @@ defmodule Graphene.CoreComponents do
       ping={assigns[:ping]}
       rel={assigns[:rel]}
       size={assigns[:size]}
+      tab-index={assigns[:tab_index]}
       target={assigns[:target]}
       tooltip-alignment={assigns[:tooltip_alignment]}
       tooltip-position={assigns[:tooltip_position]}
@@ -1556,7 +2293,7 @@ defmodule Graphene.CoreComponents do
       type={assigns[:type]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-copy>
     """
   end
@@ -1568,6 +2305,28 @@ defmodule Graphene.CoreComponents do
 
 
   """
+
+  attr :align, :string,
+    default: "bottom",
+    values: [
+      "top",
+      "top-start",
+      "top-end",
+      "bottom",
+      "bottom-start",
+      "bottom-end",
+      "left",
+      "left-start",
+      "left-end",
+      "right",
+      "right-start",
+      "right-end"
+    ],
+    doc: "How the tooltip is aligned to the trigger button."
+
+  attr :auto_align, :boolean,
+    default: false,
+    doc: "Specify whether a auto align functionality should be applied"
 
   attr :button_class_name, :any,
     default: nil,
@@ -1590,13 +2349,15 @@ defmodule Graphene.CoreComponents do
   def copy_button(assigns) do
     ~H"""
     <cds-copy-button
+      align={assigns[:align]}
+      autoAlign={assigns[:auto_align]}
       button-class-name={assigns[:button_class_name]}
       disabled={assigns[:disabled]}
       feedback={assigns[:feedback]}
       feedback-timeout={assigns[:feedback_timeout]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-copy-button>
     """
   end
@@ -1667,7 +2428,7 @@ defmodule Graphene.CoreComponents do
       value={assigns[:value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-date-picker>
     """
   end
@@ -1749,8 +2510,117 @@ defmodule Graphene.CoreComponents do
       warn-text={assigns[:warn_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-date-picker-input>
+    """
+  end
+
+  @doc """
+  Component `<cds-definition-tooltip>` from `./src/components/tooltip/definition-tooltip.ts`
+
+  Definition tooltip.
+
+
+  """
+
+  attr :align, :string,
+    default: "bottom",
+    doc: "Specify how the trigger should align with the tooltip"
+
+  attr :autoalign, :boolean,
+    default: false,
+    doc:
+      "Will auto-align Definition Tooltip. This prop is currently experimental and is subject to future changes."
+
+  attr :default_open, :boolean,
+    default: false,
+    doc: "Specify whether the tooltip should be open when it first renders"
+
+  attr :open_on_hover, :boolean,
+    default: false,
+    doc: "Specifies whether the `DefinitionTooltip` should open on hover or not"
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def definition_tooltip(assigns) do
+    ~H"""
+    <cds-definition-tooltip
+      align={assigns[:align]}
+      autoalign={assigns[:autoalign]}
+      default-open={assigns[:default_open]}
+      open-on-hover={assigns[:open_on_hover]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-definition-tooltip>
+    """
+  end
+
+  @doc """
+  Component `<cds-dismissible-tag>` from `./src/components/tag/dismissible-tag.ts`
+
+  Dismissible Tag.
+
+  ## Events
+
+  * `cds-dismissible-tag-beingclosed` - The custom event fired as the element is being closed
+  * `cds-dismissible-tag-closed` - The custom event fired after the element has been closed
+  * `cds-tag-beingclosed` - The custom event fired as the element is being closed
+  * `cds-tag-closed` - The custom event fired after the element has been closed
+
+  """
+
+  attr :disabled, :boolean, default: false, doc: "`true` if the tag should be disabled"
+
+  attr :dismiss_tooltip_alignment, :string,
+    default: "bottom",
+    doc: "Specify the tooltip alignment for the dismiss button"
+
+  attr :dismiss_tooltip_label, :string,
+    default: nil,
+    doc: "Provide a custom tooltip label for the dismiss button"
+
+  attr :filter, :boolean, default: false, doc: "Determine if is a filter/chip"
+  attr :has_custom_icon, :boolean, default: false, doc: "`true` if there is a custom icon."
+  attr :open, :boolean, default: true, doc: "`true` if the tag should be open."
+  attr :size, :any, default: nil, doc: "The size of the tag."
+
+  attr :tag_title, :string,
+    default: nil,
+    doc: "Provide a custom `title` to be inserted in the tag."
+
+  attr :text, :string, default: nil, doc: "Provide text to be rendered inside of a the tag."
+
+  attr :title, :string,
+    default: "Clear filter",
+    doc:
+      "Text to show on filter tag \"clear\" buttons. Corresponds to the attribute with the same name"
+
+  attr :type, :any, default: nil, doc: "The type of the tag."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def dismissible_tag(assigns) do
+    ~H"""
+    <cds-dismissible-tag
+      disabled={assigns[:disabled]}
+      dismiss-tooltip-alignment={assigns[:dismiss_tooltip_alignment]}
+      dismiss-tooltip-label={assigns[:dismiss_tooltip_label]}
+      filter={assigns[:filter]}
+      has-custom-icon={assigns[:has_custom_icon]}
+      open={assigns[:open]}
+      size={assigns[:size]}
+      tag-title={assigns[:tag_title]}
+      text={assigns[:text]}
+      title={assigns[:title]}
+      type={assigns[:type]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-dismissible-tag>
     """
   end
 
@@ -1767,9 +2637,14 @@ defmodule Graphene.CoreComponents do
   Cancellation of this event stops the user-initiated toggling.
   * `cds-dropdown-selected` - The custom event fired after a dropdown item is selected upon a user gesture.
   * `cds-dropdown-toggled` - The custom event fired after the open state of this dropdown is toggled upon a user gesture.
+  * `input` - Undocumented
   * `invalid` - Undocumented
 
   """
+
+  attr :autoalign, :boolean,
+    default: false,
+    doc: "Specify whether auto align functionality should be applied"
 
   attr :direction, :string,
     default: "bottom",
@@ -1839,6 +2714,7 @@ defmodule Graphene.CoreComponents do
   def dropdown(assigns) do
     ~H"""
     <cds-dropdown
+      autoalign={assigns[:autoalign]}
       direction={assigns[:direction]}
       disabled={assigns[:disabled]}
       helper-text={assigns[:helper_text]}
@@ -1862,7 +2738,7 @@ defmodule Graphene.CoreComponents do
       warn-text={assigns[:warn_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-dropdown>
     """
   end
@@ -1898,7 +2774,7 @@ defmodule Graphene.CoreComponents do
       value={assigns[:value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-dropdown-item>
     """
   end
@@ -1922,7 +2798,7 @@ defmodule Graphene.CoreComponents do
   attr :has_rounded_corners, :boolean,
     default: false,
     doc:
-      "Specify if the `ExpandableTile` component should be rendered with rounded corners.\nOnly valid when `slug` prop is present"
+      "Specify if the `ExpandableTile` component should be rendered with rounded corners.\nOnly valid when `ai-label` prop is present"
 
   attr :with_interactive, :boolean, default: false, doc: "`true` to expand this expandable tile."
   attr :rest, :global
@@ -1938,15 +2814,35 @@ defmodule Graphene.CoreComponents do
       with-interactive={assigns[:with_interactive]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-expandable-tile>
+    """
+  end
+
+  @doc """
+  Component `<feature-flags>` from `./src/components/feature-flags/index.ts`
+
+  Undocumented
+
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def feature_flags(assigns) do
+    ~H"""
+    <feature-flags {@rest}>
+      {render_slot(@inner_block)}
+    </feature-flags>
     """
   end
 
   @doc """
   Component `<cds-file-uploader>` from `./src/components/file-uploader/file-uploader.ts`
 
-  The shell UI for file uploader.
+  The file uploader component.
 
 
   """
@@ -1956,8 +2852,6 @@ defmodule Graphene.CoreComponents do
   attr :label_title, :string, default: nil, doc: "The label title."
   attr :rest, :global
 
-  slot :"s-label-title.", do: attr(:tag, :string)
-  slot :"s-lebel-description.", do: attr(:tag, :string)
   slot :inner_block
 
   def file_uploader(assigns) do
@@ -1968,27 +2862,13 @@ defmodule Graphene.CoreComponents do
       label-title={assigns[:label_title]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
-      <.dynamic_tag
-        :for={s <- assigns[:"s-label-title."]}
-        name={Map.get(s, :tag, "div")}
-        slot="label-title."
-      >
-        <%= render_slot(s) %>
-      </.dynamic_tag>
-      <.dynamic_tag
-        :for={s <- assigns[:"s-lebel-description."]}
-        name={Map.get(s, :tag, "div")}
-        slot="lebel-description."
-      >
-        <%= render_slot(s) %>
-      </.dynamic_tag>
+      {render_slot(@inner_block)}
     </cds-file-uploader>
     """
   end
 
   @doc """
-  Component `<cds-file-uploader-container>` from `./src/components/file-uploader/file-uploader-button.ts`
+  Component `<cds-file-uploader-button>` from `./src/components/file-uploader/file-uploader-button.ts`
 
   File uploader button .
 
@@ -2035,9 +2915,9 @@ defmodule Graphene.CoreComponents do
 
   slot :inner_block
 
-  def file_uploader_container(assigns) do
+  def file_uploader_button(assigns) do
     ~H"""
-    <cds-file-uploader-container
+    <cds-file-uploader-button
       accept={assigns[:accept]}
       button-kind={assigns[:button_kind]}
       disabled={assigns[:disabled]}
@@ -2047,8 +2927,8 @@ defmodule Graphene.CoreComponents do
       slot={assigns[:slot]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
-    </cds-file-uploader-container>
+      {render_slot(@inner_block)}
+    </cds-file-uploader-button>
     """
   end
 
@@ -2096,7 +2976,7 @@ defmodule Graphene.CoreComponents do
       slot={assigns[:slot]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-file-uploader-drop-container>
     """
   end
@@ -2156,16 +3036,20 @@ defmodule Graphene.CoreComponents do
       state={assigns[:state]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
-      <.dynamic_tag :for={s <- assigns[:"s-validity"]} name={Map.get(s, :tag, "div")} slot="validity">
-        <%= render_slot(s) %>
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:"s-validity"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="validity"
+      >
+        {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
         :for={s <- assigns[:"s-validity-message"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="validity-message"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-file-uploader-item>
     """
@@ -2186,8 +3070,960 @@ defmodule Graphene.CoreComponents do
   def file_uploader_skeleton(assigns) do
     ~H"""
     <cds-file-uploader-skeleton {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-file-uploader-skeleton>
+    """
+  end
+
+  @doc """
+  Component `<cds-fluid-number-input>` from `./src/components/fluid-number-input/fluid-number-input.ts`
+
+  Fluid number input.
+
+  ## Events
+
+  * `cds-number-input` - The name of the custom event fired after the value is changed upon a user gesture.
+  * `invalid` - Undocumented
+
+  """
+
+  attr :allow_empty, :boolean, default: false, doc: "`true` to allow empty string."
+
+  attr :autocomplete, :string,
+    default: nil,
+    doc: "May be any of the standard HTML autocomplete options"
+
+  attr :autofocus, :boolean,
+    default: false,
+    doc: "Sets the input to be focussed automatically on page load. Defaults to false"
+
+  attr :decrement_button_assistive_text, :string,
+    default: "decrease number input",
+    doc: "Aria text for the button that decrements the value"
+
+  attr :default_value, :string,
+    default: nil,
+    doc: "Optional starting value for uncontrolled state"
+
+  attr :disable_wheel, :boolean,
+    default: false,
+    doc: "Specify if the wheel functionality for the input should be disabled, or not"
+
+  attr :disabled, :boolean, default: false, doc: "Controls the disabled state of the input"
+
+  attr :enable_counter, :boolean,
+    default: false,
+    doc: "Specify whether to display the character counter"
+
+  attr :helper_text, :string, default: nil, doc: "The helper text."
+
+  attr :hide_label, :boolean,
+    default: false,
+    doc: "Specify whether you want the underlying label to be visually hidden"
+
+  attr :hide_steppers, :boolean,
+    default: false,
+    doc: "Specify whether you want the steppers to be hidden"
+
+  attr :hide_password_label, :string,
+    default: "Hide password",
+    doc: "\"Hide password\" tooltip text on password visibility toggle"
+
+  attr :icon_description, :string,
+    default: nil,
+    doc: "Provide a description for up/down icons that can be read by screen readers"
+
+  attr :increment_button_assistive_text, :string,
+    default: "increase number input",
+    doc: "Aria text for the button that increments the value"
+
+  attr :inline, :boolean, default: false, doc: "true to use the inline version."
+  attr :invalid, :boolean, default: false, doc: "Specify if the currently value is invalid."
+
+  attr :invalid_text, :string,
+    default: nil,
+    doc: "Message which is displayed if the value is invalid."
+
+  attr :is_fluid, :boolean, default: false, doc: "Set to true to use the fluid variant."
+
+  attr :label, :string,
+    default: nil,
+    doc: "Generic label that will be used as the textual representation of what this field is for"
+
+  attr :max, :string, default: nil, doc: "The maximum value allowed in the input"
+
+  attr :max_count, :any,
+    default: nil,
+    doc:
+      "Max character count allowed for input. This is needed in order for enableCounter to display"
+
+  attr :min, :string, default: nil, doc: "The minimum value allowed in the input"
+  attr :name, :string, default: nil, doc: "Name for the input in the `FormData`"
+
+  attr :pattern, :string,
+    default: nil,
+    doc: "Pattern to validate the input against for HTML validity checking"
+
+  attr :placeholder, :string,
+    default: nil,
+    doc: "Value to display when the input has an empty `value`"
+
+  attr :readonly, :boolean, default: false, doc: "Specify if the component should be read-only"
+  attr :required, :boolean, default: false, doc: "Boolean property to set the required status"
+
+  attr :required_validity_message, :string,
+    default: "Please fill out this field.",
+    doc: "The special validity message for `required`."
+
+  attr :show_password_visibility_toggle, :boolean,
+    default: false,
+    doc: "Boolean property to render password visibility toggle"
+
+  attr :show_password_label, :string,
+    default: "Show password",
+    doc: "\"Show password\" tooltip text on password visibility toggle"
+
+  attr :size, :any, default: nil, doc: "The input box size."
+  attr :step, :string, default: nil, doc: "The amount the value should increase or decrease by"
+
+  attr :tooltip_alignment, :string,
+    default: "center",
+    values: ["start", "center", "end"],
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end."
+
+  attr :tooltip_direction, :string,
+    default: "bottom",
+    values: ["top", "right", "bottom", "left"],
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left."
+
+  attr :type, :string,
+    default: "text",
+    values: ["email", "password", "tel", "text", "url"],
+    doc: "The type of the input. Can be one of the types listed in the INPUT_TYPE enum"
+
+  attr :validity_message, :string,
+    default: nil,
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
+
+  attr :value, :string, default: nil, doc: "The value of the input."
+
+  attr :warn, :boolean,
+    default: false,
+    doc: "Specify whether the control is currently in warning state"
+
+  attr :warn_text, :string,
+    default: nil,
+    doc: "Provide the text that is displayed when the control is in warning state"
+
+  attr :rest, :global
+
+  slot :"s-helper-text", doc: "The helper text.", do: attr(:tag, :string)
+  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
+
+  slot :"s-validity-message",
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
+    do: attr(:tag, :string)
+
+  slot :inner_block
+
+  def fluid_number_input(assigns) do
+    ~H"""
+    <cds-fluid-number-input
+      allow-empty={assigns[:allow_empty]}
+      autocomplete={assigns[:autocomplete]}
+      autofocus={assigns[:autofocus]}
+      decrement-button-assistive-text={assigns[:decrement_button_assistive_text]}
+      default-value={assigns[:default_value]}
+      disable-wheel={assigns[:disable_wheel]}
+      disabled={assigns[:disabled]}
+      enable-counter={assigns[:enable_counter]}
+      helper-text={assigns[:helper_text]}
+      hide-label={assigns[:hide_label]}
+      hide-steppers={assigns[:hide_steppers]}
+      hidePasswordLabel={assigns[:hide_password_label]}
+      icon-description={assigns[:icon_description]}
+      increment-button-assistive-text={assigns[:increment_button_assistive_text]}
+      inline={assigns[:inline]}
+      invalid={assigns[:invalid]}
+      invalid-text={assigns[:invalid_text]}
+      isFluid={assigns[:is_fluid]}
+      label={assigns[:label]}
+      max={assigns[:max]}
+      max-count={assigns[:max_count]}
+      min={assigns[:min]}
+      name={assigns[:name]}
+      pattern={assigns[:pattern]}
+      placeholder={assigns[:placeholder]}
+      readonly={assigns[:readonly]}
+      required={assigns[:required]}
+      required-validity-message={assigns[:required_validity_message]}
+      show-password-visibility-toggle={assigns[:show_password_visibility_toggle]}
+      showPasswordLabel={assigns[:show_password_label]}
+      size={assigns[:size]}
+      step={assigns[:step]}
+      tooltipAlignment={assigns[:tooltip_alignment]}
+      tooltipDirection={assigns[:tooltip_direction]}
+      type={assigns[:type]}
+      validity-message={assigns[:validity_message]}
+      value={assigns[:value]}
+      warn={assigns[:warn]}
+      warn-text={assigns[:warn_text]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:"s-helper-text"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="helper-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:"s-label-text"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:"s-validity-message"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+    </cds-fluid-number-input>
+    """
+  end
+
+  @doc """
+  Component `<cds-fluid-number-input-skeleton>` from `./src/components/fluid-number-input/fluid-number-input-skeleton.ts`
+
+  Fluid number input.
+
+
+  """
+
+  attr :hide_label, :boolean,
+    default: false,
+    doc: "`true` if the label should be hidden. Corresponds to the attribute with the same name."
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def fluid_number_input_skeleton(assigns) do
+    ~H"""
+    <cds-fluid-number-input-skeleton
+      hide-label={assigns[:hide_label]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-fluid-number-input-skeleton>
+    """
+  end
+
+  @doc """
+  Component `<cds-fluid-search>` from `./src/components/fluid-search/fluid-search.ts`
+
+  Fluid text input.
+
+  ## Events
+
+  * `cds-search-input` - The custom event fired after the search content is changed upon a user gesture.
+
+  """
+
+  attr :autocomplete, :string,
+    default: "off",
+    doc:
+      "Specify an optional value for the autocomplete property on the underlying <input>,\ndefaults to \"off\""
+
+  attr :close_button_label_text, :string,
+    default: nil,
+    doc: "Specify a label to be read by screen readers on the \"close\" button"
+
+  attr :disabled, :boolean, default: false, doc: "`true` if the search box should be disabled."
+  attr :expandable, :boolean, default: false, doc: "`true` if the search bar can be expandable"
+
+  attr :expanded, :boolean,
+    default: false,
+    doc: "`true` if the expandable search has been expanded"
+
+  attr :has_custom_icon, :boolean, default: false
+  attr :label_text, :string, default: nil, doc: "The label text."
+  attr :name, :string, default: nil, doc: "The form name in `FormData`."
+  attr :placeholder, :string, default: "Search", doc: "The placeholder text."
+
+  attr :role, :string,
+    default: nil,
+    doc: "Specify the role for the underlying <input>, defaults to searchbox"
+
+  attr :size, :any, default: nil, doc: "The search box size."
+  attr :type, :string, default: nil, doc: "The `<input>` name."
+  attr :value, :string, default: nil, doc: "The value."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def fluid_search(assigns) do
+    ~H"""
+    <cds-fluid-search
+      autocomplete={assigns[:autocomplete]}
+      close-button-label-text={assigns[:close_button_label_text]}
+      disabled={assigns[:disabled]}
+      expandable={assigns[:expandable]}
+      expanded={assigns[:expanded]}
+      hasCustomIcon={assigns[:has_custom_icon]}
+      label-text={assigns[:label_text]}
+      name={assigns[:name]}
+      placeholder={assigns[:placeholder]}
+      role={assigns[:role]}
+      size={assigns[:size]}
+      type={assigns[:type]}
+      value={assigns[:value]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-fluid-search>
+    """
+  end
+
+  @doc """
+  Component `<cds-fluid-search-skeleton>` from `./src/components/fluid-search/fluid-search-skeleton.ts`
+
+  Fluid Search.
+
+
+  """
+
+  attr :size, :any,
+    default: nil,
+    doc: "The search box size. Corresponds to the attribute with the same name."
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def fluid_search_skeleton(assigns) do
+    ~H"""
+    <cds-fluid-search-skeleton
+      size={assigns[:size]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-fluid-search-skeleton>
+    """
+  end
+
+  @doc """
+  Component `<cds-fluid-select>` from `./src/components/fluid-select/fluid-select.ts`
+
+  Fluid text select.
+
+  ## Events
+
+  * `cds-select-selected` - The name of the custom event fired after an item is selected.
+
+  """
+
+  attr :autofocus, :boolean,
+    default: false,
+    doc: "Sets the select to be focussed automatically on page load. Defaults to false"
+
+  attr :disabled, :boolean, default: false, doc: "Controls the disabled state of the select"
+  attr :helper_text, :string, default: nil, doc: "The helper text."
+
+  attr :hide_label, :boolean,
+    default: false,
+    doc: "Specify whether the label should be hidden, or not"
+
+  attr :id, :string, default: nil, doc: "ID to link the `label` and `select`"
+
+  attr :inline, :boolean,
+    default: false,
+    doc: "Specify whether you want the inline version of this control"
+
+  attr :invalid, :boolean, default: false, doc: "Specify if the currently value is invalid."
+
+  attr :invalid_text, :string,
+    default: nil,
+    doc: "Message which is displayed if the value is invalid."
+
+  attr :is_fluid, :boolean, default: false, doc: "Specify whether the textarea is fluid or not"
+  attr :label_text, :string, default: nil, doc: "The label text."
+  attr :multiple, :boolean, default: nil, doc: "`true` to enable multiple selection."
+  attr :name, :string, default: nil, doc: "Name for the select in the `FormData`"
+
+  attr :pattern, :string,
+    default: nil,
+    doc: "Pattern to validate the select against for HTML validity checking"
+
+  attr :placeholder, :string,
+    default: nil,
+    doc: "Value to display when the select has an empty `value`"
+
+  attr :readonly, :boolean, default: false, doc: "Controls the readonly state of the select"
+  attr :required, :boolean, default: false, doc: "Boolean property to set the required status"
+
+  attr :required_validity_message, :string,
+    default: "Please fill out this field.",
+    doc: "The special validity message for `required`."
+
+  attr :selected_index, :string, default: nil, doc: "The selected index."
+  attr :size, :any, default: nil, doc: "The input box size."
+  attr :value, :string, default: nil, doc: "The value of the text area."
+  attr :warn, :boolean, default: false, doc: "Specify if the currently value is warn."
+  attr :warn_text, :string, default: nil, doc: "Message which is displayed if the value is warn."
+  attr :rest, :global
+
+  slot :"s-helper-text", doc: "The helper text.", do: attr(:tag, :string)
+  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
+
+  slot :"s-validity-message",
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
+    do: attr(:tag, :string)
+
+  slot :inner_block
+
+  def fluid_select(assigns) do
+    ~H"""
+    <cds-fluid-select
+      autofocus={assigns[:autofocus]}
+      disabled={assigns[:disabled]}
+      helper-text={assigns[:helper_text]}
+      hide-label={assigns[:hide_label]}
+      id={assigns[:id]}
+      inline={assigns[:inline]}
+      invalid={assigns[:invalid]}
+      invalid-text={assigns[:invalid_text]}
+      isFluid={assigns[:is_fluid]}
+      label-text={assigns[:label_text]}
+      multiple={assigns[:multiple]}
+      name={assigns[:name]}
+      pattern={assigns[:pattern]}
+      placeholder={assigns[:placeholder]}
+      readonly={assigns[:readonly]}
+      required={assigns[:required]}
+      required-validity-message={assigns[:required_validity_message]}
+      selectedIndex={assigns[:selected_index]}
+      size={assigns[:size]}
+      value={assigns[:value]}
+      warn={assigns[:warn]}
+      warn-text={assigns[:warn_text]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:"s-helper-text"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="helper-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:"s-label-text"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:"s-validity-message"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+    </cds-fluid-select>
+    """
+  end
+
+  @doc """
+  Component `<cds-fluid-select-skeleton>` from `./src/components/fluid-select/fluid-select-skeleton.ts`
+
+  Fluid text area input.
+
+
+  """
+
+  attr :hide_label, :boolean,
+    default: false,
+    doc: "`true` if the label should be hidden. Corresponds to the attribute with the same name."
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def fluid_select_skeleton(assigns) do
+    ~H"""
+    <cds-fluid-select-skeleton
+      hide-label={assigns[:hide_label]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-fluid-select-skeleton>
+    """
+  end
+
+  @doc """
+  Component `<cds-fluid-text-input>` from `./src/components/fluid-text-input/fluid-text-input.ts`
+
+  Fluid text input.
+
+  ## Events
+
+  * `invalid` - Undocumented
+
+  """
+
+  attr :autocomplete, :string,
+    default: nil,
+    doc: "May be any of the standard HTML autocomplete options"
+
+  attr :autofocus, :boolean,
+    default: false,
+    doc: "Sets the input to be focussed automatically on page load. Defaults to false"
+
+  attr :disabled, :boolean, default: false, doc: "Controls the disabled state of the input"
+
+  attr :enable_counter, :boolean,
+    default: false,
+    doc: "Specify whether to display the character counter"
+
+  attr :helper_text, :string, default: nil, doc: "The helper text."
+
+  attr :hide_label, :boolean,
+    default: false,
+    doc: "Specify whether you want the underlying label to be visually hidden"
+
+  attr :hide_password_label, :string,
+    default: "Hide password",
+    doc: "\"Hide password\" tooltip text on password visibility toggle"
+
+  attr :inline, :boolean, default: false, doc: "true to use the inline version."
+  attr :invalid, :boolean, default: false, doc: "Specify if the currently value is invalid."
+
+  attr :invalid_text, :string,
+    default: nil,
+    doc: "Message which is displayed if the value is invalid."
+
+  attr :is_fluid, :boolean, default: false
+
+  attr :label, :string,
+    default: nil,
+    doc: "Generic label that will be used as the textual representation of what this field is for"
+
+  attr :max_count, :any,
+    default: nil,
+    doc:
+      "Max character count allowed for input. This is needed in order for enableCounter to display"
+
+  attr :name, :string, default: nil, doc: "Name for the input in the `FormData`"
+
+  attr :pattern, :string,
+    default: nil,
+    doc: "Pattern to validate the input against for HTML validity checking"
+
+  attr :placeholder, :string,
+    default: nil,
+    doc: "Value to display when the input has an empty `value`"
+
+  attr :readonly, :boolean, default: false, doc: "Specify if the component should be read-only"
+  attr :required, :boolean, default: false, doc: "Boolean property to set the required status"
+
+  attr :required_validity_message, :string,
+    default: "Please fill out this field.",
+    doc: "The special validity message for `required`."
+
+  attr :show_password_visibility_toggle, :boolean,
+    default: false,
+    doc: "Boolean property to render password visibility toggle"
+
+  attr :show_password_label, :string,
+    default: "Show password",
+    doc: "\"Show password\" tooltip text on password visibility toggle"
+
+  attr :size, :any, default: nil, doc: "The input box size."
+
+  attr :tooltip_alignment, :string,
+    default: "center",
+    values: ["start", "center", "end"],
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end."
+
+  attr :tooltip_direction, :string,
+    default: "bottom",
+    values: ["top", "right", "bottom", "left"],
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left."
+
+  attr :type, :string,
+    default: "text",
+    values: ["email", "password", "tel", "text", "url"],
+    doc: "The type of the input. Can be one of the types listed in the INPUT_TYPE enum"
+
+  attr :validity_message, :string,
+    default: nil,
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
+
+  attr :value, :string, default: nil, doc: "The value of the input."
+
+  attr :warn, :boolean,
+    default: false,
+    doc: "Specify whether the control is currently in warning state"
+
+  attr :warn_text, :string,
+    default: nil,
+    doc: "Provide the text that is displayed when the control is in warning state"
+
+  attr :rest, :global
+
+  slot :"s-helper-text", doc: "The helper text.", do: attr(:tag, :string)
+  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
+
+  slot :"s-validity-message",
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
+    do: attr(:tag, :string)
+
+  slot :inner_block
+
+  def fluid_text_input(assigns) do
+    ~H"""
+    <cds-fluid-text-input
+      autocomplete={assigns[:autocomplete]}
+      autofocus={assigns[:autofocus]}
+      disabled={assigns[:disabled]}
+      enable-counter={assigns[:enable_counter]}
+      helper-text={assigns[:helper_text]}
+      hide-label={assigns[:hide_label]}
+      hidePasswordLabel={assigns[:hide_password_label]}
+      inline={assigns[:inline]}
+      invalid={assigns[:invalid]}
+      invalid-text={assigns[:invalid_text]}
+      isFluid={assigns[:is_fluid]}
+      label={assigns[:label]}
+      max-count={assigns[:max_count]}
+      name={assigns[:name]}
+      pattern={assigns[:pattern]}
+      placeholder={assigns[:placeholder]}
+      readonly={assigns[:readonly]}
+      required={assigns[:required]}
+      required-validity-message={assigns[:required_validity_message]}
+      show-password-visibility-toggle={assigns[:show_password_visibility_toggle]}
+      showPasswordLabel={assigns[:show_password_label]}
+      size={assigns[:size]}
+      tooltipAlignment={assigns[:tooltip_alignment]}
+      tooltipDirection={assigns[:tooltip_direction]}
+      type={assigns[:type]}
+      validity-message={assigns[:validity_message]}
+      value={assigns[:value]}
+      warn={assigns[:warn]}
+      warn-text={assigns[:warn_text]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:"s-helper-text"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="helper-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:"s-label-text"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:"s-validity-message"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+    </cds-fluid-text-input>
+    """
+  end
+
+  @doc """
+  Component `<cds-fluid-text-input-skeleton>` from `./src/components/fluid-text-input/fluid-text-input-skeleton.ts`
+
+  Fluid text area input.
+
+
+  """
+
+  attr :hide_label, :boolean,
+    default: false,
+    doc: "Specify whether the label should be hidden, or not"
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def fluid_text_input_skeleton(assigns) do
+    ~H"""
+    <cds-fluid-text-input-skeleton
+      hide-label={assigns[:hide_label]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-fluid-text-input-skeleton>
+    """
+  end
+
+  @doc """
+  Component `<cds-fluid-textarea>` from `./src/components/fluid-textarea/fluid-textarea.ts`
+
+  Fluid text area input.
+
+  ## Events
+
+  * `input` - Undocumented
+  * `invalid` - Undocumented
+
+  """
+
+  attr :autocomplete, :string,
+    default: nil,
+    doc: "May be any of the standard HTML autocomplete options"
+
+  attr :autofocus, :boolean,
+    default: false,
+    doc: "Sets the input to be focussed automatically on page load. Defaults to false"
+
+  attr :cols, :any, default: nil, doc: "The number of columns for the textarea to show by default"
+
+  attr :counter_mode, :any,
+    default: nil,
+    doc: "Specify the method used for calculating the counter number"
+
+  attr :disabled, :boolean, default: false, doc: "Controls the disabled state of the input"
+
+  attr :enable_counter, :boolean,
+    default: false,
+    doc: "Specify whether to display the character counter"
+
+  attr :helper_text, :string, default: nil, doc: "The helper text."
+
+  attr :hide_label, :boolean,
+    default: false,
+    doc: "Specify whether you want the underlying label to be visually hidden"
+
+  attr :hide_password_label, :string,
+    default: "Hide password",
+    doc: "\"Hide password\" tooltip text on password visibility toggle"
+
+  attr :id, :string, default: nil, doc: "ID to link the `label` and `textarea`"
+  attr :inline, :boolean, default: false, doc: "true to use the inline version."
+  attr :invalid, :boolean, default: false, doc: "Specify if the currently value is invalid."
+
+  attr :invalid_text, :string,
+    default: nil,
+    doc: "Message which is displayed if the value is invalid."
+
+  attr :is_fluid, :boolean, default: false, doc: "Specify whether the textarea is fluid or not"
+
+  attr :label, :string,
+    default: nil,
+    doc: "Generic label that will be used as the textual representation of what this field is for"
+
+  attr :max_count, :any,
+    default: nil,
+    doc:
+      "Max character count allowed for input. This is needed in order for enableCounter to display"
+
+  attr :name, :string, default: nil, doc: "Name for the input in the `FormData`"
+
+  attr :pattern, :string,
+    default: nil,
+    doc: "Pattern to validate the textarea against for HTML validity checking"
+
+  attr :placeholder, :string,
+    default: nil,
+    doc: "Value to display when the input has an empty `value`"
+
+  attr :readonly, :boolean, default: false, doc: "Specify if the component should be read-only"
+  attr :required, :boolean, default: false, doc: "Boolean property to set the required status"
+
+  attr :required_validity_message, :string,
+    default: "Please fill out this field.",
+    doc: "The special validity message for `required`."
+
+  attr :rows, :string, default: "4", doc: "The number of rows for the textarea to show by default"
+
+  attr :show_password_visibility_toggle, :boolean,
+    default: false,
+    doc: "Boolean property to render password visibility toggle"
+
+  attr :show_password_label, :string,
+    default: "Show password",
+    doc: "\"Show password\" tooltip text on password visibility toggle"
+
+  attr :size, :any, default: nil, doc: "The input box size."
+
+  attr :tooltip_alignment, :string,
+    default: "center",
+    values: ["start", "center", "end"],
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end."
+
+  attr :tooltip_direction, :string,
+    default: "bottom",
+    values: ["top", "right", "bottom", "left"],
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left."
+
+  attr :type, :string,
+    default: "text",
+    values: ["email", "password", "tel", "text", "url"],
+    doc: "The type of the input. Can be one of the types listed in the INPUT_TYPE enum"
+
+  attr :validity_message, :string,
+    default: nil,
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
+
+  attr :value, :string, default: nil, doc: "The value of the input."
+
+  attr :warn, :boolean,
+    default: false,
+    doc: "Specify whether the control is currently in warning state"
+
+  attr :warn_text, :string,
+    default: nil,
+    doc: "Provide the text that is displayed when the control is in warning state"
+
+  attr :rest, :global
+
+  slot :"s-helper-text", doc: "The helper text.", do: attr(:tag, :string)
+  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
+
+  slot :"s-validity-message",
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
+    do: attr(:tag, :string)
+
+  slot :inner_block
+
+  def fluid_textarea(assigns) do
+    ~H"""
+    <cds-fluid-textarea
+      autocomplete={assigns[:autocomplete]}
+      autofocus={assigns[:autofocus]}
+      cols={assigns[:cols]}
+      counter-mode={assigns[:counter_mode]}
+      disabled={assigns[:disabled]}
+      enable-counter={assigns[:enable_counter]}
+      helper-text={assigns[:helper_text]}
+      hide-label={assigns[:hide_label]}
+      hidePasswordLabel={assigns[:hide_password_label]}
+      id={assigns[:id]}
+      inline={assigns[:inline]}
+      invalid={assigns[:invalid]}
+      invalid-text={assigns[:invalid_text]}
+      isFluid={assigns[:is_fluid]}
+      label={assigns[:label]}
+      max-count={assigns[:max_count]}
+      name={assigns[:name]}
+      pattern={assigns[:pattern]}
+      placeholder={assigns[:placeholder]}
+      readonly={assigns[:readonly]}
+      required={assigns[:required]}
+      required-validity-message={assigns[:required_validity_message]}
+      rows={assigns[:rows]}
+      show-password-visibility-toggle={assigns[:show_password_visibility_toggle]}
+      showPasswordLabel={assigns[:show_password_label]}
+      size={assigns[:size]}
+      tooltipAlignment={assigns[:tooltip_alignment]}
+      tooltipDirection={assigns[:tooltip_direction]}
+      type={assigns[:type]}
+      validity-message={assigns[:validity_message]}
+      value={assigns[:value]}
+      warn={assigns[:warn]}
+      warn-text={assigns[:warn_text]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:"s-helper-text"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="helper-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:"s-label-text"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:"s-validity-message"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+    </cds-fluid-textarea>
+    """
+  end
+
+  @doc """
+  Component `<cds-fluid-textarea-skeleton>` from `./src/components/fluid-textarea/fluid-textarea-skeleton.ts`
+
+  Fluid text area input.
+
+
+  """
+
+  attr :hide_label, :boolean,
+    default: false,
+    doc: "Specify whether the label should be hidden, or not"
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def fluid_textarea_skeleton(assigns) do
+    ~H"""
+    <cds-fluid-textarea-skeleton
+      hide-label={assigns[:hide_label]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-fluid-textarea-skeleton>
+    """
+  end
+
+  @doc """
+  Component `<cds-form>` from `./src/components/form/form.ts`
+
+  Presentational element for form
+
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def form(assigns) do
+    ~H"""
+    <cds-form {@rest}>
+      {render_slot(@inner_block)}
+    </cds-form>
     """
   end
 
@@ -2220,8 +4056,6 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-label-title.", do: attr(:tag, :string)
-  slot :"s-lebel-description.", do: attr(:tag, :string)
   slot :inner_block
 
   def form_group(assigns) do
@@ -2234,21 +4068,7 @@ defmodule Graphene.CoreComponents do
       message-text={assigns[:message_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
-      <.dynamic_tag
-        :for={s <- assigns[:"s-label-title."]}
-        name={Map.get(s, :tag, "div")}
-        slot="label-title."
-      >
-        <%= render_slot(s) %>
-      </.dynamic_tag>
-      <.dynamic_tag
-        :for={s <- assigns[:"s-lebel-description."]}
-        name={Map.get(s, :tag, "div")}
-        slot="lebel-description."
-      >
-        <%= render_slot(s) %>
-      </.dynamic_tag>
+      {render_slot(@inner_block)}
     </cds-form-group>
     """
   end
@@ -2268,8 +4088,50 @@ defmodule Graphene.CoreComponents do
   def form_item(assigns) do
     ~H"""
     <cds-form-item {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-form-item>
+    """
+  end
+
+  @doc """
+  Component `<cds-grid>` from `./src/components/grid/grid.ts`
+
+  The grid component.
+
+
+  """
+
+  attr :align, :any, default: nil, doc: "Specify grid alignment. Default is center"
+
+  attr :condensed, :boolean,
+    default: false,
+    doc:
+      "Collapse the gutter to 1px. Useful for fluid layouts.\nRows have 1px of margin between them to match gutter."
+
+  attr :full_width, :boolean,
+    default: false,
+    doc: "Remove the default max width that the grid has set"
+
+  attr :narrow, :boolean,
+    default: false,
+    doc:
+      "Container hangs 16px into the gutter. Useful for\ntypographic alignment with and without containers."
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def grid(assigns) do
+    ~H"""
+    <cds-grid
+      align={assigns[:align]}
+      condensed={assigns[:condensed]}
+      full-width={assigns[:full_width]}
+      narrow={assigns[:narrow]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-grid>
     """
   end
 
@@ -2288,7 +4150,7 @@ defmodule Graphene.CoreComponents do
   def header(assigns) do
     ~H"""
     <cds-header {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-header>
     """
   end
@@ -2323,7 +4185,7 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "The `aria-label` attribute for the button in its inactive state."
 
-  attr :danger_descriptor, :any,
+  attr :danger_description, :any,
     default: nil,
     doc: "Specify the message read by screen readers for the danger button variant"
 
@@ -2372,6 +4234,7 @@ defmodule Graphene.CoreComponents do
   attr :ping, :string, default: nil, doc: "URLs to ping, if this button is rendered as `<a>`."
   attr :rel, :string, default: nil, doc: "The link type, if this button is rendered as `<a>`."
   attr :size, :string, default: "lg", doc: "Button size."
+  attr :tab_index, :string, default: "0", doc: "Specify the tabIndex of the button."
 
   attr :target, :string,
     default: nil,
@@ -2392,7 +4255,7 @@ defmodule Graphene.CoreComponents do
   attr :tooltip_text, :string,
     default: nil,
     doc:
-      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left."
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
 
   attr :type, :string,
     default: "button",
@@ -2412,7 +4275,7 @@ defmodule Graphene.CoreComponents do
       button-class-name={assigns[:button_class_name]}
       button-label-active={assigns[:button_label_active]}
       button-label-inactive={assigns[:button_label_inactive]}
-      danger-descriptor={assigns[:danger_descriptor]}
+      danger-description={assigns[:danger_description]}
       disabled={assigns[:disabled]}
       download={assigns[:download]}
       has-main-content={assigns[:has_main_content]}
@@ -2427,6 +4290,7 @@ defmodule Graphene.CoreComponents do
       ping={assigns[:ping]}
       rel={assigns[:rel]}
       size={assigns[:size]}
+      tab-index={assigns[:tab_index]}
       target={assigns[:target]}
       tooltip-alignment={assigns[:tooltip_alignment]}
       tooltip-position={assigns[:tooltip_position]}
@@ -2434,7 +4298,7 @@ defmodule Graphene.CoreComponents do
       type={assigns[:type]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-header-global-action>
     """
   end
@@ -2469,7 +4333,7 @@ defmodule Graphene.CoreComponents do
       trigger-content={assigns[:trigger_content]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-header-menu>
     """
   end
@@ -2523,7 +4387,7 @@ defmodule Graphene.CoreComponents do
       is-not-child-of-header={assigns[:is_not_child_of_header]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-header-menu-button>
     """
   end
@@ -2566,7 +4430,7 @@ defmodule Graphene.CoreComponents do
       title={assigns[:title]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-header-menu-item>
     """
   end
@@ -2587,8 +4451,12 @@ defmodule Graphene.CoreComponents do
 
   def header_name(assigns) do
     ~H"""
-    <cds-header-name href={assigns[:href]} prefix={assigns[:prefix]} {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-header-name
+      href={assigns[:href]}
+      prefix={assigns[:prefix]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-header-name>
     """
   end
@@ -2611,8 +4479,11 @@ defmodule Graphene.CoreComponents do
 
   def header_nav(assigns) do
     ~H"""
-    <cds-header-nav menu-bar-label={assigns[:menu_bar_label]} {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-header-nav
+      menu-bar-label={assigns[:menu_bar_label]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-header-nav>
     """
   end
@@ -2655,7 +4526,7 @@ defmodule Graphene.CoreComponents do
       title={assigns[:title]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-header-nav-item>
     """
   end
@@ -2675,8 +4546,11 @@ defmodule Graphene.CoreComponents do
 
   def header_panel(assigns) do
     ~H"""
-    <cds-header-panel expanded={assigns[:expanded]} {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-header-panel
+      expanded={assigns[:expanded]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-header-panel>
     """
   end
@@ -2700,9 +4574,252 @@ defmodule Graphene.CoreComponents do
 
   def header_side_nav_items(assigns) do
     ~H"""
-    <cds-header-side-nav-items has-divider={assigns[:has_divider]} {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-header-side-nav-items
+      has-divider={assigns[:has_divider]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-header-side-nav-items>
+    """
+  end
+
+  @doc """
+  Component `<cds-heading>` from `./src/components/heading/heading.ts`
+
+  The heading component
+
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def heading(assigns) do
+    ~H"""
+    <cds-heading {@rest}>
+      {render_slot(@inner_block)}
+    </cds-heading>
+    """
+  end
+
+  @doc """
+  Component `<cds-icon>` from `./src/components/icon/icon.ts`
+
+  Icon component that renders imported icons or custom SVG content.
+
+
+  """
+
+  attr :class, :string, default: nil, doc: "Custom CSS classes"
+  attr :icon, :any, default: nil, doc: "The imported icon"
+  attr :size, :string, default: "16", doc: "The size of the icon (16, 20, 24, 32)"
+  attr :rest, :global
+
+  slot :"s-", doc: "The icon content (for custom SVG)", do: attr(:tag, :string)
+  slot :inner_block
+
+  def icon(assigns) do
+    ~H"""
+    <cds-icon
+      class={assigns[:class]}
+      icon={assigns[:icon]}
+      size={assigns[:size]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag :for={s <- assigns[:"s-"]} tag_name={Map.get(s, :tag, "div")} slot="">
+        {render_slot(s)}
+      </.dynamic_tag>
+    </cds-icon>
+    """
+  end
+
+  @doc """
+  Component `<cds-icon-button>` from `./src/components/icon-button/icon-button.ts`
+
+  Icon Button
+
+
+  """
+
+  attr :align, :string,
+    default: "top",
+    doc: "Checks if a badge indicator is being used with incorrect properties"
+
+  attr :autoalign, :boolean,
+    default: false,
+    doc: "Specify whether a auto align functionality should be applied"
+
+  attr :autofocus, :boolean,
+    default: false,
+    doc: "`true` if the button should have input focus when the page loads."
+
+  attr :batch_action, :boolean,
+    default: false,
+    doc: "`true` if the button is being used within a data table batch action toolbar"
+
+  attr :button_class_name, :any,
+    default: nil,
+    doc: "Specify an optional className to be added to your Button"
+
+  attr :close_on_activation, :boolean,
+    default: true,
+    doc:
+      "Determines whether the tooltip should close when inner content is activated (click, Enter or Space)"
+
+  attr :danger_description, :any,
+    default: nil,
+    doc: "Specify the message read by screen readers for the danger button variant"
+
+  attr :default_open, :boolean,
+    default: false,
+    doc: "Specify whether the tooltip should be open when it first renders"
+
+  attr :disabled, :boolean, default: false, doc: "`true` if the button should be disabled."
+
+  attr :download, :string,
+    default: nil,
+    doc: "The default file name, used if this button is rendered as `<a>`."
+
+  attr :enter_delay_ms, :string,
+    default: "100",
+    doc: "Specify the duration in milliseconds to delay before displaying the tooltip"
+
+  attr :has_main_content, :boolean, default: false, doc: "`true` if there is a non-icon content."
+
+  attr :href, :string,
+    default: nil,
+    doc: "Link `href`. If present, this button is rendered as `<a>`."
+
+  attr :hreflang, :string,
+    default: nil,
+    doc: "The language of what `href` points to, if this button is rendered as `<a>`."
+
+  attr :is_expressive, :boolean, default: false, doc: "`true` if expressive theme enabled."
+
+  attr :is_selected, :boolean,
+    default: false,
+    doc: "Specify whether the Button is currently selected.\nOnly applies to the Ghost variant."
+
+  attr :kind, :string,
+    default: "primary",
+    values: [
+      "primary",
+      "secondary",
+      "tertiary",
+      "danger",
+      "danger--tertiary",
+      "danger--ghost",
+      "ghost"
+    ],
+    doc: "Button kind."
+
+  attr :leave_delay_ms, :string,
+    default: "300",
+    doc: "Specify the duration in milliseconds to delay before hiding the tooltip"
+
+  attr :link_role, :string, default: "button", doc: "The a11y role for `<a>`."
+  attr :open_tooltip, :boolean, default: false, doc: "Boolean to determine if tooltip is open."
+  attr :ping, :string, default: nil, doc: "URLs to ping, if this button is rendered as `<a>`."
+  attr :rel, :string, default: nil, doc: "The link type, if this button is rendered as `<a>`."
+  attr :size, :string, default: "md", doc: "Specify the size of the Button. Defaults to `md`."
+  attr :tab_index, :string, default: "0", doc: "Specify the tabIndex of the button."
+
+  attr :target, :string,
+    default: nil,
+    doc: "The link target, if this button is rendered as `<a>`."
+
+  attr :tooltip_alignment, :string,
+    default: "",
+    values: ["left", "right", ""],
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end."
+
+  attr :tooltip_position, :string,
+    default: "top",
+    values: ["top", "bottom", "right", "left"],
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left."
+
+  attr :tooltip_text, :string,
+    default: nil,
+    doc:
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
+
+  attr :type, :string,
+    default: "button",
+    values: ["button", "reset", "submit"],
+    doc: "Button type."
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def icon_button(assigns) do
+    ~H"""
+    <cds-icon-button
+      align={assigns[:align]}
+      autoalign={assigns[:autoalign]}
+      autofocus={assigns[:autofocus]}
+      batch-action={assigns[:batch_action]}
+      button-class-name={assigns[:button_class_name]}
+      close-on-activation={assigns[:close_on_activation]}
+      danger-description={assigns[:danger_description]}
+      defaultOpen={assigns[:default_open]}
+      disabled={assigns[:disabled]}
+      download={assigns[:download]}
+      enter-delay-ms={assigns[:enter_delay_ms]}
+      has-main-content={assigns[:has_main_content]}
+      href={assigns[:href]}
+      hreflang={assigns[:hreflang]}
+      isExpressive={assigns[:is_expressive]}
+      isSelected={assigns[:is_selected]}
+      kind={assigns[:kind]}
+      leave-delay-ms={assigns[:leave_delay_ms]}
+      link-role={assigns[:link_role]}
+      openTooltip={assigns[:open_tooltip]}
+      ping={assigns[:ping]}
+      rel={assigns[:rel]}
+      size={assigns[:size]}
+      tab-index={assigns[:tab_index]}
+      target={assigns[:target]}
+      tooltip-alignment={assigns[:tooltip_alignment]}
+      tooltip-position={assigns[:tooltip_position]}
+      tooltip-text={assigns[:tooltip_text]}
+      type={assigns[:type]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-icon-button>
+    """
+  end
+
+  @doc """
+  Component `<cds-icon-indicator>` from `./src/components/icon-indicator/icon-indicator.ts`
+
+  Icon Indicator.
+
+
+  """
+
+  attr :kind, :any, default: nil, doc: "Icon Indicator kind"
+  attr :label, :string, default: nil, doc: "Label next to the icon."
+  attr :size, :string, default: "16", doc: "Icon indicator should be size 16 or 20"
+  attr :rest, :global
+
+  slot :inner_block
+
+  def icon_indicator(assigns) do
+    ~H"""
+    <cds-icon-indicator
+      kind={assigns[:kind]}
+      label={assigns[:label]}
+      size={assigns[:size]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-icon-indicator>
     """
   end
 
@@ -2711,10 +4828,15 @@ defmodule Graphene.CoreComponents do
 
   Lnline loading spinner.
 
+  ## Events
+
+  * `cds-inline-loading-onsuccess` - The custom event fired when inline-loading has finished status
 
   """
 
-  attr :assistive_text, :string,
+  attr :assistive_text, :string, default: nil
+
+  attr :icon_description, :string,
     default: "Loading",
     doc: "The assistive text for the spinner icon."
 
@@ -2723,14 +4845,24 @@ defmodule Graphene.CoreComponents do
     values: ["inactive", "active", "finished", "error"],
     doc: "The loading status."
 
+  attr :success_delay, :string,
+    default: "1500",
+    doc: "Provide a delay for the setTimeout for success"
+
   attr :rest, :global
 
   slot :inner_block
 
   def inline_loading(assigns) do
     ~H"""
-    <cds-inline-loading assistive-text={assigns[:assistive_text]} status={assigns[:status]} {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-inline-loading
+      assistive-text={assigns[:assistive_text]}
+      icon-description={assigns[:icon_description]}
+      status={assigns[:status]}
+      success-delay={assigns[:success_delay]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-inline-loading>
     """
   end
@@ -2788,12 +4920,16 @@ defmodule Graphene.CoreComponents do
       title={assigns[:title]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
-      <.dynamic_tag :for={s <- assigns[:"s-subtitle"]} name={Map.get(s, :tag, "div")} slot="subtitle">
-        <%= render_slot(s) %>
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:"s-subtitle"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="subtitle"
+      >
+        {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-title"]} name={Map.get(s, :tag, "div")} slot="title">
-        <%= render_slot(s) %>
+      <.dynamic_tag :for={s <- assigns[:"s-title"]} tag_name={Map.get(s, :tag, "div")} slot="title">
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-inline-notification>
     """
@@ -2806,7 +4942,7 @@ defmodule Graphene.CoreComponents do
 
   ## Events
 
-  * `cds-use-layer` - The name of the custom event fired when the "use layer" action occurs.
+  * `cds-use-layer` - The custom event that returns the layer level and the layer element.
 
   """
 
@@ -2816,6 +4952,7 @@ defmodule Graphene.CoreComponents do
     default: "0",
     doc: "Specify the layer level and override any existing levels based on hierarchy"
 
+  attr :with_background, :any, default: nil
   attr :rest, :global
 
   slot :"s-children", doc: "The elements contained within the component.", do: attr(:tag, :string)
@@ -2823,10 +4960,19 @@ defmodule Graphene.CoreComponents do
 
   def layer(assigns) do
     ~H"""
-    <cds-layer layers={assigns[:layers]} level={assigns[:level]} {@rest}>
-      <%= render_slot(@inner_block) %>
-      <.dynamic_tag :for={s <- assigns[:"s-children"]} name={Map.get(s, :tag, "div")} slot="children">
-        <%= render_slot(s) %>
+    <cds-layer
+      layers={assigns[:layers]}
+      level={assigns[:level]}
+      with-background={assigns[:with_background]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:"s-children"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="children"
+      >
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-layer>
     """
@@ -2873,7 +5019,7 @@ defmodule Graphene.CoreComponents do
       visited={assigns[:visited]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-link>
     """
   end
@@ -2898,10 +5044,13 @@ defmodule Graphene.CoreComponents do
 
   def list_item(assigns) do
     ~H"""
-    <cds-list-item nested={assigns[:nested]} {@rest}>
-      <%= render_slot(@inner_block) %>
-      <.dynamic_tag :for={s <- assigns[:"s-nested"]} name={Map.get(s, :tag, "div")} slot="nested">
-        <%= render_slot(s) %>
+    <cds-list-item
+      nested={assigns[:nested]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag :for={s <- assigns[:"s-nested"]} tag_name={Map.get(s, :tag, "div")} slot="nested">
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-list-item>
     """
@@ -2915,13 +5064,24 @@ defmodule Graphene.CoreComponents do
 
   """
 
-  attr :assistive_text, :string,
-    default: "Loading",
-    doc: "The assistive text for the spinner icon."
+  attr :active, :boolean,
+    default: false,
+    doc: "Specify whether you want the loading indicator to be spinning or not"
 
-  attr :inactive, :boolean, default: false, doc: "`true` if spinner should stop."
+  attr :assistive_text, :string, default: nil
+
+  attr :description, :string,
+    default: "Loading",
+    doc: "Specify a description that would be used to best describe the loading state"
+
+  attr :inactive, :boolean, default: nil
   attr :overlay, :boolean, default: false, doc: "`true` if overlay should be applied."
-  attr :type, :string, default: "regular", values: ["regular", "small"], doc: "Spinner type."
+
+  attr :small, :boolean,
+    default: false,
+    doc: "Specify whether you would like the small variant of <Loading>"
+
+  attr :type, :string, default: nil, values: [nil, "regular", "small"]
   attr :rest, :global
 
   slot :inner_block
@@ -2929,14 +5089,230 @@ defmodule Graphene.CoreComponents do
   def loading(assigns) do
     ~H"""
     <cds-loading
+      active={assigns[:active]}
       assistive-text={assigns[:assistive_text]}
+      description={assigns[:description]}
       inactive={assigns[:inactive]}
       overlay={assigns[:overlay]}
+      small={assigns[:small]}
       type={assigns[:type]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-loading>
+    """
+  end
+
+  @doc """
+  Component `<cds-menu-button>` from `./src/components/menu-button/menu-button.ts`
+
+  Menu button.
+
+
+  """
+
+  attr :disabled, :any,
+    default: nil,
+    doc: "Specify whether the MenuButton should be disabled, or not."
+
+  attr :kind, :any,
+    default: nil,
+    doc: "Specify the type of button to be used as the base for the trigger button."
+
+  attr :label, :any, default: nil, doc: "Provide the label to be rendered on the trigger button."
+
+  attr :menu_alignment, :string,
+    default: "bottom",
+    values: [
+      "top",
+      "top-start",
+      "top-end",
+      "bottom",
+      "bottom-start",
+      "bottom-end",
+      "left",
+      "left-start",
+      "left-end",
+      "right",
+      "right-start",
+      "right-end"
+    ],
+    doc: "Experimental property. Specify how the menu should align with the button element"
+
+  attr :menu_background_token, :any,
+    default: nil,
+    doc: "Specify the background token to use for the menu. Default is 'layer'."
+
+  attr :menu_border, :boolean,
+    default: false,
+    doc: "Specify whether the menu should have a border."
+
+  attr :size, :any, default: nil, doc: "Specify the size of the button and menu."
+  attr :tab_index, :string, default: "0", doc: "Specify the tabIndex of the button."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def menu_button(assigns) do
+    ~H"""
+    <cds-menu-button
+      disabled={assigns[:disabled]}
+      kind={assigns[:kind]}
+      label={assigns[:label]}
+      menu-alignment={assigns[:menu_alignment]}
+      menu-background-token={assigns[:menu_background_token]}
+      menu-border={assigns[:menu_border]}
+      size={assigns[:size]}
+      tab-index={assigns[:tab_index]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-menu-button>
+    """
+  end
+
+  @doc """
+  Component `<cds-menu-item>` from `./src/components/menu/menu-item.ts`
+
+  Menu Item.
+
+  ## Events
+
+  * `icon-detect` - Undocumented
+
+  """
+
+  attr :boundaries, :any, default: nil, doc: "Menu boundaries."
+  attr :disabled, :any, default: nil, doc: "Disabled property for the menu item."
+  attr :kind, :any, default: nil
+  attr :label, :any, default: nil, doc: "Label for the menu item."
+  attr :shortcut, :any, default: nil, doc: "Shortcut for the menu item."
+
+  attr :submenu_open, :boolean,
+    default: false,
+    doc: "Whether the menu submen for an item is open or not."
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def menu_item(assigns) do
+    ~H"""
+    <cds-menu-item
+      boundaries={assigns[:boundaries]}
+      disabled={assigns[:disabled]}
+      kind={assigns[:kind]}
+      label={assigns[:label]}
+      shortcut={assigns[:shortcut]}
+      submenuOpen={assigns[:submenu_open]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-menu-item>
+    """
+  end
+
+  @doc """
+  Component `<cds-menu-item-divider>` from `./src/components/menu/menu-item-divider.ts`
+
+  Menu Item.
+
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def menu_item_divider(assigns) do
+    ~H"""
+    <cds-menu-item-divider {@rest}>
+      {render_slot(@inner_block)}
+    </cds-menu-item-divider>
+    """
+  end
+
+  @doc """
+  Component `<cds-menu-item-group>` from `./src/components/menu/menu-item-group.ts`
+
+  Menu Item.
+
+
+  """
+
+  attr :label, :any, default: nil, doc: "Label for the menu item."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def menu_item_group(assigns) do
+    ~H"""
+    <cds-menu-item-group
+      label={assigns[:label]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-menu-item-group>
+    """
+  end
+
+  @doc """
+  Component `<cds-menu-item-radio-group>` from `./src/components/menu/menu-item-radio-group.ts`
+
+  Menu Item.
+
+
+  """
+
+  attr :item_to_string, :any, default: nil, doc: "List of items in the radio group."
+  attr :items, :any, default: nil, doc: "List of items in the radio group."
+  attr :label, :any, default: nil, doc: "Label for the menu item radio group."
+  attr :selected_item, :any, default: nil, doc: "Selected item in the radio group."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def menu_item_radio_group(assigns) do
+    ~H"""
+    <cds-menu-item-radio-group
+      itemToString={assigns[:item_to_string]}
+      items={assigns[:items]}
+      label={assigns[:label]}
+      selectedItem={assigns[:selected_item]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-menu-item-radio-group>
+    """
+  end
+
+  @doc """
+  Component `<cds-menu-item-selectable>` from `./src/components/menu/menu-item-selectable.ts`
+
+  Menu Item.
+
+
+  """
+
+  attr :label, :any, default: nil, doc: "Label for the menu item selectable."
+  attr :render_icon, :any, default: nil, doc: "Sets the menu item's icon."
+  attr :selected, :boolean, default: false, doc: "Whether the menu item is selected or not."
+  attr :shortcut, :any, default: nil
+  attr :rest, :global
+
+  slot :inner_block
+
+  def menu_item_selectable(assigns) do
+    ~H"""
+    <cds-menu-item-selectable
+      label={assigns[:label]}
+      renderIcon={assigns[:render_icon]}
+      selected={assigns[:selected]}
+      shortcut={assigns[:shortcut]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-menu-item-selectable>
     """
   end
 
@@ -2970,6 +5346,20 @@ defmodule Graphene.CoreComponents do
     default: false,
     doc: "Specify whether the modal contains scrolling content"
 
+  attr :loading_description, :string,
+    default: nil,
+    doc: "Specify the description for the loading text"
+
+  attr :loading_icon_description, :string,
+    default: "Loading",
+    doc: "Specify the description for the loading icon"
+
+  attr :loading_status, :any, default: nil, doc: "Specify the loading status"
+
+  attr :loading_success_delay, :string,
+    default: "1500",
+    doc: "Provide a delay for the setTimeout for success"
+
   attr :open, :boolean, default: false, doc: "`true` if the modal should be open."
 
   attr :prevent_close, :boolean,
@@ -2979,6 +5369,11 @@ defmodule Graphene.CoreComponents do
   attr :prevent_close_on_click_outside, :boolean,
     default: false,
     doc: "Prevent closing on click outside of modal"
+
+  attr :should_submit_on_enter, :boolean,
+    default: false,
+    doc:
+      "Specify if Enter key should be used as \"submit\" action that clicks the primary footer button"
 
   attr :size, :string, default: "md", values: ["xs", "sm", "md", "lg"], doc: "Modal size."
   attr :rest, :global
@@ -2992,13 +5387,18 @@ defmodule Graphene.CoreComponents do
       container-class={assigns[:container_class]}
       full-width={assigns[:full_width]}
       has-scrolling-content={assigns[:has_scrolling_content]}
+      loading-description={assigns[:loading_description]}
+      loading-icon-description={assigns[:loading_icon_description]}
+      loading-status={assigns[:loading_status]}
+      loading-success-delay={assigns[:loading_success_delay]}
       open={assigns[:open]}
       prevent-close={assigns[:prevent_close]}
       prevent-close-on-click-outside={assigns[:prevent_close_on_click_outside]}
+      should-submit-on-enter={assigns[:should_submit_on_enter]}
       size={assigns[:size]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-modal>
     """
   end
@@ -3018,7 +5418,7 @@ defmodule Graphene.CoreComponents do
   def modal_body(assigns) do
     ~H"""
     <cds-modal-body {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-modal-body>
     """
   end
@@ -3038,7 +5438,7 @@ defmodule Graphene.CoreComponents do
   def modal_body_content(assigns) do
     ~H"""
     <cds-modal-body-content {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-modal-body-content>
     """
   end
@@ -3061,8 +5461,11 @@ defmodule Graphene.CoreComponents do
 
   def modal_close_button(assigns) do
     ~H"""
-    <cds-modal-close-button close-button-label={assigns[:close_button_label]} {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-modal-close-button
+      close-button-label={assigns[:close_button_label]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-modal-close-button>
     """
   end
@@ -3085,8 +5488,11 @@ defmodule Graphene.CoreComponents do
 
   def modal_footer(assigns) do
     ~H"""
-    <cds-modal-footer has-three-buttons={assigns[:has_three_buttons]} {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-modal-footer
+      has-three-buttons={assigns[:has_three_buttons]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-modal-footer>
     """
   end
@@ -3111,7 +5517,7 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "Specify an optional className to be added to your Button"
 
-  attr :danger_descriptor, :any,
+  attr :danger_description, :any,
     default: nil,
     doc: "Specify the message read by screen readers for the danger button variant"
 
@@ -3155,6 +5561,7 @@ defmodule Graphene.CoreComponents do
   attr :ping, :string, default: nil, doc: "URLs to ping, if this button is rendered as `<a>`."
   attr :rel, :string, default: nil, doc: "The link type, if this button is rendered as `<a>`."
   attr :size, :string, default: "lg", doc: "Button size."
+  attr :tab_index, :string, default: "0", doc: "Specify the tabIndex of the button."
 
   attr :target, :string,
     default: nil,
@@ -3175,7 +5582,7 @@ defmodule Graphene.CoreComponents do
   attr :tooltip_text, :string,
     default: nil,
     doc:
-      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left."
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
 
   attr :type, :string,
     default: "button",
@@ -3192,7 +5599,7 @@ defmodule Graphene.CoreComponents do
       autofocus={assigns[:autofocus]}
       batch-action={assigns[:batch_action]}
       button-class-name={assigns[:button_class_name]}
-      danger-descriptor={assigns[:danger_descriptor]}
+      danger-description={assigns[:danger_description]}
       disabled={assigns[:disabled]}
       download={assigns[:download]}
       has-main-content={assigns[:has_main_content]}
@@ -3206,6 +5613,7 @@ defmodule Graphene.CoreComponents do
       ping={assigns[:ping]}
       rel={assigns[:rel]}
       size={assigns[:size]}
+      tab-index={assigns[:tab_index]}
       target={assigns[:target]}
       tooltip-alignment={assigns[:tooltip_alignment]}
       tooltip-position={assigns[:tooltip_position]}
@@ -3213,7 +5621,7 @@ defmodule Graphene.CoreComponents do
       type={assigns[:type]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-modal-footer-button>
     """
   end
@@ -3233,7 +5641,7 @@ defmodule Graphene.CoreComponents do
   def modal_header(assigns) do
     ~H"""
     <cds-modal-header {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-modal-header>
     """
   end
@@ -3253,7 +5661,7 @@ defmodule Graphene.CoreComponents do
   def modal_heading(assigns) do
     ~H"""
     <cds-modal-heading {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-modal-heading>
     """
   end
@@ -3273,7 +5681,7 @@ defmodule Graphene.CoreComponents do
   def modal_label(assigns) do
     ~H"""
     <cds-modal-label {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-modal-label>
     """
   end
@@ -3291,6 +5699,7 @@ defmodule Graphene.CoreComponents do
   * `cds-multi-select-beingtoggled` - The custom event fired before the open state of this multi select is toggled upon a user gesture.
   Cancellation of this event stops the user-initiated toggling.
   * `cds-multi-select-toggled` - The custom event fired after the open state of this multi select is toggled upon a user gesture.
+  * `input` - Undocumented
   * `cds-dropdown-beingselected` - The custom event fired before a dropdown item is selected upon a user gesture.
   Cancellation of this event stops changing the user-initiated selection.
   * `cds-dropdown-beingtoggled` - The custom event fired before the open state of this dropdown is toggled upon a user gesture.
@@ -3300,6 +5709,10 @@ defmodule Graphene.CoreComponents do
   * `invalid` - Undocumented
 
   """
+
+  attr :autoalign, :boolean,
+    default: false,
+    doc: "Specify whether auto align functionality should be applied"
 
   attr :clear_selection_description, :string,
     default: "Total items selected: ",
@@ -3351,6 +5764,10 @@ defmodule Graphene.CoreComponents do
     default: "Please fill out this field.",
     doc: "The special validity message for `required`."
 
+  attr :select_all, :boolean,
+    default: false,
+    doc: "Enables rendering of a “Select all” multi-select-item"
+
   attr :selection_feedback, :string,
     default: "top-after-reopen",
     values: ["fixed", "top", "top-after-reopen"],
@@ -3394,6 +5811,7 @@ defmodule Graphene.CoreComponents do
   def multi_select(assigns) do
     ~H"""
     <cds-multi-select
+      autoalign={assigns[:autoalign]}
       clear-selection-description={assigns[:clear_selection_description]}
       clear-selection-label={assigns[:clear_selection_label]}
       clear-selection-text={assigns[:clear_selection_text]}
@@ -3411,6 +5829,7 @@ defmodule Graphene.CoreComponents do
       read-only={assigns[:read_only]}
       required={assigns[:required]}
       required-validity-message={assigns[:required_validity_message]}
+      select-all={assigns[:select_all]}
       selection-feedback={assigns[:selection_feedback]}
       size={assigns[:size]}
       title-text={assigns[:title_text]}
@@ -3423,7 +5842,7 @@ defmodule Graphene.CoreComponents do
       warn-text={assigns[:warn_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-multi-select>
     """
   end
@@ -3441,6 +5860,12 @@ defmodule Graphene.CoreComponents do
     doc: "`true` if this dropdown item should be disabled."
 
   attr :filtered, :any, default: nil, doc: "The property to hide when item is filtered from input"
+
+  attr :indeterminate, :boolean,
+    default: false,
+    doc: "When `true`, renders the checkbox in its indeterminate state."
+
+  attr :is_select_all, :boolean, default: false, doc: "Marks this item as the “select all” item."
 
   attr :selection_name, :string,
     default: nil,
@@ -3462,12 +5887,14 @@ defmodule Graphene.CoreComponents do
     <cds-multi-select-item
       disabled={assigns[:disabled]}
       filtered={assigns[:filtered]}
+      indeterminate={assigns[:indeterminate]}
+      is-select-all={assigns[:is_select_all]}
       selection-name={assigns[:selection_name]}
       size={assigns[:size]}
       value={assigns[:value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-multi-select-item>
     """
   end
@@ -3498,6 +5925,14 @@ defmodule Graphene.CoreComponents do
     default: "decrease number input",
     doc: "Aria text for the button that decrements the value"
 
+  attr :default_value, :string,
+    default: nil,
+    doc: "Optional starting value for uncontrolled state"
+
+  attr :disable_wheel, :boolean,
+    default: false,
+    doc: "Specify if the wheel functionality for the input should be disabled, or not"
+
   attr :disabled, :boolean, default: false, doc: "Controls the disabled state of the input"
 
   attr :enable_counter, :boolean,
@@ -3518,6 +5953,10 @@ defmodule Graphene.CoreComponents do
     default: "Hide password",
     doc: "\"Hide password\" tooltip text on password visibility toggle"
 
+  attr :icon_description, :string,
+    default: nil,
+    doc: "Provide a description for up/down icons that can be read by screen readers"
+
   attr :increment_button_assistive_text, :string,
     default: "increase number input",
     doc: "Aria text for the button that increments the value"
@@ -3528,6 +5967,8 @@ defmodule Graphene.CoreComponents do
   attr :invalid_text, :string,
     default: nil,
     doc: "Message which is displayed if the value is invalid."
+
+  attr :is_fluid, :boolean, default: false, doc: "Set to true to use the fluid variant."
 
   attr :label, :string,
     default: nil,
@@ -3620,16 +6061,20 @@ defmodule Graphene.CoreComponents do
       autocomplete={assigns[:autocomplete]}
       autofocus={assigns[:autofocus]}
       decrement-button-assistive-text={assigns[:decrement_button_assistive_text]}
+      default-value={assigns[:default_value]}
+      disable-wheel={assigns[:disable_wheel]}
       disabled={assigns[:disabled]}
       enable-counter={assigns[:enable_counter]}
       helper-text={assigns[:helper_text]}
       hide-label={assigns[:hide_label]}
       hide-steppers={assigns[:hide_steppers]}
       hidePasswordLabel={assigns[:hide_password_label]}
+      icon-description={assigns[:icon_description]}
       increment-button-assistive-text={assigns[:increment_button_assistive_text]}
       inline={assigns[:inline]}
       invalid={assigns[:invalid]}
       invalid-text={assigns[:invalid_text]}
+      isFluid={assigns[:is_fluid]}
       label={assigns[:label]}
       max={assigns[:max]}
       max-count={assigns[:max_count]}
@@ -3653,29 +6098,98 @@ defmodule Graphene.CoreComponents do
       warn-text={assigns[:warn_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
       <.dynamic_tag
         :for={s <- assigns[:"s-helper-text"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="helper-text"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
         :for={s <- assigns[:"s-label-text"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
         :for={s <- assigns[:"s-validity-message"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="validity-message"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-number-input>
+    """
+  end
+
+  @doc """
+  Component `<cds-operational-tag>` from `./src/components/tag/operational-tag.ts`
+
+  Operational tag.
+
+  ## Events
+
+  * `cds-operational-tag-beforeselected` - The custom event fired as the element is being selected
+  * `cds-operational-tag-selected` - The custom event fired after the element has been selected
+
+  """
+
+  attr :disabled, :boolean, default: false, doc: "`true` if the tag should be disabled"
+  attr :selected, :boolean, default: false, doc: "Specify the state of the selectable tag."
+  attr :size, :any, default: nil, doc: "The size of the tag."
+  attr :text, :string, default: nil, doc: "Provide text to be rendered inside of a the tag."
+  attr :type, :any, default: nil, doc: "The type of the tag."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def operational_tag(assigns) do
+    ~H"""
+    <cds-operational-tag
+      disabled={assigns[:disabled]}
+      selected={assigns[:selected]}
+      size={assigns[:size]}
+      text={assigns[:text]}
+      type={assigns[:type]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-operational-tag>
+    """
+  end
+
+  @doc """
+  Component `<cds-ordered-list>` from `./src/components/list/ordered-list.ts`
+
+  Ordered list.
+
+
+  """
+
+  attr :is_expressive, :boolean, default: false, doc: "`true` if expressive theme enabled."
+
+  attr :native, :boolean,
+    default: false,
+    doc:
+      "Specify whether the ordered list should use native list styles instead of\ncustom counter"
+
+  attr :nested, :boolean, default: false, doc: "Specify whether the list is nested, or not"
+  attr :rest, :global
+
+  slot :inner_block
+
+  def ordered_list(assigns) do
+    ~H"""
+    <cds-ordered-list
+      is-expressive={assigns[:is_expressive]}
+      native={assigns[:native]}
+      nested={assigns[:nested]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-ordered-list>
     """
   end
 
@@ -3689,7 +6203,7 @@ defmodule Graphene.CoreComponents do
 
   attr :align, :string,
     default: "top",
-    doc: "Specify how the trigger should align with the tooltip"
+    doc: "Checks if a badge indicator is being used with incorrect properties"
 
   attr :autoalign, :boolean,
     default: false,
@@ -3703,6 +6217,10 @@ defmodule Graphene.CoreComponents do
     default: false,
     doc: "`true` if the button is being used within a data table batch action toolbar"
 
+  attr :breadcrumb, :boolean,
+    default: false,
+    doc: "`true` if this overflow menu use inside breadcrumb."
+
   attr :button_class_name, :any,
     default: nil,
     doc: "Specify an optional className to be added to your Button"
@@ -3712,7 +6230,7 @@ defmodule Graphene.CoreComponents do
     doc:
       "Determines whether the tooltip should close when inner content is activated (click, Enter or Space)"
 
-  attr :danger_descriptor, :any,
+  attr :danger_description, :any,
     default: nil,
     doc: "Specify the message read by screen readers for the danger button variant"
 
@@ -3781,6 +6299,7 @@ defmodule Graphene.CoreComponents do
   attr :ping, :string, default: nil, doc: "URLs to ping, if this button is rendered as `<a>`."
   attr :rel, :string, default: nil, doc: "The link type, if this button is rendered as `<a>`."
   attr :size, :string, default: "md", values: ["sm", "md", "lg"], doc: "Overflow menu size."
+  attr :tab_index, :string, default: "0", doc: "Specify the tabIndex of the button."
 
   attr :target, :string,
     default: nil,
@@ -3803,7 +6322,7 @@ defmodule Graphene.CoreComponents do
   attr :tooltip_text, :string,
     default: nil,
     doc:
-      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left."
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
 
   attr :type, :string,
     default: "button",
@@ -3822,9 +6341,10 @@ defmodule Graphene.CoreComponents do
       autoalign={assigns[:autoalign]}
       autofocus={assigns[:autofocus]}
       batch-action={assigns[:batch_action]}
+      breadcrumb={assigns[:breadcrumb]}
       button-class-name={assigns[:button_class_name]}
       close-on-activation={assigns[:close_on_activation]}
-      danger-descriptor={assigns[:danger_descriptor]}
+      danger-description={assigns[:danger_description]}
       data-table={assigns[:data_table]}
       defaultOpen={assigns[:default_open]}
       disabled={assigns[:disabled]}
@@ -3845,6 +6365,7 @@ defmodule Graphene.CoreComponents do
       ping={assigns[:ping]}
       rel={assigns[:rel]}
       size={assigns[:size]}
+      tab-index={assigns[:tab_index]}
       target={assigns[:target]}
       toolbar-action={assigns[:toolbar_action]}
       tooltip-alignment={assigns[:tooltip_alignment]}
@@ -3853,9 +6374,9 @@ defmodule Graphene.CoreComponents do
       type={assigns[:type]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
-      <.dynamic_tag :for={s <- assigns[:"s-icon"]} name={Map.get(s, :tag, "div")} slot="icon">
-        <%= render_slot(s) %>
+      {render_slot(@inner_block)}
+      <.dynamic_tag :for={s <- assigns[:"s-icon"]} tag_name={Map.get(s, :tag, "div")} slot="icon">
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-overflow-menu>
     """
@@ -3888,7 +6409,7 @@ defmodule Graphene.CoreComponents do
       size={assigns[:size]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-overflow-menu-body>
     """
   end
@@ -3898,6 +6419,9 @@ defmodule Graphene.CoreComponents do
 
   Overflow menu item.
 
+  ## Events
+
+  * `cds-overflow-menu-item-clicked` - The custom event fired when an overflow menu item is clicked.
 
   """
 
@@ -3929,8 +6453,164 @@ defmodule Graphene.CoreComponents do
       size={assigns[:size]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-overflow-menu-item>
+    """
+  end
+
+  @doc """
+  Component `<cds-page-header>` from `./src/components/page-header/page-header.ts`
+
+  Page header.
+
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def page_header(assigns) do
+    ~H"""
+    <cds-page-header {@rest}>
+      {render_slot(@inner_block)}
+    </cds-page-header>
+    """
+  end
+
+  @doc """
+  Component `<cds-page-header-breadcrumb>` from `./src/components/page-header/page-header-breadcrumb.ts`
+
+  Page header Breadcrumb Bar.
+
+
+  """
+
+  attr :border, :boolean, default: true, doc: "Specify if breadcrumb bar has bottom border."
+
+  attr :content_actions_flush, :boolean,
+    default: false,
+    doc: "Set to `true` if content actions should be flush (no padding)"
+
+  attr :page_actions_flush, :boolean,
+    default: false,
+    doc: "Set to `true` if page actions should be flush (no padding)"
+
+  attr :within_grid, :boolean,
+    default: false,
+    doc:
+      "Set to `true` if the breadcrumb bar is sitting within a grid\n(ie. when used in tandem with page-header-hero-image)"
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def page_header_breadcrumb(assigns) do
+    ~H"""
+    <cds-page-header-breadcrumb
+      border={assigns[:border]}
+      content-actions-flush={assigns[:content_actions_flush]}
+      page-actions-flush={assigns[:page_actions_flush]}
+      within-grid={assigns[:within_grid]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-page-header-breadcrumb>
+    """
+  end
+
+  @doc """
+  Component `<cds-page-header-content>` from `./src/components/page-header/page-header-content.ts`
+
+  Page header content.
+
+
+  """
+
+  attr :title, :string, default: nil, doc: "Title text of the page-header-content"
+
+  attr :within_grid, :boolean,
+    default: false,
+    doc:
+      "Set to `true` if the breadcrumb bar is sitting within a grid\n(ie. when used in tandem with page-header-hero-image)"
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def page_header_content(assigns) do
+    ~H"""
+    <cds-page-header-content
+      title={assigns[:title]}
+      within-grid={assigns[:within_grid]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-page-header-content>
+    """
+  end
+
+  @doc """
+  Component `<cds-page-header-content-text>` from `./src/components/page-header/page-header-content-text.ts`
+
+  Page header Content Text.
+
+
+  """
+
+  attr :subtitle, :string, default: nil, doc: "Subtitle text of the page-header-content"
+  attr :rest, :global
+
+  slot :inner_block
+
+  def page_header_content_text(assigns) do
+    ~H"""
+    <cds-page-header-content-text
+      subtitle={assigns[:subtitle]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-page-header-content-text>
+    """
+  end
+
+  @doc """
+  Component `<cds-page-header-hero-image>` from `./src/components/page-header/page-header-hero-image.ts`
+
+  Page header Hero Image.
+
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def page_header_hero_image(assigns) do
+    ~H"""
+    <cds-page-header-hero-image {@rest}>
+      {render_slot(@inner_block)}
+    </cds-page-header-hero-image>
+    """
+  end
+
+  @doc """
+  Component `<cds-page-header-tabs>` from `./src/components/page-header/page-header-tabs.ts`
+
+  Page header Tabs Bar.
+
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def page_header_tabs(assigns) do
+    ~H"""
+    <cds-page-header-tabs {@rest}>
+      {render_slot(@inner_block)}
+    </cds-page-header-tabs>
     """
   end
 
@@ -3941,7 +6621,7 @@ defmodule Graphene.CoreComponents do
 
   ## Events
 
-  * `cds-pages-select-changed` - The custom event fired after the current page is changed from `<cds-pages-select>`.
+  * `cds-pagination-changed-current` - The custom event fired after the current page is changed from `<cds-pages-select>`.
   * `cds-page-sizes-select-changed` - The custom event fired after the number of rows per page is changed from `<cds-page-sizes-select>`.
 
   """
@@ -3966,8 +6646,8 @@ defmodule Graphene.CoreComponents do
 
   attr :page, :string, default: "1", doc: "The current page"
 
-  attr :page_input_disabled, :any,
-    default: nil,
+  attr :page_input_disabled, :boolean,
+    default: false,
     doc: "true if the select box to change the page should be disabled."
 
   attr :page_size, :string, default: "10", doc: "Number of items per page."
@@ -4023,15 +6703,226 @@ defmodule Graphene.CoreComponents do
       totalPages={assigns[:total_pages]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
       <.dynamic_tag
         :for={s <- assigns[:"s-page-sizes-select"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="page-sizes-select"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-pagination>
+    """
+  end
+
+  @doc """
+  Component `<cds-password-input>` from `./src/components/password-input/password-input.ts`
+
+  Password Input element. Supports all the usual attributes for textual input types
+
+  ## Events
+
+  * `invalid` - Undocumented
+
+  """
+
+  attr :autocomplete, :string,
+    default: nil,
+    doc: "May be any of the standard HTML autocomplete options"
+
+  attr :autofocus, :boolean,
+    default: false,
+    doc: "Sets the input to be focussed automatically on page load. Defaults to false"
+
+  attr :disabled, :boolean, default: false, doc: "Controls the disabled state of the input"
+
+  attr :enable_counter, :boolean,
+    default: false,
+    doc: "Specify whether to display the character counter"
+
+  attr :helper_text, :string, default: nil, doc: "The helper text."
+
+  attr :hide_label, :boolean,
+    default: false,
+    doc: "Specify whether you want the underlying label to be visually hidden"
+
+  attr :hide_password_label, :string,
+    default: "Hide password",
+    doc: "\"Hide password\" tooltip text on password visibility toggle"
+
+  attr :inline, :boolean, default: false, doc: "true to use the inline version."
+  attr :invalid, :boolean, default: false, doc: "Specify if the currently value is invalid."
+
+  attr :invalid_text, :string,
+    default: nil,
+    doc: "Message which is displayed if the value is invalid."
+
+  attr :is_fluid, :boolean, default: false
+
+  attr :label, :string,
+    default: nil,
+    doc: "Generic label that will be used as the textual representation of what this field is for"
+
+  attr :max_count, :any,
+    default: nil,
+    doc:
+      "Max character count allowed for input. This is needed in order for enableCounter to display"
+
+  attr :name, :string, default: nil, doc: "Name for the input in the `FormData`"
+
+  attr :pattern, :string,
+    default: nil,
+    doc: "Pattern to validate the input against for HTML validity checking"
+
+  attr :placeholder, :string,
+    default: nil,
+    doc: "Value to display when the input has an empty `value`"
+
+  attr :readonly, :boolean, default: false, doc: "Specify if the component should be read-only"
+  attr :required, :boolean, default: false, doc: "Boolean property to set the required status"
+
+  attr :required_validity_message, :string,
+    default: "Please fill out this field.",
+    doc: "The special validity message for `required`."
+
+  attr :show_password_label, :string,
+    default: "Show password",
+    doc: "\"Show password\" tooltip text on password visibility toggle"
+
+  attr :show_password_visibility_toggle, :boolean,
+    default: false,
+    doc: "Boolean property to render password visibility toggle"
+
+  attr :size, :any, default: nil, doc: "The input box size."
+
+  attr :tooltip_alignment, :string,
+    default: "center",
+    values: ["start", "center", "end"],
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end."
+
+  attr :tooltip_position, :string,
+    default: "bottom",
+    values: ["top", "right", "bottom", "left"],
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left."
+
+  attr :type, :string,
+    default: "password",
+    values: ["email", "password", "tel", "text", "url"],
+    doc: "The native `<input>` type. Defaults to “password”."
+
+  attr :validity_message, :string,
+    default: nil,
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
+
+  attr :value, :string, default: nil, doc: "The value of the input."
+
+  attr :warn, :boolean,
+    default: false,
+    doc: "Specify whether the control is currently in warning state"
+
+  attr :warn_text, :string,
+    default: nil,
+    doc: "Provide the text that is displayed when the control is in warning state"
+
+  attr :rest, :global
+
+  slot :"s-helper-text", doc: "The helper text.", do: attr(:tag, :string)
+  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
+
+  slot :"s-validity-message",
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
+    do: attr(:tag, :string)
+
+  slot :inner_block
+
+  def password_input(assigns) do
+    ~H"""
+    <cds-password-input
+      autocomplete={assigns[:autocomplete]}
+      autofocus={assigns[:autofocus]}
+      disabled={assigns[:disabled]}
+      enable-counter={assigns[:enable_counter]}
+      helper-text={assigns[:helper_text]}
+      hide-label={assigns[:hide_label]}
+      hide-password-label={assigns[:hide_password_label]}
+      inline={assigns[:inline]}
+      invalid={assigns[:invalid]}
+      invalid-text={assigns[:invalid_text]}
+      isFluid={assigns[:is_fluid]}
+      label={assigns[:label]}
+      max-count={assigns[:max_count]}
+      name={assigns[:name]}
+      pattern={assigns[:pattern]}
+      placeholder={assigns[:placeholder]}
+      readonly={assigns[:readonly]}
+      required={assigns[:required]}
+      required-validity-message={assigns[:required_validity_message]}
+      show-password-label={assigns[:show_password_label]}
+      show-password-visibility-toggle={assigns[:show_password_visibility_toggle]}
+      size={assigns[:size]}
+      tooltip-alignment={assigns[:tooltip_alignment]}
+      tooltip-position={assigns[:tooltip_position]}
+      type={assigns[:type]}
+      validity-message={assigns[:validity_message]}
+      value={assigns[:value]}
+      warn={assigns[:warn]}
+      warn-text={assigns[:warn_text]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:"s-helper-text"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="helper-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:"s-label-text"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:"s-validity-message"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+    </cds-password-input>
+    """
+  end
+
+  @doc """
+  Component `<cds-password-input-skeleton>` from `./src/components/password-input/password-input-skeleton.ts`
+
+  Undocumented
+
+
+  """
+
+  attr :hide_label, :boolean,
+    default: false,
+    doc: "Specify whether the label should be hidden, or not"
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def password_input_skeleton(assigns) do
+    ~H"""
+    <cds-password-input-skeleton
+      hide-label={assigns[:hide_label]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-password-input-skeleton>
     """
   end
 
@@ -4045,9 +6936,27 @@ defmodule Graphene.CoreComponents do
 
   attr :align, :string, default: nil, doc: "Specify direction of alignment"
 
+  attr :alignment_axis_offset, :string,
+    default: nil,
+    doc:
+      "**Experimental:** Provide an offset value for alignment axis. Only takes effect when `autoalign` is enabled."
+
   attr :autoalign, :boolean,
     default: false,
     doc: "Specify whether a auto align functionality should be applied"
+
+  attr :autoalign_boundary, :string,
+    default: nil,
+    doc:
+      "Specify a bounding element to be used for autoAlign calculations. The viewport is used by default.\nTakes one of the following: 'clippingAncestors', '#elementid', '#elementid_1, #elementid_2', 'rect(x, y, width, height)'\nThis prop is currently experimental and is subject to future changes."
+
+  attr :background_token, :any,
+    default: nil,
+    doc: "Specify the background token to use. Default is 'layer'."
+
+  attr :border, :boolean,
+    default: false,
+    doc: "Specify whether a border should be rendered on the popover"
 
   attr :caret, :boolean, default: true, doc: "Specify whether a caret should be rendered"
 
@@ -4072,7 +6981,11 @@ defmodule Graphene.CoreComponents do
     ~H"""
     <cds-popover
       align={assigns[:align]}
+      alignment-axis-offset={assigns[:alignment_axis_offset]}
       autoalign={assigns[:autoalign]}
+      autoalign-boundary={assigns[:autoalign_boundary]}
+      backgroundToken={assigns[:background_token]}
+      border={assigns[:border]}
       caret={assigns[:caret]}
       dropShadow={assigns[:drop_shadow]}
       highContrast={assigns[:high_contrast]}
@@ -4080,7 +6993,7 @@ defmodule Graphene.CoreComponents do
       tabTip={assigns[:tab_tip]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-popover>
     """
   end
@@ -4099,11 +7012,23 @@ defmodule Graphene.CoreComponents do
     default: false,
     doc: "Specify whether a auto align functionality should be applied"
 
+  attr :background_token, :any,
+    default: nil,
+    doc: "Specify the background token to use. Default is 'layer'."
+
+  attr :border, :boolean,
+    default: false,
+    doc: "Specify whether a border should be rendered on the popover"
+
   attr :caret, :any, default: nil, doc: "Specify whether a caret should be rendered"
 
   attr :drop_shadow, :boolean,
     default: true,
     doc: "Specify whether a dropShadow should be rendered"
+
+  attr :high_contrast, :boolean,
+    default: false,
+    doc: "Render the component using the high-contrast variant"
 
   attr :open, :boolean,
     default: false,
@@ -4123,14 +7048,17 @@ defmodule Graphene.CoreComponents do
     <cds-popover-content
       align={assigns[:align]}
       autoalign={assigns[:autoalign]}
+      backgroundToken={assigns[:background_token]}
+      border={assigns[:border]}
       caret={assigns[:caret]}
       dropShadow={assigns[:drop_shadow]}
+      highContrast={assigns[:high_contrast]}
       open={assigns[:open]}
       slot={assigns[:slot]}
       tabTip={assigns[:tab_tip]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-popover-content>
     """
   end
@@ -4181,7 +7109,7 @@ defmodule Graphene.CoreComponents do
       value={assigns[:value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-progress-bar>
     """
   end
@@ -4191,12 +7119,21 @@ defmodule Graphene.CoreComponents do
 
   Progress indicator.
 
+  ## Events
+
+  * `change` - Undocumented
+  * `onChange` - Undocumented
 
   """
 
+  attr :current_index, :string,
+    default: "0",
+    doc: "Optionally specify the current step array index."
+
   attr :space_equally, :boolean,
     default: false,
-    doc: "Specify whether the progress steps should be split equally in size in the\ndiv"
+    doc:
+      "Specify whether the progress steps should be split equally in size in the\ncontainer (horizontal only)."
 
   attr :vertical, :boolean,
     default: false,
@@ -4209,11 +7146,12 @@ defmodule Graphene.CoreComponents do
   def progress_indicator(assigns) do
     ~H"""
     <cds-progress-indicator
+      current-index={assigns[:current_index]}
       space-equally={assigns[:space_equally]}
       vertical={assigns[:vertical]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-progress-indicator>
     """
   end
@@ -4226,11 +7164,18 @@ defmodule Graphene.CoreComponents do
 
   """
 
+  attr :clickable, :boolean,
+    default: false,
+    doc:
+      "Set by the parent indicator. If true, the step is interactive unless it is\ncurrent or disabled. This mirrors React's \"onChange prop exists\" semantics."
+
+  attr :complete, :boolean, default: false, doc: "Specify whether the step has been completed"
+  attr :current, :boolean, default: false, doc: "Specify whether the step is the current step"
   attr :description, :string, default: nil
   attr :disabled, :boolean, default: false, doc: "`true` if the progress step should be disabled."
   attr :icon_label, :string, default: nil, doc: "The a11y text for the icon."
+  attr :invalid, :boolean, default: false, doc: "Specify whether the step is invalid"
   attr :label, :string, default: nil
-  attr :label_text, :string, default: nil, doc: "The primary progress label."
   attr :secondary_label, :string, default: nil
   attr :secondary_label_text, :string, default: nil, doc: "The secondary progress label."
 
@@ -4247,23 +7192,26 @@ defmodule Graphene.CoreComponents do
   def progress_step(assigns) do
     ~H"""
     <cds-progress-step
+      clickable={assigns[:clickable]}
+      complete={assigns[:complete]}
+      current={assigns[:current]}
       description={assigns[:description]}
       disabled={assigns[:disabled]}
       icon-label={assigns[:icon_label]}
+      invalid={assigns[:invalid]}
       label={assigns[:label]}
-      label-text={assigns[:label_text]}
       secondary-label={assigns[:secondary_label]}
       secondary-label-text={assigns[:secondary_label_text]}
       state={assigns[:state]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
       <.dynamic_tag
         :for={s <- assigns[:"s-secondary-label-text"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="secondary-label-text"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-progress-step>
     """
@@ -4285,6 +7233,10 @@ defmodule Graphene.CoreComponents do
   attr :data_table, :boolean,
     default: false,
     doc: "`true` if the radio button is used in a data table"
+
+  attr :default_checked, :boolean,
+    default: false,
+    doc: "Specify whether the `<radio-button>` should be checked by default"
 
   attr :disabled, :boolean,
     default: false,
@@ -4314,9 +7266,19 @@ defmodule Graphene.CoreComponents do
     default: false,
     doc: "`true` if the radio button group should be disabled."
 
+  attr :required, :boolean, default: false, doc: "`true` if the radio button is required."
+
   attr :value, :string,
     default: nil,
     doc: "The `value` attribute for the `<input>` for selection."
+
+  attr :warn, :boolean,
+    default: false,
+    doc: "Specify whether the control is currently in warning state"
+
+  attr :warn_text, :string,
+    default: nil,
+    doc: "Provide the text that is displayed when the control is in warning state"
 
   attr :rest, :global
 
@@ -4327,6 +7289,7 @@ defmodule Graphene.CoreComponents do
     <cds-radio-button
       checked={assigns[:checked]}
       data-table={assigns[:data_table]}
+      default-checked={assigns[:default_checked]}
       disabled={assigns[:disabled]}
       disabledItem={assigns[:disabled_item]}
       hide-label={assigns[:hide_label]}
@@ -4336,10 +7299,13 @@ defmodule Graphene.CoreComponents do
       name={assigns[:name]}
       orientation={assigns[:orientation]}
       readOnly={assigns[:read_only]}
+      required={assigns[:required]}
       value={assigns[:value]}
+      warn={assigns[:warn]}
+      warn-text={assigns[:warn_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-radio-button>
     """
   end
@@ -4388,6 +7354,10 @@ defmodule Graphene.CoreComponents do
     default: false,
     doc: "Controls the readonly state of the radio button group."
 
+  attr :required, :boolean,
+    default: false,
+    doc: "`true` to specify if input selection in group is required."
+
   attr :value, :string,
     default: nil,
     doc: "The `value` attribute for the `<input>` for selection."
@@ -4417,12 +7387,13 @@ defmodule Graphene.CoreComponents do
       name={assigns[:name]}
       orientation={assigns[:orientation]}
       readOnly={assigns[:read_only]}
+      required={assigns[:required]}
       value={assigns[:value]}
       warn={assigns[:warn]}
       warn-text={assigns[:warn_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-radio-button-group>
     """
   end
@@ -4430,11 +7401,11 @@ defmodule Graphene.CoreComponents do
   @doc """
   Component `<cds-radio-tile>` from `./src/components/tile/radio-tile.ts`
 
-  Single-selectable tile.
+  Radio tile.
 
   ## Events
 
-  * `cds-radio-tile-selected` - The name of the custom event fired after this selectable tile changes its selected state.
+  * `cds-radio-tile-selected` - The name of the custom event fired after this radio tile changes its selected state.
   * `cds-selectable-tile-changed` - The custom event fired after this selectable tile changes its selected state.
 
   """
@@ -4445,14 +7416,18 @@ defmodule Graphene.CoreComponents do
 
   attr :color_scheme, :string, default: "", values: ["", "light"], doc: "The color scheme."
 
+  attr :disabled, :boolean,
+    default: false,
+    doc: "`true` if the seletable tile should be disabled."
+
   attr :has_rounded_corners, :boolean,
     default: false,
     doc:
-      "Specify if the `SeletableTile` component should be rendered with rounded corners.\nOnly valid when `slug` prop is present"
+      "Specify if the `SeletableTile` component should be rendered with rounded corners.\nOnly valid when `ai-label` prop is present"
 
-  attr :name, :string, default: nil, doc: "The form name."
+  attr :name, :string, default: nil
   attr :selected, :boolean, default: false, doc: "`true` to show the selected state."
-  attr :value, :string, default: nil, doc: "The form value."
+  attr :value, :string, default: nil
   attr :rest, :global
 
   slot :inner_block
@@ -4462,13 +7437,14 @@ defmodule Graphene.CoreComponents do
     <cds-radio-tile
       checkmark-label={assigns[:checkmark_label]}
       color-scheme={assigns[:color_scheme]}
+      disabled={assigns[:disabled]}
       has-rounded-corners={assigns[:has_rounded_corners]}
       name={assigns[:name]}
       selected={assigns[:selected]}
       value={assigns[:value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-radio-tile>
     """
   end
@@ -4534,7 +7510,7 @@ defmodule Graphene.CoreComponents do
       value={assigns[:value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-search>
     """
   end
@@ -4573,6 +7549,7 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "Message which is displayed if the value is invalid."
 
+  attr :is_fluid, :boolean, default: false, doc: "Specify whether the textarea is fluid or not"
   attr :label_text, :string, default: nil, doc: "The label text."
   attr :multiple, :boolean, default: nil, doc: "`true` to enable multiple selection."
   attr :name, :string, default: nil, doc: "Name for the select in the `FormData`"
@@ -4620,6 +7597,7 @@ defmodule Graphene.CoreComponents do
       inline={assigns[:inline]}
       invalid={assigns[:invalid]}
       invalid-text={assigns[:invalid_text]}
+      isFluid={assigns[:is_fluid]}
       label-text={assigns[:label_text]}
       multiple={assigns[:multiple]}
       name={assigns[:name]}
@@ -4635,27 +7613,27 @@ defmodule Graphene.CoreComponents do
       warn-text={assigns[:warn_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
       <.dynamic_tag
         :for={s <- assigns[:"s-helper-text"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="helper-text"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
         :for={s <- assigns[:"s-label-text"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
         :for={s <- assigns[:"s-validity-message"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="validity-message"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-select>
     """
@@ -4690,7 +7668,7 @@ defmodule Graphene.CoreComponents do
       value={assigns[:value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-select-item>
     """
   end
@@ -4711,9 +7689,47 @@ defmodule Graphene.CoreComponents do
 
   def select_item_group(assigns) do
     ~H"""
-    <cds-select-item-group disabled={assigns[:disabled]} label={assigns[:label]} {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-select-item-group
+      disabled={assigns[:disabled]}
+      label={assigns[:label]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-select-item-group>
+    """
+  end
+
+  @doc """
+  Component `<cds-selectable-tag>` from `./src/components/tag/selectable-tag.ts`
+
+  Selectable tag.
+
+  ## Events
+
+  * `cds-selectable-tag-beforeselected` - The custom event fired as the element is being selected
+  * `cds-selectable-tag-selected` - The custom event fired after the element has been selected
+
+  """
+
+  attr :disabled, :boolean, default: false, doc: "`true` if the tag should be disabled"
+  attr :selected, :boolean, default: false, doc: "Specify the state of the selectable tag."
+  attr :size, :any, default: nil, doc: "The size of the tag."
+  attr :text, :string, default: nil, doc: "Provide text to be rendered inside of a the tag."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def selectable_tag(assigns) do
+    ~H"""
+    <cds-selectable-tag
+      disabled={assigns[:disabled]}
+      selected={assigns[:selected]}
+      size={assigns[:size]}
+      text={assigns[:text]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-selectable-tag>
     """
   end
 
@@ -4734,14 +7750,18 @@ defmodule Graphene.CoreComponents do
 
   attr :color_scheme, :string, default: "", values: ["", "light"], doc: "The color scheme."
 
+  attr :disabled, :boolean,
+    default: false,
+    doc: "`true` if the seletable tile should be disabled."
+
   attr :has_rounded_corners, :boolean,
     default: false,
     doc:
-      "Specify if the `SeletableTile` component should be rendered with rounded corners.\nOnly valid when `slug` prop is present"
+      "Specify if the `SeletableTile` component should be rendered with rounded corners.\nOnly valid when `ai-label` prop is present"
 
-  attr :name, :string, default: nil, doc: "The form name."
+  attr :name, :string, default: nil
   attr :selected, :boolean, default: false, doc: "`true` to show the selected state."
-  attr :value, :string, default: nil, doc: "The form value."
+  attr :value, :string, default: nil
   attr :rest, :global
 
   slot :inner_block
@@ -4751,14 +7771,43 @@ defmodule Graphene.CoreComponents do
     <cds-selectable-tile
       checkmark-label={assigns[:checkmark_label]}
       color-scheme={assigns[:color_scheme]}
+      disabled={assigns[:disabled]}
       has-rounded-corners={assigns[:has_rounded_corners]}
       name={assigns[:name]}
       selected={assigns[:selected]}
       value={assigns[:value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-selectable-tile>
+    """
+  end
+
+  @doc """
+  Component `<cds-shape-indicator>` from `./src/components/shape-indicator/shape-indicator.ts`
+
+  Shape Indicator.
+
+
+  """
+
+  attr :kind, :any, default: nil, doc: "Shape Indicator kind"
+  attr :label, :string, default: nil, doc: "Label next to the shape."
+  attr :text_size, :string, default: "12", doc: "Shape indicator size (12 or 14)"
+  attr :rest, :global
+
+  slot :inner_block
+
+  def shape_indicator(assigns) do
+    ~H"""
+    <cds-shape-indicator
+      kind={assigns[:kind]}
+      label={assigns[:label]}
+      text-size={assigns[:text_size]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-shape-indicator>
     """
   end
 
@@ -4801,7 +7850,7 @@ defmodule Graphene.CoreComponents do
       is-not-persistent={assigns[:is_not_persistent]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-side-nav>
     """
   end
@@ -4821,7 +7870,7 @@ defmodule Graphene.CoreComponents do
   def side_nav_divider(assigns) do
     ~H"""
     <cds-side-nav-divider {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-side-nav-divider>
     """
   end
@@ -4841,7 +7890,7 @@ defmodule Graphene.CoreComponents do
   def side_nav_items(assigns) do
     ~H"""
     <cds-side-nav-items {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-side-nav-items>
     """
   end
@@ -4882,19 +7931,19 @@ defmodule Graphene.CoreComponents do
       title={assigns[:title]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
-      <.dynamic_tag :for={s <- assigns[:"s-link"]} name={Map.get(s, :tag, "div")} slot="link">
-        <%= render_slot(s) %>
+      {render_slot(@inner_block)}
+      <.dynamic_tag :for={s <- assigns[:"s-link"]} tag_name={Map.get(s, :tag, "div")} slot="link">
+        {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-title"]} name={Map.get(s, :tag, "div")} slot="title">
-        <%= render_slot(s) %>
+      <.dynamic_tag :for={s <- assigns[:"s-title"]} tag_name={Map.get(s, :tag, "div")} slot="title">
+        {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
         :for={s <- assigns[:"s-title-icon-container"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="title-icon-container"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-side-nav-link>
     """
@@ -4940,13 +7989,13 @@ defmodule Graphene.CoreComponents do
       title={assigns[:title]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
       <.dynamic_tag
         :for={s <- assigns[:"s-title-icon"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="title-icon"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-side-nav-menu>
     """
@@ -4962,6 +8011,7 @@ defmodule Graphene.CoreComponents do
 
   attr :active, :boolean, default: false, doc: "`true` if the menu item should be active."
   attr :href, :string, default: nil, doc: "Link `href`."
+  attr :target, :string, default: nil, doc: "Link `target`."
   attr :title, :string, default: nil, doc: "The title."
   attr :rest, :global
 
@@ -4972,10 +8022,11 @@ defmodule Graphene.CoreComponents do
     <cds-side-nav-menu-item
       active={assigns[:active]}
       href={assigns[:href]}
+      target={assigns[:target]}
       title={assigns[:title]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-side-nav-menu-item>
     """
   end
@@ -5071,7 +8122,7 @@ defmodule Graphene.CoreComponents do
       title={assigns[:title]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-side-panel>
     """
   end
@@ -5091,7 +8142,7 @@ defmodule Graphene.CoreComponents do
   def skeleton_icon(assigns) do
     ~H"""
     <cds-skeleton-icon {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-skeleton-icon>
     """
   end
@@ -5114,8 +8165,11 @@ defmodule Graphene.CoreComponents do
 
   def skeleton_placeholder(assigns) do
     ~H"""
-    <cds-skeleton-placeholder optional-classes={assigns[:optional_classes]} {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-skeleton-placeholder
+      optional-classes={assigns[:optional_classes]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-skeleton-placeholder>
     """
   end
@@ -5127,6 +8181,10 @@ defmodule Graphene.CoreComponents do
 
 
   """
+
+  attr :heading, :boolean,
+    default: false,
+    doc: "Determines if the skeleton text should be rendered as a heading."
 
   attr :line_count, :string, default: "3", doc: "the number of lines in a paragraph"
 
@@ -5148,6 +8206,7 @@ defmodule Graphene.CoreComponents do
   def skeleton_text(assigns) do
     ~H"""
     <cds-skeleton-text
+      heading={assigns[:heading]}
       lineCount={assigns[:line_count]}
       optional-classes={assigns[:optional_classes]}
       paragraph={assigns[:paragraph]}
@@ -5155,7 +8214,7 @@ defmodule Graphene.CoreComponents do
       width={assigns[:width]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-skeleton-text>
     """
   end
@@ -5185,7 +8244,7 @@ defmodule Graphene.CoreComponents do
       link-assistive-text={assigns[:link_assistive_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-skip-to-content>
     """
   end
@@ -5203,6 +8262,15 @@ defmodule Graphene.CoreComponents do
   """
 
   attr :disabled, :boolean, default: false, doc: "`true` if the check box should be disabled."
+
+  attr :hide_label, :boolean,
+    default: false,
+    doc: "Specify whether you want the underlying label to be visually hidden"
+
+  attr :hide_text_input, :boolean,
+    default: false,
+    doc: "Checks whether the input field is hidden or not"
+
   attr :invalid, :boolean, default: false, doc: "true to specify if the control is invalid."
 
   attr :invalid_text, :string,
@@ -5226,6 +8294,7 @@ defmodule Graphene.CoreComponents do
       "A value determining how much the value should increase/decrease by Shift+arrow keys,\nwhich will be `(max - min) / stepMultiplier`."
 
   attr :value, :any, default: nil, doc: "The value."
+  attr :value_upper, :any, default: nil, doc: "The upper bound when there are two handles.."
 
   attr :warn, :boolean,
     default: false,
@@ -5246,6 +8315,8 @@ defmodule Graphene.CoreComponents do
     ~H"""
     <cds-slider
       disabled={assigns[:disabled]}
+      hide-label={assigns[:hide_label]}
+      hide-text-input={assigns[:hide_text_input]}
       invalid={assigns[:invalid]}
       invalid-text={assigns[:invalid_text]}
       isValid={assigns[:is_valid]}
@@ -5260,23 +8331,32 @@ defmodule Graphene.CoreComponents do
       step={assigns[:step]}
       step-multiplier={assigns[:step_multiplier]}
       value={assigns[:value]}
+      value-upper={assigns[:value_upper]}
       warn={assigns[:warn]}
       warn-text={assigns[:warn_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
       <.dynamic_tag
         :for={s <- assigns[:"s-label-text"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-max-text"]} name={Map.get(s, :tag, "div")} slot="max-text">
-        <%= render_slot(s) %>
+      <.dynamic_tag
+        :for={s <- assigns[:"s-max-text"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="max-text"
+      >
+        {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-min-text"]} name={Map.get(s, :tag, "div")} slot="min-text">
-        <%= render_slot(s) %>
+      <.dynamic_tag
+        :for={s <- assigns[:"s-min-text"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="min-text"
+      >
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-slider>
     """
@@ -5294,13 +8374,18 @@ defmodule Graphene.CoreComponents do
   """
 
   attr :disabled, :boolean, default: false, doc: "`true` if the input should be disabled."
+
+  attr :hide_text_input, :boolean,
+    default: false,
+    doc: "true to specify if the control should display warn icon and text."
+
   attr :invalid, :boolean, default: false, doc: "true to specify if the control is invalid."
   attr :max, :string, default: nil, doc: "The maximum value."
   attr :min, :string, default: nil, doc: "The minimum value."
   attr :readonly, :boolean, default: false, doc: "true` if the input should be readonly."
   attr :step, :string, default: nil, doc: "The snapping step of the value."
   attr :type, :string, default: "number", doc: "The type of the `<input>`."
-  attr :value, :string, default: nil, doc: "The value."
+  attr :value, :any, default: nil, doc: "The value."
 
   attr :warn, :boolean,
     default: false,
@@ -5314,6 +8399,7 @@ defmodule Graphene.CoreComponents do
     ~H"""
     <cds-slider-input
       disabled={assigns[:disabled]}
+      hideTextInput={assigns[:hide_text_input]}
       invalid={assigns[:invalid]}
       max={assigns[:max]}
       min={assigns[:min]}
@@ -5324,7 +8410,7 @@ defmodule Graphene.CoreComponents do
       warn={assigns[:warn]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-slider-input>
     """
   end
@@ -5361,9 +8447,17 @@ defmodule Graphene.CoreComponents do
     ],
     doc: "How the tooltip is aligned to the trigger button."
 
+  attr :alignment_axis_offset, :string,
+    default: "0",
+    doc:
+      "**Experimental:** Provide an offset value for alignment axis. Only takes effect when `autoalign` is enabled."
+
   attr :autoalign, :boolean,
     default: false,
     doc: "Specify whether a auto align functionality should be applied"
+
+  attr :button_label, :string, default: "Show information", doc: "The label for the toggle button"
+  attr :default_open, :boolean, default: false, doc: "Set whether toggletip is open by default."
 
   attr :kind, :string,
     default: "",
@@ -5402,7 +8496,10 @@ defmodule Graphene.CoreComponents do
       ai-text={assigns[:ai_text]}
       ai-text-label={assigns[:ai_text_label]}
       alignment={assigns[:alignment]}
+      alignment-axis-offset={assigns[:alignment_axis_offset]}
       autoalign={assigns[:autoalign]}
+      button-label={assigns[:button_label]}
+      default-open={assigns[:default_open]}
       kind={assigns[:kind]}
       open={assigns[:open]}
       previousValue={assigns[:previous_value]}
@@ -5413,7 +8510,7 @@ defmodule Graphene.CoreComponents do
       slug-label={assigns[:slug_label]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-slug>
     """
   end
@@ -5438,7 +8535,7 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "Specify an optional className to be added to your Button"
 
-  attr :danger_descriptor, :any,
+  attr :danger_description, :any,
     default: nil,
     doc: "Specify the message read by screen readers for the danger button variant"
 
@@ -5483,6 +8580,7 @@ defmodule Graphene.CoreComponents do
   attr :rel, :string, default: nil, doc: "The link type, if this button is rendered as `<a>`."
   attr :size, :string, default: "lg", doc: "Button size."
   attr :slot, :string, default: "actions", doc: "The shadow slot this slug-action should be in."
+  attr :tab_index, :string, default: "0", doc: "Specify the tabIndex of the button."
 
   attr :target, :string,
     default: nil,
@@ -5503,7 +8601,7 @@ defmodule Graphene.CoreComponents do
   attr :tooltip_text, :string,
     default: nil,
     doc:
-      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left."
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
 
   attr :type, :string,
     default: "button",
@@ -5520,7 +8618,7 @@ defmodule Graphene.CoreComponents do
       autofocus={assigns[:autofocus]}
       batch-action={assigns[:batch_action]}
       button-class-name={assigns[:button_class_name]}
-      danger-descriptor={assigns[:danger_descriptor]}
+      danger-description={assigns[:danger_description]}
       disabled={assigns[:disabled]}
       download={assigns[:download]}
       has-main-content={assigns[:has_main_content]}
@@ -5535,6 +8633,7 @@ defmodule Graphene.CoreComponents do
       rel={assigns[:rel]}
       size={assigns[:size]}
       slot={assigns[:slot]}
+      tab-index={assigns[:tab_index]}
       target={assigns[:target]}
       tooltip-alignment={assigns[:tooltip_alignment]}
       tooltip-position={assigns[:tooltip_position]}
@@ -5542,7 +8641,7 @@ defmodule Graphene.CoreComponents do
       type={assigns[:type]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-slug-action-button>
     """
   end
@@ -5590,7 +8689,7 @@ defmodule Graphene.CoreComponents do
       use-custom-gap-value={assigns[:use_custom_gap_value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-stack>
     """
   end
@@ -5628,7 +8727,7 @@ defmodule Graphene.CoreComponents do
       selection-name={assigns[:selection_name]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-structured-list>
     """
   end
@@ -5648,7 +8747,7 @@ defmodule Graphene.CoreComponents do
   def structured_list_body(assigns) do
     ~H"""
     <cds-structured-list-body {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-structured-list-body>
     """
   end
@@ -5668,7 +8767,7 @@ defmodule Graphene.CoreComponents do
   def structured_list_cell(assigns) do
     ~H"""
     <cds-structured-list-cell {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-structured-list-cell>
     """
   end
@@ -5688,7 +8787,7 @@ defmodule Graphene.CoreComponents do
   def structured_list_head(assigns) do
     ~H"""
     <cds-structured-list-head {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-structured-list-head>
     """
   end
@@ -5708,7 +8807,7 @@ defmodule Graphene.CoreComponents do
   def structured_list_header_cell(assigns) do
     ~H"""
     <cds-structured-list-header-cell {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-structured-list-header-cell>
     """
   end
@@ -5732,8 +8831,11 @@ defmodule Graphene.CoreComponents do
 
   def structured_list_header_row(assigns) do
     ~H"""
-    <cds-structured-list-header-row selection-name={assigns[:selection_name]} {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-structured-list-header-row
+      selection-name={assigns[:selection_name]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-structured-list-header-row>
     """
   end
@@ -5776,7 +8878,7 @@ defmodule Graphene.CoreComponents do
       selection-value={assigns[:selection_value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-structured-list-row>
     """
   end
@@ -5796,7 +8898,7 @@ defmodule Graphene.CoreComponents do
   def switcher(assigns) do
     ~H"""
     <cds-switcher {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-switcher>
     """
   end
@@ -5816,7 +8918,7 @@ defmodule Graphene.CoreComponents do
   def switcher_divider(assigns) do
     ~H"""
     <cds-switcher-divider {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-switcher-divider>
     """
   end
@@ -5851,7 +8953,7 @@ defmodule Graphene.CoreComponents do
       tab-index={assigns[:tab_index]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-switcher-item>
     """
   end
@@ -5907,8 +9009,28 @@ defmodule Graphene.CoreComponents do
       value={assigns[:value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-tab>
+    """
+  end
+
+  @doc """
+  Component `<cds-tab-skeleton>` from `./src/components/tabs/tab-skeleton.ts`
+
+  Skeleton of tab.
+
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def tab_skeleton(assigns) do
+    ~H"""
+    <cds-tab-skeleton {@rest}>
+      {render_slot(@inner_block)}
+    </cds-tab-skeleton>
     """
   end
 
@@ -5977,6 +9099,11 @@ defmodule Graphene.CoreComponents do
 
   attr :use_zebra_styles, :boolean, default: false, doc: "true to add useZebraStyles striping."
   attr :with_header, :any, default: nil
+
+  attr :with_row_ai_labels, :boolean,
+    default: false,
+    doc: "true if AI Labels are added in the rows"
+
   attr :with_row_slugs, :boolean, default: false, doc: "true if slugs are added in the rows"
   attr :rest, :global
 
@@ -6001,22 +9128,27 @@ defmodule Graphene.CoreComponents do
       use-static-width={assigns[:use_static_width]}
       use-zebra-styles={assigns[:use_zebra_styles]}
       with-header={assigns[:with_header]}
+      with-row-ai-labels={assigns[:with_row_ai_labels]}
       with-row-slugs={assigns[:with_row_slugs]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
-      <.dynamic_tag :for={s <- assigns[:"s-title"]} name={Map.get(s, :tag, "div")} slot="title">
-        <%= render_slot(s) %>
+      {render_slot(@inner_block)}
+      <.dynamic_tag :for={s <- assigns[:"s-title"]} tag_name={Map.get(s, :tag, "div")} slot="title">
+        {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
         :for={s <- assigns[:"s-description"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="description"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-toolbar"]} name={Map.get(s, :tag, "div")} slot="toolbar">
-        <%= render_slot(s) %>
+      <.dynamic_tag
+        :for={s <- assigns[:"s-toolbar"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="toolbar"
+      >
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-table>
     """
@@ -6030,6 +9162,7 @@ defmodule Graphene.CoreComponents do
   ## Events
 
   * `cds-table-batch-actions-cancel-clicked` - The custom event fired after the Cancel button is clicked.
+  * `cds-table-batch-actions-select-all-clicked` - The custom event fired after the Select all button is clicked.
 
   """
 
@@ -6042,6 +9175,13 @@ defmodule Graphene.CoreComponents do
     doc:
       "Numeric representation of the total number of items selected in a table.\nThis number is used to derive the selection message."
 
+  attr :size, :string, default: "lg", doc: "The table size."
+
+  attr :total_rows_count, :string,
+    default: "0",
+    doc:
+      "Numeric representation of the total number of items in a table.\nThis number is used in the select all button text\nThis property controls the rendering of the Select all button"
+
   attr :rest, :global
 
   slot :inner_block
@@ -6051,9 +9191,11 @@ defmodule Graphene.CoreComponents do
     <cds-table-batch-actions
       active={assigns[:active]}
       selected-rows-count={assigns[:selected_rows_count]}
+      size={assigns[:size]}
+      total-rows-count={assigns[:total_rows_count]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-table-batch-actions>
     """
   end
@@ -6077,8 +9219,11 @@ defmodule Graphene.CoreComponents do
 
   def table_body(assigns) do
     ~H"""
-    <cds-table-body use-zebra-styles={assigns[:use_zebra_styles]} {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-table-body
+      use-zebra-styles={assigns[:use_zebra_styles]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-table-body>
     """
   end
@@ -6108,7 +9253,7 @@ defmodule Graphene.CoreComponents do
       size={assigns[:size]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-table-cell>
     """
   end
@@ -6128,7 +9273,7 @@ defmodule Graphene.CoreComponents do
   def table_cell_content(assigns) do
     ~H"""
     <cds-table-cell-content {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-table-cell-content>
     """
   end
@@ -6167,7 +9312,7 @@ defmodule Graphene.CoreComponents do
       selected={assigns[:selected]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-table-expanded-row>
     """
   end
@@ -6187,7 +9332,7 @@ defmodule Graphene.CoreComponents do
   def table_head(assigns) do
     ~H"""
     <cds-table-head {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-table-head>
     """
   end
@@ -6248,7 +9393,7 @@ defmodule Graphene.CoreComponents do
       sort-direction={assigns[:sort_direction]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-table-header-cell>
     """
   end
@@ -6268,7 +9413,7 @@ defmodule Graphene.CoreComponents do
   def table_header_description(assigns) do
     ~H"""
     <cds-table-header-description {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-table-header-description>
     """
   end
@@ -6319,7 +9464,7 @@ defmodule Graphene.CoreComponents do
   attr :selected, :boolean, default: false, doc: "`true` if this table row should be selected."
 
   attr :selection_label, :string,
-    default: nil,
+    default: "Select row",
     doc: "The `aria-label` attribute for the `<label>` for selection."
 
   attr :selection_name, :string,
@@ -6350,7 +9495,7 @@ defmodule Graphene.CoreComponents do
       selection-value={assigns[:selection_value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-table-header-row>
     """
   end
@@ -6370,7 +9515,7 @@ defmodule Graphene.CoreComponents do
   def table_header_title(assigns) do
     ~H"""
     <cds-table-header-title {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-table-header-title>
     """
   end
@@ -6419,7 +9564,7 @@ defmodule Graphene.CoreComponents do
   attr :selected, :boolean, default: false, doc: "`true` if this table row should be selected."
 
   attr :selection_label, :string,
-    default: nil,
+    default: "Select row",
     doc: "The `aria-label` attribute for the `<label>` for selection."
 
   attr :selection_name, :string,
@@ -6450,7 +9595,7 @@ defmodule Graphene.CoreComponents do
       selection-value={assigns[:selection_value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-table-row>
     """
   end
@@ -6499,7 +9644,7 @@ defmodule Graphene.CoreComponents do
       zebra={assigns[:zebra]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-table-skeleton>
     """
   end
@@ -6519,8 +9664,11 @@ defmodule Graphene.CoreComponents do
 
   def table_toolbar(assigns) do
     ~H"""
-    <cds-table-toolbar size={assigns[:size]} {@rest}>
-      <%= render_slot(@inner_block) %>
+    <cds-table-toolbar
+      size={assigns[:size]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
     </cds-table-toolbar>
     """
   end
@@ -6549,7 +9697,7 @@ defmodule Graphene.CoreComponents do
       size={assigns[:size]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-table-toolbar-content>
     """
   end
@@ -6617,7 +9765,7 @@ defmodule Graphene.CoreComponents do
       value={assigns[:value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-table-toolbar-search>
     """
   end
@@ -6639,6 +9787,11 @@ defmodule Graphene.CoreComponents do
   """
 
   attr :icon, :boolean, default: false, doc: "Icon only."
+  attr :low_contrast, :boolean, default: false, doc: "`true` to use the low contrast version."
+
+  attr :selected_index, :string,
+    default: "0",
+    doc: "Specify a selected index for the initially selected content"
 
   attr :selected_item_assistive_text, :string,
     default: "Selected an item.",
@@ -6647,6 +9800,11 @@ defmodule Graphene.CoreComponents do
   attr :selecting_items_assistive_text, :string,
     default: "Selecting items. Use up and down arrow keys to navigate.",
     doc: "An assistive text for screen reader to announce, telling the open state."
+
+  attr :selection_mode, :string,
+    default: "automatic",
+    doc:
+      "Choose whether or not to automatically change selection on focus when left/right arrow pressed. Defaults to 'automatic'"
 
   attr :size, :string,
     default: nil,
@@ -6667,16 +9825,116 @@ defmodule Graphene.CoreComponents do
     ~H"""
     <cds-tabs
       icon={assigns[:icon]}
+      low-contrast={assigns[:low_contrast]}
+      selected-index={assigns[:selected_index]}
       selected-item-assistive-text={assigns[:selected_item_assistive_text]}
       selecting-items-assistive-text={assigns[:selecting_items_assistive_text]}
+      selection-mode={assigns[:selection_mode]}
       size={assigns[:size]}
       trigger-content={assigns[:trigger_content]}
       type={assigns[:type]}
       value={assigns[:value]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-tabs>
+    """
+  end
+
+  @doc """
+  Component `<cds-tabs-skeleton>` from `./src/components/tabs/tabs-skeleton.ts`
+
+  Skeleton of tabs.
+
+
+  """
+
+  attr :contained, :boolean, default: false, doc: "Provide the type of Tab"
+  attr :rest, :global
+
+  slot :inner_block
+
+  def tabs_skeleton(assigns) do
+    ~H"""
+    <cds-tabs-skeleton
+      contained={assigns[:contained]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-tabs-skeleton>
+    """
+  end
+
+  @doc """
+  Component `<cds-tag>` from `./src/components/tag/tag.ts`
+
+  Tag.
+
+  ## Events
+
+  * `cds-tag-beingclosed` - The custom event fired as the element is being closed
+  * `cds-tag-closed` - The custom event fired after the element has been closed
+
+  """
+
+  attr :disabled, :boolean, default: false, doc: "`true` if the tag should be disabled"
+  attr :filter, :boolean, default: false, doc: "Determine if is a filter/chip"
+  attr :has_custom_icon, :boolean, default: false, doc: "`true` if there is a custom icon."
+  attr :open, :boolean, default: true, doc: "`true` if the tag should be open."
+  attr :size, :any, default: nil, doc: "The size of the tag."
+
+  attr :title, :string,
+    default: "Clear filter",
+    doc:
+      "Text to show on filter tag \"clear\" buttons. Corresponds to the attribute with the same name"
+
+  attr :type, :any, default: nil, doc: "The type of the tag."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def tag(assigns) do
+    ~H"""
+    <cds-tag
+      disabled={assigns[:disabled]}
+      filter={assigns[:filter]}
+      has-custom-icon={assigns[:has_custom_icon]}
+      open={assigns[:open]}
+      size={assigns[:size]}
+      title={assigns[:title]}
+      type={assigns[:type]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-tag>
+    """
+  end
+
+  @doc """
+  Component `<cds-tag-skeleton>` from `./src/components/tag/tag-skeleton.ts`
+
+  Skeleton of tag.
+
+
+  """
+
+  attr :size, :any,
+    default: nil,
+    doc:
+      "Specify the size of the Tag. Currently supports either `sm`,\n`md` (default) or `lg` sizes."
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def tag_skeleton(assigns) do
+    ~H"""
+    <cds-tag-skeleton
+      size={assigns[:size]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-tag-skeleton>
     """
   end
 
@@ -6744,7 +10002,7 @@ defmodule Graphene.CoreComponents do
       width={assigns[:width]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-tearsheet>
     """
   end
@@ -6790,6 +10048,8 @@ defmodule Graphene.CoreComponents do
   attr :invalid_text, :string,
     default: nil,
     doc: "Message which is displayed if the value is invalid."
+
+  attr :is_fluid, :boolean, default: false
 
   attr :label, :string,
     default: nil,
@@ -6884,6 +10144,7 @@ defmodule Graphene.CoreComponents do
       inline={assigns[:inline]}
       invalid={assigns[:invalid]}
       invalid-text={assigns[:invalid_text]}
+      isFluid={assigns[:is_fluid]}
       label={assigns[:label]}
       max-count={assigns[:max_count]}
       name={assigns[:name]}
@@ -6904,29 +10165,56 @@ defmodule Graphene.CoreComponents do
       warn-text={assigns[:warn_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
       <.dynamic_tag
         :for={s <- assigns[:"s-helper-text"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="helper-text"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
         :for={s <- assigns[:"s-label-text"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
         :for={s <- assigns[:"s-validity-message"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="validity-message"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-text-input>
+    """
+  end
+
+  @doc """
+  Component `<cds-text-input-skeleton>` from `./src/components/text-input/text-input-skeleton.ts`
+
+  Undocumented
+
+
+  """
+
+  attr :hide_label, :boolean,
+    default: false,
+    doc: "Specify whether the label should be hidden, or not"
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def text_input_skeleton(assigns) do
+    ~H"""
+    <cds-text-input-skeleton
+      hide-label={assigns[:hide_label]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-text-input-skeleton>
     """
   end
 
@@ -6937,6 +10225,7 @@ defmodule Graphene.CoreComponents do
 
   ## Events
 
+  * `input` - Undocumented
   * `invalid` - Undocumented
 
   """
@@ -6949,9 +10238,11 @@ defmodule Graphene.CoreComponents do
     default: false,
     doc: "Sets the input to be focussed automatically on page load. Defaults to false"
 
-  attr :cols, :any,
+  attr :cols, :any, default: nil, doc: "The number of columns for the textarea to show by default"
+
+  attr :counter_mode, :any,
     default: nil,
-    doc: "The number of columns for the stextarea to show by default"
+    doc: "Specify the method used for calculating the counter number"
 
   attr :disabled, :boolean, default: false, doc: "Controls the disabled state of the input"
 
@@ -6976,6 +10267,8 @@ defmodule Graphene.CoreComponents do
   attr :invalid_text, :string,
     default: nil,
     doc: "Message which is displayed if the value is invalid."
+
+  attr :is_fluid, :boolean, default: false, doc: "Specify whether the textarea is fluid or not"
 
   attr :label, :string,
     default: nil,
@@ -7065,6 +10358,7 @@ defmodule Graphene.CoreComponents do
       autocomplete={assigns[:autocomplete]}
       autofocus={assigns[:autofocus]}
       cols={assigns[:cols]}
+      counter-mode={assigns[:counter_mode]}
       disabled={assigns[:disabled]}
       enable-counter={assigns[:enable_counter]}
       helper-text={assigns[:helper_text]}
@@ -7074,6 +10368,7 @@ defmodule Graphene.CoreComponents do
       inline={assigns[:inline]}
       invalid={assigns[:invalid]}
       invalid-text={assigns[:invalid_text]}
+      isFluid={assigns[:is_fluid]}
       label={assigns[:label]}
       max-count={assigns[:max_count]}
       name={assigns[:name]}
@@ -7095,29 +10390,56 @@ defmodule Graphene.CoreComponents do
       warn-text={assigns[:warn_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
       <.dynamic_tag
         :for={s <- assigns[:"s-helper-text"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="helper-text"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
         :for={s <- assigns[:"s-label-text"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
         :for={s <- assigns[:"s-validity-message"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="validity-message"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-textarea>
+    """
+  end
+
+  @doc """
+  Component `<cds-textarea-skeleton>` from `./src/components/textarea/textarea-skeleton.ts`
+
+  Undocumented
+
+
+  """
+
+  attr :hide_label, :boolean,
+    default: false,
+    doc: "Specify whether the label should be hidden, or not"
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def textarea_skeleton(assigns) do
+    ~H"""
+    <cds-textarea-skeleton
+      hide-label={assigns[:hide_label]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-textarea-skeleton>
     """
   end
 
@@ -7134,7 +10456,7 @@ defmodule Graphene.CoreComponents do
   attr :has_rounded_corners, :boolean,
     default: false,
     doc:
-      "Specify if the `Tile` component should be rendered with rounded corners.\nOnly valid when `slug` prop is present"
+      "Specify if the `Tile` component should be rendered with rounded corners.\nOnly valid when `ai-label` prop is present"
 
   attr :rest, :global
 
@@ -7147,7 +10469,7 @@ defmodule Graphene.CoreComponents do
       has-rounded-corners={assigns[:has_rounded_corners]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-tile>
     """
   end
@@ -7189,8 +10511,164 @@ defmodule Graphene.CoreComponents do
       selectableTiles={assigns[:selectable_tiles]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-tile-group>
+    """
+  end
+
+  @doc """
+  Component `<cds-time-picker>` from `./src/components/time-picker/time-picker.ts`
+
+  Time Picker component.
+
+  ## Events
+
+  * `change` - Undocumented
+  * `invalid` - Undocumented
+
+  """
+
+  attr :disabled, :boolean, default: false, doc: "Specify whether the control is disabled"
+  attr :hide_label, :boolean, default: false, doc: "Specify whether the label should be hidden"
+  attr :invalid, :boolean, default: false, doc: "Specify whether the control is currently invalid"
+
+  attr :invalid_text, :string,
+    default: "Invalid time format.",
+    doc: "Provide the text that is displayed when the control is in an invalid state"
+
+  attr :label_text, :string,
+    default: "Select a time",
+    doc: "Provide label text to be read by screen readers"
+
+  attr :max_length, :string, default: "5", doc: "Specify the maximum length of the input value"
+  attr :name, :string, default: nil, doc: "Name for the input in FormData"
+
+  attr :pattern, :string,
+    default: "(1[012]|[1-9]):[0-5][0-9](\\\\s)?",
+    doc: "Pattern for input validation"
+
+  attr :placeholder, :string, default: "hh:mm", doc: "Placeholder text for the input"
+
+  attr :read_only, :boolean,
+    default: false,
+    doc: "Specify whether the control should be read-only"
+
+  attr :required, :boolean, default: false, doc: "Whether the input is required"
+
+  attr :required_validity_message, :string,
+    default: "Please fill out this field.",
+    doc: "Custom message for required validation"
+
+  attr :size, :any, default: nil, doc: "Size of the time picker"
+  attr :type, :string, default: "text", doc: "Input type"
+  attr :validity_message, :string, default: nil, doc: "Validity message"
+  attr :value, :string, default: nil, doc: "Value of the input"
+  attr :warning, :boolean, default: false, doc: "Specify whether the control is in warning state"
+
+  attr :warning_text, :string,
+    default: "Warning message.",
+    doc: "Provide the text that is displayed when the control is in a warning state"
+
+  attr :rest, :global
+
+  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
+
+  slot :"s-time-picker-select",
+    doc: "Slot for time picker select components.",
+    do: attr(:tag, :string)
+
+  slot :"s-validity-message",
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
+    do: attr(:tag, :string)
+
+  slot :inner_block
+
+  def time_picker(assigns) do
+    ~H"""
+    <cds-time-picker
+      disabled={assigns[:disabled]}
+      hide-label={assigns[:hide_label]}
+      invalid={assigns[:invalid]}
+      invalid-text={assigns[:invalid_text]}
+      label-text={assigns[:label_text]}
+      max-length={assigns[:max_length]}
+      name={assigns[:name]}
+      pattern={assigns[:pattern]}
+      placeholder={assigns[:placeholder]}
+      readOnly={assigns[:read_only]}
+      required={assigns[:required]}
+      required-validity-message={assigns[:required_validity_message]}
+      size={assigns[:size]}
+      type={assigns[:type]}
+      validity-message={assigns[:validity_message]}
+      value={assigns[:value]}
+      warning={assigns[:warning]}
+      warning-text={assigns[:warning_text]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:"s-label-text"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:"s-time-picker-select"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="time-picker-select"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:"s-validity-message"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+    </cds-time-picker>
+    """
+  end
+
+  @doc """
+  Component `<cds-time-picker-select>` from `./src/components/time-picker/time-picker-select.ts`
+
+  Time picker select dropdown.
+
+
+  """
+
+  attr :default_value, :string,
+    default: nil,
+    doc: "Optionally provide the default value of the select"
+
+  attr :disabled, :boolean, default: false, doc: "Specify whether the control is disabled"
+  attr :id, :string, default: nil, doc: "Specify a custom id for the select box"
+  attr :name, :string, default: nil, doc: "Name for the select in the `FormData`"
+  attr :read_only, :boolean, default: false, doc: "Controls the readOnly state of the select"
+  attr :size, :any, default: nil, doc: "Size of the time picker select"
+  attr :value, :string, default: nil, doc: "The value of the select."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def time_picker_select(assigns) do
+    ~H"""
+    <cds-time-picker-select
+      default-value={assigns[:default_value]}
+      disabled={assigns[:disabled]}
+      id={assigns[:id]}
+      name={assigns[:name]}
+      readOnly={assigns[:read_only]}
+      size={assigns[:size]}
+      value={assigns[:value]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-time-picker-select>
     """
   end
 
@@ -7249,12 +10727,16 @@ defmodule Graphene.CoreComponents do
       title={assigns[:title]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
-      <.dynamic_tag :for={s <- assigns[:"s-subtitle"]} name={Map.get(s, :tag, "div")} slot="subtitle">
-        <%= render_slot(s) %>
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:"s-subtitle"]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="subtitle"
+      >
+        {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-title"]} name={Map.get(s, :tag, "div")} slot="title">
-        <%= render_slot(s) %>
+      <.dynamic_tag :for={s <- assigns[:"s-title"]} tag_name={Map.get(s, :tag, "div")} slot="title">
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-toast-notification>
     """
@@ -7274,11 +10756,16 @@ defmodule Graphene.CoreComponents do
 
   attr :checked, :boolean,
     default: false,
-    doc: "Specify whether the underlying input should be checked"
+    doc:
+      "\n**Deprecated:** Use `toggled` instead.\nThe `checked` attribute will be removed in the next major version."
 
   attr :data_table, :boolean,
     default: false,
     doc: "Specify if checkbox is being used in a data table"
+
+  attr :default_checked, :any,
+    default: nil,
+    doc: "Specify whether the underlying input should be checked by default"
 
   attr :disabled, :boolean, default: false, doc: "Specify whether the Checkbox should be disabled"
 
@@ -7292,6 +10779,7 @@ defmodule Graphene.CoreComponents do
       "Specify whether the checkbox should be present in the DOM,\nbut invisible and uninteractable. Used for data-table purposes."
 
   attr :hide_label, :boolean, default: false, doc: "Hide label text."
+  attr :id, :string, default: "checkbox", doc: "Specify a custom id for the checkbox"
 
   attr :indeterminate, :boolean,
     default: false,
@@ -7305,8 +10793,8 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "Provide the text that is displayed when the Checkbox is in an invalid state"
 
-  attr :label_a, :string, default: nil, doc: "The text for the checked state."
-  attr :label_b, :string, default: nil, doc: "The text for the unchecked state."
+  attr :label_a, :string, default: "On", doc: "Specify the label for the \"on\" position"
+  attr :label_b, :string, default: "Off", doc: "Specify the label for the \"off\" position"
 
   attr :label_text, :string,
     default: nil,
@@ -7318,6 +10806,7 @@ defmodule Graphene.CoreComponents do
   attr :readonly, :boolean, default: false, doc: "Specify whether the Checkbox is read-only"
   attr :size, :string, default: "", values: ["", "sm"], doc: "Toggle size."
   attr :title, :string, default: nil, doc: "Specify a title for the node for the Checkbox"
+  attr :toggled, :boolean, default: nil, doc: "Specify whether the control is toggled"
   attr :value, :string, default: nil, doc: "The value."
   attr :warn, :boolean, default: false, doc: "Specify whether the Checkbox is in a warn state"
 
@@ -7337,10 +10826,12 @@ defmodule Graphene.CoreComponents do
     <cds-toggle
       checked={assigns[:checked]}
       data-table={assigns[:data_table]}
+      default-checked={assigns[:default_checked]}
       disabled={assigns[:disabled]}
       helper-text={assigns[:helper_text]}
       hide-checkbox={assigns[:hide_checkbox]}
       hideLabel={assigns[:hide_label]}
+      id={assigns[:id]}
       indeterminate={assigns[:indeterminate]}
       invalid={assigns[:invalid]}
       invalid-text={assigns[:invalid_text]}
@@ -7352,34 +10843,55 @@ defmodule Graphene.CoreComponents do
       readonly={assigns[:readonly]}
       size={assigns[:size]}
       title={assigns[:title]}
+      toggled={assigns[:toggled]}
       value={assigns[:value]}
       warn={assigns[:warn]}
       warn-text={assigns[:warn_text]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
       <.dynamic_tag
         :for={s <- assigns[:"s-checked-text"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="checked-text"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
         :for={s <- assigns[:"s-label-text"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
         :for={s <- assigns[:"s-unchecked-text"]}
-        name={Map.get(s, :tag, "div")}
+        tag_name={Map.get(s, :tag, "div")}
         slot="unchecked-text"
       >
-        <%= render_slot(s) %>
+        {render_slot(s)}
       </.dynamic_tag>
     </cds-toggle>
+    """
+  end
+
+  @doc """
+  Component `<cds-toggle-skeleton>` from `./src/components/toggle/toggle-skeleton.ts`
+
+  Undocumented
+
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def toggle_skeleton(assigns) do
+    ~H"""
+    <cds-toggle-skeleton {@rest}>
+      {render_slot(@inner_block)}
+    </cds-toggle-skeleton>
     """
   end
 
@@ -7409,10 +10921,17 @@ defmodule Graphene.CoreComponents do
     ],
     doc: "How the tooltip is aligned to the trigger button."
 
+  attr :alignment_axis_offset, :string,
+    default: "0",
+    doc:
+      "**Experimental:** Provide an offset value for alignment axis. Only takes effect when `autoalign` is enabled."
+
   attr :autoalign, :boolean,
     default: false,
     doc: "Specify whether a auto align functionality should be applied"
 
+  attr :button_label, :string, default: "Show information", doc: "The label for the toggle button"
+  attr :default_open, :boolean, default: false, doc: "Set whether toggletip is open by default."
   attr :open, :boolean, default: false, doc: "Set whether toggletip is open"
   attr :rest, :global
 
@@ -7422,11 +10941,14 @@ defmodule Graphene.CoreComponents do
     ~H"""
     <cds-toggletip
       alignment={assigns[:alignment]}
+      alignment-axis-offset={assigns[:alignment_axis_offset]}
       autoalign={assigns[:autoalign]}
+      button-label={assigns[:button_label]}
+      default-open={assigns[:default_open]}
       open={assigns[:open]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-toggletip>
     """
   end
@@ -7443,9 +10965,27 @@ defmodule Graphene.CoreComponents do
     default: "top",
     doc: "Specify how the trigger should align with the tooltip"
 
+  attr :alignment_axis_offset, :string,
+    default: nil,
+    doc:
+      "**Experimental:** Provide an offset value for alignment axis. Only takes effect when `autoalign` is enabled."
+
   attr :autoalign, :boolean,
     default: false,
     doc: "Specify whether a auto align functionality should be applied"
+
+  attr :autoalign_boundary, :string,
+    default: nil,
+    doc:
+      "Specify a bounding element to be used for autoAlign calculations. The viewport is used by default.\nTakes one of the following: 'clippingAncestors', '#elementid', '#elementid_1, #elementid_2', 'rect(x, y, width, height)'\nThis prop is currently experimental and is subject to future changes."
+
+  attr :background_token, :any,
+    default: nil,
+    doc: "Specify the background token to use. Default is 'layer'."
+
+  attr :border, :boolean,
+    default: false,
+    doc: "Specify whether a border should be rendered on the popover"
 
   attr :caret, :boolean, default: true, doc: "Specify whether a caret should be rendered"
 
@@ -7471,6 +11011,11 @@ defmodule Graphene.CoreComponents do
     default: false,
     doc: "Render the component using the high-contrast variant"
 
+  attr :keyboard_only, :boolean,
+    default: false,
+    doc:
+      "Only open tooltip on keyboard interactions, this is used for interactive tags\n(ie. operational-tag, selectable-tag)"
+
   attr :leave_delay_ms, :string,
     default: "300",
     doc: "Specify the duration in milliseconds to delay before hiding the tooltip"
@@ -7495,7 +11040,11 @@ defmodule Graphene.CoreComponents do
     ~H"""
     <cds-tooltip
       align={assigns[:align]}
+      alignment-axis-offset={assigns[:alignment_axis_offset]}
       autoalign={assigns[:autoalign]}
+      autoalign-boundary={assigns[:autoalign_boundary]}
+      backgroundToken={assigns[:background_token]}
+      border={assigns[:border]}
       caret={assigns[:caret]}
       closeOnActivation={assigns[:close_on_activation]}
       data-table={assigns[:data_table]}
@@ -7503,6 +11052,7 @@ defmodule Graphene.CoreComponents do
       dropShadow={assigns[:drop_shadow]}
       enter-delay-ms={assigns[:enter_delay_ms]}
       highContrast={assigns[:high_contrast]}
+      keyboard-only={assigns[:keyboard_only]}
       leave-delay-ms={assigns[:leave_delay_ms]}
       open={assigns[:open]}
       size={assigns[:size]}
@@ -7511,8 +11061,190 @@ defmodule Graphene.CoreComponents do
       toolbar-action={assigns[:toolbar_action]}
       {@rest}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </cds-tooltip>
+    """
+  end
+
+  @doc """
+  Component `<cds-tooltip-content>` from `./src/components/tooltip/tooltip-content.ts`
+
+  Tooltip content.
+
+
+  """
+
+  attr :align, :string, default: nil, doc: "Specify the popover alignment"
+
+  attr :autoalign, :boolean,
+    default: false,
+    doc: "Specify whether a auto align functionality should be applied"
+
+  attr :background_token, :any,
+    default: nil,
+    doc: "Specify the background token to use. Default is 'layer'."
+
+  attr :border, :boolean,
+    default: false,
+    doc: "Specify whether a border should be rendered on the popover"
+
+  attr :caret, :any, default: nil, doc: "Specify whether a caret should be rendered"
+
+  attr :drop_shadow, :boolean,
+    default: true,
+    doc: "Specify whether a dropShadow should be rendered"
+
+  attr :high_contrast, :boolean,
+    default: false,
+    doc: "Render the component using the high-contrast variant"
+
+  attr :open, :boolean,
+    default: false,
+    doc: "Specify whether the component is currently open or closed"
+
+  attr :slot, :string,
+    default: "content",
+    doc: "The shadow slot this popover content should be in."
+
+  attr :tab_tip, :boolean, default: false, doc: "Render the component using the tab tip variant"
+  attr :rest, :global
+
+  slot :inner_block
+
+  def tooltip_content(assigns) do
+    ~H"""
+    <cds-tooltip-content
+      align={assigns[:align]}
+      autoalign={assigns[:autoalign]}
+      backgroundToken={assigns[:background_token]}
+      border={assigns[:border]}
+      caret={assigns[:caret]}
+      dropShadow={assigns[:drop_shadow]}
+      highContrast={assigns[:high_contrast]}
+      open={assigns[:open]}
+      slot={assigns[:slot]}
+      tabTip={assigns[:tab_tip]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-tooltip-content>
+    """
+  end
+
+  @doc """
+  Component `<cds-tree-node>` from `./src/components/tree-view/tree-node.ts`
+
+  Tree node.
+
+  ## Events
+
+  * `eventSelected` - The name of the custom event fired when node is selected.
+  * `eventToggled` - The name of the custom event fired when a node is toggled.
+
+  """
+
+  attr :active, :boolean, default: false, doc: "sets if tree node is active"
+  attr :disabled, :boolean, default: false, doc: "disabled property"
+  attr :href, :any, default: nil, doc: "Optional: The URL the TreeNode is linking to"
+
+  attr :id, :string,
+    default: "Math.random().toString(16).slice(2)",
+    doc:
+      "Specify the TreeNode's ID. Must be unique in the DOM and is used for props.active, props.selected and aria-owns"
+
+  attr :is_expanded, :boolean,
+    default: false,
+    doc: "Specify if the TreeNode is expanded (only applicable to parent nodes)"
+
+  attr :label, :string, default: nil, doc: "Rendered label for the TreeNode"
+
+  attr :on_click, :any,
+    default: nil,
+    doc: "when adding an href to control the click functionality"
+
+  attr :selected, :boolean, default: false, doc: "sets if tree node is selected"
+  attr :rest, :global
+
+  slot :inner_block
+
+  def tree_node(assigns) do
+    ~H"""
+    <cds-tree-node
+      active={assigns[:active]}
+      disabled={assigns[:disabled]}
+      href={assigns[:href]}
+      id={assigns[:id]}
+      is-expanded={assigns[:is_expanded]}
+      label={assigns[:label]}
+      onClick={assigns[:on_click]}
+      selected={assigns[:selected]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-tree-node>
+    """
+  end
+
+  @doc """
+  Component `<cds-tree-view>` from `./src/components/tree-view/tree-view.ts`
+
+  Tree view.
+
+
+  """
+
+  attr :hide_label, :boolean,
+    default: false,
+    doc: "Specify whether or not the label should be hidden"
+
+  attr :label, :string,
+    default: nil,
+    doc: "Provide the label text that will be read by a screen reader"
+
+  attr :size, :any,
+    default: nil,
+    doc: "Specify the size of the tree from a list of available sizes."
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def tree_view(assigns) do
+    ~H"""
+    <cds-tree-view
+      hide-label={assigns[:hide_label]}
+      label={assigns[:label]}
+      size={assigns[:size]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-tree-view>
+    """
+  end
+
+  @doc """
+  Component `<cds-unordered-list>` from `./src/components/list/unordered-list.ts`
+
+  Unordered list.
+
+
+  """
+
+  attr :is_expressive, :boolean, default: false, doc: "`true` if expressive theme enabled."
+  attr :nested, :boolean, default: false, doc: "Specify whether the list is nested, or not"
+  attr :rest, :global
+
+  slot :inner_block
+
+  def unordered_list(assigns) do
+    ~H"""
+    <cds-unordered-list
+      is-expressive={assigns[:is_expressive]}
+      nested={assigns[:nested]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-unordered-list>
     """
   end
 
@@ -7522,9 +11254,12 @@ defmodule Graphene.CoreComponents do
       "accordion_item",
       "actionable_notification",
       "actionable_notification_button",
+      "ai_label",
+      "ai_label_action_button",
       "ai_skeleton_icon",
       "ai_skeleton_placeholder",
       "ai_skeleton_text",
+      "badge_indicator",
       "breadcrumb",
       "breadcrumb_item",
       "breadcrumb_link",
@@ -7532,29 +11267,52 @@ defmodule Graphene.CoreComponents do
       "button",
       "button_set",
       "button_set_base",
+      "callout_notification",
+      "chat_button",
       "chat_button_skeleton",
       "checkbox",
       "checkbox_group",
       "clickable_tile",
       "code_snippet",
+      "column",
+      "column_hang",
       "combo_box",
       "combo_box_item",
+      "combo_button",
+      "contained_list",
+      "contained_list_description",
+      "contained_list_item",
       "content_switcher",
       "content_switcher_item",
       "copy",
       "copy_button",
       "date_picker",
       "date_picker_input",
+      "definition_tooltip",
+      "dismissible_tag",
       "dropdown",
       "dropdown_item",
       "expandable_tile",
+      "feature_flags",
       "file_uploader",
-      "file_uploader_container",
+      "file_uploader_button",
       "file_uploader_drop_container",
       "file_uploader_item",
       "file_uploader_skeleton",
+      "fluid_number_input",
+      "fluid_number_input_skeleton",
+      "fluid_search",
+      "fluid_search_skeleton",
+      "fluid_select",
+      "fluid_select_skeleton",
+      "fluid_text_input",
+      "fluid_text_input_skeleton",
+      "fluid_textarea",
+      "fluid_textarea_skeleton",
+      "form",
       "form_group",
       "form_item",
+      "grid",
       "header",
       "header_global_action",
       "header_menu",
@@ -7565,12 +11323,22 @@ defmodule Graphene.CoreComponents do
       "header_nav_item",
       "header_panel",
       "header_side_nav_items",
+      "heading",
+      "icon",
+      "icon_button",
+      "icon_indicator",
       "inline_loading",
       "inline_notification",
       "layer",
       "link",
       "list_item",
       "loading",
+      "menu_button",
+      "menu_item",
+      "menu_item_divider",
+      "menu_item_group",
+      "menu_item_radio_group",
+      "menu_item_selectable",
       "modal",
       "modal_body",
       "modal_body_content",
@@ -7583,10 +11351,20 @@ defmodule Graphene.CoreComponents do
       "multi_select",
       "multi_select_item",
       "number_input",
+      "operational_tag",
+      "ordered_list",
       "overflow_menu",
       "overflow_menu_body",
       "overflow_menu_item",
+      "page_header",
+      "page_header_breadcrumb",
+      "page_header_content",
+      "page_header_content_text",
+      "page_header_hero_image",
+      "page_header_tabs",
       "pagination",
+      "password_input",
+      "password_input_skeleton",
       "popover",
       "popover_content",
       "progress_bar",
@@ -7599,7 +11377,9 @@ defmodule Graphene.CoreComponents do
       "select",
       "select_item",
       "select_item_group",
+      "selectable_tag",
       "selectable_tile",
+      "shape_indicator",
       "side_nav",
       "side_nav_divider",
       "side_nav_items",
@@ -7627,6 +11407,7 @@ defmodule Graphene.CoreComponents do
       "switcher_divider",
       "switcher_item",
       "tab",
+      "tab_skeleton",
       "table",
       "table_batch_actions",
       "table_body",
@@ -7644,15 +11425,27 @@ defmodule Graphene.CoreComponents do
       "table_toolbar_content",
       "table_toolbar_search",
       "tabs",
+      "tabs_skeleton",
+      "tag",
+      "tag_skeleton",
       "tearsheet",
       "text_input",
+      "text_input_skeleton",
       "textarea",
+      "textarea_skeleton",
       "tile",
       "tile_group",
+      "time_picker",
+      "time_picker_select",
       "toast_notification",
       "toggle",
+      "toggle_skeleton",
       "toggletip",
-      "tooltip"
+      "tooltip",
+      "tooltip_content",
+      "tree_node",
+      "tree_view",
+      "unordered_list"
     ]
   end
 end

@@ -81,7 +81,7 @@ defmodule Graphene.Icons do
 
     ~H"""
     <SVG.svg width={@width} height={@height} viewBox={@viewBox} {@rest}>
-      <%= {:safe, @content} %>
+      {{:safe, @content}}
     </SVG.svg>
     """
   end

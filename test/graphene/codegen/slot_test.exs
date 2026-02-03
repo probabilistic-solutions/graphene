@@ -46,7 +46,7 @@ defmodule Graphene.CodeGen.Component.SlotTest do
       res = Slot.display_use(slot)
 
       assert res ==
-               ~S|<.dynamic_tag :for={s <- assigns[:"title-icon"]} name={Map.get(s, :tag, "div")} slot="title-icon"><%= render_slot(s) %></.dynamic_tag>|
+               ~S|<.dynamic_tag :for={s <- assigns[:"title-icon"]} tag_name={Map.get(s, :tag, "div")} slot="title-icon"><%= render_slot(s) %></.dynamic_tag>|
     end
   end
 end

@@ -45,9 +45,9 @@ defmodule Graphene.SVG do
       {@rest}
     >
       <%= if not is_nil(@title) do %>
-        <title><%= @title %></title>
+        <title>{@title}</title>
       <% end %>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </svg>
     """
   end

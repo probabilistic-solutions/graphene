@@ -147,7 +147,7 @@ defmodule Graphene.CodeGen.ComponentTest do
                   toolbar-action={assigns[:toolbar_action]}
                   {@rest}>
                   <%= render_slot(@inner_block) %>
-                  <.dynamic_tag :for={s <- assigns[:"s-icon"]} name={Map.get(s, :tag, "div")} slot="icon"><%= render_slot(s) %></.dynamic_tag>
+                  <.dynamic_tag :for={s <- assigns[:"s-icon"]} tag_name={Map.get(s, :tag, "div")} slot="icon"><%= render_slot(s) %></.dynamic_tag>
                  </cds-breadcrumb-overflow-menu>
                  """
              end

@@ -36,7 +36,7 @@ defmodule Graphene.CodeGen.Component.Slot do
 
   def display_use(slot, opts \\ []) do
     template =
-      ~S|<.dynamic_tag :for={s <- assigns[<%= @slot.atomname %>]} name={Map.get(s, :tag, "div")} slot=<%= inspect(@slot.htmlname) %>><%%= render_slot(s) %></.dynamic_tag>|
+      ~S|<.dynamic_tag :for={s <- assigns[<%= @slot.atomname %>]} tag_name={Map.get(s, :tag, "div")} slot=<%= inspect(@slot.htmlname) %>><%%= render_slot(s) %></.dynamic_tag>|
 
     EEx.eval_string(template, [assigns: [slot: slot]], opts)
   end

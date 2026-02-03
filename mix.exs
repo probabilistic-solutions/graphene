@@ -4,7 +4,7 @@ defmodule Graphene.MixProject do
   def project do
     [
       app: :graphene,
-      version: "0.1.0",
+      version: "2.47.0", # same as webcomponents
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -31,9 +31,9 @@ defmodule Graphene.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.7.12"},
+      {:phoenix, "~> 1.8.3"},
       {:phoenix_html, "~> 4.0"},
-      {:phoenix_live_view, "~> 0.20.2"},
+      {:phoenix_live_view, "~>  1.1.0"},
       {:gettext, "~> 0.20"},
       {:lib_combin, "~> 0.1.5"},
       # dev deps (e.g. for code gen)
@@ -42,7 +42,7 @@ defmodule Graphene.MixProject do
       {:floki, ">= 0.30.0", only: :test},
       # stories
       {:tmp, "~> 0.2.0", only: :dev},
-      {:phoenix_storybook, "~> 0.6.0", optional: true}
+      {:phoenix_storybook, "~> 0.9.3", optional: true}
     ]
   end
 
