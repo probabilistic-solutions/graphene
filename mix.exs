@@ -41,7 +41,7 @@ defmodule Graphene.MixProject do
       # testing
       {:floki, ">= 0.30.0", only: :test},
       # stories
-
+      {:tmp, "~> 0.2.0", only: :dev},
     ]
   end
 

@@ -18,7 +18,7 @@ pkgs.mkShell {
       elixir
       elixir-ls
       yarn
-      prettier
+      chromedriver
       tailwindcss_4
       esbuild
       watchman
