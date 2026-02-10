@@ -2,14 +2,7 @@ import { WebComponentManager, Hooks, mergeWebComponentsAttrs as onBeforeElUpdate
 
 (function () {
   const componentManager = new WebComponentManager();
-
-  // Check if connect method exists before calling it
-  if (typeof componentManager.connect === 'function') {
-    componentManager.connect();
-  } else {
-    console.warn('WebComponentManager.connect() is not available');
-  };
-
+  componentManager.connect();
   (window as any).storybook = {
     Hooks,
     LiveSocketOptions: {
