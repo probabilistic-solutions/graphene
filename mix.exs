@@ -34,15 +34,14 @@ defmodule Graphene.MixProject do
       {:phoenix, "~> 1.8.3"},
       {:phoenix_html, "~> 4.0"},
       {:phoenix_live_view, "~>  1.1.0"},
-      {:gettext, "~> 0.20"},
+      {:gettext, "~> 1.0.2"},
       {:lib_combin, "~> 0.1.5"},
       # dev deps (e.g. for code gen)
       {:jason, "~> 1.2", only: :dev},
       # testing
       {:floki, ">= 0.30.0", only: :test},
       # stories
-      {:tmp, "~> 0.2.0", only: :dev},
-      {:phoenix_storybook, "~> 0.9.3", optional: true}
+
     ]
   end
 

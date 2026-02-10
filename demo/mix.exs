@@ -23,20 +23,21 @@ defmodule Demo.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:phoenix, "~> 1.7.12"},
+      {:phoenix, "~> 1.8.3"},
       {:phoenix_html, "~> 4.0"},
+      {:phoenix_live_view, "~>  1.1.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 0.20.2"},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.3"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
-      {:gettext, "~> 0.20"},
+      {:gettext, "~> 1.0.2"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
-      {:phoenix_storybook, "~> 0.6.0", optional: true},
-      {:graphene, path: ".."}
+      {:graphene, path: ".."},
+      {:tmp, "~> 0.2.0", only: :dev},
+      {:phoenix_storybook, "~> 0.9.3", optional: true},
     ]
   end
 
