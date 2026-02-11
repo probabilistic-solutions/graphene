@@ -28,6 +28,7 @@ defmodule Demo.MixProject do
       {:phoenix_live_view, "~>  1.1.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:floki, ">= 0.30.0", only: :test},
+      {:wallaby, "~> 0.30.0", only: :test, runtime: false},
       {:phoenix_live_dashboard, "~> 0.8.3"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
