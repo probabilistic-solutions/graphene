@@ -17,7 +17,6 @@ pkgs.mkShell {
       nixpkgs-fmt
       elixir
       elixir-ls
-      yarn
       chromedriver
       tailwindcss_4
       esbuild

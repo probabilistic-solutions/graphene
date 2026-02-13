@@ -1,27 +1,32 @@
 /* This is your custom storybook stylesheet. */
 @use '@carbon/styles/scss/theme';
 @use '@carbon/styles/scss/themes';
-// @use 'demo';
-$font-prefix: '../fonts';
-@import '@ibm/plex/scss/mono/index';
-@import '@ibm/plex/scss/sans/index';
-@import '@ibm/plex/scss/serif/index';
+@use '@carbon/styles/scss/reset';
+@use '@carbon/styles/scss/type';
 
-@mixin sans-font {
-    font-family:
-        "IBM Plex Sans",
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        ".SFNSText-Regular",
-        sans-serif;
+@import '@ibm/plex/css/ibm-plex.css';
+
+@include type.reset;
+
+.psb {
+  @include type.font-family('sans');
+  --psb-font-mono: #{type.font-family('mono')};
+}
+
+.psb code.psb,
+.psb pre.psb,
+.psb kbd.psb,
+.psb samp.psb,
+.psb-doc pre code,
+.psb-doc code.inline {
+  @include type.font-family('mono');
 }
 
 .demo-sandbox {
-    @import '@carbon/styles/scss/reset';
-    @include sans-font;
-    @include theme.theme(themes.$g10);
-    background-color: var(--cds-background);
-    color: var(--cds-text-primary);
-    // @include demo.components;
+  @include reset.reset;
+  @include type.font-family('sans');
+  @include type.default-type;
+  @include theme.theme(themes.$g10);
+  background-color: var(--cds-background);
+  color: var(--cds-text-primary);
 }

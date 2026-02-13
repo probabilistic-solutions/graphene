@@ -5,7 +5,7 @@
 // single point of entry JS file, where you have a LiveView connection
 // setup. We need to make some changes there:
 
-// import { mergeWebComponentsAttrs } from "graphene/hooks";
+// import { mergeWebComponentsAttrs } from "graphene";
 
 // let liveSocket = new LiveSocket("/live", Socket, {
 //   longPollFallbackMs: 2500,

@@ -7,6 +7,7 @@ defmodule Demo.MixProject do
       version: "0.1.0",
       elixir: "~> 1.16",
       start_permanent: Mix.env() == :prod,
+      listeners: [Phoenix.CodeReloader],
       deps: deps(),
       aliases: aliases()
     ]
@@ -54,7 +55,7 @@ defmodule Demo.MixProject do
       # building assets requires npm available in shell
       "assets.setup": [
         # download files to node_modules
-        "cmd --cd assets yarn install --cache-folder .yarn/cache"
+        "cmd --cd assets npm install"
       ],
       "assets.build": [
         # our build requires build.js where esbuild is limited in CLI

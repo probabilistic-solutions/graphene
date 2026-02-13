@@ -1,4 +1,5 @@
-import { WebComponentManager, Hooks, mergeWebComponentsAttrs as onBeforeElUpdated } from "graphene/src";
+import { WebComponentManager, mergeWebComponentsAttrs as onBeforeElUpdated } from "graphene";
+import { Hooks } from "./hooks";
 
 (function () {
   const componentManager = new WebComponentManager();

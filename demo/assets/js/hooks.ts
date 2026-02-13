@@ -1,2 +1,4 @@
 /* Place for custom hooks */
-export { Hooks } from "graphene/src";
+import { Hooks as GrapheneHooks } from "graphene";
+
+export const Hooks = { ...GrapheneHooks };

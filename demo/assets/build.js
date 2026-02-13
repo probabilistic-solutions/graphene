@@ -32,7 +32,7 @@ const plugins = [
         // TODO: Those are copied from elixir task make sure to apply similar flags
         // "sass default --no-source-map --style=compressed --load-path node-modules",
         include: ['/\.scss$/', '**/*.scss', '**/*.sass'],
-        Paths: ["node-modules/", ".", ".."],
+        loadPaths: ["node_modules", ".", ".."],
         // TODO: configure autoprefixer as per Carbon docs
         // async transform(source, resolveDir) {
         //   const { css } = await postcss([autoprefixer,
@@ -56,7 +56,7 @@ let opts = {
     target: "es2020",
     format: "esm",
     outdir: "../priv/static/assets",
-    external: ["*.css", "../fonts/*", "images/*"],
+    external: ["../fonts/*", "images/*"],
     loader: loader,
     plugins: plugins,
     inject: ["./process_polyfill.js"],

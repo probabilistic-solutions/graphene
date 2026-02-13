@@ -34,4 +34,4 @@
 
 ## Environment & Configuration
 - `.envrc` opts into Nix; use `nix-shell` if you want a reproducible toolchain.
-- Asset builds require Node + Yarn; demo assets use the `demo/assets` build script.
+- Asset builds require Node + npm; demo assets use the `demo/assets` build script.

@@ -1,12 +1,33 @@
 {
-    "package": "graphene",
-    "version": "0.0.1",
+    "name": "graphene",
+    "version": "2.47.0",
     "type": "module",
+    "module": "./dist/index.js",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        },
+        "./styles": "./dist/graphene.css",
+        "./styles.css": "./dist/graphene.css"
+    },
+    "files": [
+        "dist",
+        "src",
+        "styles.css"
+    ],
     "scripts": {
-        "build": "node build.cjs"
+        "build": "node build.cjs",
+        "build:dist": "node build.cjs --outdir dist && tsc -p tsconfig.json",
+        "clean": "rm -rf dist",
+        "prepare": "npm run build:dist"
     },
     "dependencies": {
-        "@carbon/web-components": "==2.47.0"
+        "@carbon/styles": "^1.100.0",
+        "@ibm/plex": "^6.4.1",
+        "@carbon/web-components": "2.47.0"
     },
     "devDependencies": {
         "@types/node": "^20.11.30",

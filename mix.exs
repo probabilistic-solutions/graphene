@@ -36,8 +36,9 @@ defmodule Graphene.MixProject do
       {:phoenix_live_view, "~>  1.1.0"},
       {:gettext, "~> 1.0.2"},
       {:lib_combin, "~> 0.1.5"},
+      {:esbuild, "~> 0.8", runtime: false},
       # dev deps (e.g. for code gen)
-      {:jason, "~> 1.2", only: :dev},
+      {:jason, "~> 1.4"},
       # testing
       {:floki, ">= 0.30.0", only: :test},
       # stories
@@ -57,18 +58,16 @@ defmodule Graphene.MixProject do
       # building assets requires npm available in shell
       "assets.setup": [
         # download files to node_modules
-        "cmd --cd assets yarn install --cache-folder .yarn/cache"
+        "cmd --cd assets npm install"
       ],
       "assets.clean": ["cmd rm -rf priv/static/assets"],
       "assets.build": [
         "assets.clean",
-        # our build requires build.js where esbuild is limited in CLI
-        "cmd --cd assets yarn build --outdir ../priv/static/assets"
+        "esbuild graphene"
       ],
       "assets.deploy": [
         "assets.clean",
-        # same as build but digests the output
-        "cmd --cd assets yarn build --outdir ../priv/static/assets --deploy"
+        "esbuild graphene_prod"
       ]
     ]
   end

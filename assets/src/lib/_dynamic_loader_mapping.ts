@@ -5,7 +5,7 @@
 type ComponentImports = { [componentName: string]: () => Promise<any> };
 
 // Define a static mapping for component imports
-export const componentImports: ComponentMappings = {
+export const componentImports: ComponentImports = {
   'cds-accordion': () => import("@carbon/web-components/es/components/accordion/index.js"),
   'cds-accordion-item': () => import("@carbon/web-components/es/components/accordion/index.js"),
   'cds-actionable-notification': () => import("@carbon/web-components/es/components/notification/index.js"),
