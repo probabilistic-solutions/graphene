@@ -12,9 +12,28 @@ defmodule Demo.StorybookRenderingTest do
     {:ok, session: session}
   end
 
-  feature "renders button component story", %{session: session} do
-    session
-    |> visit("/components/button")
-    |> assert_has(css("cds-button"))
+  feature "renders all storybook stories", %{session: session} do
+    story_paths()
+    |> Enum.reduce(session, fn path, session ->
+      session
+      |> visit(path)
+      |> assert_has(css(".psb-sandbox"))
+    end)
+  end
+
+  defp story_paths do
+    storybook_root = Path.join(:code.priv_dir(:graphene), "storybook")
+
+    storybook_root
+    |> Path.join("**/*.story.exs")
+    |> Path.wildcard()
+    |> Enum.map(&storybook_path/1)
+    |> Enum.sort()
+  end
+
+  defp storybook_path(file) do
+    storybook_root = Path.join(:code.priv_dir(:graphene), "storybook")
+    relative = Path.relative_to(file, storybook_root)
+    "/" <> String.replace_suffix(relative, ".story.exs", "")
   end
 end

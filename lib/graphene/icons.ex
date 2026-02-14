@@ -28,13 +28,32 @@ defmodule Graphene.Icons do
   use Phoenix.Component
   alias Graphene.SVG
 
-  @available_icons (if Code.loaded?(Graphene.IconsRaw) do
+  @icons_raw_source Path.join(__DIR__, "icons_raw.ex")
+  @external_resource @icons_raw_source
+
+  @available_icons (if Code.ensure_loaded?(Graphene.IconsRaw) do
                       Graphene.IconsRaw.available_icons()
                     else
-                      ["not_compiled"]
+                      case File.read(@icons_raw_source) do
+                        {:ok, content} ->
+                          case Regex.run(
+                                 ~r/def available_icons\\(\\),\\s*do: \\[(.*?)\\]\\s*def/s,
+                                 content
+                               ) do
+                            [_, list_body] ->
+                              Regex.scan(~r/"([^"]+)"/, list_body)
+                              |> Enum.map(fn [_, name] -> name end)
+
+                            _ ->
+                              []
+                          end
+
+                        _ ->
+                          []
+                      end
                     end)
 
-  defdelegate available_icons(), to: Graphene.IconsRaw
+  def available_icons, do: @available_icons
 
   defp autosize(%{fit: fit} = assigns) do
     {width, height} =
