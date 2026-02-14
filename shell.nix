@@ -14,11 +14,9 @@ pkgs.mkShell {
       rustc
       nodejs
       deno
-      chromium
       nixpkgs-fmt
       elixir
       elixir-ls
-      chromedriver
       tailwindcss_4
       esbuild
       watchman
@@ -37,6 +35,8 @@ pkgs.mkShell {
         [
           libnotify
           inotify-tools
+          ungoogled-chromium
+          chromedriver
         ]
       ))
     );

@@ -18,6 +18,50 @@ defmodule Storybook.BasicComponents.Input do
         attributes: %{name: "password", type: "password", label: "Password", value: "secret"}
       },
       %Variation{
+        id: :color,
+        attributes: %{name: "favorite_color", type: "color", label: "Color", value: "#0f62fe"}
+      },
+      %Variation{
+        id: :date,
+        attributes: %{name: "date", type: "date", label: "Date", value: "2024-12-31"}
+      },
+      %Variation{
+        id: :datetime_local,
+        attributes: %{
+          name: "meeting",
+          type: "datetime-local",
+          label: "Datetime",
+          value: "2024-12-31T09:30"
+        }
+      },
+      %Variation{
+        id: :tel,
+        attributes: %{name: "phone", type: "tel", label: "Phone", value: "+1 555 123 4567"}
+      },
+      %Variation{
+        id: :url,
+        attributes: %{name: "website", type: "url", label: "Website", value: "https://example.com"}
+      },
+      %Variation{
+        id: :time,
+        attributes: %{name: "time", type: "time", label: "Time", value: "13:45"}
+      },
+      %Variation{
+        id: :week,
+        attributes: %{name: "week", type: "week", label: "Week", value: "2024-W52"}
+      },
+      %Variation{
+        id: :file,
+        attributes: %{
+          name: "attachment",
+          type: "file",
+          label: "Upload CV",
+          prompt: "PDF or DOCX",
+          accept: ".pdf,.doc,.docx",
+          errors: ["Please choose a file"]
+        }
+      },
+      %Variation{
         id: :textarea,
         attributes: %{name: "bio", type: "textarea", label: "Bio", value: "I love Carbon."}
       },

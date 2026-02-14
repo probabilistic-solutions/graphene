@@ -20,6 +20,7 @@ defmodule Graphene.BasicComponents do
   }
 
   @available_graphene_icons MapSet.new(Graphene.Icons.available_icons())
+  @basic_icon_names Graphene.Icons.available_icons() ++ Map.keys(@hero_icon_map)
   @icon_fallback "help"
 
   @doc """
@@ -505,7 +506,7 @@ defmodule Graphene.BasicComponents do
   @doc """
   Renders a Carbon icon by name.
   """
-  attr :name, :string, required: true
+  attr :name, :string, required: true, values: @basic_icon_names
   attr :class, :any, default: ""
   attr :size, :integer, default: 24
 

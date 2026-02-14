@@ -2,7 +2,7 @@ defmodule Demo.StorybookRenderingFeatureTest do
   use ExUnit.Case, async: false
   use Wallaby.Feature
 
-  import Wallaby.Query, only: [css: 1]
+  import Wallaby.Query, only: [css: 1, css: 2, button: 1]
 
   @moduletag :wallaby
 
@@ -19,6 +19,18 @@ defmodule Demo.StorybookRenderingFeatureTest do
       |> visit(path)
       |> assert_has(css(".psb-sandbox"))
     end)
+  end
+
+  feature "table story logs client events", %{session: session} do
+    session
+    |> visit("/basic_components/table")
+    # basic table simulator -> logs
+    |> click(button("Select row 2"))
+    |> assert_has(css("#basic-events-log", text: "row_selected"))
+    |> assert_has(css("#basic-events-log", text: "row-2"))
+    # core table simulator -> logs
+    |> click(button("Core: Select row 2"))
+    |> assert_has(css("#core-events-log", text: "core-row-2"))
   end
 
   defp story_paths do

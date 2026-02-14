@@ -44,6 +44,7 @@ defmodule Graphene.BasicComponents.TableComponent do
     ~H"""
     <div id={@id}>
       <CoreComponents.table
+        id={@table_id}
         use_zebra_styles={true}
         is_selectable={@effective_selectable}
         is_sortable={@effective_sortable}
@@ -73,7 +74,7 @@ defmodule Graphene.BasicComponents.TableComponent do
         >
           <CoreComponents.table_row
             :for={{row, index} <- Enum.with_index(@rows)}
-            id={row_dom_id(@row_id, row)}
+            id={row_dom_id(@row_id, row, index)}
             data-row-id={row_key_string(@row_id, row, index)}
             selected={row_selected?(@selected_set, @row_id, row, index)}
             selection_name={@effective_selectable && @selection_name}
@@ -190,16 +191,15 @@ defmodule Graphene.BasicComponents.TableComponent do
     |> to_string()
   end
 
-  defp row_dom_id(row_id_fun, row) do
+  defp row_dom_id(row_id_fun, row, index) do
     case row_id_fun do
       fun when is_function(fun, 1) ->
-        case fun.(row) do
-          nil -> nil
-          value -> to_string(value)
-        end
+        row_id_fun
+        |> row_key(row, index)
+        |> to_string()
 
       _ ->
-        nil
+        row_key(row_id_fun, row, index) |> to_string()
     end
   end
 
