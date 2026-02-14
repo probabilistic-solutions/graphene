@@ -1,4 +1,4 @@
-defmodule Demo.StorybookRenderingTest do
+defmodule Demo.StorybookRenderingFeatureTest do
   use ExUnit.Case, async: false
   use Wallaby.Feature
 
@@ -35,5 +35,25 @@ defmodule Demo.StorybookRenderingTest do
     storybook_root = Path.join(:code.priv_dir(:graphene), "storybook")
     relative = Path.relative_to(file, storybook_root)
     "/" <> String.replace_suffix(relative, ".story.exs", "")
+  end
+end
+
+defmodule Demo.StorybookRenderingServerTest do
+  use ExUnit.Case, async: true
+  import Phoenix.ConnTest
+  import Phoenix.LiveViewTest
+
+  @endpoint DemoWeb.Endpoint
+
+  test "table story renders rows server-side" do
+    {:ok, _view, html} =
+      build_conn()
+      |> live("/basic_components/table")
+
+    # If rendering fails (e.g., invalid DOM ids), LiveView exits and this assertion is never reached.
+    assert html =~ "BasicComponents table"
+    assert html =~ "Ada Lovelace"
+    assert html =~ "Grace Hopper"
+    assert html =~ "cds-table"
   end
 end

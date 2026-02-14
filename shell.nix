@@ -14,6 +14,7 @@ pkgs.mkShell {
       rustc
       nodejs
       deno
+      chromium
       nixpkgs-fmt
       elixir
       elixir-ls

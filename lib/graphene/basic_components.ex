@@ -233,7 +233,6 @@ defmodule Graphene.BasicComponents do
           {render_select_option(option, @selected)}
         <% end %>
       </CoreComponents.select>
-      <.error :for={msg <- @errors}>{msg}</.error>
     </CoreComponents.form_item>
     """
   end
@@ -258,7 +257,6 @@ defmodule Graphene.BasicComponents do
         class={@class}
         {@rest}
       />
-      <.error :for={msg <- @errors}>{msg}</.error>
     </CoreComponents.form_item>
     """
   end
@@ -304,7 +302,6 @@ defmodule Graphene.BasicComponents do
         class={@class}
         {@rest}
       />
-      <.error :for={msg <- @errors}>{msg}</.error>
     </CoreComponents.form_item>
     """
   end
@@ -355,7 +352,6 @@ defmodule Graphene.BasicComponents do
         class={@class}
         {@rest}
       />
-      <.error :for={msg <- @errors}>{msg}</.error>
     </CoreComponents.form_item>
     """
   end

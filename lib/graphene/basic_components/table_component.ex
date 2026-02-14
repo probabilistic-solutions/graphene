@@ -192,8 +192,14 @@ defmodule Graphene.BasicComponents.TableComponent do
 
   defp row_dom_id(row_id_fun, row) do
     case row_id_fun do
-      fun when is_function(fun, 1) -> fun.(row)
-      _ -> nil
+      fun when is_function(fun, 1) ->
+        case fun.(row) do
+          nil -> nil
+          value -> to_string(value)
+        end
+
+      _ ->
+        nil
     end
   end
 
