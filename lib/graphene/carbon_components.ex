@@ -59,6 +59,12 @@ defmodule Graphene.CarbonComponents do
   end
 
   def accordion(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:alignment, fn -> nil end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:is_flush, fn -> false end)
+
     ~H"""
     <CoreComponents.accordion
       alignment={@alignment}
@@ -141,16 +147,14 @@ defmodule Graphene.CarbonComponents do
   * `low_contrast` (`:boolean`) - Low contrast mode. Defaults to `false`.
   * `open` (`:boolean`) - `true` if the notification should be open. Defaults to `true`.
   * `status_icon_description` (`:string`) - Provide a description for "status" icon that can be read by screen readers. Defaults to `nil`.
-  * `subtitle` (`:string`) - The subtitle. Defaults to `nil`.
   * `timeout` (`:any`) - Specify an optional duration the notification should be closed in. Defaults to `nil`.
-  * `title` (`:string`) - The title. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-subtitle` - The subtitle. Accepts attributes:
+  * `subtitle` - The subtitle. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-title` - The title. Accepts attributes:
+  * `title` - The title. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -186,16 +190,14 @@ defmodule Graphene.CarbonComponents do
   attr :status_icon_description, :string,
     doc: "Provide a description for \"status\" icon that can be read by screen readers"
 
-  attr :subtitle, :string, doc: "The subtitle."
   attr :timeout, :any, doc: "Specify an optional duration the notification should be closed in"
-  attr :title, :string, doc: "The title."
   slot :inner_block
 
-  slot :"s-subtitle", doc: "The subtitle." do
+  slot :subtitle, doc: "The subtitle." do
     attr :tag, :string
   end
 
-  slot :"s-title", doc: "The title." do
+  slot :title, doc: "The title." do
     attr :tag, :string
   end
 
@@ -353,6 +355,12 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
+  * `body_text` - Content for the AI label body. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `actions` - Action buttons for the AI label. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
@@ -406,7 +414,66 @@ defmodule Graphene.CarbonComponents do
 
   attr :size, :any, doc: "AI Label size should be mini, 2xs, xs, sm, md, lg, xl."
   attr :slot, :string, default: "ai-label"
+
+  slot :actions, doc: "Action buttons for the AI label." do
+    attr :tag, :string
+  end
+
+  slot :body_text, doc: "Content for the AI label body." do
+    attr :tag, :string
+  end
+
   slot :inner_block
+
+  slot :action_button do
+    attr :attrs, :map
+  end
+
+  def ai_label(%{} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:ai_text_label, fn -> nil end)
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:default_open, fn -> false end)
+      |> assign_new(:kind, fn -> nil end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:previous_value, fn -> nil end)
+      |> assign_new(:revert_active, fn -> false end)
+      |> assign_new(:size, fn -> nil end)
+
+    ~H"""
+    <CoreComponents.ai_label
+      ai_text={assigns[:ai_text]}
+      ai_text_label={assigns[:ai_text_label]}
+      alignment={assigns[:alignment]}
+      alignment_axis_offset={assigns[:alignment_axis_offset]}
+      autoalign={assigns[:autoalign]}
+      button_label={assigns[:button_label]}
+      default_open={assigns[:default_open]}
+      kind={assigns[:kind]}
+      open={assigns[:open]}
+      previous_value={assigns[:previous_value]}
+      revert_active={assigns[:revert_active]}
+      revert_label={assigns[:revert_label]}
+      size={assigns[:size]}
+      slot={assigns[:slot]}
+      {@rest}
+    >
+      <.dynamic_tag :for={body <- @body_text} tag_name={Map.get(body, :tag, "div")} slot="body-text">
+        {render_slot(body)}
+      </.dynamic_tag>
+      <.dynamic_tag :for={action <- @actions} tag_name={Map.get(action, :tag, "div")} slot="actions">
+        {render_slot(action)}
+      </.dynamic_tag>
+      <%= for action_button <- @action_button do %>
+        <CoreComponents.ai_label_action_button {action_button[:attrs] || %{}}>
+          {render_slot(action_button)}
+        </CoreComponents.ai_label_action_button>
+      <% end %>
+      {render_slot(@inner_block)}
+    </CoreComponents.ai_label>
+    """
+  end
 
   def ai_label(assigns) do
     CoreComponents.ai_label(assigns)
@@ -691,6 +758,11 @@ defmodule Graphene.CarbonComponents do
   end
 
   def breadcrumb(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:no_trailing_slash, fn -> false end)
+      |> assign_new(:size, fn -> nil end)
+
     ~H"""
     <CoreComponents.breadcrumb no_trailing_slash={@no_trailing_slash} size={@size} {@rest}>
       <%= for item <- @item do %>
@@ -849,7 +921,7 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-icon` - The icon for the trigger button. Accepts attributes:
+  * `icon` - The icon for the trigger button. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -955,11 +1027,11 @@ defmodule Graphene.CarbonComponents do
     values: ["button", "reset", "submit"],
     default: "button"
 
-  slot :inner_block
-
-  slot :"s-icon", doc: "The icon for the trigger button." do
+  slot :icon, doc: "The icon for the trigger button." do
     attr :tag, :string
   end
+
+  slot :inner_block
 
   def breadcrumb_overflow_menu(assigns) do
     CoreComponents.breadcrumb_overflow_menu(assigns)
@@ -1013,7 +1085,7 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-icon` - Icon. Accepts attributes:
+  * `icon` - Icon. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -1086,11 +1158,11 @@ defmodule Graphene.CarbonComponents do
     values: ["button", "reset", "submit"],
     default: "button"
 
-  slot :inner_block
-
-  slot :"s-icon", doc: "Icon." do
+  slot :icon, doc: "Icon." do
     attr :tag, :string
   end
+
+  slot :inner_block
 
   def button(assigns) do
     CoreComponents.button(assigns)
@@ -1169,23 +1241,18 @@ defmodule Graphene.CarbonComponents do
   * `low_contrast` (`:boolean`) - Low contrast mode. Defaults to `false`.
   * `open` (`:boolean`) - `true` if the notification should be open. Defaults to `true`.
   * `status_icon_description` (`:string`) - Provide a description for "status" icon that can be read by screen readers. Defaults to `nil`.
-  * `subtitle` (`:string`) - The subtitle. Defaults to `nil`.
   * `timeout` (`:any`) - Specify an optional duration the notification should be closed in. Defaults to `nil`.
-  * `title` (`:string`) - The title. Defaults to `nil`.
   * `title_id` (`:string`) - Specify the id for the title element. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-` - The default slot for additional content. Accepts attributes:
+  * `action` - The action button. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-action` - The action button. Accepts attributes:
+  * `subtitle` - The subtitle. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-subtitle` - The subtitle. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `s-title` - The title. Accepts attributes:
+  * `title` - The title. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -1221,25 +1288,20 @@ defmodule Graphene.CarbonComponents do
   attr :status_icon_description, :string,
     doc: "Provide a description for \"status\" icon that can be read by screen readers"
 
-  attr :subtitle, :string, doc: "The subtitle."
   attr :timeout, :any, doc: "Specify an optional duration the notification should be closed in"
-  attr :title, :string, doc: "The title."
   attr :title_id, :string, doc: "Specify the id for the title element."
+
+  slot :action, doc: "The action button." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-", doc: "The default slot for additional content." do
+  slot :subtitle, doc: "The subtitle." do
     attr :tag, :string
   end
 
-  slot :"s-action", doc: "The action button." do
-    attr :tag, :string
-  end
-
-  slot :"s-subtitle", doc: "The subtitle." do
-    attr :tag, :string
-  end
-
-  slot :"s-title", doc: "The title." do
+  slot :title, doc: "The title." do
     attr :tag, :string
   end
 
@@ -1463,6 +1525,19 @@ defmodule Graphene.CarbonComponents do
   end
 
   def checkbox_group(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:disabled, fn -> nil end)
+      |> assign_new(:helper_text, fn -> nil end)
+      |> assign_new(:invalid, fn -> nil end)
+      |> assign_new(:invalid_text, fn -> nil end)
+      |> assign_new(:legend_id, fn -> nil end)
+      |> assign_new(:legend_text, fn -> nil end)
+      |> assign_new(:orientation, fn -> nil end)
+      |> assign_new(:readonly, fn -> false end)
+      |> assign_new(:warn, fn -> false end)
+      |> assign_new(:warn_text, fn -> nil end)
+
     ~H"""
     <CoreComponents.checkbox_group
       disabled={@disabled}
@@ -1647,6 +1722,44 @@ defmodule Graphene.CarbonComponents do
 
   attr :wrap_text, :boolean, doc: "`true` if the button should be disabled."
   slot :inner_block
+
+  def code_snippet(%{copy_text: nil} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:copy_text, fn -> nil end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:hide_copy_button, fn -> false end)
+      |> assign_new(:wrap_text, fn -> false end)
+
+    ~H"""
+    <% copy_text =
+      @copy_text ||
+        @inner_block
+        |> render_slot()
+        |> Phoenix.HTML.Safe.to_iodata()
+        |> IO.iodata_to_binary()
+        |> String.trim() %>
+    <CoreComponents.code_snippet
+      copy_text={copy_text}
+      disabled={@disabled}
+      feedback={@feedback}
+      feedback_timeout={@feedback_timeout}
+      hide_copy_button={@hide_copy_button}
+      max_collapsed_number_of_rows={@max_collapsed_number_of_rows}
+      max_expanded_number_of_rows={@max_expanded_number_of_rows}
+      min_collapsed_number_of_rows={@min_collapsed_number_of_rows}
+      min_expanded_number_of_rows={@min_expanded_number_of_rows}
+      show_less_text={@show_less_text}
+      show_more_text={@show_more_text}
+      tooltip_content={@tooltip_content}
+      type={@type}
+      wrap_text={@wrap_text}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </CoreComponents.code_snippet>
+    """
+  end
 
   def code_snippet(assigns) do
     CoreComponents.code_snippet(assigns)
@@ -1860,6 +1973,31 @@ defmodule Graphene.CarbonComponents do
   end
 
   def combo_box(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:allow_custom_value, fn -> false end)
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:helper_text, fn -> nil end)
+      |> assign_new(:hide_label, fn -> false end)
+      |> assign_new(:input_label, fn -> nil end)
+      |> assign_new(:invalid, fn -> false end)
+      |> assign_new(:invalid_text, fn -> nil end)
+      |> assign_new(:label, fn -> nil end)
+      |> assign_new(:name, fn -> nil end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:read_only, fn -> false end)
+      |> assign_new(:required, fn -> false end)
+      |> assign_new(:should_filter_item, fn -> nil end)
+      |> assign_new(:title_text, fn -> nil end)
+      |> assign_new(:toggle_label_closed, fn -> nil end)
+      |> assign_new(:toggle_label_open, fn -> nil end)
+      |> assign_new(:typeahead, fn -> false end)
+      |> assign_new(:validity_message, fn -> nil end)
+      |> assign_new(:value, fn -> nil end)
+      |> assign_new(:warn, fn -> false end)
+      |> assign_new(:warn_text, fn -> nil end)
+
     ~H"""
     <FormComponents.combo_box
       allow_custom_value={@allow_custom_value}
@@ -2000,6 +2138,7 @@ defmodule Graphene.CarbonComponents do
     attr :disabled, :boolean
     attr :kind, :any
     attr :shortcut, :string
+    attr :divider, :boolean
     attr :attrs, :map
   end
 
@@ -2013,6 +2152,14 @@ defmodule Graphene.CarbonComponents do
   end
 
   def combo_button(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:disabled, fn -> nil end)
+      |> assign_new(:label, fn -> nil end)
+      |> assign_new(:on_click, fn -> nil end)
+      |> assign_new(:size, fn -> nil end)
+      |> assign_new(:tooltip_alignment, fn -> nil end)
+
     ~H"""
     <CoreComponents.combo_button
       disabled={assigns[:disabled]}
@@ -2046,18 +2193,14 @@ defmodule Graphene.CarbonComponents do
 
   * `is_inset` (`:boolean`) - Specify whether the dividing lines in between list items should be inset. Defaults to `false`.
   * `kind` (`:any`) - The kind of ContainedList you want to display. Defaults to `nil`.
-  * `label` (`:string`) - A label describing the contained list. Defaults to `nil`.
   * `size` (`:any`) - Specify the size of the contained list. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-` - The list items (cds-contained-list-item elements). Accepts attributes:
+  * `action` - The action slot for interactive elements in header. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-action` - The action slot for interactive elements in header. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `s-label` - The label text. Accepts attributes:
+  * `label` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -2067,20 +2210,16 @@ defmodule Graphene.CarbonComponents do
     doc: "Specify whether the dividing lines in between list items should be inset."
 
   attr :kind, :any, doc: "The kind of ContainedList you want to display"
-  attr :label, :string, doc: "A label describing the contained list."
   attr :rest, :global
   attr :size, :any, doc: "Specify the size of the contained list."
+
+  slot :action, doc: "The action slot for interactive elements in header" do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-", doc: "The list items (cds-contained-list-item elements)" do
-    attr :tag, :string
-  end
-
-  slot :"s-action", doc: "The action slot for interactive elements in header" do
-    attr :tag, :string
-  end
-
-  slot :"s-label", doc: "The label text" do
+  slot :label, doc: "The label text" do
     attr :tag, :string
   end
 
@@ -2090,14 +2229,25 @@ defmodule Graphene.CarbonComponents do
   end
 
   def contained_list(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:is_inset, fn -> false end)
+      |> assign_new(:kind, fn -> nil end)
+      |> assign_new(:size, fn -> nil end)
+
     ~H"""
     <CoreComponents.contained_list
       is_inset={@is_inset}
       kind={@kind}
-      label={@label}
       size={@size}
       {@rest}
     >
+      <.dynamic_tag :for={label <- @label} tag_name={Map.get(label, :tag, "div")} slot="label">
+        {render_slot(label)}
+      </.dynamic_tag>
+      <.dynamic_tag :for={action <- @action} tag_name={Map.get(action, :tag, "div")} slot="action">
+        {render_slot(action)}
+      </.dynamic_tag>
       <%= for item <- @item do %>
         <CoreComponents.contained_list_item
           clickable={item[:clickable]}
@@ -2126,18 +2276,11 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-` - The description text content. Accepts attributes:
-
-    * `tag` (`:string`)
   * `inner_block`
 
   """
   attr :rest, :global
   slot :inner_block
-
-  slot :"s-", doc: "The description text content" do
-    attr :tag, :string
-  end
 
   def contained_list_description(assigns) do
     CoreComponents.contained_list_description(assigns)
@@ -2160,13 +2303,10 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-` - The content of the list item. Accepts attributes:
+  * `action` - The action slot for interactive elements. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-action` - The action slot for interactive elements. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `s-icon` - The icon slot for rendering an icon. Accepts attributes:
+  * `icon` - The icon slot for rendering an icon. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -2175,19 +2315,16 @@ defmodule Graphene.CarbonComponents do
   attr :clickable, :boolean, doc: "Whether this item is clickable"
   attr :disabled, :boolean, doc: "Whether this item is disabled."
   attr :rest, :global
+
+  slot :action, doc: "The action slot for interactive elements" do
+    attr :tag, :string
+  end
+
+  slot :icon, doc: "The icon slot for rendering an icon" do
+    attr :tag, :string
+  end
+
   slot :inner_block
-
-  slot :"s-", doc: "The content of the list item" do
-    attr :tag, :string
-  end
-
-  slot :"s-action", doc: "The action slot for interactive elements" do
-    attr :tag, :string
-  end
-
-  slot :"s-icon", doc: "The icon slot for rendering an icon" do
-    attr :tag, :string
-  end
 
   def contained_list_item(assigns) do
     CoreComponents.contained_list_item(assigns)
@@ -2245,6 +2382,13 @@ defmodule Graphene.CarbonComponents do
   end
 
   def content_switcher(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:icon, fn -> false end)
+      |> assign_new(:low_contrast, fn -> false end)
+      |> assign_new(:size, fn -> nil end)
+      |> assign_new(:value, fn -> nil end)
+
     ~H"""
     <CoreComponents.content_switcher
       icon={@icon}
@@ -2626,6 +2770,18 @@ defmodule Graphene.CarbonComponents do
   end
 
   def date_picker(%{input: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:date_format, fn -> nil end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:enabled_range, fn -> nil end)
+      |> assign_new(:max_date, fn -> nil end)
+      |> assign_new(:min_date, fn -> nil end)
+      |> assign_new(:name, fn -> nil end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:readonly, fn -> false end)
+      |> assign_new(:value, fn -> nil end)
+
     ~H"""
     <FormComponents.date_picker
       allow_input={@allow_input}
@@ -2942,6 +3098,27 @@ defmodule Graphene.CarbonComponents do
   end
 
   def dropdown(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:helper_text, fn -> nil end)
+      |> assign_new(:hide_label, fn -> false end)
+      |> assign_new(:invalid, fn -> false end)
+      |> assign_new(:invalid_text, fn -> nil end)
+      |> assign_new(:label, fn -> nil end)
+      |> assign_new(:name, fn -> nil end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:read_only, fn -> false end)
+      |> assign_new(:required, fn -> false end)
+      |> assign_new(:title_text, fn -> nil end)
+      |> assign_new(:toggle_label_closed, fn -> nil end)
+      |> assign_new(:toggle_label_open, fn -> nil end)
+      |> assign_new(:validity_message, fn -> nil end)
+      |> assign_new(:value, fn -> nil end)
+      |> assign_new(:warn, fn -> false end)
+      |> assign_new(:warn_text, fn -> nil end)
+
     ~H"""
     <FormComponents.dropdown
       autoalign={@autoalign}
@@ -3123,6 +3300,12 @@ defmodule Graphene.CarbonComponents do
   end
 
   def file_uploader(%{button: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:label_description, fn -> nil end)
+      |> assign_new(:label_title, fn -> nil end)
+
     ~H"""
     <CoreComponents.file_uploader
       disabled={@disabled}
@@ -3293,10 +3476,10 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-validity` - message The validity message. Accepts attributes:
+  * `validity` - message The validity message. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - supplement The supplemental validity message. Accepts attributes:
+  * `validity_message` - supplement The supplemental validity message. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -3326,11 +3509,11 @@ defmodule Graphene.CarbonComponents do
 
   slot :inner_block
 
-  slot :"s-validity", doc: "message The validity message." do
+  slot :validity, doc: "message The validity message." do
     attr :tag, :string
   end
 
-  slot :"s-validity-message", doc: "supplement The supplemental validity message." do
+  slot :validity_message, doc: "supplement The supplemental validity message." do
     attr :tag, :string
   end
 
@@ -3381,7 +3564,6 @@ defmodule Graphene.CarbonComponents do
   * `disable_wheel` (`:boolean`) - Specify if the wheel functionality for the input should be disabled, or not. Defaults to `false`.
   * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
   * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
   * `hide_steppers` (`:boolean`) - Specify whether you want the steppers to be hidden. Defaults to `false`.
   * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
@@ -3414,20 +3596,19 @@ defmodule Graphene.CarbonComponents do
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
   * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `validity_message` (`:string`) - The validity message. If present and non-empty, this input shows the UI of its invalid state. Defaults to `nil`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -3450,7 +3631,6 @@ defmodule Graphene.CarbonComponents do
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
-  attr :helper_text, :string, doc: "The helper text."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -3522,10 +3702,6 @@ defmodule Graphene.CarbonComponents do
     values: ["email", "password", "tel", "text", "url"],
     default: "text"
 
-  attr :validity_message, :string,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
 
@@ -3539,17 +3715,17 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -3690,14 +3866,12 @@ defmodule Graphene.CarbonComponents do
 
   * `autofocus` (`:boolean`) - Sets the select to be focussed automatically on page load. Defaults to false. Defaults to `false`.
   * `disabled` (`:boolean`) - Controls the disabled state of the select. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether the label should be hidden, or not. Defaults to `false`.
   * `id` (`:string`) - ID to link the `label` and `select`. Defaults to `nil`.
   * `inline` (`:boolean`) - Specify whether you want the inline version of this control. Defaults to `false`.
   * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
   * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
   * `is_fluid` (`:boolean`) - Specify whether the textarea is fluid or not. Defaults to `false`.
-  * `label_text` (`:string`) - The label text. Defaults to `nil`.
   * `multiple` (`:boolean`) - `true` to enable multiple selection. Defaults to `nil`.
   * `name` (`:string`) - Name for the select in the `FormData`. Defaults to `nil`.
   * `pattern` (`:string`) - Pattern to validate the select against for HTML validity checking. Defaults to `nil`.
@@ -3713,13 +3887,13 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -3729,14 +3903,12 @@ defmodule Graphene.CarbonComponents do
     doc: "Sets the select to be focussed automatically on page load. Defaults to false"
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the select"
-  attr :helper_text, :string, doc: "The helper text."
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
   attr :id, :string, doc: "ID to link the `label` and `select`"
   attr :inline, :boolean, doc: "Specify whether you want the inline version of this control"
   attr :invalid, :boolean, doc: "Specify if the currently value is invalid."
   attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
   attr :is_fluid, :boolean, doc: "Specify whether the textarea is fluid or not"
-  attr :label_text, :string, doc: "The label text."
   attr :multiple, :boolean, doc: "`true` to enable multiple selection."
   attr :name, :string, doc: "Name for the select in the `FormData`"
   attr :pattern, :string, doc: "Pattern to validate the select against for HTML validity checking"
@@ -3761,17 +3933,17 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -3785,18 +3957,38 @@ defmodule Graphene.CarbonComponents do
   end
 
   def fluid_select(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:autofocus, fn -> false end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:hide_label, fn -> false end)
+      |> assign_new(:id, fn -> nil end)
+      |> assign_new(:inline, fn -> false end)
+      |> assign_new(:invalid, fn -> false end)
+      |> assign_new(:invalid_text, fn -> nil end)
+      |> assign_new(:is_fluid, fn -> false end)
+      |> assign_new(:multiple, fn -> nil end)
+      |> assign_new(:name, fn -> nil end)
+      |> assign_new(:pattern, fn -> nil end)
+      |> assign_new(:placeholder, fn -> nil end)
+      |> assign_new(:readonly, fn -> false end)
+      |> assign_new(:required, fn -> false end)
+      |> assign_new(:selected_index, fn -> nil end)
+      |> assign_new(:size, fn -> nil end)
+      |> assign_new(:value, fn -> nil end)
+      |> assign_new(:warn, fn -> false end)
+      |> assign_new(:warn_text, fn -> nil end)
+
     ~H"""
     <FormComponents.fluid_select
       autofocus={@autofocus}
       disabled={@disabled}
-      helper_text={@helper_text}
       hide_label={@hide_label}
       id={@id}
       inline={@inline}
       invalid={@invalid}
       invalid_text={@invalid_text}
       is_fluid={@is_fluid}
-      label_text={@label_text}
       multiple={@multiple}
       name={@name}
       pattern={@pattern}
@@ -3811,6 +4003,27 @@ defmodule Graphene.CarbonComponents do
       warn_text={@warn_text}
       {@rest}
     >
+      <.dynamic_tag
+        :for={label <- @label_text}
+        tag_name={Map.get(label, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(label)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={helper <- @helper_text}
+        tag_name={Map.get(helper, :tag, "div")}
+        slot="helper-text"
+      >
+        {render_slot(helper)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={message <- @validity_message}
+        tag_name={Map.get(message, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(message)}
+      </.dynamic_tag>
       <%= for item <- @item do %>
         <CoreComponents.select_item
           label={item[:label]}
@@ -3869,7 +4082,6 @@ defmodule Graphene.CarbonComponents do
   * `autofocus` (`:boolean`) - Sets the input to be focussed automatically on page load. Defaults to false. Defaults to `false`.
   * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
   * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
   * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
   * `inline` (`:boolean`) - true to use the inline version. Defaults to `false`.
@@ -3896,20 +4108,19 @@ defmodule Graphene.CarbonComponents do
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
   * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `validity_message` (`:string`) - The validity message. If present and non-empty, this input shows the UI of its invalid state. Defaults to `nil`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -3922,7 +4133,6 @@ defmodule Graphene.CarbonComponents do
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
-  attr :helper_text, :string, doc: "The helper text."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -3981,10 +4191,6 @@ defmodule Graphene.CarbonComponents do
     values: ["email", "password", "tel", "text", "url"],
     default: "text"
 
-  attr :validity_message, :string,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
 
@@ -3998,17 +4204,17 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -4061,7 +4267,6 @@ defmodule Graphene.CarbonComponents do
   * `counter_mode` (`:any`) - Specify the method used for calculating the counter number. Defaults to `nil`.
   * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
   * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
   * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
   * `id` (`:string`) - ID to link the `label` and `textarea`. Defaults to `nil`.
@@ -4090,20 +4295,19 @@ defmodule Graphene.CarbonComponents do
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
   * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `validity_message` (`:string`) - The validity message. If present and non-empty, this input shows the UI of its invalid state. Defaults to `nil`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -4118,7 +4322,6 @@ defmodule Graphene.CarbonComponents do
   attr :counter_mode, :any, doc: "Specify the method used for calculating the counter number"
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
-  attr :helper_text, :string, doc: "The helper text."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -4182,10 +4385,6 @@ defmodule Graphene.CarbonComponents do
     values: ["email", "password", "tel", "text", "url"],
     default: "text"
 
-  attr :validity_message, :string,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
 
@@ -4199,17 +4398,17 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -4379,6 +4578,13 @@ defmodule Graphene.CarbonComponents do
   end
 
   def grid(%{column: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:align, fn -> nil end)
+      |> assign_new(:condensed, fn -> false end)
+      |> assign_new(:full_width, fn -> false end)
+      |> assign_new(:narrow, fn -> false end)
+
     ~H"""
     <CoreComponents.grid
       align={@align}
@@ -4875,9 +5081,6 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-` - The icon content (for custom SVG). Accepts attributes:
-
-    * `tag` (`:string`)
   * `inner_block`
 
   """
@@ -4886,10 +5089,6 @@ defmodule Graphene.CarbonComponents do
   attr :rest, :global
   attr :size, :string, doc: "The size of the icon (16, 20, 24, 32)", default: "16"
   slot :inner_block
-
-  slot :"s-", doc: "The icon content (for custom SVG)" do
-    attr :tag, :string
-  end
 
   def icon(assigns) do
     CoreComponents.icon(assigns)
@@ -5140,16 +5339,14 @@ defmodule Graphene.CarbonComponents do
   * `low_contrast` (`:boolean`) - Low contrast mode. Defaults to `false`.
   * `open` (`:boolean`) - `true` if the notification should be open. Defaults to `true`.
   * `status_icon_description` (`:string`) - Provide a description for "status" icon that can be read by screen readers. Defaults to `nil`.
-  * `subtitle` (`:string`) - The subtitle. Defaults to `nil`.
   * `timeout` (`:any`) - Specify an optional duration the notification should be closed in. Defaults to `nil`.
-  * `title` (`:string`) - The title. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-subtitle` - The subtitle. Accepts attributes:
+  * `subtitle` - The subtitle. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-title` - The title. Accepts attributes:
+  * `title` - The title. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -5169,16 +5366,14 @@ defmodule Graphene.CarbonComponents do
   attr :status_icon_description, :string,
     doc: "Provide a description for \"status\" icon that can be read by screen readers"
 
-  attr :subtitle, :string, doc: "The subtitle."
   attr :timeout, :any, doc: "Specify an optional duration the notification should be closed in"
-  attr :title, :string, doc: "The title."
   slot :inner_block
 
-  slot :"s-subtitle", doc: "The subtitle." do
+  slot :subtitle, doc: "The subtitle." do
     attr :tag, :string
   end
 
-  slot :"s-title", doc: "The title." do
+  slot :title, doc: "The title." do
     attr :tag, :string
   end
 
@@ -5204,7 +5399,7 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-children` - The elements contained within the component. Accepts attributes:
+  * `children` - The elements contained within the component. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -5218,11 +5413,12 @@ defmodule Graphene.CarbonComponents do
 
   attr :rest, :global
   attr :with_background, :any
-  slot :inner_block
 
-  slot :"s-children", doc: "The elements contained within the component." do
+  slot :children, doc: "The elements contained within the component." do
     attr :tag, :string
   end
+
+  slot :inner_block
 
   def layer(assigns) do
     CoreComponents.layer(assigns)
@@ -5283,27 +5479,19 @@ defmodule Graphene.CarbonComponents do
 
   ## Attributes
 
-  * `nested` (`:boolean`) - `true` if this list item is a child of a nested list.
-    `<cds-ordered-list>` or `<cds-unordered-list>` automatically sets this property.
-
-    Defaults to `false`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-nested` - The nested child list. Accepts attributes:
+  * `nested` - The nested child list. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
 
   """
-  attr :nested, :boolean,
-    doc:
-      "`true` if this list item is a child of a nested list.\n`<cds-ordered-list>` or `<cds-unordered-list>` automatically sets this property."
-
   attr :rest, :global
   slot :inner_block
 
-  slot :"s-nested", doc: "The nested child list." do
+  slot :nested, doc: "The nested child list." do
     attr :tag, :string
   end
 
@@ -5428,6 +5616,15 @@ defmodule Graphene.CarbonComponents do
   end
 
   def menu_button(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:disabled, fn -> nil end)
+      |> assign_new(:kind, fn -> nil end)
+      |> assign_new(:label, fn -> nil end)
+      |> assign_new(:menu_background_token, fn -> nil end)
+      |> assign_new(:menu_border, fn -> false end)
+      |> assign_new(:size, fn -> nil end)
+
     ~H"""
     <CoreComponents.menu_button
       disabled={assigns[:disabled]}
@@ -5669,6 +5866,8 @@ defmodule Graphene.CarbonComponents do
 
   attr :size, :string, doc: "Modal size.", values: ["xs", "sm", "md", "lg"], default: "md"
   slot :inner_block
+  slot :label
+  slot :heading
   slot :body
 
   slot :footer_button do
@@ -5681,6 +5880,19 @@ defmodule Graphene.CarbonComponents do
   end
 
   def modal(%{body: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:alert, fn -> false end)
+      |> assign_new(:container_class, fn -> nil end)
+      |> assign_new(:full_width, fn -> false end)
+      |> assign_new(:has_scrolling_content, fn -> false end)
+      |> assign_new(:loading_description, fn -> nil end)
+      |> assign_new(:loading_status, fn -> nil end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:prevent_close, fn -> false end)
+      |> assign_new(:prevent_close_on_click_outside, fn -> false end)
+      |> assign_new(:should_submit_on_enter, fn -> false end)
+
     ~H"""
     <CoreComponents.modal
       alert={@alert}
@@ -5699,8 +5911,12 @@ defmodule Graphene.CarbonComponents do
       {@rest}
     >
       <CoreComponents.modal_header>
-        <CoreComponents.modal_label :if={@label}>{@label}</CoreComponents.modal_label>
-        <CoreComponents.modal_heading :if={@heading}>{@heading}</CoreComponents.modal_heading>
+        <%= for label <- @label do %>
+          <CoreComponents.modal_label>{render_slot(label)}</CoreComponents.modal_label>
+        <% end %>
+        <%= for heading <- @heading do %>
+          <CoreComponents.modal_heading>{render_slot(heading)}</CoreComponents.modal_heading>
+        <% end %>
       </CoreComponents.modal_header>
       <CoreComponents.modal_body :if={@body != []}>
         <CoreComponents.modal_body_content>
@@ -5728,6 +5944,19 @@ defmodule Graphene.CarbonComponents do
   end
 
   def modal(%{footer_button: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:alert, fn -> false end)
+      |> assign_new(:container_class, fn -> nil end)
+      |> assign_new(:full_width, fn -> false end)
+      |> assign_new(:has_scrolling_content, fn -> false end)
+      |> assign_new(:loading_description, fn -> nil end)
+      |> assign_new(:loading_status, fn -> nil end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:prevent_close, fn -> false end)
+      |> assign_new(:prevent_close_on_click_outside, fn -> false end)
+      |> assign_new(:should_submit_on_enter, fn -> false end)
+
     ~H"""
     <CoreComponents.modal
       alert={@alert}
@@ -5746,8 +5975,12 @@ defmodule Graphene.CarbonComponents do
       {@rest}
     >
       <CoreComponents.modal_header>
-        <CoreComponents.modal_label :if={@label}>{@label}</CoreComponents.modal_label>
-        <CoreComponents.modal_heading :if={@heading}>{@heading}</CoreComponents.modal_heading>
+        <%= for label <- @label do %>
+          <CoreComponents.modal_label>{render_slot(label)}</CoreComponents.modal_label>
+        <% end %>
+        <%= for heading <- @heading do %>
+          <CoreComponents.modal_heading>{render_slot(heading)}</CoreComponents.modal_heading>
+        <% end %>
       </CoreComponents.modal_header>
       <CoreComponents.modal_body :if={@body != []}>
         <CoreComponents.modal_body_content>
@@ -5774,8 +6007,20 @@ defmodule Graphene.CarbonComponents do
     """
   end
 
-  def modal(%{label: label, heading: heading} = assigns)
-      when not is_nil(label) or not is_nil(heading) do
+  def modal(%{label: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:alert, fn -> false end)
+      |> assign_new(:container_class, fn -> nil end)
+      |> assign_new(:full_width, fn -> false end)
+      |> assign_new(:has_scrolling_content, fn -> false end)
+      |> assign_new(:loading_description, fn -> nil end)
+      |> assign_new(:loading_status, fn -> nil end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:prevent_close, fn -> false end)
+      |> assign_new(:prevent_close_on_click_outside, fn -> false end)
+      |> assign_new(:should_submit_on_enter, fn -> false end)
+
     ~H"""
     <CoreComponents.modal
       alert={@alert}
@@ -5794,8 +6039,76 @@ defmodule Graphene.CarbonComponents do
       {@rest}
     >
       <CoreComponents.modal_header>
-        <CoreComponents.modal_label :if={@label}>{@label}</CoreComponents.modal_label>
-        <CoreComponents.modal_heading :if={@heading}>{@heading}</CoreComponents.modal_heading>
+        <%= for label <- @label do %>
+          <CoreComponents.modal_label>{render_slot(label)}</CoreComponents.modal_label>
+        <% end %>
+        <%= for heading <- @heading do %>
+          <CoreComponents.modal_heading>{render_slot(heading)}</CoreComponents.modal_heading>
+        <% end %>
+      </CoreComponents.modal_header>
+      <CoreComponents.modal_body :if={@body != []}>
+        <CoreComponents.modal_body_content>
+          <%= for body <- @body do %>
+            {render_slot(body)}
+          <% end %>
+        </CoreComponents.modal_body_content>
+      </CoreComponents.modal_body>
+      <CoreComponents.modal_footer :if={@footer_button != []}>
+        <%= for button <- @footer_button do %>
+          <CoreComponents.modal_footer_button
+            kind={button[:kind]}
+            disabled={button[:disabled]}
+            type={button[:type]}
+            autofocus={button[:autofocus]}
+            {button[:attrs] || %{}}
+          >
+            {button[:label] || render_slot(button)}
+          </CoreComponents.modal_footer_button>
+        <% end %>
+      </CoreComponents.modal_footer>
+      {render_slot(@inner_block)}
+    </CoreComponents.modal>
+    """
+  end
+
+  def modal(%{heading: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:alert, fn -> false end)
+      |> assign_new(:container_class, fn -> nil end)
+      |> assign_new(:full_width, fn -> false end)
+      |> assign_new(:has_scrolling_content, fn -> false end)
+      |> assign_new(:loading_description, fn -> nil end)
+      |> assign_new(:loading_status, fn -> nil end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:prevent_close, fn -> false end)
+      |> assign_new(:prevent_close_on_click_outside, fn -> false end)
+      |> assign_new(:should_submit_on_enter, fn -> false end)
+
+    ~H"""
+    <CoreComponents.modal
+      alert={@alert}
+      container_class={@container_class}
+      full_width={@full_width}
+      has_scrolling_content={@has_scrolling_content}
+      loading_description={@loading_description}
+      loading_icon_description={@loading_icon_description}
+      loading_status={@loading_status}
+      loading_success_delay={@loading_success_delay}
+      open={@open}
+      prevent_close={@prevent_close}
+      prevent_close_on_click_outside={@prevent_close_on_click_outside}
+      should_submit_on_enter={@should_submit_on_enter}
+      size={@size}
+      {@rest}
+    >
+      <CoreComponents.modal_header>
+        <%= for label <- @label do %>
+          <CoreComponents.modal_label>{render_slot(label)}</CoreComponents.modal_label>
+        <% end %>
+        <%= for heading <- @heading do %>
+          <CoreComponents.modal_heading>{render_slot(heading)}</CoreComponents.modal_heading>
+        <% end %>
       </CoreComponents.modal_header>
       <CoreComponents.modal_body :if={@body != []}>
         <CoreComponents.modal_body_content>
@@ -6268,6 +6581,30 @@ defmodule Graphene.CarbonComponents do
   end
 
   def multi_select(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:clear_selection_label, fn -> nil end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:filterable, fn -> nil end)
+      |> assign_new(:helper_text, fn -> nil end)
+      |> assign_new(:hide_label, fn -> false end)
+      |> assign_new(:invalid, fn -> false end)
+      |> assign_new(:invalid_text, fn -> nil end)
+      |> assign_new(:label, fn -> nil end)
+      |> assign_new(:name, fn -> nil end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:read_only, fn -> false end)
+      |> assign_new(:required, fn -> false end)
+      |> assign_new(:select_all, fn -> false end)
+      |> assign_new(:title_text, fn -> nil end)
+      |> assign_new(:toggle_label_closed, fn -> nil end)
+      |> assign_new(:toggle_label_open, fn -> nil end)
+      |> assign_new(:validity_message, fn -> nil end)
+      |> assign_new(:value, fn -> nil end)
+      |> assign_new(:warn, fn -> false end)
+      |> assign_new(:warn_text, fn -> nil end)
+
     ~H"""
     <FormComponents.multi_select
       autoalign={@autoalign}
@@ -6380,7 +6717,6 @@ defmodule Graphene.CarbonComponents do
   * `disable_wheel` (`:boolean`) - Specify if the wheel functionality for the input should be disabled, or not. Defaults to `false`.
   * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
   * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
   * `hide_steppers` (`:boolean`) - Specify whether you want the steppers to be hidden. Defaults to `false`.
   * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
@@ -6413,20 +6749,19 @@ defmodule Graphene.CarbonComponents do
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
   * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `validity_message` (`:string`) - The validity message. If present and non-empty, this input shows the UI of its invalid state. Defaults to `nil`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -6449,7 +6784,6 @@ defmodule Graphene.CarbonComponents do
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
-  attr :helper_text, :string, doc: "The helper text."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -6521,10 +6855,6 @@ defmodule Graphene.CarbonComponents do
     values: ["email", "password", "tel", "text", "url"],
     default: "text"
 
-  attr :validity_message, :string,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
 
@@ -6538,17 +6868,17 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -6689,7 +7019,10 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-icon` - The icon for the trigger button. Accepts attributes:
+  * `icon` - The icon for the trigger button. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `tooltip_content` - Tooltip content for the overflow menu trigger. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -6795,9 +7128,13 @@ defmodule Graphene.CarbonComponents do
     values: ["button", "reset", "submit"],
     default: "button"
 
+  slot :icon, doc: "The icon for the trigger button." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-icon", doc: "The icon for the trigger button." do
+  slot :tooltip_content, doc: "Tooltip content for the overflow menu trigger." do
     attr :tag, :string
   end
 
@@ -6808,48 +7145,81 @@ defmodule Graphene.CarbonComponents do
   end
 
   def overflow_menu(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:autofocus, fn -> false end)
+      |> assign_new(:batch_action, fn -> false end)
+      |> assign_new(:breadcrumb, fn -> false end)
+      |> assign_new(:button_class_name, fn -> nil end)
+      |> assign_new(:danger_description, fn -> nil end)
+      |> assign_new(:data_table, fn -> false end)
+      |> assign_new(:default_open, fn -> false end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:download, fn -> nil end)
+      |> assign_new(:flipped, fn -> false end)
+      |> assign_new(:has_main_content, fn -> false end)
+      |> assign_new(:href, fn -> nil end)
+      |> assign_new(:hreflang, fn -> nil end)
+      |> assign_new(:is_expressive, fn -> false end)
+      |> assign_new(:is_selected, fn -> false end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:open_tooltip, fn -> false end)
+      |> assign_new(:ping, fn -> nil end)
+      |> assign_new(:rel, fn -> nil end)
+      |> assign_new(:target, fn -> nil end)
+      |> assign_new(:toolbar_action, fn -> false end)
+      |> assign_new(:tooltip_text, fn -> nil end)
+
     ~H"""
     <CoreComponents.overflow_menu
-      align={@align}
-      autoalign={@autoalign}
-      autofocus={@autofocus}
-      batch_action={@batch_action}
-      breadcrumb={@breadcrumb}
-      button_class_name={@button_class_name}
-      close_on_activation={@close_on_activation}
-      danger_description={@danger_description}
-      data_table={@data_table}
-      default_open={@default_open}
-      disabled={@disabled}
-      download={@download}
-      enter_delay_ms={@enter_delay_ms}
-      flipped={@flipped}
-      has_main_content={@has_main_content}
-      href={@href}
-      hreflang={@hreflang}
-      index={@index}
-      is_expressive={@is_expressive}
-      is_selected={@is_selected}
-      kind={@kind}
-      leave_delay_ms={@leave_delay_ms}
-      link_role={@link_role}
-      open={@open}
-      open_tooltip={@open_tooltip}
-      ping={@ping}
-      rel={@rel}
-      size={@size}
-      tab_index={@tab_index}
-      target={@target}
-      toolbar_action={@toolbar_action}
-      tooltip_alignment={@tooltip_alignment}
-      tooltip_position={@tooltip_position}
-      tooltip_text={@tooltip_text}
-      type={@type}
+      align={assigns[:align]}
+      autoalign={assigns[:autoalign]}
+      autofocus={assigns[:autofocus]}
+      batch_action={assigns[:batch_action]}
+      breadcrumb={assigns[:breadcrumb]}
+      button_class_name={assigns[:button_class_name]}
+      close_on_activation={assigns[:close_on_activation]}
+      danger_description={assigns[:danger_description]}
+      data_table={assigns[:data_table]}
+      default_open={assigns[:default_open]}
+      disabled={assigns[:disabled]}
+      download={assigns[:download]}
+      enter_delay_ms={assigns[:enter_delay_ms]}
+      flipped={assigns[:flipped]}
+      has_main_content={assigns[:has_main_content]}
+      href={assigns[:href]}
+      hreflang={assigns[:hreflang]}
+      index={assigns[:index]}
+      is_expressive={assigns[:is_expressive]}
+      is_selected={assigns[:is_selected]}
+      kind={assigns[:kind]}
+      leave_delay_ms={assigns[:leave_delay_ms]}
+      link_role={assigns[:link_role]}
+      open={assigns[:open]}
+      open_tooltip={assigns[:open_tooltip]}
+      ping={assigns[:ping]}
+      rel={assigns[:rel]}
+      size={assigns[:size]}
+      tab_index={assigns[:tab_index]}
+      target={assigns[:target]}
+      toolbar_action={assigns[:toolbar_action]}
+      tooltip_alignment={assigns[:tooltip_alignment]}
+      tooltip_position={assigns[:tooltip_position]}
+      tooltip_text={assigns[:tooltip_text]}
+      type={assigns[:type]}
       {@rest}
     >
-      <%= for icon <- assigns[:"s-icon"] do %>
+      <.dynamic_tag :for={icon <- @icon} tag_name={Map.get(icon, :tag, "span")} slot="icon">
         {render_slot(icon)}
-      <% end %>
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={tooltip <- @tooltip_content}
+        tag_name={Map.get(tooltip, :tag, "span")}
+        slot="tooltip-content"
+      >
+        {render_slot(tooltip)}
+      </.dynamic_tag>
       <CoreComponents.overflow_menu_body>
         <%= for item <- @item do %>
           <CoreComponents.overflow_menu_item disabled={item[:disabled]} danger={item[:danger]}>
@@ -7188,7 +7558,7 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-page-sizes-select` - Where to put in the `<page-sizes-select>`. Accepts attributes:
+  * `page_sizes_select` - Where to put in the `<page-sizes-select>`. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -7237,7 +7607,7 @@ defmodule Graphene.CarbonComponents do
   attr :total_pages, :string, doc: "The number of total pages.", default: "1"
   slot :inner_block
 
-  slot :"s-page-sizes-select", doc: "Where to put in the `<page-sizes-select>`." do
+  slot :page_sizes_select, doc: "Where to put in the `<page-sizes-select>`." do
     attr :tag, :string
   end
 
@@ -7261,7 +7631,6 @@ defmodule Graphene.CarbonComponents do
   * `autofocus` (`:boolean`) - Sets the input to be focussed automatically on page load. Defaults to false. Defaults to `false`.
   * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
   * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
   * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
   * `inline` (`:boolean`) - true to use the inline version. Defaults to `false`.
@@ -7288,20 +7657,19 @@ defmodule Graphene.CarbonComponents do
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
   * `type` (`:string`) - The native `<input>` type. Defaults to “password”. Defaults to `"password"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `validity_message` (`:string`) - The validity message. If present and non-empty, this input shows the UI of its invalid state. Defaults to `nil`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -7314,7 +7682,6 @@ defmodule Graphene.CarbonComponents do
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
-  attr :helper_text, :string, doc: "The helper text."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -7373,10 +7740,6 @@ defmodule Graphene.CarbonComponents do
     values: ["email", "password", "tel", "text", "url"],
     default: "password"
 
-  attr :validity_message, :string,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
 
@@ -7390,17 +7753,17 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -7493,6 +7856,18 @@ defmodule Graphene.CarbonComponents do
   slot :content
 
   def popover(%{content: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:align, fn -> nil end)
+      |> assign_new(:alignment_axis_offset, fn -> nil end)
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:autoalign_boundary, fn -> nil end)
+      |> assign_new(:background_token, fn -> nil end)
+      |> assign_new(:border, fn -> false end)
+      |> assign_new(:high_contrast, fn -> false end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:tab_tip, fn -> false end)
+
     ~H"""
     <CoreComponents.popover
       align={@align}
@@ -7683,6 +8058,11 @@ defmodule Graphene.CarbonComponents do
   end
 
   def progress_indicator(%{step: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:space_equally, fn -> false end)
+      |> assign_new(:vertical, fn -> false end)
+
     ~H"""
     <CoreComponents.progress_indicator
       current_index={@current_index}
@@ -7695,14 +8075,17 @@ defmodule Graphene.CarbonComponents do
           label={step[:label]}
           description={step[:description]}
           secondary_label={step[:secondary_label]}
-          secondary_label_text={step[:secondary_label_text]}
           complete={step[:complete]}
           current={step[:current]}
           disabled={step[:disabled]}
           invalid={step[:invalid]}
           icon_label={step[:icon_label]}
           clickable={step[:clickable]}
-        />
+        >
+          <%= if step[:secondary_label_text] do %>
+            <span slot="secondary-label-text">{step[:secondary_label_text]}</span>
+          <% end %>
+        </CoreComponents.progress_step>
       <% end %>
     </CoreComponents.progress_indicator>
     """
@@ -7733,12 +8116,11 @@ defmodule Graphene.CarbonComponents do
   * `invalid` (`:boolean`) - Specify whether the step is invalid. Defaults to `false`.
   * `label` (`:string`) - Defaults to `nil`.
   * `secondary_label` (`:string`) - Defaults to `nil`.
-  * `secondary_label_text` (`:string`) - The secondary progress label. Defaults to `nil`.
   * `state` (`:string`) - The progress state. Defaults to `"incomplete"`. Must be one of `"complete"`, `"current"`, `"incomplete"`, or `"invalid"`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-secondary-label-text` - The secondary progress label. Accepts attributes:
+  * `secondary_label_text` - The secondary progress label. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -7757,7 +8139,6 @@ defmodule Graphene.CarbonComponents do
   attr :label, :string
   attr :rest, :global
   attr :secondary_label, :string
-  attr :secondary_label_text, :string, doc: "The secondary progress label."
 
   attr :state, :string,
     doc: "The progress state.",
@@ -7766,7 +8147,7 @@ defmodule Graphene.CarbonComponents do
 
   slot :inner_block
 
-  slot :"s-secondary-label-text", doc: "The secondary progress label." do
+  slot :secondary_label_text, doc: "The secondary progress label." do
     attr :tag, :string
   end
 
@@ -7925,6 +8306,21 @@ defmodule Graphene.CarbonComponents do
   end
 
   def radio_button_group(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:default_selected, fn -> nil end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:helper_text, fn -> nil end)
+      |> assign_new(:invalid, fn -> false end)
+      |> assign_new(:invalid_text, fn -> nil end)
+      |> assign_new(:legend_text, fn -> nil end)
+      |> assign_new(:name, fn -> nil end)
+      |> assign_new(:read_only, fn -> false end)
+      |> assign_new(:required, fn -> false end)
+      |> assign_new(:value, fn -> nil end)
+      |> assign_new(:warn, fn -> false end)
+      |> assign_new(:warn_text, fn -> nil end)
+
     ~H"""
     <FormComponents.radio_button_group
       default_selected={@default_selected}
@@ -8089,14 +8485,12 @@ defmodule Graphene.CarbonComponents do
 
   * `autofocus` (`:boolean`) - Sets the select to be focussed automatically on page load. Defaults to false. Defaults to `false`.
   * `disabled` (`:boolean`) - Controls the disabled state of the select. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether the label should be hidden, or not. Defaults to `false`.
   * `id` (`:string`) - ID to link the `label` and `select`. Defaults to `nil`.
   * `inline` (`:boolean`) - Specify whether you want the inline version of this control. Defaults to `false`.
   * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
   * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
   * `is_fluid` (`:boolean`) - Specify whether the textarea is fluid or not. Defaults to `false`.
-  * `label_text` (`:string`) - The label text. Defaults to `nil`.
   * `multiple` (`:boolean`) - `true` to enable multiple selection. Defaults to `nil`.
   * `name` (`:string`) - Name for the select in the `FormData`. Defaults to `nil`.
   * `pattern` (`:string`) - Pattern to validate the select against for HTML validity checking. Defaults to `nil`.
@@ -8112,13 +8506,13 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -8128,14 +8522,12 @@ defmodule Graphene.CarbonComponents do
     doc: "Sets the select to be focussed automatically on page load. Defaults to false"
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the select"
-  attr :helper_text, :string, doc: "The helper text."
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
   attr :id, :string, doc: "ID to link the `label` and `select`"
   attr :inline, :boolean, doc: "Specify whether you want the inline version of this control"
   attr :invalid, :boolean, doc: "Specify if the currently value is invalid."
   attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
   attr :is_fluid, :boolean, doc: "Specify whether the textarea is fluid or not"
-  attr :label_text, :string, doc: "The label text."
   attr :multiple, :boolean, doc: "`true` to enable multiple selection."
   attr :name, :string, doc: "Name for the select in the `FormData`"
   attr :pattern, :string, doc: "Pattern to validate the select against for HTML validity checking"
@@ -8160,17 +8552,17 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -8184,18 +8576,38 @@ defmodule Graphene.CarbonComponents do
   end
 
   def select(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:autofocus, fn -> false end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:hide_label, fn -> false end)
+      |> assign_new(:id, fn -> nil end)
+      |> assign_new(:inline, fn -> false end)
+      |> assign_new(:invalid, fn -> false end)
+      |> assign_new(:invalid_text, fn -> nil end)
+      |> assign_new(:is_fluid, fn -> false end)
+      |> assign_new(:multiple, fn -> nil end)
+      |> assign_new(:name, fn -> nil end)
+      |> assign_new(:pattern, fn -> nil end)
+      |> assign_new(:placeholder, fn -> nil end)
+      |> assign_new(:readonly, fn -> false end)
+      |> assign_new(:required, fn -> false end)
+      |> assign_new(:selected_index, fn -> nil end)
+      |> assign_new(:size, fn -> nil end)
+      |> assign_new(:value, fn -> nil end)
+      |> assign_new(:warn, fn -> false end)
+      |> assign_new(:warn_text, fn -> nil end)
+
     ~H"""
     <FormComponents.select
       autofocus={@autofocus}
       disabled={@disabled}
-      helper_text={@helper_text}
       hide_label={@hide_label}
       id={@id}
       inline={@inline}
       invalid={@invalid}
       invalid_text={@invalid_text}
       is_fluid={@is_fluid}
-      label_text={@label_text}
       multiple={@multiple}
       name={@name}
       pattern={@pattern}
@@ -8210,6 +8622,27 @@ defmodule Graphene.CarbonComponents do
       warn_text={@warn_text}
       {@rest}
     >
+      <.dynamic_tag
+        :for={label <- @label_text}
+        tag_name={Map.get(label, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(label)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={helper <- @helper_text}
+        tag_name={Map.get(helper, :tag, "div")}
+        slot="helper-text"
+      >
+        {render_slot(helper)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={message <- @validity_message}
+        tag_name={Map.get(message, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(message)}
+      </.dynamic_tag>
       <%= for item <- @item do %>
         <CoreComponents.select_item
           label={item[:label]}
@@ -8495,17 +8928,16 @@ defmodule Graphene.CarbonComponents do
   * `large` (`:boolean`) - Specify if this is a large variation of the side nav link. Defaults to `false`.
   * `rel` (`:string`) - The link type. Defaults to `nil`.
   * `target` (`:string`) - The link target. Defaults to `nil`.
-  * `title` (`:string`) - The title. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-link` - The link. Accepts attributes:
+  * `link` - The link. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-title` - The title. Accepts attributes:
+  * `title` - The title. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-title-icon-container` - The title icon container. Accepts attributes:
+  * `title_icon_container` - The title icon container. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -8517,18 +8949,17 @@ defmodule Graphene.CarbonComponents do
   attr :rel, :string, doc: "The link type."
   attr :rest, :global
   attr :target, :string, doc: "The link target."
-  attr :title, :string, doc: "The title."
   slot :inner_block
 
-  slot :"s-link", doc: "The link." do
+  slot :link, doc: "The link." do
     attr :tag, :string
   end
 
-  slot :"s-title", doc: "The title." do
+  slot :title, doc: "The title." do
     attr :tag, :string
   end
 
-  slot :"s-title-icon-container", doc: "The title icon container." do
+  slot :title_icon_container, doc: "The title icon container." do
     attr :tag, :string
   end
 
@@ -8558,7 +8989,7 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-title-icon` - The icon. Accepts attributes:
+  * `title_icon` - The icon. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -8575,7 +9006,7 @@ defmodule Graphene.CarbonComponents do
   attr :title, :string, doc: "The title text."
   slot :inner_block
 
-  slot :"s-title-icon", doc: "The icon." do
+  slot :title_icon, doc: "The icon." do
     attr :tag, :string
   end
 
@@ -8834,7 +9265,6 @@ defmodule Graphene.CarbonComponents do
   * `invalid` (`:boolean`) - true to specify if the control is invalid. Defaults to `false`.
   * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
   * `is_valid` (`:any`) - is slide input valid. Defaults to `nil`.
-  * `label_text` (`:string`) - The label text. Defaults to `nil`.
   * `max` (`:string`) - The maximum value. Defaults to `nil`.
   * `max_label` (`:string`) - The label associated with the maximum value. Defaults to `nil`.
   * `min` (`:string`) - The minimum value. Defaults to `nil`.
@@ -8854,13 +9284,13 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-max-text` - The text for maximum value. Accepts attributes:
+  * `max_text` - The text for maximum value. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-min-text` - The text for minimum value. Accepts attributes:
+  * `min_text` - The text for minimum value. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -8875,7 +9305,6 @@ defmodule Graphene.CarbonComponents do
   attr :invalid, :boolean, doc: "true to specify if the control is invalid."
   attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
   attr :is_valid, :any, doc: "is slide input valid"
-  attr :label_text, :string, doc: "The label text."
   attr :max, :string, doc: "The maximum value."
   attr :max_label, :string, doc: "The label associated with the maximum value."
   attr :min, :string, doc: "The minimum value."
@@ -8899,15 +9328,15 @@ defmodule Graphene.CarbonComponents do
 
   slot :inner_block
 
-  slot :"s-label-text", doc: "The label text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-max-text", doc: "The text for maximum value." do
+  slot :max_text, doc: "The text for maximum value." do
     attr :tag, :string
   end
 
-  slot :"s-min-text", doc: "The text for minimum value." do
+  slot :min_text, doc: "The text for minimum value." do
     attr :tag, :string
   end
 
@@ -9271,6 +9700,12 @@ defmodule Graphene.CarbonComponents do
   end
 
   def structured_list(%{rows: rows, col: [_ | _]} = assigns) when is_list(rows) do
+    assigns =
+      assigns
+      |> assign_new(:condensed, fn -> false end)
+      |> assign_new(:flush, fn -> false end)
+      |> assign_new(:selection_name, fn -> nil end)
+
     assigns =
       assigns
       |> assign(:selected_set, MapSet.new(Enum.map(assigns.selected_ids || [], &to_string/1)))
@@ -9674,13 +10109,13 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-title` - Title. Accepts attributes:
+  * `title` - Title. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-description` - Description. Accepts attributes:
+  * `description` - Description. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-toolbar` - Toolbar. Accepts attributes:
+  * `toolbar` - Toolbar. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -9720,17 +10155,18 @@ defmodule Graphene.CarbonComponents do
   attr :with_header, :any
   attr :with_row_ai_labels, :boolean, doc: "true if AI Labels are added in the rows"
   attr :with_row_slugs, :boolean, doc: "true if slugs are added in the rows"
+
+  slot :description, doc: "Description" do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-description", doc: "Description" do
+  slot :title, doc: "Title" do
     attr :tag, :string
   end
 
-  slot :"s-title", doc: "Title" do
-    attr :tag, :string
-  end
-
-  slot :"s-toolbar", doc: "Toolbar" do
+  slot :toolbar, doc: "Toolbar" do
     attr :tag, :string
   end
 
@@ -10407,6 +10843,14 @@ defmodule Graphene.CarbonComponents do
   end
 
   def tabs(%{tab: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:icon, fn -> false end)
+      |> assign_new(:low_contrast, fn -> false end)
+      |> assign_new(:size, fn -> nil end)
+      |> assign_new(:trigger_content, fn -> nil end)
+      |> assign_new(:value, fn -> nil end)
+
     ~H"""
     <CoreComponents.tabs
       icon={@icon}
@@ -10627,7 +11071,6 @@ defmodule Graphene.CarbonComponents do
   * `autofocus` (`:boolean`) - Sets the input to be focussed automatically on page load. Defaults to false. Defaults to `false`.
   * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
   * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
   * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
   * `inline` (`:boolean`) - true to use the inline version. Defaults to `false`.
@@ -10654,20 +11097,19 @@ defmodule Graphene.CarbonComponents do
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
   * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `validity_message` (`:string`) - The validity message. If present and non-empty, this input shows the UI of its invalid state. Defaults to `nil`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -10680,7 +11122,6 @@ defmodule Graphene.CarbonComponents do
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
-  attr :helper_text, :string, doc: "The helper text."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -10739,10 +11180,6 @@ defmodule Graphene.CarbonComponents do
     values: ["email", "password", "tel", "text", "url"],
     default: "text"
 
-  attr :validity_message, :string,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
 
@@ -10756,17 +11193,17 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -10819,7 +11256,6 @@ defmodule Graphene.CarbonComponents do
   * `counter_mode` (`:any`) - Specify the method used for calculating the counter number. Defaults to `nil`.
   * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
   * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
   * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
   * `id` (`:string`) - ID to link the `label` and `textarea`. Defaults to `nil`.
@@ -10848,20 +11284,19 @@ defmodule Graphene.CarbonComponents do
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
   * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `validity_message` (`:string`) - The validity message. If present and non-empty, this input shows the UI of its invalid state. Defaults to `nil`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -10876,7 +11311,6 @@ defmodule Graphene.CarbonComponents do
   attr :counter_mode, :any, doc: "Specify the method used for calculating the counter number"
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
-  attr :helper_text, :string, doc: "The helper text."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -10940,10 +11374,6 @@ defmodule Graphene.CarbonComponents do
     values: ["email", "password", "tel", "text", "url"],
     default: "text"
 
-  attr :validity_message, :string,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
 
@@ -10957,17 +11387,17 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -11092,7 +11522,6 @@ defmodule Graphene.CarbonComponents do
   * `hide_label` (`:boolean`) - Specify whether the label should be hidden. Defaults to `false`.
   * `invalid` (`:boolean`) - Specify whether the control is currently invalid. Defaults to `false`.
   * `invalid_text` (`:string`) - Provide the text that is displayed when the control is in an invalid state. Defaults to `"Invalid time format."`.
-  * `label_text` (`:string`) - Provide label text to be read by screen readers. Defaults to `"Select a time"`.
   * `max_length` (`:string`) - Specify the maximum length of the input value. Defaults to `"5"`.
   * `name` (`:string`) - Name for the input in FormData. Defaults to `nil`.
   * `pattern` (`:string`) - Pattern for input validation. Defaults to `"(1[012]|[1-9]):[0-5][0-9](\\\\s)?"`.
@@ -11102,20 +11531,19 @@ defmodule Graphene.CarbonComponents do
   * `required_validity_message` (`:string`) - Custom message for required validation. Defaults to `"Please fill out this field."`.
   * `size` (`:any`) - Size of the time picker. Defaults to `nil`.
   * `type` (`:string`) - Input type. Defaults to `"text"`.
-  * `validity_message` (`:string`) - Validity message. Defaults to `nil`.
   * `value` (`:string`) - Value of the input. Defaults to `nil`.
   * `warning` (`:boolean`) - Specify whether the control is in warning state. Defaults to `false`.
   * `warning_text` (`:string`) - Provide the text that is displayed when the control is in a warning state. Defaults to `"Warning message."`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-time-picker-select` - Slot for time picker select components. Accepts attributes:
+  * `time_picker_select` - Slot for time picker select components. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -11128,10 +11556,6 @@ defmodule Graphene.CarbonComponents do
   attr :invalid_text, :string,
     doc: "Provide the text that is displayed when the control is in an invalid state",
     default: "Invalid time format."
-
-  attr :label_text, :string,
-    doc: "Provide label text to be read by screen readers",
-    default: "Select a time"
 
   attr :max_length, :string, doc: "Specify the maximum length of the input value", default: "5"
   attr :name, :string, doc: "Name for the input in FormData"
@@ -11151,7 +11575,6 @@ defmodule Graphene.CarbonComponents do
   attr :rest, :global
   attr :size, :any, doc: "Size of the time picker"
   attr :type, :string, doc: "Input type", default: "text"
-  attr :validity_message, :string, doc: "Validity message"
   attr :value, :string, doc: "Value of the input"
   attr :warning, :boolean, doc: "Specify whether the control is in warning state"
 
@@ -11168,15 +11591,15 @@ defmodule Graphene.CarbonComponents do
 
   slot :inner_block
 
-  slot :"s-label-text", doc: "The label text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-time-picker-select", doc: "Slot for time picker select components." do
+  slot :time_picker_select, doc: "Slot for time picker select components." do
     attr :tag, :string
   end
 
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -11190,13 +11613,24 @@ defmodule Graphene.CarbonComponents do
   end
 
   def time_picker(%{select_item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:hide_label, fn -> false end)
+      |> assign_new(:invalid, fn -> false end)
+      |> assign_new(:name, fn -> nil end)
+      |> assign_new(:read_only, fn -> false end)
+      |> assign_new(:required, fn -> false end)
+      |> assign_new(:size, fn -> nil end)
+      |> assign_new(:value, fn -> nil end)
+      |> assign_new(:warning, fn -> false end)
+
     ~H"""
     <FormComponents.time_picker
       disabled={@disabled}
       hide_label={@hide_label}
       invalid={@invalid}
       invalid_text={@invalid_text}
-      label_text={@label_text}
       max_length={@max_length}
       name={@name}
       pattern={@pattern}
@@ -11206,12 +11640,25 @@ defmodule Graphene.CarbonComponents do
       required_validity_message={@required_validity_message}
       size={@size}
       type={@type}
-      validity_message={@validity_message}
       value={@value}
       warning={@warning}
       warning_text={@warning_text}
       {@rest}
     >
+      <.dynamic_tag
+        :for={label <- @label_text}
+        tag_name={Map.get(label, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(label)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={message <- @validity_message}
+        tag_name={Map.get(message, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(message)}
+      </.dynamic_tag>
       <CoreComponents.time_picker_select>
         <%= for item <- @select_item do %>
           <CoreComponents.select_item
@@ -11286,16 +11733,14 @@ defmodule Graphene.CarbonComponents do
   * `low_contrast` (`:boolean`) - Low contrast mode. Defaults to `false`.
   * `open` (`:boolean`) - `true` if the notification should be open. Defaults to `true`.
   * `status_icon_description` (`:string`) - Provide a description for "status" icon that can be read by screen readers. Defaults to `nil`.
-  * `subtitle` (`:string`) - The subtitle. Defaults to `nil`.
   * `timeout` (`:any`) - Specify an optional duration the notification should be closed in. Defaults to `nil`.
-  * `title` (`:string`) - The title. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-subtitle` - The subtitle. Accepts attributes:
+  * `subtitle` - The subtitle. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-title` - The title. Accepts attributes:
+  * `title` - The title. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -11316,16 +11761,14 @@ defmodule Graphene.CarbonComponents do
   attr :status_icon_description, :string,
     doc: "Provide a description for \"status\" icon that can be read by screen readers"
 
-  attr :subtitle, :string, doc: "The subtitle."
   attr :timeout, :any, doc: "Specify an optional duration the notification should be closed in"
-  attr :title, :string, doc: "The title."
   slot :inner_block
 
-  slot :"s-subtitle", doc: "The subtitle." do
+  slot :subtitle, doc: "The subtitle." do
     attr :tag, :string
   end
 
-  slot :"s-title", doc: "The title." do
+  slot :title, doc: "The title." do
     attr :tag, :string
   end
 
@@ -11365,10 +11808,6 @@ defmodule Graphene.CarbonComponents do
   * `invalid_text` (`:any`) - Provide the text that is displayed when the Checkbox is in an invalid state. Defaults to `nil`.
   * `label_a` (`:string`) - Specify the label for the "on" position. Defaults to `"On"`.
   * `label_b` (`:string`) - Specify the label for the "off" position. Defaults to `"Off"`.
-  * `label_text` (`:string`) - Provide a label to provide a description of the Checkbox input that you are
-    exposing to the user
-
-    Defaults to `nil`.
   * `name` (`:string`) - The form name. Defaults to `nil`.
   * `read_only` (`:boolean`) - Read only boolean. Defaults to `false`.
   * `readonly` (`:boolean`) - Specify whether the Checkbox is read-only. Defaults to `false`.
@@ -11381,13 +11820,13 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-checked-text` - The text for the checked state. Accepts attributes:
+  * `checked_text` - The text for the checked state. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-unchecked-text` - The text for the unchecked state. Accepts attributes:
+  * `unchecked_text` - The text for the unchecked state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -11419,11 +11858,6 @@ defmodule Graphene.CarbonComponents do
 
   attr :label_a, :string, doc: "Specify the label for the \"on\" position", default: "On"
   attr :label_b, :string, doc: "Specify the label for the \"off\" position", default: "Off"
-
-  attr :label_text, :string,
-    doc:
-      "Provide a label to provide a description of the Checkbox input that you are\nexposing to the user"
-
   attr :name, :string, doc: "The form name."
   attr :read_only, :boolean, doc: "Read only boolean."
   attr :readonly, :boolean, doc: "Specify whether the Checkbox is read-only"
@@ -11444,17 +11878,17 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
+  slot :checked_text, doc: "The text for the checked state." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-checked-text", doc: "The text for the checked state." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-unchecked-text", doc: "The text for the unchecked state." do
+  slot :unchecked_text, doc: "The text for the unchecked state." do
     attr :tag, :string
   end
 
@@ -11502,6 +11936,12 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
+  * `body_text` - Body text content for the toggletip. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `actions` - Action buttons for the toggletip. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
@@ -11533,6 +11973,15 @@ defmodule Graphene.CarbonComponents do
   attr :default_open, :boolean, doc: "Set whether toggletip is open by default."
   attr :open, :boolean, doc: "Set whether toggletip is open"
   attr :rest, :global
+
+  slot :actions, doc: "Action buttons for the toggletip." do
+    attr :tag, :string
+  end
+
+  slot :body_text, doc: "Body text content for the toggletip." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
   def toggletip(assigns) do
@@ -11639,6 +12088,23 @@ defmodule Graphene.CarbonComponents do
   slot :content
 
   def tooltip(%{content: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:alignment_axis_offset, fn -> nil end)
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:autoalign_boundary, fn -> nil end)
+      |> assign_new(:background_token, fn -> nil end)
+      |> assign_new(:border, fn -> false end)
+      |> assign_new(:close_on_activation, fn -> false end)
+      |> assign_new(:data_table, fn -> false end)
+      |> assign_new(:default_open, fn -> false end)
+      |> assign_new(:high_contrast, fn -> false end)
+      |> assign_new(:keyboard_only, fn -> false end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:size, fn -> false end)
+      |> assign_new(:tab_tip, fn -> false end)
+      |> assign_new(:toolbar_action, fn -> false end)
+
     ~H"""
     <CoreComponents.tooltip
       align={@align}
@@ -11815,6 +12281,12 @@ defmodule Graphene.CarbonComponents do
   end
 
   def tree_view(%{node: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:hide_label, fn -> false end)
+      |> assign_new(:label, fn -> nil end)
+      |> assign_new(:size, fn -> nil end)
+
     ~H"""
     <CoreComponents.tree_view
       hide_label={@hide_label}
@@ -12015,6 +12487,7 @@ defmodule Graphene.CarbonComponents do
     attr :disabled, :boolean
     attr :kind, :any
     attr :shortcut, :string
+    attr :divider, :boolean
     attr :attrs, :map
   end
 
@@ -12093,7 +12566,7 @@ defmodule Graphene.CarbonComponents do
 
   slot :inner_block
 
-  slot :"s-page-sizes-select", doc: "Where to put in the `<page-sizes-select>`." do
+  slot :page_sizes_select, doc: "Where to put in the `<page-sizes-select>`." do
     attr :tag, :string
   end
 
@@ -12111,10 +12584,6 @@ defmodule Graphene.CarbonComponents do
   attr :invalid_text, :string,
     doc: "Provide the text that is displayed when the control is in an invalid state",
     default: "Invalid time format."
-
-  attr :label_text, :string,
-    doc: "Provide label text to be read by screen readers",
-    default: "Select a time"
 
   attr :max_length, :string, doc: "Specify the maximum length of the input value", default: "5"
   attr :name, :string, doc: "Name for the input in FormData"
@@ -12134,7 +12603,6 @@ defmodule Graphene.CarbonComponents do
   attr :rest, :global
   attr :size, :any, doc: "Size of the time picker"
   attr :type, :string, doc: "Input type", default: "text"
-  attr :validity_message, :string, doc: "Validity message"
   attr :value, :string, doc: "Value of the input"
   attr :warning, :boolean, doc: "Specify whether the control is in warning state"
 
@@ -12144,18 +12612,74 @@ defmodule Graphene.CarbonComponents do
 
   slot :inner_block
 
-  slot :"s-label-text", doc: "The label text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-time-picker-select", doc: "Slot for time picker select components." do
+  slot :time_picker_select, doc: "Slot for time picker select components." do
     attr :tag, :string
   end
 
-  slot :"s-validity-message",
+  slot :select_item, doc: "Select items for the time picker." do
+    attr :label, :string
+    attr :value, :string
+    attr :selected, :boolean
+    attr :disabled, :boolean
+  end
+
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
+  end
+
+  def fluid_time_picker(%{select_item: [_ | _]} = assigns) do
+    ~H"""
+    <FormComponents.time_picker
+      disabled={assigns[:disabled]}
+      hide_label={assigns[:hide_label]}
+      invalid={assigns[:invalid]}
+      invalid_text={assigns[:invalid_text]}
+      max_length={assigns[:max_length]}
+      name={assigns[:name]}
+      pattern={assigns[:pattern]}
+      placeholder={assigns[:placeholder]}
+      read_only={assigns[:read_only]}
+      required={assigns[:required]}
+      required_validity_message={assigns[:required_validity_message]}
+      size={assigns[:size]}
+      type={assigns[:type]}
+      value={assigns[:value]}
+      warning={assigns[:warning]}
+      warning_text={assigns[:warning_text]}
+      {@rest}
+    >
+      <.dynamic_tag
+        :for={label <- @label_text}
+        tag_name={Map.get(label, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(label)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={message <- @validity_message}
+        tag_name={Map.get(message, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(message)}
+      </.dynamic_tag>
+      <CoreComponents.time_picker_select>
+        <%= for item <- @select_item do %>
+          <CoreComponents.select_item
+            label={item[:label]}
+            value={item[:value] || item[:label]}
+            selected={item[:selected]}
+            disabled={item[:disabled]}
+          />
+        <% end %>
+      </CoreComponents.time_picker_select>
+    </FormComponents.time_picker>
+    """
   end
 
   def fluid_time_picker(assigns) do
@@ -12194,10 +12718,10 @@ defmodule Graphene.CarbonComponents do
         <% end %>
       </CoreComponents.menu_item_group>
     <% end %>
-    <%= for divider <- @divider do %>
-      <CoreComponents.menu_item_divider {divider[:attrs] || %{}} />
-    <% end %>
     <%= for item <- @item do %>
+      <%= if item[:divider] do %>
+        <CoreComponents.menu_item_divider />
+      <% end %>
       <CoreComponents.menu_item
         label={item[:label]}
         disabled={item[:disabled]}
@@ -12209,6 +12733,9 @@ defmodule Graphene.CarbonComponents do
           {render_slot(item)}
         <% end %>
       </CoreComponents.menu_item>
+    <% end %>
+    <%= for divider <- @divider do %>
+      <CoreComponents.menu_item_divider {divider[:attrs] || %{}} />
     <% end %>
     """
   end

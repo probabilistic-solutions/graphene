@@ -83,13 +83,13 @@ defmodule Storybook.CarbonComponents.DataTable.Shared do
   def ai_label(assigns) do
     ~H"""
     <Carbon.ai_label alignment="bottom-start">
-      <div slot="body-text">
+      <:body_text>
         <p class="secondary">AI Explained</p>
         <h2 class="ai-label-heading">84%</h2>
         <p class="secondary bold">Confidence score</p>
         <p class="secondary">Model type: Foundation</p>
-      </div>
-      <Carbon.ai_label_action_button>View literature</Carbon.ai_label_action_button>
+      </:body_text>
+      <:action_button>View literature</:action_button>
     </Carbon.ai_label>
     """
   end
@@ -98,18 +98,18 @@ defmodule Storybook.CarbonComponents.DataTable.Shared do
     ~H"""
     <span>Attached groups</span>
     <Carbon.ai_label alignment="bottom-start" kind="inline">
-      <div slot="body-text">
+      <:body_text>
         <p class="secondary">AI Explained</p>
         <p class="secondary">Sorting guidance</p>
-      </div>
-      <Carbon.ai_label_action_button>View details</Carbon.ai_label_action_button>
+      </:body_text>
+      <:action_button>View details</:action_button>
     </Carbon.ai_label>
     """
   end
 
   def overflow_icon(assigns) do
     ~H"""
-    <span aria-hidden="true">...</span>
+    <Graphene.Icons.icon fit="width" name="overflow-menu--horizontal" />
     """
   end
 end

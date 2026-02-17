@@ -19,25 +19,25 @@ defmodule Storybook.CarbonComponents.FormComponents do
     form =
       Phoenix.Component.to_form(
         %{
-          subscribe: true,
-          feature: false,
-          plan: "starter",
-          quantity: "2",
-          fluid_quantity: "4",
-          name: "Ada Lovelace",
-          title: "Engineer",
-          password: "password",
-          bio: "Inventor of the first algorithm.",
-          notes: "Prefers a concise summary.",
-          search: "Ada",
-          fluid_search: "",
-          select: "option-1",
-          fluid_select: "option-2",
-          dropdown: "option-1",
-          combo: "option-2",
-          multi: "option-1",
-          date: "2024-01-10",
-          time: "09:30"
+          "subscribe" => true,
+          "feature" => false,
+          "plan" => "starter",
+          "quantity" => "2",
+          "fluid_quantity" => "4",
+          "name" => "Ada Lovelace",
+          "title" => "Engineer",
+          "password" => "password",
+          "bio" => "Inventor of the first algorithm.",
+          "notes" => "Prefers a concise summary.",
+          "search" => "Ada",
+          "fluid_search" => "",
+          "select" => "option-1",
+          "fluid_select" => "option-2",
+          "dropdown" => "option-1",
+          "combo" => "option-2",
+          "multi" => "option-1",
+          "date" => "2024-01-10",
+          "time" => "09:30"
         },
         as: :form
       )
@@ -62,12 +62,9 @@ defmodule Storybook.CarbonComponents.FormComponents do
             <div style="display: grid; gap: 0.75rem;">
               <h3>Boolean inputs</h3>
               <.checkbox field={@form[:subscribe]} label_text="Receive updates" />
-              <.toggle
-                field={@form[:feature]}
-                label_text="Enable feature"
-                label_a="On"
-                label_b="Off"
-              />
+              <.toggle field={@form[:feature]} label_a="On" label_b="Off">
+                <:label_text>Enable feature</:label_text>
+              </.toggle>
             </div>
 
             <div style="display: grid; gap: 0.75rem;">
@@ -82,10 +79,10 @@ defmodule Storybook.CarbonComponents.FormComponents do
             <div style="display: grid; gap: 0.75rem;">
               <h3>Numbers</h3>
               <.number_input field={@form[:quantity]} min="0" max="Infinity">
-                <:s-label-text>Quantity</:s-label-text>
+                <:label_text>Quantity</:label_text>
               </.number_input>
               <.fluid_number_input field={@form[:fluid_quantity]} min="0" max="Infinity">
-                <:s-label-text>Fluid quantity</:s-label-text>
+                <:label_text>Fluid quantity</:label_text>
               </.fluid_number_input>
             </div>
 
@@ -136,7 +133,9 @@ defmodule Storybook.CarbonComponents.FormComponents do
             <div style="display: grid; gap: 0.75rem;">
               <h3>Date & time</h3>
               <.form_date_picker field={@form[:date]} label_text="Start date" placeholder="mm/dd/yyyy" />
-              <.time_picker field={@form[:time]} label_text="Select time" />
+              <.time_picker field={@form[:time]}>
+                <:label_text>Select time</:label_text>
+              </.time_picker>
             </div>
           </div>
 
@@ -221,7 +220,8 @@ defmodule Storybook.CarbonComponents.FormComponents do
 
   defp form_select(assigns) do
     ~H"""
-    <.select field={@field} label={@label}>
+    <.select field={@field}>
+      <:label_text><%= @label %></:label_text>
       <%= for choice <- @choice do %>
         <CoreComponents.select_item
           value={choice[:value] || choice[:label]}
@@ -246,7 +246,8 @@ defmodule Storybook.CarbonComponents.FormComponents do
 
   defp form_fluid_select(assigns) do
     ~H"""
-    <.fluid_select field={@field} label={@label}>
+    <.fluid_select field={@field}>
+      <:label_text><%= @label %></:label_text>
       <%= for choice <- @choice do %>
         <CoreComponents.select_item
           value={choice[:value] || choice[:label]}

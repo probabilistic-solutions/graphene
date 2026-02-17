@@ -356,12 +356,8 @@ defmodule Graphene.CodeGen.Component.Story do
     if is_nil(value), do: "nil", else: to_string(value)
   end
 
-  defp slot_content(_component_name, _component_module, :"s-") do
-    ~S|<:s->Item</:s->|
-  end
-
-  defp slot_content(_component_name, _component_module, :"s-icon") do
-    ~S|<:s-icon><Graphene.Icons.icon fit="width" name="analytics"/></:s-icon>|
+  defp slot_content(_component_name, _component_module, :icon) do
+    ~S|<:icon><Graphene.Icons.icon fit="width" name="analytics"/></:icon>|
   end
 
   defp slot_content(component_name, component_module, :inner_block) do
@@ -372,7 +368,7 @@ defmodule Graphene.CodeGen.Component.Story do
     content =
       slot
       |> to_string()
-      |> String.replace_prefix("s-", "")
+      |> String.replace("_", " ")
       |> String.capitalize()
 
     "<:#{slot}>#{content}</:#{slot}>"

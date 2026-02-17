@@ -3,6 +3,7 @@ defmodule Storybook.BasicComponents.Table.Interactivity do
   use PhoenixStorybook.Story, :example
 
   import Graphene.BasicComponents
+  alias Graphene.CarbonComponents, as: Carbon
 
   alias Phoenix.LiveView.JS
   alias Storybook.BasicComponents.Table.Shared, as: TableData
@@ -46,26 +47,24 @@ defmodule Storybook.BasicComponents.Table.Interactivity do
       <:title>DataTable</:title>
       <:description>Advanced interactivity with callbacks</:description>
       <:toolbar>
-        <cds-table-toolbar>
-          <cds-table-batch-actions total-rows-count="6">
+        <Carbon.table_toolbar>
+          <Carbon.table_batch_actions total_rows_count="6">
             <.button kind="ghost">Delete</.button>
             <.button kind="ghost">Save</.button>
             <.button kind="ghost" href="#">Download</.button>
-          </cds-table-batch-actions>
-          <cds-table-toolbar-content has-batch-actions>
-            <cds-table-toolbar-search placeholder="Filter table"></cds-table-toolbar-search>
-            <cds-overflow-menu toolbar-action>
-              <%= TableData.overflow_menu_icon() %>
-              <span slot="tooltip-content">Settings</span>
-              <cds-overflow-menu-body>
-                <cds-overflow-menu-item>Action 1</cds-overflow-menu-item>
-                <cds-overflow-menu-item>Action 2</cds-overflow-menu-item>
-                <cds-overflow-menu-item>Action 3</cds-overflow-menu-item>
-              </cds-overflow-menu-body>
-            </cds-overflow-menu>
+          </Carbon.table_batch_actions>
+          <Carbon.table_toolbar_content has_batch_actions>
+            <Carbon.table_toolbar_search placeholder="Filter table" />
+            <Carbon.overflow_menu toolbar_action>
+              <:icon><%= TableData.overflow_menu_icon() %></:icon>
+              <:tooltip_content>Settings</:tooltip_content>
+              <:item label="Action 1" />
+              <:item label="Action 2" />
+              <:item label="Action 3" />
+            </Carbon.overflow_menu>
             <.button>Add new</.button>
-          </cds-table-toolbar-content>
-        </cds-table-toolbar>
+          </Carbon.table_toolbar_content>
+        </Carbon.table_toolbar>
       </:toolbar>
 
       <:row_decorator :let={row}>
@@ -79,15 +78,13 @@ defmodule Storybook.BasicComponents.Table.Interactivity do
       </:col>
 
       <:action :let={_row}>
-        <cds-overflow-menu toolbar-action>
-          <%= TableData.overflow_menu_icon() %>
-          <span slot="tooltip-content">Options</span>
-          <cds-overflow-menu-body flipped>
-            <cds-overflow-menu-item>Stop app</cds-overflow-menu-item>
-            <cds-overflow-menu-item>Restart app</cds-overflow-menu-item>
-            <cds-overflow-menu-item>Rename</cds-overflow-menu-item>
-          </cds-overflow-menu-body>
-        </cds-overflow-menu>
+        <Carbon.overflow_menu toolbar_action flipped>
+          <:icon><%= TableData.overflow_menu_icon() %></:icon>
+          <:tooltip_content>Options</:tooltip_content>
+          <:item label="Stop app" />
+          <:item label="Restart app" />
+          <:item label="Rename" />
+        </Carbon.overflow_menu>
       </:action>
 
       <:expanded_row :let={row}>

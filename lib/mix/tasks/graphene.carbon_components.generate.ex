@@ -248,7 +248,7 @@ if Mix.env() == :dev do
         |> Kernel.<>(Map.get(recipe, :extra_slots, ""))
 
       patterns = Map.get(recipe, :patterns, [])
-      prelude = Map.get(recipe, :prelude)
+      prelude = merge_prelude(assign_defaults_prelude(component.attrs), Map.get(recipe, :prelude))
       body = Map.get(recipe, :body, "")
 
       clauses =
@@ -260,6 +260,41 @@ if Mix.env() == :dev do
 
       doc_str <> attrs <> slots <> clauses <> fallback
     end
+
+    defp assign_defaults_prelude(attrs) do
+      attrs =
+        Enum.filter(attrs, fn attr ->
+          default = Keyword.get(attr.opts, :default, :__missing__)
+          not attr.required and default in [nil, false]
+        end)
+
+      case attrs do
+        [] ->
+          nil
+
+        _ ->
+          assigns =
+            attrs
+            |> Enum.map(fn attr ->
+              default =
+                cond do
+                  attr.name == :rest -> "%{}"
+                  Keyword.get(attr.opts, :default, :__missing__) == false -> "false"
+                  true -> "nil"
+                end
+
+              "      |> assign_new(#{atom_name(attr.name)}, fn -> #{default} end)\n"
+            end)
+            |> Enum.join("")
+
+          "    assigns =\n      assigns\n" <> assigns <> "\n"
+      end
+    end
+
+    defp merge_prelude(nil, nil), do: nil
+    defp merge_prelude(prelude, nil), do: prelude
+    defp merge_prelude(nil, prelude), do: prelude
+    defp merge_prelude(prelude, extra), do: prelude <> "\n" <> extra
 
     defp render_recipe_clause(name, pattern, prelude, body) do
       {pattern, guard} = split_pattern(pattern)

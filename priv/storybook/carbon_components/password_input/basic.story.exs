@@ -7,22 +7,24 @@ defmodule Storybook.CarbonComponents.PasswordInput.Basic do
     [
       %Variation{
         id: :default,
+        attributes: %{name: "password-input-default"},
         slots: [
-          ~S|<:s-label-text>Password</:s-label-text>|
+          ~S|<:label_text>Password</:label_text>|
         ]
       },
       %Variation{
         id: :helper_text,
+        attributes: %{name: "password-input-helper"},
         slots: [
-          ~S|<:s-label-text>New password</:s-label-text>
-<:s-helper-text>Minimum 8 characters</:s-helper-text>|
+          ~S|<:label_text>New password</:label_text>
+<:helper_text>Minimum 8 characters</:helper_text>|
         ]
       },
       %Variation{
         id: :invalid,
-        attributes: %{invalid: true, invalid_text: "Required"},
+        attributes: %{name: "password-input-invalid", invalid: true, invalid_text: "Required"},
         slots: [
-          ~S|<:s-label-text>Password</:s-label-text>|
+          ~S|<:label_text>Password</:label_text>|
         ]
       }
     ]

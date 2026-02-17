@@ -4,8 +4,16 @@ defmodule Graphene.CodeGen.ComponentPatches do
   """
   alias Graphene.CodeGen.Component
   alias Graphene.CodeGen.Component.{Attr, Slot}
+  alias Graphene.CodeGen.Util
 
-  def patch(
+  def patch(component) do
+    component
+    |> do_patch()
+    |> add_missing_slots()
+    |> resolve_slot_collisions()
+  end
+
+  defp do_patch(
         %{
           htmltag: "cds-checkbox",
           componentname: componentname,
@@ -24,7 +32,7 @@ defmodule Graphene.CodeGen.ComponentPatches do
     }
   end
 
-  def patch(
+  defp do_patch(
         %{
           htmltag: "cds-menu-item",
           componentname: componentname,
@@ -43,7 +51,7 @@ defmodule Graphene.CodeGen.ComponentPatches do
     }
   end
 
-  def patch(
+  defp do_patch(
         %{
           htmltag: "cds-fluid-textarea",
           componentname: componentname,
@@ -62,7 +70,7 @@ defmodule Graphene.CodeGen.ComponentPatches do
     }
   end
 
-  def patch(
+  defp do_patch(
         %{
           htmltag: "cds-popover",
           componentname: componentname,
@@ -81,23 +89,50 @@ defmodule Graphene.CodeGen.ComponentPatches do
     }
   end
 
-  def patch(%{htmltag: "cds-copy"} = component) do
+  defp do_patch(%{htmltag: "cds-copy"} = component) do
     %{component | import: "./src/components/copy/copy.js"}
   end
 
-  def patch(%{htmltag: "cds-number-input"} = component) do
+  defp do_patch(%{htmltag: "cds-number-input"} = component) do
     set_step_default(component)
   end
 
-  def patch(%{htmltag: "cds-fluid-number-input"} = component) do
+  defp do_patch(%{htmltag: "cds-fluid-number-input"} = component) do
     set_step_default(component)
   end
 
-  def patch(%{htmltag: "cds-button", slots: []} = component) do
+  defp do_patch(%{htmltag: "cds-slider"} = component) do
+    set_attr_default(component, "step-multiplier", "4")
+  end
+
+  defp do_patch(%{htmltag: "cds-slider-input"} = component) do
+    set_attr_default(component, "step-multiplier", "4")
+  end
+
+  defp do_patch(%{htmltag: "cds-button", slots: []} = component) do
     %{component | slots: [Slot.parse(%{"name" => "icon", "description" => "Icon."})]}
   end
 
-  def patch(%{htmltag: "cds-table", slots: []} = component) do
+  defp do_patch(%{htmltag: "cds-ai-label"} = component) do
+    component
+    |> ensure_slot(%{"name" => "body-text", "description" => "Content for the AI label body."})
+    |> ensure_slot(%{"name" => "actions", "description" => "Action buttons for the AI label."})
+  end
+
+  defp do_patch(%{htmltag: "cds-toggletip"} = component) do
+    component
+    |> ensure_slot(%{"name" => "body-text", "description" => "Body text content for the toggletip."})
+    |> ensure_slot(%{"name" => "actions", "description" => "Action buttons for the toggletip."})
+  end
+
+  defp do_patch(%{htmltag: "cds-overflow-menu"} = component) do
+    ensure_slot(component, %{
+      "name" => "tooltip-content",
+      "description" => "Tooltip content for the overflow menu trigger."
+    })
+  end
+
+  defp do_patch(%{htmltag: "cds-table", slots: []} = component) do
     %{
       component
       | slots: [
@@ -108,7 +143,7 @@ defmodule Graphene.CodeGen.ComponentPatches do
     }
   end
 
-  def patch(%{htmltag: "cds-table-row"} = component) do
+  defp do_patch(%{htmltag: "cds-table-row"} = component) do
     ensure_attr(
       component,
       %{
@@ -120,7 +155,7 @@ defmodule Graphene.CodeGen.ComponentPatches do
     )
   end
 
-  def patch(component), do: component
+  defp do_patch(component), do: component
 
   @manual_components [
     %Component{
@@ -172,6 +207,48 @@ defmodule Graphene.CodeGen.ComponentPatches do
         </CoreComponents.accordion_item>
       <% end %>
     </CoreComponents.accordion>
+"""
+    },
+    %{
+      name: :ai_label,
+      delegate: :core,
+      patterns: ["%{}"],
+      extra_slots: ~S"""
+  slot :action_button do
+    attr :attrs, :map
+  end
+""",
+      body: ~S"""
+    <CoreComponents.ai_label
+      ai_text={assigns[:ai_text]}
+      ai_text_label={assigns[:ai_text_label]}
+      alignment={assigns[:alignment]}
+      alignment_axis_offset={assigns[:alignment_axis_offset]}
+      autoalign={assigns[:autoalign]}
+      button_label={assigns[:button_label]}
+      default_open={assigns[:default_open]}
+      kind={assigns[:kind]}
+      open={assigns[:open]}
+      previous_value={assigns[:previous_value]}
+      revert_active={assigns[:revert_active]}
+      revert_label={assigns[:revert_label]}
+      size={assigns[:size]}
+      slot={assigns[:slot]}
+      {@rest}
+    >
+      <.dynamic_tag :for={body <- @body_text} tag_name={Map.get(body, :tag, "div")} slot="body-text">
+        {render_slot(body)}
+      </.dynamic_tag>
+      <.dynamic_tag :for={action <- @actions} tag_name={Map.get(action, :tag, "div")} slot="actions">
+        {render_slot(action)}
+      </.dynamic_tag>
+      <%= for action_button <- @action_button do %>
+        <CoreComponents.ai_label_action_button {action_button[:attrs] || %{}}>
+          {render_slot(action_button)}
+        </CoreComponents.ai_label_action_button>
+      <% end %>
+      {render_slot(@inner_block)}
+    </CoreComponents.ai_label>
 """
     },
     %{
@@ -306,6 +383,7 @@ defmodule Graphene.CodeGen.ComponentPatches do
     attr :disabled, :boolean
     attr :kind, :any
     attr :shortcut, :string
+    attr :divider, :boolean
     attr :attrs, :map
   end
 
@@ -336,6 +414,39 @@ defmodule Graphene.CodeGen.ComponentPatches do
 """
     },
     %{
+      name: :code_snippet,
+      delegate: :core,
+      patterns: ["%{copy_text: nil}"],
+      body: ~S"""
+    <% copy_text =
+      @copy_text ||
+        (@inner_block
+         |> render_slot()
+         |> Phoenix.HTML.Safe.to_iodata()
+         |> IO.iodata_to_binary()
+         |> String.trim()) %>
+    <CoreComponents.code_snippet
+      copy_text={copy_text}
+      disabled={@disabled}
+      feedback={@feedback}
+      feedback_timeout={@feedback_timeout}
+      hide_copy_button={@hide_copy_button}
+      max_collapsed_number_of_rows={@max_collapsed_number_of_rows}
+      max_expanded_number_of_rows={@max_expanded_number_of_rows}
+      min_collapsed_number_of_rows={@min_collapsed_number_of_rows}
+      min_expanded_number_of_rows={@min_expanded_number_of_rows}
+      show_less_text={@show_less_text}
+      show_more_text={@show_more_text}
+      tooltip_content={@tooltip_content}
+      type={@type}
+      wrap_text={@wrap_text}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </CoreComponents.code_snippet>
+"""
+    },
+    %{
       name: :contained_list,
       delegate: :core,
       patterns: ["%{item: [_ | _]}"],
@@ -349,10 +460,15 @@ defmodule Graphene.CodeGen.ComponentPatches do
     <CoreComponents.contained_list
       is_inset={@is_inset}
       kind={@kind}
-      label={@label}
       size={@size}
       {@rest}
     >
+      <.dynamic_tag :for={label <- @label} tag_name={Map.get(label, :tag, "div")} slot="label">
+        {render_slot(label)}
+      </.dynamic_tag>
+      <.dynamic_tag :for={action <- @action} tag_name={Map.get(action, :tag, "div")} slot="action">
+        {render_slot(action)}
+      </.dynamic_tag>
       <%= for item <- @item do %>
         <CoreComponents.contained_list_item
           clickable={item[:clickable]}
@@ -568,14 +684,12 @@ defmodule Graphene.CodeGen.ComponentPatches do
     <FormComponents.fluid_select
       autofocus={@autofocus}
       disabled={@disabled}
-      helper_text={@helper_text}
       hide_label={@hide_label}
       id={@id}
       inline={@inline}
       invalid={@invalid}
       invalid_text={@invalid_text}
       is_fluid={@is_fluid}
-      label_text={@label_text}
       multiple={@multiple}
       name={@name}
       pattern={@pattern}
@@ -590,6 +704,27 @@ defmodule Graphene.CodeGen.ComponentPatches do
       warn_text={@warn_text}
       {@rest}
     >
+      <.dynamic_tag
+        :for={label <- @label_text}
+        tag_name={Map.get(label, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(label)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={helper <- @helper_text}
+        tag_name={Map.get(helper, :tag, "div")}
+        slot="helper-text"
+      >
+        {render_slot(helper)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={message <- @validity_message}
+        tag_name={Map.get(message, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(message)}
+      </.dynamic_tag>
       <%= for item <- @item do %>
         <CoreComponents.select_item
           label={item[:label]}
@@ -619,7 +754,6 @@ defmodule Graphene.CodeGen.ComponentPatches do
       hide_label={@hide_label}
       invalid={@invalid}
       invalid_text={@invalid_text}
-      label_text={@label_text}
       max_length={@max_length}
       name={@name}
       pattern={@pattern}
@@ -629,12 +763,25 @@ defmodule Graphene.CodeGen.ComponentPatches do
       required_validity_message={@required_validity_message}
       size={@size}
       type={@type}
-      validity_message={@validity_message}
       value={@value}
       warning={@warning}
       warning_text={@warning_text}
       {@rest}
     >
+      <.dynamic_tag
+        :for={label <- @label_text}
+        tag_name={Map.get(label, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(label)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={message <- @validity_message}
+        tag_name={Map.get(message, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(message)}
+      </.dynamic_tag>
       <CoreComponents.time_picker_select>
         <%= for item <- @select_item do %>
           <CoreComponents.select_item
@@ -729,9 +876,12 @@ defmodule Graphene.CodeGen.ComponentPatches do
       patterns: [
         "%{body: [_ | _]}",
         "%{footer_button: [_ | _]}",
-        "%{label: label, heading: heading} when not is_nil(label) or not is_nil(heading)"
+        "%{label: [_ | _]}",
+        "%{heading: [_ | _]}"
       ],
       extra_slots: ~S"""
+  slot :label
+  slot :heading
   slot :body
 
   slot :footer_button do
@@ -761,8 +911,12 @@ defmodule Graphene.CodeGen.ComponentPatches do
       {@rest}
     >
       <CoreComponents.modal_header>
-        <CoreComponents.modal_label :if={@label}>{@label}</CoreComponents.modal_label>
-        <CoreComponents.modal_heading :if={@heading}>{@heading}</CoreComponents.modal_heading>
+        <%= for label <- @label do %>
+          <CoreComponents.modal_label>{render_slot(label)}</CoreComponents.modal_label>
+        <% end %>
+        <%= for heading <- @heading do %>
+          <CoreComponents.modal_heading>{render_slot(heading)}</CoreComponents.modal_heading>
+        <% end %>
       </CoreComponents.modal_header>
       <CoreComponents.modal_body :if={@body != []}>
         <CoreComponents.modal_body_content>
@@ -856,46 +1010,53 @@ defmodule Graphene.CodeGen.ComponentPatches do
 """,
       body: ~S"""
     <CoreComponents.overflow_menu
-      align={@align}
-      autoalign={@autoalign}
-      autofocus={@autofocus}
-      batch_action={@batch_action}
-      breadcrumb={@breadcrumb}
-      button_class_name={@button_class_name}
-      close_on_activation={@close_on_activation}
-      danger_description={@danger_description}
-      data_table={@data_table}
-      default_open={@default_open}
-      disabled={@disabled}
-      download={@download}
-      enter_delay_ms={@enter_delay_ms}
-      flipped={@flipped}
-      has_main_content={@has_main_content}
-      href={@href}
-      hreflang={@hreflang}
-      index={@index}
-      is_expressive={@is_expressive}
-      is_selected={@is_selected}
-      kind={@kind}
-      leave_delay_ms={@leave_delay_ms}
-      link_role={@link_role}
-      open={@open}
-      open_tooltip={@open_tooltip}
-      ping={@ping}
-      rel={@rel}
-      size={@size}
-      tab_index={@tab_index}
-      target={@target}
-      toolbar_action={@toolbar_action}
-      tooltip_alignment={@tooltip_alignment}
-      tooltip_position={@tooltip_position}
-      tooltip_text={@tooltip_text}
-      type={@type}
+      align={assigns[:align]}
+      autoalign={assigns[:autoalign]}
+      autofocus={assigns[:autofocus]}
+      batch_action={assigns[:batch_action]}
+      breadcrumb={assigns[:breadcrumb]}
+      button_class_name={assigns[:button_class_name]}
+      close_on_activation={assigns[:close_on_activation]}
+      danger_description={assigns[:danger_description]}
+      data_table={assigns[:data_table]}
+      default_open={assigns[:default_open]}
+      disabled={assigns[:disabled]}
+      download={assigns[:download]}
+      enter_delay_ms={assigns[:enter_delay_ms]}
+      flipped={assigns[:flipped]}
+      has_main_content={assigns[:has_main_content]}
+      href={assigns[:href]}
+      hreflang={assigns[:hreflang]}
+      index={assigns[:index]}
+      is_expressive={assigns[:is_expressive]}
+      is_selected={assigns[:is_selected]}
+      kind={assigns[:kind]}
+      leave_delay_ms={assigns[:leave_delay_ms]}
+      link_role={assigns[:link_role]}
+      open={assigns[:open]}
+      open_tooltip={assigns[:open_tooltip]}
+      ping={assigns[:ping]}
+      rel={assigns[:rel]}
+      size={assigns[:size]}
+      tab_index={assigns[:tab_index]}
+      target={assigns[:target]}
+      toolbar_action={assigns[:toolbar_action]}
+      tooltip_alignment={assigns[:tooltip_alignment]}
+      tooltip_position={assigns[:tooltip_position]}
+      tooltip_text={assigns[:tooltip_text]}
+      type={assigns[:type]}
       {@rest}
     >
-      <%= for icon <- assigns[:"s-icon"] do %>
+      <.dynamic_tag :for={icon <- @icon} tag_name={Map.get(icon, :tag, "span")} slot="icon">
         {render_slot(icon)}
-      <% end %>
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={tooltip <- @tooltip_content}
+        tag_name={Map.get(tooltip, :tag, "span")}
+        slot="tooltip-content"
+      >
+        {render_slot(tooltip)}
+      </.dynamic_tag>
       <CoreComponents.overflow_menu_body>
         <%= for item <- @item do %>
           <CoreComponents.overflow_menu_item disabled={item[:disabled]} danger={item[:danger]}>
@@ -1029,14 +1190,17 @@ defmodule Graphene.CodeGen.ComponentPatches do
           label={step[:label]}
           description={step[:description]}
           secondary_label={step[:secondary_label]}
-          secondary_label_text={step[:secondary_label_text]}
           complete={step[:complete]}
           current={step[:current]}
           disabled={step[:disabled]}
           invalid={step[:invalid]}
           icon_label={step[:icon_label]}
           clickable={step[:clickable]}
-        />
+        >
+          <%= if step[:secondary_label_text] do %>
+            <span slot="secondary-label-text">{step[:secondary_label_text]}</span>
+          <% end %>
+        </CoreComponents.progress_step>
       <% end %>
     </CoreComponents.progress_indicator>
 """
@@ -1098,14 +1262,12 @@ defmodule Graphene.CodeGen.ComponentPatches do
     <FormComponents.select
       autofocus={@autofocus}
       disabled={@disabled}
-      helper_text={@helper_text}
       hide_label={@hide_label}
       id={@id}
       inline={@inline}
       invalid={@invalid}
       invalid_text={@invalid_text}
       is_fluid={@is_fluid}
-      label_text={@label_text}
       multiple={@multiple}
       name={@name}
       pattern={@pattern}
@@ -1120,6 +1282,27 @@ defmodule Graphene.CodeGen.ComponentPatches do
       warn_text={@warn_text}
       {@rest}
     >
+      <.dynamic_tag
+        :for={label <- @label_text}
+        tag_name={Map.get(label, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(label)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={helper <- @helper_text}
+        tag_name={Map.get(helper, :tag, "div")}
+        slot="helper-text"
+      >
+        {render_slot(helper)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={message <- @validity_message}
+        tag_name={Map.get(message, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(message)}
+      </.dynamic_tag>
       <%= for item <- @item do %>
         <CoreComponents.select_item
           label={item[:label]}
@@ -1237,7 +1420,6 @@ defmodule Graphene.CodeGen.ComponentPatches do
       hide_label={@hide_label}
       invalid={@invalid}
       invalid_text={@invalid_text}
-      label_text={@label_text}
       max_length={@max_length}
       name={@name}
       pattern={@pattern}
@@ -1247,12 +1429,25 @@ defmodule Graphene.CodeGen.ComponentPatches do
       required_validity_message={@required_validity_message}
       size={@size}
       type={@type}
-      validity_message={@validity_message}
       value={@value}
       warning={@warning}
       warning_text={@warning_text}
       {@rest}
     >
+      <.dynamic_tag
+        :for={label <- @label_text}
+        tag_name={Map.get(label, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(label)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={message <- @validity_message}
+        tag_name={Map.get(message, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(message)}
+      </.dynamic_tag>
       <CoreComponents.time_picker_select>
         <%= for item <- @select_item do %>
           <CoreComponents.select_item
@@ -1369,6 +1564,37 @@ defmodule Graphene.CodeGen.ComponentPatches do
     %{component | attrs: Enum.map(component.attrs, &set_step_attr_default/1)}
   end
 
+  defp set_attr_default(component, htmlname, default) do
+    attrs =
+      Enum.map(component.attrs, fn attr ->
+        if attr.htmlname == htmlname and Keyword.get(attr.opts, :default) in [nil, :__missing__] do
+          %{attr | opts: Keyword.put(attr.opts, :default, default)}
+        else
+          attr
+        end
+      end)
+
+    %{component | attrs: attrs}
+  end
+
+  defp add_missing_slots(component), do: component
+
+  defp resolve_slot_collisions(component) do
+    slot_names =
+      component.slots
+      |> Enum.map(&Util.kebab2snake(&1.htmlname))
+      |> MapSet.new()
+
+    attrs =
+      component.attrs
+      |> Enum.reject(fn attr ->
+        attr_name = Util.kebab2snake(attr.htmlname)
+        MapSet.member?(slot_names, attr_name)
+      end)
+
+    %{component | attrs: attrs}
+  end
+
   defp ensure_attr(component, %{"name" => name} = attr) do
     exists? = Enum.any?(component.attrs, &(&1.htmlname == name))
 
@@ -1376,6 +1602,16 @@ defmodule Graphene.CodeGen.ComponentPatches do
       component
     else
       %{component | attrs: component.attrs ++ [Attr.parse(attr)]}
+    end
+  end
+
+  defp ensure_slot(component, %{"name" => name} = slot) do
+    exists? = Enum.any?(component.slots, &(&1.htmlname == name))
+
+    if exists? do
+      component
+    else
+      %{component | slots: component.slots ++ [Slot.parse(slot)]}
     end
   end
 

@@ -7,15 +7,27 @@ defmodule Storybook.CarbonComponents.Notification.Toast do
     [
       %Variation{
         id: :success,
-        attributes: %{title: "Saved", subtitle: "Your changes were saved", kind: "success", timeout: "3000"}
+        attributes: %{kind: "success", timeout: "3000"},
+        slots: [
+          ~S|<:title>Saved</:title>
+<:subtitle>Your changes were saved</:subtitle>|
+        ]
       },
       %Variation{
         id: :info,
-        attributes: %{title: "New message", subtitle: "You have unread messages", kind: "info", timeout: "5000"}
+        attributes: %{kind: "info", timeout: "5000"},
+        slots: [
+          ~S|<:title>New message</:title>
+<:subtitle>You have unread messages</:subtitle>|
+        ]
       },
       %Variation{
         id: :error,
-        attributes: %{title: "Failed", subtitle: "Try again", kind: "error", timeout: "3000"}
+        attributes: %{kind: "error", timeout: "3000"},
+        slots: [
+          ~S|<:title>Failed</:title>
+<:subtitle>Try again</:subtitle>|
+        ]
       }
     ]
   end

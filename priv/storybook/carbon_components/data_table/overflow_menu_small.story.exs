@@ -31,10 +31,10 @@ defmodule Storybook.CarbonComponents.DataTable.OverflowMenuSmall do
 </:col>
 <:action :let={_row}>
   <Graphene.CarbonComponents.overflow_menu toolbar_action flipped>
-    <:s-icon>
+    <:icon>
       <Storybook.CarbonComponents.DataTable.Shared.overflow_icon />
-    </:s-icon>
-    <span slot="tooltip-content">Options</span>
+    </:icon>
+    <:tooltip_content>Options</:tooltip_content>
     <:item>Stop app</:item>
     <:item>Restart app</:item>
     <:item>Rename</:item>
@@ -66,10 +66,10 @@ defmodule Storybook.CarbonComponents.DataTable.OverflowMenuSmall do
 </:col>
 <:action :let={_row}>
   <Graphene.CarbonComponents.overflow_menu toolbar_action flipped>
-    <:s-icon>
+    <:icon>
       <Storybook.CarbonComponents.DataTable.Shared.overflow_icon />
-    </:s-icon>
-    <span slot="tooltip-content">Options</span>
+    </:icon>
+    <:tooltip_content>Options</:tooltip_content>
     <:item>Stop app</:item>
     <:item>Restart app</:item>
   </Graphene.CarbonComponents.overflow_menu>

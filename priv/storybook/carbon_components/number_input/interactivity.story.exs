@@ -22,6 +22,7 @@ defmodule Storybook.CarbonComponents.NumberInput.Interactivity do
     ~H"""
     <.number_input
       id="number-input-events"
+      name="number-input-events"
       label="Quantity"
       value={@value}
       min="0"

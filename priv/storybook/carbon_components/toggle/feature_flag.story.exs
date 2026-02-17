@@ -8,20 +8,28 @@ defmodule Storybook.CarbonComponents.Toggle.FeatureFlag do
       %Variation{
         id: :single,
         slots: [
-          ~S|<Graphene.CarbonComponents.toggle label_text="Label" label_a="On" label_b="Off" toggled={true} />|
+          ~S|<Graphene.CarbonComponents.toggle name="feature-flag-single" label_a="On" label_b="Off" toggled={true}>
+  <:label_text>Label</:label_text>
+</Graphene.CarbonComponents.toggle>|
         ]
       },
       %Variation{
         id: :multiple,
         slots: [
-          ~S|<Graphene.CarbonComponents.toggle label_text="Feature A" label_a="On" label_b="Off" toggled={true} />
-<Graphene.CarbonComponents.toggle label_text="Feature B" label_a="On" label_b="Off" />|
+          ~S|<Graphene.CarbonComponents.toggle name="feature-flag-a" label_a="On" label_b="Off" toggled={true}>
+  <:label_text>Feature A</:label_text>
+</Graphene.CarbonComponents.toggle>
+<Graphene.CarbonComponents.toggle name="feature-flag-b" label_a="On" label_b="Off">
+  <:label_text>Feature B</:label_text>
+</Graphene.CarbonComponents.toggle>|
         ]
       },
       %Variation{
         id: :disabled,
         slots: [
-          ~S|<Graphene.CarbonComponents.toggle label_text="Disabled" label_a="On" label_b="Off" disabled={true} />|
+          ~S|<Graphene.CarbonComponents.toggle name="feature-flag-disabled" label_a="On" label_b="Off" disabled={true}>
+  <:label_text>Disabled</:label_text>
+</Graphene.CarbonComponents.toggle>|
         ]
       }
     ]

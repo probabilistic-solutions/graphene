@@ -39,12 +39,12 @@ defmodule Graphene.BasicComponents do
       :if={msg = render_slot(@inner_block) || Phoenix.Flash.get(@flash, @kind)}
       id={@id}
       kind={@carbon_kind}
-      title={@title}
       open
       phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide("##{@id}")}
       {@rest}
     >
-      <:s-subtitle>{msg}</:s-subtitle>
+      <:title :if={@title}>{@title}</:title>
+      <:subtitle>{msg}</:subtitle>
     </CarbonComponents.toast_notification>
     """
   end
@@ -197,7 +197,6 @@ defmodule Graphene.BasicComponents do
       <CarbonComponents.select
         id={@id}
         name={@name}
-        label_text={@label}
         value={select_value(@value, @multiple)}
         multiple={@multiple}
         invalid={@invalid}
@@ -205,6 +204,7 @@ defmodule Graphene.BasicComponents do
         class={@class}
         {@rest}
       >
+        <:label_text>{@label}</:label_text>
         <CarbonComponents.select_item
           :if={@prompt}
           value=""

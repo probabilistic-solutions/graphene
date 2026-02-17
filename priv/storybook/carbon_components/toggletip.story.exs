@@ -10,9 +10,15 @@ defmodule Storybook.CarbonComponents.Toggletip do
         attributes: %{alignment: "bottom", default_open: true},
         slots: [
           ~S|Toggletip label
-<p slot="body-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-<Graphene.CarbonComponents.link href="#" slot="actions">Link action</Graphene.CarbonComponents.link>
-<Graphene.CarbonComponents.button size="sm" slot="actions">Button</Graphene.CarbonComponents.button>|
+<:body_text>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</:body_text>
+<:actions>
+  <Graphene.CarbonComponents.link href="#">Link action</Graphene.CarbonComponents.link>
+</:actions>
+<:actions>
+  <Graphene.CarbonComponents.button size="sm">Button</Graphene.CarbonComponents.button>
+</:actions>|
         ]
       },
       %Variation{
@@ -20,7 +26,9 @@ defmodule Storybook.CarbonComponents.Toggletip do
         attributes: %{alignment: "top"},
         slots: [
           ~S|Info
-<p slot="body-text">More details about this option.</p>|
+<:body_text>
+  <p>More details about this option.</p>
+</:body_text>|
         ]
       },
       %Variation{
@@ -28,8 +36,12 @@ defmodule Storybook.CarbonComponents.Toggletip do
         attributes: %{alignment: "right"},
         slots: [
           ~S|Help
-<p slot="body-text">Short description goes here.</p>
-<Graphene.CarbonComponents.button size="sm" slot="actions">Got it</Graphene.CarbonComponents.button>|
+<:body_text>
+  <p>Short description goes here.</p>
+</:body_text>
+<:actions>
+  <Graphene.CarbonComponents.button size="sm">Got it</Graphene.CarbonComponents.button>
+</:actions>|
         ]
       }
     ]

@@ -22,12 +22,13 @@ defmodule Storybook.CarbonComponents.FluidTextarea.Interactivity do
     ~H"""
     <.fluid_textarea
       id="fluid-textarea-events"
+      name="fluid-textarea-events"
       placeholder="Add notes"
       required
       value={@value}
       {@event_attrs}
     >
-      <:s-label-text>Notes</:s-label-text>
+      <:label_text>Notes</:label_text>
     </.fluid_textarea>
 
     <.button kind="secondary" phx-click="standard_click">Standard event</.button>

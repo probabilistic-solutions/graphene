@@ -11,8 +11,7 @@ defmodule Storybook.CarbonComponents.Menu do
         slots: [
           ~S|<:item label="First action" />
 <:item label="Second action" />
-<:divider />
-<:item label="Danger action" kind="danger" />|
+<:item label="Danger action" divider kind="danger" />|
         ]
       },
       %Variation{

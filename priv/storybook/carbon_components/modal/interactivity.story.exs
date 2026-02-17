@@ -32,9 +32,9 @@ defmodule Storybook.CarbonComponents.Modal.Interactivity do
     <.modal
       id="modal-events"
       open={@open}
-      heading="Modal heading"
       {@event_attrs}
     >
+      <:heading>Modal heading</:heading>
       <:body>Close the modal to see events.</:body>
       <:footer_button kind="secondary">Cancel</:footer_button>
       <:footer_button kind="primary">Submit</:footer_button>

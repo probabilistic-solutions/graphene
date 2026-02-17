@@ -7,27 +7,24 @@ defmodule Storybook.CarbonComponents.CodeSnippet do
     [
       %Variation{
         id: :single,
-        attributes: %{type: "single", copy_text: "npm install graphene"},
+        attributes: %{type: "single"},
         slots: ["npm install graphene"]
       },
       %Variation{
         id: :inline,
-        attributes: %{type: "inline", copy_text: "mix test"},
+        attributes: %{type: "inline"},
         slots: ["mix test"]
       },
       %Variation{
         id: :multi,
-        attributes: %{
-          type: "multi",
-          copy_text: "mix graphene.core_components.generate\nmix graphene.stories.generate"
-        },
+        attributes: %{type: "multi"},
         slots: [
           "mix graphene.core_components.generate\nmix graphene.stories.generate"
         ]
       },
       %Variation{
         id: :wrapped,
-        attributes: %{type: "single", wrap_text: true, copy_text: "npm install graphene --save"},
+        attributes: %{type: "single", wrap_text: true},
         slots: ["npm install graphene --save"]
       }
     ]

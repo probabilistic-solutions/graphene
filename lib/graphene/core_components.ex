@@ -132,17 +132,14 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "Provide a description for \"status\" icon that can be read by screen readers"
 
-  attr :subtitle, :string, default: nil, doc: "The subtitle."
-
   attr :timeout, :any,
     default: nil,
     doc: "Specify an optional duration the notification should be closed in"
 
-  attr :title, :string, default: nil, doc: "The title."
   attr :rest, :global
 
-  slot :"s-subtitle", doc: "The subtitle.", do: attr(:tag, :string)
-  slot :"s-title", doc: "The title.", do: attr(:tag, :string)
+  slot :subtitle, doc: "The subtitle.", do: attr(:tag, :string)
+  slot :title, doc: "The title.", do: attr(:tag, :string)
   slot :inner_block
 
   def actionable_notification(assigns) do
@@ -158,20 +155,14 @@ defmodule Graphene.CoreComponents do
       low-contrast={assigns[:low_contrast]}
       open={assigns[:open]}
       status-icon-description={assigns[:status_icon_description]}
-      subtitle={assigns[:subtitle]}
       timeout={assigns[:timeout]}
-      title={assigns[:title]}
       {@rest}
     >
       {render_slot(@inner_block)}
-      <.dynamic_tag
-        :for={s <- assigns[:"s-subtitle"]}
-        tag_name={Map.get(s, :tag, "div")}
-        slot="subtitle"
-      >
+      <.dynamic_tag :for={s <- assigns[:subtitle]} tag_name={Map.get(s, :tag, "div")} slot="subtitle">
         {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-title"]} tag_name={Map.get(s, :tag, "div")} slot="title">
+      <.dynamic_tag :for={s <- assigns[:title]} tag_name={Map.get(s, :tag, "div")} slot="title">
         {render_slot(s)}
       </.dynamic_tag>
     </cds-actionable-notification>
@@ -373,6 +364,8 @@ defmodule Graphene.CoreComponents do
   attr :slot, :string, default: "ai-label"
   attr :rest, :global
 
+  slot :body_text, doc: "Content for the AI label body.", do: attr(:tag, :string)
+  slot :actions, doc: "Action buttons for the AI label.", do: attr(:tag, :string)
   slot :inner_block
 
   def ai_label(assigns) do
@@ -395,6 +388,16 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:body_text]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="body-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag :for={s <- assigns[:actions]} tag_name={Map.get(s, :tag, "div")} slot="actions">
+        {render_slot(s)}
+      </.dynamic_tag>
     </cds-ai-label>
     """
   end
@@ -885,7 +888,7 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-icon", doc: "The icon for the trigger button.", do: attr(:tag, :string)
+  slot :icon, doc: "The icon for the trigger button.", do: attr(:tag, :string)
   slot :inner_block
 
   def breadcrumb_overflow_menu(assigns) do
@@ -929,7 +932,7 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
-      <.dynamic_tag :for={s <- assigns[:"s-icon"]} tag_name={Map.get(s, :tag, "div")} slot="icon">
+      <.dynamic_tag :for={s <- assigns[:icon]} tag_name={Map.get(s, :tag, "div")} slot="icon">
         {render_slot(s)}
       </.dynamic_tag>
     </cds-breadcrumb-overflow-menu>
@@ -1030,7 +1033,7 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-icon", doc: "Icon.", do: attr(:tag, :string)
+  slot :icon, doc: "Icon.", do: attr(:tag, :string)
   slot :inner_block
 
   def button(assigns) do
@@ -1062,7 +1065,7 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
-      <.dynamic_tag :for={s <- assigns[:"s-icon"]} tag_name={Map.get(s, :tag, "div")} slot="icon">
+      <.dynamic_tag :for={s <- assigns[:icon]} tag_name={Map.get(s, :tag, "div")} slot="icon">
         {render_slot(s)}
       </.dynamic_tag>
     </cds-button>
@@ -1160,20 +1163,16 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "Provide a description for \"status\" icon that can be read by screen readers"
 
-  attr :subtitle, :string, default: nil, doc: "The subtitle."
-
   attr :timeout, :any,
     default: nil,
     doc: "Specify an optional duration the notification should be closed in"
 
-  attr :title, :string, default: nil, doc: "The title."
   attr :title_id, :string, default: nil, doc: "Specify the id for the title element."
   attr :rest, :global
 
-  slot :"s-", doc: "The default slot for additional content.", do: attr(:tag, :string)
-  slot :"s-action", doc: "The action button.", do: attr(:tag, :string)
-  slot :"s-subtitle", doc: "The subtitle.", do: attr(:tag, :string)
-  slot :"s-title", doc: "The title.", do: attr(:tag, :string)
+  slot :action, doc: "The action button.", do: attr(:tag, :string)
+  slot :subtitle, doc: "The subtitle.", do: attr(:tag, :string)
+  slot :title, doc: "The title.", do: attr(:tag, :string)
   slot :inner_block
 
   def callout_notification(assigns) do
@@ -1189,27 +1188,18 @@ defmodule Graphene.CoreComponents do
       low-contrast={assigns[:low_contrast]}
       open={assigns[:open]}
       status-icon-description={assigns[:status_icon_description]}
-      subtitle={assigns[:subtitle]}
       timeout={assigns[:timeout]}
-      title={assigns[:title]}
       title-id={assigns[:title_id]}
       {@rest}
     >
       {render_slot(@inner_block)}
-      <.dynamic_tag :for={s <- assigns[:"s-"]} tag_name={Map.get(s, :tag, "div")} slot="">
+      <.dynamic_tag :for={s <- assigns[:action]} tag_name={Map.get(s, :tag, "div")} slot="action">
         {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-action"]} tag_name={Map.get(s, :tag, "div")} slot="action">
+      <.dynamic_tag :for={s <- assigns[:subtitle]} tag_name={Map.get(s, :tag, "div")} slot="subtitle">
         {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag
-        :for={s <- assigns[:"s-subtitle"]}
-        tag_name={Map.get(s, :tag, "div")}
-        slot="subtitle"
-      >
-        {render_slot(s)}
-      </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-title"]} tag_name={Map.get(s, :tag, "div")} slot="title">
+      <.dynamic_tag :for={s <- assigns[:title]} tag_name={Map.get(s, :tag, "div")} slot="title">
         {render_slot(s)}
       </.dynamic_tag>
     </cds-callout-notification>
@@ -1924,17 +1914,11 @@ defmodule Graphene.CoreComponents do
     doc: "Specify whether the dividing lines in between list items should be inset."
 
   attr :kind, :any, default: nil, doc: "The kind of ContainedList you want to display"
-  attr :label, :string, default: nil, doc: "A label describing the contained list."
   attr :size, :any, default: nil, doc: "Specify the size of the contained list."
   attr :rest, :global
 
-  slot :"s-", doc: "The list items (cds-contained-list-item elements)", do: attr(:tag, :string)
-
-  slot :"s-action",
-    doc: "The action slot for interactive elements in header",
-    do: attr(:tag, :string)
-
-  slot :"s-label", doc: "The label text", do: attr(:tag, :string)
+  slot :action, doc: "The action slot for interactive elements in header", do: attr(:tag, :string)
+  slot :label, doc: "The label text", do: attr(:tag, :string)
   slot :inner_block
 
   def contained_list(assigns) do
@@ -1942,18 +1926,14 @@ defmodule Graphene.CoreComponents do
     <cds-contained-list
       is-inset={assigns[:is_inset]}
       kind={assigns[:kind]}
-      label={assigns[:label]}
       size={assigns[:size]}
       {@rest}
     >
       {render_slot(@inner_block)}
-      <.dynamic_tag :for={s <- assigns[:"s-"]} tag_name={Map.get(s, :tag, "div")} slot="">
+      <.dynamic_tag :for={s <- assigns[:action]} tag_name={Map.get(s, :tag, "div")} slot="action">
         {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-action"]} tag_name={Map.get(s, :tag, "div")} slot="action">
-        {render_slot(s)}
-      </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-label"]} tag_name={Map.get(s, :tag, "div")} slot="label">
+      <.dynamic_tag :for={s <- assigns[:label]} tag_name={Map.get(s, :tag, "div")} slot="label">
         {render_slot(s)}
       </.dynamic_tag>
     </cds-contained-list>
@@ -1970,16 +1950,12 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-", doc: "The description text content", do: attr(:tag, :string)
   slot :inner_block
 
   def contained_list_description(assigns) do
     ~H"""
     <cds-contained-list-description {@rest}>
       {render_slot(@inner_block)}
-      <.dynamic_tag :for={s <- assigns[:"s-"]} tag_name={Map.get(s, :tag, "div")} slot="">
-        {render_slot(s)}
-      </.dynamic_tag>
     </cds-contained-list-description>
     """
   end
@@ -1999,9 +1975,8 @@ defmodule Graphene.CoreComponents do
   attr :disabled, :boolean, default: false, doc: "Whether this item is disabled."
   attr :rest, :global
 
-  slot :"s-", doc: "The content of the list item", do: attr(:tag, :string)
-  slot :"s-action", doc: "The action slot for interactive elements", do: attr(:tag, :string)
-  slot :"s-icon", doc: "The icon slot for rendering an icon", do: attr(:tag, :string)
+  slot :action, doc: "The action slot for interactive elements", do: attr(:tag, :string)
+  slot :icon, doc: "The icon slot for rendering an icon", do: attr(:tag, :string)
   slot :inner_block
 
   def contained_list_item(assigns) do
@@ -2012,13 +1987,10 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
-      <.dynamic_tag :for={s <- assigns[:"s-"]} tag_name={Map.get(s, :tag, "div")} slot="">
+      <.dynamic_tag :for={s <- assigns[:action]} tag_name={Map.get(s, :tag, "div")} slot="action">
         {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-action"]} tag_name={Map.get(s, :tag, "div")} slot="action">
-        {render_slot(s)}
-      </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-icon"]} tag_name={Map.get(s, :tag, "div")} slot="icon">
+      <.dynamic_tag :for={s <- assigns[:icon]} tag_name={Map.get(s, :tag, "div")} slot="icon">
         {render_slot(s)}
       </.dynamic_tag>
     </cds-contained-list-item>
@@ -3017,9 +2989,9 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-validity", doc: "message The validity message.", do: attr(:tag, :string)
+  slot :validity, doc: "message The validity message.", do: attr(:tag, :string)
 
-  slot :"s-validity-message",
+  slot :validity_message,
     doc: "supplement The supplemental validity message.",
     do: attr(:tag, :string)
 
@@ -3037,15 +3009,11 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
-      <.dynamic_tag
-        :for={s <- assigns[:"s-validity"]}
-        tag_name={Map.get(s, :tag, "div")}
-        slot="validity"
-      >
+      <.dynamic_tag :for={s <- assigns[:validity]} tag_name={Map.get(s, :tag, "div")} slot="validity">
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-validity-message"]}
+        :for={s <- assigns[:validity_message]}
         tag_name={Map.get(s, :tag, "div")}
         slot="validity-message"
       >
@@ -3114,8 +3082,6 @@ defmodule Graphene.CoreComponents do
   attr :enable_counter, :boolean,
     default: false,
     doc: "Specify whether to display the character counter"
-
-  attr :helper_text, :string, default: nil, doc: "The helper text."
 
   attr :hide_label, :boolean,
     default: false,
@@ -3203,11 +3169,6 @@ defmodule Graphene.CoreComponents do
     values: ["email", "password", "tel", "text", "url"],
     doc: "The type of the input. Can be one of the types listed in the INPUT_TYPE enum"
 
-  attr :validity_message, :string,
-    default: nil,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, default: nil, doc: "The value of the input."
 
   attr :warn, :boolean,
@@ -3220,10 +3181,10 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-helper-text", doc: "The helper text.", do: attr(:tag, :string)
-  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
+  slot :helper_text, doc: "The helper text.", do: attr(:tag, :string)
+  slot :label_text, doc: "The label text.", do: attr(:tag, :string)
 
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
     do: attr(:tag, :string)
@@ -3241,7 +3202,6 @@ defmodule Graphene.CoreComponents do
       disable-wheel={assigns[:disable_wheel]}
       disabled={assigns[:disabled]}
       enable-counter={assigns[:enable_counter]}
-      helper-text={assigns[:helper_text]}
       hide-label={assigns[:hide_label]}
       hide-steppers={assigns[:hide_steppers]}
       hidePasswordLabel={assigns[:hide_password_label]}
@@ -3268,7 +3228,6 @@ defmodule Graphene.CoreComponents do
       tooltipAlignment={assigns[:tooltip_alignment]}
       tooltipDirection={assigns[:tooltip_direction]}
       type={assigns[:type]}
-      validity-message={assigns[:validity_message]}
       value={assigns[:value]}
       warn={assigns[:warn]}
       warn-text={assigns[:warn_text]}
@@ -3276,21 +3235,21 @@ defmodule Graphene.CoreComponents do
     >
       {render_slot(@inner_block)}
       <.dynamic_tag
-        :for={s <- assigns[:"s-helper-text"]}
+        :for={s <- assigns[:helper_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="helper-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-label-text"]}
+        :for={s <- assigns[:label_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-validity-message"]}
+        :for={s <- assigns[:validity_message]}
         tag_name={Map.get(s, :tag, "div")}
         slot="validity-message"
       >
@@ -3436,7 +3395,6 @@ defmodule Graphene.CoreComponents do
     doc: "Sets the select to be focussed automatically on page load. Defaults to false"
 
   attr :disabled, :boolean, default: false, doc: "Controls the disabled state of the select"
-  attr :helper_text, :string, default: nil, doc: "The helper text."
 
   attr :hide_label, :boolean,
     default: false,
@@ -3455,7 +3413,6 @@ defmodule Graphene.CoreComponents do
     doc: "Message which is displayed if the value is invalid."
 
   attr :is_fluid, :boolean, default: false, doc: "Specify whether the textarea is fluid or not"
-  attr :label_text, :string, default: nil, doc: "The label text."
   attr :multiple, :boolean, default: nil, doc: "`true` to enable multiple selection."
   attr :name, :string, default: nil, doc: "Name for the select in the `FormData`"
 
@@ -3481,10 +3438,10 @@ defmodule Graphene.CoreComponents do
   attr :warn_text, :string, default: nil, doc: "Message which is displayed if the value is warn."
   attr :rest, :global
 
-  slot :"s-helper-text", doc: "The helper text.", do: attr(:tag, :string)
-  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
+  slot :helper_text, doc: "The helper text.", do: attr(:tag, :string)
+  slot :label_text, doc: "The label text.", do: attr(:tag, :string)
 
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
     do: attr(:tag, :string)
@@ -3496,14 +3453,12 @@ defmodule Graphene.CoreComponents do
     <cds-fluid-select
       autofocus={assigns[:autofocus]}
       disabled={assigns[:disabled]}
-      helper-text={assigns[:helper_text]}
       hide-label={assigns[:hide_label]}
       id={assigns[:id]}
       inline={assigns[:inline]}
       invalid={assigns[:invalid]}
       invalid-text={assigns[:invalid_text]}
       isFluid={assigns[:is_fluid]}
-      label-text={assigns[:label_text]}
       multiple={assigns[:multiple]}
       name={assigns[:name]}
       pattern={assigns[:pattern]}
@@ -3520,21 +3475,21 @@ defmodule Graphene.CoreComponents do
     >
       {render_slot(@inner_block)}
       <.dynamic_tag
-        :for={s <- assigns[:"s-helper-text"]}
+        :for={s <- assigns[:helper_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="helper-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-label-text"]}
+        :for={s <- assigns[:label_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-validity-message"]}
+        :for={s <- assigns[:validity_message]}
         tag_name={Map.get(s, :tag, "div")}
         slot="validity-message"
       >
@@ -3595,8 +3550,6 @@ defmodule Graphene.CoreComponents do
   attr :enable_counter, :boolean,
     default: false,
     doc: "Specify whether to display the character counter"
-
-  attr :helper_text, :string, default: nil, doc: "The helper text."
 
   attr :hide_label, :boolean,
     default: false,
@@ -3668,11 +3621,6 @@ defmodule Graphene.CoreComponents do
     values: ["email", "password", "tel", "text", "url"],
     doc: "The type of the input. Can be one of the types listed in the INPUT_TYPE enum"
 
-  attr :validity_message, :string,
-    default: nil,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, default: nil, doc: "The value of the input."
 
   attr :warn, :boolean,
@@ -3685,10 +3633,10 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-helper-text", doc: "The helper text.", do: attr(:tag, :string)
-  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
+  slot :helper_text, doc: "The helper text.", do: attr(:tag, :string)
+  slot :label_text, doc: "The label text.", do: attr(:tag, :string)
 
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
     do: attr(:tag, :string)
@@ -3702,7 +3650,6 @@ defmodule Graphene.CoreComponents do
       autofocus={assigns[:autofocus]}
       disabled={assigns[:disabled]}
       enable-counter={assigns[:enable_counter]}
-      helper-text={assigns[:helper_text]}
       hide-label={assigns[:hide_label]}
       hidePasswordLabel={assigns[:hide_password_label]}
       inline={assigns[:inline]}
@@ -3723,7 +3670,6 @@ defmodule Graphene.CoreComponents do
       tooltipAlignment={assigns[:tooltip_alignment]}
       tooltipDirection={assigns[:tooltip_direction]}
       type={assigns[:type]}
-      validity-message={assigns[:validity_message]}
       value={assigns[:value]}
       warn={assigns[:warn]}
       warn-text={assigns[:warn_text]}
@@ -3731,21 +3677,21 @@ defmodule Graphene.CoreComponents do
     >
       {render_slot(@inner_block)}
       <.dynamic_tag
-        :for={s <- assigns[:"s-helper-text"]}
+        :for={s <- assigns[:helper_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="helper-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-label-text"]}
+        :for={s <- assigns[:label_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-validity-message"]}
+        :for={s <- assigns[:validity_message]}
         tag_name={Map.get(s, :tag, "div")}
         slot="validity-message"
       >
@@ -3813,8 +3759,6 @@ defmodule Graphene.CoreComponents do
   attr :enable_counter, :boolean,
     default: false,
     doc: "Specify whether to display the character counter"
-
-  attr :helper_text, :string, default: nil, doc: "The helper text."
 
   attr :hide_label, :boolean,
     default: false,
@@ -3889,11 +3833,6 @@ defmodule Graphene.CoreComponents do
     values: ["email", "password", "tel", "text", "url"],
     doc: "The type of the input. Can be one of the types listed in the INPUT_TYPE enum"
 
-  attr :validity_message, :string,
-    default: nil,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, default: nil, doc: "The value of the input."
 
   attr :warn, :boolean,
@@ -3906,10 +3845,10 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-helper-text", doc: "The helper text.", do: attr(:tag, :string)
-  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
+  slot :helper_text, doc: "The helper text.", do: attr(:tag, :string)
+  slot :label_text, doc: "The label text.", do: attr(:tag, :string)
 
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
     do: attr(:tag, :string)
@@ -3925,7 +3864,6 @@ defmodule Graphene.CoreComponents do
       counter-mode={assigns[:counter_mode]}
       disabled={assigns[:disabled]}
       enable-counter={assigns[:enable_counter]}
-      helper-text={assigns[:helper_text]}
       hide-label={assigns[:hide_label]}
       hidePasswordLabel={assigns[:hide_password_label]}
       id={assigns[:id]}
@@ -3948,7 +3886,6 @@ defmodule Graphene.CoreComponents do
       tooltipAlignment={assigns[:tooltip_alignment]}
       tooltipDirection={assigns[:tooltip_direction]}
       type={assigns[:type]}
-      validity-message={assigns[:validity_message]}
       value={assigns[:value]}
       warn={assigns[:warn]}
       warn-text={assigns[:warn_text]}
@@ -3956,21 +3893,21 @@ defmodule Graphene.CoreComponents do
     >
       {render_slot(@inner_block)}
       <.dynamic_tag
-        :for={s <- assigns[:"s-helper-text"]}
+        :for={s <- assigns[:helper_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="helper-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-label-text"]}
+        :for={s <- assigns[:label_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-validity-message"]}
+        :for={s <- assigns[:validity_message]}
         tag_name={Map.get(s, :tag, "div")}
         slot="validity-message"
       >
@@ -4616,7 +4553,6 @@ defmodule Graphene.CoreComponents do
   attr :size, :string, default: "16", doc: "The size of the icon (16, 20, 24, 32)"
   attr :rest, :global
 
-  slot :"s-", doc: "The icon content (for custom SVG)", do: attr(:tag, :string)
   slot :inner_block
 
   def icon(assigns) do
@@ -4628,9 +4564,6 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
-      <.dynamic_tag :for={s <- assigns[:"s-"]} tag_name={Map.get(s, :tag, "div")} slot="">
-        {render_slot(s)}
-      </.dynamic_tag>
     </cds-icon>
     """
   end
@@ -4894,17 +4827,14 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "Provide a description for \"status\" icon that can be read by screen readers"
 
-  attr :subtitle, :string, default: nil, doc: "The subtitle."
-
   attr :timeout, :any,
     default: nil,
     doc: "Specify an optional duration the notification should be closed in"
 
-  attr :title, :string, default: nil, doc: "The title."
   attr :rest, :global
 
-  slot :"s-subtitle", doc: "The subtitle.", do: attr(:tag, :string)
-  slot :"s-title", doc: "The title.", do: attr(:tag, :string)
+  slot :subtitle, doc: "The subtitle.", do: attr(:tag, :string)
+  slot :title, doc: "The title.", do: attr(:tag, :string)
   slot :inner_block
 
   def inline_notification(assigns) do
@@ -4915,20 +4845,14 @@ defmodule Graphene.CoreComponents do
       low-contrast={assigns[:low_contrast]}
       open={assigns[:open]}
       status-icon-description={assigns[:status_icon_description]}
-      subtitle={assigns[:subtitle]}
       timeout={assigns[:timeout]}
-      title={assigns[:title]}
       {@rest}
     >
       {render_slot(@inner_block)}
-      <.dynamic_tag
-        :for={s <- assigns[:"s-subtitle"]}
-        tag_name={Map.get(s, :tag, "div")}
-        slot="subtitle"
-      >
+      <.dynamic_tag :for={s <- assigns[:subtitle]} tag_name={Map.get(s, :tag, "div")} slot="subtitle">
         {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-title"]} tag_name={Map.get(s, :tag, "div")} slot="title">
+      <.dynamic_tag :for={s <- assigns[:title]} tag_name={Map.get(s, :tag, "div")} slot="title">
         {render_slot(s)}
       </.dynamic_tag>
     </cds-inline-notification>
@@ -4955,7 +4879,7 @@ defmodule Graphene.CoreComponents do
   attr :with_background, :any, default: nil
   attr :rest, :global
 
-  slot :"s-children", doc: "The elements contained within the component.", do: attr(:tag, :string)
+  slot :children, doc: "The elements contained within the component.", do: attr(:tag, :string)
   slot :inner_block
 
   def layer(assigns) do
@@ -4967,11 +4891,7 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
-      <.dynamic_tag
-        :for={s <- assigns[:"s-children"]}
-        tag_name={Map.get(s, :tag, "div")}
-        slot="children"
-      >
+      <.dynamic_tag :for={s <- assigns[:children]} tag_name={Map.get(s, :tag, "div")} slot="children">
         {render_slot(s)}
       </.dynamic_tag>
     </cds-layer>
@@ -5032,24 +4952,16 @@ defmodule Graphene.CoreComponents do
 
   """
 
-  attr :nested, :boolean,
-    default: false,
-    doc:
-      "`true` if this list item is a child of a nested list.\n`<cds-ordered-list>` or `<cds-unordered-list>` automatically sets this property."
-
   attr :rest, :global
 
-  slot :"s-nested", doc: "The nested child list.", do: attr(:tag, :string)
+  slot :nested, doc: "The nested child list.", do: attr(:tag, :string)
   slot :inner_block
 
   def list_item(assigns) do
     ~H"""
-    <cds-list-item
-      nested={assigns[:nested]}
-      {@rest}
-    >
+    <cds-list-item {@rest}>
       {render_slot(@inner_block)}
-      <.dynamic_tag :for={s <- assigns[:"s-nested"]} tag_name={Map.get(s, :tag, "div")} slot="nested">
+      <.dynamic_tag :for={s <- assigns[:nested]} tag_name={Map.get(s, :tag, "div")} slot="nested">
         {render_slot(s)}
       </.dynamic_tag>
     </cds-list-item>
@@ -5958,8 +5870,6 @@ defmodule Graphene.CoreComponents do
     default: false,
     doc: "Specify whether to display the character counter"
 
-  attr :helper_text, :string, default: nil, doc: "The helper text."
-
   attr :hide_label, :boolean,
     default: false,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -6046,11 +5956,6 @@ defmodule Graphene.CoreComponents do
     values: ["email", "password", "tel", "text", "url"],
     doc: "The type of the input. Can be one of the types listed in the INPUT_TYPE enum"
 
-  attr :validity_message, :string,
-    default: nil,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, default: nil, doc: "The value of the input."
 
   attr :warn, :boolean,
@@ -6063,10 +5968,10 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-helper-text", doc: "The helper text.", do: attr(:tag, :string)
-  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
+  slot :helper_text, doc: "The helper text.", do: attr(:tag, :string)
+  slot :label_text, doc: "The label text.", do: attr(:tag, :string)
 
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
     do: attr(:tag, :string)
@@ -6084,7 +5989,6 @@ defmodule Graphene.CoreComponents do
       disable-wheel={assigns[:disable_wheel]}
       disabled={assigns[:disabled]}
       enable-counter={assigns[:enable_counter]}
-      helper-text={assigns[:helper_text]}
       hide-label={assigns[:hide_label]}
       hide-steppers={assigns[:hide_steppers]}
       hidePasswordLabel={assigns[:hide_password_label]}
@@ -6111,7 +6015,6 @@ defmodule Graphene.CoreComponents do
       tooltipAlignment={assigns[:tooltip_alignment]}
       tooltipDirection={assigns[:tooltip_direction]}
       type={assigns[:type]}
-      validity-message={assigns[:validity_message]}
       value={assigns[:value]}
       warn={assigns[:warn]}
       warn-text={assigns[:warn_text]}
@@ -6119,21 +6022,21 @@ defmodule Graphene.CoreComponents do
     >
       {render_slot(@inner_block)}
       <.dynamic_tag
-        :for={s <- assigns[:"s-helper-text"]}
+        :for={s <- assigns[:helper_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="helper-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-label-text"]}
+        :for={s <- assigns[:label_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-validity-message"]}
+        :for={s <- assigns[:validity_message]}
         tag_name={Map.get(s, :tag, "div")}
         slot="validity-message"
       >
@@ -6350,7 +6253,12 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-icon", doc: "The icon for the trigger button.", do: attr(:tag, :string)
+  slot :icon, doc: "The icon for the trigger button.", do: attr(:tag, :string)
+
+  slot :tooltip_content,
+    doc: "Tooltip content for the overflow menu trigger.",
+    do: attr(:tag, :string)
+
   slot :inner_block
 
   def overflow_menu(assigns) do
@@ -6394,7 +6302,14 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
-      <.dynamic_tag :for={s <- assigns[:"s-icon"]} tag_name={Map.get(s, :tag, "div")} slot="icon">
+      <.dynamic_tag :for={s <- assigns[:icon]} tag_name={Map.get(s, :tag, "div")} slot="icon">
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:tooltip_content]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="tooltip-content"
+      >
         {render_slot(s)}
       </.dynamic_tag>
     </cds-overflow-menu>
@@ -6696,7 +6611,7 @@ defmodule Graphene.CoreComponents do
   attr :total_pages, :string, default: "1", doc: "The number of total pages."
   attr :rest, :global
 
-  slot :"s-page-sizes-select",
+  slot :page_sizes_select,
     doc: "Where to put in the `<page-sizes-select>`.",
     do: attr(:tag, :string)
 
@@ -6724,7 +6639,7 @@ defmodule Graphene.CoreComponents do
     >
       {render_slot(@inner_block)}
       <.dynamic_tag
-        :for={s <- assigns[:"s-page-sizes-select"]}
+        :for={s <- assigns[:page_sizes_select]}
         tag_name={Map.get(s, :tag, "div")}
         slot="page-sizes-select"
       >
@@ -6758,8 +6673,6 @@ defmodule Graphene.CoreComponents do
   attr :enable_counter, :boolean,
     default: false,
     doc: "Specify whether to display the character counter"
-
-  attr :helper_text, :string, default: nil, doc: "The helper text."
 
   attr :hide_label, :boolean,
     default: false,
@@ -6831,11 +6744,6 @@ defmodule Graphene.CoreComponents do
     values: ["email", "password", "tel", "text", "url"],
     doc: "The native `<input>` type. Defaults to “password”."
 
-  attr :validity_message, :string,
-    default: nil,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, default: nil, doc: "The value of the input."
 
   attr :warn, :boolean,
@@ -6848,10 +6756,10 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-helper-text", doc: "The helper text.", do: attr(:tag, :string)
-  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
+  slot :helper_text, doc: "The helper text.", do: attr(:tag, :string)
+  slot :label_text, doc: "The label text.", do: attr(:tag, :string)
 
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
     do: attr(:tag, :string)
@@ -6865,7 +6773,6 @@ defmodule Graphene.CoreComponents do
       autofocus={assigns[:autofocus]}
       disabled={assigns[:disabled]}
       enable-counter={assigns[:enable_counter]}
-      helper-text={assigns[:helper_text]}
       hide-label={assigns[:hide_label]}
       hide-password-label={assigns[:hide_password_label]}
       inline={assigns[:inline]}
@@ -6886,7 +6793,6 @@ defmodule Graphene.CoreComponents do
       tooltip-alignment={assigns[:tooltip_alignment]}
       tooltip-position={assigns[:tooltip_position]}
       type={assigns[:type]}
-      validity-message={assigns[:validity_message]}
       value={assigns[:value]}
       warn={assigns[:warn]}
       warn-text={assigns[:warn_text]}
@@ -6894,21 +6800,21 @@ defmodule Graphene.CoreComponents do
     >
       {render_slot(@inner_block)}
       <.dynamic_tag
-        :for={s <- assigns[:"s-helper-text"]}
+        :for={s <- assigns[:helper_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="helper-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-label-text"]}
+        :for={s <- assigns[:label_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-validity-message"]}
+        :for={s <- assigns[:validity_message]}
         tag_name={Map.get(s, :tag, "div")}
         slot="validity-message"
       >
@@ -7196,7 +7102,6 @@ defmodule Graphene.CoreComponents do
   attr :invalid, :boolean, default: false, doc: "Specify whether the step is invalid"
   attr :label, :string, default: nil
   attr :secondary_label, :string, default: nil
-  attr :secondary_label_text, :string, default: nil, doc: "The secondary progress label."
 
   attr :state, :string,
     default: "incomplete",
@@ -7205,7 +7110,7 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-secondary-label-text", doc: "The secondary progress label.", do: attr(:tag, :string)
+  slot :secondary_label_text, doc: "The secondary progress label.", do: attr(:tag, :string)
   slot :inner_block
 
   def progress_step(assigns) do
@@ -7220,13 +7125,12 @@ defmodule Graphene.CoreComponents do
       invalid={assigns[:invalid]}
       label={assigns[:label]}
       secondary-label={assigns[:secondary_label]}
-      secondary-label-text={assigns[:secondary_label_text]}
       state={assigns[:state]}
       {@rest}
     >
       {render_slot(@inner_block)}
       <.dynamic_tag
-        :for={s <- assigns[:"s-secondary-label-text"]}
+        :for={s <- assigns[:secondary_label_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="secondary-label-text"
       >
@@ -7550,7 +7454,6 @@ defmodule Graphene.CoreComponents do
     doc: "Sets the select to be focussed automatically on page load. Defaults to false"
 
   attr :disabled, :boolean, default: false, doc: "Controls the disabled state of the select"
-  attr :helper_text, :string, default: nil, doc: "The helper text."
 
   attr :hide_label, :boolean,
     default: false,
@@ -7569,7 +7472,6 @@ defmodule Graphene.CoreComponents do
     doc: "Message which is displayed if the value is invalid."
 
   attr :is_fluid, :boolean, default: false, doc: "Specify whether the textarea is fluid or not"
-  attr :label_text, :string, default: nil, doc: "The label text."
   attr :multiple, :boolean, default: nil, doc: "`true` to enable multiple selection."
   attr :name, :string, default: nil, doc: "Name for the select in the `FormData`"
 
@@ -7595,10 +7497,10 @@ defmodule Graphene.CoreComponents do
   attr :warn_text, :string, default: nil, doc: "Message which is displayed if the value is warn."
   attr :rest, :global
 
-  slot :"s-helper-text", doc: "The helper text.", do: attr(:tag, :string)
-  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
+  slot :helper_text, doc: "The helper text.", do: attr(:tag, :string)
+  slot :label_text, doc: "The label text.", do: attr(:tag, :string)
 
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
     do: attr(:tag, :string)
@@ -7610,14 +7512,12 @@ defmodule Graphene.CoreComponents do
     <cds-select
       autofocus={assigns[:autofocus]}
       disabled={assigns[:disabled]}
-      helper-text={assigns[:helper_text]}
       hide-label={assigns[:hide_label]}
       id={assigns[:id]}
       inline={assigns[:inline]}
       invalid={assigns[:invalid]}
       invalid-text={assigns[:invalid_text]}
       isFluid={assigns[:is_fluid]}
-      label-text={assigns[:label_text]}
       multiple={assigns[:multiple]}
       name={assigns[:name]}
       pattern={assigns[:pattern]}
@@ -7634,21 +7534,21 @@ defmodule Graphene.CoreComponents do
     >
       {render_slot(@inner_block)}
       <.dynamic_tag
-        :for={s <- assigns[:"s-helper-text"]}
+        :for={s <- assigns[:helper_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="helper-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-label-text"]}
+        :for={s <- assigns[:label_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-validity-message"]}
+        :for={s <- assigns[:validity_message]}
         tag_name={Map.get(s, :tag, "div")}
         slot="validity-message"
       >
@@ -7931,12 +7831,11 @@ defmodule Graphene.CoreComponents do
 
   attr :rel, :string, default: nil, doc: "The link type."
   attr :target, :string, default: nil, doc: "The link target."
-  attr :title, :string, default: nil, doc: "The title."
   attr :rest, :global
 
-  slot :"s-link", doc: "The link.", do: attr(:tag, :string)
-  slot :"s-title", doc: "The title.", do: attr(:tag, :string)
-  slot :"s-title-icon-container", doc: "The title icon container.", do: attr(:tag, :string)
+  slot :link, doc: "The link.", do: attr(:tag, :string)
+  slot :title, doc: "The title.", do: attr(:tag, :string)
+  slot :title_icon_container, doc: "The title icon container.", do: attr(:tag, :string)
   slot :inner_block
 
   def side_nav_link(assigns) do
@@ -7947,18 +7846,17 @@ defmodule Graphene.CoreComponents do
       large={assigns[:large]}
       rel={assigns[:rel]}
       target={assigns[:target]}
-      title={assigns[:title]}
       {@rest}
     >
       {render_slot(@inner_block)}
-      <.dynamic_tag :for={s <- assigns[:"s-link"]} tag_name={Map.get(s, :tag, "div")} slot="link">
+      <.dynamic_tag :for={s <- assigns[:link]} tag_name={Map.get(s, :tag, "div")} slot="link">
         {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-title"]} tag_name={Map.get(s, :tag, "div")} slot="title">
+      <.dynamic_tag :for={s <- assigns[:title]} tag_name={Map.get(s, :tag, "div")} slot="title">
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-title-icon-container"]}
+        :for={s <- assigns[:title_icon_container]}
         tag_name={Map.get(s, :tag, "div")}
         slot="title-icon-container"
       >
@@ -7995,7 +7893,7 @@ defmodule Graphene.CoreComponents do
   attr :title, :string, default: nil, doc: "The title text."
   attr :rest, :global
 
-  slot :"s-title-icon", doc: "The icon.", do: attr(:tag, :string)
+  slot :title_icon, doc: "The icon.", do: attr(:tag, :string)
   slot :inner_block
 
   def side_nav_menu(assigns) do
@@ -8010,7 +7908,7 @@ defmodule Graphene.CoreComponents do
     >
       {render_slot(@inner_block)}
       <.dynamic_tag
-        :for={s <- assigns[:"s-title-icon"]}
+        :for={s <- assigns[:title_icon]}
         tag_name={Map.get(s, :tag, "div")}
         slot="title-icon"
       >
@@ -8297,7 +8195,6 @@ defmodule Graphene.CoreComponents do
     doc: "Message which is displayed if the value is invalid."
 
   attr :is_valid, :any, default: nil, doc: "is slide input valid"
-  attr :label_text, :string, default: nil, doc: "The label text."
   attr :max, :string, default: nil, doc: "The maximum value."
   attr :max_label, :string, default: nil, doc: "The label associated with the maximum value."
   attr :min, :string, default: nil, doc: "The minimum value."
@@ -8308,7 +8205,7 @@ defmodule Graphene.CoreComponents do
   attr :step, :string, default: nil, doc: "The snapping step of the value."
 
   attr :step_multiplier, :string,
-    default: nil,
+    default: "4",
     doc:
       "A value determining how much the value should increase/decrease by Shift+arrow keys,\nwhich will be `(max - min) / stepMultiplier`."
 
@@ -8325,9 +8222,9 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
-  slot :"s-max-text", doc: "The text for maximum value.", do: attr(:tag, :string)
-  slot :"s-min-text", doc: "The text for minimum value.", do: attr(:tag, :string)
+  slot :label_text, doc: "The label text.", do: attr(:tag, :string)
+  slot :max_text, doc: "The text for maximum value.", do: attr(:tag, :string)
+  slot :min_text, doc: "The text for minimum value.", do: attr(:tag, :string)
   slot :inner_block
 
   def slider(assigns) do
@@ -8339,7 +8236,6 @@ defmodule Graphene.CoreComponents do
       invalid={assigns[:invalid]}
       invalid-text={assigns[:invalid_text]}
       isValid={assigns[:is_valid]}
-      label-text={assigns[:label_text]}
       max={assigns[:max]}
       max-label={assigns[:max_label]}
       min={assigns[:min]}
@@ -8357,24 +8253,16 @@ defmodule Graphene.CoreComponents do
     >
       {render_slot(@inner_block)}
       <.dynamic_tag
-        :for={s <- assigns[:"s-label-text"]}
+        :for={s <- assigns[:label_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag
-        :for={s <- assigns[:"s-max-text"]}
-        tag_name={Map.get(s, :tag, "div")}
-        slot="max-text"
-      >
+      <.dynamic_tag :for={s <- assigns[:max_text]} tag_name={Map.get(s, :tag, "div")} slot="max-text">
         {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag
-        :for={s <- assigns[:"s-min-text"]}
-        tag_name={Map.get(s, :tag, "div")}
-        slot="min-text"
-      >
+      <.dynamic_tag :for={s <- assigns[:min_text]} tag_name={Map.get(s, :tag, "div")} slot="min-text">
         {render_slot(s)}
       </.dynamic_tag>
     </cds-slider>
@@ -9126,9 +9014,9 @@ defmodule Graphene.CoreComponents do
   attr :with_row_slugs, :boolean, default: false, doc: "true if slugs are added in the rows"
   attr :rest, :global
 
-  slot :"s-title", doc: "Title", do: attr(:tag, :string)
-  slot :"s-description", doc: "Description", do: attr(:tag, :string)
-  slot :"s-toolbar", doc: "Toolbar", do: attr(:tag, :string)
+  slot :title, doc: "Title", do: attr(:tag, :string)
+  slot :description, doc: "Description", do: attr(:tag, :string)
+  slot :toolbar, doc: "Toolbar", do: attr(:tag, :string)
   slot :inner_block
 
   def table(assigns) do
@@ -9152,21 +9040,17 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
-      <.dynamic_tag :for={s <- assigns[:"s-title"]} tag_name={Map.get(s, :tag, "div")} slot="title">
+      <.dynamic_tag :for={s <- assigns[:title]} tag_name={Map.get(s, :tag, "div")} slot="title">
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-description"]}
+        :for={s <- assigns[:description]}
         tag_name={Map.get(s, :tag, "div")}
         slot="description"
       >
         {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag
-        :for={s <- assigns[:"s-toolbar"]}
-        tag_name={Map.get(s, :tag, "div")}
-        slot="toolbar"
-      >
+      <.dynamic_tag :for={s <- assigns[:toolbar]} tag_name={Map.get(s, :tag, "div")} slot="toolbar">
         {render_slot(s)}
       </.dynamic_tag>
     </cds-table>
@@ -10056,8 +9940,6 @@ defmodule Graphene.CoreComponents do
     default: false,
     doc: "Specify whether to display the character counter"
 
-  attr :helper_text, :string, default: nil, doc: "The helper text."
-
   attr :hide_label, :boolean,
     default: false,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -10128,11 +10010,6 @@ defmodule Graphene.CoreComponents do
     values: ["email", "password", "tel", "text", "url"],
     doc: "The type of the input. Can be one of the types listed in the INPUT_TYPE enum"
 
-  attr :validity_message, :string,
-    default: nil,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, default: nil, doc: "The value of the input."
 
   attr :warn, :boolean,
@@ -10145,10 +10022,10 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-helper-text", doc: "The helper text.", do: attr(:tag, :string)
-  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
+  slot :helper_text, doc: "The helper text.", do: attr(:tag, :string)
+  slot :label_text, doc: "The label text.", do: attr(:tag, :string)
 
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
     do: attr(:tag, :string)
@@ -10162,7 +10039,6 @@ defmodule Graphene.CoreComponents do
       autofocus={assigns[:autofocus]}
       disabled={assigns[:disabled]}
       enable-counter={assigns[:enable_counter]}
-      helper-text={assigns[:helper_text]}
       hide-label={assigns[:hide_label]}
       hidePasswordLabel={assigns[:hide_password_label]}
       inline={assigns[:inline]}
@@ -10183,7 +10059,6 @@ defmodule Graphene.CoreComponents do
       tooltipAlignment={assigns[:tooltip_alignment]}
       tooltipDirection={assigns[:tooltip_direction]}
       type={assigns[:type]}
-      validity-message={assigns[:validity_message]}
       value={assigns[:value]}
       warn={assigns[:warn]}
       warn-text={assigns[:warn_text]}
@@ -10191,21 +10066,21 @@ defmodule Graphene.CoreComponents do
     >
       {render_slot(@inner_block)}
       <.dynamic_tag
-        :for={s <- assigns[:"s-helper-text"]}
+        :for={s <- assigns[:helper_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="helper-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-label-text"]}
+        :for={s <- assigns[:label_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-validity-message"]}
+        :for={s <- assigns[:validity_message]}
         tag_name={Map.get(s, :tag, "div")}
         slot="validity-message"
       >
@@ -10273,8 +10148,6 @@ defmodule Graphene.CoreComponents do
   attr :enable_counter, :boolean,
     default: false,
     doc: "Specify whether to display the character counter"
-
-  attr :helper_text, :string, default: nil, doc: "The helper text."
 
   attr :hide_label, :boolean,
     default: false,
@@ -10349,11 +10222,6 @@ defmodule Graphene.CoreComponents do
     values: ["email", "password", "tel", "text", "url"],
     doc: "The type of the input. Can be one of the types listed in the INPUT_TYPE enum"
 
-  attr :validity_message, :string,
-    default: nil,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, default: nil, doc: "The value of the input."
 
   attr :warn, :boolean,
@@ -10366,10 +10234,10 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-helper-text", doc: "The helper text.", do: attr(:tag, :string)
-  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
+  slot :helper_text, doc: "The helper text.", do: attr(:tag, :string)
+  slot :label_text, doc: "The label text.", do: attr(:tag, :string)
 
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
     do: attr(:tag, :string)
@@ -10385,7 +10253,6 @@ defmodule Graphene.CoreComponents do
       counter-mode={assigns[:counter_mode]}
       disabled={assigns[:disabled]}
       enable-counter={assigns[:enable_counter]}
-      helper-text={assigns[:helper_text]}
       hide-label={assigns[:hide_label]}
       hidePasswordLabel={assigns[:hide_password_label]}
       id={assigns[:id]}
@@ -10408,7 +10275,6 @@ defmodule Graphene.CoreComponents do
       tooltipAlignment={assigns[:tooltip_alignment]}
       tooltipDirection={assigns[:tooltip_direction]}
       type={assigns[:type]}
-      validity-message={assigns[:validity_message]}
       value={assigns[:value]}
       warn={assigns[:warn]}
       warn-text={assigns[:warn_text]}
@@ -10416,21 +10282,21 @@ defmodule Graphene.CoreComponents do
     >
       {render_slot(@inner_block)}
       <.dynamic_tag
-        :for={s <- assigns[:"s-helper-text"]}
+        :for={s <- assigns[:helper_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="helper-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-label-text"]}
+        :for={s <- assigns[:label_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-validity-message"]}
+        :for={s <- assigns[:validity_message]}
         tag_name={Map.get(s, :tag, "div")}
         slot="validity-message"
       >
@@ -10560,10 +10426,6 @@ defmodule Graphene.CoreComponents do
     default: "Invalid time format.",
     doc: "Provide the text that is displayed when the control is in an invalid state"
 
-  attr :label_text, :string,
-    default: "Select a time",
-    doc: "Provide label text to be read by screen readers"
-
   attr :max_length, :string, default: "5", doc: "Specify the maximum length of the input value"
   attr :name, :string, default: nil, doc: "Name for the input in FormData"
 
@@ -10585,7 +10447,6 @@ defmodule Graphene.CoreComponents do
 
   attr :size, :any, default: nil, doc: "Size of the time picker"
   attr :type, :string, default: "text", doc: "Input type"
-  attr :validity_message, :string, default: nil, doc: "Validity message"
   attr :value, :string, default: nil, doc: "Value of the input"
   attr :warning, :boolean, default: false, doc: "Specify whether the control is in warning state"
 
@@ -10595,13 +10456,13 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
+  slot :label_text, doc: "The label text.", do: attr(:tag, :string)
 
-  slot :"s-time-picker-select",
+  slot :time_picker_select,
     doc: "Slot for time picker select components.",
     do: attr(:tag, :string)
 
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
     do: attr(:tag, :string)
@@ -10615,7 +10476,6 @@ defmodule Graphene.CoreComponents do
       hide-label={assigns[:hide_label]}
       invalid={assigns[:invalid]}
       invalid-text={assigns[:invalid_text]}
-      label-text={assigns[:label_text]}
       max-length={assigns[:max_length]}
       name={assigns[:name]}
       pattern={assigns[:pattern]}
@@ -10625,7 +10485,6 @@ defmodule Graphene.CoreComponents do
       required-validity-message={assigns[:required_validity_message]}
       size={assigns[:size]}
       type={assigns[:type]}
-      validity-message={assigns[:validity_message]}
       value={assigns[:value]}
       warning={assigns[:warning]}
       warning-text={assigns[:warning_text]}
@@ -10633,21 +10492,21 @@ defmodule Graphene.CoreComponents do
     >
       {render_slot(@inner_block)}
       <.dynamic_tag
-        :for={s <- assigns[:"s-label-text"]}
+        :for={s <- assigns[:label_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-time-picker-select"]}
+        :for={s <- assigns[:time_picker_select]}
         tag_name={Map.get(s, :tag, "div")}
         slot="time-picker-select"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-validity-message"]}
+        :for={s <- assigns[:validity_message]}
         tag_name={Map.get(s, :tag, "div")}
         slot="validity-message"
       >
@@ -10724,17 +10583,14 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "Provide a description for \"status\" icon that can be read by screen readers"
 
-  attr :subtitle, :string, default: nil, doc: "The subtitle."
-
   attr :timeout, :any,
     default: nil,
     doc: "Specify an optional duration the notification should be closed in"
 
-  attr :title, :string, default: nil, doc: "The title."
   attr :rest, :global
 
-  slot :"s-subtitle", doc: "The subtitle.", do: attr(:tag, :string)
-  slot :"s-title", doc: "The title.", do: attr(:tag, :string)
+  slot :subtitle, doc: "The subtitle.", do: attr(:tag, :string)
+  slot :title, doc: "The title.", do: attr(:tag, :string)
   slot :inner_block
 
   def toast_notification(assigns) do
@@ -10746,20 +10602,14 @@ defmodule Graphene.CoreComponents do
       low-contrast={assigns[:low_contrast]}
       open={assigns[:open]}
       status-icon-description={assigns[:status_icon_description]}
-      subtitle={assigns[:subtitle]}
       timeout={assigns[:timeout]}
-      title={assigns[:title]}
       {@rest}
     >
       {render_slot(@inner_block)}
-      <.dynamic_tag
-        :for={s <- assigns[:"s-subtitle"]}
-        tag_name={Map.get(s, :tag, "div")}
-        slot="subtitle"
-      >
+      <.dynamic_tag :for={s <- assigns[:subtitle]} tag_name={Map.get(s, :tag, "div")} slot="subtitle">
         {render_slot(s)}
       </.dynamic_tag>
-      <.dynamic_tag :for={s <- assigns[:"s-title"]} tag_name={Map.get(s, :tag, "div")} slot="title">
+      <.dynamic_tag :for={s <- assigns[:title]} tag_name={Map.get(s, :tag, "div")} slot="title">
         {render_slot(s)}
       </.dynamic_tag>
     </cds-toast-notification>
@@ -10819,12 +10669,6 @@ defmodule Graphene.CoreComponents do
 
   attr :label_a, :string, default: "On", doc: "Specify the label for the \"on\" position"
   attr :label_b, :string, default: "Off", doc: "Specify the label for the \"off\" position"
-
-  attr :label_text, :string,
-    default: nil,
-    doc:
-      "Provide a label to provide a description of the Checkbox input that you are\nexposing to the user"
-
   attr :name, :string, default: nil, doc: "The form name."
   attr :read_only, :boolean, default: false, doc: "Read only boolean."
   attr :readonly, :boolean, default: false, doc: "Specify whether the Checkbox is read-only"
@@ -10840,9 +10684,9 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
-  slot :"s-checked-text", doc: "The text for the checked state.", do: attr(:tag, :string)
-  slot :"s-label-text", doc: "The label text.", do: attr(:tag, :string)
-  slot :"s-unchecked-text", doc: "The text for the unchecked state.", do: attr(:tag, :string)
+  slot :checked_text, doc: "The text for the checked state.", do: attr(:tag, :string)
+  slot :label_text, doc: "The label text.", do: attr(:tag, :string)
+  slot :unchecked_text, doc: "The text for the unchecked state.", do: attr(:tag, :string)
   slot :inner_block
 
   def toggle(assigns) do
@@ -10861,7 +10705,6 @@ defmodule Graphene.CoreComponents do
       invalid-text={assigns[:invalid_text]}
       label-a={assigns[:label_a]}
       label-b={assigns[:label_b]}
-      label-text={assigns[:label_text]}
       name={assigns[:name]}
       read-only={assigns[:read_only]}
       readonly={assigns[:readonly]}
@@ -10875,21 +10718,21 @@ defmodule Graphene.CoreComponents do
     >
       {render_slot(@inner_block)}
       <.dynamic_tag
-        :for={s <- assigns[:"s-checked-text"]}
+        :for={s <- assigns[:checked_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="checked-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-label-text"]}
+        :for={s <- assigns[:label_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="label-text"
       >
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag
-        :for={s <- assigns[:"s-unchecked-text"]}
+        :for={s <- assigns[:unchecked_text]}
         tag_name={Map.get(s, :tag, "div")}
         slot="unchecked-text"
       >
@@ -10959,6 +10802,8 @@ defmodule Graphene.CoreComponents do
   attr :open, :boolean, default: false, doc: "Set whether toggletip is open"
   attr :rest, :global
 
+  slot :body_text, doc: "Body text content for the toggletip.", do: attr(:tag, :string)
+  slot :actions, doc: "Action buttons for the toggletip.", do: attr(:tag, :string)
   slot :inner_block
 
   def toggletip(assigns) do
@@ -10973,6 +10818,16 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:body_text]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="body-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag :for={s <- assigns[:actions]} tag_name={Map.get(s, :tag, "div")} slot="actions">
+        {render_slot(s)}
+      </.dynamic_tag>
     </cds-toggletip>
     """
   end

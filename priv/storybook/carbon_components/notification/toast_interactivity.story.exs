@@ -32,11 +32,12 @@ defmodule Storybook.CarbonComponents.Notification.Toast.Interactivity do
     <.toast_notification
       id="toast-notification-events"
       open={@open}
-      title="Saved"
-      subtitle="Your settings were updated"
       kind="success"
       {@event_attrs}
-    />
+    >
+      <:title>Saved</:title>
+      <:subtitle>Your settings were updated</:subtitle>
+    </.toast_notification>
     <.event_panel
       state={%{open: @open, value: @value, checked: @checked}}
       last_event={@last_event}

@@ -22,10 +22,11 @@ defmodule Storybook.CarbonComponents.FluidSelect.Interactivity do
     ~H"""
     <.fluid_select
       id="fluid-select-events"
-      label_text="Select an option"
+      name="fluid-select-events"
       value={@value}
       {@event_attrs}
     >
+      <:label_text>Select an option</:label_text>
       <:item value="">Choose one</:item>
       <:item value="option-1">Option 1</:item>
       <:item value="option-2">Option 2</:item>

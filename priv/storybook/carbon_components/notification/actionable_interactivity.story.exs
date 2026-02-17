@@ -32,11 +32,11 @@ defmodule Storybook.CarbonComponents.Notification.Actionable.Interactivity do
     <.actionable_notification
       id="actionable-notification-events"
       open={@open}
-      title="Update available"
-      subtitle="A newer version is ready."
       action_button_label="Update"
       {@event_attrs}
     >
+      <:title>Update available</:title>
+      <:subtitle>A newer version is ready.</:subtitle>
       Additional details can go here.
     </.actionable_notification>
     <.event_panel

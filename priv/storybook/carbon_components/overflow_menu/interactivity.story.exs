@@ -31,10 +31,10 @@ defmodule Storybook.CarbonComponents.OverflowMenu.Interactivity do
       id="overflow-menu-events"
       {@event_attrs}
     >
-      <:s-icon>
-        <span aria-hidden="true">...</span>
-      </:s-icon>
-      <span slot="tooltip-content">Options</span>
+      <:icon>
+        <Graphene.Icons.icon fit="width" name="overflow-menu--horizontal" />
+      </:icon>
+      <:tooltip_content>Options</:tooltip_content>
       <:item>Action 1</:item>
       <:item>Action 2</:item>
       <:item danger>Delete</:item>

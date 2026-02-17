@@ -32,11 +32,12 @@ defmodule Storybook.CarbonComponents.Notification.Inline.Interactivity do
     <.inline_notification
       id="inline-notification-events"
       open={@open}
-      title="Updates available"
-      subtitle="Refresh to install the latest changes"
       kind="info"
       {@event_attrs}
-    />
+    >
+      <:title>Updates available</:title>
+      <:subtitle>Refresh to install the latest changes</:subtitle>
+    </.inline_notification>
     <.event_panel
       state={%{open: @open, value: @value, checked: @checked}}
       last_event={@last_event}

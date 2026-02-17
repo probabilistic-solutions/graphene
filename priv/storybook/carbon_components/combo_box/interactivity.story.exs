@@ -34,6 +34,7 @@ defmodule Storybook.CarbonComponents.ComboBox.Interactivity do
     ~H"""
     <.combo_box
       id="combo-box-events"
+      name="combo-box-events"
       title_text="Choose an option"
       label="Combo box"
       value={@value}

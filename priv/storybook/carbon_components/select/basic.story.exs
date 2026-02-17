@@ -7,9 +7,10 @@ defmodule Storybook.CarbonComponents.Select.Basic do
     [
       %Variation{
         id: :default,
-        attributes: %{label_text: "Select an option"},
+        attributes: %{name: "select-default"},
         slots: [
-          ~S|<:item value="">Choose one</:item>
+          ~S|<:label_text>Select an option</:label_text>
+<:item value="">Choose one</:item>
 <:item value="option-1">Option 1</:item>
 <:item value="option-2">Option 2</:item>
 <:item value="option-3">Option 3</:item>|
@@ -17,17 +18,19 @@ defmodule Storybook.CarbonComponents.Select.Basic do
       },
       %Variation{
         id: :inline,
-        attributes: %{label_text: "Inline", inline: true},
+        attributes: %{name: "select-inline", inline: true},
         slots: [
-          ~S|<:item value="alpha">Alpha</:item>
+          ~S|<:label_text>Inline</:label_text>
+<:item value="alpha">Alpha</:item>
 <:item value="beta">Beta</:item>|
         ]
       },
       %Variation{
         id: :invalid,
-        attributes: %{label_text: "Required", invalid: true, invalid_text: "Pick a value"},
+        attributes: %{name: "select-invalid", invalid: true, invalid_text: "Pick a value"},
         slots: [
-          ~S|<:item value="one">One</:item>
+          ~S|<:label_text>Required</:label_text>
+<:item value="one">One</:item>
 <:item value="two">Two</:item>|
         ]
       }

@@ -22,6 +22,7 @@ defmodule Storybook.CarbonComponents.FluidSearch.Interactivity do
     ~H"""
     <.fluid_search
       id="fluid-search-events"
+      name="fluid-search-events"
       label_text="Search"
       placeholder="Search"
       value={@value}

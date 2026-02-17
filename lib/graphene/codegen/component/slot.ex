@@ -4,6 +4,9 @@ defmodule Graphene.CodeGen.Component.Slot do
 
   alias Graphene.CodeGen.Util
 
+  def parse(%{"name" => ""}), do: nil
+  def parse(%{"name" => nil}), do: nil
+
   def parse(%{"name" => name} = data) do
     htmlname = Util.camel2kebab(name)
 
@@ -13,11 +16,13 @@ defmodule Graphene.CodeGen.Component.Slot do
         doc -> [doc: doc]
       end
 
+    slot_name = Util.kebab2snake(htmlname)
+
     struct(
       __MODULE__,
       name: name,
       htmlname: htmlname,
-      atomname: Util.atom_repr("s-" <> htmlname),
+      atomname: Util.atom_repr(slot_name),
       opts: opts
     )
   end

@@ -45,9 +45,9 @@ defmodule Storybook.CoreComponents.TextInput do
       %Variation{
         id: :with_helper_text,
         attributes: %{
-          helper_text: "This is some helper text.",
           value: "Help me"
-        }
+        },
+        slots: [~S|<:helper_text>This is some helper text.</:helper_text>|]
       },
       %Variation{
         id: :with_counter,

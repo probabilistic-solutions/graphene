@@ -22,12 +22,13 @@ defmodule Storybook.CarbonComponents.Textarea.Interactivity do
     ~H"""
     <.textarea
       id="textarea-events"
+      name="textarea-events"
       placeholder="Enter a message"
       required
       value={@value}
       {@event_attrs}
     >
-      <:s-label-text>Message</:s-label-text>
+      <:label_text>Message</:label_text>
     </.textarea>
 
     <.button kind="secondary" phx-click="standard_click">Standard event</.button>

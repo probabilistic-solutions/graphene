@@ -27,11 +27,8 @@ defmodule Storybook.CarbonComponents.ContainedList.Interactivity do
       )
 
     ~H"""
-    <.contained_list
-      id="contained-list-events"
-      label="Clickable list"
-      {@event_attrs}
-    >
+    <.contained_list id="contained-list-events" {@event_attrs}>
+      <:label>Clickable list</:label>
       <:item clickable>First item</:item>
       <:item clickable>Second item</:item>
       <:item clickable>Third item</:item>

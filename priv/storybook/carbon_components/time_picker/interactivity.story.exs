@@ -22,10 +22,11 @@ defmodule Storybook.CarbonComponents.TimePicker.Interactivity do
     ~H"""
     <.time_picker
       id="time-picker-events"
+      name="time-picker-events"
       value={@value}
       {@event_attrs}
     >
-      <:s-label-text>Start time</:s-label-text>
+      <:label_text>Start time</:label_text>
       <:select_item value="UTC" selected>UTC</:select_item>
       <:select_item value="PST">PST</:select_item>
     </.time_picker>

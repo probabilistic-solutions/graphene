@@ -22,12 +22,13 @@ defmodule Storybook.CarbonComponents.TextInput.Interactivity do
     ~H"""
     <.text_input
       id="text-input-events"
+      name="text-input-events"
       placeholder="Enter name"
       required
       value={@value}
       {@event_attrs}
     >
-      <:s-label-text>Name</:s-label-text>
+      <:label_text>Name</:label_text>
     </.text_input>
 
     <.button kind="secondary" phx-click="standard_click">Standard event</.button>

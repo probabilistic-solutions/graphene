@@ -7,11 +7,11 @@ defmodule Storybook.CarbonComponents.Search.Basic do
     [
       %Variation{
         id: :default,
-        attributes: %{label_text: "Search", placeholder: "Search"}
+        attributes: %{name: "search-default", label_text: "Search", placeholder: "Search"}
       },
       %Variation{
         id: :expandable,
-        attributes: %{label_text: "Search", expandable: true, expanded: true}
+        attributes: %{name: "search-expandable", label_text: "Search", expandable: true, expanded: true}
       },
       %VariationGroup{
         id: :sizes,
@@ -19,7 +19,7 @@ defmodule Storybook.CarbonComponents.Search.Basic do
           for size <- ~w(sm md lg) do
             %Variation{
               id: String.to_atom(size),
-              attributes: %{label_text: "Size #{size}", size: size}
+              attributes: %{name: "search-#{size}", label_text: "Size #{size}", size: size}
             }
           end
       }

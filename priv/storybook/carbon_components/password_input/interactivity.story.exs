@@ -22,12 +22,13 @@ defmodule Storybook.CarbonComponents.PasswordInput.Interactivity do
     ~H"""
     <.password_input
       id="password-input-events"
+      name="password-input-events"
       placeholder="Enter password"
       required
       value={@value}
       {@event_attrs}
     >
-      <:s-label-text>Password</:s-label-text>
+      <:label_text>Password</:label_text>
     </.password_input>
 
     <.button kind="secondary" phx-click="standard_click">Standard event</.button>

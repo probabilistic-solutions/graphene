@@ -141,6 +141,7 @@
     attr :disabled, :boolean
     attr :kind, :any
     attr :shortcut, :string
+    attr :divider, :boolean
     attr :attrs, :map
   end
 
@@ -219,7 +220,7 @@
 
   slot :inner_block
 
-  slot :"s-page-sizes-select", doc: "Where to put in the `<page-sizes-select>`." do
+  slot :page_sizes_select, doc: "Where to put in the `<page-sizes-select>`." do
     attr :tag, :string
   end
 
@@ -237,10 +238,6 @@
   attr :invalid_text, :string,
     doc: "Provide the text that is displayed when the control is in an invalid state",
     default: "Invalid time format."
-
-  attr :label_text, :string,
-    doc: "Provide label text to be read by screen readers",
-    default: "Select a time"
 
   attr :max_length, :string, doc: "Specify the maximum length of the input value", default: "5"
   attr :name, :string, doc: "Name for the input in FormData"
@@ -260,7 +257,6 @@
   attr :rest, :global
   attr :size, :any, doc: "Size of the time picker"
   attr :type, :string, doc: "Input type", default: "text"
-  attr :validity_message, :string, doc: "Validity message"
   attr :value, :string, doc: "Value of the input"
   attr :warning, :boolean, doc: "Specify whether the control is in warning state"
 
@@ -270,18 +266,74 @@
 
   slot :inner_block
 
-  slot :"s-label-text", doc: "The label text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-time-picker-select", doc: "Slot for time picker select components." do
+  slot :time_picker_select, doc: "Slot for time picker select components." do
     attr :tag, :string
   end
 
-  slot :"s-validity-message",
+  slot :select_item, doc: "Select items for the time picker." do
+    attr :label, :string
+    attr :value, :string
+    attr :selected, :boolean
+    attr :disabled, :boolean
+  end
+
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
+  end
+
+  def fluid_time_picker(%{select_item: [_ | _]} = assigns) do
+    ~H"""
+    <FormComponents.time_picker
+      disabled={assigns[:disabled]}
+      hide_label={assigns[:hide_label]}
+      invalid={assigns[:invalid]}
+      invalid_text={assigns[:invalid_text]}
+      max_length={assigns[:max_length]}
+      name={assigns[:name]}
+      pattern={assigns[:pattern]}
+      placeholder={assigns[:placeholder]}
+      read_only={assigns[:read_only]}
+      required={assigns[:required]}
+      required_validity_message={assigns[:required_validity_message]}
+      size={assigns[:size]}
+      type={assigns[:type]}
+      value={assigns[:value]}
+      warning={assigns[:warning]}
+      warning_text={assigns[:warning_text]}
+      {@rest}
+    >
+      <.dynamic_tag
+        :for={label <- @label_text}
+        tag_name={Map.get(label, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(label)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={message <- @validity_message}
+        tag_name={Map.get(message, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(message)}
+      </.dynamic_tag>
+      <CoreComponents.time_picker_select>
+        <%= for item <- @select_item do %>
+          <CoreComponents.select_item
+            label={item[:label]}
+            value={item[:value] || item[:label]}
+            selected={item[:selected]}
+            disabled={item[:disabled]}
+          />
+        <% end %>
+      </CoreComponents.time_picker_select>
+    </FormComponents.time_picker>
+    """
   end
 
   def fluid_time_picker(assigns) do
@@ -320,10 +372,10 @@
         <% end %>
       </CoreComponents.menu_item_group>
     <% end %>
-    <%= for divider <- @divider do %>
-      <CoreComponents.menu_item_divider {divider[:attrs] || %{}} />
-    <% end %>
     <%= for item <- @item do %>
+      <%= if item[:divider] do %>
+        <CoreComponents.menu_item_divider />
+      <% end %>
       <CoreComponents.menu_item
         label={item[:label]}
         disabled={item[:disabled]}
@@ -335,6 +387,9 @@
           {render_slot(item)}
         <% end %>
       </CoreComponents.menu_item>
+    <% end %>
+    <%= for divider <- @divider do %>
+      <CoreComponents.menu_item_divider {divider[:attrs] || %{}} />
     <% end %>
     """
   end

@@ -30,6 +30,7 @@ defmodule Storybook.CarbonComponents.DatePicker.Interactivity do
     ~H"""
     <.date_picker
       id="date-picker-events"
+      name="date-picker-events"
       value={@value}
       {@event_attrs}
     >

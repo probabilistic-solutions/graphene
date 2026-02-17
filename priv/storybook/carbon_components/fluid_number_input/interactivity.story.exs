@@ -22,6 +22,7 @@ defmodule Storybook.CarbonComponents.FluidNumberInput.Interactivity do
     ~H"""
     <.fluid_number_input
       id="fluid-number-input-events"
+      name="fluid-number-input-events"
       label="Amount"
       value={@value}
       min="0"

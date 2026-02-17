@@ -1,5 +1,9 @@
 defmodule Storybook.BasicComponents.Table.Shared do
   @moduledoc false
+  use Phoenix.Component
+
+  alias Graphene.CarbonComponents
+  alias Graphene.Icons
 
   @rows [
     %{
@@ -76,34 +80,40 @@ defmodule Storybook.BasicComponents.Table.Shared do
     "Expandable content for #{row.name}"
   end
 
-  def ai_label_markup do
-    Phoenix.HTML.raw("""
-    <cds-ai-label alignment=\"bottom-left\">
-      <div slot=\"body-text\">
-        <p class=\"secondary\">AI Explained</p>
-        <h2 class=\"ai-label-heading\">84%</h2>
-        <p class=\"secondary bold\">Confidence score</p>
-        <p class=\"secondary\">Model type: Foundation</p>
-      </div>
-      <cds-ai-label-action-button>View literature</cds-ai-label-action-button>
-    </cds-ai-label>
-    """)
+  def ai_label_markup(assigns \\ %{}) do
+    ~H"""
+    <CarbonComponents.ai_label alignment="bottom-start">
+      <:body_text>
+        <p class="secondary">AI Explained</p>
+        <h2 class="ai-label-heading">84%</h2>
+        <p class="secondary bold">Confidence score</p>
+        <p class="secondary">Model type: Foundation</p>
+      </:body_text>
+      <:action_button>View literature</:action_button>
+    </CarbonComponents.ai_label>
+    """
   end
 
   def ai_label_header_label do
-    Phoenix.HTML.raw("""
-    Attached groups
-    <cds-ai-label alignment=\"bottom-left\">
-      <div slot=\"body-text\">
-        <p class=\"secondary\">AI Explained</p>
-        <p class=\"secondary\">Sorting guidance</p>
-      </div>
-      <cds-ai-label-action-button>View details</cds-ai-label-action-button>
-    </cds-ai-label>
-    """)
+    fn ->
+      assigns = %{}
+
+      ~H"""
+      Attached groups
+      <CarbonComponents.ai_label alignment="bottom-start">
+        <:body_text>
+          <p class="secondary">AI Explained</p>
+          <p class="secondary">Sorting guidance</p>
+        </:body_text>
+        <:action_button>View details</:action_button>
+      </CarbonComponents.ai_label>
+      """
+    end
   end
 
-  def overflow_menu_icon do
-    Phoenix.HTML.raw("<span slot=\"icon\">...</span>")
+  def overflow_menu_icon(assigns \\ %{}) do
+    ~H"""
+    <Icons.icon fit="width" name="overflow-menu--horizontal" />
+    """
   end
 end

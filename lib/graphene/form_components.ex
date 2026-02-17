@@ -381,10 +381,6 @@ defmodule Graphene.FormComponents do
   * `invalid_text` (`:any`) - Provide the text that is displayed when the Checkbox is in an invalid state. Defaults to `nil`.
   * `label_a` (`:string`) - Specify the label for the "on" position. Defaults to `"On"`.
   * `label_b` (`:string`) - Specify the label for the "off" position. Defaults to `"Off"`.
-  * `label_text` (`:string`) - Provide a label to provide a description of the Checkbox input that you are
-    exposing to the user
-
-    Defaults to `nil`.
   * `name` (`:string`) - The form name. Defaults to `nil`.
   * `read_only` (`:boolean`) - Read only boolean. Defaults to `false`.
   * `readonly` (`:boolean`) - Specify whether the Checkbox is read-only. Defaults to `false`.
@@ -397,13 +393,13 @@ defmodule Graphene.FormComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-checked-text` - The text for the checked state. Accepts attributes:
+  * `checked_text` - The text for the checked state. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-unchecked-text` - The text for the unchecked state. Accepts attributes:
+  * `unchecked_text` - The text for the unchecked state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -447,11 +443,6 @@ defmodule Graphene.FormComponents do
 
   attr :label_a, :string, doc: "Specify the label for the \"on\" position", default: "On"
   attr :label_b, :string, doc: "Specify the label for the \"off\" position", default: "Off"
-
-  attr :label_text, :string,
-    doc:
-      "Provide a label to provide a description of the Checkbox input that you are\nexposing to the user"
-
   attr :name, :string, doc: "The form name."
   attr :read_only, :boolean, doc: "Read only boolean."
   attr :readonly, :boolean, doc: "Specify whether the Checkbox is read-only"
@@ -465,17 +456,17 @@ defmodule Graphene.FormComponents do
   attr :warn_text, :boolean,
     doc: "Provide the text that is displayed when the Checkbox is in a warn state"
 
+  slot :checked_text, doc: "The text for the checked state." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-checked-text", doc: "The text for the checked state." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-unchecked-text", doc: "The text for the unchecked state." do
+  slot :unchecked_text, doc: "The text for the unchecked state." do
     attr :tag, :string
   end
 
@@ -613,7 +604,6 @@ defmodule Graphene.FormComponents do
   * `disable_wheel` (`:boolean`) - Specify if the wheel functionality for the input should be disabled, or not. Defaults to `false`.
   * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
   * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
   * `hide_steppers` (`:boolean`) - Specify whether you want the steppers to be hidden. Defaults to `false`.
   * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
@@ -646,20 +636,19 @@ defmodule Graphene.FormComponents do
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
   * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `validity_message` (`:string`) - The validity message. If present and non-empty, this input shows the UI of its invalid state. Defaults to `nil`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -694,7 +683,6 @@ defmodule Graphene.FormComponents do
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
-  attr :helper_text, :string, doc: "The helper text."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -766,27 +754,23 @@ defmodule Graphene.FormComponents do
     values: ["email", "password", "tel", "text", "url"],
     default: "text"
 
-  attr :validity_message, :string,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
 
   attr :warn_text, :string,
     doc: "Provide the text that is displayed when the control is in warning state"
 
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -832,7 +816,6 @@ defmodule Graphene.FormComponents do
   * `disable_wheel` (`:boolean`) - Specify if the wheel functionality for the input should be disabled, or not. Defaults to `false`.
   * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
   * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
   * `hide_steppers` (`:boolean`) - Specify whether you want the steppers to be hidden. Defaults to `false`.
   * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
@@ -865,20 +848,19 @@ defmodule Graphene.FormComponents do
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
   * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `validity_message` (`:string`) - The validity message. If present and non-empty, this input shows the UI of its invalid state. Defaults to `nil`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -913,7 +895,6 @@ defmodule Graphene.FormComponents do
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
-  attr :helper_text, :string, doc: "The helper text."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -985,27 +966,23 @@ defmodule Graphene.FormComponents do
     values: ["email", "password", "tel", "text", "url"],
     default: "text"
 
-  attr :validity_message, :string,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
 
   attr :warn_text, :string,
     doc: "Provide the text that is displayed when the control is in warning state"
 
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -1046,7 +1023,6 @@ defmodule Graphene.FormComponents do
   * `autofocus` (`:boolean`) - Sets the input to be focussed automatically on page load. Defaults to false. Defaults to `false`.
   * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
   * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
   * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
   * `inline` (`:boolean`) - true to use the inline version. Defaults to `false`.
@@ -1073,20 +1049,19 @@ defmodule Graphene.FormComponents do
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
   * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `validity_message` (`:string`) - The validity message. If present and non-empty, this input shows the UI of its invalid state. Defaults to `nil`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -1111,7 +1086,6 @@ defmodule Graphene.FormComponents do
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
-  attr :helper_text, :string, doc: "The helper text."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -1170,27 +1144,23 @@ defmodule Graphene.FormComponents do
     values: ["email", "password", "tel", "text", "url"],
     default: "text"
 
-  attr :validity_message, :string,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
 
   attr :warn_text, :string,
     doc: "Provide the text that is displayed when the control is in warning state"
 
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -1224,7 +1194,6 @@ defmodule Graphene.FormComponents do
   * `autofocus` (`:boolean`) - Sets the input to be focussed automatically on page load. Defaults to false. Defaults to `false`.
   * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
   * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
   * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
   * `inline` (`:boolean`) - true to use the inline version. Defaults to `false`.
@@ -1251,20 +1220,19 @@ defmodule Graphene.FormComponents do
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
   * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `validity_message` (`:string`) - The validity message. If present and non-empty, this input shows the UI of its invalid state. Defaults to `nil`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -1289,7 +1257,6 @@ defmodule Graphene.FormComponents do
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
-  attr :helper_text, :string, doc: "The helper text."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -1348,27 +1315,23 @@ defmodule Graphene.FormComponents do
     values: ["email", "password", "tel", "text", "url"],
     default: "text"
 
-  attr :validity_message, :string,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
 
   attr :warn_text, :string,
     doc: "Provide the text that is displayed when the control is in warning state"
 
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -1402,7 +1365,6 @@ defmodule Graphene.FormComponents do
   * `autofocus` (`:boolean`) - Sets the input to be focussed automatically on page load. Defaults to false. Defaults to `false`.
   * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
   * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
   * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
   * `inline` (`:boolean`) - true to use the inline version. Defaults to `false`.
@@ -1429,20 +1391,19 @@ defmodule Graphene.FormComponents do
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
   * `type` (`:string`) - The native `<input>` type. Defaults to “password”. Defaults to `"password"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `validity_message` (`:string`) - The validity message. If present and non-empty, this input shows the UI of its invalid state. Defaults to `nil`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -1467,7 +1428,6 @@ defmodule Graphene.FormComponents do
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
-  attr :helper_text, :string, doc: "The helper text."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -1526,27 +1486,23 @@ defmodule Graphene.FormComponents do
     values: ["email", "password", "tel", "text", "url"],
     default: "password"
 
-  attr :validity_message, :string,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
 
   attr :warn_text, :string,
     doc: "Provide the text that is displayed when the control is in warning state"
 
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -1583,7 +1539,6 @@ defmodule Graphene.FormComponents do
   * `counter_mode` (`:any`) - Specify the method used for calculating the counter number. Defaults to `nil`.
   * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
   * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
   * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
   * `id` (`:string`) - ID to link the `label` and `textarea`. Defaults to `nil`.
@@ -1612,20 +1567,19 @@ defmodule Graphene.FormComponents do
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
   * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `validity_message` (`:string`) - The validity message. If present and non-empty, this input shows the UI of its invalid state. Defaults to `nil`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -1652,7 +1606,6 @@ defmodule Graphene.FormComponents do
   attr :counter_mode, :any, doc: "Specify the method used for calculating the counter number"
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
-  attr :helper_text, :string, doc: "The helper text."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -1716,27 +1669,23 @@ defmodule Graphene.FormComponents do
     values: ["email", "password", "tel", "text", "url"],
     default: "text"
 
-  attr :validity_message, :string,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
 
   attr :warn_text, :string,
     doc: "Provide the text that is displayed when the control is in warning state"
 
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -1773,7 +1722,6 @@ defmodule Graphene.FormComponents do
   * `counter_mode` (`:any`) - Specify the method used for calculating the counter number. Defaults to `nil`.
   * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
   * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
   * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
   * `id` (`:string`) - ID to link the `label` and `textarea`. Defaults to `nil`.
@@ -1802,20 +1750,19 @@ defmodule Graphene.FormComponents do
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
   * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `validity_message` (`:string`) - The validity message. If present and non-empty, this input shows the UI of its invalid state. Defaults to `nil`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -1842,7 +1789,6 @@ defmodule Graphene.FormComponents do
   attr :counter_mode, :any, doc: "Specify the method used for calculating the counter number"
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
-  attr :helper_text, :string, doc: "The helper text."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -1906,27 +1852,23 @@ defmodule Graphene.FormComponents do
     values: ["email", "password", "tel", "text", "url"],
     default: "text"
 
-  attr :validity_message, :string,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
-
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
 
   attr :warn_text, :string,
     doc: "Provide the text that is displayed when the control is in warning state"
 
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -2120,14 +2062,12 @@ defmodule Graphene.FormComponents do
 
   * `autofocus` (`:boolean`) - Sets the select to be focussed automatically on page load. Defaults to false. Defaults to `false`.
   * `disabled` (`:boolean`) - Controls the disabled state of the select. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether the label should be hidden, or not. Defaults to `false`.
   * `id` (`:string`) - ID to link the `label` and `select`. Defaults to `nil`.
   * `inline` (`:boolean`) - Specify whether you want the inline version of this control. Defaults to `false`.
   * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
   * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
   * `is_fluid` (`:boolean`) - Specify whether the textarea is fluid or not. Defaults to `false`.
-  * `label_text` (`:string`) - The label text. Defaults to `nil`.
   * `multiple` (`:boolean`) - `true` to enable multiple selection. Defaults to `nil`.
   * `name` (`:string`) - Name for the select in the `FormData`. Defaults to `nil`.
   * `pattern` (`:string`) - Pattern to validate the select against for HTML validity checking. Defaults to `nil`.
@@ -2143,13 +2083,13 @@ defmodule Graphene.FormComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -2171,14 +2111,12 @@ defmodule Graphene.FormComponents do
     doc: "Sets the select to be focussed automatically on page load. Defaults to false"
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the select"
-  attr :helper_text, :string, doc: "The helper text."
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
   attr :id, :string, doc: "ID to link the `label` and `select`"
   attr :inline, :boolean, doc: "Specify whether you want the inline version of this control"
   attr :invalid, :boolean, doc: "Specify if the currently value is invalid."
   attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
   attr :is_fluid, :boolean, doc: "Specify whether the textarea is fluid or not"
-  attr :label_text, :string, doc: "The label text."
   attr :multiple, :boolean, doc: "`true` to enable multiple selection."
   attr :name, :string, doc: "Name for the select in the `FormData`"
   attr :pattern, :string, doc: "Pattern to validate the select against for HTML validity checking"
@@ -2196,17 +2134,18 @@ defmodule Graphene.FormComponents do
   attr :value, :string, doc: "The value of the text area."
   attr :warn, :boolean, doc: "Specify if the currently value is warn."
   attr :warn_text, :string, doc: "Message which is displayed if the value is warn."
+
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -2240,14 +2179,12 @@ defmodule Graphene.FormComponents do
 
   * `autofocus` (`:boolean`) - Sets the select to be focussed automatically on page load. Defaults to false. Defaults to `false`.
   * `disabled` (`:boolean`) - Controls the disabled state of the select. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
   * `hide_label` (`:boolean`) - Specify whether the label should be hidden, or not. Defaults to `false`.
   * `id` (`:string`) - ID to link the `label` and `select`. Defaults to `nil`.
   * `inline` (`:boolean`) - Specify whether you want the inline version of this control. Defaults to `false`.
   * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
   * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
   * `is_fluid` (`:boolean`) - Specify whether the textarea is fluid or not. Defaults to `false`.
-  * `label_text` (`:string`) - The label text. Defaults to `nil`.
   * `multiple` (`:boolean`) - `true` to enable multiple selection. Defaults to `nil`.
   * `name` (`:string`) - Name for the select in the `FormData`. Defaults to `nil`.
   * `pattern` (`:string`) - Pattern to validate the select against for HTML validity checking. Defaults to `nil`.
@@ -2263,13 +2200,13 @@ defmodule Graphene.FormComponents do
   * Global attributes are accepted.
   ## Slots
 
-  * `s-helper-text` - The helper text. Accepts attributes:
+  * `helper_text` - The helper text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -2291,14 +2228,12 @@ defmodule Graphene.FormComponents do
     doc: "Sets the select to be focussed automatically on page load. Defaults to false"
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the select"
-  attr :helper_text, :string, doc: "The helper text."
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
   attr :id, :string, doc: "ID to link the `label` and `select`"
   attr :inline, :boolean, doc: "Specify whether you want the inline version of this control"
   attr :invalid, :boolean, doc: "Specify if the currently value is invalid."
   attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
   attr :is_fluid, :boolean, doc: "Specify whether the textarea is fluid or not"
-  attr :label_text, :string, doc: "The label text."
   attr :multiple, :boolean, doc: "`true` to enable multiple selection."
   attr :name, :string, doc: "Name for the select in the `FormData`"
   attr :pattern, :string, doc: "Pattern to validate the select against for HTML validity checking"
@@ -2316,17 +2251,18 @@ defmodule Graphene.FormComponents do
   attr :value, :string, doc: "The value of the text area."
   attr :warn, :boolean, doc: "Specify if the currently value is warn."
   attr :warn_text, :string, doc: "Message which is displayed if the value is warn."
+
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
-  slot :"s-helper-text", doc: "The helper text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-label-text", doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string
@@ -2899,7 +2835,6 @@ defmodule Graphene.FormComponents do
   * `hide_label` (`:boolean`) - Specify whether the label should be hidden. Defaults to `false`.
   * `invalid` (`:boolean`) - Specify whether the control is currently invalid. Defaults to `false`.
   * `invalid_text` (`:string`) - Provide the text that is displayed when the control is in an invalid state. Defaults to `"Invalid time format."`.
-  * `label_text` (`:string`) - Provide label text to be read by screen readers. Defaults to `"Select a time"`.
   * `max_length` (`:string`) - Specify the maximum length of the input value. Defaults to `"5"`.
   * `name` (`:string`) - Name for the input in FormData. Defaults to `nil`.
   * `pattern` (`:string`) - Pattern for input validation. Defaults to `"(1[012]|[1-9]):[0-5][0-9](\\\\s)?"`.
@@ -2909,20 +2844,19 @@ defmodule Graphene.FormComponents do
   * `required_validity_message` (`:string`) - Custom message for required validation. Defaults to `"Please fill out this field."`.
   * `size` (`:any`) - Size of the time picker. Defaults to `nil`.
   * `type` (`:string`) - Input type. Defaults to `"text"`.
-  * `validity_message` (`:string`) - Validity message. Defaults to `nil`.
   * `value` (`:string`) - Value of the input. Defaults to `nil`.
   * `warning` (`:boolean`) - Specify whether the control is in warning state. Defaults to `false`.
   * `warning_text` (`:string`) - Provide the text that is displayed when the control is in a warning state. Defaults to `"Warning message."`.
   * Global attributes are accepted.
   ## Slots
 
-  * `s-label-text` - The label text. Accepts attributes:
+  * `label_text` - The label text. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-time-picker-select` - Slot for time picker select components. Accepts attributes:
+  * `time_picker_select` - Slot for time picker select components. Accepts attributes:
 
     * `tag` (`:string`)
-  * `s-validity-message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -2948,10 +2882,6 @@ defmodule Graphene.FormComponents do
     doc: "Provide the text that is displayed when the control is in an invalid state",
     default: "Invalid time format."
 
-  attr :label_text, :string,
-    doc: "Provide label text to be read by screen readers",
-    default: "Select a time"
-
   attr :max_length, :string, doc: "Specify the maximum length of the input value", default: "5"
   attr :name, :string, doc: "Name for the input in FormData"
 
@@ -2970,7 +2900,6 @@ defmodule Graphene.FormComponents do
   attr :rest, :global
   attr :size, :any, doc: "Size of the time picker"
   attr :type, :string, doc: "Input type", default: "text"
-  attr :validity_message, :string, doc: "Validity message"
   attr :value, :string, doc: "Value of the input"
   attr :warning, :boolean, doc: "Specify whether the control is in warning state"
 
@@ -2980,15 +2909,15 @@ defmodule Graphene.FormComponents do
 
   slot :inner_block
 
-  slot :"s-label-text", doc: "The label text." do
+  slot :label_text, doc: "The label text." do
     attr :tag, :string
   end
 
-  slot :"s-time-picker-select", doc: "Slot for time picker select components." do
+  slot :time_picker_select, doc: "Slot for time picker select components." do
     attr :tag, :string
   end
 
-  slot :"s-validity-message",
+  slot :validity_message,
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
     attr :tag, :string

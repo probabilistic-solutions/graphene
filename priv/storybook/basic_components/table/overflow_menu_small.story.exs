@@ -3,6 +3,7 @@ defmodule Storybook.BasicComponents.Table.OverflowMenuSmall do
   use PhoenixStorybook.Story, :example
 
   import Graphene.BasicComponents
+  alias Graphene.CarbonComponents, as: Carbon
 
   alias Storybook.BasicComponents.Table.Shared, as: TableData
 
@@ -25,12 +26,12 @@ defmodule Storybook.BasicComponents.Table.OverflowMenuSmall do
       <:title>DataTable</:title>
       <:description>Small overflow menu</:description>
       <:toolbar>
-        <cds-table-toolbar>
-          <cds-table-toolbar-content>
-            <cds-table-toolbar-search placeholder="Filter table"></cds-table-toolbar-search>
+        <Carbon.table_toolbar>
+          <Carbon.table_toolbar_content>
+            <Carbon.table_toolbar_search placeholder="Filter table" />
             <.button>Primary button</.button>
-          </cds-table-toolbar-content>
-        </cds-table-toolbar>
+          </Carbon.table_toolbar_content>
+        </Carbon.table_toolbar>
       </:toolbar>
 
       <:col :for={col <- @columns} :let={row} label={col.label}>
@@ -38,15 +39,13 @@ defmodule Storybook.BasicComponents.Table.OverflowMenuSmall do
       </:col>
 
       <:action :let={_row}>
-        <cds-overflow-menu toolbar-action>
-          <%= TableData.overflow_menu_icon() %>
-          <span slot="tooltip-content">Options</span>
-          <cds-overflow-menu-body flipped>
-            <cds-overflow-menu-item>Stop app</cds-overflow-menu-item>
-            <cds-overflow-menu-item>Restart app</cds-overflow-menu-item>
-            <cds-overflow-menu-item>Rename</cds-overflow-menu-item>
-          </cds-overflow-menu-body>
-        </cds-overflow-menu>
+        <Carbon.overflow_menu toolbar_action flipped>
+          <:icon><%= TableData.overflow_menu_icon() %></:icon>
+          <:tooltip_content>Options</:tooltip_content>
+          <:item label="Stop app" />
+          <:item label="Restart app" />
+          <:item label="Rename" />
+        </Carbon.overflow_menu>
       </:action>
     </.table>
     """

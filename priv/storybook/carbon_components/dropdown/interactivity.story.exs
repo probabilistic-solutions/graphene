@@ -34,6 +34,7 @@ defmodule Storybook.CarbonComponents.Dropdown.Interactivity do
     ~H"""
     <.dropdown
       id="dropdown-events"
+      name="dropdown-events"
       title_text="Dropdown"
       value={@value}
       {@event_attrs}

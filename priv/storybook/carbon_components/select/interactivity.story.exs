@@ -22,10 +22,11 @@ defmodule Storybook.CarbonComponents.Select.Interactivity do
     ~H"""
     <.select
       id="select-events"
-      label_text="Select an option"
+      name="select-events"
       value={@value}
       {@event_attrs}
     >
+      <:label_text>Select an option</:label_text>
       <:item value="">Choose one</:item>
       <:item value="option-1">Option 1</:item>
       <:item value="option-2">Option 2</:item>

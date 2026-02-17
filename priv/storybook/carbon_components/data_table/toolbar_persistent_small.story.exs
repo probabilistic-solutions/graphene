@@ -22,10 +22,10 @@ defmodule Storybook.CarbonComponents.DataTable.ToolbarPersistentSmall do
     <Graphene.CarbonComponents.table_toolbar_content>
       <Graphene.CarbonComponents.table_toolbar_search persistent placeholder="Filter table" />
       <Graphene.CarbonComponents.overflow_menu toolbar_action>
-        <:s-icon>
+        <:icon>
           <Storybook.CarbonComponents.DataTable.Shared.overflow_icon />
-        </:s-icon>
-        <span slot="tooltip-content">Settings</span>
+        </:icon>
+        <:tooltip_content>Settings</:tooltip_content>
         <:item>Action 1</:item>
         <:item>Action 2</:item>
         <:item>Action 3</:item>
@@ -55,10 +55,10 @@ defmodule Storybook.CarbonComponents.DataTable.ToolbarPersistentSmall do
     <Graphene.CarbonComponents.table_toolbar_content>
       <Graphene.CarbonComponents.table_toolbar_search persistent placeholder="Filter table" />
       <Graphene.CarbonComponents.overflow_menu toolbar_action>
-        <:s-icon>
+        <:icon>
           <Storybook.CarbonComponents.DataTable.Shared.overflow_icon />
-        </:s-icon>
-        <span slot="tooltip-content">Settings</span>
+        </:icon>
+        <:tooltip_content>Settings</:tooltip_content>
         <:item>Action 1</:item>
         <:item>Action 2</:item>
       </Graphene.CarbonComponents.overflow_menu>

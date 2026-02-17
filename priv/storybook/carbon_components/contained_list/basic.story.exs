@@ -7,18 +7,18 @@ defmodule Storybook.CarbonComponents.ContainedList.Basic do
     [
       %Variation{
         id: :default,
-        attributes: %{label: "Contained list"},
         slots: [
-          ~S|<:item>First item</:item>
+          ~S|<:label>Contained list</:label>
+<:item>First item</:item>
 <:item>Second item</:item>
 <:item>Third item</:item>|
         ]
       },
       %Variation{
         id: :interactive,
-        attributes: %{label: "Clickable list"},
         slots: [
-          ~S|<:item clickable={true}>Clickable item</:item>
+          ~S|<:label>Clickable list</:label>
+<:item clickable={true}>Clickable item</:item>
 <:item clickable={true}>Another action</:item>
 <:item disabled={true}>Disabled</:item>|
         ]
@@ -27,14 +27,15 @@ defmodule Storybook.CarbonComponents.ContainedList.Basic do
         id: :sizes,
         variations:
           for size <- ~w(sm md lg) do
-            %Variation{
-              id: String.to_atom(size),
-              attributes: %{label: "Size #{size}", size: size},
-              slots: [
-                ~S|<:item>Alpha</:item>
+              %Variation{
+                id: String.to_atom(size),
+                attributes: %{size: size},
+                slots: [
+                  ~s|<:label>Size #{size}</:label>
+<:item>Alpha</:item>
 <:item>Beta</:item>|
-              ]
-            }
+                ]
+              }
           end
       }
     ]

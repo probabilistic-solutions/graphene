@@ -22,6 +22,7 @@ defmodule Storybook.CarbonComponents.Search.Interactivity do
     ~H"""
     <.search
       id="search-events"
+      name="search-events"
       label_text="Search"
       placeholder="Search"
       value={@value}

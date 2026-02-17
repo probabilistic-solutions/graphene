@@ -7,15 +7,27 @@ defmodule Storybook.CarbonComponents.Notification.Actionable do
     [
       %Variation{
         id: :default,
-        attributes: %{title: "Backup completed", subtitle: "View the report for details", action_button_label: "View report"}
+        attributes: %{action_button_label: "View report"},
+        slots: [
+          ~S|<:title>Backup completed</:title>
+<:subtitle>View the report for details</:subtitle>|
+        ]
       },
       %Variation{
         id: :warning,
-        attributes: %{title: "Storage almost full", subtitle: "Upgrade or remove files", action_button_label: "Manage", kind: "warning"}
+        attributes: %{action_button_label: "Manage", kind: "warning"},
+        slots: [
+          ~S|<:title>Storage almost full</:title>
+<:subtitle>Upgrade or remove files</:subtitle>|
+        ]
       },
       %Variation{
         id: :error,
-        attributes: %{title: "Sync failed", subtitle: "Retry the sync", action_button_label: "Retry", kind: "error"}
+        attributes: %{action_button_label: "Retry", kind: "error"},
+        slots: [
+          ~S|<:title>Sync failed</:title>
+<:subtitle>Retry the sync</:subtitle>|
+        ]
       }
     ]
   end

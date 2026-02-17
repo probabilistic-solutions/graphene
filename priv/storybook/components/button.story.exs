@@ -59,7 +59,7 @@ defmodule Storybook.CoreComponents.Button do
       },
       %Variation{
         id: :icon,
-        slots: [~S|<:s-icon><Graphene.Icons.icon fit="width" name="arrow--right" /></:s-icon>|]
+        slots: [~S|<:icon><Graphene.Icons.icon fit="width" name="arrow--right" /></:icon>|]
       },
       %Variation{
         id: :"icon-text",
@@ -67,7 +67,7 @@ defmodule Storybook.CoreComponents.Button do
           has_main_content: true
         },
         slots: [
-          ~S|Text <:s-icon><Graphene.Icons.icon fit="width" name="arrow--right" slot="icon" /></:s-icon>|
+          ~S|Text <:icon><Graphene.Icons.icon fit="width" name="arrow--right" /></:icon>|
         ]
       },
       %Variation{
@@ -76,7 +76,7 @@ defmodule Storybook.CoreComponents.Button do
           tooltip_text: "help message"
         },
         slots: [
-          ~S|<:s-icon><Graphene.Icons.icon fit="width" name="help-desk" slot="icon"/></:s-icon>|
+          ~S|<:icon><Graphene.Icons.icon fit="width" name="help-desk"/></:icon>|
         ]
       },
       %VariationGroup{
@@ -88,7 +88,7 @@ defmodule Storybook.CoreComponents.Button do
               tooltip_text: "expressive false",
               is_expressive: false
             },
-            slots: [~S|<:s-icon><Graphene.Icons.icon fit="width" name="analytics"/></:s-icon>|]
+            slots: [~S|<:icon><Graphene.Icons.icon fit="width" name="analytics"/></:icon>|]
           },
           %Variation{
             id: :expressive,
@@ -96,7 +96,7 @@ defmodule Storybook.CoreComponents.Button do
               tooltip_text: "expressive true",
               is_expressive: true
             },
-            slots: [~S|<:s-icon><Graphene.Icons.icon fit="width" name="analytics"/></:s-icon>|]
+            slots: [~S|<:icon><Graphene.Icons.icon fit="width" name="analytics"/></:icon>|]
           }
         ]
       },

@@ -3,6 +3,7 @@ defmodule Storybook.BasicComponents.Table.ToolbarPersistentSmall do
   use PhoenixStorybook.Story, :example
 
   import Graphene.BasicComponents
+  alias Graphene.CarbonComponents, as: Carbon
 
   alias Storybook.BasicComponents.Table.Shared, as: TableData
 
@@ -24,21 +25,19 @@ defmodule Storybook.BasicComponents.Table.ToolbarPersistentSmall do
       <:title>DataTable</:title>
       <:description>Small persistent toolbar</:description>
       <:toolbar>
-        <cds-table-toolbar>
-          <cds-table-toolbar-content>
-            <cds-table-toolbar-search persistent placeholder="Filter table"></cds-table-toolbar-search>
-            <cds-overflow-menu toolbar-action>
-              <%= TableData.overflow_menu_icon() %>
-              <span slot="tooltip-content">Settings</span>
-              <cds-overflow-menu-body>
-                <cds-overflow-menu-item>Action 1</cds-overflow-menu-item>
-                <cds-overflow-menu-item>Action 2</cds-overflow-menu-item>
-                <cds-overflow-menu-item>Action 3</cds-overflow-menu-item>
-              </cds-overflow-menu-body>
-            </cds-overflow-menu>
+        <Carbon.table_toolbar>
+          <Carbon.table_toolbar_content>
+            <Carbon.table_toolbar_search persistent placeholder="Filter table" />
+            <Carbon.overflow_menu toolbar_action>
+              <:icon><%= TableData.overflow_menu_icon() %></:icon>
+              <:tooltip_content>Settings</:tooltip_content>
+              <:item label="Action 1" />
+              <:item label="Action 2" />
+              <:item label="Action 3" />
+            </Carbon.overflow_menu>
             <.button>Primary button</.button>
-          </cds-table-toolbar-content>
-        </cds-table-toolbar>
+          </Carbon.table_toolbar_content>
+        </Carbon.table_toolbar>
       </:toolbar>
 
       <:col :for={col <- @columns} :let={row} label={col.label}>

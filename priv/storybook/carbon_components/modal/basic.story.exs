@@ -7,27 +7,33 @@ defmodule Storybook.CarbonComponents.Modal.Basic do
     [
       %Variation{
         id: :small,
-        attributes: %{open: true, size: "sm", label: "Optional label", heading: "Modal heading"},
+        attributes: %{open: true, size: "sm"},
         slots: [
-          ~S|<:body>Add your modal content here. Use descriptive text to explain next steps.</:body>
+          ~S|<:label>Optional label</:label>
+<:heading>Modal heading</:heading>
+<:body>Add your modal content here. Use descriptive text to explain next steps.</:body>
 <:footer_button kind="secondary">Cancel</:footer_button>
 <:footer_button kind="primary">Submit</:footer_button>|
         ]
       },
       %Variation{
         id: :large,
-        attributes: %{open: true, size: "lg", label: "Large modal", heading: "Modal heading"},
+        attributes: %{open: true, size: "lg"},
         slots: [
-          ~S|<:body>Large modal content with additional context.</:body>
+          ~S|<:label>Large modal</:label>
+<:heading>Modal heading</:heading>
+<:body>Large modal content with additional context.</:body>
 <:footer_button kind="secondary">Back</:footer_button>
 <:footer_button kind="primary">Continue</:footer_button>|
         ]
       },
       %Variation{
         id: :danger,
-        attributes: %{open: true, size: "sm", label: "Danger", heading: "Delete item"},
+        attributes: %{open: true, size: "sm"},
         slots: [
-          ~S|<:body>Are you sure you want to delete this item?</:body>
+          ~S|<:label>Danger</:label>
+<:heading>Delete item</:heading>
+<:body>Are you sure you want to delete this item?</:body>
 <:footer_button kind="secondary">Cancel</:footer_button>
 <:footer_button kind="danger">Delete</:footer_button>|
         ]

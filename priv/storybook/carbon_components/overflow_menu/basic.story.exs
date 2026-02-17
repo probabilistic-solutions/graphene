@@ -8,10 +8,10 @@ defmodule Storybook.CarbonComponents.OverflowMenu.Basic do
       %Variation{
         id: :default,
         slots: [
-          ~S|<:s-icon>
-  <span aria-hidden="true">...</span>
-</:s-icon>
-<span slot="tooltip-content">Options</span>
+          ~S|<:icon>
+  <Graphene.Icons.icon fit="width" name="overflow-menu--horizontal" />
+</:icon>
+<:tooltip_content>Options</:tooltip_content>
 <:item>Action 1</:item>
 <:item>Action 2</:item>
 <:item danger>Delete</:item>|
@@ -21,10 +21,10 @@ defmodule Storybook.CarbonComponents.OverflowMenu.Basic do
         id: :autoalign,
         attributes: %{autoalign: true},
         slots: [
-          ~S|<:s-icon>
-  <span aria-hidden="true">...</span>
-</:s-icon>
-<span slot="tooltip-content">Auto align</span>
+          ~S|<:icon>
+  <Graphene.Icons.icon fit="width" name="overflow-menu--horizontal" />
+</:icon>
+<:tooltip_content>Auto align</:tooltip_content>
 <:item>Edit</:item>
 <:item>Duplicate</:item>|
         ]
@@ -33,10 +33,10 @@ defmodule Storybook.CarbonComponents.OverflowMenu.Basic do
         id: :disabled,
         attributes: %{disabled: true},
         slots: [
-          ~S|<:s-icon>
-  <span aria-hidden="true">...</span>
-</:s-icon>
-<span slot="tooltip-content">Disabled</span>
+          ~S|<:icon>
+  <Graphene.Icons.icon fit="width" name="overflow-menu--horizontal" />
+</:icon>
+<:tooltip_content>Disabled</:tooltip_content>
 <:item>Action 1</:item>|
         ]
       }

@@ -7,15 +7,20 @@ defmodule Storybook.CarbonComponents.FluidSearch.Basic do
     [
       %Variation{
         id: :default,
-        attributes: %{label_text: "Search", placeholder: "Search"}
+        attributes: %{name: "fluid-search-default", label_text: "Search", placeholder: "Search"}
       },
       %Variation{
         id: :expandable,
-        attributes: %{label_text: "Search", expandable: true, expanded: true}
+        attributes: %{
+          name: "fluid-search-expandable",
+          label_text: "Search",
+          expandable: true,
+          expanded: true
+        }
       },
       %Variation{
         id: :disabled,
-        attributes: %{label_text: "Search", disabled: true}
+        attributes: %{name: "fluid-search-disabled", label_text: "Search", disabled: true}
       },
       %VariationGroup{
         id: :sizes,
@@ -23,7 +28,7 @@ defmodule Storybook.CarbonComponents.FluidSearch.Basic do
           for size <- ~w(sm md lg) do
             %Variation{
               id: String.to_atom(size),
-              attributes: %{label_text: "Size #{size}", size: size}
+              attributes: %{name: "fluid-search-#{size}", label_text: "Size #{size}", size: size}
             }
           end
       }

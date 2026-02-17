@@ -11,8 +11,7 @@ defmodule Storybook.CarbonComponents.ComboButton do
         slots: [
           ~S|<:item label="Second action" />
 <:item label="Third action" />
-<:divider />
-<:item label="Danger action" kind="danger" />|
+<:item label="Danger action" divider kind="danger" />|
         ]
       },
       %Variation{

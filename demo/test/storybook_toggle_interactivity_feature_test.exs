@@ -19,7 +19,7 @@ defmodule Demo.StorybookToggleInteractivityFeatureTest do
       |> assert_has(css("cds-toggle"))
       |> assert_has(css("li", text: "Checked: false"))
 
-    session = session |> click(css("input[type='checkbox'][name='checked']"))
+    session = session |> click(css("cds-toggle"))
 
     assert_has(session, css("li", text: "Checked: true"))
   end

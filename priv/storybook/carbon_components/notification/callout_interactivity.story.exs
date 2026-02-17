@@ -32,11 +32,12 @@ defmodule Storybook.CarbonComponents.Notification.Callout.Interactivity do
     <.callout_notification
       id="callout-notification-events"
       open={@open}
-      title="Callout notice"
-      subtitle="This notification can be dismissed."
       kind="warning"
       {@event_attrs}
-    />
+    >
+      <:title>Callout notice</:title>
+      <:subtitle>This notification can be dismissed.</:subtitle>
+    </.callout_notification>
     <.event_panel
       state={%{open: @open, value: @value, checked: @checked}}
       last_event={@last_event}

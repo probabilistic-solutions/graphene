@@ -7,24 +7,24 @@ defmodule Storybook.CarbonComponents.Textarea.Basic do
     [
       %Variation{
         id: :default,
-        attributes: %{rows: "3"},
+        attributes: %{name: "textarea-default", rows: "3"},
         slots: [
-          ~S|<:s-label-text>Notes</:s-label-text>|
+          ~S|<:label_text>Notes</:label_text>|
         ]
       },
       %Variation{
         id: :helper_text,
-        attributes: %{rows: "4"},
+        attributes: %{name: "textarea-helper", rows: "4"},
         slots: [
-          ~S|<:s-label-text>Description</:s-label-text>
-<:s-helper-text>Max 300 characters</:s-helper-text>|
+          ~S|<:label_text>Description</:label_text>
+<:helper_text>Max 300 characters</:helper_text>|
         ]
       },
       %Variation{
         id: :invalid,
-        attributes: %{rows: "3", invalid: true, invalid_text: "Required"},
+        attributes: %{name: "textarea-invalid", rows: "3", invalid: true, invalid_text: "Required"},
         slots: [
-          ~S|<:s-label-text>Reason</:s-label-text>|
+          ~S|<:label_text>Reason</:label_text>|
         ]
       }
     ]

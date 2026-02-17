@@ -38,6 +38,7 @@ defmodule Graphene.CodeGen.Component do
   defp extract_slots(meta) do
     Map.get(meta, "slots", [])
     |> Enum.map(&Slot.parse/1)
+    |> Enum.reject(&is_nil/1)
     |> Enum.sort(fn a, b -> a.name < b.name end)
   end
 

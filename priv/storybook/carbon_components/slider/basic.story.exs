@@ -7,15 +7,18 @@ defmodule Storybook.CarbonComponents.Slider.Basic do
     [
       %Variation{
         id: :default,
-        attributes: %{label_text: "Slider", min: "0", max: "100", value: "50"}
+        attributes: %{min: "0", max: "100", value: "50"},
+        slots: [~S|<:label_text>Slider</:label_text>|]
       },
       %Variation{
         id: :stepped,
-        attributes: %{label_text: "Step", min: "0", max: "10", step: "1", value: "3"}
+        attributes: %{min: "0", max: "10", step: "1", value: "3"},
+        slots: [~S|<:label_text>Step</:label_text>|]
       },
       %Variation{
         id: :disabled,
-        attributes: %{label_text: "Disabled", min: "0", max: "100", value: "40", disabled: true}
+        attributes: %{min: "0", max: "100", value: "40", disabled: true},
+        slots: [~S|<:label_text>Disabled</:label_text>|]
       }
     ]
   end

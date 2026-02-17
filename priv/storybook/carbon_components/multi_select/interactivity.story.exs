@@ -34,6 +34,7 @@ defmodule Storybook.CarbonComponents.MultiSelect.Interactivity do
     ~H"""
     <.multi_select
       id="multi-select-events"
+      name="multi-select-events"
       title_text="Choose multiple"
       {@event_attrs}
     >

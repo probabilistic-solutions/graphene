@@ -20,7 +20,9 @@ defmodule Storybook.CarbonComponents.Toggle.Interactivity do
     ~H"""
     <form id="toggle-form" phx-change="toggle_changed">
       <label class="inline-flex items-center gap-3 cursor-pointer">
-        <.toggle type="checkbox" id="toggle-events" label_text="Enable feature" name="checked" value="true" checked={@checked} />
+        <.toggle type="checkbox" id="toggle-events" name="checked" value="true" checked={@checked}>
+          <:label_text>Enable feature</:label_text>
+        </.toggle>
       </label>
     </form>
     <div class="mt-4 p-4 bg-gray-100 rounded">

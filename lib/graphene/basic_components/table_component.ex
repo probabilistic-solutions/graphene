@@ -86,17 +86,17 @@ defmodule Graphene.BasicComponents.TableComponent do
         phx-update={@phx_update}
         data-selected-ids={@selected_ids_attr}
       >
-        <:s-title :if={@title != []}>
+        <:title :if={@title != []}>
           <CoreComponents.table_header_title>
             {render_slot(@title)}
           </CoreComponents.table_header_title>
-        </:s-title>
-        <:s-description :if={@description != []}>
+        </:title>
+        <:description :if={@description != []}>
           <CoreComponents.table_header_description>
             {render_slot(@description)}
           </CoreComponents.table_header_description>
-        </:s-description>
-        <:s-toolbar :if={@toolbar != []}>{render_slot(@toolbar)}</:s-toolbar>
+        </:description>
+        <:toolbar :if={@toolbar != []}>{render_slot(@toolbar)}</:toolbar>
         <CoreComponents.table_head>
           <CoreComponents.table_header_row
             selection_name={@effective_selectable && @selection_name}

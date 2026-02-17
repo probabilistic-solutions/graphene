@@ -22,10 +22,11 @@ defmodule Storybook.CarbonComponents.FluidTimePicker.Interactivity do
     ~H"""
     <.fluid_time_picker
       id="fluid-time-picker-events"
+      name="fluid-time-picker-events"
       value={@value}
       {@event_attrs}
     >
-      <:s-label-text>Start time</:s-label-text>
+      <:label_text>Start time</:label_text>
       <:select_item value="UTC" selected>UTC</:select_item>
       <:select_item value="PST">PST</:select_item>
     </.fluid_time_picker>

@@ -7,15 +7,27 @@ defmodule Storybook.CarbonComponents.Notification.Callout do
     [
       %Variation{
         id: :warning,
-        attributes: %{title: "Plan limit reached", subtitle: "Upgrade to continue", kind: "warning"}
+        attributes: %{kind: "warning"},
+        slots: [
+          ~S|<:title>Plan limit reached</:title>
+<:subtitle>Upgrade to continue</:subtitle>|
+        ]
       },
       %Variation{
         id: :success,
-        attributes: %{title: "Payment received", subtitle: "Your invoice is paid", kind: "success"}
+        attributes: %{kind: "success"},
+        slots: [
+          ~S|<:title>Payment received</:title>
+<:subtitle>Your invoice is paid</:subtitle>|
+        ]
       },
       %Variation{
         id: :error,
-        attributes: %{title: "Payment failed", subtitle: "Update your card", kind: "error"}
+        attributes: %{kind: "error"},
+        slots: [
+          ~S|<:title>Payment failed</:title>
+<:subtitle>Update your card</:subtitle>|
+        ]
       }
     ]
   end
