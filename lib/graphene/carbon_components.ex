@@ -9,6 +9,7 @@ defmodule Graphene.CarbonComponents do
   use Phoenix.Component
 
   alias Graphene.CoreComponents
+  alias Graphene.FormComponents
   alias Graphene.CarbonComponents.DataTableComponent
 
   @doc """
@@ -1452,7 +1453,7 @@ defmodule Graphene.CarbonComponents do
   slot :inner_block
 
   def checkbox(assigns) do
-    CoreComponents.checkbox(assigns)
+    FormComponents.checkbox(assigns)
   end
 
   @doc """
@@ -1953,7 +1954,7 @@ defmodule Graphene.CarbonComponents do
 
   def combo_box(%{item: [_ | _]} = assigns) do
     ~H"""
-    <CoreComponents.combo_box
+    <FormComponents.combo_box
       allow_custom_value={@allow_custom_value}
       autoalign={@autoalign}
       clear_selection_label={@clear_selection_label}
@@ -1991,12 +1992,12 @@ defmodule Graphene.CarbonComponents do
           {item[:label] || render_slot(item)}
         </CoreComponents.combo_box_item>
       <% end %>
-    </CoreComponents.combo_box>
+    </FormComponents.combo_box>
     """
   end
 
   def combo_box(assigns) do
-    CoreComponents.combo_box(assigns)
+    FormComponents.combo_box(assigns)
   end
 
   @doc """
@@ -2732,7 +2733,7 @@ defmodule Graphene.CarbonComponents do
 
   def date_picker(%{input: [_ | _]} = assigns) do
     ~H"""
-    <CoreComponents.date_picker
+    <FormComponents.date_picker
       allow_input={@allow_input}
       close_on_select={@close_on_select}
       date_format={@date_format}
@@ -2759,12 +2760,12 @@ defmodule Graphene.CarbonComponents do
           {input[:attrs] || %{}}
         />
       <% end %>
-    </CoreComponents.date_picker>
+    </FormComponents.date_picker>
     """
   end
 
   def date_picker(assigns) do
-    CoreComponents.date_picker(assigns)
+    FormComponents.date_picker(assigns)
   end
 
   @doc """
@@ -3059,7 +3060,7 @@ defmodule Graphene.CarbonComponents do
 
   def dropdown(%{item: [_ | _]} = assigns) do
     ~H"""
-    <CoreComponents.dropdown
+    <FormComponents.dropdown
       autoalign={@autoalign}
       direction={@direction}
       disabled={@disabled}
@@ -3092,12 +3093,12 @@ defmodule Graphene.CarbonComponents do
           {item[:label] || render_slot(item)}
         </CoreComponents.dropdown_item>
       <% end %>
-    </CoreComponents.dropdown>
+    </FormComponents.dropdown>
     """
   end
 
   def dropdown(assigns) do
-    CoreComponents.dropdown(assigns)
+    FormComponents.dropdown(assigns)
   end
 
   @doc """
@@ -3665,7 +3666,7 @@ defmodule Graphene.CarbonComponents do
   end
 
   def fluid_number_input(assigns) do
-    CoreComponents.fluid_number_input(assigns)
+    FormComponents.fluid_number_input(assigns)
   end
 
   @doc """
@@ -3751,7 +3752,7 @@ defmodule Graphene.CarbonComponents do
   slot :inner_block
 
   def fluid_search(assigns) do
-    CoreComponents.fluid_search(assigns)
+    FormComponents.fluid_search(assigns)
   end
 
   @doc """
@@ -3900,7 +3901,7 @@ defmodule Graphene.CarbonComponents do
 
   def fluid_select(%{item: [_ | _]} = assigns) do
     ~H"""
-    <CoreComponents.fluid_select
+    <FormComponents.fluid_select
       autofocus={@autofocus}
       disabled={@disabled}
       helper_text={@helper_text}
@@ -3933,12 +3934,12 @@ defmodule Graphene.CarbonComponents do
           disabled={item[:disabled]}
         />
       <% end %>
-    </CoreComponents.fluid_select>
+    </FormComponents.fluid_select>
     """
   end
 
   def fluid_select(assigns) do
-    CoreComponents.fluid_select(assigns)
+    FormComponents.fluid_select(assigns)
   end
 
   @doc """
@@ -4123,7 +4124,7 @@ defmodule Graphene.CarbonComponents do
   end
 
   def fluid_text_input(assigns) do
-    CoreComponents.fluid_text_input(assigns)
+    FormComponents.fluid_text_input(assigns)
   end
 
   @doc """
@@ -4317,7 +4318,7 @@ defmodule Graphene.CarbonComponents do
   end
 
   def fluid_textarea(assigns) do
-    CoreComponents.fluid_textarea(assigns)
+    FormComponents.fluid_textarea(assigns)
   end
 
   @doc """
@@ -6324,7 +6325,7 @@ defmodule Graphene.CarbonComponents do
 
   def multi_select(%{item: [_ | _]} = assigns) do
     ~H"""
-    <CoreComponents.multi_select
+    <FormComponents.multi_select
       autoalign={@autoalign}
       clear_selection_label={@clear_selection_label}
       clear_selection_text={@clear_selection_text}
@@ -6363,12 +6364,12 @@ defmodule Graphene.CarbonComponents do
           {item[:label] || render_slot(item)}
         </CoreComponents.multi_select_item>
       <% end %>
-    </CoreComponents.multi_select>
+    </FormComponents.multi_select>
     """
   end
 
   def multi_select(assigns) do
-    CoreComponents.multi_select(assigns)
+    FormComponents.multi_select(assigns)
   end
 
   @doc """
@@ -6603,7 +6604,7 @@ defmodule Graphene.CarbonComponents do
   end
 
   def number_input(assigns) do
-    CoreComponents.number_input(assigns)
+    FormComponents.number_input(assigns)
   end
 
   @doc """
@@ -7498,7 +7499,7 @@ defmodule Graphene.CarbonComponents do
   end
 
   def password_input(assigns) do
-    CoreComponents.password_input(assigns)
+    FormComponents.password_input(assigns)
   end
 
   @doc """
@@ -8051,7 +8052,7 @@ defmodule Graphene.CarbonComponents do
 
   def radio_button_group(%{item: [_ | _]} = assigns) do
     ~H"""
-    <CoreComponents.radio_button_group
+    <FormComponents.radio_button_group
       default_selected={@default_selected}
       disabled={@disabled}
       helper_text={@helper_text}
@@ -8076,12 +8077,12 @@ defmodule Graphene.CarbonComponents do
           disabled={item[:disabled]}
         />
       <% end %>
-    </CoreComponents.radio_button_group>
+    </FormComponents.radio_button_group>
     """
   end
 
   def radio_button_group(assigns) do
-    CoreComponents.radio_button_group(assigns)
+    FormComponents.radio_button_group(assigns)
   end
 
   @doc """
@@ -8190,7 +8191,7 @@ defmodule Graphene.CarbonComponents do
   slot :inner_block
 
   def search(assigns) do
-    CoreComponents.search(assigns)
+    FormComponents.search(assigns)
   end
 
   @doc """
@@ -8316,7 +8317,7 @@ defmodule Graphene.CarbonComponents do
 
   def select(%{item: [_ | _]} = assigns) do
     ~H"""
-    <CoreComponents.select
+    <FormComponents.select
       autofocus={@autofocus}
       disabled={@disabled}
       helper_text={@helper_text}
@@ -8349,12 +8350,12 @@ defmodule Graphene.CarbonComponents do
           disabled={item[:disabled]}
         />
       <% end %>
-    </CoreComponents.select>
+    </FormComponents.select>
     """
   end
 
   def select(assigns) do
-    CoreComponents.select(assigns)
+    FormComponents.select(assigns)
   end
 
   @doc """
@@ -10753,7 +10754,7 @@ defmodule Graphene.CarbonComponents do
   end
 
   def text_input(assigns) do
-    CoreComponents.text_input(assigns)
+    FormComponents.text_input(assigns)
   end
 
   @doc """
@@ -10947,7 +10948,7 @@ defmodule Graphene.CarbonComponents do
   end
 
   def textarea(assigns) do
-    CoreComponents.textarea(assigns)
+    FormComponents.textarea(assigns)
   end
 
   @doc """
@@ -11161,7 +11162,7 @@ defmodule Graphene.CarbonComponents do
 
   def time_picker(%{select_item: [_ | _]} = assigns) do
     ~H"""
-    <CoreComponents.time_picker
+    <FormComponents.time_picker
       disabled={@disabled}
       hide_label={@hide_label}
       invalid={@invalid}
@@ -11192,12 +11193,12 @@ defmodule Graphene.CarbonComponents do
           />
         <% end %>
       </CoreComponents.time_picker_select>
-    </CoreComponents.time_picker>
+    </FormComponents.time_picker>
     """
   end
 
   def time_picker(assigns) do
-    CoreComponents.time_picker(assigns)
+    FormComponents.time_picker(assigns)
   end
 
   @doc """
@@ -11422,7 +11423,7 @@ defmodule Graphene.CarbonComponents do
   end
 
   def toggle(assigns) do
-    CoreComponents.toggle(assigns)
+    FormComponents.toggle(assigns)
   end
 
   @doc """
@@ -12149,7 +12150,7 @@ defmodule Graphene.CarbonComponents do
 
   def fluid_time_picker(%{select_item: [_ | _]} = assigns) do
     ~H"""
-    <CoreComponents.time_picker
+    <FormComponents.time_picker
       disabled={@disabled}
       hide_label={@hide_label}
       invalid={@invalid}
@@ -12180,12 +12181,12 @@ defmodule Graphene.CarbonComponents do
           />
         <% end %>
       </CoreComponents.time_picker_select>
-    </CoreComponents.time_picker>
+    </FormComponents.time_picker>
     """
   end
 
   def fluid_time_picker(assigns) do
-    CoreComponents.time_picker(assigns)
+    FormComponents.time_picker(assigns)
   end
 
   @doc """

@@ -12,20 +12,20 @@ defmodule Storybook.CarbonComponents.Form do
     ~H"""
     <div style="display: grid; gap: 2rem;">
       <Graphene.CarbonComponents.form>
-        <.text_input value="Ada Lovelace">
+        <.text_input id="form-name" name="name" value="Ada Lovelace">
           <:s-label-text>Name</:s-label-text>
         </.text_input>
-        <.text_input value="Engineer">
+        <.text_input id="form-role" name="role" value="Engineer">
           <:s-label-text>Role</:s-label-text>
         </.text_input>
         <.button type="submit">Submit</.button>
       </Graphene.CarbonComponents.form>
 
       <Graphene.CarbonComponents.form>
-        <.text_input value="ada@graphene.dev" type="email">
+        <.text_input id="form-email" name="email" value="ada@graphene.dev" type="email">
           <:s-label-text>Email</:s-label-text>
         </.text_input>
-        <.password_input value="password">
+        <.password_input id="form-password" name="password" value="password">
           <:s-label-text>Password</:s-label-text>
         </.password_input>
         <.button kind="secondary" type="submit">Create account</.button>

@@ -10,7 +10,9 @@ defmodule Graphene.BasicComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
+  alias Graphene.CarbonComponents
   alias Graphene.CoreComponents
+  alias Graphene.FormComponents
 
   @hero_icon_map %{
     "hero-information-circle" => "information",
@@ -171,17 +173,9 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CoreComponents.form_item>
-      <input
-        type="hidden"
-        name={@name}
-        value="false"
-        disabled={@rest[:disabled]}
-        form={@rest[:form]}
-      />
-      <CoreComponents.checkbox
+      <FormComponents.checkbox
         id={@id}
         name={@name}
-        value="true"
         checked={@checked}
         label_text={@label}
         invalid={@invalid}
@@ -211,7 +205,7 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CoreComponents.form_item>
-      <CoreComponents.select
+      <FormComponents.select
         id={@id}
         name={@name}
         label_text={@label}
@@ -233,7 +227,7 @@ defmodule Graphene.BasicComponents do
         <%= for option <- normalize_options(@options) do %>
           {render_select_option(option, @selected)}
         <% end %>
-      </CoreComponents.select>
+      </FormComponents.select>
     </CoreComponents.form_item>
     """
   end
@@ -248,7 +242,7 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CoreComponents.form_item>
-      <CoreComponents.textarea
+      <FormComponents.textarea
         id={@id}
         name={@name}
         label={@label}
@@ -271,7 +265,7 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CoreComponents.form_item>
-      <CoreComponents.search
+      <FormComponents.search
         name={@name}
         label_text={@label}
         value={Phoenix.HTML.Form.normalize_value("search", @value)}
@@ -304,7 +298,7 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CoreComponents.form_item>
-      <CoreComponents.number_input
+      <FormComponents.number_input
         id={@id}
         name={@name}
         label={@label}
@@ -355,7 +349,7 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CoreComponents.form_item>
-      <CoreComponents.text_input
+      <FormComponents.text_input
         id={@id}
         name={@name}
         label={@label}
@@ -487,52 +481,7 @@ defmodule Graphene.BasicComponents do
   slot :expanded_row, doc: "content rendered as expanded rows"
 
   def table(assigns) do
-    assigns =
-      assigns
-      |> table_assigns()
-      |> assign(:component_id, "#{assigns.id}-component")
-
-    ~H"""
-    <.live_component
-      module={Graphene.BasicComponents.TableComponent}
-      id={@component_id}
-      table_id={@id}
-      rows={@rows}
-      row_id={@row_id}
-      row_click={@row_click}
-      row_item={@row_item}
-      col={@col}
-      action={@action}
-      selectable={@selectable}
-      sortable={@sortable}
-      selected_ids={@selected_ids}
-      selection_name={@selection_name}
-      selection_label={@selection_label}
-      radio={@radio}
-      size={@size}
-      expandable={@expandable}
-      batch_expansion={@batch_expansion}
-      overflow_menu_on_hover={@overflow_menu_on_hover}
-      use_zebra_styles={@use_zebra_styles}
-      use_static_width={@use_static_width}
-      with_row_ai_labels={@with_row_ai_labels}
-      with_row_slugs={@with_row_slugs}
-      locale={@locale}
-      filter_rows={@filter_rows}
-      phx_update={@phx_update}
-      on_row_selected={@on_row_selected}
-      on_row_all_selected={@on_row_all_selected}
-      on_sorted={@on_sorted}
-      on_filtered={@on_filtered}
-      on_search={@on_search}
-      on_batch_cancel={@on_batch_cancel}
-      title={@title}
-      description={@description}
-      toolbar={@toolbar}
-      row_decorator={@row_decorator}
-      expanded_row={@expanded_row}
-    />
-    """
+    CarbonComponents.data_table(assigns)
   end
 
   @doc """
@@ -618,23 +567,6 @@ defmodule Graphene.BasicComponents do
   """
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
-  end
-
-  defp table_assigns(assigns) do
-    assigns =
-      case Map.get(assigns, :phx_update) do
-        false -> Map.put(assigns, :phx_update, nil)
-        "" -> Map.put(assigns, :phx_update, nil)
-        _ -> assigns
-      end
-
-    case assigns do
-      %{rows: %Phoenix.LiveView.LiveStream{}} ->
-        assign(assigns, row_id: assigns.row_id || fn {id, _item} -> id end)
-
-      _ ->
-        assigns
-    end
   end
 
   defp button_click(rest) do
