@@ -25,5 +25,13 @@ export function mergeWebComponentsAttrs(from: HTMLElement, to: HTMLElement): voi
         attributes.forEach((attr) => {
             to.setAttribute(attr.name, attr.value);
         });
+        const tagName = to.tagName.toLowerCase();
+        if (tagName === "cds-number-input" || tagName === "cds-fluid-number-input") {
+            const step = to.getAttribute("step");
+            const safeStep = step === null || step === "" || step === "null" || step === "undefined" ? "1" : step;
+            to.setAttribute("step", safeStep);
+            (to as any)._step = safeStep;
+            (to as any).step = safeStep;
+        }
     }
 }

@@ -2,7 +2,8 @@ defmodule Graphene.CodeGen.ComponentPatches do
   @moduledoc """
   Known Patches for components code generation
   """
-  alias Graphene.CodeGen.Component.Slot
+  alias Graphene.CodeGen.Component
+  alias Graphene.CodeGen.Component.{Attr, Slot}
 
   def patch(
         %{
@@ -84,6 +85,14 @@ defmodule Graphene.CodeGen.ComponentPatches do
     %{component | import: "./src/components/copy/copy.js"}
   end
 
+  def patch(%{htmltag: "cds-number-input"} = component) do
+    set_step_default(component)
+  end
+
+  def patch(%{htmltag: "cds-fluid-number-input"} = component) do
+    set_step_default(component)
+  end
+
   def patch(%{htmltag: "cds-button", slots: []} = component) do
     %{component | slots: [Slot.parse(%{"name" => "icon", "description" => "Icon."})]}
   end
@@ -99,5 +108,65 @@ defmodule Graphene.CodeGen.ComponentPatches do
     }
   end
 
+  def patch(%{htmltag: "cds-table-row"} = component) do
+    ensure_attr(
+      component,
+      %{
+        "name" => "radio",
+        "type" => "boolean",
+        "default" => "false",
+        "description" => "Specify whether the control should be a radio button or inline checkbox."
+      }
+    )
+  end
+
   def patch(component), do: component
+
+  def append_missing_components(components) do
+    components
+    |> append_menu_component()
+  end
+
+  defp append_menu_component(components) do
+    if Enum.any?(components, &(&1.htmltag == "cds-menu")) do
+      components
+    else
+      docs = """
+      Component `<cds-menu>` from `./src/components/menu/menu.ts`
+
+      Menu.
+      """
+
+      component = %Component{
+        htmltag: "cds-menu",
+        componentname: "menu",
+        source: "./src/components/menu/menu.ts",
+        docs: docs,
+        attrs: [],
+        slots: []
+      }
+
+      components ++ [component]
+    end
+  end
+
+  defp set_step_default(component) do
+    %{component | attrs: Enum.map(component.attrs, &set_step_attr_default/1)}
+  end
+
+  defp ensure_attr(component, %{"name" => name} = attr) do
+    exists? = Enum.any?(component.attrs, &(&1.htmlname == name))
+
+    if exists? do
+      component
+    else
+      %{component | attrs: component.attrs ++ [Attr.parse(attr)]}
+    end
+  end
+
+  defp set_step_attr_default(%{htmlname: "step"} = attr) do
+    %{attr | opts: Keyword.put(attr.opts, :default, "1")}
+  end
+
+  defp set_step_attr_default(attr), do: attr
 end

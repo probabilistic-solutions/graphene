@@ -27,11 +27,11 @@
     "dependencies": {
         "@carbon/styles": "^1.100.0",
         "@ibm/plex": "^6.4.1",
-        "@carbon/web-components": "2.47.0"
-    },
-    "devDependencies": {
-        "@types/node": "^20.11.30",
+        "@carbon/web-components": "2.47.0",
         "esbuild": "^0.20.2",
         "typescript": "^5.4.3"
+    },
+    "devDependencies": {
+        "@types/node": "^20.11.30"
     }
 }

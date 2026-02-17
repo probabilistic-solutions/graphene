@@ -6,6 +6,7 @@
 - `priv/static/` stores built assets; `priv/storybook/` contains story definitions, with `priv/storybook/generated/` produced by codegen.
 - `demo/` is a Phoenix app showcasing Graphene (`demo/lib/`, `demo/assets/`, `demo/config/`).
 - Tests live in `test/` for the library and `demo/test/` for the demo app.
+- `lib/graphene/core_components.ex` is generated; update `lib/graphene/codegen/component_patch.ex` and re-run `mix graphene.core_components.generate` instead of editing it directly.
 
 ## Build, Test, and Development Commands
 - `mix deps.get` installs Elixir dependencies.
@@ -15,6 +16,7 @@
 - `cd demo && mix phx.server` runs the demo app at `http://localhost:4000`.
 - `mix test` (root) and `cd demo && mix test` (demo) run ExUnit tests.
 - Optional generation (dev only): `mix graphene.icons.generate`, `mix graphene.core_components.generate`, `mix graphene.stories.generate` to refresh generated outputs.
+- `mix graphene.core_components.generate` performs a compile check on the generated module before replacing `lib/graphene/core_components.ex`.
 
 ## Coding Style & Naming Conventions
 - Format with `mix format` (configured by `.formatter.exs` and LiveView HTML formatter).

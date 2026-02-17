@@ -289,7 +289,18 @@ defmodule Graphene.BasicComponents do
     {invalid, invalid_text} = input_errors(assigns.errors)
     class = input_class(assigns.class, assigns.error_class, invalid)
 
-    assigns = assign(assigns, invalid: invalid, invalid_text: invalid_text, class: class)
+    {min, rest} = Map.pop(assigns.rest, :min)
+    {max, rest} = Map.pop(rest, :max)
+
+    assigns =
+      assign(assigns,
+        invalid: invalid,
+        invalid_text: invalid_text,
+        class: class,
+        min: if(is_nil(min), do: "", else: min),
+        max: if(is_nil(max), do: "", else: max),
+        rest: rest
+      )
 
     ~H"""
     <CoreComponents.form_item>
@@ -298,6 +309,8 @@ defmodule Graphene.BasicComponents do
         name={@name}
         label={@label}
         value={Phoenix.HTML.Form.normalize_value("number", @value)}
+        min={@min}
+        max={@max}
         invalid={@invalid}
         invalid_text={@invalid_text}
         class={@class}
@@ -427,9 +440,30 @@ defmodule Graphene.BasicComponents do
 
   attr :selectable, :boolean, default: false, doc: "enable row selection"
   attr :sortable, :boolean, default: false, doc: "enable sorting UI on header cells"
-  attr :selected_ids, :list, default: [], doc: "selected row ids"
+  attr :selected_ids, :list,
+    default: nil,
+    doc:
+      "selected row ids. When nil, the table keeps its internal selection state. Pass an explicit list to control selection."
   attr :selection_name, :string, default: nil, doc: "name attribute for row selection inputs"
   attr :selection_label, :string, default: "Select row", doc: "aria label for row selection"
+  attr :radio, :boolean, default: false, doc: "use radio selection instead of checkboxes"
+  attr :size, :string, default: "lg", values: ["xs", "sm", "md", "lg", "xl"], doc: "table size"
+  attr :expandable, :boolean, default: false, doc: "enable expandable rows"
+  attr :batch_expansion, :boolean, default: false, doc: "enable batch expansion control"
+  attr :overflow_menu_on_hover, :boolean,
+    default: false,
+    doc: "show overflow menu only on hover"
+
+  attr :use_zebra_styles, :boolean, default: true, doc: "enable zebra striping"
+  attr :use_static_width, :boolean, default: false, doc: "use static table width"
+  attr :with_row_ai_labels, :boolean, default: false, doc: "enable AI labels in rows"
+  attr :with_row_slugs, :boolean, default: false, doc: "enable slugs in rows"
+  attr :locale, :string, default: nil, doc: "table locale"
+  attr :filter_rows, :any, default: nil, doc: "custom filter rows function"
+  attr :phx_update, :any,
+    default: "ignore",
+    doc:
+      "phx-update behavior for the table root. Defaults to \"ignore\" so LiveView does not patch the table subtree after client-side sorting/filtering. Set to nil or false to allow normal patching."
 
   attr :on_row_selected, :any, default: nil, doc: "callback for row selection events"
   attr :on_row_all_selected, :any, default: nil, doc: "callback for select-all events"
@@ -439,10 +473,18 @@ defmodule Graphene.BasicComponents do
   attr :on_batch_cancel, :any, default: nil, doc: "callback for batch cancel events"
 
   slot :col, required: true do
-    attr :label, :string
+    attr :label, :any
   end
 
   slot :action, doc: "the slot for showing user actions in the last table column"
+  slot :title, doc: "table title"
+  slot :description, doc: "table description"
+  slot :toolbar, doc: "table toolbar contents"
+  slot :row_decorator, doc: "content injected before row cells" do
+    attr :class, :string
+  end
+
+  slot :expanded_row, doc: "content rendered as expanded rows"
 
   def table(assigns) do
     assigns =
@@ -466,12 +508,29 @@ defmodule Graphene.BasicComponents do
       selected_ids={@selected_ids}
       selection_name={@selection_name}
       selection_label={@selection_label}
+      radio={@radio}
+      size={@size}
+      expandable={@expandable}
+      batch_expansion={@batch_expansion}
+      overflow_menu_on_hover={@overflow_menu_on_hover}
+      use_zebra_styles={@use_zebra_styles}
+      use_static_width={@use_static_width}
+      with_row_ai_labels={@with_row_ai_labels}
+      with_row_slugs={@with_row_slugs}
+      locale={@locale}
+      filter_rows={@filter_rows}
+      phx_update={@phx_update}
       on_row_selected={@on_row_selected}
       on_row_all_selected={@on_row_all_selected}
       on_sorted={@on_sorted}
       on_filtered={@on_filtered}
       on_search={@on_search}
       on_batch_cancel={@on_batch_cancel}
+      title={@title}
+      description={@description}
+      toolbar={@toolbar}
+      row_decorator={@row_decorator}
+      expanded_row={@expanded_row}
     />
     """
   end
@@ -562,6 +621,13 @@ defmodule Graphene.BasicComponents do
   end
 
   defp table_assigns(assigns) do
+    assigns =
+      case Map.get(assigns, :phx_update) do
+        false -> Map.put(assigns, :phx_update, nil)
+        "" -> Map.put(assigns, :phx_update, nil)
+        _ -> assigns
+      end
+
     case assigns do
       %{rows: %Phoenix.LiveView.LiveStream{}} ->
         assign(assigns, row_id: assigns.row_id || fn {id, _item} -> id end)
@@ -574,10 +640,11 @@ defmodule Graphene.BasicComponents do
   defp button_click(rest) do
     navigate = rest[:navigate]
     patch = rest[:patch]
+    {phx_click, rest} = Map.pop(rest, :"phx-click")
     rest = Map.drop(rest, [:navigate, :patch, :method])
 
     cond do
-      Map.has_key?(rest, :"phx-click") -> {rest, nil}
+      not is_nil(phx_click) -> {rest, phx_click}
       navigate -> {rest, JS.navigate(navigate)}
       patch -> {rest, JS.patch(patch)}
       true -> {rest, nil}

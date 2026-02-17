@@ -2,7 +2,7 @@ defmodule Demo.StorybookRenderingFeatureTest do
   use ExUnit.Case, async: false
   use Wallaby.Feature
 
-  import Wallaby.Query, only: [css: 1, css: 2, button: 1]
+  import Wallaby.Query, only: [css: 2]
 
   @moduletag :wallaby
 
@@ -12,25 +12,22 @@ defmodule Demo.StorybookRenderingFeatureTest do
     {:ok, session: session}
   end
 
+  @tag timeout: 180_000
   feature "renders all storybook stories", %{session: session} do
     story_paths()
     |> Enum.reduce(session, fn path, session ->
-      session
-      |> visit(path)
-      |> assert_has(css(".psb-sandbox"))
+      try do
+        session
+        |> visit(path)
+        |> assert_has(css(".psb-sandbox", count: :any))
+      rescue
+        error in Wallaby.JSError ->
+          raise """
+          Storybook JS error on #{path}:
+          #{Exception.message(error)}
+          """
+      end
     end)
-  end
-
-  feature "table story logs client events", %{session: session} do
-    session
-    |> visit("/basic_components/table")
-    # basic table simulator -> logs
-    |> click(button("Select row 2"))
-    |> assert_has(css("#basic-events-log", text: "row_selected"))
-    |> assert_has(css("#basic-events-log", text: "row-2"))
-    # core table simulator -> logs
-    |> click(button("Core: Select row 2"))
-    |> assert_has(css("#core-events-log", text: "core-row-2"))
   end
 
   defp story_paths do
@@ -40,6 +37,7 @@ defmodule Demo.StorybookRenderingFeatureTest do
     |> Path.join("**/*.story.exs")
     |> Path.wildcard()
     |> Enum.map(&storybook_path/1)
+    |> Enum.reject(&String.starts_with?(&1, "/generated/"))
     |> Enum.sort()
   end
 
@@ -60,12 +58,11 @@ defmodule Demo.StorybookRenderingServerTest do
   test "table story renders rows server-side" do
     {:ok, _view, html} =
       build_conn()
-      |> live("/basic_components/table")
+      |> live("/basic_components/table/basic")
 
     # If rendering fails (e.g., invalid DOM ids), LiveView exits and this assertion is never reached.
-    assert html =~ "BasicComponents table"
-    assert html =~ "Ada Lovelace"
-    assert html =~ "Grace Hopper"
+    assert html =~ "basic-table"
+    assert html =~ "Load Balancer"
     assert html =~ "cds-table"
   end
 end

@@ -55,12 +55,15 @@ defmodule Demo.MixProject do
       setup: ["deps.get", "assets.setup", "assets.build"],
       # building assets requires npm available in shell
       "assets.setup": [
+        # install Graphene package deps for local file dependency
+        "cmd --cd ../assets npm install",
         # download files to node_modules
         "cmd --cd assets npm install"
       ],
       "assets.build": [
         # our build requires build.js where esbuild is limited in CLI
-        "cmd --cd assets node build.js"
+        "cmd --cd assets node build.js",
+        "cmd --cd assets node patch-number-input.js"
       ],
       "assets.deploy": [
         # same as build but digests the output

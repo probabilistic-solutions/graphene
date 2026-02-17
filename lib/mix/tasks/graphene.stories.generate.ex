@@ -29,11 +29,26 @@ if Mix.env() == :dev do
           )
         end
 
+        maybe_compile_generated_stories(path)
+
         Logger.debug("Generation complete, finishing transaction")
         File.rm_rf!(storybook_location("core"))
         File.mkdir_p!(storybook_location("core"))
         File.cp_r(path, storybook_location("core"))
       end)
+    end
+
+    defp maybe_compile_generated_stories(path) do
+      if Code.ensure_loaded?(PhoenixStorybook.Story) do
+        path
+        |> Path.join("**/*.story.exs")
+        |> Path.wildcard()
+        |> Enum.each(&Code.compile_file/1)
+      else
+        Logger.warning(
+          "PhoenixStorybook is not available; skipping compile check for generated stories."
+        )
+      end
     end
   end
 end

@@ -1,6 +1,6 @@
 defmodule DemoWeb.Storybook do
   use PhoenixStorybook,
-    otp_app: :demo_web,
+    otp_app: :demo,
     content_path: Path.join(:code.priv_dir(:graphene), "storybook"),
     # assets path are remote path, not local file-system paths
     css_path: "/assets/css/storybook.css",

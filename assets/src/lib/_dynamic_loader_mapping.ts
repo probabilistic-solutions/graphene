@@ -89,6 +89,7 @@ export const componentImports: ComponentImports = {
   'cds-link': () => import("@carbon/web-components/es/components/link/index.js"),
   'cds-list-item': () => import("@carbon/web-components/es/components/list/index.js"),
   'cds-loading': () => import("@carbon/web-components/es/components/loading/index.js"),
+  'cds-menu': () => import("@carbon/web-components/es/components/menu/index.js"),
   'cds-menu-button': () => import("@carbon/web-components/es/components/menu-button/index.js"),
   'cds-menu-item': () => import("@carbon/web-components/es/components/menu/index.js"),
   'cds-menu-item-divider': () => import("@carbon/web-components/es/components/menu/index.js"),

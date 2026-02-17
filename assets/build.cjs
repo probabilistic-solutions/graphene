@@ -1,4 +1,5 @@
 const esbuild = require("esbuild");
+const fs = require("fs/promises");
 const path = require("path");
 
 const args = process.argv.slice(2);
@@ -22,7 +23,25 @@ const loader = {
 };
 
 const plugins = [
+  {
+    name: "carbon-number-input-step-fix",
+    setup(build) {
+      build.onLoad(
+        {
+          filter: /@carbon[\\/]web-components[\\/]es[\\/]components[\\/]number-input[\\/]number-input\\.js$/,
+        },
+        async (args) => {
+          const contents = await fs.readFile(args.path, "utf8");
+          const patched = contents.replace(
+            "return this._step.toString();",
+            'return (this._step ?? "1").toString();'
+          );
 
+          return { contents: patched, loader: "js" };
+        }
+      );
+    },
+  },
 ];
 
 // Define esbuild options
@@ -37,6 +56,28 @@ let opts = {
     loader: loader,
     plugins: plugins,
 };
+
+async function patchNumberInputStep(outDir) {
+    const indexPath = path.join(outDir, "index.js");
+    try {
+        let contents = await fs.readFile(indexPath, "utf8");
+        const replacements = [
+            [/this\\._step\\.toString\\(\\)/g, '(this._step ?? "1").toString()'],
+            [/this\\._min\\.toString\\(\\)/g, '(this._min ?? "").toString()'],
+            [/this\\._max\\.toString\\(\\)/g, '(this._max ?? "").toString()'],
+            [/\\.requestUpdate\\(\\)/g, '.requestUpdate?.()'],
+        ];
+        let patched = contents;
+        replacements.forEach(([pattern, replacement]) => {
+            patched = patched.replace(pattern, replacement);
+        });
+        if (patched !== contents) {
+            await fs.writeFile(indexPath, patched);
+        }
+    } catch (_error) {
+        // best-effort patch; ignore if file missing
+    }
+}
 
 if (deploy) {
     opts = {
@@ -60,5 +101,10 @@ if (watch) {
             process.exit(1);
         });
 } else {
-    esbuild.build(opts);
+    esbuild
+        .build(opts)
+        .then(() => patchNumberInputStep(outDirPath))
+        .catch((_error) => {
+            process.exit(1);
+        });
 }

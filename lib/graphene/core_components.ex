@@ -3184,7 +3184,7 @@ defmodule Graphene.CoreComponents do
     doc: "\"Show password\" tooltip text on password visibility toggle"
 
   attr :size, :any, default: nil, doc: "The input box size."
-  attr :step, :string, default: nil, doc: "The amount the value should increase or decrease by"
+  attr :step, :string, default: "1", doc: "The amount the value should increase or decrease by"
 
   attr :tooltip_alignment, :string,
     default: "center",
@@ -5104,6 +5104,25 @@ defmodule Graphene.CoreComponents do
   end
 
   @doc """
+  Component `<cds-menu>` from `./src/components/menu/menu.ts`
+
+  Menu.
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def menu(assigns) do
+    ~H"""
+    <cds-menu {@rest}>
+      {render_slot(@inner_block)}
+    </cds-menu>
+    """
+  end
+
+  @doc """
   Component `<cds-menu-button>` from `./src/components/menu-button/menu-button.ts`
 
   Menu button.
@@ -6008,7 +6027,7 @@ defmodule Graphene.CoreComponents do
     doc: "\"Show password\" tooltip text on password visibility toggle"
 
   attr :size, :any, default: nil, doc: "The input box size."
-  attr :step, :string, default: nil, doc: "The amount the value should increase or decrease by"
+  attr :step, :string, default: "1", doc: "The amount the value should increase or decrease by"
 
   attr :tooltip_alignment, :string,
     default: "center",
@@ -9576,6 +9595,10 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "The `value` attribute for the `<input>` for selection."
 
+  attr :radio, :boolean,
+    default: false,
+    doc: "Specify whether the control should be a radio button or inline checkbox."
+
   attr :rest, :global
 
   slot :inner_block
@@ -9593,6 +9616,7 @@ defmodule Graphene.CoreComponents do
       selection-label={assigns[:selection_label]}
       selection-name={assigns[:selection_name]}
       selection-value={assigns[:selection_value]}
+      radio={assigns[:radio]}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -11333,6 +11357,7 @@ defmodule Graphene.CoreComponents do
       "link",
       "list_item",
       "loading",
+      "menu",
       "menu_button",
       "menu_item",
       "menu_item_divider",

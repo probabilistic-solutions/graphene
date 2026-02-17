@@ -10,16 +10,22 @@ defmodule Graphene.CodeGen.Component.Story do
         raise "PhoenixStorybook is required to use Graphene.CodeGen.Component.Story"
       end
 
-      @func unquote(func)
+      @component_func unquote(func)
+      @component_info Keyword.take(Function.info(@component_func), [:module, :name])
+      @render_func @component_func
 
-      @info Keyword.take(Function.info(@func), [:module, :name])
-
-      def function, do: @func
+      def function, do: @render_func
 
       def variations do
-        component_module = @info[:module]
-        component = component_module.__components__()[@info[:name]]
-        base_variations = Graphene.CodeGen.Component.Story.variations(@info[:name], component_module, component)
+        component_module = @component_info[:module]
+        component = component_module.__components__()[@component_info[:name]]
+
+        base_variations =
+          Graphene.CodeGen.Component.Story.variations(
+            @component_info[:name],
+            component_module,
+            component
+          )
         Enum.concat(base_variations, unquote(extra_variations))
       end
     end

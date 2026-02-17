@@ -23,14 +23,26 @@ if Mix.env() == :dev do
           icons
         end
 
+      tmp_dir =
+        Path.join(System.tmp_dir!(), "graphene-icons-#{System.unique_integer([:positive])}")
+
+      File.mkdir_p!(tmp_dir)
+      tmp_dst = Path.join(tmp_dir, "icons_raw.ex")
+
       Mix.Generator.copy_template(
         templatesrc(),
-        templatedst(),
+        tmp_dst,
         [icons: icons, version: version(), module: "Graphene.IconsRaw"],
         force: true
       )
 
-      Mix.Task.run("format", [templatedst()])
+      Mix.Task.reenable("format")
+      Mix.Task.run("format", [tmp_dst])
+
+      compile_generated!(tmp_dst, "Graphene.IconsRaw")
+
+      File.mkdir_p!(Path.dirname(templatedst()))
+      File.cp!(tmp_dst, templatedst())
       Logger.debug("Added #{length(icons)} icons")
     end
 
@@ -128,6 +140,22 @@ if Mix.env() == :dev do
         variants: variants,
         default: default
       }
+    end
+
+    defp compile_generated!(path, module_name) do
+      content = File.read!(path)
+      module_decl = "defmodule #{module_name} do"
+      check_module = "#{module_name}.GeneratedCheck"
+
+      content =
+        if String.contains?(content, module_decl) do
+          String.replace(content, module_decl, "defmodule #{check_module} do", global: false)
+        else
+          raise "Expected #{module_decl} in generated output"
+        end
+
+      Code.compile_string(content, path)
+      :ok
     end
   end
 end

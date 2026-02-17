@@ -31,29 +31,31 @@ defmodule Graphene.Icons do
   @icons_raw_source Path.join(__DIR__, "icons_raw.ex")
   @external_resource @icons_raw_source
 
-  @available_icons (if Code.ensure_loaded?(Graphene.IconsRaw) do
-                      Graphene.IconsRaw.available_icons()
-                    else
-                      case File.read(@icons_raw_source) do
-                        {:ok, content} ->
-                          case Regex.run(
-                                 ~r/def available_icons\\(\\),\\s*do: \\[(.*?)\\]\\s*def/s,
-                                 content
-                               ) do
-                            [_, list_body] ->
-                              Regex.scan(~r/"([^"]+)"/, list_body)
-                              |> Enum.map(fn [_, name] -> name end)
+  @available_icons (case File.read(@icons_raw_source) do
+                      {:ok, content} ->
+                        case Regex.run(
+                               ~r/def available_icons\\(\\),\\s*do: \\[(.*?)\\]\\s*def/s,
+                               content
+                             ) do
+                          [_, list_body] ->
+                            Regex.scan(~r/"([^"]+)"/, list_body)
+                            |> Enum.map(fn [_, name] -> name end)
 
-                            _ ->
-                              []
-                          end
+                          _ ->
+                            []
+                        end
 
-                        _ ->
-                          []
-                      end
+                      _ ->
+                        []
                     end)
 
-  def available_icons, do: @available_icons
+  def available_icons do
+    if Code.ensure_loaded?(Graphene.IconsRaw) do
+      Graphene.IconsRaw.available_icons()
+    else
+      @available_icons
+    end
+  end
 
   defp autosize(%{fit: fit} = assigns) do
     {width, height} =
@@ -79,7 +81,11 @@ defmodule Graphene.Icons do
 
   Check avaliable icons with `Graphene.Icons.available_icons/1`
   """
-  attr :name, :string, required: true, values: @available_icons
+  if @available_icons == [] do
+    attr :name, :string, required: true
+  else
+    attr :name, :string, required: true, values: @available_icons
+  end
 
   attr :size, :integer,
     default: 24,

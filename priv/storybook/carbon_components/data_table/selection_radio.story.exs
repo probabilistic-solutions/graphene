@@ -1,0 +1,48 @@
+Code.require_file(Path.join(__DIR__, "shared.exs"))
+defmodule Storybook.CarbonComponents.DataTable.SelectionRadio do
+  use PhoenixStorybook.Story, :component
+
+  def function, do: &Graphene.CarbonComponents.data_table/1
+
+  def variations do
+    [
+      %Variation{
+        id: :radio,
+        attributes: %{
+          id: "carbon-radio-selection-table",
+          rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
+          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          selectable: true,
+          radio: true,
+          selection_name: "carbon-radio-selection"
+        },
+        slots: [
+          ~S|<:title>DataTable</:title>
+<:description>Radio selection</:description>
+<:col :for={col <- Storybook.CarbonComponents.DataTable.Shared.columns()} :let={row} label={col.label}>
+  <%= Map.get(row, col.key) %>
+</:col>|
+        ]
+      },
+      %Variation{
+        id: :radio_selected,
+        attributes: %{
+          id: "carbon-radio-selection-table-selected",
+          rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
+          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          selectable: true,
+          radio: true,
+          selection_name: "carbon-radio-selection",
+          selected_ids: [Storybook.CarbonComponents.DataTable.Shared.row_id(Enum.at(Storybook.CarbonComponents.DataTable.Shared.rows(), 2))]
+        },
+        slots: [
+          ~S|<:title>DataTable</:title>
+<:description>Preselected radio</:description>
+<:col :for={col <- Storybook.CarbonComponents.DataTable.Shared.columns()} :let={row} label={col.label}>
+  <%= Map.get(row, col.key) %>
+</:col>|
+        ]
+      }
+    ]
+  end
+end

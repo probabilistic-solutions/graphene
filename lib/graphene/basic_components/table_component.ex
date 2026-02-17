@@ -7,9 +7,12 @@ defmodule Graphene.BasicComponents.TableComponent do
 
   @impl true
   def update(assigns, socket) do
+    prev_selected_ids = socket.assigns[:selected_ids]
+
     socket =
       socket
       |> assign(assigns)
+      |> maybe_preserve_selected_ids(prev_selected_ids, assigns)
       |> assign_new(:selected_ids, fn -> [] end)
       |> assign_new(:table_id, fn -> assigns.id end)
       |> assign_new(:selection_name, fn ->
@@ -18,6 +21,18 @@ defmodule Graphene.BasicComponents.TableComponent do
       |> assign_new(:selection_label, fn -> "Select row" end)
       |> assign_new(:selectable, fn -> false end)
       |> assign_new(:sortable, fn -> false end)
+      |> assign_new(:radio, fn -> false end)
+      |> assign_new(:size, fn -> "lg" end)
+      |> assign_new(:expandable, fn -> false end)
+      |> assign_new(:batch_expansion, fn -> false end)
+      |> assign_new(:overflow_menu_on_hover, fn -> false end)
+      |> assign_new(:use_zebra_styles, fn -> true end)
+      |> assign_new(:use_static_width, fn -> false end)
+      |> assign_new(:with_row_ai_labels, fn -> false end)
+      |> assign_new(:with_row_slugs, fn -> false end)
+      |> assign_new(:locale, fn -> "en" end)
+      |> assign_new(:filter_rows, fn -> nil end)
+      |> assign_new(:phx_update, fn -> "ignore" end)
       |> assign_new(:on_row_selected, fn -> nil end)
       |> assign_new(:on_row_all_selected, fn -> nil end)
       |> assign_new(:on_sorted, fn -> nil end)
@@ -29,6 +44,12 @@ defmodule Graphene.BasicComponents.TableComponent do
       |> assign_new(:row_id, fn -> nil end)
       |> assign_new(:action, fn -> [] end)
       |> assign_new(:col, fn -> [] end)
+      |> assign_new(:title, fn -> [] end)
+      |> assign_new(:description, fn -> [] end)
+      |> assign_new(:toolbar, fn -> [] end)
+      |> assign_new(:row_decorator, fn -> [] end)
+      |> assign_new(:expanded_row, fn -> [] end)
+      |> limit_selected_ids()
 
     {:ok, socket}
   end
@@ -38,30 +59,57 @@ defmodule Graphene.BasicComponents.TableComponent do
     assigns =
       assigns
       |> assign(:selected_set, selected_set(assigns.selected_ids))
+      |> assign(:selected_ids_attr, selected_ids_attr(assigns.selected_ids))
       |> assign(:effective_selectable, effective_selectable?(assigns))
       |> assign(:effective_sortable, effective_sortable?(assigns))
+      |> assign(:effective_expandable, effective_expandable?(assigns))
 
     ~H"""
     <div id={@id}>
       <CoreComponents.table
         id={@table_id}
-        use_zebra_styles={true}
+        size={@size}
+        expandable={@effective_expandable}
+        batch_expansion={@batch_expansion}
+        radio={@radio}
+        overflow_menu_on_hover={@overflow_menu_on_hover}
+        use_zebra_styles={@use_zebra_styles}
+        use_static_width={@use_static_width}
+        with_row_ai_labels={@with_row_ai_labels}
+        with_row_slugs={@with_row_slugs}
+        locale={@locale}
+        filter_rows={@filter_rows}
         is_selectable={@effective_selectable}
         is_sortable={@effective_sortable}
         phx-hook="BasicComponentsTable"
         phx-target={@myself}
+        phx-update={@phx_update}
+        data-selected-ids={@selected_ids_attr}
       >
+        <:s-title :if={@title != []}>
+          <CoreComponents.table_header_title>
+            {render_slot(@title)}
+          </CoreComponents.table_header_title>
+        </:s-title>
+        <:s-description :if={@description != []}>
+          <CoreComponents.table_header_description>
+            {render_slot(@description)}
+          </CoreComponents.table_header_description>
+        </:s-description>
+        <:s-toolbar :if={@toolbar != []}>{render_slot(@toolbar)}</:s-toolbar>
         <CoreComponents.table_head>
           <CoreComponents.table_header_row
             selection_name={@effective_selectable && @selection_name}
             selection_label={@effective_selectable && "Select all"}
+            hide_checkbox={@radio}
+            batch_expansion={@batch_expansion}
           >
             <CoreComponents.table_header_cell
               :for={{col, index} <- Enum.with_index(@col)}
               is_sortable={@effective_sortable}
               data-col-index={index}
             >
-              {col[:label]}
+              {render_column_label(col[:label])}
             </CoreComponents.table_header_cell>
             <CoreComponents.table_header_cell :if={@action != []}>
               <span class="sr-only">Actions</span>
@@ -69,34 +117,45 @@ defmodule Graphene.BasicComponents.TableComponent do
           </CoreComponents.table_header_row>
         </CoreComponents.table_head>
         <CoreComponents.table_body
-          id={@table_id}
+          id={@table_id <> "body"}
           phx-update={is_struct(@rows, Phoenix.LiveView.LiveStream) && "stream"}
         >
-          <CoreComponents.table_row
-            :for={{row, index} <- Enum.with_index(@rows)}
-            id={row_dom_id(@row_id, row, index)}
-            data-row-id={row_key_string(@row_id, row, index)}
-            selected={row_selected?(@selected_set, @row_id, row, index)}
-            selection_name={@effective_selectable && @selection_name}
-            selection_value={@effective_selectable && row_key_string(@row_id, row, index)}
-            selection_label={@effective_selectable && @selection_label}
-          >
-            <CoreComponents.table_cell
-              :for={col <- @col}
-              phx-click={@row_click && @row_click.(row)}
+          <%= for {row, index} <- Enum.with_index(@rows) do %>
+            <CoreComponents.table_row
+              id={row_dom_id(@row_id, row, index)}
+              data-row-id={row_key_string(@row_id, row, index)}
+              selected={row_selected?(@selected_set, @row_id, row, index)}
+              selection_name={@effective_selectable && @selection_name}
+              selection_value={@effective_selectable && row_key_string(@row_id, row, index)}
+              selection_label={@effective_selectable && @selection_label}
+              radio={@radio}
+              batch_expansion={@batch_expansion}
             >
-              <CoreComponents.table_cell_content>
-                {render_slot(col, @row_item.(row))}
-              </CoreComponents.table_cell_content>
-            </CoreComponents.table_cell>
-            <CoreComponents.table_cell :if={@action != []}>
-              <div>
-                <%= for action <- @action do %>
-                  {render_slot(action, @row_item.(row))}
-                <% end %>
-              </div>
-            </CoreComponents.table_cell>
-          </CoreComponents.table_row>
+              <%= for decorator <- @row_decorator do %>
+                {render_slot(decorator, @row_item.(row))}
+              <% end %>
+              <CoreComponents.table_cell
+                :for={col <- @col}
+                phx-click={@row_click && @row_click.(row)}
+              >
+                <CoreComponents.table_cell_content>
+                  {render_slot(col, @row_item.(row))}
+                </CoreComponents.table_cell_content>
+              </CoreComponents.table_cell>
+              <CoreComponents.table_cell :if={@action != []}>
+                <div>
+                  <%= for action <- @action do %>
+                    {render_slot(action, @row_item.(row))}
+                  <% end %>
+                </div>
+              </CoreComponents.table_cell>
+            </CoreComponents.table_row>
+            <CoreComponents.table_expanded_row :if={@effective_expandable}>
+              <%= for expanded <- @expanded_row do %>
+                {render_slot(expanded, @row_item.(row))}
+              <% end %>
+            </CoreComponents.table_expanded_row>
+          <% end %>
         </CoreComponents.table_body>
       </CoreComponents.table>
     </div>
@@ -149,8 +208,11 @@ defmodule Graphene.BasicComponents.TableComponent do
   end
 
   defp effective_selectable?(assigns) do
+    selected_ids = assigns.selected_ids || []
+
     assigns.selectable ||
-      assigns.selected_ids != [] ||
+      assigns.radio ||
+      selected_ids != [] ||
       is_function(assigns.on_row_selected) ||
       is_function(assigns.on_row_all_selected)
   end
@@ -159,9 +221,18 @@ defmodule Graphene.BasicComponents.TableComponent do
     assigns.sortable || is_function(assigns.on_sorted)
   end
 
+  defp effective_expandable?(assigns) do
+    assigns.expandable || assigns.expanded_row != []
+  end
+
   defp maybe_update_selected(socket, %{"selected_ids" => ids}) when is_list(ids) do
     if effective_selectable?(socket.assigns) do
-      assign(socket, :selected_ids, Enum.map(ids, &to_string/1))
+      ids =
+        ids
+        |> Enum.map(&to_string/1)
+        |> maybe_limit_selection(socket.assigns)
+
+      assign(socket, :selected_ids, ids)
     else
       socket
     end
@@ -169,10 +240,20 @@ defmodule Graphene.BasicComponents.TableComponent do
 
   defp maybe_update_selected(socket, _payload), do: socket
 
+  defp selected_set(nil), do: MapSet.new()
+
   defp selected_set(ids) do
     ids
     |> Enum.map(&to_string/1)
     |> MapSet.new()
+  end
+
+  defp selected_ids_attr(nil), do: ""
+
+  defp selected_ids_attr(ids) when is_list(ids) do
+    ids
+    |> Enum.map(&to_string/1)
+    |> Enum.join(",")
   end
 
   defp row_key(row_id_fun, row, index) do
@@ -207,6 +288,10 @@ defmodule Graphene.BasicComponents.TableComponent do
     MapSet.member?(selected_set, row_key_string(row_id_fun, row, index))
   end
 
+  defp render_column_label(nil), do: nil
+  defp render_column_label(fun) when is_function(fun, 0), do: fun.()
+  defp render_column_label(label), do: label
+
   defp apply_callback(socket, nil, _payload), do: socket
 
   defp apply_callback(socket, fun, payload) when is_function(fun, 2) do
@@ -223,4 +308,27 @@ defmodule Graphene.BasicComponents.TableComponent do
   defp normalize_callback_result(%Phoenix.LiveView.Socket{} = sock, _socket), do: sock
   defp normalize_callback_result(%{} = assigns, socket), do: assign(socket, assigns)
   defp normalize_callback_result(_, socket), do: socket
+
+  defp limit_selected_ids(%Phoenix.LiveView.Socket{} = socket) do
+    assigns = socket.assigns
+
+    if assigns.radio && is_list(assigns.selected_ids) do
+      assign(socket, :selected_ids, Enum.take(assigns.selected_ids, 1))
+    else
+      socket
+    end
+  end
+
+  defp maybe_limit_selection(ids, %{radio: true}) when is_list(ids), do: Enum.take(ids, 1)
+  defp maybe_limit_selection(ids, _assigns), do: ids
+
+  defp maybe_preserve_selected_ids(socket, prev_selected_ids, assigns) do
+    case Map.get(assigns, :selected_ids, :unset) do
+      nil when is_list(prev_selected_ids) ->
+        assign(socket, :selected_ids, prev_selected_ids)
+
+      _ ->
+        socket
+    end
+  end
 end

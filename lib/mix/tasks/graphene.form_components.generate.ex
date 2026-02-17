@@ -1,0 +1,307 @@
+if Mix.env() == :dev do
+  defmodule Mix.Tasks.Graphene.FormComponents.Generate do
+    use Mix.Task
+    require Logger
+
+    defp template(:src) do
+      Path.join(["assets", "eex", "graphene_form_components.ex"])
+    end
+
+    defp template(:dst) do
+      Path.join(["lib", "graphene", "form_components.ex"])
+    end
+
+    defp helpers_template(:src) do
+      Path.join(["assets", "eex", "graphene_form_components_custom.ex"])
+    end
+
+    defp module_name do
+      "Graphene.FormComponents"
+    end
+
+    defp components do
+      Graphene.CoreComponents.__components__()
+    end
+
+    defp docs_map do
+      case Code.fetch_docs(Graphene.CoreComponents) do
+        {:docs_v1, _, _, _, _, _, docs} ->
+          for {{:function, name, 1}, _, _, doc, _} <- docs, into: %{} do
+            doc_text =
+              case doc do
+                %{"en" => text} when is_binary(text) -> text
+                :hidden -> nil
+                :none -> nil
+                _ -> nil
+              end
+
+            {name, doc_text}
+          end
+
+        _ ->
+          %{}
+      end
+    end
+
+    defp form_component_specs do
+      [
+        %{name: :checkbox, mode: :boolean, checked_attr: :checked, event: "cds-checkbox-changed"},
+        %{name: :toggle, mode: :boolean, checked_attr: :toggled, detail_key: "toggled", event: "cds-toggle-changed"},
+        %{name: :radio_button_group, mode: :value, event: "cds-radio-button-group-changed"},
+        %{name: :number_input, mode: :value, value_attr: :default_value, event: "cds-number-input"},
+        %{name: :fluid_number_input, mode: :value, value_attr: :default_value, event: "cds-number-input"},
+        %{name: :text_input, mode: :value, event: "input"},
+        %{name: :fluid_text_input, mode: :value, event: "input"},
+        %{name: :password_input, mode: :value, event: "input"},
+        %{name: :textarea, mode: :value, event: "input"},
+        %{name: :fluid_textarea, mode: :value, event: "input"},
+        %{name: :search, mode: :value, event: "cds-search-input"},
+        %{name: :fluid_search, mode: :value, event: "cds-search-input"},
+        %{name: :select, mode: :value, event: "cds-select-selected"},
+        %{name: :fluid_select, mode: :value, event: "cds-select-selected"},
+        %{name: :dropdown, mode: :value, event: "cds-dropdown-selected"},
+        %{name: :combo_box, mode: :value, event: "cds-combo-box-selected"},
+        %{name: :multi_select, mode: :value, event: "cds-multi-select-selected"},
+        %{name: :date_picker, mode: :value, event: "cds-date-picker-changed"},
+        %{name: :time_picker, mode: :value, event: "change"}
+      ]
+    end
+
+    defp render_template(path, assigns) do
+      EEx.eval_file(path, assigns: assigns)
+    end
+
+    defp compile_generated!(path, mod) do
+      content = File.read!(path)
+      module_decl = "defmodule #{mod} do"
+      check_module = "#{mod}.GeneratedCheck"
+
+      content =
+        if String.contains?(content, module_decl) do
+          String.replace(content, module_decl, "defmodule #{check_module} do", global: false)
+        else
+          raise "Expected #{module_decl} in generated output"
+        end
+
+      Code.compile_string(content, path)
+      :ok
+    end
+
+    defp opt_string([]), do: nil
+
+    defp opt_string(opts) do
+      opts
+      |> Enum.map(fn {k, v} ->
+        value = inspect(v, pretty: true, limit: :infinity)
+        "#{k}: #{value}"
+      end)
+      |> Enum.join(", ")
+    end
+
+    defp atom_name(atom) do
+      name = Atom.to_string(atom)
+
+      if Regex.match?(~r/^[a-z_][a-zA-Z0-9_]*$/, name) do
+        ":#{name}"
+      else
+        ":\"#{name}\""
+      end
+    end
+
+    defp build_attr(attr) do
+      opts =
+        []
+        |> maybe_add_opt(:default, Keyword.get(attr.opts, :default))
+        |> maybe_add_opt(:values, Keyword.get(attr.opts, :values))
+        |> maybe_add_opt(:required, attr.required)
+        |> maybe_add_opt(:doc, attr.doc)
+
+      opt_str = opt_string(opts)
+      name = atom_name(attr.name)
+
+      if opt_str do
+        "  attr #{name}, :#{attr.type}, #{opt_str}\n"
+      else
+        "  attr #{name}, :#{attr.type}\n"
+      end
+    end
+
+    defp build_slot(slot) do
+      slot_opts =
+        []
+        |> maybe_add_opt(:required, slot.required)
+        |> maybe_add_opt(:doc, slot.doc)
+
+      slot_opt_str = opt_string(slot_opts)
+      name = atom_name(slot.name)
+
+      header =
+        if slot_opt_str do
+          "  slot #{name}, #{slot_opt_str}"
+        else
+          "  slot #{name}"
+        end
+
+      if slot.attrs == [] do
+        header <> "\n"
+      else
+        attrs =
+          slot.attrs
+          |> Enum.map(fn attr ->
+            opts =
+              []
+              |> maybe_add_opt(:values, Keyword.get(attr.opts, :values))
+              |> maybe_add_opt(:required, attr.required)
+              |> maybe_add_opt(:doc, attr.doc)
+
+            opt_str = opt_string(opts)
+            attr_name = atom_name(attr.name)
+
+            if opt_str do
+              "    attr #{attr_name}, :#{attr.type}, #{opt_str}\n"
+            else
+              "    attr #{attr_name}, :#{attr.type}\n"
+            end
+          end)
+          |> Enum.join("")
+
+        header <> " do\n" <> attrs <> "  end\n"
+      end
+    end
+
+    defp build_extra_attrs(component) do
+      names = MapSet.new(Enum.map(component.attrs, & &1.name))
+      extras = []
+
+      extras =
+        if MapSet.member?(names, :field) do
+          extras
+        else
+          extras ++
+            [
+              "  attr :field, Phoenix.HTML.FormField,\n" <>
+                "    doc: \"a form field struct, for example: @form[:email]\"\n"
+            ]
+        end
+
+      extras =
+        if MapSet.member?(names, :form) do
+          extras
+        else
+          extras ++
+            [
+              "  attr :form, :string,\n" <>
+                "    default: nil,\n" <>
+                "    doc: \"the form attribute for the hidden input\"\n"
+            ]
+        end
+
+      if MapSet.member?(names, :form_event) do
+        extras
+      else
+        extras ++
+          [
+            "  attr :form_event, :string,\n" <>
+              "    default: nil,\n" <>
+              "    doc: \"override the custom event used to sync form values\"\n"
+          ]
+      end
+    end
+
+    defp maybe_add_opt(opts, _key, nil), do: opts
+    defp maybe_add_opt(opts, _key, false), do: opts
+    defp maybe_add_opt(opts, _key, []), do: opts
+    defp maybe_add_opt(opts, key, value), do: Keyword.put(opts, key, value)
+
+    defp indent_doc(doc) do
+      doc
+      |> String.split("\n")
+      |> Enum.map(&"  #{&1}")
+      |> Enum.join("\n")
+    end
+
+    defp render_doc(name, doc) do
+      if is_binary(doc) do
+        "  @doc \"\"\"\n" <> indent_doc(doc) <> "\n\n  Form-aware wrapper.\n  \"\"\"\n"
+      else
+        "  @doc \"\"\"\n  Form-aware wrapper for Graphene.CoreComponents.#{name}/1.\n  \"\"\"\n"
+      end
+    end
+
+    defp render_form_component(name, component, doc, spec) do
+      doc_str = render_doc(name, doc)
+
+      attrs =
+        component.attrs
+        |> Enum.map(&build_attr/1)
+        |> Enum.join("")
+
+      extras = build_extra_attrs(component) |> Enum.join("")
+      slots = component.slots |> Enum.map(&build_slot/1) |> Enum.join("")
+
+      opts =
+        spec
+        |> Enum.reject(fn {_, value} -> is_nil(value) end)
+        |> Enum.map(fn {key, value} -> "#{key}: #{inspect(value)}" end)
+        |> Enum.join(", ")
+
+      body =
+        "  def #{name}(assigns) do\n" <>
+          "    assigns = form_input_assigns(assigns, #{opts})\n" <>
+          "    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])\n" <>
+          "    assigns = assign(assigns, :component_assigns, component_assigns)\n" <>
+          "    ~H\"\"\"\n" <>
+          "    <input type=\"hidden\" id={@input_id} name={@name} value={@input_value} form={@form} />\n" <>
+          "    <%= CoreComponents.#{name}(@component_assigns) %>\n" <>
+          "    <.form_bridge_hook />\n" <>
+          "    \"\"\"\n" <>
+          "  end\n\n"
+
+      doc_str <> extras <> attrs <> slots <> body
+    end
+
+    defp render_wrappers do
+      docs = docs_map()
+      components = components()
+
+      form_component_specs()
+      |> Enum.map(fn spec ->
+        name = spec.name
+        component = Map.get(components, name)
+
+        if component do
+          render_form_component(name, component, Map.get(docs, name), spec)
+        else
+          nil
+        end
+      end)
+      |> Enum.reject(&is_nil/1)
+      |> Enum.join("\n")
+    end
+
+    @impl true
+    def run(_args \\ []) do
+      Logger.debug("Running #{__MODULE__}")
+
+      wrappers = render_wrappers()
+      helpers = File.read!(helpers_template(:src))
+
+      assigns = [module: module_name(), wrappers: wrappers, helpers: helpers]
+      tmp_dir = Path.join(System.tmp_dir!(), "graphene-form-#{System.unique_integer([:positive])}")
+      File.mkdir_p!(tmp_dir)
+      tmp_out = Path.join(tmp_dir, "form_components.ex")
+
+      File.write!(tmp_out, render_template(template(:src), assigns))
+
+      Mix.Task.reenable("format")
+      Mix.Task.run("format", [tmp_out])
+
+      compile_generated!(tmp_out, module_name())
+
+      File.mkdir_p!(Path.dirname(template(:dst)))
+      File.cp!(tmp_out, template(:dst))
+
+      Logger.debug("Added #{length(form_component_specs())} form components")
+    end
+  end
+end
