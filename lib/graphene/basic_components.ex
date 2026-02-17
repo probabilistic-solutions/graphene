@@ -1,6 +1,6 @@
 defmodule Graphene.BasicComponents do
   @moduledoc """
-  Compatibility wrappers around Graphene.CoreComponents that mirror the
+  Compatibility wrappers around Graphene.CarbonComponents that mirror the
   Phoenix installer core_components API.
 
   These components preserve the Phoenix core attributes/slots while rendering
@@ -11,19 +11,8 @@ defmodule Graphene.BasicComponents do
 
   alias Phoenix.LiveView.JS
   alias Graphene.CarbonComponents
-  alias Graphene.CoreComponents
-  alias Graphene.FormComponents
 
-  @hero_icon_map %{
-    "hero-information-circle" => "information",
-    "hero-exclamation-circle" => "warning--filled",
-    "hero-x-mark" => "close",
-    "hero-arrow-path" => "renew"
-  }
-
-  @available_graphene_icons MapSet.new(Graphene.Icons.available_icons())
-  @basic_icon_names Graphene.Icons.available_icons() ++ Map.keys(@hero_icon_map)
-  @icon_fallback "help"
+  @basic_icon_names Graphene.Icons.available_icons()
 
   @doc """
   Renders flash notices.
@@ -46,7 +35,7 @@ defmodule Graphene.BasicComponents do
     assigns = assign(assigns, :carbon_kind, flash_kind(assigns.kind))
 
     ~H"""
-    <CoreComponents.toast_notification
+    <CarbonComponents.toast_notification
       :if={msg = render_slot(@inner_block) || Phoenix.Flash.get(@flash, @kind)}
       id={@id}
       kind={@carbon_kind}
@@ -56,7 +45,7 @@ defmodule Graphene.BasicComponents do
       {@rest}
     >
       <:s-subtitle>{msg}</:s-subtitle>
-    </CoreComponents.toast_notification>
+    </CarbonComponents.toast_notification>
     """
   end
 
@@ -101,9 +90,9 @@ defmodule Graphene.BasicComponents do
       |> assign(:carbon_kind, kind)
 
     ~H"""
-    <CoreComponents.button kind={@carbon_kind} class={@class} phx-click={@phx_click} {@rest}>
+    <CarbonComponents.button kind={@carbon_kind} class={@class} phx-click={@phx_click} {@rest}>
       {render_slot(@inner_block)}
-    </CoreComponents.button>
+    </CarbonComponents.button>
     """
   end
 
@@ -172,8 +161,8 @@ defmodule Graphene.BasicComponents do
     assigns = assign(assigns, invalid: invalid, invalid_text: invalid_text, class: class)
 
     ~H"""
-    <CoreComponents.form_item>
-      <FormComponents.checkbox
+    <CarbonComponents.form_item>
+      <CarbonComponents.checkbox
         id={@id}
         name={@name}
         checked={@checked}
@@ -184,7 +173,7 @@ defmodule Graphene.BasicComponents do
         {@rest}
       />
       <.error :for={msg <- @errors}>{msg}</.error>
-    </CoreComponents.form_item>
+    </CarbonComponents.form_item>
     """
   end
 
@@ -204,8 +193,8 @@ defmodule Graphene.BasicComponents do
       )
 
     ~H"""
-    <CoreComponents.form_item>
-      <FormComponents.select
+    <CarbonComponents.form_item>
+      <CarbonComponents.select
         id={@id}
         name={@name}
         label_text={@label}
@@ -216,19 +205,19 @@ defmodule Graphene.BasicComponents do
         class={@class}
         {@rest}
       >
-        <CoreComponents.select_item
+        <CarbonComponents.select_item
           :if={@prompt}
           value=""
           label={@prompt}
           selected={prompt_selected?(@value)}
         >
           {@prompt}
-        </CoreComponents.select_item>
+        </CarbonComponents.select_item>
         <%= for option <- normalize_options(@options) do %>
           {render_select_option(option, @selected)}
         <% end %>
-      </FormComponents.select>
-    </CoreComponents.form_item>
+      </CarbonComponents.select>
+    </CarbonComponents.form_item>
     """
   end
 
@@ -241,8 +230,8 @@ defmodule Graphene.BasicComponents do
     assigns = assign(assigns, invalid: invalid, invalid_text: invalid_text, class: class)
 
     ~H"""
-    <CoreComponents.form_item>
-      <FormComponents.textarea
+    <CarbonComponents.form_item>
+      <CarbonComponents.textarea
         id={@id}
         name={@name}
         label={@label}
@@ -252,7 +241,7 @@ defmodule Graphene.BasicComponents do
         class={@class}
         {@rest}
       />
-    </CoreComponents.form_item>
+    </CarbonComponents.form_item>
     """
   end
 
@@ -264,8 +253,8 @@ defmodule Graphene.BasicComponents do
     assigns = assign(assigns, class: class)
 
     ~H"""
-    <CoreComponents.form_item>
-      <FormComponents.search
+    <CarbonComponents.form_item>
+      <CarbonComponents.search
         name={@name}
         label_text={@label}
         value={Phoenix.HTML.Form.normalize_value("search", @value)}
@@ -273,7 +262,7 @@ defmodule Graphene.BasicComponents do
         {@rest}
       />
       <.error :for={msg <- @errors}>{msg}</.error>
-    </CoreComponents.form_item>
+    </CarbonComponents.form_item>
     """
   end
 
@@ -297,8 +286,8 @@ defmodule Graphene.BasicComponents do
       )
 
     ~H"""
-    <CoreComponents.form_item>
-      <FormComponents.number_input
+    <CarbonComponents.form_item>
+      <CarbonComponents.number_input
         id={@id}
         name={@name}
         label={@label}
@@ -310,7 +299,7 @@ defmodule Graphene.BasicComponents do
         class={@class}
         {@rest}
       />
-    </CoreComponents.form_item>
+    </CarbonComponents.form_item>
     """
   end
 
@@ -323,19 +312,19 @@ defmodule Graphene.BasicComponents do
     assigns = assign(assigns, invalid: invalid, invalid_text: invalid_text, class: class)
 
     ~H"""
-    <CoreComponents.form_item>
-      <CoreComponents.file_uploader label_title={@label} label_description={@prompt}>
-        <CoreComponents.file_uploader_button
+    <CarbonComponents.form_item>
+      <CarbonComponents.file_uploader label_title={@label} label_description={@prompt}>
+        <CarbonComponents.file_uploader_button
           name={@name}
           accept={@rest[:accept]}
           multiple={@multiple}
           disabled={@rest[:disabled]}
         >
           {if @label, do: @label, else: "Upload"}
-        </CoreComponents.file_uploader_button>
-      </CoreComponents.file_uploader>
+        </CarbonComponents.file_uploader_button>
+      </CarbonComponents.file_uploader>
       <.error :for={msg <- @errors}>{msg}</.error>
-    </CoreComponents.form_item>
+    </CarbonComponents.form_item>
     """
   end
 
@@ -348,8 +337,8 @@ defmodule Graphene.BasicComponents do
     assigns = assign(assigns, invalid: invalid, invalid_text: invalid_text, class: class)
 
     ~H"""
-    <CoreComponents.form_item>
-      <FormComponents.text_input
+    <CarbonComponents.form_item>
+      <CarbonComponents.text_input
         id={@id}
         name={@name}
         label={@label}
@@ -360,7 +349,7 @@ defmodule Graphene.BasicComponents do
         class={@class}
         {@rest}
       />
-    </CoreComponents.form_item>
+    </CarbonComponents.form_item>
     """
   end
 
@@ -372,7 +361,7 @@ defmodule Graphene.BasicComponents do
     assigns = assign(assigns, class: class)
 
     ~H"""
-    <CoreComponents.form_item>
+    <CarbonComponents.form_item>
       <label :if={@label}>{@label}</label>
       <input
         type={@type}
@@ -383,7 +372,7 @@ defmodule Graphene.BasicComponents do
         {@rest}
       />
       <.error :for={msg <- @errors}>{msg}</.error>
-    </CoreComponents.form_item>
+    </CarbonComponents.form_item>
     """
   end
 
@@ -403,13 +392,13 @@ defmodule Graphene.BasicComponents do
 
   def header(assigns) do
     ~H"""
-    <CoreComponents.stack orientation="horizontal" gap="3">
-      <CoreComponents.stack gap="1">
-        <CoreComponents.heading>{render_slot(@inner_block)}</CoreComponents.heading>
+    <CarbonComponents.stack orientation="horizontal" gap="3">
+      <CarbonComponents.stack gap="1">
+        <CarbonComponents.heading>{render_slot(@inner_block)}</CarbonComponents.heading>
         <p :if={@subtitle != []}>{render_slot(@subtitle)}</p>
-      </CoreComponents.stack>
+      </CarbonComponents.stack>
       <div :if={@actions != []}>{render_slot(@actions)}</div>
-    </CoreComponents.stack>
+    </CarbonComponents.stack>
     """
   end
 
@@ -500,33 +489,31 @@ defmodule Graphene.BasicComponents do
 
   def list(assigns) do
     ~H"""
-    <CoreComponents.unordered_list>
-      <CoreComponents.list_item :for={item <- @item}>
+    <CarbonComponents.unordered_list>
+      <CarbonComponents.list_item :for={item <- @item}>
         <div>
           <strong>{item.title}</strong>
           <div>{render_slot(item)}</div>
         </div>
-      </CoreComponents.list_item>
-    </CoreComponents.unordered_list>
+      </CarbonComponents.list_item>
+    </CarbonComponents.unordered_list>
     """
   end
 
   @doc """
   Renders a Carbon icon by name.
   """
-  attr :name, :string, required: true, values: @basic_icon_names
+  if @basic_icon_names == [] do
+    attr :name, :string, required: true
+  else
+    attr :name, :string, required: true, values: @basic_icon_names
+  end
   attr :class, :any, default: ""
   attr :size, :integer, default: 24
 
   def icon(assigns) do
-    assigns =
-      assigns
-      |> assign_new(:class, fn -> "" end)
-      |> assign_new(:size, fn -> 24 end)
-      |> assign(:carbon_name, normalize_icon_name(assigns.name))
-
     ~H"""
-    <Graphene.Icons.icon name={@carbon_name} size={@size} class={@class} />
+    <Graphene.Icons.icon name={@name} size={@size} class={@class} />
     """
   end
 
@@ -588,20 +575,6 @@ defmodule Graphene.BasicComponents do
   defp flash_kind(kind) when is_atom(kind), do: Atom.to_string(kind)
   defp flash_kind(kind), do: to_string(kind)
 
-  defp normalize_icon_name("hero-" <> rest = name) do
-    case Map.get(@hero_icon_map, name) do
-      nil ->
-        if MapSet.member?(@available_graphene_icons, rest), do: rest, else: @icon_fallback
-
-      mapped ->
-        mapped
-    end
-  end
-
-  defp normalize_icon_name(name) do
-    if MapSet.member?(@available_graphene_icons, name), do: name, else: @icon_fallback
-  end
-
   defp input_defaults(assigns) do
     assigns
     |> assign_new(:id, fn -> nil end)
@@ -658,11 +631,11 @@ defmodule Graphene.BasicComponents do
     assigns = %{label: to_string(label), options: options, selected: selected}
 
     ~H"""
-    <CoreComponents.select_item_group label={@label}>
+    <CarbonComponents.select_item_group label={@label}>
       <%= for option <- @options do %>
         {render_select_option(option, @selected)}
       <% end %>
-    </CoreComponents.select_item_group>
+    </CarbonComponents.select_item_group>
     """
   end
 
@@ -677,9 +650,9 @@ defmodule Graphene.BasicComponents do
     }
 
     ~H"""
-    <CoreComponents.select_item label={@label} value={@value} selected={@selected}>
+    <CarbonComponents.select_item label={@label} value={@value} selected={@selected}>
       {@label}
-    </CoreComponents.select_item>
+    </CarbonComponents.select_item>
     """
   end
 

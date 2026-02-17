@@ -335,8 +335,8 @@ defmodule Graphene.FormComponents do
       form_input_assigns(assigns,
         name: :checkbox,
         mode: :boolean,
-        checked_attr: :checked,
-        event: "cds-checkbox-changed"
+        event: "cds-checkbox-changed",
+        checked_attr: :checked
       )
 
     component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
@@ -484,9 +484,9 @@ defmodule Graphene.FormComponents do
       form_input_assigns(assigns,
         name: :toggle,
         mode: :boolean,
+        event: "cds-toggle-changed",
         checked_attr: :toggled,
-        detail_key: "toggled",
-        event: "cds-toggle-changed"
+        detail_key: "toggled"
       )
 
     component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
@@ -797,8 +797,8 @@ defmodule Graphene.FormComponents do
       form_input_assigns(assigns,
         name: :number_input,
         mode: :value,
-        value_attr: :default_value,
-        event: "cds-number-input"
+        event: "cds-number-input",
+        value_attr: :default_value
       )
 
     component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
@@ -1016,8 +1016,8 @@ defmodule Graphene.FormComponents do
       form_input_assigns(assigns,
         name: :fluid_number_input,
         mode: :value,
-        value_attr: :default_value,
-        event: "cds-number-input"
+        event: "cds-number-input",
+        value_attr: :default_value
       )
 
     component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])

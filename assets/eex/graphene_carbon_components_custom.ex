@@ -164,26 +164,9 @@
       tab_index={@tab_index}
       {@rest}
     >
-      <cds-menu>
-        <CoreComponents.menu_item
-          :for={item <- @item}
-          label={item[:label]}
-          disabled={item[:disabled]}
-          kind={item[:kind]}
-          shortcut={item[:shortcut]}
-          {@item.attrs || %{}}
-        >
-          {render_slot(item)}
-        </CoreComponents.menu_item>
-        <CoreComponents.menu_item_group
-          :for={group <- @group}
-          label={group[:label]}
-          {@group.attrs || %{}}
-        >
-          {render_slot(group)}
-        </CoreComponents.menu_item_group>
-        <CoreComponents.menu_item_divider :for={_ <- @divider} />
-      </cds-menu>
+      <CoreComponents.menu>
+        {render_menu_items(assigns)}
+      </CoreComponents.menu>
     </CoreComponents.menu_button>
     """
   end
@@ -302,7 +285,7 @@
   end
 
   def fluid_time_picker(assigns) do
-    CoreComponents.time_picker(assigns)
+    FormComponents.time_picker(assigns)
   end
 
   @doc """
@@ -326,6 +309,53 @@
       </main>
     </div>
     """
+  end
+
+  defp render_menu_items(assigns) do
+    ~H"""
+    <%= for group <- @group do %>
+      <CoreComponents.menu_item_group label={group[:label]} {group[:attrs] || %{}}>
+        <%= if group.inner_block do %>
+          {render_slot(group)}
+        <% end %>
+      </CoreComponents.menu_item_group>
+    <% end %>
+    <%= for divider <- @divider do %>
+      <CoreComponents.menu_item_divider {divider[:attrs] || %{}} />
+    <% end %>
+    <%= for item <- @item do %>
+      <CoreComponents.menu_item
+        label={item[:label]}
+        disabled={item[:disabled]}
+        kind={item[:kind]}
+        shortcut={item[:shortcut]}
+        {item[:attrs] || %{}}
+      >
+        <%= if item.inner_block do %>
+          {render_slot(item)}
+        <% end %>
+      </CoreComponents.menu_item>
+    <% end %>
+    """
+  end
+
+  defp render_column_label(nil), do: nil
+  defp render_column_label(fun) when is_function(fun, 0), do: fun.()
+  defp render_column_label(label), do: label
+
+  defp structured_list_row_id(row_id_fun, row, index) do
+    key =
+      cond do
+        is_function(row_id_fun, 1) -> row_id_fun.(row)
+        is_nil(row_id_fun) -> index
+        true -> row_id_fun
+      end
+
+    key |> to_string()
+  end
+
+  defp structured_list_selected?(selected_set, row_id_fun, row, index) do
+    MapSet.member?(selected_set, structured_list_row_id(row_id_fun, row, index))
   end
 
   defp table_assigns(assigns) do

@@ -23,6 +23,28 @@ if Mix.env() == :dev do
       Graphene.CoreComponents.__components__()
     end
 
+    defp carbon_component_overrides do
+      Graphene.CodeGen.ComponentPatches.carbon_component_overrides()
+    end
+
+    defp carbon_component_recipes do
+      Graphene.CodeGen.ComponentPatches.carbon_component_recipes()
+    end
+
+    defp form_delegate_names do
+      if Code.ensure_loaded?(Graphene.FormComponents) do
+        core_names = components() |> Map.keys() |> MapSet.new()
+
+        Graphene.FormComponents.__info__(:functions)
+        |> Enum.filter(fn {_name, arity} -> arity == 1 end)
+        |> Enum.map(&elem(&1, 0))
+        |> MapSet.new()
+        |> MapSet.intersection(core_names)
+      else
+        MapSet.new()
+      end
+    end
+
     defp docs_map do
       case Code.fetch_docs(Graphene.CoreComponents) do
         {:docs_v1, _, _, _, _, _, docs} ->
@@ -157,7 +179,22 @@ if Mix.env() == :dev do
       |> Enum.join("\n")
     end
 
-    defp render_component(name, component, doc) do
+    defp render_component(name, component, doc, recipe, form_delegates) do
+      if recipe do
+        render_recipe_component(name, component, doc, recipe)
+      else
+        delegate =
+          if MapSet.member?(form_delegates, name) do
+            :form
+          else
+            :core
+          end
+
+        render_simple_component(name, component, doc, delegate)
+      end
+    end
+
+    defp render_simple_component(name, component, doc, delegate) do
       doc_str =
         if is_binary(doc) do
           "  @doc \"\"\"\n" <> indent_doc(doc) <> "\n  \"\"\"\n"
@@ -165,25 +202,156 @@ if Mix.env() == :dev do
           "  @doc \"See Graphene.CoreComponents.#{name}/1.\"\n"
         end
 
-      attrs = component.attrs |> Enum.map(&build_attr/1) |> Enum.join("")
+      attrs =
+        component.attrs
+        |> Enum.map(&build_attr/1)
+        |> Enum.join("")
+        |> Kernel.<>(form_delegate_attrs(component, delegate))
+
       slots = component.slots |> Enum.map(&build_slot/1) |> Enum.join("")
 
-      doc_str <> attrs <> slots <>
+      delegate_call =
+        case delegate do
+          :form -> "    FormComponents.#{name}(assigns)\n"
+          _ -> "    CoreComponents.#{name}(assigns)\n"
+        end
+
+      doc_str <>
+        attrs <>
+        slots <>
         "  def #{name}(assigns) do\n" <>
-        "    CoreComponents.#{name}(assigns)\n" <>
+        delegate_call <>
         "  end\n\n"
+    end
+
+    defp render_recipe_component(name, component, doc, recipe) do
+      doc_str =
+        if is_binary(doc) do
+          "  @doc \"\"\"\n" <> indent_doc(doc) <> "\n  \"\"\"\n"
+        else
+          "  @doc \"See Graphene.CoreComponents.#{name}/1.\"\n"
+        end
+
+      delegate = Map.get(recipe, :delegate, :core)
+
+      attrs =
+        component.attrs
+        |> Enum.map(&build_attr/1)
+        |> Enum.join("")
+        |> Kernel.<>(form_delegate_attrs(component, delegate))
+        |> Kernel.<>(Map.get(recipe, :extra_attrs, ""))
+
+      slots =
+        component.slots
+        |> Enum.map(&build_slot/1)
+        |> Enum.join("")
+        |> Kernel.<>(Map.get(recipe, :extra_slots, ""))
+
+      patterns = Map.get(recipe, :patterns, [])
+      prelude = Map.get(recipe, :prelude)
+      body = Map.get(recipe, :body, "")
+
+      clauses =
+        patterns
+        |> Enum.map(fn pattern -> render_recipe_clause(name, pattern, prelude, body) end)
+        |> Enum.join("\n")
+
+      fallback = render_recipe_fallback(name, delegate)
+
+      doc_str <> attrs <> slots <> clauses <> fallback
+    end
+
+    defp render_recipe_clause(name, pattern, prelude, body) do
+      {pattern, guard} = split_pattern(pattern)
+
+      head =
+        if guard do
+          "  def #{name}(#{pattern} = assigns) when #{guard} do\n"
+        else
+          "  def #{name}(#{pattern} = assigns) do\n"
+        end
+
+      prelude = ensure_trailing_newline(prelude)
+
+      head <>
+        prelude <>
+        "    ~H\"\"\"\n" <>
+        body <>
+        "    \"\"\"\n" <>
+        "  end\n"
+    end
+
+    defp render_recipe_fallback(name, delegate) do
+      call =
+        case delegate do
+          :form -> "    FormComponents.#{name}(assigns)\n"
+          _ -> "    CoreComponents.#{name}(assigns)\n"
+        end
+
+      "  def #{name}(assigns) do\n" <> call <> "  end\n\n"
+    end
+
+    defp split_pattern(pattern) do
+      case String.split(pattern, " when ", parts: 2) do
+        [head, guard] -> {head, guard}
+        [head] -> {head, nil}
+      end
+    end
+
+    defp form_delegate_attrs(component, :form) do
+      existing = MapSet.new(Enum.map(component.attrs, & &1.name))
+
+      [
+        {:field, "Phoenix.HTML.FormField",
+         [doc: "a form field struct, for example: @form[:email]"]},
+        {:form, :string, [default: nil, doc: "the form attribute for the hidden input"]},
+        {:form_event, :string,
+         [default: nil, doc: "override the custom event used to sync form values"]}
+      ]
+      |> Enum.reject(fn {name, _type, _opts} -> MapSet.member?(existing, name) end)
+      |> Enum.map(fn {name, type, opts} -> build_manual_attr(name, type, opts) end)
+      |> Enum.join("")
+    end
+
+    defp form_delegate_attrs(_component, _delegate), do: ""
+
+    defp build_manual_attr(name, type, opts) do
+      opt_str = opt_string(opts)
+      name = atom_name(name)
+      type =
+        case type do
+          atom when is_atom(atom) -> ":#{atom}"
+          other -> to_string(other)
+        end
+
+      if opt_str do
+        "  attr #{name}, #{type}, #{opt_str}\n"
+      else
+        "  attr #{name}, #{type}\n"
+      end
+    end
+
+    defp ensure_trailing_newline(nil), do: ""
+
+    defp ensure_trailing_newline(content) when is_binary(content) do
+      if String.ends_with?(content, "\n"), do: content, else: content <> "\n"
     end
 
     defp render_wrappers do
       docs = docs_map()
+      recipes = carbon_component_recipes() |> Map.new(&{&1.name, &1})
+      overrides = carbon_component_overrides()
+      form_delegates = form_delegate_names()
 
       components()
       |> Map.keys()
       |> Enum.sort()
+      |> Enum.reject(&MapSet.member?(overrides, &1))
       |> Enum.map(fn name ->
         component = Map.fetch!(components(), name)
         doc = Map.get(docs, name)
-        render_component(name, component, doc)
+        recipe = Map.get(recipes, name)
+        render_component(name, component, doc, recipe, form_delegates)
       end)
       |> Enum.join("\n")
     end
