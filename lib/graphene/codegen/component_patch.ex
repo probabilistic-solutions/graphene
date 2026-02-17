@@ -122,32 +122,29 @@ defmodule Graphene.CodeGen.ComponentPatches do
 
   def patch(component), do: component
 
-  def append_missing_components(components) do
-    components
-    |> append_menu_component()
-  end
-
-  defp append_menu_component(components) do
-    if Enum.any?(components, &(&1.htmltag == "cds-menu")) do
-      components
-    else
-      docs = """
+  @manual_components [
+    %Component{
+      htmltag: "cds-menu",
+      componentname: "menu",
+      source: "./src/components/menu/menu.ts",
+      docs: """
       Component `<cds-menu>` from `./src/components/menu/menu.ts`
 
       Menu.
-      """
+      """,
+      attrs: [],
+      slots: []
+    }
+  ]
 
-      component = %Component{
-        htmltag: "cds-menu",
-        componentname: "menu",
-        source: "./src/components/menu/menu.ts",
-        docs: docs,
-        attrs: [],
-        slots: []
-      }
-
-      components ++ [component]
-    end
+  def append_missing_components(components) do
+    Enum.reduce(@manual_components, components, fn component, acc ->
+      if Enum.any?(acc, &(&1.htmltag == component.htmltag)) do
+        acc
+      else
+        acc ++ [component]
+      end
+    end)
   end
 
   defp set_step_default(component) do
