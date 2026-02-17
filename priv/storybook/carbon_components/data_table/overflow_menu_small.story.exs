@@ -11,7 +11,7 @@ defmodule Storybook.CarbonComponents.DataTable.OverflowMenuSmall do
         attributes: %{
           id: "carbon-overflow-menu-small-table",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           size: "sm",
           overflow_menu_on_hover: true
         },
@@ -47,7 +47,7 @@ defmodule Storybook.CarbonComponents.DataTable.OverflowMenuSmall do
         attributes: %{
           id: "carbon-overflow-menu-xs-table",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           size: "xs",
           overflow_menu_on_hover: true
         },

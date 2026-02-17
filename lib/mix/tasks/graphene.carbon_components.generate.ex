@@ -353,6 +353,7 @@ if Mix.env() == :dev do
     defp build_manual_attr(name, type, opts) do
       opt_str = opt_string(opts)
       name = atom_name(name)
+
       type =
         case type do
           atom when is_atom(atom) -> ":#{atom}"
@@ -399,7 +400,10 @@ if Mix.env() == :dev do
       custom_components = File.read!(custom_template(:src))
 
       assigns = [module: module_name(), wrappers: wrappers, custom_components: custom_components]
-      tmp_dir = Path.join(System.tmp_dir!(), "graphene-carbon-#{System.unique_integer([:positive])}")
+
+      tmp_dir =
+        Path.join(System.tmp_dir!(), "graphene-carbon-#{System.unique_integer([:positive])}")
+
       File.mkdir_p!(tmp_dir)
       tmp_out = Path.join(tmp_dir, "carbon_components.ex")
 

@@ -11,7 +11,7 @@ defmodule Storybook.CarbonComponents.DataTable.SelectionRadio do
         attributes: %{
           id: "carbon-radio-selection-table",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           selectable: true,
           radio: true,
           selection_name: "carbon-radio-selection"
@@ -29,11 +29,11 @@ defmodule Storybook.CarbonComponents.DataTable.SelectionRadio do
         attributes: %{
           id: "carbon-radio-selection-table-selected",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           selectable: true,
           radio: true,
           selection_name: "carbon-radio-selection",
-          selected_ids: [Storybook.CarbonComponents.DataTable.Shared.row_id(Enum.at(Storybook.CarbonComponents.DataTable.Shared.rows(), 2))]
+          selected_ids: [Graphene.CarbonComponents.DataTable.Shared.row_id(Enum.at(Storybook.CarbonComponents.DataTable.Shared.rows(), 2))]
         },
         slots: [
           ~S|<:title>DataTable</:title>

@@ -11,6 +11,13 @@
             customElements.whenDefined(tagName).then(cb).catch(cb);
           };
 
+          const parseFileNames = (files) => {
+            return Array.from(files || []).map((file) => {
+              if (file && typeof file === "object" && "name" in file) return file.name;
+              return file;
+            });
+          };
+
           const parseValue = (detail, target) => {
             if (detail && Object.prototype.hasOwnProperty.call(detail, "value")) return detail.value;
             if (detail && detail.item && Object.prototype.hasOwnProperty.call(detail.item, "value")) {
@@ -24,7 +31,11 @@
                 item && Object.prototype.hasOwnProperty.call(item, "value") ? item.value : item
               );
             }
+            if (detail && Array.isArray(detail.addedFiles)) {
+              return parseFileNames(detail.addedFiles);
+            }
             if (target && Object.prototype.hasOwnProperty.call(target, "value")) return target.value;
+            if (target && target.files) return parseFileNames(target.files);
             if (target && Object.prototype.hasOwnProperty.call(target, "selectedItem")) {
               const selected = target.selectedItem;
               if (selected && Object.prototype.hasOwnProperty.call(selected, "value")) return selected.value;
@@ -224,4 +235,136 @@
       is_nil(value) -> ""
       true -> inspect(value)
     end
+  end
+
+  @doc """
+  Form-aware file uploader wrapper.
+
+  Uses the file uploader button event by default. If you only provide a
+  drop container slot, set `form_event` to `cds-file-uploader-drop-container-changed`.
+  """
+  attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:attachments]"
+
+  attr :form, :string,
+    default: nil,
+    doc: "the form attribute for the hidden input"
+
+  attr :id, :string,
+    default: nil,
+    doc: "the DOM id for the file uploader root element"
+
+  attr :name, :string,
+    default: nil,
+    doc: "the name used for the hidden form input"
+
+  attr :value, :any,
+    default: nil,
+    doc: "optional value to sync to the hidden input"
+
+  attr :form_event, :string,
+    default: nil,
+    doc: "override the custom event used to sync form values"
+
+  attr :file_input_name, :string,
+    default: nil,
+    doc: "optional name attribute for the underlying file input"
+
+  attr :disabled, :boolean, doc: "`true` if the file uploader should be disabled"
+  attr :label_description, :string, doc: "The description text."
+  attr :label_title, :string, doc: "The label title."
+  attr :rest, :global
+
+  slot :button do
+    attr :label, :string
+    attr :accept, :string
+    attr :button_kind, :string
+    attr :disabled, :boolean
+    attr :multiple, :boolean
+    attr :name, :string
+    attr :size, :string
+    attr :attrs, :map
+  end
+
+  slot :drop_container do
+    attr :accept, :string
+    attr :disabled, :boolean
+    attr :multiple, :boolean
+    attr :name, :string
+    attr :attrs, :map
+  end
+
+  slot :item do
+    attr :state, :string
+    attr :invalid, :boolean
+    attr :icon_description, :string
+    attr :attrs, :map
+  end
+
+  slot :inner_block
+
+  def file_uploader(assigns) do
+    assigns =
+      assigns
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:label_description, fn -> nil end)
+      |> assign_new(:label_title, fn -> nil end)
+      |> assign_new(:file_input_name, fn -> nil end)
+      |> assign_new(:button, fn -> [] end)
+      |> assign_new(:drop_container, fn -> [] end)
+      |> assign_new(:item, fn -> [] end)
+      |> assign_new(:form_event, fn ->
+        if Map.get(assigns, :drop_container, []) != [] and Map.get(assigns, :button, []) == [] do
+          "cds-file-uploader-drop-container-changed"
+        else
+          "cds-file-uploader-button-changed"
+        end
+      end)
+      |> form_input_assigns(name: :file_uploader, mode: :value, event: "cds-file-uploader-button-changed")
+
+    ~H"""
+    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <CoreComponents.file_uploader
+      disabled={@disabled}
+      label_description={@label_description}
+      label_title={@label_title}
+      {@rest}
+    >
+      <%= for drop <- @drop_container do %>
+        <CoreComponents.file_uploader_drop_container
+          accept={drop[:accept]}
+          disabled={drop[:disabled]}
+          multiple={drop[:multiple]}
+          name={drop[:name] || @file_input_name}
+          {drop[:attrs] || %{}}
+        >
+          {render_slot(drop)}
+        </CoreComponents.file_uploader_drop_container>
+      <% end %>
+      <%= for button <- @button do %>
+        <CoreComponents.file_uploader_button
+          accept={button[:accept]}
+          button_kind={button[:button_kind]}
+          disabled={button[:disabled]}
+          multiple={button[:multiple]}
+          name={button[:name] || @file_input_name}
+          size={button[:size]}
+          {button[:attrs] || %{}}
+        >
+          {button[:label] || render_slot(button)}
+        </CoreComponents.file_uploader_button>
+      <% end %>
+      <%= for item <- @item do %>
+        <CoreComponents.file_uploader_item
+          state={item[:state]}
+          invalid={item[:invalid]}
+          icon_description={item[:icon_description]}
+          {item[:attrs] || %{}}
+        >
+          {render_slot(item)}
+        </CoreComponents.file_uploader_item>
+      <% end %>
+      {render_slot(@inner_block)}
+    </CoreComponents.file_uploader>
+    <.form_bridge_hook />
+    """
   end

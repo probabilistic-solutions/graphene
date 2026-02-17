@@ -8,12 +8,12 @@ defmodule Storybook.CarbonComponents.PageHeader do
       %Variation{
         id: :default,
         slots: [
-          ~S|<:breadcrumb>
+          ~S|<:breadcrumb_slot>
   <Graphene.CarbonComponents.breadcrumb>
     <:item href="#">Home</:item>
     <:item current>Page</:item>
   </Graphene.CarbonComponents.breadcrumb>
-</:breadcrumb>
+</:breadcrumb_slot>
 <:content title="Page title" />
 <:content_text subtitle="Optional subtitle">
   This is a short supporting description for the page header.
@@ -23,13 +23,13 @@ defmodule Storybook.CarbonComponents.PageHeader do
       %Variation{
         id: :with_actions,
         slots: [
-          ~S|<:breadcrumb>
+          ~S|<:breadcrumb_slot>
   <Graphene.CarbonComponents.breadcrumb>
     <:item href="#">Home</:item>
     <:item href="#">Workspace</:item>
     <:item current>Projects</:item>
   </Graphene.CarbonComponents.breadcrumb>
-</:breadcrumb>
+</:breadcrumb_slot>
 <:content title="Projects">
   <Graphene.CarbonComponents.button kind="ghost">New project</Graphene.CarbonComponents.button>
 </:content>
@@ -41,12 +41,12 @@ defmodule Storybook.CarbonComponents.PageHeader do
       %Variation{
         id: :compact,
         slots: [
-          ~S|<:breadcrumb border={false}>
+          ~S|<:breadcrumb_slot border={false}>
   <Graphene.CarbonComponents.breadcrumb>
     <:item href="#">Home</:item>
     <:item current>Settings</:item>
   </Graphene.CarbonComponents.breadcrumb>
-</:breadcrumb>
+</:breadcrumb_slot>
 <:content title="Settings" />
 <:content_text subtitle="Account">
   Update profile and security preferences.

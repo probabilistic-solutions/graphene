@@ -17,36 +17,7 @@ defmodule Demo.TableInteractivityFeatureTest do
   end
 
   @tag timeout: 120_000
-  feature "basic table selection and sorting stays interactive", %{session: session} do
-    session
-    |> visit("/basic_components/table/interactivity")
-    |> assert_has(css("#advanced-events-table cds-table-row", count: :any))
-    |> click_simulator_button("#advanced-events-simulator", "Select row 2")
-    |> assert_has(css("#advanced-events-log", text: "[row_selected]", count: :any))
-    |> assert_has(
-      css("#advanced-events-table cds-table-row[data-row-id='row-2'][selected]", count: :any)
-    )
-    |> click_simulator_button("#advanced-events-simulator", "Select all")
-    |> assert_has(css("#advanced-events-log", text: "[row_all_selected]", count: :any))
-    |> assert_has(css("#advanced-events-table cds-table-row[selected]", count: 6))
-    |> click_simulator_button("#advanced-events-simulator", "Sort by name (desc)")
-    |> assert_has(css("#advanced-events-log", text: "[sorted]", count: :any))
-    |> assert_has(
-      css(
-        "#advanced-events-table cds-table-header-cell[data-col-index='0'][sort-direction='descending']",
-        count: 1
-      )
-    )
-    |> assert_has(css("#advanced-events-table cds-table-header-row", count: 1))
-    |> click_simulator_button("#advanced-events-simulator", "Search 'Balancer 1'")
-    |> assert_has(css("#advanced-events-log", text: "[search]", count: :any))
-    |> assert_filtered_count("#advanced-events-table", 5)
-    |> click_simulator_button("#advanced-events-simulator", "Clear search")
-    |> assert_filtered_count("#advanced-events-table", 0)
-  end
-
-  @tag timeout: 120_000
-  feature "carbon data table selection and sorting stays interactive", %{session: session} do
+  feature "data table selection and sorting stays interactive", %{session: session} do
     session
     |> visit("/carbon_components/data_table/interactivity")
     |> assert_has(css("#carbon-events-table cds-table-row", count: :any))

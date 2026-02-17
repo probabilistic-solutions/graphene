@@ -37,7 +37,9 @@ defmodule Storybook.CarbonComponents.FormComponents do
           "combo" => "option-2",
           "multi" => "option-1",
           "date" => "2024-01-10",
-          "time" => "09:30"
+          "time" => "09:30",
+          "slo" => "65",
+          "attachments" => ""
         },
         as: :form
       )
@@ -69,11 +71,11 @@ defmodule Storybook.CarbonComponents.FormComponents do
 
             <div style="display: grid; gap: 0.75rem;">
               <h3>Radio group</h3>
-              <.form_radio_group field={@form[:plan]} legend_text="Choose a plan">
-                <:choice value="starter" label="Starter" />
-                <:choice value="pro" label="Pro" />
-                <:choice value="enterprise" label="Enterprise" />
-              </.form_radio_group>
+              <.radio_button_group field={@form[:plan]} legend_text="Choose a plan">
+                <CoreComponents.radio_button value="starter" label_text="Starter" />
+                <CoreComponents.radio_button value="pro" label_text="Pro" />
+                <CoreComponents.radio_button value="enterprise" label_text="Enterprise" />
+              </.radio_button_group>
             </div>
 
             <div style="display: grid; gap: 0.75rem;">
@@ -84,6 +86,17 @@ defmodule Storybook.CarbonComponents.FormComponents do
               <.fluid_number_input field={@form[:fluid_quantity]} min="0" max="Infinity">
                 <:label_text>Fluid quantity</:label_text>
               </.fluid_number_input>
+              <.slider
+                field={@form[:slo]}
+                id={@form[:slo].id}
+                name={@form[:slo].name}
+                value={@form[:slo].value}
+                min="0"
+                max="100"
+                step="5"
+              >
+                <:label_text>Utilization target</:label_text>
+              </.slider>
             </div>
 
             <div style="display: grid; gap: 0.75rem;">
@@ -103,39 +116,55 @@ defmodule Storybook.CarbonComponents.FormComponents do
 
             <div style="display: grid; gap: 0.75rem;">
               <h3>Selects</h3>
-              <.form_select field={@form[:select]} label="Select option">
-                <:choice value="option-1" label="Option 1" />
-                <:choice value="option-2" label="Option 2" />
-                <:choice value="option-3" label="Option 3" />
-              </.form_select>
-              <.form_fluid_select field={@form[:fluid_select]} label="Fluid select">
-                <:choice value="option-1" label="Option 1" />
-                <:choice value="option-2" label="Option 2" />
-                <:choice value="option-3" label="Option 3" />
-              </.form_fluid_select>
-              <.form_dropdown field={@form[:dropdown]} label="Dropdown">
-                <:choice value="option-1" label="Option 1" />
-                <:choice value="option-2" label="Option 2" />
-                <:choice value="option-3" label="Option 3" />
-              </.form_dropdown>
-              <.form_combo_box field={@form[:combo]} label="Combo box">
-                <:choice value="option-1" label="Option 1" />
-                <:choice value="option-2" label="Option 2" />
-                <:choice value="option-3" label="Option 3" />
-              </.form_combo_box>
-              <.form_multi_select field={@form[:multi]} label="Multi select">
-                <:choice value="option-1" label="Option 1" />
-                <:choice value="option-2" label="Option 2" />
-                <:choice value="option-3" label="Option 3" />
-              </.form_multi_select>
+              <.select field={@form[:select]}>
+                <:label_text>Select option</:label_text>
+                <:item value="option-1">Option 1</:item>
+                <:item value="option-2">Option 2</:item>
+                <:item value="option-3">Option 3</:item>
+              </.select>
+              <.fluid_select field={@form[:fluid_select]}>
+                <:label_text>Fluid select</:label_text>
+                <:item value="option-1">Option 1</:item>
+                <:item value="option-2">Option 2</:item>
+                <:item value="option-3">Option 3</:item>
+              </.fluid_select>
+              <.dropdown field={@form[:dropdown]} label="Dropdown">
+                <:item value="option-1">Option 1</:item>
+                <:item value="option-2">Option 2</:item>
+                <:item value="option-3">Option 3</:item>
+              </.dropdown>
+              <.combo_box field={@form[:combo]} label="Combo box">
+                <:item value="option-1">Option 1</:item>
+                <:item value="option-2">Option 2</:item>
+                <:item value="option-3">Option 3</:item>
+              </.combo_box>
+              <.multi_select field={@form[:multi]} label="Multi select">
+                <:item value="option-1">Option 1</:item>
+                <:item value="option-2">Option 2</:item>
+                <:item value="option-3">Option 3</:item>
+              </.multi_select>
             </div>
 
             <div style="display: grid; gap: 0.75rem;">
               <h3>Date & time</h3>
-              <.form_date_picker field={@form[:date]} label_text="Start date" placeholder="mm/dd/yyyy" />
+              <.date_picker field={@form[:date]}>
+                <CoreComponents.date_picker_input
+                  label_text="Start date"
+                  placeholder="mm/dd/yyyy"
+                  kind="single"
+                />
+              </.date_picker>
               <.time_picker field={@form[:time]}>
                 <:label_text>Select time</:label_text>
               </.time_picker>
+            </div>
+
+            <div style="display: grid; gap: 0.75rem;">
+              <h3>File upload</h3>
+              <.file_uploader field={@form[:attachments]} label_title="Upload evidence">
+                <:button label="Add files" />
+                <:item state="complete">audit-report.pdf</:item>
+              </.file_uploader>
             </div>
           </div>
 
@@ -184,156 +213,4 @@ defmodule Storybook.CarbonComponents.FormComponents do
      |> assign(submit_event: %{event: "form_submit", payload: payload})}
   end
 
-  attr :field, Phoenix.HTML.FormField
-  attr :legend_text, :string, default: nil
-  attr :name, :string, default: nil
-  slot :choice do
-    attr :label, :string
-    attr :value, :string
-    attr :checked, :boolean
-    attr :disabled, :boolean
-  end
-
-  defp form_radio_group(assigns) do
-    ~H"""
-    <.radio_button_group field={@field} legend_text={@legend_text} name={@name}>
-      <%= for choice <- @choice do %>
-        <CoreComponents.radio_button
-          label_text={choice[:label]}
-          value={choice[:value]}
-          checked={choice[:checked]}
-          disabled={choice[:disabled]}
-        />
-      <% end %>
-    </.radio_button_group>
-    """
-  end
-
-  attr :field, Phoenix.HTML.FormField
-  attr :label, :string, default: nil
-  slot :choice do
-    attr :label, :string
-    attr :value, :string
-    attr :selected, :boolean
-    attr :disabled, :boolean
-  end
-
-  defp form_select(assigns) do
-    ~H"""
-    <.select field={@field}>
-      <:label_text><%= @label %></:label_text>
-      <%= for choice <- @choice do %>
-        <CoreComponents.select_item
-          value={choice[:value] || choice[:label]}
-          selected={choice[:selected]}
-          disabled={choice[:disabled]}
-        >
-          {choice[:label]}
-        </CoreComponents.select_item>
-      <% end %>
-    </.select>
-    """
-  end
-
-  attr :field, Phoenix.HTML.FormField
-  attr :label, :string, default: nil
-  slot :choice do
-    attr :label, :string
-    attr :value, :string
-    attr :selected, :boolean
-    attr :disabled, :boolean
-  end
-
-  defp form_fluid_select(assigns) do
-    ~H"""
-    <.fluid_select field={@field}>
-      <:label_text><%= @label %></:label_text>
-      <%= for choice <- @choice do %>
-        <CoreComponents.select_item
-          value={choice[:value] || choice[:label]}
-          selected={choice[:selected]}
-          disabled={choice[:disabled]}
-        >
-          {choice[:label]}
-        </CoreComponents.select_item>
-      <% end %>
-    </.fluid_select>
-    """
-  end
-
-  attr :field, Phoenix.HTML.FormField
-  attr :label, :string, default: nil
-  slot :choice do
-    attr :label, :string
-    attr :value, :string
-    attr :disabled, :boolean
-  end
-
-  defp form_dropdown(assigns) do
-    ~H"""
-    <.dropdown field={@field} label={@label}>
-      <%= for choice <- @choice do %>
-        <CoreComponents.dropdown_item value={choice[:value] || choice[:label]} disabled={choice[:disabled]}>
-          {choice[:label]}
-        </CoreComponents.dropdown_item>
-      <% end %>
-    </.dropdown>
-    """
-  end
-
-  attr :field, Phoenix.HTML.FormField
-  attr :label, :string, default: nil
-  slot :choice do
-    attr :label, :string
-    attr :value, :string
-    attr :disabled, :boolean
-  end
-
-  defp form_combo_box(assigns) do
-    ~H"""
-    <.combo_box field={@field} label={@label}>
-      <%= for choice <- @choice do %>
-        <CoreComponents.combo_box_item value={choice[:value] || choice[:label]} disabled={choice[:disabled]}>
-          {choice[:label]}
-        </CoreComponents.combo_box_item>
-      <% end %>
-    </.combo_box>
-    """
-  end
-
-  attr :field, Phoenix.HTML.FormField
-  attr :label, :string, default: nil
-  slot :choice do
-    attr :label, :string
-    attr :value, :string
-    attr :disabled, :boolean
-  end
-
-  defp form_multi_select(assigns) do
-    ~H"""
-    <.multi_select field={@field} label={@label}>
-      <%= for choice <- @choice do %>
-        <CoreComponents.multi_select_item value={choice[:value] || choice[:label]} disabled={choice[:disabled]}>
-          {choice[:label]}
-        </CoreComponents.multi_select_item>
-      <% end %>
-    </.multi_select>
-    """
-  end
-
-  attr :field, Phoenix.HTML.FormField
-  attr :label_text, :string, default: nil
-  attr :placeholder, :string, default: nil
-
-  defp form_date_picker(assigns) do
-    ~H"""
-    <.date_picker field={@field}>
-      <CoreComponents.date_picker_input
-        label_text={@label_text}
-        placeholder={@placeholder}
-        kind="single"
-      />
-    </.date_picker>
-    """
-  end
 end

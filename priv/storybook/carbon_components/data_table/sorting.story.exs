@@ -8,7 +8,7 @@ defmodule Storybook.CarbonComponents.DataTable.Sorting do
     [
       %Variation{
         id: :sorting,
-        attributes: %{id: "carbon-sorting-table", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1, sortable: true},
+        attributes: %{id: "carbon-sorting-table", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1, sortable: true},
         slots: [
           ~S|<:title>DataTable</:title>
 <:description>Sorting enabled</:description>
@@ -19,7 +19,7 @@ defmodule Storybook.CarbonComponents.DataTable.Sorting do
       },
       %Variation{
         id: :compact,
-        attributes: %{id: "carbon-sorting-table-compact", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1, sortable: true, size: "sm"},
+        attributes: %{id: "carbon-sorting-table-compact", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1, sortable: true, size: "sm"},
         slots: [
           ~S|<:title>DataTable</:title>
 <:description>Compact sorting</:description>

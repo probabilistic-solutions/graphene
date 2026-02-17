@@ -4,7 +4,8 @@ defmodule Graphene.MixProject do
   def project do
     [
       app: :graphene,
-      version: "2.47.0", # same as webcomponents
+      # same as webcomponents
+      version: "2.47.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -42,7 +43,7 @@ defmodule Graphene.MixProject do
       # testing
       {:floki, ">= 0.30.0", only: :test},
       # stories
-      {:tmp, "~> 0.2.0", only: :dev},
+      {:tmp, "~> 0.2.0", only: :dev}
     ]
   end
 

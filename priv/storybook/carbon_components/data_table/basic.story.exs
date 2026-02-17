@@ -8,7 +8,7 @@ defmodule Storybook.CarbonComponents.DataTable.Basic do
     [
       %Variation{
         id: :default,
-        attributes: %{id: "carbon-basic-table", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1},
+        attributes: %{id: "carbon-basic-table", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1},
         slots: [
           ~S|<:title>DataTable</:title>
 <:description>Basic</:description>
@@ -22,7 +22,7 @@ defmodule Storybook.CarbonComponents.DataTable.Basic do
         attributes: %{
           id: "carbon-basic-table-compact",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           size: "sm",
           use_zebra_styles: false
         },

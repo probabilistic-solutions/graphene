@@ -8,7 +8,7 @@ defmodule Storybook.CarbonComponents.DataTable.Toolbar do
     [
       %Variation{
         id: :actions,
-        attributes: %{id: "carbon-toolbar-table", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1},
+        attributes: %{id: "carbon-toolbar-table", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1},
         slots: [
           ~S|<:title>DataTable</:title>
 <:description>Toolbar actions</:description>
@@ -36,7 +36,7 @@ defmodule Storybook.CarbonComponents.DataTable.Toolbar do
       },
       %Variation{
         id: :compact,
-        attributes: %{id: "carbon-toolbar-table-compact", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1, size: "sm"},
+        attributes: %{id: "carbon-toolbar-table-compact", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1, size: "sm"},
         slots: [
           ~S|<:title>DataTable</:title>
 <:description>Compact toolbar</:description>

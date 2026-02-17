@@ -25,7 +25,7 @@ defmodule Storybook.CarbonComponents.DataTable.Dynamic do
     <.data_table
       id="carbon-dynamic-table"
       rows={@rows}
-      row_id={&Storybook.CarbonComponents.DataTable.Shared.row_id/1}
+      row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
       phx_update={false}
     >
       <:title>DataTable</:title>

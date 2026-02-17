@@ -1,18 +1,25 @@
 defmodule Storybook.CarbonComponents.Link do
-  use PhoenixStorybook.Story, :example
+  use PhoenixStorybook.Story, :component
 
-  def doc do
-    "Link."
-  end
+  def function, do: &Graphene.CarbonComponents.link/1
 
-  @impl true
-  def render(assigns) do
-    ~H"""
-    <div style="display: grid; gap: 0.75rem;">
-      <Graphene.CarbonComponents.link href="#">Inline link</Graphene.CarbonComponents.link>
-      <Graphene.CarbonComponents.link href="#" target="_blank" rel="noreferrer">External link</Graphene.CarbonComponents.link>
-      <Graphene.CarbonComponents.link href="#" disabled>Disabled link</Graphene.CarbonComponents.link>
-    </div>
-    """
+  def variations do
+    [
+      %Variation{
+        id: :inline,
+        attributes: %{href: "#"},
+        slots: ["Inline link"]
+      },
+      %Variation{
+        id: :external,
+        attributes: %{href: "#", target: "_blank", rel: "noreferrer"},
+        slots: ["External link"]
+      },
+      %Variation{
+        id: :disabled,
+        attributes: %{href: "#", disabled: true},
+        slots: ["Disabled link"]
+      }
+    ]
   end
 end

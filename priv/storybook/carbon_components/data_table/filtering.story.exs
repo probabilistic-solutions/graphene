@@ -8,7 +8,7 @@ defmodule Storybook.CarbonComponents.DataTable.Filtering do
     [
       %Variation{
         id: :persistent,
-        attributes: %{id: "carbon-filtering-table", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1},
+        attributes: %{id: "carbon-filtering-table", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1},
         slots: [
           ~S|<:title>DataTable</:title>
 <:description>With filtering</:description>
@@ -36,7 +36,7 @@ defmodule Storybook.CarbonComponents.DataTable.Filtering do
       },
       %Variation{
         id: :compact,
-        attributes: %{id: "carbon-filtering-table-compact", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1, size: "sm"},
+        attributes: %{id: "carbon-filtering-table-compact", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1, size: "sm"},
         slots: [
           ~S|<:title>DataTable</:title>
 <:description>Compact filter</:description>

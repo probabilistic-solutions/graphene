@@ -82,7 +82,10 @@ if Mix.env() == :dev do
       Logger.debug("Running #{__MODULE__}")
       components = get_components()
       assigns = template_assigns(components)
-      tmp_dir = Path.join(System.tmp_dir!(), "graphene-codegen-#{System.unique_integer([:positive])}")
+
+      tmp_dir =
+        Path.join(System.tmp_dir!(), "graphene-codegen-#{System.unique_integer([:positive])}")
+
       File.mkdir_p!(tmp_dir)
       tmp_core = Path.join(tmp_dir, "core_components.ex")
       tmp_js = Path.join(tmp_dir, "_dynamic_loader_mapping.ts")

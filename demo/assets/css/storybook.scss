@@ -3,10 +3,12 @@
 @use '@carbon/styles/scss/themes';
 @use '@carbon/styles/scss/reset';
 @use '@carbon/styles/scss/type';
+@use '@carbon/grid';
 
 @import '@ibm/plex/css/ibm-plex.css';
 
 @include type.reset;
+@include grid.css-grid();
 
 .psb {
   @include type.font-family('sans');

@@ -12,7 +12,10 @@ defmodule Graphene.CarbonComponents.DataTableComponent do
     socket =
       socket
       |> assign(assigns)
-      |> assign(:locale, if(is_nil(assigns[:locale]) || assigns[:locale] == "", do: "en", else: assigns[:locale]))
+      |> assign(
+        :locale,
+        if(is_nil(assigns[:locale]) || assigns[:locale] == "", do: "en", else: assigns[:locale])
+      )
       |> maybe_preserve_selected_ids(prev_selected_ids, assigns)
       |> assign_new(:selected_ids, fn -> [] end)
       |> assign_new(:table_id, fn -> assigns.id end)
@@ -42,7 +45,7 @@ defmodule Graphene.CarbonComponents.DataTableComponent do
       |> assign_new(:on_batch_cancel, fn -> nil end)
       |> assign_new(:row_item, fn -> &Function.identity/1 end)
       |> assign_new(:row_click, fn -> nil end)
-      |> assign_new(:row_id, fn -> nil end)
+      |> assign_new(:row_id, fn -> &default_row_id/1 end)
       |> assign_new(:action, fn -> [] end)
       |> assign_new(:col, fn -> [] end)
       |> assign_new(:title, fn -> [] end)
@@ -261,6 +264,7 @@ defmodule Graphene.CarbonComponents.DataTableComponent do
     key =
       cond do
         is_function(row_id_fun, 1) -> row_id_fun.(row)
+        is_nil(row_id_fun) -> default_row_id(row)
         true -> index
       end
 
@@ -287,6 +291,10 @@ defmodule Graphene.CarbonComponents.DataTableComponent do
 
   defp row_selected?(selected_set, row_id_fun, row, index) do
     MapSet.member?(selected_set, row_key_string(row_id_fun, row, index))
+  end
+
+  defp default_row_id(row) do
+    Graphene.CarbonComponents.DataTable.Shared.row_id(row)
   end
 
   defp render_column_label(nil), do: nil

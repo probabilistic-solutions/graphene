@@ -8,7 +8,7 @@ defmodule Storybook.CarbonComponents.DataTable.AILabelSort do
     [
       %Variation{
         id: :sorting,
-        attributes: %{id: "carbon-ai-label-sort-table", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1, sortable: true},
+        attributes: %{id: "carbon-ai-label-sort-table", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1, sortable: true},
         slots: [
           ~S|<:title>DataTable</:title>
 <:description>AI label in header with sorting</:description>
@@ -22,7 +22,7 @@ defmodule Storybook.CarbonComponents.DataTable.AILabelSort do
       },
       %Variation{
         id: :compact,
-        attributes: %{id: "carbon-ai-label-sort-table-compact", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1, sortable: true, size: "sm"},
+        attributes: %{id: "carbon-ai-label-sort-table-compact", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1, sortable: true, size: "sm"},
         slots: [
           ~S|<:title>DataTable</:title>
 <:description>Compact AI label header</:description>

@@ -3258,93 +3258,6 @@ defmodule Graphene.CarbonComponents do
   end
 
   @doc """
-  Component `<cds-file-uploader>` from `./src/components/file-uploader/file-uploader.ts`
-
-  The file uploader component.
-
-
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - `true` if the file uploader should disabled. Defaults to `false`.
-  * `label_description` (`:string`) - The description text. Defaults to `nil`.
-  * `label_title` (`:string`) - The label title. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
-  """
-  attr :disabled, :boolean, doc: "`true` if the file uploader should disabled."
-  attr :label_description, :string, doc: "The description text."
-  attr :label_title, :string, doc: "The label title."
-  attr :rest, :global
-  slot :inner_block
-
-  slot :button do
-    attr :label, :string
-    attr :accept, :string
-    attr :button_kind, :string
-    attr :disabled, :boolean
-    attr :multiple, :boolean
-    attr :name, :string
-    attr :size, :string
-    attr :attrs, :map
-  end
-
-  slot :item do
-    attr :state, :string
-    attr :invalid, :boolean
-    attr :icon_description, :string
-    attr :attrs, :map
-  end
-
-  def file_uploader(%{button: [_ | _]} = assigns) do
-    assigns =
-      assigns
-      |> assign_new(:disabled, fn -> false end)
-      |> assign_new(:label_description, fn -> nil end)
-      |> assign_new(:label_title, fn -> nil end)
-
-    ~H"""
-    <CoreComponents.file_uploader
-      disabled={@disabled}
-      label_description={@label_description}
-      label_title={@label_title}
-      {@rest}
-    >
-      <%= for button <- @button do %>
-        <CoreComponents.file_uploader_button
-          accept={button[:accept]}
-          button_kind={button[:button_kind]}
-          disabled={button[:disabled]}
-          multiple={button[:multiple]}
-          name={button[:name]}
-          size={button[:size]}
-          {button[:attrs] || %{}}
-        >
-          {button[:label] || render_slot(button)}
-        </CoreComponents.file_uploader_button>
-      <% end %>
-      <%= for item <- @item do %>
-        <CoreComponents.file_uploader_item
-          state={item[:state]}
-          invalid={item[:invalid]}
-          icon_description={item[:icon_description]}
-          {item[:attrs] || %{}}
-        >
-          {render_slot(item)}
-        </CoreComponents.file_uploader_item>
-      <% end %>
-    </CoreComponents.file_uploader>
-    """
-  end
-
-  def file_uploader(assigns) do
-    CoreComponents.file_uploader(assigns)
-  end
-
-  @doc """
   Component `<cds-file-uploader-button>` from `./src/components/file-uploader/file-uploader-button.ts`
 
   File uploader button .
@@ -3574,9 +3487,9 @@ defmodule Graphene.CarbonComponents do
   * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
   * `is_fluid` (`:boolean`) - Set to true to use the fluid variant. Defaults to `false`.
   * `label` (`:string`) - Generic label that will be used as the textual representation of what this field is for. Defaults to `nil`.
-  * `max` (`:string`) - The maximum value allowed in the input. Defaults to `nil`.
+  * `max` (`:string`) - The maximum value allowed in the input. Defaults to `"Infty"`.
   * `max_count` (`:any`) - Max character count allowed for input. This is needed in order for enableCounter to display. Defaults to `nil`.
-  * `min` (`:string`) - The minimum value allowed in the input. Defaults to `nil`.
+  * `min` (`:string`) - The minimum value allowed in the input. Defaults to `"-Infty"`.
   * `name` (`:string`) - Name for the input in the `FormData`. Defaults to `nil`.
   * `pattern` (`:string`) - Pattern to validate the input against for HTML validity checking. Defaults to `nil`.
   * `placeholder` (`:string`) - Value to display when the input has an empty `value`. Defaults to `nil`.
@@ -3656,13 +3569,13 @@ defmodule Graphene.CarbonComponents do
   attr :label, :string,
     doc: "Generic label that will be used as the textual representation of what this field is for"
 
-  attr :max, :string, doc: "The maximum value allowed in the input"
+  attr :max, :string, doc: "The maximum value allowed in the input", default: "Infty"
 
   attr :max_count, :any,
     doc:
       "Max character count allowed for input. This is needed in order for enableCounter to display"
 
-  attr :min, :string, doc: "The minimum value allowed in the input"
+  attr :min, :string, doc: "The minimum value allowed in the input", default: "-Infty"
   attr :name, :string, doc: "Name for the input in the `FormData`"
   attr :pattern, :string, doc: "Pattern to validate the input against for HTML validity checking"
   attr :placeholder, :string, doc: "Value to display when the input has an empty `value`"
@@ -4030,7 +3943,9 @@ defmodule Graphene.CarbonComponents do
           value={item[:value] || item[:label]}
           selected={item[:selected]}
           disabled={item[:disabled]}
-        />
+        >
+          {item[:label] || render_slot(item)}
+        </CoreComponents.select_item>
       <% end %>
     </FormComponents.fluid_select>
     """
@@ -4458,7 +4373,34 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  attr :for, :any, default: nil, doc: "form data passed to Phoenix.Component.form/1"
+  attr :as, :any, default: nil, doc: "form name passed to Phoenix.Component.form/1"
+  attr :action, :string, default: nil, doc: "form action"
+  attr :method, :string, default: nil, doc: "form method"
+  attr :multipart, :boolean, default: false, doc: "multipart form"
+  attr :csrf_token, :any, default: nil, doc: "CSRF token"
+  attr :errors, :list, default: nil, doc: "form errors"
   slot :inner_block
+
+  def form(%{} = assigns) do
+    ~H"""
+    <Phoenix.Component.form
+      :let={f}
+      for={@for}
+      as={@as}
+      action={@action}
+      method={@method}
+      multipart={@multipart}
+      csrf_token={@csrf_token}
+      errors={@errors}
+      {@rest}
+    >
+      <CoreComponents.form>
+        {render_slot(@inner_block, f)}
+      </CoreComponents.form>
+    </Phoenix.Component.form>
+    """
+  end
 
   def form(assigns) do
     CoreComponents.form(assigns)
@@ -4629,6 +4571,29 @@ defmodule Graphene.CarbonComponents do
   """
   attr :rest, :global
   slot :inner_block
+
+  slot :name do
+    attr :href, :string
+    attr :prefix, :string
+    attr :attrs, :map
+  end
+
+  def header(%{name: [_ | _]} = assigns) do
+    ~H"""
+    <CoreComponents.header {@rest}>
+      <%= for name <- @name do %>
+        <CoreComponents.header_name
+          href={name[:href]}
+          prefix={name[:prefix]}
+          {name[:attrs] || %{}}
+        >
+          {render_slot(name)}
+        </CoreComponents.header_name>
+      <% end %>
+      {render_slot(@inner_block)}
+    </CoreComponents.header>
+    """
+  end
 
   def header(assigns) do
     CoreComponents.header(assigns)
@@ -5088,7 +5053,34 @@ defmodule Graphene.CarbonComponents do
   attr :icon, :any, doc: "The imported icon"
   attr :rest, :global
   attr :size, :string, doc: "The size of the icon (16, 20, 24, 32)", default: "16"
+  attr :name, :string, doc: "Carbon icon name"
   slot :inner_block
+
+  def icon(%{name: name} = assigns) when not is_nil(name) do
+    assigns =
+      assigns
+      |> assign_new(:class, fn -> nil end)
+      |> assign_new(:icon, fn -> nil end)
+
+    ~H"""
+    <% icon_rest = if @class, do: Map.put(@rest || %{}, :class, @class), else: @rest || %{} %>
+    <% size_value =
+      case @size do
+        size when is_integer(size) ->
+          size
+
+        size when is_binary(size) ->
+          case Integer.parse(size) do
+            {value, _} -> value
+            _ -> 16
+          end
+
+        _ ->
+          16
+      end %>
+    <Graphene.Icons.icon name={@name} size={size_value} {icon_rest} />
+    """
+  end
 
   def icon(assigns) do
     CoreComponents.icon(assigns)
@@ -5242,6 +5234,96 @@ defmodule Graphene.CarbonComponents do
     default: "button"
 
   slot :inner_block
+
+  slot :icon do
+    attr :name, :string
+    attr :size, :any
+    attr :attrs, :map
+  end
+
+  def icon_button(%{icon: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:autofocus, fn -> false end)
+      |> assign_new(:batch_action, fn -> false end)
+      |> assign_new(:button_class_name, fn -> nil end)
+      |> assign_new(:danger_description, fn -> nil end)
+      |> assign_new(:default_open, fn -> false end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:download, fn -> nil end)
+      |> assign_new(:has_main_content, fn -> false end)
+      |> assign_new(:href, fn -> nil end)
+      |> assign_new(:hreflang, fn -> nil end)
+      |> assign_new(:is_expressive, fn -> false end)
+      |> assign_new(:is_selected, fn -> false end)
+      |> assign_new(:open_tooltip, fn -> false end)
+      |> assign_new(:ping, fn -> nil end)
+      |> assign_new(:rel, fn -> nil end)
+      |> assign_new(:target, fn -> nil end)
+      |> assign_new(:tooltip_text, fn -> nil end)
+
+    ~H"""
+    <CoreComponents.icon_button
+      align={assigns[:align]}
+      autoalign={assigns[:autoalign]}
+      autofocus={assigns[:autofocus]}
+      batch_action={assigns[:batch_action]}
+      button_class_name={assigns[:button_class_name]}
+      close_on_activation={assigns[:close_on_activation]}
+      danger_description={assigns[:danger_description]}
+      default_open={assigns[:default_open]}
+      disabled={assigns[:disabled]}
+      download={assigns[:download]}
+      enter_delay_ms={assigns[:enter_delay_ms]}
+      has_main_content={assigns[:has_main_content]}
+      href={assigns[:href]}
+      hreflang={assigns[:hreflang]}
+      is_expressive={assigns[:is_expressive]}
+      is_selected={assigns[:is_selected]}
+      kind={assigns[:kind]}
+      leave_delay_ms={assigns[:leave_delay_ms]}
+      link_role={assigns[:link_role]}
+      open_tooltip={assigns[:open_tooltip]}
+      ping={assigns[:ping]}
+      rel={assigns[:rel]}
+      size={assigns[:size]}
+      tab_index={assigns[:tab_index]}
+      target={assigns[:target]}
+      tooltip_alignment={assigns[:tooltip_alignment]}
+      tooltip_position={assigns[:tooltip_position]}
+      tooltip_text={assigns[:tooltip_text]}
+      type={assigns[:type]}
+      {@rest}
+    >
+      <%= for icon <- @icon do %>
+        <% size_value =
+          case icon[:size] do
+            size when is_integer(size) ->
+              size
+
+            size when is_binary(size) ->
+              case Integer.parse(size) do
+                {value, _} -> value
+                _ -> 16
+              end
+
+            _ ->
+              16
+          end %>
+        <% size_string = Integer.to_string(size_value) %>
+        <%= if icon[:name] do %>
+          <Graphene.Icons.icon name={icon[:name]} size={size_value} {icon[:attrs] || %{}} />
+        <% else %>
+          <CoreComponents.icon size={size_string} {icon[:attrs] || %{}}>
+            {render_slot(icon)}
+          </CoreComponents.icon>
+        <% end %>
+      <% end %>
+      {render_slot(@inner_block)}
+    </CoreComponents.icon_button>
+    """
+  end
 
   def icon_button(assigns) do
     CoreComponents.icon_button(assigns)
@@ -6727,9 +6809,9 @@ defmodule Graphene.CarbonComponents do
   * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
   * `is_fluid` (`:boolean`) - Set to true to use the fluid variant. Defaults to `false`.
   * `label` (`:string`) - Generic label that will be used as the textual representation of what this field is for. Defaults to `nil`.
-  * `max` (`:string`) - The maximum value allowed in the input. Defaults to `nil`.
+  * `max` (`:string`) - The maximum value allowed in the input. Defaults to `"Infty"`.
   * `max_count` (`:any`) - Max character count allowed for input. This is needed in order for enableCounter to display. Defaults to `nil`.
-  * `min` (`:string`) - The minimum value allowed in the input. Defaults to `nil`.
+  * `min` (`:string`) - The minimum value allowed in the input. Defaults to `"-Infty"`.
   * `name` (`:string`) - Name for the input in the `FormData`. Defaults to `nil`.
   * `pattern` (`:string`) - Pattern to validate the input against for HTML validity checking. Defaults to `nil`.
   * `placeholder` (`:string`) - Value to display when the input has an empty `value`. Defaults to `nil`.
@@ -6809,13 +6891,13 @@ defmodule Graphene.CarbonComponents do
   attr :label, :string,
     doc: "Generic label that will be used as the textual representation of what this field is for"
 
-  attr :max, :string, doc: "The maximum value allowed in the input"
+  attr :max, :string, doc: "The maximum value allowed in the input", default: "Infty"
 
   attr :max_count, :any,
     doc:
       "Max character count allowed for input. This is needed in order for enableCounter to display"
 
-  attr :min, :string, doc: "The minimum value allowed in the input"
+  attr :min, :string, doc: "The minimum value allowed in the input", default: "-Infty"
   attr :name, :string, doc: "Name for the input in the `FormData`"
   attr :pattern, :string, doc: "Pattern to validate the input against for HTML validity checking"
   attr :placeholder, :string, doc: "Value to display when the input has an empty `value`"
@@ -6954,6 +7036,34 @@ defmodule Graphene.CarbonComponents do
   attr :nested, :boolean, doc: "Specify whether the list is nested, or not"
   attr :rest, :global
   slot :inner_block
+
+  slot :item do
+    attr :attrs, :map
+  end
+
+  def ordered_list(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:is_expressive, fn -> false end)
+      |> assign_new(:native, fn -> false end)
+      |> assign_new(:nested, fn -> false end)
+
+    ~H"""
+    <CoreComponents.ordered_list
+      is_expressive={@is_expressive}
+      native={@native}
+      nested={@nested}
+      {@rest}
+    >
+      <%= for item <- @item do %>
+        <CoreComponents.list_item {item[:attrs] || %{}}>
+          {render_slot(item)}
+        </CoreComponents.list_item>
+      <% end %>
+      {render_slot(@inner_block)}
+    </CoreComponents.ordered_list>
+    """
+  end
 
   def ordered_list(assigns) do
     CoreComponents.ordered_list(assigns)
@@ -7332,6 +7442,13 @@ defmodule Graphene.CarbonComponents do
     attr :within_grid, :boolean
   end
 
+  slot :breadcrumb_slot do
+    attr :border, :boolean
+    attr :content_actions_flush, :boolean
+    attr :page_actions_flush, :boolean
+    attr :within_grid, :boolean
+  end
+
   slot :content do
     attr :title, :string
     attr :within_grid, :boolean
@@ -7341,10 +7458,51 @@ defmodule Graphene.CarbonComponents do
     attr :subtitle, :string
   end
 
+  def page_header(%{breadcrumb_slot: [_ | _]} = assigns) do
+    ~H"""
+    <CoreComponents.page_header {@rest}>
+      <% breadcrumbs = if @breadcrumb_slot != [], do: @breadcrumb_slot, else: @breadcrumb %>
+      <%= for breadcrumb <- breadcrumbs do %>
+        <CoreComponents.page_header_breadcrumb
+          border={Map.get(breadcrumb, :border, true)}
+          content_actions_flush={breadcrumb[:content_actions_flush]}
+          page_actions_flush={breadcrumb[:page_actions_flush]}
+          within_grid={breadcrumb[:within_grid]}
+        >
+          <%= if breadcrumb.inner_block do %>
+            {render_slot(breadcrumb)}
+          <% end %>
+        </CoreComponents.page_header_breadcrumb>
+      <% end %>
+      <%= for content <- @content do %>
+        <CoreComponents.page_header_content
+          title={content[:title]}
+          within_grid={content[:within_grid]}
+        >
+          <%= if @content_text != [] do %>
+            <%= for text <- @content_text do %>
+              <CoreComponents.page_header_content_text subtitle={text[:subtitle]}>
+                <%= if text.inner_block do %>
+                  {render_slot(text)}
+                <% end %>
+              </CoreComponents.page_header_content_text>
+            <% end %>
+          <% end %>
+          <%= if content.inner_block do %>
+            {render_slot(content)}
+          <% end %>
+        </CoreComponents.page_header_content>
+      <% end %>
+      {render_slot(@inner_block)}
+    </CoreComponents.page_header>
+    """
+  end
+
   def page_header(%{breadcrumb: [_ | _]} = assigns) do
     ~H"""
     <CoreComponents.page_header {@rest}>
-      <%= for breadcrumb <- @breadcrumb do %>
+      <% breadcrumbs = if @breadcrumb_slot != [], do: @breadcrumb_slot, else: @breadcrumb %>
+      <%= for breadcrumb <- breadcrumbs do %>
         <CoreComponents.page_header_breadcrumb
           border={Map.get(breadcrumb, :border, true)}
           content_actions_flush={breadcrumb[:content_actions_flush]}
@@ -8649,7 +8807,9 @@ defmodule Graphene.CarbonComponents do
           value={item[:value] || item[:label]}
           selected={item[:selected]}
           disabled={item[:disabled]}
-        />
+        >
+          {item[:label] || render_slot(item)}
+        </CoreComponents.select_item>
       <% end %>
     </FormComponents.select>
     """
@@ -9276,7 +9436,7 @@ defmodule Graphene.CarbonComponents do
   * `step_multiplier` (`:string`) - A value determining how much the value should increase/decrease by Shift+arrow keys,
     which will be `(max - min) / stepMultiplier`.
 
-    Defaults to `nil`.
+    Defaults to `"4"`.
   * `value` (`:any`) - The value. Defaults to `nil`.
   * `value_upper` (`:any`) - The upper bound when there are two handles.. Defaults to `nil`.
   * `warn` (`:boolean`) - true to specify if the control should display warn icon and text. Defaults to `false`.
@@ -9317,7 +9477,8 @@ defmodule Graphene.CarbonComponents do
 
   attr :step_multiplier, :string,
     doc:
-      "A value determining how much the value should increase/decrease by Shift+arrow keys,\nwhich will be `(max - min) / stepMultiplier`."
+      "A value determining how much the value should increase/decrease by Shift+arrow keys,\nwhich will be `(max - min) / stepMultiplier`.",
+    default: "4"
 
   attr :value, :any, doc: "The value."
   attr :value_upper, :any, doc: "The upper bound when there are two handles.."
@@ -9325,6 +9486,13 @@ defmodule Graphene.CarbonComponents do
 
   attr :warn_text, :string,
     doc: "Provide the text that is displayed when the control is in warning state"
+
+  attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
+  attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
+
+  attr :form_event, :string,
+    default: nil,
+    doc: "override the custom event used to sync form values"
 
   slot :inner_block
 
@@ -9341,7 +9509,7 @@ defmodule Graphene.CarbonComponents do
   end
 
   def slider(assigns) do
-    CoreComponents.slider(assigns)
+    FormComponents.slider(assigns)
   end
 
   @doc """
@@ -11666,7 +11834,9 @@ defmodule Graphene.CarbonComponents do
             value={item[:value] || item[:label]}
             selected={item[:selected]}
             disabled={item[:disabled]}
-          />
+          >
+            {item[:label] || render_slot(item)}
+          </CoreComponents.select_item>
         <% end %>
       </CoreComponents.time_picker_select>
     </FormComponents.time_picker>
@@ -11984,6 +12154,82 @@ defmodule Graphene.CarbonComponents do
 
   slot :inner_block
 
+  slot :action do
+    attr :tag, :string
+  end
+
+  def toggletip(%{action: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:default_open, fn -> false end)
+      |> assign_new(:open, fn -> false end)
+
+    ~H"""
+    <CoreComponents.toggletip
+      alignment={@alignment}
+      alignment_axis_offset={@alignment_axis_offset}
+      autoalign={@autoalign}
+      button_label={@button_label}
+      default_open={@default_open}
+      open={@open}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- @body_text}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="body-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- @actions ++ @action}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="actions"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+    </CoreComponents.toggletip>
+    """
+  end
+
+  def toggletip(%{actions: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:default_open, fn -> false end)
+      |> assign_new(:open, fn -> false end)
+
+    ~H"""
+    <CoreComponents.toggletip
+      alignment={@alignment}
+      alignment_axis_offset={@alignment_axis_offset}
+      autoalign={@autoalign}
+      button_label={@button_label}
+      default_open={@default_open}
+      open={@open}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- @body_text}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="body-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- @actions ++ @action}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="actions"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+    </CoreComponents.toggletip>
+    """
+  end
+
   def toggletip(assigns) do
     CoreComponents.toggletip(assigns)
   end
@@ -12085,7 +12331,11 @@ defmodule Graphene.CarbonComponents do
 
   slot :inner_block
   slot :trigger
-  slot :content
+
+  slot :content do
+    attr :id, :string
+    attr :attrs, :map
+  end
 
   def tooltip(%{content: [_ | _]} = assigns) do
     assigns =
@@ -12133,7 +12383,10 @@ defmodule Graphene.CarbonComponents do
         {render_slot(trigger)}
       <% end %>
       <%= for content <- @content do %>
-        <CoreComponents.tooltip_content>
+        <CoreComponents.tooltip_content
+          id={content[:id]}
+          {content[:attrs] || %{}}
+        >
           {render_slot(content)}
         </CoreComponents.tooltip_content>
       <% end %>
@@ -12340,6 +12593,32 @@ defmodule Graphene.CarbonComponents do
   attr :rest, :global
   slot :inner_block
 
+  slot :item do
+    attr :attrs, :map
+  end
+
+  def unordered_list(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:is_expressive, fn -> false end)
+      |> assign_new(:nested, fn -> false end)
+
+    ~H"""
+    <CoreComponents.unordered_list
+      is_expressive={@is_expressive}
+      nested={@nested}
+      {@rest}
+    >
+      <%= for item <- @item do %>
+        <CoreComponents.list_item {item[:attrs] || %{}}>
+          {render_slot(item)}
+        </CoreComponents.list_item>
+      <% end %>
+      {render_slot(@inner_block)}
+    </CoreComponents.unordered_list>
+    """
+  end
+
   def unordered_list(assigns) do
     CoreComponents.unordered_list(assigns)
   end
@@ -12467,6 +12746,53 @@ defmodule Graphene.CarbonComponents do
       expanded_row={@expanded_row}
     />
     """
+  end
+
+  @doc """
+  File uploader wrapper for Carbon web components.
+  """
+  attr :field, Phoenix.HTML.FormField, default: nil
+  attr :form, :string, default: nil
+  attr :id, :string, default: nil
+  attr :name, :string, default: nil
+  attr :value, :any, default: nil
+  attr :disabled, :boolean, default: false
+  attr :label_description, :string, default: nil
+  attr :label_title, :string, default: nil
+  attr :file_input_name, :string, default: nil
+  attr :form_event, :string, default: nil
+  attr :rest, :global
+
+  slot :button do
+    attr :label, :string
+    attr :accept, :string
+    attr :button_kind, :string
+    attr :disabled, :boolean
+    attr :multiple, :boolean
+    attr :name, :string
+    attr :size, :string
+    attr :attrs, :map
+  end
+
+  slot :drop_container do
+    attr :accept, :string
+    attr :disabled, :boolean
+    attr :multiple, :boolean
+    attr :name, :string
+    attr :attrs, :map
+  end
+
+  slot :item do
+    attr :state, :string
+    attr :invalid, :boolean
+    attr :icon_description, :string
+    attr :attrs, :map
+  end
+
+  slot :inner_block
+
+  def file_uploader(assigns) do
+    FormComponents.file_uploader(assigns)
   end
 
   @doc """
@@ -12675,7 +13001,9 @@ defmodule Graphene.CarbonComponents do
             value={item[:value] || item[:label]}
             selected={item[:selected]}
             disabled={item[:disabled]}
-          />
+          >
+            {render_slot(item)}
+          </CoreComponents.select_item>
         <% end %>
       </CoreComponents.time_picker_select>
     </FormComponents.time_picker>

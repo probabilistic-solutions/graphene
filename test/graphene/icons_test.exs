@@ -39,54 +39,60 @@ defmodule Graphene.IconsTest do
   test "icon template" do
     assigns = %{}
 
-    html = rendered_to_string(~H"""
-    <.icon name="3d-cursor" />
-    """)
+    html =
+      rendered_to_string(~H"""
+      <.icon name="3d-cursor" />
+      """)
 
     assert html =~ "<svg"
     assert html =~ "viewBox=\"0 0 32 32\""
+
     assert_icon_attributes(html, %{
       "xmlns" => "http://www.w3.org/2000/svg",
       "width" => "24px",
       "height" => "24px",
       "aria-hidden" => true,
-      "fill" => "currentColor",
+      "fill" => "currentColor"
     })
   end
 
   test "icon sizes" do
     assigns = %{}
 
-    html_16 = rendered_to_string(~H"""
-    <.icon name="3d-cursor" size={16} />
-    """)
+    html_16 =
+      rendered_to_string(~H"""
+      <.icon name="3d-cursor" size={16} />
+      """)
 
     assert_icon_attributes(html_16, %{
       "width" => "16px",
       "height" => "16px"
     })
 
-    html_20 = rendered_to_string(~H"""
-    <.icon name="3d-cursor" size={20} />
-    """)
+    html_20 =
+      rendered_to_string(~H"""
+      <.icon name="3d-cursor" size={20} />
+      """)
 
     assert_icon_attributes(html_20, %{
       "width" => "20px",
       "height" => "20px"
     })
 
-    html_24 = rendered_to_string(~H"""
-    <.icon name="3d-cursor" size={24} />
-    """)
+    html_24 =
+      rendered_to_string(~H"""
+      <.icon name="3d-cursor" size={24} />
+      """)
 
     assert_icon_attributes(html_24, %{
       "width" => "24px",
       "height" => "24px"
     })
 
-    html_32 = rendered_to_string(~H"""
-    <.icon name="3d-cursor" size={32} />
-    """)
+    html_32 =
+      rendered_to_string(~H"""
+      <.icon name="3d-cursor" size={32} />
+      """)
 
     assert_icon_attributes(html_32, %{
       "width" => "32px",
@@ -97,9 +103,10 @@ defmodule Graphene.IconsTest do
   test "icon custom size" do
     assigns = %{}
 
-    html = rendered_to_string(~H"""
-    <.icon name="3d-cursor" width="auto" height="auto" />
-    """)
+    html =
+      rendered_to_string(~H"""
+      <.icon name="3d-cursor" width="auto" height="auto" />
+      """)
 
     assert_icon_attributes(html, %{
       "width" => "auto",
@@ -110,9 +117,10 @@ defmodule Graphene.IconsTest do
   test "icon custom attributes" do
     assigns = %{}
 
-    html = rendered_to_string(~H"""
-    <.icon name="3d-cursor" aria-hidden="false" class="icon" />
-    """)
+    html =
+      rendered_to_string(~H"""
+      <.icon name="3d-cursor" aria-hidden="false" class="icon" />
+      """)
 
     assert_icon_attributes(html, %{
       "aria-hidden" => "false",
@@ -123,9 +131,10 @@ defmodule Graphene.IconsTest do
   test "icon aria label should set role img and remove aria-hidden" do
     assigns = %{}
 
-    html = rendered_to_string(~H"""
-    <.icon name="3d-cursor" aria-label="my-label" class="icon" />
-    """)
+    html =
+      rendered_to_string(~H"""
+      <.icon name="3d-cursor" aria-label="my-label" class="icon" />
+      """)
 
     assert_icon_attributes(html, %{
       "aria-label" => "my-label",
@@ -138,9 +147,10 @@ defmodule Graphene.IconsTest do
   test "icon tab index without labels does not set anything else" do
     assigns = %{}
 
-    html = rendered_to_string(~H"""
-    <.icon name="3d-cursor" tabindex="0" />
-    """)
+    html =
+      rendered_to_string(~H"""
+      <.icon name="3d-cursor" tabindex="0" />
+      """)
 
     assert_icon_attributes(html, %{
       "tabindex" => "0",
@@ -153,9 +163,10 @@ defmodule Graphene.IconsTest do
   test "icon tab index with labels sets role img other attrs" do
     assigns = %{}
 
-    html = rendered_to_string(~H"""
-    <.icon name="3d-cursor" tabindex="0" aria-label="my-label" />
-    """)
+    html =
+      rendered_to_string(~H"""
+      <.icon name="3d-cursor" tabindex="0" aria-label="my-label" />
+      """)
 
     assert_icon_attributes(html, %{
       "tabindex" => "0",
@@ -169,9 +180,10 @@ defmodule Graphene.IconsTest do
   test "icon title element" do
     assigns = %{}
 
-    html = rendered_to_string(~H"""
-    <.icon name="3d-cursor" tabindex="0" title="my-label" />
-    """)
+    html =
+      rendered_to_string(~H"""
+      <.icon name="3d-cursor" tabindex="0" title="my-label" />
+      """)
 
     assert_icon_attributes(html, %{
       "tabindex" => "0",

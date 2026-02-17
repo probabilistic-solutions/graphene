@@ -28,7 +28,7 @@ defmodule Storybook.CarbonComponents.DataTable.Interactivity do
     <.data_table
       id="carbon-events-table"
       rows={@rows}
-      row_id={&Storybook.CarbonComponents.DataTable.Shared.row_id/1}
+      row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
       selectable={true}
       sortable={true}
       expandable={true}

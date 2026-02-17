@@ -11,7 +11,7 @@ defmodule Storybook.CarbonComponents.DataTable.SelectionRadioSorting do
         attributes: %{
           id: "carbon-radio-sorting-table",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           selectable: true,
           radio: true,
           sortable: true,
@@ -30,7 +30,7 @@ defmodule Storybook.CarbonComponents.DataTable.SelectionRadioSorting do
         attributes: %{
           id: "carbon-radio-sorting-table-compact",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           selectable: true,
           radio: true,
           sortable: true,

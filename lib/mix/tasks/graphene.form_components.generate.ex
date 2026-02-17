@@ -46,10 +46,26 @@ if Mix.env() == :dev do
     defp form_component_specs do
       [
         %{name: :checkbox, mode: :boolean, checked_attr: :checked, event: "cds-checkbox-changed"},
-        %{name: :toggle, mode: :boolean, checked_attr: :toggled, detail_key: "toggled", event: "cds-toggle-changed"},
+        %{
+          name: :toggle,
+          mode: :boolean,
+          checked_attr: :toggled,
+          detail_key: "toggled",
+          event: "cds-toggle-changed"
+        },
         %{name: :radio_button_group, mode: :value, event: "cds-radio-button-group-changed"},
-        %{name: :number_input, mode: :value, value_attr: :default_value, event: "cds-number-input"},
-        %{name: :fluid_number_input, mode: :value, value_attr: :default_value, event: "cds-number-input"},
+        %{
+          name: :number_input,
+          mode: :value,
+          value_attr: :default_value,
+          event: "cds-number-input"
+        },
+        %{
+          name: :fluid_number_input,
+          mode: :value,
+          value_attr: :default_value,
+          event: "cds-number-input"
+        },
         %{name: :text_input, mode: :value, event: "input"},
         %{name: :fluid_text_input, mode: :value, event: "input"},
         %{name: :password_input, mode: :value, event: "input"},
@@ -63,8 +79,87 @@ if Mix.env() == :dev do
         %{name: :combo_box, mode: :value, event: "cds-combo-box-selected"},
         %{name: :multi_select, mode: :value, event: "cds-multi-select-selected"},
         %{name: :date_picker, mode: :value, event: "cds-date-picker-changed"},
-        %{name: :time_picker, mode: :value, event: "change"}
+        %{name: :time_picker, mode: :value, event: "change"},
+        %{name: :slider, mode: :value, event: "cds-slider-changed"}
       ]
+    end
+
+    @item_component_configs %{
+      select: %{
+        item_component: :select_item,
+        slot_attrs: [label: :string, value: :string, selected: :boolean, disabled: :boolean],
+        component_attrs: [label: :string, value: :string, selected: :boolean, disabled: :boolean]
+      },
+      fluid_select: %{
+        item_component: :select_item,
+        slot_attrs: [label: :string, value: :string, selected: :boolean, disabled: :boolean],
+        component_attrs: [label: :string, value: :string, selected: :boolean, disabled: :boolean]
+      },
+      dropdown: %{
+        item_component: :dropdown_item,
+        slot_attrs: [label: :string, value: :string, disabled: :boolean],
+        component_attrs: [value: :string, disabled: :boolean]
+      },
+      combo_box: %{
+        item_component: :combo_box_item,
+        slot_attrs: [label: :string, value: :string, disabled: :boolean],
+        component_attrs: [value: :string, disabled: :boolean]
+      },
+      multi_select: %{
+        item_component: :multi_select_item,
+        slot_attrs: [label: :string, value: :string, disabled: :boolean],
+        component_attrs: [value: :string, disabled: :boolean]
+      }
+    }
+
+    defp item_component_config(name) do
+      Map.get(@item_component_configs, name)
+    end
+
+    defp item_slot_defs(config) do
+      attrs =
+        config.slot_attrs
+        |> Enum.map(fn {name, type} -> "    attr :#{name}, :#{type}\n" end)
+        |> Enum.join("")
+
+      "  slot :item do\n" <> attrs <> "  end\n"
+    end
+
+    defp item_component_attr_lines(config) do
+      config.component_attrs
+      |> Enum.map(fn
+        {:value, _} -> "          value={item[:value] || item[:label]}\n"
+        {:label, _} -> "          label={item[:label]}\n"
+        {:selected, _} -> "          selected={item[:selected]}\n"
+        {:disabled, _} -> "          disabled={item[:disabled]}\n"
+        {name, _} -> "          #{name}={item[:#{name}]}\n"
+      end)
+      |> Enum.join("")
+    end
+
+    defp render_item_body(name, opts, config) do
+      item_attrs = item_component_attr_lines(config)
+      item_component = config.item_component
+
+      "  def #{name}(assigns) do\n" <>
+        "    assigns = form_input_assigns(assigns, #{opts})\n" <>
+        "    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id, :item])\n" <>
+        "    assigns = assign(assigns, :component_assigns, component_assigns)\n" <>
+        "    ~H\"\"\"\n" <>
+        "    <input type=\"hidden\" id={@input_id} name={@name} value={@input_value} form={@form} />\n" <>
+        "    <CoreComponents.#{name} {@component_assigns}>\n" <>
+        "      {render_slot(@inner_block)}\n" <>
+        "      <%= for item <- @item do %>\n" <>
+        "        <CoreComponents.#{item_component}\n" <>
+        item_attrs <>
+        "        >\n" <>
+        "          {item[:label] || render_slot(item)}\n" <>
+        "        </CoreComponents.#{item_component}>\n" <>
+        "      <% end %>\n" <>
+        "    </CoreComponents.#{name}>\n" <>
+        "    <.form_bridge_hook />\n" <>
+        "    \"\"\"\n" <>
+        "  end\n\n"
     end
 
     defp render_template(path, assigns) do
@@ -237,7 +332,11 @@ if Mix.env() == :dev do
         |> Enum.join("")
 
       extras = build_extra_attrs(component) |> Enum.join("")
-      slots = component.slots |> Enum.map(&build_slot/1) |> Enum.join("")
+
+      slots =
+        component.slots
+        |> Enum.map(&build_slot/1)
+        |> Enum.join("")
 
       opts =
         spec
@@ -245,17 +344,27 @@ if Mix.env() == :dev do
         |> Enum.map(fn {key, value} -> "#{key}: #{inspect(value)}" end)
         |> Enum.join(", ")
 
-      body =
-        "  def #{name}(assigns) do\n" <>
-          "    assigns = form_input_assigns(assigns, #{opts})\n" <>
-          "    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])\n" <>
-          "    assigns = assign(assigns, :component_assigns, component_assigns)\n" <>
-          "    ~H\"\"\"\n" <>
-          "    <input type=\"hidden\" id={@input_id} name={@name} value={@input_value} form={@form} />\n" <>
-          "    <%= CoreComponents.#{name}(@component_assigns) %>\n" <>
-          "    <.form_bridge_hook />\n" <>
-          "    \"\"\"\n" <>
-          "  end\n\n"
+      {slots, body} =
+        case item_component_config(name) do
+          nil ->
+            body =
+              "  def #{name}(assigns) do\n" <>
+                "    assigns = form_input_assigns(assigns, #{opts})\n" <>
+                "    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])\n" <>
+                "    assigns = assign(assigns, :component_assigns, component_assigns)\n" <>
+                "    ~H\"\"\"\n" <>
+                "    <input type=\"hidden\" id={@input_id} name={@name} value={@input_value} form={@form} />\n" <>
+                "    <%= CoreComponents.#{name}(@component_assigns) %>\n" <>
+                "    <.form_bridge_hook />\n" <>
+                "    \"\"\"\n" <>
+                "  end\n\n"
+
+            {slots, body}
+
+          config ->
+            slots = slots <> item_slot_defs(config)
+            {slots, render_item_body(name, opts, config)}
+        end
 
       doc_str <> extras <> attrs <> slots <> body
     end
@@ -287,7 +396,10 @@ if Mix.env() == :dev do
       helpers = File.read!(helpers_template(:src))
 
       assigns = [module: module_name(), wrappers: wrappers, helpers: helpers]
-      tmp_dir = Path.join(System.tmp_dir!(), "graphene-form-#{System.unique_integer([:positive])}")
+
+      tmp_dir =
+        Path.join(System.tmp_dir!(), "graphene-form-#{System.unique_integer([:positive])}")
+
       File.mkdir_p!(tmp_dir)
       tmp_out = Path.join(tmp_dir, "form_components.ex")
 

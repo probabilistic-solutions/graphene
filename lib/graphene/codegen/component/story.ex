@@ -26,6 +26,7 @@ defmodule Graphene.CodeGen.Component.Story do
             component_module,
             component
           )
+
         Enum.concat(base_variations, unquote(extra_variations))
       end
     end
@@ -105,7 +106,12 @@ defmodule Graphene.CodeGen.Component.Story do
 
   defp composed_inner_block(:accordion, component_module) do
     join_components([
-      component_tag(component_module, :accordion_item, %{title: "Section 1", open: true}, "Accordion content"),
+      component_tag(
+        component_module,
+        :accordion_item,
+        %{title: "Section 1", open: true},
+        "Accordion content"
+      ),
       component_tag(component_module, :accordion_item, %{title: "Section 2"}, "More content")
     ])
   end
@@ -124,7 +130,12 @@ defmodule Graphene.CodeGen.Component.Story do
         component_module,
         :breadcrumb_item,
         %{},
-        component_tag(component_module, :breadcrumb_link, %{href: "#", is_currentpage: true}, "Current")
+        component_tag(
+          component_module,
+          :breadcrumb_link,
+          %{href: "#", is_currentpage: true},
+          "Current"
+        )
       )
 
     join_components([item_one, item_two])
@@ -175,8 +186,18 @@ defmodule Graphene.CodeGen.Component.Story do
 
   defp composed_inner_block(:header_menu, component_module) do
     join_components([
-      component_tag(component_module, :header_menu_item, %{href: "#", title: "Overview"}, "Overview"),
-      component_tag(component_module, :header_menu_item, %{href: "#", title: "Settings"}, "Settings")
+      component_tag(
+        component_module,
+        :header_menu_item,
+        %{href: "#", title: "Overview"},
+        "Overview"
+      ),
+      component_tag(
+        component_module,
+        :header_menu_item,
+        %{href: "#", title: "Settings"},
+        "Settings"
+      )
     ])
   end
 
@@ -234,8 +255,18 @@ defmodule Graphene.CodeGen.Component.Story do
   defp composed_inner_block(:side_nav, component_module) do
     items =
       join_components([
-        component_tag(component_module, :side_nav_link, %{href: "#", title: "Dashboard"}, "Dashboard"),
-        component_tag(component_module, :side_nav_link, %{href: "#", title: "Settings"}, "Settings")
+        component_tag(
+          component_module,
+          :side_nav_link,
+          %{href: "#", title: "Dashboard"},
+          "Dashboard"
+        ),
+        component_tag(
+          component_module,
+          :side_nav_link,
+          %{href: "#", title: "Settings"},
+          "Settings"
+        )
       ])
 
     component_tag(component_module, :side_nav_items, %{}, items)

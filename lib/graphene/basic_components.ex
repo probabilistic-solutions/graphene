@@ -423,16 +423,19 @@ defmodule Graphene.BasicComponents do
 
   attr :selectable, :boolean, default: false, doc: "enable row selection"
   attr :sortable, :boolean, default: false, doc: "enable sorting UI on header cells"
+
   attr :selected_ids, :list,
     default: nil,
     doc:
       "selected row ids. When nil, the table keeps its internal selection state. Pass an explicit list to control selection."
+
   attr :selection_name, :string, default: nil, doc: "name attribute for row selection inputs"
   attr :selection_label, :string, default: "Select row", doc: "aria label for row selection"
   attr :radio, :boolean, default: false, doc: "use radio selection instead of checkboxes"
   attr :size, :string, default: "lg", values: ["xs", "sm", "md", "lg", "xl"], doc: "table size"
   attr :expandable, :boolean, default: false, doc: "enable expandable rows"
   attr :batch_expansion, :boolean, default: false, doc: "enable batch expansion control"
+
   attr :overflow_menu_on_hover, :boolean,
     default: false,
     doc: "show overflow menu only on hover"
@@ -443,6 +446,7 @@ defmodule Graphene.BasicComponents do
   attr :with_row_slugs, :boolean, default: false, doc: "enable slugs in rows"
   attr :locale, :string, default: nil, doc: "table locale"
   attr :filter_rows, :any, default: nil, doc: "custom filter rows function"
+
   attr :phx_update, :any,
     default: "ignore",
     doc:
@@ -463,6 +467,7 @@ defmodule Graphene.BasicComponents do
   slot :title, doc: "table title"
   slot :description, doc: "table description"
   slot :toolbar, doc: "table toolbar contents"
+
   slot :row_decorator, doc: "content injected before row cells" do
     attr :class, :string
   end
@@ -508,6 +513,7 @@ defmodule Graphene.BasicComponents do
   else
     attr :name, :string, required: true, values: @basic_icon_names
   end
+
   attr :class, :any, default: ""
   attr :size, :integer, default: 24
 

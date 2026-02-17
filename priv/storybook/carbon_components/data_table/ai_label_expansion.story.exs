@@ -11,7 +11,7 @@ defmodule Storybook.CarbonComponents.DataTable.AILabelExpansion do
         attributes: %{
           id: "carbon-ai-label-expansion-table",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           expandable: true,
           batch_expansion: true,
           with_row_ai_labels: true
@@ -38,7 +38,7 @@ defmodule Storybook.CarbonComponents.DataTable.AILabelExpansion do
         attributes: %{
           id: "carbon-ai-label-expansion-table-compact",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           expandable: true,
           batch_expansion: true,
           with_row_ai_labels: true,

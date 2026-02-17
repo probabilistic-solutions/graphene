@@ -11,7 +11,7 @@ defmodule Storybook.CarbonComponents.DataTable.ToolbarPersistentSmall do
         attributes: %{
           id: "carbon-persistent-toolbar-small-table",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           size: "sm"
         },
         slots: [
@@ -44,7 +44,7 @@ defmodule Storybook.CarbonComponents.DataTable.ToolbarPersistentSmall do
         attributes: %{
           id: "carbon-persistent-toolbar-xs-table",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           size: "xs"
         },
         slots: [

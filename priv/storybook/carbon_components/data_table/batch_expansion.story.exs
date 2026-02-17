@@ -11,7 +11,7 @@ defmodule Storybook.CarbonComponents.DataTable.BatchExpansion do
         attributes: %{
           id: "carbon-batch-expansion-table",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           expandable: true,
           batch_expansion: true
         },
@@ -32,7 +32,7 @@ defmodule Storybook.CarbonComponents.DataTable.BatchExpansion do
         attributes: %{
           id: "carbon-batch-expansion-table-simple",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           expandable: true
         },
         slots: [

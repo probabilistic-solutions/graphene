@@ -3116,14 +3116,14 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "Generic label that will be used as the textual representation of what this field is for"
 
-  attr :max, :string, default: nil, doc: "The maximum value allowed in the input"
+  attr :max, :string, default: "Infty", doc: "The maximum value allowed in the input"
 
   attr :max_count, :any,
     default: nil,
     doc:
       "Max character count allowed for input. This is needed in order for enableCounter to display"
 
-  attr :min, :string, default: nil, doc: "The minimum value allowed in the input"
+  attr :min, :string, default: "-Infty", doc: "The minimum value allowed in the input"
   attr :name, :string, default: nil, doc: "Name for the input in the `FormData`"
 
   attr :pattern, :string,
@@ -5903,14 +5903,14 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "Generic label that will be used as the textual representation of what this field is for"
 
-  attr :max, :string, default: nil, doc: "The maximum value allowed in the input"
+  attr :max, :string, default: "Infty", doc: "The maximum value allowed in the input"
 
   attr :max_count, :any,
     default: nil,
     doc:
       "Max character count allowed for input. This is needed in order for enableCounter to display"
 
-  attr :min, :string, default: nil, doc: "The minimum value allowed in the input"
+  attr :min, :string, default: "-Infty", doc: "The minimum value allowed in the input"
   attr :name, :string, default: nil, doc: "Name for the input in the `FormData`"
 
   attr :pattern, :string,

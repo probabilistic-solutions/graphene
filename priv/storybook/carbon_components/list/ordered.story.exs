@@ -8,25 +8,25 @@ defmodule Storybook.CarbonComponents.List.Ordered do
       %Variation{
         id: :default,
         slots: [
-          ~S|<Graphene.CarbonComponents.list_item>First item</Graphene.CarbonComponents.list_item>
-<Graphene.CarbonComponents.list_item>Second item</Graphene.CarbonComponents.list_item>
-<Graphene.CarbonComponents.list_item>Third item</Graphene.CarbonComponents.list_item>|
+          ~S|<:item>First item</:item>
+<:item>Second item</:item>
+<:item>Third item</:item>|
         ]
       },
       %Variation{
         id: :native,
         attributes: %{native: true},
         slots: [
-          ~S|<Graphene.CarbonComponents.list_item>Step one</Graphene.CarbonComponents.list_item>
-<Graphene.CarbonComponents.list_item>Step two</Graphene.CarbonComponents.list_item>|
+          ~S|<:item>Step one</:item>
+<:item>Step two</:item>|
         ]
       },
       %Variation{
         id: :expressive,
         attributes: %{is_expressive: true},
         slots: [
-          ~S|<Graphene.CarbonComponents.list_item>Expressive one</Graphene.CarbonComponents.list_item>
-<Graphene.CarbonComponents.list_item>Expressive two</Graphene.CarbonComponents.list_item>|
+          ~S|<:item>Expressive one</:item>
+<:item>Expressive two</:item>|
         ]
       }
     ]

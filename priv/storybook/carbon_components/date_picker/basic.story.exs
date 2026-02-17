@@ -7,24 +7,24 @@ defmodule Storybook.CarbonComponents.DatePicker.Basic do
     [
       %Variation{
         id: :single,
-        attributes: %{name: "date-picker-single"},
+        attributes: %{name: "date-picker-single", date_format: "d/m/Y"},
         slots: [
-          ~S|<:input label="Start date" placeholder="mm/dd/yyyy" />|
+          ~S|<:input label="Start date" placeholder="dd/mm/yyyy" />|
         ]
       },
       %Variation{
         id: :range,
-        attributes: %{name: "date-picker-range", value: "2024-01-10/2024-01-14"},
+        attributes: %{name: "date-picker-range", value: "2024-01-10/2024-01-14", date_format: "d/m/Y"},
         slots: [
-          ~S|<:input label="Start" placeholder="mm/dd/yyyy" />
-<:input label="End" placeholder="mm/dd/yyyy" />|
+          ~S|<:input label="Start" placeholder="dd/mm/yyyy" />
+<:input label="End" placeholder="dd/mm/yyyy" />|
         ]
       },
       %Variation{
         id: :disabled,
-        attributes: %{name: "date-picker-disabled", disabled: true},
+        attributes: %{name: "date-picker-disabled", disabled: true, date_format: "d/m/Y"},
         slots: [
-          ~S|<:input label="Disabled" placeholder="mm/dd/yyyy" disabled={true} />|
+          ~S|<:input label="Disabled" placeholder="dd/mm/yyyy" disabled={true} />|
         ]
       }
     ]

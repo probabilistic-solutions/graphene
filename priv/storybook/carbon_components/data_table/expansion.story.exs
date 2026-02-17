@@ -11,7 +11,7 @@ defmodule Storybook.CarbonComponents.DataTable.Expansion do
         attributes: %{
           id: "carbon-expansion-table",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           expandable: true
         },
         slots: [
@@ -31,7 +31,7 @@ defmodule Storybook.CarbonComponents.DataTable.Expansion do
         attributes: %{
           id: "carbon-expansion-table-compact",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           expandable: true,
           size: "sm",
           use_zebra_styles: false

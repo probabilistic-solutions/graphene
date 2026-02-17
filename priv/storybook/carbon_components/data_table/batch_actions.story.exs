@@ -11,7 +11,7 @@ defmodule Storybook.CarbonComponents.DataTable.BatchActions do
         attributes: %{
           id: "carbon-batch-actions-table",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           selectable: true,
           selection_name: "carbon-batch-actions"
         },
@@ -50,7 +50,7 @@ defmodule Storybook.CarbonComponents.DataTable.BatchActions do
         attributes: %{
           id: "carbon-batch-actions-table-compact",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           selectable: true,
           selection_name: "carbon-batch-actions",
           size: "sm"

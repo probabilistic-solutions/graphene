@@ -8,7 +8,7 @@ defmodule Storybook.CarbonComponents.DataTable.ToolbarPersistent do
     [
       %Variation{
         id: :persistent,
-        attributes: %{id: "carbon-persistent-toolbar-table", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1},
+        attributes: %{id: "carbon-persistent-toolbar-table", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1},
         slots: [
           ~S|<:title>DataTable</:title>
 <:description>With persistent toolbar</:description>
@@ -36,7 +36,7 @@ defmodule Storybook.CarbonComponents.DataTable.ToolbarPersistent do
       },
       %Variation{
         id: :compact,
-        attributes: %{id: "carbon-persistent-toolbar-table-compact", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1, size: "sm"},
+        attributes: %{id: "carbon-persistent-toolbar-table-compact", rows: Storybook.CarbonComponents.DataTable.Shared.rows(), row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1, size: "sm"},
         slots: [
           ~S|<:title>DataTable</:title>
 <:description>Compact persistent toolbar</:description>

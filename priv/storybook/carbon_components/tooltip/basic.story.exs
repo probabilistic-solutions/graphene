@@ -10,7 +10,7 @@ defmodule Storybook.CarbonComponents.Tooltip.Basic do
         attributes: %{align: "bottom"},
         slots: [
           ~S|<Graphene.CarbonComponents.button kind="ghost" aria-labelledby="tooltip-content">Hover me</Graphene.CarbonComponents.button>
-<Graphene.CarbonComponents.tooltip_content id="tooltip-content">Tooltip content</Graphene.CarbonComponents.tooltip_content>|
+<:content id="tooltip-content">Tooltip content</:content>|
         ]
       },
       %Variation{
@@ -18,7 +18,7 @@ defmodule Storybook.CarbonComponents.Tooltip.Basic do
         attributes: %{align: "top"},
         slots: [
           ~S|<Graphene.CarbonComponents.button kind="ghost" aria-labelledby="tooltip-top">Top tooltip</Graphene.CarbonComponents.button>
-<Graphene.CarbonComponents.tooltip_content id="tooltip-top">Top content</Graphene.CarbonComponents.tooltip_content>|
+<:content id="tooltip-top">Top content</:content>|
         ]
       },
       %Variation{
@@ -26,7 +26,7 @@ defmodule Storybook.CarbonComponents.Tooltip.Basic do
         attributes: %{align: "right"},
         slots: [
           ~S|<Graphene.CarbonComponents.button kind="ghost" aria-labelledby="tooltip-right">Right tooltip</Graphene.CarbonComponents.button>
-<Graphene.CarbonComponents.tooltip_content id="tooltip-right">Right content</Graphene.CarbonComponents.tooltip_content>|
+<:content id="tooltip-right">Right content</:content>|
         ]
       }
     ]

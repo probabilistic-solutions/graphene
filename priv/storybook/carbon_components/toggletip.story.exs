@@ -13,12 +13,12 @@ defmodule Storybook.CarbonComponents.Toggletip do
 <:body_text>
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 </:body_text>
-<:actions>
+<:action>
   <Graphene.CarbonComponents.link href="#">Link action</Graphene.CarbonComponents.link>
-</:actions>
-<:actions>
+</:action>
+<:action>
   <Graphene.CarbonComponents.button size="sm">Button</Graphene.CarbonComponents.button>
-</:actions>|
+</:action>|
         ]
       },
       %Variation{
@@ -39,9 +39,9 @@ defmodule Storybook.CarbonComponents.Toggletip do
 <:body_text>
   <p>Short description goes here.</p>
 </:body_text>
-<:actions>
+<:action>
   <Graphene.CarbonComponents.button size="sm">Got it</Graphene.CarbonComponents.button>
-</:actions>|
+</:action>|
         ]
       }
     ]

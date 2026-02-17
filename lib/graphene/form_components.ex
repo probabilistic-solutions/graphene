@@ -23,6 +23,13 @@ defmodule Graphene.FormComponents do
             customElements.whenDefined(tagName).then(cb).catch(cb);
           };
 
+          const parseFileNames = (files) => {
+            return Array.from(files || []).map((file) => {
+              if (file && typeof file === "object" && "name" in file) return file.name;
+              return file;
+            });
+          };
+
           const parseValue = (detail, target) => {
             if (detail && Object.prototype.hasOwnProperty.call(detail, "value")) return detail.value;
             if (detail && detail.item && Object.prototype.hasOwnProperty.call(detail.item, "value")) {
@@ -36,7 +43,11 @@ defmodule Graphene.FormComponents do
                 item && Object.prototype.hasOwnProperty.call(item, "value") ? item.value : item
               );
             }
+            if (detail && Array.isArray(detail.addedFiles)) {
+              return parseFileNames(detail.addedFiles);
+            }
             if (target && Object.prototype.hasOwnProperty.call(target, "value")) return target.value;
+            if (target && target.files) return parseFileNames(target.files);
             if (target && Object.prototype.hasOwnProperty.call(target, "selectedItem")) {
               const selected = target.selectedItem;
               if (selected && Object.prototype.hasOwnProperty.call(selected, "value")) return selected.value;
@@ -237,6 +248,143 @@ defmodule Graphene.FormComponents do
       is_nil(value) -> ""
       true -> inspect(value)
     end
+  end
+
+  @doc """
+  Form-aware file uploader wrapper.
+
+  Uses the file uploader button event by default. If you only provide a
+  drop container slot, set `form_event` to `cds-file-uploader-drop-container-changed`.
+  """
+  attr :field, Phoenix.HTML.FormField,
+    doc: "a form field struct, for example: @form[:attachments]"
+
+  attr :form, :string,
+    default: nil,
+    doc: "the form attribute for the hidden input"
+
+  attr :id, :string,
+    default: nil,
+    doc: "the DOM id for the file uploader root element"
+
+  attr :name, :string,
+    default: nil,
+    doc: "the name used for the hidden form input"
+
+  attr :value, :any,
+    default: nil,
+    doc: "optional value to sync to the hidden input"
+
+  attr :form_event, :string,
+    default: nil,
+    doc: "override the custom event used to sync form values"
+
+  attr :file_input_name, :string,
+    default: nil,
+    doc: "optional name attribute for the underlying file input"
+
+  attr :disabled, :boolean, doc: "`true` if the file uploader should be disabled"
+  attr :label_description, :string, doc: "The description text."
+  attr :label_title, :string, doc: "The label title."
+  attr :rest, :global
+
+  slot :button do
+    attr :label, :string
+    attr :accept, :string
+    attr :button_kind, :string
+    attr :disabled, :boolean
+    attr :multiple, :boolean
+    attr :name, :string
+    attr :size, :string
+    attr :attrs, :map
+  end
+
+  slot :drop_container do
+    attr :accept, :string
+    attr :disabled, :boolean
+    attr :multiple, :boolean
+    attr :name, :string
+    attr :attrs, :map
+  end
+
+  slot :item do
+    attr :state, :string
+    attr :invalid, :boolean
+    attr :icon_description, :string
+    attr :attrs, :map
+  end
+
+  slot :inner_block
+
+  def file_uploader(assigns) do
+    assigns =
+      assigns
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:label_description, fn -> nil end)
+      |> assign_new(:label_title, fn -> nil end)
+      |> assign_new(:file_input_name, fn -> nil end)
+      |> assign_new(:button, fn -> [] end)
+      |> assign_new(:drop_container, fn -> [] end)
+      |> assign_new(:item, fn -> [] end)
+      |> assign_new(:form_event, fn ->
+        if Map.get(assigns, :drop_container, []) != [] and Map.get(assigns, :button, []) == [] do
+          "cds-file-uploader-drop-container-changed"
+        else
+          "cds-file-uploader-button-changed"
+        end
+      end)
+      |> form_input_assigns(
+        name: :file_uploader,
+        mode: :value,
+        event: "cds-file-uploader-button-changed"
+      )
+
+    ~H"""
+    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <CoreComponents.file_uploader
+      disabled={@disabled}
+      label_description={@label_description}
+      label_title={@label_title}
+      {@rest}
+    >
+      <%= for drop <- @drop_container do %>
+        <CoreComponents.file_uploader_drop_container
+          accept={drop[:accept]}
+          disabled={drop[:disabled]}
+          multiple={drop[:multiple]}
+          name={drop[:name] || @file_input_name}
+          {drop[:attrs] || %{}}
+        >
+          {render_slot(drop)}
+        </CoreComponents.file_uploader_drop_container>
+      <% end %>
+      <%= for button <- @button do %>
+        <CoreComponents.file_uploader_button
+          accept={button[:accept]}
+          button_kind={button[:button_kind]}
+          disabled={button[:disabled]}
+          multiple={button[:multiple]}
+          name={button[:name] || @file_input_name}
+          size={button[:size]}
+          {button[:attrs] || %{}}
+        >
+          {button[:label] || render_slot(button)}
+        </CoreComponents.file_uploader_button>
+      <% end %>
+      <%= for item <- @item do %>
+        <CoreComponents.file_uploader_item
+          state={item[:state]}
+          invalid={item[:invalid]}
+          icon_description={item[:icon_description]}
+          {item[:attrs] || %{}}
+        >
+          {render_slot(item)}
+        </CoreComponents.file_uploader_item>
+      <% end %>
+      {render_slot(@inner_block)}
+    </CoreComponents.file_uploader>
+    <.form_bridge_hook />
+    """
   end
 
   @doc """
@@ -614,9 +762,9 @@ defmodule Graphene.FormComponents do
   * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
   * `is_fluid` (`:boolean`) - Set to true to use the fluid variant. Defaults to `false`.
   * `label` (`:string`) - Generic label that will be used as the textual representation of what this field is for. Defaults to `nil`.
-  * `max` (`:string`) - The maximum value allowed in the input. Defaults to `nil`.
+  * `max` (`:string`) - The maximum value allowed in the input. Defaults to `"Infty"`.
   * `max_count` (`:any`) - Max character count allowed for input. This is needed in order for enableCounter to display. Defaults to `nil`.
-  * `min` (`:string`) - The minimum value allowed in the input. Defaults to `nil`.
+  * `min` (`:string`) - The minimum value allowed in the input. Defaults to `"-Infty"`.
   * `name` (`:string`) - Name for the input in the `FormData`. Defaults to `nil`.
   * `pattern` (`:string`) - Pattern to validate the input against for HTML validity checking. Defaults to `nil`.
   * `placeholder` (`:string`) - Value to display when the input has an empty `value`. Defaults to `nil`.
@@ -708,13 +856,13 @@ defmodule Graphene.FormComponents do
   attr :label, :string,
     doc: "Generic label that will be used as the textual representation of what this field is for"
 
-  attr :max, :string, doc: "The maximum value allowed in the input"
+  attr :max, :string, doc: "The maximum value allowed in the input", default: "Infty"
 
   attr :max_count, :any,
     doc:
       "Max character count allowed for input. This is needed in order for enableCounter to display"
 
-  attr :min, :string, doc: "The minimum value allowed in the input"
+  attr :min, :string, doc: "The minimum value allowed in the input", default: "-Infty"
   attr :name, :string, doc: "Name for the input in the `FormData`"
   attr :pattern, :string, doc: "Pattern to validate the input against for HTML validity checking"
   attr :placeholder, :string, doc: "Value to display when the input has an empty `value`"
@@ -826,9 +974,9 @@ defmodule Graphene.FormComponents do
   * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
   * `is_fluid` (`:boolean`) - Set to true to use the fluid variant. Defaults to `false`.
   * `label` (`:string`) - Generic label that will be used as the textual representation of what this field is for. Defaults to `nil`.
-  * `max` (`:string`) - The maximum value allowed in the input. Defaults to `nil`.
+  * `max` (`:string`) - The maximum value allowed in the input. Defaults to `"Infty"`.
   * `max_count` (`:any`) - Max character count allowed for input. This is needed in order for enableCounter to display. Defaults to `nil`.
-  * `min` (`:string`) - The minimum value allowed in the input. Defaults to `nil`.
+  * `min` (`:string`) - The minimum value allowed in the input. Defaults to `"-Infty"`.
   * `name` (`:string`) - Name for the input in the `FormData`. Defaults to `nil`.
   * `pattern` (`:string`) - Pattern to validate the input against for HTML validity checking. Defaults to `nil`.
   * `placeholder` (`:string`) - Value to display when the input has an empty `value`. Defaults to `nil`.
@@ -920,13 +1068,13 @@ defmodule Graphene.FormComponents do
   attr :label, :string,
     doc: "Generic label that will be used as the textual representation of what this field is for"
 
-  attr :max, :string, doc: "The maximum value allowed in the input"
+  attr :max, :string, doc: "The maximum value allowed in the input", default: "Infty"
 
   attr :max_count, :any,
     doc:
       "Max character count allowed for input. This is needed in order for enableCounter to display"
 
-  attr :min, :string, doc: "The minimum value allowed in the input"
+  attr :min, :string, doc: "The minimum value allowed in the input", default: "-Infty"
   attr :name, :string, doc: "Name for the input in the `FormData`"
   attr :pattern, :string, doc: "Pattern to validate the input against for HTML validity checking"
   attr :placeholder, :string, doc: "Value to display when the input has an empty `value`"
@@ -2151,16 +2299,37 @@ defmodule Graphene.FormComponents do
     attr :tag, :string
   end
 
+  slot :item do
+    attr :label, :string
+    attr :value, :string
+    attr :selected, :boolean
+    attr :disabled, :boolean
+  end
+
   def select(assigns) do
     assigns =
       form_input_assigns(assigns, name: :select, mode: :value, event: "cds-select-selected")
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id, :item])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
     <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
-    {CoreComponents.select(@component_assigns)}
+    <CoreComponents.select {@component_assigns}>
+      {render_slot(@inner_block)}
+      <%= for item <- @item do %>
+        <CoreComponents.select_item
+          label={item[:label]}
+          value={item[:value] || item[:label]}
+          selected={item[:selected]}
+          disabled={item[:disabled]}
+        >
+          {item[:label] || render_slot(item)}
+        </CoreComponents.select_item>
+      <% end %>
+    </CoreComponents.select>
     <.form_bridge_hook />
     """
   end
@@ -2268,16 +2437,37 @@ defmodule Graphene.FormComponents do
     attr :tag, :string
   end
 
+  slot :item do
+    attr :label, :string
+    attr :value, :string
+    attr :selected, :boolean
+    attr :disabled, :boolean
+  end
+
   def fluid_select(assigns) do
     assigns =
       form_input_assigns(assigns, name: :fluid_select, mode: :value, event: "cds-select-selected")
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id, :item])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
     <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
-    {CoreComponents.fluid_select(@component_assigns)}
+    <CoreComponents.fluid_select {@component_assigns}>
+      {render_slot(@inner_block)}
+      <%= for item <- @item do %>
+        <CoreComponents.select_item
+          label={item[:label]}
+          value={item[:value] || item[:label]}
+          selected={item[:selected]}
+          disabled={item[:disabled]}
+        >
+          {item[:label] || render_slot(item)}
+        </CoreComponents.select_item>
+      <% end %>
+    </CoreComponents.fluid_select>
     <.form_bridge_hook />
     """
   end
@@ -2392,16 +2582,34 @@ defmodule Graphene.FormComponents do
 
   slot :inner_block
 
+  slot :item do
+    attr :label, :string
+    attr :value, :string
+    attr :disabled, :boolean
+  end
+
   def dropdown(assigns) do
     assigns =
       form_input_assigns(assigns, name: :dropdown, mode: :value, event: "cds-dropdown-selected")
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id, :item])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
     <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
-    {CoreComponents.dropdown(@component_assigns)}
+    <CoreComponents.dropdown {@component_assigns}>
+      {render_slot(@inner_block)}
+      <%= for item <- @item do %>
+        <CoreComponents.dropdown_item
+          value={item[:value] || item[:label]}
+          disabled={item[:disabled]}
+        >
+          {item[:label] || render_slot(item)}
+        </CoreComponents.dropdown_item>
+      <% end %>
+    </CoreComponents.dropdown>
     <.form_bridge_hook />
     """
   end
@@ -2546,16 +2754,34 @@ defmodule Graphene.FormComponents do
 
   slot :inner_block
 
+  slot :item do
+    attr :label, :string
+    attr :value, :string
+    attr :disabled, :boolean
+  end
+
   def combo_box(assigns) do
     assigns =
       form_input_assigns(assigns, name: :combo_box, mode: :value, event: "cds-combo-box-selected")
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id, :item])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
     <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
-    {CoreComponents.combo_box(@component_assigns)}
+    <CoreComponents.combo_box {@component_assigns}>
+      {render_slot(@inner_block)}
+      <%= for item <- @item do %>
+        <CoreComponents.combo_box_item
+          value={item[:value] || item[:label]}
+          disabled={item[:disabled]}
+        >
+          {item[:label] || render_slot(item)}
+        </CoreComponents.combo_box_item>
+      <% end %>
+    </CoreComponents.combo_box>
     <.form_bridge_hook />
     """
   end
@@ -2714,6 +2940,12 @@ defmodule Graphene.FormComponents do
 
   slot :inner_block
 
+  slot :item do
+    attr :label, :string
+    attr :value, :string
+    attr :disabled, :boolean
+  end
+
   def multi_select(assigns) do
     assigns =
       form_input_assigns(assigns,
@@ -2722,12 +2954,24 @@ defmodule Graphene.FormComponents do
         event: "cds-multi-select-selected"
       )
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id, :item])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
     <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
-    {CoreComponents.multi_select(@component_assigns)}
+    <CoreComponents.multi_select {@component_assigns}>
+      {render_slot(@inner_block)}
+      <%= for item <- @item do %>
+        <CoreComponents.multi_select_item
+          value={item[:value] || item[:label]}
+          disabled={item[:disabled]}
+        >
+          {item[:label] || render_slot(item)}
+        </CoreComponents.multi_select_item>
+      <% end %>
+    </CoreComponents.multi_select>
     <.form_bridge_hook />
     """
   end
@@ -2931,6 +3175,127 @@ defmodule Graphene.FormComponents do
     ~H"""
     <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
     {CoreComponents.time_picker(@component_assigns)}
+    <.form_bridge_hook />
+    """
+  end
+
+  @doc """
+  Component `<cds-slider>` from `./src/components/slider/slider.ts`
+
+  Slider.
+
+  ## Events
+
+  * `cds-slider-input-changed` - The name of the custom event fired after the value is changed in `<cds-slider-input>` by user gesture.
+  * `cds-slider-changed` - The custom event fired after the value is changed by user gesture.
+
+
+  ## Attributes
+
+  * `disabled` (`:boolean`) - `true` if the check box should be disabled. Defaults to `false`.
+  * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
+  * `hide_text_input` (`:boolean`) - Checks whether the input field is hidden or not. Defaults to `false`.
+  * `invalid` (`:boolean`) - true to specify if the control is invalid. Defaults to `false`.
+  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
+  * `is_valid` (`:any`) - is slide input valid. Defaults to `nil`.
+  * `max` (`:string`) - The maximum value. Defaults to `nil`.
+  * `max_label` (`:string`) - The label associated with the maximum value. Defaults to `nil`.
+  * `min` (`:string`) - The minimum value. Defaults to `nil`.
+  * `min_label` (`:string`) - The label associated with the minimum value. Defaults to `nil`.
+  * `name` (`:string`) - The form name. Defaults to `nil`.
+  * `readonly` (`:boolean`) - Whether the slider should be read-only. Defaults to `false`.
+  * `required` (`:boolean`) - true to specify if the control is required. Defaults to `false`.
+  * `step` (`:string`) - The snapping step of the value. Defaults to `nil`.
+  * `step_multiplier` (`:string`) - A value determining how much the value should increase/decrease by Shift+arrow keys,
+    which will be `(max - min) / stepMultiplier`.
+
+    Defaults to `"4"`.
+  * `value` (`:any`) - The value. Defaults to `nil`.
+  * `value_upper` (`:any`) - The upper bound when there are two handles.. Defaults to `nil`.
+  * `warn` (`:boolean`) - true to specify if the control should display warn icon and text. Defaults to `false`.
+  * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
+  * Global attributes are accepted.
+  ## Slots
+
+  * `label_text` - The label text. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `max_text` - The text for maximum value. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `min_text` - The text for minimum value. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `inner_block`
+
+
+  Form-aware wrapper.
+  """
+  attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
+
+  attr :form, :string,
+    default: nil,
+    doc: "the form attribute for the hidden input"
+
+  attr :form_event, :string,
+    default: nil,
+    doc: "override the custom event used to sync form values"
+
+  attr :disabled, :boolean, doc: "`true` if the check box should be disabled."
+
+  attr :hide_label, :boolean,
+    doc: "Specify whether you want the underlying label to be visually hidden"
+
+  attr :hide_text_input, :boolean, doc: "Checks whether the input field is hidden or not"
+  attr :invalid, :boolean, doc: "true to specify if the control is invalid."
+  attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
+  attr :is_valid, :any, doc: "is slide input valid"
+  attr :max, :string, doc: "The maximum value."
+  attr :max_label, :string, doc: "The label associated with the maximum value."
+  attr :min, :string, doc: "The minimum value."
+  attr :min_label, :string, doc: "The label associated with the minimum value."
+  attr :name, :string, doc: "The form name."
+  attr :readonly, :boolean, doc: "Whether the slider should be read-only"
+  attr :required, :boolean, doc: "true to specify if the control is required."
+  attr :rest, :global
+  attr :step, :string, doc: "The snapping step of the value."
+
+  attr :step_multiplier, :string,
+    doc:
+      "A value determining how much the value should increase/decrease by Shift+arrow keys,\nwhich will be `(max - min) / stepMultiplier`.",
+    default: "4"
+
+  attr :value, :any, doc: "The value."
+  attr :value_upper, :any, doc: "The upper bound when there are two handles.."
+  attr :warn, :boolean, doc: "true to specify if the control should display warn icon and text."
+
+  attr :warn_text, :string,
+    doc: "Provide the text that is displayed when the control is in warning state"
+
+  slot :inner_block
+
+  slot :label_text, doc: "The label text." do
+    attr :tag, :string
+  end
+
+  slot :max_text, doc: "The text for maximum value." do
+    attr :tag, :string
+  end
+
+  slot :min_text, doc: "The text for minimum value." do
+    attr :tag, :string
+  end
+
+  def slider(assigns) do
+    assigns =
+      form_input_assigns(assigns, name: :slider, mode: :value, event: "cds-slider-changed")
+
+    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    assigns = assign(assigns, :component_assigns, component_assigns)
+
+    ~H"""
+    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    {CoreComponents.slider(@component_assigns)}
     <.form_bridge_hook />
     """
   end

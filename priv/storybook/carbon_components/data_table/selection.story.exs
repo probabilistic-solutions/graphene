@@ -11,7 +11,7 @@ defmodule Storybook.CarbonComponents.DataTable.Selection do
         attributes: %{
           id: "carbon-selection-table",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           selectable: true,
           selection_name: "carbon-selection"
         },
@@ -28,10 +28,10 @@ defmodule Storybook.CarbonComponents.DataTable.Selection do
         attributes: %{
           id: "carbon-selection-table-selected",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
-          row_id: &Storybook.CarbonComponents.DataTable.Shared.row_id/1,
+          row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
           selectable: true,
           selection_name: "carbon-selection",
-          selected_ids: [Storybook.CarbonComponents.DataTable.Shared.row_id(Enum.at(Storybook.CarbonComponents.DataTable.Shared.rows(), 1))]
+          selected_ids: [Graphene.CarbonComponents.DataTable.Shared.row_id(Enum.at(Storybook.CarbonComponents.DataTable.Shared.rows(), 1))]
         },
         slots: [
           ~S|<:title>DataTable</:title>

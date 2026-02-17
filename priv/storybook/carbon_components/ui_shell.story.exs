@@ -16,7 +16,7 @@ defmodule Storybook.CarbonComponents.UIShell do
       </:skip_to_content>
       <:header>
         <.header>
-          <.header_name href="#">Graphene</.header_name>
+          <:name href="#">Graphene</:name>
           <.header_nav>
             <.header_nav_item href="#">Home</.header_nav_item>
             <.header_nav_item href="#">Docs</.header_nav_item>
