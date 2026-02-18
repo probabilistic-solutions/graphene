@@ -44,6 +44,8 @@ defmodule Graphene.CarbonComponents do
     attr :disabled, :boolean
   end
 
+  slot :inner_block
+
   def accordion(%{item: [_ | _]} = assigns) do
     assigns =
       assigns
@@ -93,6 +95,7 @@ defmodule Graphene.CarbonComponents do
   attr :title, :string, doc: "The title text."
   attr :controlled, :boolean, doc: "Whether the item is controlled by the parent."
   attr :rest, :global
+  slot :inner_block
 
   def accordion_item(assigns) do
     CoreComponents.accordion_item(assigns)
@@ -112,6 +115,7 @@ defmodule Graphene.CarbonComponents do
   attr :is_flush, :boolean, doc: "Specify whether Accordion text should be flush."
   attr :open, :boolean, doc: "`true` if the first accordion item should be open."
   attr :rest, :global
+  slot :inner_block
 
   def accordion_skeleton(assigns) do
     CoreComponents.accordion_skeleton(assigns)
@@ -163,6 +167,7 @@ defmodule Graphene.CarbonComponents do
   slot :subtitle, doc: "The subtitle."
   slot :title, doc: "The title."
   slot :action, doc: "Action content for the notification."
+  slot :inner_block
 
   def actionable_notification(assigns) do
     CoreComponents.actionable_notification(assigns)
@@ -242,6 +247,7 @@ defmodule Graphene.CarbonComponents do
     default: "button"
 
   attr :rest, :global
+  slot :inner_block
 
   def actionable_notification_button(assigns) do
     CoreComponents.actionable_notification_button(assigns)
@@ -316,6 +322,8 @@ defmodule Graphene.CarbonComponents do
   slot :action_button do
     attr :attrs, :map
   end
+
+  slot :inner_block
 
   def ai_label(%{} = assigns) do
     assigns =
@@ -444,6 +452,7 @@ defmodule Graphene.CarbonComponents do
     default: "button"
 
   attr :rest, :global
+  slot :inner_block
 
   def ai_label_action_button(assigns) do
     CoreComponents.ai_label_action_button(assigns)
@@ -458,6 +467,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :custom_styles, :string, doc: "Custom styles to apply to skeleton icon"
   attr :rest, :global
+  slot :inner_block
 
   def ai_skeleton_icon(assigns) do
     CoreComponents.ai_skeleton_icon(assigns)
@@ -471,6 +481,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def ai_skeleton_placeholder(assigns) do
     CoreComponents.ai_skeleton_placeholder(assigns)
@@ -492,6 +503,7 @@ defmodule Graphene.CarbonComponents do
     default: "100%"
 
   attr :rest, :global
+  slot :inner_block
 
   def ai_skeleton_text(assigns) do
     CoreComponents.ai_skeleton_text(assigns)
@@ -511,6 +523,7 @@ defmodule Graphene.CarbonComponents do
     default: "badge-indicator"
 
   attr :rest, :global
+  slot :inner_block
 
   def badge_indicator(assigns) do
     CoreComponents.badge_indicator(assigns)
@@ -540,6 +553,8 @@ defmodule Graphene.CarbonComponents do
     attr :current, :boolean
     attr :text, :string
   end
+
+  slot :inner_block
 
   def breadcrumb(%{item: [_ | _]} = assigns) do
     assigns =
@@ -579,6 +594,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def breadcrumb_item(assigns) do
     CoreComponents.breadcrumb_item(assigns)
@@ -608,6 +624,7 @@ defmodule Graphene.CarbonComponents do
   attr :type, :string, doc: "MIME type of the `target`."
   attr :visited, :boolean, doc: "`true` if the link has been visited."
   attr :rest, :global
+  slot :inner_block
 
   def breadcrumb_link(assigns) do
     CoreComponents.breadcrumb_link(assigns)
@@ -721,6 +738,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :rest, :global
   slot :icon, doc: "The icon for the trigger button."
+  slot :inner_block
 
   def breadcrumb_overflow_menu(assigns) do
     CoreComponents.breadcrumb_overflow_menu(assigns)
@@ -736,6 +754,7 @@ defmodule Graphene.CarbonComponents do
   attr :no_trailing_slash, :boolean, doc: "`true` to omit the trailing slash."
   attr :size, :string, doc: "Breadcrumb size."
   attr :rest, :global
+  slot :inner_block
 
   def breadcrumb_skeleton(assigns) do
     CoreComponents.breadcrumb_skeleton(assigns)
@@ -816,6 +835,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :rest, :global
   slot :icon, doc: "Icon."
+  slot :inner_block
 
   def button(assigns) do
     CoreComponents.button(assigns)
@@ -832,6 +852,7 @@ defmodule Graphene.CarbonComponents do
     doc: "`true` if the buttons should be stacked. Only applies to the button-set variant."
 
   attr :rest, :global
+  slot :inner_block
 
   def button_set(assigns) do
     CoreComponents.button_set(assigns)
@@ -845,6 +866,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def button_set_base(assigns) do
     CoreComponents.button_set_base(assigns)
@@ -857,6 +879,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def button_skeleton(assigns) do
     CoreComponents.button_skeleton(assigns)
@@ -909,6 +932,7 @@ defmodule Graphene.CarbonComponents do
   slot :action, doc: "The action button."
   slot :subtitle, doc: "The subtitle."
   slot :title, doc: "The title."
+  slot :inner_block
 
   def callout_notification(assigns) do
     CoreComponents.callout_notification(assigns)
@@ -937,6 +961,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :size, :string, doc: "Chat button size.", values: ["sm", "md", "lg"], default: "lg"
   attr :rest, :global
+  slot :inner_block
 
   def chat_button(assigns) do
     CoreComponents.chat_button(assigns)
@@ -956,6 +981,7 @@ defmodule Graphene.CarbonComponents do
     default: "lg"
 
   attr :rest, :global
+  slot :inner_block
 
   def chat_button_skeleton(assigns) do
     CoreComponents.chat_button_skeleton(assigns)
@@ -1013,6 +1039,7 @@ defmodule Graphene.CarbonComponents do
     doc: "override the custom event used to sync form values"
 
   attr :rest, :global
+  slot :inner_block
 
   def checkbox(assigns) do
     FormComponents.checkbox(assigns)
@@ -1057,6 +1084,8 @@ defmodule Graphene.CarbonComponents do
     attr :checked, :boolean
     attr :disabled, :boolean
   end
+
+  slot :inner_block
 
   def checkbox_group(%{item: [_ | _]} = assigns) do
     assigns =
@@ -1108,6 +1137,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def checkbox_skeleton(assigns) do
     CoreComponents.checkbox_skeleton(assigns)
@@ -1141,6 +1171,7 @@ defmodule Graphene.CarbonComponents do
   attr :type, :string, doc: "MIME type of the `target`."
   attr :visited, :boolean, doc: "`true` if the link has been visited."
   attr :rest, :global
+  slot :inner_block
 
   def clickable_tile(assigns) do
     CoreComponents.clickable_tile(assigns)
@@ -1206,6 +1237,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :wrap_text, :boolean, doc: "`true` if the button should be disabled."
   attr :rest, :global
+  slot :inner_block
 
   def code_snippet(%{copy_text: nil} = assigns) do
     assigns =
@@ -1257,6 +1289,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :type, :string, doc: "Code snippet type.", values: [nil, "single", "inline", "multi"]
   attr :rest, :global
+  slot :inner_block
 
   def code_snippet_skeleton(assigns) do
     CoreComponents.code_snippet_skeleton(assigns)
@@ -1278,6 +1311,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :span, :any
   attr :rest, :global
+  slot :inner_block
 
   def column(assigns) do
     CoreComponents.column(assigns)
@@ -1291,6 +1325,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def column_hang(assigns) do
     CoreComponents.column_hang(assigns)
@@ -1398,6 +1433,8 @@ defmodule Graphene.CarbonComponents do
     attr :disabled, :boolean
   end
 
+  slot :inner_block
+
   def combo_box(%{item: [_ | _]} = assigns) do
     assigns =
       assigns
@@ -1487,6 +1524,7 @@ defmodule Graphene.CarbonComponents do
       "The `value` attribute that is set to the parent `<cds-dropdown>` when this dropdown item is selected."
 
   attr :rest, :global
+  slot :inner_block
 
   def combo_box_item(assigns) do
     CoreComponents.combo_box_item(assigns)
@@ -1566,6 +1604,8 @@ defmodule Graphene.CarbonComponents do
     attr :attrs, :map
   end
 
+  slot :inner_block
+
   def combo_button(%{item: [_ | _]} = assigns) do
     assigns =
       assigns
@@ -1616,6 +1656,8 @@ defmodule Graphene.CarbonComponents do
     attr :disabled, :boolean
   end
 
+  slot :inner_block
+
   def contained_list(%{item: [_ | _]} = assigns) do
     assigns =
       assigns
@@ -1660,6 +1702,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def contained_list_description(assigns) do
     CoreComponents.contained_list_description(assigns)
@@ -1680,6 +1723,7 @@ defmodule Graphene.CarbonComponents do
   attr :rest, :global
   slot :action, doc: "The action slot for interactive elements"
   slot :icon, doc: "The icon slot for rendering an icon"
+  slot :inner_block
 
   def contained_list_item(assigns) do
     CoreComponents.contained_list_item(assigns)
@@ -1720,6 +1764,8 @@ defmodule Graphene.CarbonComponents do
     attr :icon, :boolean
     attr :target, :string
   end
+
+  slot :inner_block
 
   def content_switcher(%{item: [_ | _]} = assigns) do
     assigns =
@@ -1783,6 +1829,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :rest, :global
   slot :tooltip_content, doc: "Tooltip content for the item."
+  slot :inner_block
 
   def content_switcher_item(assigns) do
     CoreComponents.content_switcher_item(assigns)
@@ -1894,6 +1941,7 @@ defmodule Graphene.CarbonComponents do
     default: "button"
 
   attr :rest, :global
+  slot :inner_block
 
   def copy(assigns) do
     CoreComponents.copy(assigns)
@@ -1938,6 +1986,7 @@ defmodule Graphene.CarbonComponents do
     default: "2000"
 
   attr :rest, :global
+  slot :inner_block
 
   def copy_button(assigns) do
     CoreComponents.copy_button(assigns)
@@ -1997,6 +2046,8 @@ defmodule Graphene.CarbonComponents do
     attr :readonly, :boolean
     attr :attrs, :map
   end
+
+  slot :inner_block
 
   def date_picker(%{input: [_ | _]} = assigns) do
     assigns =
@@ -2088,6 +2139,7 @@ defmodule Graphene.CarbonComponents do
     doc: "Provide the text that is displayed when the control is in warning state"
 
   attr :rest, :global
+  slot :inner_block
 
   def date_picker_input(assigns) do
     CoreComponents.date_picker_input(assigns)
@@ -2103,6 +2155,7 @@ defmodule Graphene.CarbonComponents do
   attr :kind, :string, doc: "Date picker kind.", values: [nil, "simple", "single", "from", "to"]
   attr :range, :boolean, doc: "`true` if the input is a range."
   attr :rest, :global
+  slot :inner_block
 
   def date_picker_input_skeleton(assigns) do
     CoreComponents.date_picker_input_skeleton(assigns)
@@ -2131,6 +2184,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :rest, :global
   slot :definition, doc: "Definition content."
+  slot :inner_block
 
   def definition_tooltip(assigns) do
     CoreComponents.definition_tooltip(assigns)
@@ -2189,6 +2243,7 @@ defmodule Graphene.CarbonComponents do
     default: "gray"
 
   attr :rest, :global
+  slot :inner_block
 
   def dismissible_tag(assigns) do
     CoreComponents.dismissible_tag(assigns)
@@ -2271,6 +2326,8 @@ defmodule Graphene.CarbonComponents do
     attr :value, :string
     attr :disabled, :boolean
   end
+
+  slot :inner_block
 
   def dropdown(%{item: [_ | _]} = assigns) do
     assigns =
@@ -2356,6 +2413,7 @@ defmodule Graphene.CarbonComponents do
       "The `value` attribute that is set to the parent `<cds-dropdown>` when this dropdown item is selected."
 
   attr :rest, :global
+  slot :inner_block
 
   def dropdown_item(assigns) do
     CoreComponents.dropdown_item(assigns)
@@ -2370,6 +2428,7 @@ defmodule Graphene.CarbonComponents do
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden."
   attr :size, :string, doc: "Dropdown size.", values: [nil, "sm", "md", "lg"]
   attr :rest, :global
+  slot :inner_block
 
   def dropdown_skeleton(assigns) do
     CoreComponents.dropdown_skeleton(assigns)
@@ -2397,6 +2456,7 @@ defmodule Graphene.CarbonComponents do
   attr :with_interactive, :boolean, doc: "`true` to expand this expandable tile."
   attr :rest, :global
   slot :above_the_fold_content, doc: "Above-the-fold content."
+  slot :inner_block
 
   def expandable_tile(assigns) do
     CoreComponents.expandable_tile(assigns)
@@ -2413,6 +2473,7 @@ defmodule Graphene.CarbonComponents do
     doc: "Enable reduced label spacing for v12 toggle."
 
   attr :rest, :global
+  slot :inner_block
 
   def feature_flags(assigns) do
     CoreComponents.feature_flags(assigns)
@@ -2457,6 +2518,7 @@ defmodule Graphene.CarbonComponents do
     default: "drop-container"
 
   attr :rest, :global
+  slot :inner_block
 
   def file_uploader_button(assigns) do
     CoreComponents.file_uploader_button(assigns)
@@ -2486,6 +2548,7 @@ defmodule Graphene.CarbonComponents do
     default: "drop-container"
 
   attr :rest, :global
+  slot :inner_block
 
   def file_uploader_drop_container(assigns) do
     CoreComponents.file_uploader_drop_container(assigns)
@@ -2526,6 +2589,7 @@ defmodule Graphene.CarbonComponents do
   attr :rest, :global
   slot :validity, doc: "message The validity message."
   slot :validity_message, doc: "supplement The supplemental validity message."
+  slot :inner_block
 
   def file_uploader_item(assigns) do
     CoreComponents.file_uploader_item(assigns)
@@ -2539,6 +2603,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def file_uploader_skeleton(assigns) do
     CoreComponents.file_uploader_skeleton(assigns)
@@ -2662,6 +2727,8 @@ defmodule Graphene.CarbonComponents do
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
+  slot :inner_block
+
   def fluid_number_input(assigns) do
     FormComponents.fluid_number_input(assigns)
   end
@@ -2677,6 +2744,7 @@ defmodule Graphene.CarbonComponents do
     doc: "`true` if the label should be hidden. Corresponds to the attribute with the same name."
 
   attr :rest, :global
+  slot :inner_block
 
   def fluid_number_input_skeleton(assigns) do
     CoreComponents.fluid_number_input_skeleton(assigns)
@@ -2724,6 +2792,7 @@ defmodule Graphene.CarbonComponents do
     doc: "override the custom event used to sync form values"
 
   attr :rest, :global
+  slot :inner_block
 
   def fluid_search(assigns) do
     FormComponents.fluid_search(assigns)
@@ -2742,6 +2811,7 @@ defmodule Graphene.CarbonComponents do
     default: "md"
 
   attr :rest, :global
+  slot :inner_block
 
   def fluid_search_skeleton(assigns) do
     CoreComponents.fluid_search_skeleton(assigns)
@@ -2804,6 +2874,8 @@ defmodule Graphene.CarbonComponents do
     attr :selected, :boolean
     attr :disabled, :boolean
   end
+
+  slot :inner_block
 
   def fluid_select(%{item: [_ | _]} = assigns) do
     assigns =
@@ -2901,6 +2973,7 @@ defmodule Graphene.CarbonComponents do
     doc: "`true` if the label should be hidden. Corresponds to the attribute with the same name."
 
   attr :rest, :global
+  slot :inner_block
 
   def fluid_select_skeleton(assigns) do
     CoreComponents.fluid_select_skeleton(assigns)
@@ -3000,6 +3073,8 @@ defmodule Graphene.CarbonComponents do
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
+  slot :inner_block
+
   def fluid_text_input(assigns) do
     FormComponents.fluid_text_input(assigns)
   end
@@ -3013,6 +3088,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
   attr :rest, :global
+  slot :inner_block
 
   def fluid_text_input_skeleton(assigns) do
     CoreComponents.fluid_text_input_skeleton(assigns)
@@ -3121,6 +3197,8 @@ defmodule Graphene.CarbonComponents do
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
+  slot :inner_block
+
   def fluid_textarea(assigns) do
     FormComponents.fluid_textarea(assigns)
   end
@@ -3134,6 +3212,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
   attr :rest, :global
+  slot :inner_block
 
   def fluid_textarea_skeleton(assigns) do
     CoreComponents.fluid_textarea_skeleton(assigns)
@@ -3154,6 +3233,7 @@ defmodule Graphene.CarbonComponents do
   attr :csrf_token, :any, default: nil, doc: "CSRF token"
   attr :errors, :list, default: nil, doc: "form errors"
   attr :rest, :global
+  slot :inner_block
 
   def form(%{} = assigns) do
     ~H"""
@@ -3200,6 +3280,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :message_text, :any, doc: "Provide the text for the message in the Form Group"
   attr :rest, :global
+  slot :inner_block
 
   def form_group(assigns) do
     CoreComponents.form_group(assigns)
@@ -3213,6 +3294,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def form_item(assigns) do
     CoreComponents.form_item(assigns)
@@ -3246,6 +3328,8 @@ defmodule Graphene.CarbonComponents do
     attr :span, :string
     attr :attrs, :map
   end
+
+  slot :inner_block
 
   def grid(%{column: [_ | _]} = assigns) do
     assigns =
@@ -3296,6 +3380,8 @@ defmodule Graphene.CarbonComponents do
     attr :prefix, :string
     attr :attrs, :map
   end
+
+  slot :inner_block
 
   def header(%{name: [_ | _]} = assigns) do
     ~H"""
@@ -3401,6 +3487,7 @@ defmodule Graphene.CarbonComponents do
     default: "button"
 
   attr :rest, :global
+  slot :inner_block
 
   def header_global_action(assigns) do
     CoreComponents.header_global_action(assigns)
@@ -3422,6 +3509,7 @@ defmodule Graphene.CarbonComponents do
   attr :menu_label, :string, doc: "The `aria-label` attribute for the menu UI."
   attr :trigger_content, :string, doc: "The content of the trigger button."
   attr :rest, :global
+  slot :inner_block
 
   def header_menu(assigns) do
     CoreComponents.header_menu(assigns)
@@ -3458,6 +3546,7 @@ defmodule Graphene.CarbonComponents do
     doc: "If `true` will style the side nav to sit below the header"
 
   attr :rest, :global
+  slot :inner_block
 
   def header_menu_button(assigns) do
     CoreComponents.header_menu_button(assigns)
@@ -3485,6 +3574,7 @@ defmodule Graphene.CarbonComponents do
   attr :target, :string, doc: "The link target."
   attr :title, :string, doc: "The title."
   attr :rest, :global
+  slot :inner_block
 
   def header_menu_item(assigns) do
     CoreComponents.header_menu_item(assigns)
@@ -3500,6 +3590,7 @@ defmodule Graphene.CarbonComponents do
   attr :href, :string, doc: "Link `href`."
   attr :prefix, :string, doc: "The product name prefix."
   attr :rest, :global
+  slot :inner_block
 
   def header_name(assigns) do
     CoreComponents.header_name(assigns)
@@ -3514,6 +3605,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :menu_bar_label, :string, doc: "The `aria-label` attribute for the menu bar UI."
   attr :rest, :global
+  slot :inner_block
 
   def header_nav(assigns) do
     CoreComponents.header_nav(assigns)
@@ -3541,6 +3633,7 @@ defmodule Graphene.CarbonComponents do
   attr :target, :string, doc: "The link target."
   attr :title, :string, doc: "The title."
   attr :rest, :global
+  slot :inner_block
 
   def header_nav_item(assigns) do
     CoreComponents.header_nav_item(assigns)
@@ -3555,6 +3648,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :expanded, :any, doc: "Specify whether the panel is expanded"
   attr :rest, :global
+  slot :inner_block
 
   def header_panel(assigns) do
     CoreComponents.header_panel(assigns)
@@ -3572,6 +3666,7 @@ defmodule Graphene.CarbonComponents do
       "Optionally specify if container will have a bottom divider to differentiate\nbetween original sidenav items and header menu items. False by default."
 
   attr :rest, :global
+  slot :inner_block
 
   def header_side_nav_items(assigns) do
     CoreComponents.header_side_nav_items(assigns)
@@ -3585,6 +3680,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def heading(assigns) do
     CoreComponents.heading(assigns)
@@ -3602,6 +3698,7 @@ defmodule Graphene.CarbonComponents do
   attr :size, :string, doc: "The size of the icon (16, 20, 24, 32)", default: "16"
   attr :name, :string, doc: "Carbon icon name"
   attr :rest, :global
+  slot :inner_block
 
   def icon(%{name: name} = assigns) when not is_nil(name) do
     assigns =
@@ -3738,6 +3835,8 @@ defmodule Graphene.CarbonComponents do
     attr :attrs, :map
   end
 
+  slot :inner_block
+
   def icon_button(%{icon: [_ | _]} = assigns) do
     assigns =
       assigns
@@ -3858,6 +3957,7 @@ defmodule Graphene.CarbonComponents do
   attr :label, :string, doc: "Label next to the icon."
   attr :size, :string, doc: "Icon indicator should be size 16 or 20", default: "16"
   attr :rest, :global
+  slot :inner_block
 
   def icon_indicator(assigns) do
     CoreComponents.icon_indicator(assigns)
@@ -3890,6 +3990,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :controlled, :boolean, doc: "Whether the loading state is controlled."
   attr :rest, :global
+  slot :inner_block
 
   def inline_loading(assigns) do
     CoreComponents.inline_loading(assigns)
@@ -3924,6 +4025,7 @@ defmodule Graphene.CarbonComponents do
   attr :rest, :global
   slot :subtitle, doc: "The subtitle."
   slot :title, doc: "The title."
+  slot :inner_block
 
   def inline_notification(assigns) do
     CoreComponents.inline_notification(assigns)
@@ -3948,6 +4050,7 @@ defmodule Graphene.CarbonComponents do
   attr :with_background, :any
   attr :rest, :global
   slot :children, doc: "The elements contained within the component."
+  slot :inner_block
 
   def layer(assigns) do
     CoreComponents.layer(assigns)
@@ -3973,6 +4076,7 @@ defmodule Graphene.CarbonComponents do
   attr :type, :string, doc: "MIME type of the `target`."
   attr :visited, :boolean, doc: "`true` if the link has been visited."
   attr :rest, :global
+  slot :inner_block
 
   def link(assigns) do
     CoreComponents.link(assigns)
@@ -3987,6 +4091,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :rest, :global
   slot :nested, doc: "The nested child list."
+  slot :inner_block
 
   def list_item(assigns) do
     CoreComponents.list_item(assigns)
@@ -4013,6 +4118,7 @@ defmodule Graphene.CarbonComponents do
   attr :small, :boolean, doc: "Specify whether you would like the small variant of <Loading>"
   attr :type, :string, values: [nil, "regular", "small"]
   attr :rest, :global
+  slot :inner_block
 
   def loading(assigns) do
     CoreComponents.loading(assigns)
@@ -4033,6 +4139,7 @@ defmodule Graphene.CarbonComponents do
   attr :x, :string, doc: "Horizontal position of the menu."
   attr :y, :string, doc: "Vertical position of the menu."
   attr :rest, :global
+  slot :inner_block
 
   def menu(assigns) do
     CoreComponents.menu(assigns)
@@ -4104,6 +4211,8 @@ defmodule Graphene.CarbonComponents do
     attr :attrs, :map
   end
 
+  slot :inner_block
+
   def menu_button(%{item: [_ | _]} = assigns) do
     assigns =
       assigns
@@ -4153,6 +4262,7 @@ defmodule Graphene.CarbonComponents do
   attr :selected, :boolean, doc: "Whether the menu item is selected."
   attr :rest, :global
   slot :submenu, doc: "Submenu content."
+  slot :inner_block
 
   def menu_item(assigns) do
     CoreComponents.menu_item(assigns)
@@ -4166,6 +4276,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def menu_item_divider(assigns) do
     CoreComponents.menu_item_divider(assigns)
@@ -4180,6 +4291,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :label, :any, doc: "Label for the menu item."
   attr :rest, :global
+  slot :inner_block
 
   def menu_item_group(assigns) do
     CoreComponents.menu_item_group(assigns)
@@ -4197,6 +4309,7 @@ defmodule Graphene.CarbonComponents do
   attr :label, :any, doc: "Label for the menu item radio group."
   attr :selected_item, :any, doc: "Selected item in the radio group."
   attr :rest, :global
+  slot :inner_block
 
   def menu_item_radio_group(assigns) do
     CoreComponents.menu_item_radio_group(assigns)
@@ -4214,6 +4327,7 @@ defmodule Graphene.CarbonComponents do
   attr :selected, :boolean, doc: "Whether the menu item is selected or not."
   attr :shortcut, :any
   attr :rest, :global
+  slot :inner_block
 
   def menu_item_selectable(assigns) do
     CoreComponents.menu_item_selectable(assigns)
@@ -4281,6 +4395,8 @@ defmodule Graphene.CarbonComponents do
     attr :autofocus, :boolean
     attr :attrs, :map
   end
+
+  slot :inner_block
 
   def modal(%{body: [_ | _]} = assigns) do
     assigns =
@@ -4550,6 +4666,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def modal_body(assigns) do
     CoreComponents.modal_body(assigns)
@@ -4563,6 +4680,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def modal_body_content(assigns) do
     CoreComponents.modal_body_content(assigns)
@@ -4580,6 +4698,7 @@ defmodule Graphene.CarbonComponents do
     default: "Close"
 
   attr :rest, :global
+  slot :inner_block
 
   def modal_close_button(assigns) do
     CoreComponents.modal_close_button(assigns)
@@ -4594,6 +4713,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :has_three_buttons, :boolean, doc: "`true` if this modal footer has more than two buttons."
   attr :rest, :global
+  slot :inner_block
 
   def modal_footer(assigns) do
     CoreComponents.modal_footer(assigns)
@@ -4673,6 +4793,7 @@ defmodule Graphene.CarbonComponents do
     default: "button"
 
   attr :rest, :global
+  slot :inner_block
 
   def modal_footer_button(assigns) do
     CoreComponents.modal_footer_button(assigns)
@@ -4686,6 +4807,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def modal_header(assigns) do
     CoreComponents.modal_header(assigns)
@@ -4699,6 +4821,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def modal_heading(assigns) do
     CoreComponents.modal_heading(assigns)
@@ -4712,6 +4835,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def modal_label(assigns) do
     CoreComponents.modal_label(assigns)
@@ -4828,6 +4952,8 @@ defmodule Graphene.CarbonComponents do
     attr :disabled, :boolean
   end
 
+  slot :inner_block
+
   def multi_select(%{item: [_ | _]} = assigns) do
     assigns =
       assigns
@@ -4929,6 +5055,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :selected, :boolean, doc: "Whether the item is selected."
   attr :rest, :global
+  slot :inner_block
 
   def multi_select_item(assigns) do
     CoreComponents.multi_select_item(assigns)
@@ -5052,6 +5179,8 @@ defmodule Graphene.CarbonComponents do
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
+  slot :inner_block
+
   def number_input(assigns) do
     FormComponents.number_input(assigns)
   end
@@ -5064,6 +5193,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden."
   attr :rest, :global
+  slot :inner_block
 
   def number_input_skeleton(assigns) do
     CoreComponents.number_input_skeleton(assigns)
@@ -5104,6 +5234,7 @@ defmodule Graphene.CarbonComponents do
     default: "gray"
 
   attr :rest, :global
+  slot :inner_block
 
   def operational_tag(assigns) do
     CoreComponents.operational_tag(assigns)
@@ -5128,6 +5259,8 @@ defmodule Graphene.CarbonComponents do
   slot :item do
     attr :attrs, :map
   end
+
+  slot :inner_block
 
   def ordered_list(%{item: [_ | _]} = assigns) do
     assigns =
@@ -5273,6 +5406,8 @@ defmodule Graphene.CarbonComponents do
     attr :danger, :boolean
   end
 
+  slot :inner_block
+
   def overflow_menu(%{item: [_ | _]} = assigns) do
     assigns =
       assigns
@@ -5379,6 +5514,7 @@ defmodule Graphene.CarbonComponents do
   attr :flipped, :boolean, doc: "How the menu is aligned to the trigger button."
   attr :size, :string, doc: "The overflow menu size.", values: ["sm", "md", "lg"], default: "md"
   attr :rest, :global
+  slot :inner_block
 
   def overflow_menu_body(assigns) do
     CoreComponents.overflow_menu_body(assigns)
@@ -5405,6 +5541,7 @@ defmodule Graphene.CarbonComponents do
     default: "md"
 
   attr :rest, :global
+  slot :inner_block
 
   def overflow_menu_item(assigns) do
     CoreComponents.overflow_menu_item(assigns)
@@ -5441,6 +5578,8 @@ defmodule Graphene.CarbonComponents do
   slot :content_text do
     attr :subtitle, :string
   end
+
+  slot :inner_block
 
   def page_header(%{breadcrumb_slot: [_ | _]} = assigns) do
     ~H"""
@@ -5548,6 +5687,7 @@ defmodule Graphene.CarbonComponents do
   attr :rest, :global
   slot :content_actions, doc: "Content actions for the breadcrumb."
   slot :page_actions, doc: "Page actions for the breadcrumb."
+  slot :inner_block
 
   def page_header_breadcrumb(assigns) do
     CoreComponents.page_header_breadcrumb(assigns)
@@ -5569,6 +5709,7 @@ defmodule Graphene.CarbonComponents do
   attr :rest, :global
   slot :contextual_actions, doc: "Contextual actions for the page header."
   slot :page_actions, doc: "Page actions for the page header."
+  slot :inner_block
 
   def page_header_content(assigns) do
     CoreComponents.page_header_content(assigns)
@@ -5583,6 +5724,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :subtitle, :string, doc: "Subtitle text of the page-header-content"
   attr :rest, :global
+  slot :inner_block
 
   def page_header_content_text(assigns) do
     CoreComponents.page_header_content_text(assigns)
@@ -5596,6 +5738,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def page_header_hero_image(assigns) do
     CoreComponents.page_header_hero_image(assigns)
@@ -5610,6 +5753,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :rest, :global
   slot :tags, doc: "Tags for the page header."
+  slot :inner_block
 
   def page_header_tabs(assigns) do
     CoreComponents.page_header_tabs(assigns)
@@ -5668,6 +5812,7 @@ defmodule Graphene.CarbonComponents do
   attr :total_pages, :string, doc: "The number of total pages.", default: "1"
   attr :rest, :global
   slot :page_sizes_select, doc: "Where to put in the `<page-sizes-select>`."
+  slot :inner_block
 
   def pagination(assigns) do
     CoreComponents.pagination(assigns)
@@ -5767,6 +5912,8 @@ defmodule Graphene.CarbonComponents do
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
+  slot :inner_block
+
   def password_input(assigns) do
     FormComponents.password_input(assigns)
   end
@@ -5780,6 +5927,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
   attr :rest, :global
+  slot :inner_block
 
   def password_input_skeleton(assigns) do
     CoreComponents.password_input_skeleton(assigns)
@@ -5822,6 +5970,7 @@ defmodule Graphene.CarbonComponents do
   attr :rest, :global
   slot :trigger
   slot :content
+  slot :inner_block
 
   def popover(%{content: [_ | _]} = assigns) do
     assigns =
@@ -5898,6 +6047,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :tab_tip, :boolean, doc: "Render the component using the tab tip variant"
   attr :rest, :global
+  slot :inner_block
 
   def popover_content(assigns) do
     CoreComponents.popover_content(assigns)
@@ -5932,6 +6082,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :value, :any, doc: "The current value."
   attr :rest, :global
+  slot :inner_block
 
   def progress_bar(assigns) do
     CoreComponents.progress_bar(assigns)
@@ -5973,6 +6124,8 @@ defmodule Graphene.CarbonComponents do
     attr :icon_label, :string
     attr :clickable, :boolean
   end
+
+  slot :inner_block
 
   def progress_indicator(%{step: [_ | _]} = assigns) do
     assigns =
@@ -6020,6 +6173,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :vertical, :boolean, doc: "`true` to render the vertical variant."
   attr :rest, :global
+  slot :inner_block
 
   def progress_indicator_skeleton(assigns) do
     CoreComponents.progress_indicator_skeleton(assigns)
@@ -6052,6 +6206,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :rest, :global
   slot :secondary_label_text, doc: "The secondary progress label."
+  slot :inner_block
 
   def progress_step(assigns) do
     CoreComponents.progress_step(assigns)
@@ -6065,6 +6220,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :vertical, :boolean, doc: "`true` to render the vertical variant."
   attr :rest, :global
+  slot :inner_block
 
   def progress_step_skeleton(assigns) do
     CoreComponents.progress_step_skeleton(assigns)
@@ -6114,6 +6270,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :rest, :global
   slot :ai_label, doc: "AI label content."
+  slot :inner_block
 
   def radio_button(assigns) do
     CoreComponents.radio_button(assigns)
@@ -6173,6 +6330,8 @@ defmodule Graphene.CarbonComponents do
     attr :disabled, :boolean
   end
 
+  slot :inner_block
+
   def radio_button_group(%{item: [_ | _]} = assigns) do
     assigns =
       assigns
@@ -6230,6 +6389,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def radio_button_skeleton(assigns) do
     CoreComponents.radio_button_skeleton(assigns)
@@ -6260,6 +6420,7 @@ defmodule Graphene.CarbonComponents do
   attr :selected, :boolean, doc: "`true` to show the selected state."
   attr :value, :string
   attr :rest, :global
+  slot :inner_block
 
   def radio_tile(assigns) do
     CoreComponents.radio_tile(assigns)
@@ -6308,6 +6469,7 @@ defmodule Graphene.CarbonComponents do
     doc: "override the custom event used to sync form values"
 
   attr :rest, :global
+  slot :inner_block
 
   def search(assigns) do
     FormComponents.search(assigns)
@@ -6370,6 +6532,8 @@ defmodule Graphene.CarbonComponents do
     attr :selected, :boolean
     attr :disabled, :boolean
   end
+
+  slot :inner_block
 
   def select(%{item: [_ | _]} = assigns) do
     assigns =
@@ -6472,6 +6636,7 @@ defmodule Graphene.CarbonComponents do
   attr :value, :string, doc: "The value."
   attr :text, :string, doc: "Text for the select item."
   attr :rest, :global
+  slot :inner_block
 
   def select_item(assigns) do
     CoreComponents.select_item(assigns)
@@ -6487,6 +6652,7 @@ defmodule Graphene.CarbonComponents do
   attr :disabled, :boolean, doc: "`true` to disable this option."
   attr :label, :string, doc: "The label."
   attr :rest, :global
+  slot :inner_block
 
   def select_item_group(assigns) do
     CoreComponents.select_item_group(assigns)
@@ -6500,6 +6666,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden."
   attr :rest, :global
+  slot :inner_block
 
   def select_skeleton(assigns) do
     CoreComponents.select_skeleton(assigns)
@@ -6521,6 +6688,7 @@ defmodule Graphene.CarbonComponents do
   attr :size, :string, doc: "The size of the tag.", values: ["lg", "md", "sm"], default: "md"
   attr :text, :string, doc: "Provide text to be rendered inside of a the tag."
   attr :rest, :global
+  slot :inner_block
 
   def selectable_tag(assigns) do
     CoreComponents.selectable_tag(assigns)
@@ -6550,6 +6718,7 @@ defmodule Graphene.CarbonComponents do
   attr :selected, :boolean, doc: "`true` to show the selected state."
   attr :value, :string
   attr :rest, :global
+  slot :inner_block
 
   def selectable_tile(assigns) do
     CoreComponents.selectable_tile(assigns)
@@ -6582,6 +6751,7 @@ defmodule Graphene.CarbonComponents do
   attr :label, :string, doc: "Label next to the shape."
   attr :text_size, :string, doc: "Shape indicator size (12 or 14)", default: "12"
   attr :rest, :global
+  slot :inner_block
 
   def shape_indicator(assigns) do
     CoreComponents.shape_indicator(assigns)
@@ -6612,6 +6782,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :usage_mode, :string, doc: "Usage mode for the side nav."
   attr :rest, :global
+  slot :inner_block
 
   def side_nav(assigns) do
     CoreComponents.side_nav(assigns)
@@ -6625,6 +6796,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def side_nav_divider(assigns) do
     CoreComponents.side_nav_divider(assigns)
@@ -6638,6 +6810,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def side_nav_items(assigns) do
     CoreComponents.side_nav_items(assigns)
@@ -6659,6 +6832,7 @@ defmodule Graphene.CarbonComponents do
   slot :link, doc: "The link."
   slot :title, doc: "The title."
   slot :title_icon_container, doc: "The title icon container."
+  slot :inner_block
 
   def side_nav_link(assigns) do
     CoreComponents.side_nav_link(assigns)
@@ -6686,6 +6860,7 @@ defmodule Graphene.CarbonComponents do
   attr :title, :string, doc: "The title text."
   attr :rest, :global
   slot :title_icon, doc: "The icon."
+  slot :inner_block
 
   def side_nav_menu(assigns) do
     CoreComponents.side_nav_menu(assigns)
@@ -6703,6 +6878,7 @@ defmodule Graphene.CarbonComponents do
   attr :target, :string, doc: "Link `target`."
   attr :title, :string, doc: "The title."
   attr :rest, :global
+  slot :inner_block
 
   def side_nav_menu_item(assigns) do
     CoreComponents.side_nav_menu_item(assigns)
@@ -6767,6 +6943,7 @@ defmodule Graphene.CarbonComponents do
   attr :slide_in, :boolean, doc: "Determines if this panel slides in"
   attr :title, :any, doc: "Sets the title text"
   attr :rest, :global
+  slot :inner_block
 
   def side_panel(assigns) do
     CoreComponents.side_panel(assigns)
@@ -6780,6 +6957,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def skeleton_icon(assigns) do
     CoreComponents.skeleton_icon(assigns)
@@ -6794,6 +6972,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :optional_classes, :any, doc: "Specify optional classes to be added to your SkeletonText"
   attr :rest, :global
+  slot :inner_block
 
   def skeleton_placeholder(assigns) do
     CoreComponents.skeleton_placeholder(assigns)
@@ -6817,6 +6996,7 @@ defmodule Graphene.CarbonComponents do
     default: "100%"
 
   attr :rest, :global
+  slot :inner_block
 
   def skeleton_text(assigns) do
     CoreComponents.skeleton_text(assigns)
@@ -6836,6 +7016,7 @@ defmodule Graphene.CarbonComponents do
     default: "Skip to main content"
 
   attr :rest, :global
+  slot :inner_block
 
   def skip_to_content(assigns) do
     CoreComponents.skip_to_content(assigns)
@@ -6896,6 +7077,7 @@ defmodule Graphene.CarbonComponents do
   slot :max_text, doc: "The text for maximum value."
   slot :min_text, doc: "The text for minimum value."
   slot :lower_input, doc: "Lower input content."
+  slot :inner_block
 
   def slider(assigns) do
     FormComponents.slider(assigns)
@@ -6926,6 +7108,7 @@ defmodule Graphene.CarbonComponents do
   attr :warn, :boolean, doc: "true to specify if the control should display warn icon and text."
   attr :required, :boolean, doc: "Whether the input is required."
   attr :rest, :global
+  slot :inner_block
 
   def slider_input(assigns) do
     CoreComponents.slider_input(assigns)
@@ -6939,6 +7122,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :two_handles, :boolean, doc: "`true` to show two handles."
   attr :rest, :global
+  slot :inner_block
 
   def slider_skeleton(assigns) do
     CoreComponents.slider_skeleton(assigns)
@@ -7008,6 +7192,7 @@ defmodule Graphene.CarbonComponents do
     default: "Show information"
 
   attr :rest, :global
+  slot :inner_block
 
   def slug(assigns) do
     CoreComponents.slug(assigns)
@@ -7088,6 +7273,7 @@ defmodule Graphene.CarbonComponents do
     default: "button"
 
   attr :rest, :global
+  slot :inner_block
 
   def slug_action_button(assigns) do
     CoreComponents.slug_action_button(assigns)
@@ -7122,6 +7308,7 @@ defmodule Graphene.CarbonComponents do
     doc: "Turn on when passing in custom value to 'gap' attribute (ie. gap=\"2rem\")"
 
   attr :rest, :global
+  slot :inner_block
 
   def stack(assigns) do
     CoreComponents.stack(assigns)
@@ -7149,6 +7336,8 @@ defmodule Graphene.CarbonComponents do
   slot :col do
     attr :label, :any
   end
+
+  slot :inner_block
 
   def structured_list(%{rows: rows, col: [_ | _]} = assigns) when is_list(rows) do
     assigns =
@@ -7204,6 +7393,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def structured_list_body(assigns) do
     CoreComponents.structured_list_body(assigns)
@@ -7217,6 +7407,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def structured_list_cell(assigns) do
     CoreComponents.structured_list_cell(assigns)
@@ -7230,6 +7421,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def structured_list_head(assigns) do
     CoreComponents.structured_list_head(assigns)
@@ -7243,6 +7435,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def structured_list_header_cell(assigns) do
     CoreComponents.structured_list_header_cell(assigns)
@@ -7255,6 +7448,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def structured_list_header_cell_skeleton(assigns) do
     CoreComponents.structured_list_header_cell_skeleton(assigns)
@@ -7272,6 +7466,7 @@ defmodule Graphene.CarbonComponents do
       "The `name` attribute for the `<input>` for selection.\nIf present, this structured list header row will show its selectable version of the UI."
 
   attr :rest, :global
+  slot :inner_block
 
   def structured_list_header_row(assigns) do
     CoreComponents.structured_list_header_row(assigns)
@@ -7296,6 +7491,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :selection_value, :string, doc: "The `value` attribute for the `<input>` for selection."
   attr :rest, :global
+  slot :inner_block
 
   def structured_list_row(assigns) do
     CoreComponents.structured_list_row(assigns)
@@ -7309,6 +7505,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def switcher(assigns) do
     CoreComponents.switcher(assigns)
@@ -7322,6 +7519,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def switcher_divider(assigns) do
     CoreComponents.switcher_divider(assigns)
@@ -7342,6 +7540,7 @@ defmodule Graphene.CarbonComponents do
     default: "0"
 
   attr :rest, :global
+  slot :inner_block
 
   def switcher_item(assigns) do
     CoreComponents.switcher_item(assigns)
@@ -7374,6 +7573,7 @@ defmodule Graphene.CarbonComponents do
       "The `value` attribute that is set to the parent `<cds-content-switcher>`\nwhen this content switcher item is selected."
 
   attr :rest, :global
+  slot :inner_block
 
   def tab(assigns) do
     CoreComponents.tab(assigns)
@@ -7387,6 +7587,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def tab_skeleton(assigns) do
     CoreComponents.tab_skeleton(assigns)
@@ -7449,6 +7650,7 @@ defmodule Graphene.CarbonComponents do
   slot :title, doc: "Title"
   slot :description, doc: "Description"
   slot :toolbar, doc: "Toolbar"
+  slot :inner_block
 
   def table(assigns) do
     CoreComponents.table(assigns)
@@ -7480,6 +7682,7 @@ defmodule Graphene.CarbonComponents do
     default: "0"
 
   attr :rest, :global
+  slot :inner_block
 
   def table_batch_actions(assigns) do
     CoreComponents.table_batch_actions(assigns)
@@ -7497,6 +7700,7 @@ defmodule Graphene.CarbonComponents do
       "TODO: Uncomment when Carbon fully implements sticky header\nSpecify whether the header should be sticky.\nStill experimental: may not work with every combination of table props"
 
   attr :rest, :global
+  slot :inner_block
 
   def table_body(assigns) do
     CoreComponents.table_body(assigns)
@@ -7515,6 +7719,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :size, :any, doc: "The table size."
   attr :rest, :global
+  slot :inner_block
 
   def table_cell(assigns) do
     CoreComponents.table_cell(assigns)
@@ -7528,6 +7733,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def table_cell_content(assigns) do
     CoreComponents.table_cell_content(assigns)
@@ -7546,6 +7752,7 @@ defmodule Graphene.CarbonComponents do
   attr :highlighted, :boolean, doc: "`true` if the table row should be highlighted."
   attr :selected, :boolean, doc: "`true` if the previous table row has been selected"
   attr :rest, :global
+  slot :inner_block
 
   def table_expanded_row(assigns) do
     CoreComponents.table_expanded_row(assigns)
@@ -7559,6 +7766,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def table_head(assigns) do
     CoreComponents.table_head(assigns)
@@ -7599,6 +7807,7 @@ defmodule Graphene.CarbonComponents do
     values: [nil, nil, "xs", "sm", "md", "lg", "xl"]
 
   attr :rest, :global
+  slot :inner_block
 
   def table_header_cell(assigns) do
     CoreComponents.table_header_cell(assigns)
@@ -7612,6 +7821,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def table_header_description(assigns) do
     CoreComponents.table_header_description(assigns)
@@ -7661,6 +7871,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :selection_value, :string, doc: "The `value` attribute for the `<input>` for selection."
   attr :rest, :global
+  slot :inner_block
 
   def table_header_row(assigns) do
     CoreComponents.table_header_row(assigns)
@@ -7674,6 +7885,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def table_header_title(assigns) do
     CoreComponents.table_header_title(assigns)
@@ -7725,6 +7937,7 @@ defmodule Graphene.CarbonComponents do
     doc: "Specify whether the control should be a radio button or inline checkbox."
 
   attr :rest, :global
+  slot :inner_block
 
   def table_row(assigns) do
     CoreComponents.table_row(assigns)
@@ -7758,6 +7971,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :zebra, :boolean, doc: "true to add useZebraStyles striping."
   attr :rest, :global
+  slot :inner_block
 
   def table_skeleton(assigns) do
     CoreComponents.table_skeleton(assigns)
@@ -7772,6 +7986,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :size, :any, doc: "Toolbar size"
   attr :rest, :global
+  slot :inner_block
 
   def table_toolbar(assigns) do
     CoreComponents.table_toolbar(assigns)
@@ -7787,6 +8002,7 @@ defmodule Graphene.CarbonComponents do
   attr :has_batch_actions, :boolean, doc: "`true` if this batch actions bar is active."
   attr :size, :any, doc: "Table toolbar contents size"
   attr :rest, :global
+  slot :inner_block
 
   def table_toolbar_content(assigns) do
     CoreComponents.table_toolbar_content(assigns)
@@ -7828,6 +8044,7 @@ defmodule Graphene.CarbonComponents do
   attr :type, :string, doc: "The `<input>` name."
   attr :value, :string, doc: "The value."
   attr :rest, :global
+  slot :inner_block
 
   def table_toolbar_search(assigns) do
     CoreComponents.table_toolbar_search(assigns)
@@ -7882,6 +8099,8 @@ defmodule Graphene.CarbonComponents do
     attr :value, :string
   end
 
+  slot :inner_block
+
   def tabs(%{tab: [_ | _]} = assigns) do
     assigns =
       assigns
@@ -7933,6 +8152,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :contained, :boolean, doc: "Provide the type of Tab"
   attr :rest, :global
+  slot :inner_block
 
   def tabs_skeleton(assigns) do
     CoreComponents.tabs_skeleton(assigns)
@@ -7979,6 +8199,7 @@ defmodule Graphene.CarbonComponents do
     default: "gray"
 
   attr :rest, :global
+  slot :inner_block
 
   def tag(assigns) do
     CoreComponents.tag(assigns)
@@ -7998,6 +8219,7 @@ defmodule Graphene.CarbonComponents do
     default: "sm"
 
   attr :rest, :global
+  slot :inner_block
 
   def tag_skeleton(assigns) do
     CoreComponents.tag_skeleton(assigns)
@@ -8046,6 +8268,7 @@ defmodule Graphene.CarbonComponents do
     default: "narrow"
 
   attr :rest, :global
+  slot :inner_block
 
   def tearsheet(assigns) do
     CoreComponents.tearsheet(assigns)
@@ -8145,6 +8368,8 @@ defmodule Graphene.CarbonComponents do
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
+  slot :inner_block
+
   def text_input(assigns) do
     FormComponents.text_input(assigns)
   end
@@ -8158,6 +8383,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
   attr :rest, :global
+  slot :inner_block
 
   def text_input_skeleton(assigns) do
     CoreComponents.text_input_skeleton(assigns)
@@ -8266,6 +8492,8 @@ defmodule Graphene.CarbonComponents do
     doc:
       "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
+  slot :inner_block
+
   def textarea(assigns) do
     FormComponents.textarea(assigns)
   end
@@ -8279,6 +8507,7 @@ defmodule Graphene.CarbonComponents do
   """
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
   attr :rest, :global
+  slot :inner_block
 
   def textarea_skeleton(assigns) do
     CoreComponents.textarea_skeleton(assigns)
@@ -8299,6 +8528,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :rest, :global
   slot :decorator, doc: "Decorator content."
+  slot :inner_block
 
   def tile(assigns) do
     CoreComponents.tile(assigns)
@@ -8311,6 +8541,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def tile_above_the_fold_content(assigns) do
     CoreComponents.tile_above_the_fold_content(assigns)
@@ -8323,6 +8554,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def tile_below_the_fold_content(assigns) do
     CoreComponents.tile_below_the_fold_content(assigns)
@@ -8350,6 +8582,7 @@ defmodule Graphene.CarbonComponents do
   attr :selectable_tiles, :any
   attr :rest, :global
   slot :legend, doc: "Legend content."
+  slot :inner_block
 
   def tile_group(assigns) do
     CoreComponents.tile_group(assigns)
@@ -8419,6 +8652,8 @@ defmodule Graphene.CarbonComponents do
     attr :selected, :boolean
     attr :disabled, :boolean
   end
+
+  slot :inner_block
 
   def time_picker(%{select_item: [_ | _]} = assigns) do
     assigns =
@@ -8506,6 +8741,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :value, :string, doc: "The value of the select."
   attr :rest, :global
+  slot :inner_block
 
   def time_picker_select(assigns) do
     CoreComponents.time_picker_select(assigns)
@@ -8541,6 +8777,7 @@ defmodule Graphene.CarbonComponents do
   attr :rest, :global
   slot :subtitle, doc: "The subtitle."
   slot :title, doc: "The title."
+  slot :inner_block
 
   def toast_notification(assigns) do
     CoreComponents.toast_notification(assigns)
@@ -8606,6 +8843,7 @@ defmodule Graphene.CarbonComponents do
   slot :checked_text, doc: "The text for the checked state."
   slot :label_text, doc: "The label text."
   slot :unchecked_text, doc: "The text for the unchecked state."
+  slot :inner_block
 
   def toggle(assigns) do
     FormComponents.toggle(assigns)
@@ -8619,6 +8857,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :rest, :global
+  slot :inner_block
 
   def toggle_skeleton(assigns) do
     CoreComponents.toggle_skeleton(assigns)
@@ -8665,6 +8904,8 @@ defmodule Graphene.CarbonComponents do
   slot :action do
     attr :tag, :string
   end
+
+  slot :inner_block
 
   def toggletip(%{action: [_ | _]} = assigns) do
     assigns =
@@ -8813,6 +9054,8 @@ defmodule Graphene.CarbonComponents do
     attr :attrs, :map
   end
 
+  slot :inner_block
+
   def tooltip(%{content: [_ | _]} = assigns) do
     assigns =
       assigns
@@ -8905,6 +9148,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :tab_tip, :boolean, doc: "Render the component using the tab tip variant"
   attr :rest, :global
+  slot :inner_block
 
   def tooltip_content(assigns) do
     CoreComponents.tooltip_content(assigns)
@@ -8937,6 +9181,7 @@ defmodule Graphene.CarbonComponents do
   attr :on_click, :any, doc: "when adding an href to control the click functionality"
   attr :selected, :boolean, doc: "sets if tree node is selected"
   attr :rest, :global
+  slot :inner_block
 
   def tree_node(assigns) do
     CoreComponents.tree_node(assigns)
@@ -8971,6 +9216,8 @@ defmodule Graphene.CarbonComponents do
     attr :selected, :boolean
     attr :on_click, :any
   end
+
+  slot :inner_block
 
   def tree_view(%{node: [_ | _]} = assigns) do
     assigns =
@@ -9025,6 +9272,8 @@ defmodule Graphene.CarbonComponents do
   slot :item do
     attr :attrs, :map
   end
+
+  slot :inner_block
 
   def unordered_list(%{item: [_ | _]} = assigns) do
     assigns =

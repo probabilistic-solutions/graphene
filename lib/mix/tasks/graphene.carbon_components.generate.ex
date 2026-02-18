@@ -202,7 +202,11 @@ if Mix.env() == :dev do
         |> Kernel.<>(form_delegate_attrs(component, delegate))
         |> Kernel.<>(rest_attr())
 
-      slots = component.slots |> Enum.map(&build_slot/1) |> Enum.join("")
+      slots =
+        component.slots
+        |> Enum.map(&build_slot/1)
+        |> Enum.join("")
+        |> Kernel.<>(inner_block_slot(component.slots))
 
       delegate_call =
         case delegate do
@@ -236,11 +240,14 @@ if Mix.env() == :dev do
         |> Kernel.<>(Map.get(recipe, :extra_attrs, ""))
         |> Kernel.<>(rest_attr(Map.get(recipe, :extra_attrs, "")))
 
+      extra_slots = Map.get(recipe, :extra_slots, "")
+
       slots =
         component.slots
         |> Enum.map(&build_slot/1)
         |> Enum.join("")
-        |> Kernel.<>(Map.get(recipe, :extra_slots, ""))
+        |> Kernel.<>(extra_slots)
+        |> Kernel.<>(inner_block_slot(component.slots, extra_slots))
 
       patterns = Map.get(recipe, :patterns, [])
       prelude = merge_prelude(assign_defaults_prelude(component.attrs), Map.get(recipe, :prelude))
@@ -293,6 +300,19 @@ if Mix.env() == :dev do
     defp merge_prelude(prelude, nil), do: prelude
     defp merge_prelude(nil, prelude), do: prelude
     defp merge_prelude(prelude, extra), do: prelude <> "\n" <> extra
+
+    defp inner_block_slot(slots, extra_slots \\ "") do
+      has_inner_block =
+        Enum.any?(slots, fn slot ->
+          slot.atomname == ":inner_block" or slot.htmlname == "inner-block" or slot.name == "inner_block"
+        end) or String.contains?(extra_slots, "slot :inner_block")
+
+      if has_inner_block do
+        ""
+      else
+        "  slot :inner_block\n"
+      end
+    end
 
     defp rest_attr(extra_attrs \\ "") do
       if String.contains?(extra_attrs, "attr :rest") do
