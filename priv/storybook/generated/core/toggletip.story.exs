@@ -1,3 +1,6 @@
 defmodule Storybook.CodeGen.CoreComponents.Toggletip do
-  use Graphene.CodeGen.Component.Story, func: &Graphene.CoreComponents.toggletip/1
+  use Graphene.CodeGen.Component.Story,
+    func: &Graphene.CoreComponents.toggletip/1,
+    component_module: Graphene.CoreComponents,
+    component_name: :toggletip
 end

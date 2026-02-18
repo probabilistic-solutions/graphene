@@ -6095,6 +6095,8 @@ defmodule Graphene.CarbonComponents do
   * `border` (`:boolean`) - Whether the menu has a border. Defaults to `nil`.
   * `background_token` (`:string`) - Background token for the menu. Defaults to `nil`.
   * `menu_alignment` (`:string`) - Alignment of the menu. Defaults to `nil`.
+  * `x` (`:string`) - Horizontal position of the menu. Defaults to `nil`.
+  * `y` (`:string`) - Vertical position of the menu. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -6108,6 +6110,8 @@ defmodule Graphene.CarbonComponents do
   attr :open, :boolean, doc: "Whether the menu is open."
   attr :rest, :global
   attr :size, :string, doc: "Menu size."
+  attr :x, :string, doc: "Horizontal position of the menu."
+  attr :y, :string, doc: "Vertical position of the menu."
   slot :inner_block
 
   def menu(assigns) do

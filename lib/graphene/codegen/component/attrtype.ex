@@ -155,6 +155,10 @@ defmodule Graphene.CodeGen.Component.AttrType do
           # @carbon/web-components/es/components/progress-bar/defs.d.ts
           %{kind: :string, values: ~w(default inline indented)}
 
+        "MENU_SIZE" ->
+          # @carbon/web-components/es/components/menu/defs.d.ts
+          %{kind: :string, values: ~w(xs sm md lg)}
+
         "PROGRESS_STEP_STAT" ->
           # @carbon/web-components/es/components/progress-bar/defs.d.ts
           %{kind: :string, values: ~w(complete current incomplete invalid)}

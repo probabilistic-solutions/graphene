@@ -2,6 +2,8 @@ defmodule Graphene.CodeGen.Component.Story do
   defmacro __using__(opts) do
     func = Keyword.fetch!(opts, :func)
     extra_variations = Keyword.get(opts, :extra_variations, [])
+    component_module = Keyword.get(opts, :component_module)
+    component_name = Keyword.get(opts, :component_name)
 
     quote do
       if Code.ensure_loaded?(PhoenixStorybook.Story) do
@@ -11,7 +13,13 @@ defmodule Graphene.CodeGen.Component.Story do
       end
 
       @component_func unquote(func)
-      @component_info Keyword.take(Function.info(@component_func), [:module, :name])
+      @component_info (
+        if unquote(component_module) && unquote(component_name) do
+          [module: unquote(component_module), name: unquote(component_name)]
+        else
+          Keyword.take(Function.info(@component_func), [:module, :name])
+        end
+      )
       @render_func @component_func
 
       def function, do: @render_func
@@ -29,16 +37,65 @@ defmodule Graphene.CodeGen.Component.Story do
 
         Enum.concat(base_variations, unquote(extra_variations))
       end
+
+      def container do
+        Graphene.CodeGen.Component.Story.container(@component_info[:name])
+      end
+
+      def template do
+        Graphene.CodeGen.Component.Story.template(@component_info[:name])
+      end
     end
   end
 
   def variations(component_name, component_module, component) do
     base_slots = default_slots(component_name, component_module, component)
+    base_attrs = default_attributes(component_name)
 
-    [variation(%{id: :default, slots: base_slots})] ++
-      attr_variations(component, base_slots) ++
+    [variation(%{id: :default, slots: base_slots, attributes: base_attrs})] ++
+      attr_variations(component_name, component, base_slots, base_attrs) ++
       slot_variations(component_name, component_module, component)
   end
+
+  defp default_attributes(:menu) do
+    %{open: true, x: 240, y: 120}
+  end
+
+  defp default_attributes(:overflow_menu) do
+    %{open: true}
+  end
+
+  defp default_attributes(_component_name) do
+    %{}
+  end
+
+  def container(component_name) when component_name in [:menu, :overflow_menu] do
+    {:iframe, style: iframe_container_style()}
+  end
+  def container(_component_name), do: :div
+
+  defp iframe_container_style do
+    "display: flex; flex-direction: column; justify-content: center; align-items: center; " <>
+      "margin: 0; gap: 5px; padding: 5px; min-height: 240px;"
+  end
+
+  def template(:overflow_menu) do
+    """
+    <div data-floating-menu-container class="psb" style="position: relative; min-height: 240px;">
+      <.psb-variation/>
+    </div>
+    """
+  end
+
+  def template(:menu) do
+    """
+    <div class="psb" style="position: relative; min-height: 240px;">
+      <.psb-variation/>
+    </div>
+    """
+  end
+
+  def template(_component_name), do: "<.psb-variation/>"
 
   defp variation(attrs) do
     struct!(PhoenixStorybook.Stories.Variation, attrs)
@@ -93,10 +150,34 @@ defmodule Graphene.CodeGen.Component.Story do
   defp default_slots(component_name, component_module, component) do
     slots = Map.get(component, :slots, [])
 
-    if Enum.any?(slots, &(&1.name == :inner_block)) do
-      [inner_block_content(component_name, component_module)]
+    if component_name == :overflow_menu do
+      base_slots = []
+
+      base_slots =
+        if Enum.any?(slots, &(&1.name == :icon)) do
+          base_slots ++ [slot_content(component_name, component_module, :icon)]
+        else
+          base_slots
+        end
+
+      base_slots =
+        if Enum.any?(slots, &(&1.name == :tooltip_content)) do
+          base_slots ++ [slot_content(component_name, component_module, :tooltip_content)]
+        else
+          base_slots
+        end
+
+      if Enum.any?(slots, &(&1.name == :inner_block)) do
+        base_slots ++ [inner_block_content(component_name, component_module)]
+      else
+        base_slots
+      end
     else
-      []
+      if Enum.any?(slots, &(&1.name == :inner_block)) do
+        [inner_block_content(component_name, component_module)]
+      else
+        []
+      end
     end
   end
 
@@ -215,11 +296,21 @@ defmodule Graphene.CodeGen.Component.Story do
     ])
   end
 
-  defp composed_inner_block(:overflow_menu, component_module) do
+  defp composed_inner_block(:menu, component_module) do
     join_components([
-      component_tag(component_module, :overflow_menu_item, %{}, "Action 1"),
-      component_tag(component_module, :overflow_menu_item, %{}, "Action 2")
+      component_tag(component_module, :menu_item, %{label: "Action 1"}),
+      component_tag(component_module, :menu_item, %{label: "Action 2"})
     ])
+  end
+
+  defp composed_inner_block(:overflow_menu, component_module) do
+    items =
+      join_components([
+        component_tag(component_module, :overflow_menu_item, %{}, "Action 1"),
+        component_tag(component_module, :overflow_menu_item, %{}, "Action 2")
+      ])
+
+    component_tag(component_module, :overflow_menu_body, %{}, items)
   end
 
   defp composed_inner_block(component_name, component_module)
@@ -258,14 +349,14 @@ defmodule Graphene.CodeGen.Component.Story do
         component_tag(
           component_module,
           :side_nav_link,
-          %{href: "#", title: "Dashboard"},
-          "Dashboard"
+          %{href: "#"},
+          "<:title>Dashboard</:title>"
         ),
         component_tag(
           component_module,
           :side_nav_link,
-          %{href: "#", title: "Settings"},
-          "Settings"
+          %{href: "#"},
+          "<:title>Settings</:title>"
         )
       ])
 
@@ -387,6 +478,10 @@ defmodule Graphene.CodeGen.Component.Story do
     if is_nil(value), do: "nil", else: to_string(value)
   end
 
+  defp slot_content(:overflow_menu, _component_module, :icon) do
+    ~S|<:icon><Graphene.Icons.icon fit="width" name="overflow-menu--horizontal"/></:icon>|
+  end
+
   defp slot_content(_component_name, _component_module, :icon) do
     ~S|<:icon><Graphene.Icons.icon fit="width" name="analytics"/></:icon>|
   end
@@ -405,7 +500,7 @@ defmodule Graphene.CodeGen.Component.Story do
     "<:#{slot}>#{content}</:#{slot}>"
   end
 
-  defp attr_variation_groups(attr, base_slots) do
+  defp attr_variation_groups(attr, base_slots, base_attrs) do
     case {attr.type, Keyword.get(Map.get(attr, :opts, []), :values)} do
       {_, values} when not is_nil(values) ->
         values = Enum.uniq_by(values, &attr_value_key/1)
@@ -419,7 +514,7 @@ defmodule Graphene.CodeGen.Component.Story do
               # are trusted to not have infinite combinations
               variation(%{
                 id: String.to_atom("#{attr.name}-#{attr_value_key(item)}"),
-                attributes: %{attr.name => item},
+                attributes: Map.merge(base_attrs, %{attr.name => item}),
                 slots: base_slots
               })
             end
@@ -432,12 +527,12 @@ defmodule Graphene.CodeGen.Component.Story do
           variations: [
             variation(%{
               id: String.to_atom("#{attr.name}-true"),
-              attributes: %{attr.name => true},
+              attributes: Map.merge(base_attrs, %{attr.name => true}),
               slots: base_slots
             }),
             variation(%{
               id: String.to_atom("#{attr.name}-false"),
-              attributes: %{attr.name => false},
+              attributes: Map.merge(base_attrs, %{attr.name => false}),
               slots: base_slots
             })
           ]
@@ -448,15 +543,23 @@ defmodule Graphene.CodeGen.Component.Story do
     end
   end
 
-  defp attr_variations(component, base_slots) do
+  defp attr_variations(component_name, _component, _base_slots, _base_attrs)
+       when component_name in [:menu, :overflow_menu] do
+    []
+  end
+
+  defp attr_variations(_component_name, component, base_slots, base_attrs) do
     Map.get(component, :attrs, [])
-    |> Stream.map(&attr_variation_groups(&1, base_slots))
+    |> Stream.map(&attr_variation_groups(&1, base_slots, base_attrs))
     |> Enum.reject(&is_nil/1)
     |> List.flatten()
   end
 
   defp slot_variations(component_name, component_module, component) do
-    slots = Map.get(component, :slots, [])
+    if component_name in [:menu, :overflow_menu] do
+      []
+    else
+      slots = Map.get(component, :slots, [])
 
     for {comb, i} <- Enum.with_index(:lib_combin.cnr_all(slots)) do
       variation(%{
@@ -466,6 +569,7 @@ defmodule Graphene.CodeGen.Component.Story do
             slot_content(component_name, component_module, s.name)
           end
       })
+    end
     end
   end
 end

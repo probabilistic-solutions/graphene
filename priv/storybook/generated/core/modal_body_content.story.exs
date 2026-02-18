@@ -1,3 +1,6 @@
 defmodule Storybook.CodeGen.CoreComponents.Modalbodycontent do
-  use Graphene.CodeGen.Component.Story, func: &Graphene.CoreComponents.modal_body_content/1
+  use Graphene.CodeGen.Component.Story,
+    func: &Graphene.CoreComponents.modal_body_content/1,
+    component_module: Graphene.CoreComponents,
+    component_name: :modal_body_content
 end

@@ -29,6 +29,7 @@ defmodule DemoWeb.Router do
 
   scope "/" do
     # these are asserts for the storybook itself, be explicit of where they are
+    get "/storybook/assets/css/fonts.css", DemoWeb.StorybookAssetsController, :fonts
     storybook_assets("/storybook/assets")
   end
 

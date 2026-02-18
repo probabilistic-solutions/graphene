@@ -10,8 +10,12 @@ defmodule Storybook.CarbonComponents.FluidTimePicker.Basic do
         attributes: %{name: "fluid-time-picker-default", value: "12:00"},
         slots: [
           ~S|<:label_text>Start time</:label_text>
-<:select_item value="UTC" selected>UTC</:select_item>
-<:select_item value="PST">PST</:select_item>|
+<:time_picker_select>
+  <Graphene.CarbonComponents.fluid_time_picker_select>
+    <Graphene.CarbonComponents.select_item value="UTC" selected>UTC</Graphene.CarbonComponents.select_item>
+    <Graphene.CarbonComponents.select_item value="PST">PST</Graphene.CarbonComponents.select_item>
+  </Graphene.CarbonComponents.fluid_time_picker_select>
+</:time_picker_select>|
         ]
       },
       %Variation{
@@ -19,8 +23,12 @@ defmodule Storybook.CarbonComponents.FluidTimePicker.Basic do
         attributes: %{name: "fluid-time-picker-timezone", value: "09:30"},
         slots: [
           ~S|<:label_text>Meeting time</:label_text>
-<:select_item value="UTC" selected>UTC</:select_item>
-<:select_item value="CET">CET</:select_item>|
+<:time_picker_select>
+  <Graphene.CarbonComponents.fluid_time_picker_select>
+    <Graphene.CarbonComponents.select_item value="UTC" selected>UTC</Graphene.CarbonComponents.select_item>
+    <Graphene.CarbonComponents.select_item value="CET">CET</Graphene.CarbonComponents.select_item>
+  </Graphene.CarbonComponents.fluid_time_picker_select>
+</:time_picker_select>|
         ]
       },
       %Variation{
@@ -33,7 +41,11 @@ defmodule Storybook.CarbonComponents.FluidTimePicker.Basic do
         },
         slots: [
           ~S|<:label_text>Start time</:label_text>
-<:select_item value="UTC" selected>UTC</:select_item>|
+<:time_picker_select>
+  <Graphene.CarbonComponents.fluid_time_picker_select>
+    <Graphene.CarbonComponents.select_item value="UTC" selected>UTC</Graphene.CarbonComponents.select_item>
+  </Graphene.CarbonComponents.fluid_time_picker_select>
+</:time_picker_select>|
         ]
       }
     ]

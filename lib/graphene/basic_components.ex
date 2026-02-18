@@ -313,7 +313,7 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CarbonComponents.form_item>
-      <CarbonComponents.file_uploader label_title={@label} label_description={@prompt}>
+      <CarbonComponents.file_uploader id={@id} name={@name} label_title={@label} label_description={@prompt}>
         <CarbonComponents.file_uploader_button
           name={@name}
           accept={@rest[:accept]}

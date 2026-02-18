@@ -1,7 +1,7 @@
 defmodule Storybook.CarbonComponents.Link do
   use PhoenixStorybook.Story, :component
 
-  def function, do: &Graphene.CarbonComponents.link/1
+  def function, do: &Graphene.StorybookAliases.carbon_link/1
 
   def variations do
     [

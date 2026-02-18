@@ -7,18 +7,20 @@ defmodule Storybook.CarbonComponents.Dropdown.Basic do
     [
       %Variation{
         id: :default,
-        attributes: %{name: "dropdown-default", title_text: "Dropdown", value: "all"},
+        attributes: %{name: "dropdown-default", value: "all"},
         slots: [
-          ~S|<:item value="all">All</:item>
+          ~S|<:title_text>Dropdown</:title_text>
+<:item value="all">All</:item>
 <:item value="cloud">Cloud</:item>
 <:item value="edge">Edge</:item>|
         ]
       },
       %Variation{
         id: :inline,
-        attributes: %{name: "dropdown-inline", title_text: "Inline", type: "inline", value: "alpha"},
+        attributes: %{name: "dropdown-inline", type: "inline", value: "alpha"},
         slots: [
-          ~S|<:item value="alpha">Alpha</:item>
+          ~S|<:title_text>Inline</:title_text>
+<:item value="alpha">Alpha</:item>
 <:item value="beta">Beta</:item>
 <:item value="gamma">Gamma</:item>|
         ]
@@ -29,9 +31,10 @@ defmodule Storybook.CarbonComponents.Dropdown.Basic do
           for size <- ~w(sm md lg) do
             %Variation{
               id: String.to_atom(size),
-              attributes: %{name: "dropdown-#{size}", title_text: "Size #{size}", size: size, value: "one"},
+              attributes: %{name: "dropdown-#{size}", size: size, value: "one"},
               slots: [
-                ~S|<:item value="one">One</:item>
+                ~s|<:title_text>Size #{size}</:title_text>
+<:item value="one">One</:item>
 <:item value="two">Two</:item>|
               ]
             }

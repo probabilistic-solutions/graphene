@@ -361,6 +361,16 @@ defmodule Graphene.CodeGen.ComponentPatches do
           "attribute" => "menu-alignment",
           "type" => "string",
           "description" => "Alignment of the menu."
+        }),
+        Attr.parse(%{
+          "name" => "x",
+          "type" => "number",
+          "description" => "Horizontal position of the menu."
+        }),
+        Attr.parse(%{
+          "name" => "y",
+          "type" => "number",
+          "description" => "Vertical position of the menu."
         })
       ],
       slots: []
@@ -2256,6 +2266,16 @@ defmodule Graphene.CodeGen.ComponentPatches do
       "attribute" => "menu-alignment",
       "type" => "string",
       "description" => "Alignment of the menu."
+    })
+    |> ensure_attr(%{
+      "name" => "x",
+      "type" => "number",
+      "description" => "Horizontal position of the menu."
+    })
+    |> ensure_attr(%{
+      "name" => "y",
+      "type" => "number",
+      "description" => "Vertical position of the menu."
     })
   end
 

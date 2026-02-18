@@ -5540,6 +5540,8 @@ defmodule Graphene.CoreComponents do
   attr :border, :boolean, default: nil, doc: "Whether the menu has a border."
   attr :background_token, :string, default: nil, doc: "Background token for the menu."
   attr :menu_alignment, :string, default: nil, doc: "Alignment of the menu."
+  attr :x, :string, default: nil, doc: "Horizontal position of the menu."
+  attr :y, :string, default: nil, doc: "Vertical position of the menu."
   attr :rest, :global
 
   slot :inner_block
@@ -5553,6 +5555,8 @@ defmodule Graphene.CoreComponents do
       border={assigns[:border]}
       background-token={assigns[:background_token]}
       menu-alignment={assigns[:menu_alignment]}
+      x={assigns[:x]}
+      y={assigns[:y]}
       {@rest}
     >
       {render_slot(@inner_block)}

@@ -9,11 +9,11 @@ defmodule Storybook.CarbonComponents.MultiSelect.Basic do
         id: :default,
         attributes: %{
           name: "multi-select-default",
-          title_text: "Choose multiple",
           style: "min-width: 20rem;"
         },
         slots: [
-          ~S|<:item value="one">Option 1</:item>
+          ~S|<:title_text>Choose multiple</:title_text>
+<:item value="one">Option 1</:item>
 <:item value="two">Option 2</:item>
 <:item value="three">Option 3</:item>|
         ]
@@ -22,12 +22,12 @@ defmodule Storybook.CarbonComponents.MultiSelect.Basic do
         id: :inline,
         attributes: %{
           name: "multi-select-inline",
-          title_text: "Inline",
           type: "inline",
           style: "min-width: 20rem;"
         },
         slots: [
-          ~S|<:item value="alpha">Alpha</:item>
+          ~S|<:title_text>Inline</:title_text>
+<:item value="alpha">Alpha</:item>
 <:item value="beta">Beta</:item>|
         ]
       },
@@ -35,12 +35,12 @@ defmodule Storybook.CarbonComponents.MultiSelect.Basic do
         id: :disabled,
         attributes: %{
           name: "multi-select-disabled",
-          title_text: "Disabled",
           disabled: true,
           style: "min-width: 20rem;"
         },
         slots: [
-          ~S|<:item value="one">Option 1</:item>
+          ~S|<:title_text>Disabled</:title_text>
+<:item value="one">Option 1</:item>
 <:item value="two">Option 2</:item>|
         ]
       }

@@ -21,11 +21,16 @@ if Mix.env() == :dev do
 
       Tmp.dir(fn path ->
         for name <- Map.keys(Graphene.CoreComponents.__components__()) do
+          component = to_string(name)
+          {func_module, func_name} = story_function(component)
+
           Mix.Generator.copy_template(
             template_story(:src),
             template_story(:dst, path, name),
-            component: to_string(name),
-            module: "CoreComponents"
+            component: component,
+            module: "CoreComponents",
+            func_module: func_module,
+            func_name: func_name
           )
         end
 
@@ -50,5 +55,9 @@ if Mix.env() == :dev do
         )
       end
     end
+
+    defp story_function("form"), do: {"Graphene.StorybookAliases", "core_form"}
+    defp story_function("link"), do: {"Graphene.StorybookAliases", "core_link"}
+    defp story_function(component), do: {"Graphene.CoreComponents", component}
   end
 end

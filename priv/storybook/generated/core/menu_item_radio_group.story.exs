@@ -1,3 +1,6 @@
 defmodule Storybook.CodeGen.CoreComponents.Menuitemradiogroup do
-  use Graphene.CodeGen.Component.Story, func: &Graphene.CoreComponents.menu_item_radio_group/1
+  use Graphene.CodeGen.Component.Story,
+    func: &Graphene.CoreComponents.menu_item_radio_group/1,
+    component_module: Graphene.CoreComponents,
+    component_name: :menu_item_radio_group
 end
