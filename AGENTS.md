@@ -16,6 +16,7 @@
 - `cd demo && mix setup` prepares the demo app.
 - `cd demo && mix phx.server` runs the demo app at `http://localhost:4000`.
 - `mix test` (root) and `cd demo && mix test` (demo) run ExUnit tests.
+- `./scripts/screenshot <addr:port> <route> [resolution]` captures a headless Chromium screenshot (saves under `/tmp/screenshots/{repo}/{branch}`; run with `--help` for usage).
 - Optional generation (dev only): `mix graphene.icons.generate`, `mix graphene.core_components.generate`, `mix graphene.stories.generate` to refresh generated outputs.
 - `mix graphene.core_components.generate` performs a compile check on the generated module before replacing `lib/graphene/core_components.ex`.
 

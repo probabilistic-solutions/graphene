@@ -1,0 +1,156 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CHROME_BIN=${CHROME_BIN:-chromium}
+if ! command -v "$CHROME_BIN" >/dev/null 2>&1; then
+  echo "Chromium not found in PATH. Set CHROME_BIN if needed." >&2
+  exit 1
+fi
+
+ROOT_DIR_NAME=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")
+BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)
+if [[ -z "$BRANCH_NAME" ]]; then
+  BRANCH_NAME="no-git"
+elif [[ "$BRANCH_NAME" == "HEAD" ]]; then
+  SHORT_SHA=$(git rev-parse --short HEAD 2>/dev/null || echo "detached")
+  BRANCH_NAME="detached-${SHORT_SHA}"
+fi
+
+OUT_DIR=${OUT_DIR:-/tmp/screenshots/${ROOT_DIR_NAME}/${BRANCH_NAME}}
+WAIT_MS=${WAIT_MS:-8000}
+TIMEOUT_SEC=${TIMEOUT_SEC:-45}
+SHOT_TIMESTAMP=${SHOT_TIMESTAMP:-1}
+MAX_RETRIES=${MAX_RETRIES:-2}
+
+usage() {
+  cat <<USAGE
+Usage:
+  ./scripts/screenshot <addr:port> <route> [resolution]
+
+Examples:
+  ./scripts/screenshot localhost:6006 / 2560x1440
+  ./scripts/screenshot localhost:6006 /?path=/story/button--default 1600x900
+  ./scripts/screenshot localhost:4000 / 2560x1440
+
+Notes:
+  - Screenshots are written to $OUT_DIR
+  - Set WAIT_MS to give JS extra time to render (default: 8000)
+  - Set SHOT_TIMESTAMP=0 to overwrite instead of timestamping
+  - Set MAX_RETRIES to re-attempt failed shots (default: 2)
+USAGE
+}
+
+take_shot() {
+  local url=$1
+  local outfile=$2
+  local res=$3
+  local timeout_bin
+  local width
+  local height
+  local attempt=0
+
+  if [[ "$res" =~ ^([0-9]+)[xX]([0-9]+)$ ]]; then
+    width="${BASH_REMATCH[1]}"
+    height="${BASH_REMATCH[2]}"
+  else
+    echo "Invalid resolution '$res' (expected WxH, e.g. 2560x1440)" >&2
+    usage >&2
+    return 1
+  fi
+
+  mkdir -p "$OUT_DIR"
+  timeout_bin=$(command -v timeout || true)
+
+  while (( attempt <= MAX_RETRIES )); do
+    local attempt_wait=$(( WAIT_MS * (attempt + 1) ))
+    local cmd=(
+      "$CHROME_BIN"
+      --headless=new
+      --no-sandbox
+      --disable-gpu
+      --disable-dev-shm-usage
+      --disable-background-networking
+      --disable-client-side-phishing-detection
+      --disable-component-update
+      --disable-default-apps
+      --disable-domain-reliability
+      --disable-hang-monitor
+      --disable-logging
+      --disable-popup-blocking
+      --disable-prompt-on-repost
+      --disable-sync
+      --disable-features=Translate,MediaRouter,OptimizationHints,PrivacySandboxSettings4,PrivacySandboxAdsAPIs,Gcm
+      --log-level=3
+      --metrics-recording-only
+      --no-default-browser-check
+      --no-first-run
+      --password-store=basic
+      --use-mock-keychain
+      --force-device-scale-factor=1
+      --enable-unsafe-swiftshader
+      --use-angle=swiftshader
+      --hide-scrollbars
+      --run-all-compositor-stages-before-draw
+      --virtual-time-budget="$attempt_wait"
+      --window-size="${width},${height}"
+      --screenshot="$outfile"
+      "$url"
+    )
+
+    if [[ -n "$timeout_bin" ]]; then
+      "$timeout_bin" "${TIMEOUT_SEC}s" "${cmd[@]}" || true
+    else
+      "${cmd[@]}" || true
+    fi
+
+    if [[ -f "$outfile" ]]; then
+      break
+    fi
+
+    attempt=$(( attempt + 1 ))
+  done
+
+  if [[ -f "$outfile" ]]; then
+    echo "$outfile"
+  else
+    echo "Screenshot failed to write: $outfile" >&2
+    return 1
+  fi
+}
+
+if [[ $# -lt 1 ]]; then
+  usage
+  exit 1
+fi
+
+case "${1:-}" in
+  -h|--help)
+    usage
+    exit 0
+    ;;
+esac
+
+if [[ "${1:-}" == -* || $# -lt 2 || $# -gt 3 ]]; then
+  usage
+  exit 1
+fi
+
+addr=$1
+route=$2
+res=${3:-2560x1440}
+
+route="/${route#/}"
+safe_route=$(echo "$route" | sed -e 's#^/##' -e 's#[/?&=#]\+#_#g' -e 's#_$##')
+if [[ -z "$safe_route" ]]; then
+  safe_route="home"
+fi
+
+if [[ "$SHOT_TIMESTAMP" == "1" ]]; then
+  stamp=$(date +%Y%m%d_%H%M%S)
+  outfile="$OUT_DIR/${safe_route}_${res}_${stamp}.png"
+else
+  outfile="$OUT_DIR/${safe_route}_${res}.png"
+fi
+
+target_url="http://$addr$route"
+take_shot "$target_url" "$outfile" "$res"

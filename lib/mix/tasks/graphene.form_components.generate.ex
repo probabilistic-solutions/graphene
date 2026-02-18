@@ -137,18 +137,48 @@ if Mix.env() == :dev do
       |> Enum.join("")
     end
 
-    defp render_item_body(name, opts, config) do
+    defp render_slot_uses(component) do
+      component.slots
+      |> Enum.reject(&(&1.name in [:item, :inner_block]))
+      |> Enum.map(fn slot ->
+        slot_name = Atom.to_string(slot.name)
+        htmlname = Graphene.CodeGen.Util.snake2kebab(slot_name)
+
+        [
+          "      <.dynamic_tag",
+          "        :for={s <- assigns[:#{slot_name}]}",
+          "        tag_name={Map.get(s, :tag, \"div\")}",
+          "        slot=\"#{htmlname}\"",
+          "      >",
+          "        {render_slot(s)}",
+          "      </.dynamic_tag>"
+        ]
+        |> Enum.join("\n")
+      end)
+      |> case do
+        [] -> ""
+        slots -> Enum.join(slots, "\n") <> "\n"
+      end
+    end
+
+    defp render_item_body(name, opts, config, component) do
       item_attrs = item_component_attr_lines(config)
       item_component = config.item_component
+      slot_uses = render_slot_uses(component)
+      slot_keys = component.slots |> Enum.map(& &1.name)
+      drop_keys = [:input_id, :input_value, :component_assigns, :id, :item] ++ slot_keys
+      drop_keys = drop_keys |> Enum.uniq()
+      drop_keys_literal = inspect(drop_keys)
 
       "  def #{name}(assigns) do\n" <>
         "    assigns = form_input_assigns(assigns, #{opts})\n" <>
-        "    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id, :item])\n" <>
+        "    component_assigns = Map.drop(assigns, #{drop_keys_literal})\n" <>
         "    assigns = assign(assigns, :component_assigns, component_assigns)\n" <>
         "    ~H\"\"\"\n" <>
         "    <input type=\"hidden\" id={@input_id} name={@name} value={@input_value} form={@form} />\n" <>
         "    <CoreComponents.#{name} {@component_assigns}>\n" <>
         "      {render_slot(@inner_block)}\n" <>
+        slot_uses <>
         "      <%= for item <- @item do %>\n" <>
         "        <CoreComponents.#{item_component}\n" <>
         item_attrs <>
@@ -363,7 +393,7 @@ if Mix.env() == :dev do
 
           config ->
             slots = slots <> item_slot_defs(config)
-            {slots, render_item_body(name, opts, config)}
+            {slots, render_item_body(name, opts, config, component)}
         end
 
       doc_str <> extras <> attrs <> slots <> body

@@ -483,8 +483,8 @@ defmodule Graphene.FormComponents do
       form_input_assigns(assigns,
         name: :checkbox,
         mode: :boolean,
-        event: "cds-checkbox-changed",
-        checked_attr: :checked
+        checked_attr: :checked,
+        event: "cds-checkbox-changed"
       )
 
     component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
@@ -623,8 +623,8 @@ defmodule Graphene.FormComponents do
       form_input_assigns(assigns,
         name: :toggle,
         mode: :boolean,
-        event: "cds-toggle-changed",
         checked_attr: :toggled,
+        event: "cds-toggle-changed",
         detail_key: "toggled"
       )
 
@@ -2062,6 +2062,7 @@ defmodule Graphene.FormComponents do
   * `size` (`:any`) - The search box size. Defaults to `nil`.
   * `type` (`:string`) - The `<input>` name. Defaults to `nil`.
   * `value` (`:string`) - The value. Defaults to `nil`.
+  * `color_scheme` (`:string`) - Color scheme for the search. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -2088,6 +2089,7 @@ defmodule Graphene.FormComponents do
   attr :close_button_label_text, :string,
     doc: "Specify a label to be read by screen readers on the \"close\" button"
 
+  attr :color_scheme, :string, doc: "Color scheme for the search."
   attr :disabled, :boolean, doc: "`true` if the search box should be disabled."
   attr :expandable, :boolean, doc: "`true` if the search bar can be expandable"
   attr :expanded, :boolean, doc: "`true` if the expandable search has been expanded"
@@ -2311,7 +2313,17 @@ defmodule Graphene.FormComponents do
       form_input_assigns(assigns, name: :select, mode: :value, event: "cds-select-selected")
 
     component_assigns =
-      Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id, :item])
+      Map.drop(assigns, [
+        :input_id,
+        :input_value,
+        :component_assigns,
+        :id,
+        :item,
+        :helper_text,
+        :inner_block,
+        :label_text,
+        :validity_message
+      ])
 
     assigns = assign(assigns, :component_assigns, component_assigns)
 
@@ -2319,6 +2331,27 @@ defmodule Graphene.FormComponents do
     <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
     <CoreComponents.select {@component_assigns}>
       {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:helper_text]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="helper-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:label_text]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:validity_message]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
       <%= for item <- @item do %>
         <CoreComponents.select_item
           label={item[:label]}
@@ -2449,7 +2482,17 @@ defmodule Graphene.FormComponents do
       form_input_assigns(assigns, name: :fluid_select, mode: :value, event: "cds-select-selected")
 
     component_assigns =
-      Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id, :item])
+      Map.drop(assigns, [
+        :input_id,
+        :input_value,
+        :component_assigns,
+        :id,
+        :item,
+        :helper_text,
+        :inner_block,
+        :label_text,
+        :validity_message
+      ])
 
     assigns = assign(assigns, :component_assigns, component_assigns)
 
@@ -2457,6 +2500,27 @@ defmodule Graphene.FormComponents do
     <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
     <CoreComponents.fluid_select {@component_assigns}>
       {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:helper_text]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="helper-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:label_text]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:validity_message]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
       <%= for item <- @item do %>
         <CoreComponents.select_item
           label={item[:label]}
@@ -2505,7 +2569,6 @@ defmodule Graphene.FormComponents do
   * `required` (`:boolean`) - `true` if the value is required. Defaults to `false`.
   * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
   * `size` (`:string`) - Dropdown size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * `title_text` (`:string`) - Provide the title text that will be read by a screen reader when visiting this control. Defaults to `nil`.
   * `toggle_label_closed` (`:string`) - The `aria-label` attribute for the UI indicating the closed state. Defaults to `nil`.
   * `toggle_label_open` (`:string`) - The `aria-label` attribute for the UI indicating the open state. Defaults to `nil`.
   * `type` (`:string`) - `true` if this dropdown should use the inline UI variant. Defaults to `""`. Must be one of `""`, or `"inline"`.
@@ -2516,6 +2579,9 @@ defmodule Graphene.FormComponents do
   * Global attributes are accepted.
   ## Slots
 
+  * `title_text` - Title text content. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
 
@@ -2559,9 +2625,6 @@ defmodule Graphene.FormComponents do
   attr :rest, :global
   attr :size, :string, doc: "Dropdown size.", values: ["sm", "md", "lg"], default: "md"
 
-  attr :title_text, :string,
-    doc: "Provide the title text that will be read by a screen reader when visiting this control"
-
   attr :toggle_label_closed, :string,
     doc: "The `aria-label` attribute for the UI indicating the closed state."
 
@@ -2582,6 +2645,10 @@ defmodule Graphene.FormComponents do
 
   slot :inner_block
 
+  slot :title_text, doc: "Title text content." do
+    attr :tag, :string
+  end
+
   slot :item do
     attr :label, :string
     attr :value, :string
@@ -2593,7 +2660,15 @@ defmodule Graphene.FormComponents do
       form_input_assigns(assigns, name: :dropdown, mode: :value, event: "cds-dropdown-selected")
 
     component_assigns =
-      Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id, :item])
+      Map.drop(assigns, [
+        :input_id,
+        :input_value,
+        :component_assigns,
+        :id,
+        :item,
+        :inner_block,
+        :title_text
+      ])
 
     assigns = assign(assigns, :component_assigns, component_assigns)
 
@@ -2601,6 +2676,13 @@ defmodule Graphene.FormComponents do
     <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
     <CoreComponents.dropdown {@component_assigns}>
       {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:title_text]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="title-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
       <%= for item <- @item do %>
         <CoreComponents.dropdown_item
           value={item[:value] || item[:label]}
@@ -2669,6 +2751,7 @@ defmodule Graphene.FormComponents do
   * `value` (`:string`) - The value of the selected item. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
+  * `controlled` (`:boolean`) - Whether the combobox is controlled. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -2695,6 +2778,8 @@ defmodule Graphene.FormComponents do
   attr :clear_selection_label, :string,
     doc: "The `aria-label` attribute for the icon to clear selection.",
     default: "Clear selection"
+
+  attr :controlled, :boolean, doc: "Whether the combobox is controlled."
 
   attr :direction, :string,
     doc: "Specify the direction of the dropdown. Can be either top or bottom.",
@@ -2765,7 +2850,7 @@ defmodule Graphene.FormComponents do
       form_input_assigns(assigns, name: :combo_box, mode: :value, event: "cds-combo-box-selected")
 
     component_assigns =
-      Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id, :item])
+      Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id, :item, :inner_block])
 
     assigns = assign(assigns, :component_assigns, component_assigns)
 
@@ -2837,7 +2922,6 @@ defmodule Graphene.FormComponents do
 
     Defaults to `"top-after-reopen"`. Must be one of `"fixed"`, `"top"`, or `"top-after-reopen"`.
   * `size` (`:string`) - Dropdown size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * `title_text` (`:string`) - Provide the title text that will be read by a screen reader when visiting this control. Defaults to `nil`.
   * `toggle_label_closed` (`:string`) - The `aria-label` attribute for the UI indicating the closed state. Defaults to `nil`.
   * `toggle_label_open` (`:string`) - The `aria-label` attribute for the UI indicating the open state. Defaults to `nil`.
   * `type` (`:string`) - `true` if this dropdown should use the inline UI variant. Defaults to `""`. Must be one of `""`, or `"inline"`.
@@ -2848,6 +2932,9 @@ defmodule Graphene.FormComponents do
   * Global attributes are accepted.
   ## Slots
 
+  * `title_text` - Title text content. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
 
@@ -2917,9 +3004,6 @@ defmodule Graphene.FormComponents do
 
   attr :size, :string, doc: "Dropdown size.", values: ["sm", "md", "lg"], default: "md"
 
-  attr :title_text, :string,
-    doc: "Provide the title text that will be read by a screen reader when visiting this control"
-
   attr :toggle_label_closed, :string,
     doc: "The `aria-label` attribute for the UI indicating the closed state."
 
@@ -2940,6 +3024,10 @@ defmodule Graphene.FormComponents do
 
   slot :inner_block
 
+  slot :title_text, doc: "Title text content." do
+    attr :tag, :string
+  end
+
   slot :item do
     attr :label, :string
     attr :value, :string
@@ -2955,7 +3043,15 @@ defmodule Graphene.FormComponents do
       )
 
     component_assigns =
-      Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id, :item])
+      Map.drop(assigns, [
+        :input_id,
+        :input_value,
+        :component_assigns,
+        :id,
+        :item,
+        :inner_block,
+        :title_text
+      ])
 
     assigns = assign(assigns, :component_assigns, component_assigns)
 
@@ -2963,6 +3059,13 @@ defmodule Graphene.FormComponents do
     <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
     <CoreComponents.multi_select {@component_assigns}>
       {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:title_text]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="title-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
       <%= for item <- @item do %>
         <CoreComponents.multi_select_item
           value={item[:value] || item[:label]}
@@ -3214,6 +3317,8 @@ defmodule Graphene.FormComponents do
   * `value_upper` (`:any`) - The upper bound when there are two handles.. Defaults to `nil`.
   * `warn` (`:boolean`) - true to specify if the control should display warn icon and text. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
+  * `controlled` (`:boolean`) - Whether the slider is controlled. Defaults to `nil`.
+  * `format_label` (`:any`) - Formatter for the slider label. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -3224,6 +3329,9 @@ defmodule Graphene.FormComponents do
 
     * `tag` (`:string`)
   * `min_text` - The text for minimum value. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `lower_input` - Lower input content. Accepts attributes:
 
     * `tag` (`:string`)
   * `inner_block`
@@ -3241,7 +3349,9 @@ defmodule Graphene.FormComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
+  attr :controlled, :boolean, doc: "Whether the slider is controlled."
   attr :disabled, :boolean, doc: "`true` if the check box should be disabled."
+  attr :format_label, :any, doc: "Formatter for the slider label."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -3275,6 +3385,10 @@ defmodule Graphene.FormComponents do
   slot :inner_block
 
   slot :label_text, doc: "The label text." do
+    attr :tag, :string
+  end
+
+  slot :lower_input, doc: "Lower input content." do
     attr :tag, :string
   end
 

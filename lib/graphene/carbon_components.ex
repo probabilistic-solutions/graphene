@@ -107,12 +107,14 @@ defmodule Graphene.CarbonComponents do
   * `disabled` (`:boolean`) - `true` if the accordion item should be disabled. Defaults to `false`.
   * `open` (`:boolean`) - `true` if the accordion item should be open. Defaults to `false`.
   * `title` (`:string`) - The title text. Defaults to `nil`.
+  * `controlled` (`:boolean`) - Whether the item is controlled by the parent. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
   * `inner_block`
 
   """
+  attr :controlled, :boolean, doc: "Whether the item is controlled by the parent."
   attr :disabled, :boolean, doc: "`true` if the accordion item should be disabled."
   attr :open, :boolean, doc: "`true` if the accordion item should be open."
   attr :rest, :global
@@ -121,6 +123,38 @@ defmodule Graphene.CarbonComponents do
 
   def accordion_item(assigns) do
     CoreComponents.accordion_item(assigns)
+  end
+
+  @doc """
+  Component `<cds-accordion-skeleton>` from `./src/components/accordion/accordion-skeleton.ts`
+
+  Accordion skeleton.
+
+
+  ## Attributes
+
+  * `alignment` (`:string`) - Specify the alignment of the accordion heading title and chevron. Defaults to `nil`. Must be one of `nil`, `"start"`, or `"end"`.
+  * `count` (`:string`) - Set number of items to render. Defaults to `nil`.
+  * `is_flush` (`:boolean`) - Specify whether Accordion text should be flush. Defaults to `nil`.
+  * `open` (`:boolean`) - `true` if the first accordion item should be open. Defaults to `nil`.
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :alignment, :string,
+    doc: "Specify the alignment of the accordion heading title and chevron.",
+    values: [nil, "start", "end"]
+
+  attr :count, :string, doc: "Set number of items to render."
+  attr :is_flush, :boolean, doc: "Specify whether Accordion text should be flush."
+  attr :open, :boolean, doc: "`true` if the first accordion item should be open."
+  attr :rest, :global
+  slot :inner_block
+
+  def accordion_skeleton(assigns) do
+    CoreComponents.accordion_skeleton(assigns)
   end
 
   @doc """
@@ -157,6 +191,9 @@ defmodule Graphene.CarbonComponents do
   * `title` - The title. Accepts attributes:
 
     * `tag` (`:string`)
+  * `action` - Action content for the notification. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
@@ -191,6 +228,11 @@ defmodule Graphene.CarbonComponents do
     doc: "Provide a description for \"status\" icon that can be read by screen readers"
 
   attr :timeout, :any, doc: "Specify an optional duration the notification should be closed in"
+
+  slot :action, doc: "Action content for the notification." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
   slot :subtitle, doc: "The subtitle." do
@@ -894,7 +936,7 @@ defmodule Graphene.CarbonComponents do
 
     Defaults to `false`.
   * `kind` (`:string`) - Button kind. Defaults to `"primary"`. Must be one of `"primary"`, `"secondary"`, `"tertiary"`, `"danger"`, `"danger--tertiary"`, `"danger--ghost"`, or `"ghost"`.
-  * `leave_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before hiding the tooltip. Defaults to `"300"`.
+  * `leave_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before hiding the tooltip. Defaults to `"100"`.
   * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `"button"`.
   * `open` (`:boolean`) - `true` if the dropdown should be open. Defaults to `false`.
   * `open_tooltip` (`:boolean`) - Boolean to determine if tooltip is open. Defaults to `false`.
@@ -993,7 +1035,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :leave_delay_ms, :string,
     doc: "Specify the duration in milliseconds to delay before hiding the tooltip",
-    default: "300"
+    default: "100"
 
   attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
   attr :open, :boolean, doc: "`true` if the dropdown should be open."
@@ -1035,6 +1077,33 @@ defmodule Graphene.CarbonComponents do
 
   def breadcrumb_overflow_menu(assigns) do
     CoreComponents.breadcrumb_overflow_menu(assigns)
+  end
+
+  @doc """
+  Component `<cds-breadcrumb-skeleton>` from `./src/components/breadcrumb/breadcrumb-skeleton.ts`
+
+  Breadcrumb skeleton.
+
+
+  ## Attributes
+
+  * `items` (`:string`) - Number of items to render. Defaults to `nil`.
+  * `no_trailing_slash` (`:boolean`) - `true` to omit the trailing slash. Defaults to `nil`.
+  * `size` (`:string`) - Breadcrumb size. Defaults to `nil`.
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :items, :string, doc: "Number of items to render."
+  attr :no_trailing_slash, :boolean, doc: "`true` to omit the trailing slash."
+  attr :rest, :global
+  attr :size, :string, doc: "Breadcrumb size."
+  slot :inner_block
+
+  def breadcrumb_skeleton(assigns) do
+    CoreComponents.breadcrumb_skeleton(assigns)
   end
 
   @doc """
@@ -1215,6 +1284,27 @@ defmodule Graphene.CarbonComponents do
 
   def button_set_base(assigns) do
     CoreComponents.button_set_base(assigns)
+  end
+
+  @doc """
+  Component `<cds-button-skeleton>` from `./src/components/button/button-skeleton.ts`
+
+  Button skeleton.
+
+
+  ## Attributes
+
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def button_skeleton(assigns) do
+    CoreComponents.button_skeleton(assigns)
   end
 
   @doc """
@@ -1569,6 +1659,27 @@ defmodule Graphene.CarbonComponents do
   end
 
   @doc """
+  Component `<cds-checkbox-skeleton>` from `./src/components/checkbox/checkbox-skeleton.ts`
+
+  Checkbox skeleton.
+
+
+  ## Attributes
+
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def checkbox_skeleton(assigns) do
+    CoreComponents.checkbox_skeleton(assigns)
+  end
+
+  @doc """
   Component `<cds-clickable-tile>` from `./src/components/tile/clickable-tile.ts`
 
   Clickable tile.
@@ -1766,6 +1877,29 @@ defmodule Graphene.CarbonComponents do
   end
 
   @doc """
+  Component `<cds-code-snippet-skeleton>` from `./src/components/code-snippet/code-snippet-skeleton.ts`
+
+  Code snippet skeleton.
+
+
+  ## Attributes
+
+  * `type` (`:string`) - Code snippet type. Defaults to `nil`. Must be one of `nil`, `"single"`, `"inline"`, or `"multi"`.
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :rest, :global
+  attr :type, :string, doc: "Code snippet type.", values: [nil, "single", "inline", "multi"]
+  slot :inner_block
+
+  def code_snippet_skeleton(assigns) do
+    CoreComponents.code_snippet_skeleton(assigns)
+  end
+
+  @doc """
   Component `<cds-column>` from `./src/components/grid/column.ts`
 
   The column component.
@@ -1775,9 +1909,10 @@ defmodule Graphene.CarbonComponents do
   ## Attributes
 
   * `lg` (`:any`) - Defaults to `nil`.
+  * `max` (`:any`) - Defaults to `nil`.
   * `md` (`:any`) - Defaults to `nil`.
   * `sm` (`:any`) - Specify column size
-    Keys sm, md or lg
+    Keys sm, md, lg, xlg, max
 
     Values
     - N, P, { span:N start:S}, { start: S, end: E}
@@ -1788,6 +1923,7 @@ defmodule Graphene.CarbonComponents do
 
     Defaults to `nil`.
   * `span` (`:any`) - Defaults to `nil`.
+  * `xlg` (`:any`) - Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -1795,14 +1931,16 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :lg, :any
+  attr :max, :any
   attr :md, :any
   attr :rest, :global
 
   attr :sm, :any,
     doc:
-      "Specify column size\nKeys sm, md or lg\n\nValues\n- N, P, { span:N start:S}, { start: S, end: E}\nN = number\nP = percentage\nS = Start column\nE = End column (does not reach e.g. start 1 end 3 is same as start 1 span 2)"
+      "Specify column size\nKeys sm, md, lg, xlg, max\n\nValues\n- N, P, { span:N start:S}, { start: S, end: E}\nN = number\nP = percentage\nS = Start column\nE = End column (does not reach e.g. start 1 end 3 is same as start 1 span 2)"
 
   attr :span, :any
+  attr :xlg, :any
   slot :inner_block
 
   def column(assigns) do
@@ -1886,6 +2024,7 @@ defmodule Graphene.CarbonComponents do
   * `value` (`:string`) - The value of the selected item. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
+  * `controlled` (`:boolean`) - Whether the combobox is controlled. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -1900,6 +2039,8 @@ defmodule Graphene.CarbonComponents do
   attr :clear_selection_label, :string,
     doc: "The `aria-label` attribute for the icon to clear selection.",
     default: "Clear selection"
+
+  attr :controlled, :boolean, doc: "Whether the combobox is controlled."
 
   attr :direction, :string,
     doc: "Specify the direction of the dropdown. Can be either top or bottom.",
@@ -1977,6 +2118,7 @@ defmodule Graphene.CarbonComponents do
       assigns
       |> assign_new(:allow_custom_value, fn -> false end)
       |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:controlled, fn -> nil end)
       |> assign_new(:disabled, fn -> false end)
       |> assign_new(:helper_text, fn -> nil end)
       |> assign_new(:hide_label, fn -> false end)
@@ -2444,6 +2586,9 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
+  * `tooltip_content` - Tooltip content for the item. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
@@ -2466,6 +2611,10 @@ defmodule Graphene.CarbonComponents do
       "The `value` attribute that is set to the parent `<cds-content-switcher>`\nwhen this content switcher item is selected."
 
   slot :inner_block
+
+  slot :tooltip_content, doc: "Tooltip content for the item." do
+    attr :tag, :string
+  end
 
   def content_switcher_item(assigns) do
     CoreComponents.content_switcher_item(assigns)
@@ -2502,7 +2651,7 @@ defmodule Graphene.CarbonComponents do
 
     Defaults to `false`.
   * `kind` (`:string`) - Button kind. Defaults to `"primary"`. Must be one of `"primary"`, `"secondary"`, `"tertiary"`, `"danger"`, `"danger--tertiary"`, `"danger--ghost"`, or `"ghost"`.
-  * `leave_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before hiding the tooltip. Defaults to `"300"`.
+  * `leave_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before hiding the tooltip. Defaults to `"100"`.
   * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `"button"`.
   * `open_tooltip` (`:boolean`) - Boolean to determine if tooltip is open. Defaults to `false`.
   * `ping` (`:string`) - URLs to ping, if this button is rendered as `<a>`. Defaults to `nil`.
@@ -2597,7 +2746,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :leave_delay_ms, :string,
     doc: "Specify the duration in milliseconds to delay before hiding the tooltip",
-    default: "300"
+    default: "100"
 
   attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
   attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
@@ -2886,6 +3035,33 @@ defmodule Graphene.CarbonComponents do
   end
 
   @doc """
+  Component `<cds-date-picker-input-skeleton>` from `./src/components/date-picker/date-picker-input-skeleton.ts`
+
+  Date picker input skeleton.
+
+
+  ## Attributes
+
+  * `hide_label` (`:boolean`) - Specify whether the label should be hidden. Defaults to `nil`.
+  * `kind` (`:string`) - Date picker kind. Defaults to `nil`. Must be one of `nil`, `"simple"`, `"single"`, `"from"`, or `"to"`.
+  * `range` (`:boolean`) - `true` if the input is a range. Defaults to `nil`.
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :hide_label, :boolean, doc: "Specify whether the label should be hidden."
+  attr :kind, :string, doc: "Date picker kind.", values: [nil, "simple", "single", "from", "to"]
+  attr :range, :boolean, doc: "`true` if the input is a range."
+  attr :rest, :global
+  slot :inner_block
+
+  def date_picker_input_skeleton(assigns) do
+    CoreComponents.date_picker_input_skeleton(assigns)
+  end
+
+  @doc """
   Component `<cds-definition-tooltip>` from `./src/components/tooltip/definition-tooltip.ts`
 
   Definition tooltip.
@@ -2901,6 +3077,9 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
+  * `definition` - Definition content. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
@@ -2919,6 +3098,11 @@ defmodule Graphene.CarbonComponents do
     doc: "Specifies whether the `DefinitionTooltip` should open on hover or not"
 
   attr :rest, :global
+
+  slot :definition, doc: "Definition content." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
   def definition_tooltip(assigns) do
@@ -3019,7 +3203,6 @@ defmodule Graphene.CarbonComponents do
   * `required` (`:boolean`) - `true` if the value is required. Defaults to `false`.
   * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
   * `size` (`:string`) - Dropdown size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * `title_text` (`:string`) - Provide the title text that will be read by a screen reader when visiting this control. Defaults to `nil`.
   * `toggle_label_closed` (`:string`) - The `aria-label` attribute for the UI indicating the closed state. Defaults to `nil`.
   * `toggle_label_open` (`:string`) - The `aria-label` attribute for the UI indicating the open state. Defaults to `nil`.
   * `type` (`:string`) - `true` if this dropdown should use the inline UI variant. Defaults to `""`. Must be one of `""`, or `"inline"`.
@@ -3030,6 +3213,9 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
+  * `title_text` - Title text content. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
@@ -3061,9 +3247,6 @@ defmodule Graphene.CarbonComponents do
   attr :rest, :global
   attr :size, :string, doc: "Dropdown size.", values: ["sm", "md", "lg"], default: "md"
 
-  attr :title_text, :string,
-    doc: "Provide the title text that will be read by a screen reader when visiting this control"
-
   attr :toggle_label_closed, :string,
     doc: "The `aria-label` attribute for the UI indicating the closed state."
 
@@ -3091,6 +3274,10 @@ defmodule Graphene.CarbonComponents do
 
   slot :inner_block
 
+  slot :title_text, doc: "Title text content." do
+    attr :tag, :string
+  end
+
   slot :item do
     attr :label, :string
     attr :value, :string
@@ -3111,7 +3298,6 @@ defmodule Graphene.CarbonComponents do
       |> assign_new(:open, fn -> false end)
       |> assign_new(:read_only, fn -> false end)
       |> assign_new(:required, fn -> false end)
-      |> assign_new(:title_text, fn -> nil end)
       |> assign_new(:toggle_label_closed, fn -> nil end)
       |> assign_new(:toggle_label_open, fn -> nil end)
       |> assign_new(:validity_message, fn -> nil end)
@@ -3135,7 +3321,6 @@ defmodule Graphene.CarbonComponents do
       required={@required}
       required_validity_message={@required_validity_message}
       size={@size}
-      title_text={@title_text}
       toggle_label_closed={@toggle_label_closed}
       toggle_label_open={@toggle_label_open}
       type={@type}
@@ -3145,6 +3330,13 @@ defmodule Graphene.CarbonComponents do
       warn_text={@warn_text}
       {@rest}
     >
+      <.dynamic_tag
+        :for={title <- @title_text}
+        tag_name={Map.get(title, :tag, "div")}
+        slot="title-text"
+      >
+        {render_slot(title)}
+      </.dynamic_tag>
       <%= for item <- @item do %>
         <CoreComponents.dropdown_item
           value={item[:value] || item[:label]}
@@ -3194,6 +3386,31 @@ defmodule Graphene.CarbonComponents do
   end
 
   @doc """
+  Component `<cds-dropdown-skeleton>` from `./src/components/dropdown/dropdown-skeleton.ts`
+
+  Dropdown skeleton.
+
+
+  ## Attributes
+
+  * `hide_label` (`:boolean`) - Specify whether the label should be hidden. Defaults to `nil`.
+  * `size` (`:string`) - Dropdown size. Defaults to `nil`. Must be one of `nil`, `"sm"`, `"md"`, or `"lg"`.
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :hide_label, :boolean, doc: "Specify whether the label should be hidden."
+  attr :rest, :global
+  attr :size, :string, doc: "Dropdown size.", values: [nil, "sm", "md", "lg"]
+  slot :inner_block
+
+  def dropdown_skeleton(assigns) do
+    CoreComponents.dropdown_skeleton(assigns)
+  end
+
+  @doc """
   Component `<cds-expandable-tile>` from `./src/components/tile/expandable-tile.ts`
 
   Expandable tile.
@@ -3217,6 +3434,9 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
+  * `above_the_fold_content` - Above-the-fold content. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
@@ -3229,6 +3449,11 @@ defmodule Graphene.CarbonComponents do
 
   attr :rest, :global
   attr :with_interactive, :boolean, doc: "`true` to expand this expandable tile."
+
+  slot :above_the_fold_content, doc: "Above-the-fold content." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
   def expandable_tile(assigns) do
@@ -3244,12 +3469,16 @@ defmodule Graphene.CarbonComponents do
 
   ## Attributes
 
+  * `enable_v12_toggle_reduced_label_spacing` (`:boolean`) - Enable reduced label spacing for v12 toggle. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
   * `inner_block`
 
   """
+  attr :enable_v12_toggle_reduced_label_spacing, :boolean,
+    doc: "Enable reduced label spacing for v12 toggle."
+
   attr :rest, :global
   slot :inner_block
 
@@ -4336,7 +4565,7 @@ defmodule Graphene.CarbonComponents do
   @doc """
   Component `<cds-fluid-textarea-skeleton>` from `./src/components/fluid-textarea/fluid-textarea-skeleton.ts`
 
-  Fluid text area input.
+  Fluid text area skeleton.
 
 
 
@@ -4355,6 +4584,226 @@ defmodule Graphene.CarbonComponents do
 
   def fluid_textarea_skeleton(assigns) do
     CoreComponents.fluid_textarea_skeleton(assigns)
+  end
+
+  @doc """
+  Component `<cds-fluid-time-picker>` from `./src/components/fluid-time-picker/fluid-time-picker.ts`
+
+  Fluid Time Picker component.
+
+  ## Events
+
+  * `change` - Undocumented
+  * `invalid` - Undocumented
+
+
+  ## Attributes
+
+  * `disabled` (`:boolean`) - Specify whether the control is disabled. Defaults to `false`.
+  * `hide_label` (`:boolean`) - Specify whether the label should be hidden. Defaults to `false`.
+  * `invalid` (`:boolean`) - Specify whether the control is currently invalid. Defaults to `false`.
+  * `max_length` (`:string`) - Specify the maximum length of the input value. Defaults to `"5"`.
+  * `name` (`:string`) - Name for the input in FormData. Defaults to `nil`.
+  * `pattern` (`:string`) - Pattern for input validation. Defaults to `"(1[012]|[1-9]):[0-5][0-9](\\\\s)?"`.
+  * `placeholder` (`:string`) - Placeholder text for the input. Defaults to `"hh:mm"`.
+  * `read_only` (`:boolean`) - Specify whether the control should be read-only. Defaults to `false`.
+  * `required` (`:boolean`) - Whether the input is required. Defaults to `false`.
+  * `required_validity_message` (`:string`) - Custom message for required validation. Defaults to `"Please fill out this field."`.
+  * `size` (`:any`) - Size of the time picker. Defaults to `nil`.
+  * `type` (`:string`) - Input type. Defaults to `"text"`.
+  * `value` (`:string`) - Value of the input. Defaults to `nil`.
+  * `warning` (`:boolean`) - Specify whether the control is in warning state. Defaults to `false`.
+  * Global attributes are accepted.
+  ## Slots
+
+  * `invalid_text` - The invalid text. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `label_text` - The label text. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `time_picker_select` - Slot for time picker select components. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `warning_text` - The warning text. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `inner_block`
+
+  """
+  attr :disabled, :boolean, doc: "Specify whether the control is disabled"
+  attr :hide_label, :boolean, doc: "Specify whether the label should be hidden"
+  attr :invalid, :boolean, doc: "Specify whether the control is currently invalid"
+  attr :max_length, :string, doc: "Specify the maximum length of the input value", default: "5"
+  attr :name, :string, doc: "Name for the input in FormData"
+
+  attr :pattern, :string,
+    doc: "Pattern for input validation",
+    default: "(1[012]|[1-9]):[0-5][0-9](\\\\s)?"
+
+  attr :placeholder, :string, doc: "Placeholder text for the input", default: "hh:mm"
+  attr :read_only, :boolean, doc: "Specify whether the control should be read-only"
+  attr :required, :boolean, doc: "Whether the input is required"
+
+  attr :required_validity_message, :string,
+    doc: "Custom message for required validation",
+    default: "Please fill out this field."
+
+  attr :rest, :global
+  attr :size, :any, doc: "Size of the time picker"
+  attr :type, :string, doc: "Input type", default: "text"
+  attr :value, :string, doc: "Value of the input"
+  attr :warning, :boolean, doc: "Specify whether the control is in warning state"
+  slot :inner_block
+
+  slot :invalid_text, doc: "The invalid text." do
+    attr :tag, :string
+  end
+
+  slot :label_text, doc: "The label text." do
+    attr :tag, :string
+  end
+
+  slot :time_picker_select, doc: "Slot for time picker select components." do
+    attr :tag, :string
+  end
+
+  slot :validity_message,
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
+    attr :tag, :string
+  end
+
+  slot :warning_text, doc: "The warning text." do
+    attr :tag, :string
+  end
+
+  def fluid_time_picker(assigns) do
+    CoreComponents.fluid_time_picker(assigns)
+  end
+
+  @doc """
+  Component `<cds-fluid-time-picker-select>` from `./src/components/fluid-time-picker/fluid-time-picker-select.ts`
+
+  Fluid time picker select.
+
+  ## Events
+
+  * `cds-select-selected` - The name of the custom event fired after an item is selected.
+
+
+  ## Attributes
+
+  * `autofocus` (`:boolean`) - Sets the select to be focussed automatically on page load. Defaults to false. Defaults to `false`.
+  * `default_value` (`:string`) - Optionally provide the default value of the select. Defaults to `nil`.
+  * `disabled` (`:boolean`) - Controls the disabled state of the select. Defaults to `false`.
+  * `hide_label` (`:boolean`) - Specify whether the label should be hidden, or not. Defaults to `false`.
+  * `id` (`:string`) - ID to link the `label` and `select`. Defaults to `nil`.
+  * `inline` (`:boolean`) - Specify whether you want the inline version of this control. Defaults to `false`.
+  * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
+  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
+  * `is_fluid` (`:boolean`) - Specify whether the textarea is fluid or not. Defaults to `false`.
+  * `multiple` (`:boolean`) - `true` to enable multiple selection. Defaults to `nil`.
+  * `name` (`:string`) - Name for the select in the `FormData`. Defaults to `nil`.
+  * `pattern` (`:string`) - Pattern to validate the select against for HTML validity checking. Defaults to `nil`.
+  * `placeholder` (`:string`) - Value to display when the select has an empty `value`. Defaults to `nil`.
+  * `readonly` (`:boolean`) - Controls the readonly state of the select. Defaults to `false`.
+  * `required` (`:boolean`) - Boolean property to set the required status. Defaults to `false`.
+  * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
+  * `selected_index` (`:string`) - The selected index. Defaults to `nil`.
+  * `size` (`:any`) - The input box size. Defaults to `nil`.
+  * `value` (`:string`) - The value of the text area. Defaults to `nil`.
+  * `warn` (`:boolean`) - Specify if the currently value is warn. Defaults to `false`.
+  * `warn_text` (`:string`) - Message which is displayed if the value is warn. Defaults to `nil`.
+  * Global attributes are accepted.
+  ## Slots
+
+  * `helper_text` - The helper text. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `label_text` - The label text. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `inner_block`
+
+  """
+  attr :autofocus, :boolean,
+    doc: "Sets the select to be focussed automatically on page load. Defaults to false"
+
+  attr :default_value, :string, doc: "Optionally provide the default value of the select."
+  attr :disabled, :boolean, doc: "Controls the disabled state of the select"
+  attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
+  attr :id, :string, doc: "ID to link the `label` and `select`"
+  attr :inline, :boolean, doc: "Specify whether you want the inline version of this control"
+  attr :invalid, :boolean, doc: "Specify if the currently value is invalid."
+  attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
+  attr :is_fluid, :boolean, doc: "Specify whether the textarea is fluid or not"
+  attr :multiple, :boolean, doc: "`true` to enable multiple selection."
+  attr :name, :string, doc: "Name for the select in the `FormData`"
+  attr :pattern, :string, doc: "Pattern to validate the select against for HTML validity checking"
+  attr :placeholder, :string, doc: "Value to display when the select has an empty `value`"
+  attr :readonly, :boolean, doc: "Controls the readonly state of the select"
+  attr :required, :boolean, doc: "Boolean property to set the required status"
+
+  attr :required_validity_message, :string,
+    doc: "The special validity message for `required`.",
+    default: "Please fill out this field."
+
+  attr :rest, :global
+  attr :selected_index, :string, doc: "The selected index."
+  attr :size, :any, doc: "The input box size."
+  attr :value, :string, doc: "The value of the text area."
+  attr :warn, :boolean, doc: "Specify if the currently value is warn."
+  attr :warn_text, :string, doc: "Message which is displayed if the value is warn."
+
+  slot :helper_text, doc: "The helper text." do
+    attr :tag, :string
+  end
+
+  slot :inner_block
+
+  slot :label_text, doc: "The label text." do
+    attr :tag, :string
+  end
+
+  slot :validity_message,
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
+    attr :tag, :string
+  end
+
+  def fluid_time_picker_select(assigns) do
+    CoreComponents.fluid_time_picker_select(assigns)
+  end
+
+  @doc """
+  Component `<cds-fluid-time-picker-skeleton>` from `./src/components/fluid-time-picker/fluid-time-picker-skeleton.ts`
+
+  Fluid time picker skeleton.
+
+
+
+  ## Attributes
+
+  * `is_only_two` (`:boolean`) - Specify if there are only two TimePicker elements. Defaults to `false`.
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :is_only_two, :boolean, doc: "Specify if there are only two TimePicker elements."
+  attr :rest, :global
+  slot :inner_block
+
+  def fluid_time_picker_skeleton(assigns) do
+    CoreComponents.fluid_time_picker_skeleton(assigns)
   end
 
   @doc """
@@ -5115,7 +5564,7 @@ defmodule Graphene.CarbonComponents do
 
     Defaults to `false`.
   * `kind` (`:string`) - Button kind. Defaults to `"primary"`. Must be one of `"primary"`, `"secondary"`, `"tertiary"`, `"danger"`, `"danger--tertiary"`, `"danger--ghost"`, or `"ghost"`.
-  * `leave_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before hiding the tooltip. Defaults to `"300"`.
+  * `leave_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before hiding the tooltip. Defaults to `"100"`.
   * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `"button"`.
   * `open_tooltip` (`:boolean`) - Boolean to determine if tooltip is open. Defaults to `false`.
   * `ping` (`:string`) - URLs to ping, if this button is rendered as `<a>`. Defaults to `nil`.
@@ -5140,6 +5589,9 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
+  * `tooltip_content` - Tooltip content. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
@@ -5201,7 +5653,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :leave_delay_ms, :string,
     doc: "Specify the duration in milliseconds to delay before hiding the tooltip",
-    default: "300"
+    default: "100"
 
   attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
   attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
@@ -5234,6 +5686,10 @@ defmodule Graphene.CarbonComponents do
     default: "button"
 
   slot :inner_block
+
+  slot :tooltip_content, doc: "Tooltip content." do
+    attr :tag, :string
+  end
 
   slot :icon do
     attr :name, :string
@@ -5373,6 +5829,7 @@ defmodule Graphene.CarbonComponents do
   * `icon_description` (`:string`) - The assistive text for the spinner icon. Defaults to `"Loading"`.
   * `status` (`:string`) - The loading status. Defaults to `"active"`. Must be one of `"inactive"`, `"active"`, `"finished"`, or `"error"`.
   * `success_delay` (`:string`) - Provide a delay for the setTimeout for success. Defaults to `"1500"`.
+  * `controlled` (`:boolean`) - Whether the loading state is controlled. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -5380,6 +5837,7 @@ defmodule Graphene.CarbonComponents do
 
   """
   attr :assistive_text, :string
+  attr :controlled, :boolean, doc: "Whether the loading state is controlled."
 
   attr :icon_description, :string,
     doc: "The assistive text for the spinner icon.",
@@ -5624,6 +6082,39 @@ defmodule Graphene.CarbonComponents do
   end
 
   @doc """
+  Component `<cds-menu>` from `./src/components/menu/menu.ts`
+
+  Menu.
+
+
+  ## Attributes
+
+  * `open` (`:boolean`) - Whether the menu is open. Defaults to `nil`.
+  * `size` (`:string`) - Menu size. Defaults to `nil`.
+  * `label` (`:string`) - Menu label. Defaults to `nil`.
+  * `border` (`:boolean`) - Whether the menu has a border. Defaults to `nil`.
+  * `background_token` (`:string`) - Background token for the menu. Defaults to `nil`.
+  * `menu_alignment` (`:string`) - Alignment of the menu. Defaults to `nil`.
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :background_token, :string, doc: "Background token for the menu."
+  attr :border, :boolean, doc: "Whether the menu has a border."
+  attr :label, :string, doc: "Menu label."
+  attr :menu_alignment, :string, doc: "Alignment of the menu."
+  attr :open, :boolean, doc: "Whether the menu is open."
+  attr :rest, :global
+  attr :size, :string, doc: "Menu size."
+  slot :inner_block
+
+  def menu(assigns) do
+    CoreComponents.menu(assigns)
+  end
+
+  @doc """
   Component `<cds-menu-button>` from `./src/components/menu-button/menu-button.ts`
 
   Menu button.
@@ -5743,25 +6234,40 @@ defmodule Graphene.CarbonComponents do
   ## Attributes
 
   * `boundaries` (`:any`) - Menu boundaries. Defaults to `nil`.
+  * `danger_description` (`:string`) - Specify the message read by screen readers for the danger menu item variant. Defaults to `"danger"`.
   * `disabled` (`:any`) - Disabled property for the menu item. Defaults to `nil`.
   * `kind` (`:any`) - Defaults to `nil`.
   * `label` (`:any`) - Label for the menu item. Defaults to `nil`.
   * `shortcut` (`:any`) - Shortcut for the menu item. Defaults to `nil`.
   * `submenu_open` (`:boolean`) - Whether the menu submen for an item is open or not. Defaults to `false`.
+  * `selected` (`:boolean`) - Whether the menu item is selected. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
+  * `submenu` - Submenu content. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
   attr :boundaries, :any, doc: "Menu boundaries."
+
+  attr :danger_description, :string,
+    doc: "Specify the message read by screen readers for the danger menu item variant",
+    default: "danger"
+
   attr :disabled, :any, doc: "Disabled property for the menu item."
   attr :kind, :any
   attr :label, :any, doc: "Label for the menu item."
   attr :rest, :global
+  attr :selected, :boolean, doc: "Whether the menu item is selected."
   attr :shortcut, :any, doc: "Shortcut for the menu item."
   attr :submenu_open, :boolean, doc: "Whether the menu submen for an item is open or not."
   slot :inner_block
+
+  slot :submenu, doc: "Submenu content." do
+    attr :tag, :string
+  end
 
   def menu_item(assigns) do
     CoreComponents.menu_item(assigns)
@@ -5846,7 +6352,7 @@ defmodule Graphene.CarbonComponents do
   @doc """
   Component `<cds-menu-item-selectable>` from `./src/components/menu/menu-item-selectable.ts`
 
-  Menu Item.
+  Menu Item Selectable.
 
 
 
@@ -6557,7 +7063,6 @@ defmodule Graphene.CarbonComponents do
 
     Defaults to `"top-after-reopen"`. Must be one of `"fixed"`, `"top"`, or `"top-after-reopen"`.
   * `size` (`:string`) - Dropdown size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * `title_text` (`:string`) - Provide the title text that will be read by a screen reader when visiting this control. Defaults to `nil`.
   * `toggle_label_closed` (`:string`) - The `aria-label` attribute for the UI indicating the closed state. Defaults to `nil`.
   * `toggle_label_open` (`:string`) - The `aria-label` attribute for the UI indicating the open state. Defaults to `nil`.
   * `type` (`:string`) - `true` if this dropdown should use the inline UI variant. Defaults to `""`. Must be one of `""`, or `"inline"`.
@@ -6568,6 +7073,9 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
+  * `title_text` - Title text content. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
@@ -6625,9 +7133,6 @@ defmodule Graphene.CarbonComponents do
 
   attr :size, :string, doc: "Dropdown size.", values: ["sm", "md", "lg"], default: "md"
 
-  attr :title_text, :string,
-    doc: "Provide the title text that will be read by a screen reader when visiting this control"
-
   attr :toggle_label_closed, :string,
     doc: "The `aria-label` attribute for the UI indicating the closed state."
 
@@ -6655,6 +7160,10 @@ defmodule Graphene.CarbonComponents do
 
   slot :inner_block
 
+  slot :title_text, doc: "Title text content." do
+    attr :tag, :string
+  end
+
   slot :item do
     attr :label, :string
     attr :value, :string
@@ -6679,7 +7188,6 @@ defmodule Graphene.CarbonComponents do
       |> assign_new(:read_only, fn -> false end)
       |> assign_new(:required, fn -> false end)
       |> assign_new(:select_all, fn -> false end)
-      |> assign_new(:title_text, fn -> nil end)
       |> assign_new(:toggle_label_closed, fn -> nil end)
       |> assign_new(:toggle_label_open, fn -> nil end)
       |> assign_new(:validity_message, fn -> nil end)
@@ -6709,7 +7217,6 @@ defmodule Graphene.CarbonComponents do
       select_all={@select_all}
       selection_feedback={@selection_feedback}
       size={@size}
-      title_text={@title_text}
       toggle_label_closed={@toggle_label_closed}
       toggle_label_open={@toggle_label_open}
       type={@type}
@@ -6719,6 +7226,13 @@ defmodule Graphene.CarbonComponents do
       warn_text={@warn_text}
       {@rest}
     >
+      <.dynamic_tag
+        :for={title <- @title_text}
+        tag_name={Map.get(title, :tag, "div")}
+        slot="title-text"
+      >
+        {render_slot(title)}
+      </.dynamic_tag>
       <%= for item <- @item do %>
         <CoreComponents.multi_select_item
           value={item[:value] || item[:label]}
@@ -6751,6 +7265,7 @@ defmodule Graphene.CarbonComponents do
   * `selection_name` (`:string`) - The `name` attribute for the `<input>` for selection. Defaults to `nil`.
   * `size` (`:string`) - Dropdown size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
   * `value` (`:string`) - The `value` attribute that is set to the parent `<cds-dropdown>` when this dropdown item is selected. Defaults to `nil`.
+  * `selected` (`:boolean`) - Whether the item is selected. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -6765,6 +7280,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :is_select_all, :boolean, doc: "Marks this item as the “select all” item."
   attr :rest, :global
+  attr :selected, :boolean, doc: "Whether the item is selected."
   attr :selection_name, :string, doc: "The `name` attribute for the `<input>` for selection."
   attr :size, :string, doc: "Dropdown size.", values: ["sm", "md", "lg"], default: "md"
 
@@ -6971,6 +7487,29 @@ defmodule Graphene.CarbonComponents do
   end
 
   @doc """
+  Component `<cds-number-input-skeleton>` from `./src/components/number-input/number-input-skeleton.ts`
+
+  Number input skeleton.
+
+
+  ## Attributes
+
+  * `hide_label` (`:boolean`) - Specify whether the label should be hidden. Defaults to `nil`.
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :hide_label, :boolean, doc: "Specify whether the label should be hidden."
+  attr :rest, :global
+  slot :inner_block
+
+  def number_input_skeleton(assigns) do
+    CoreComponents.number_input_skeleton(assigns)
+  end
+
+  @doc """
   Component `<cds-operational-tag>` from `./src/components/tag/operational-tag.ts`
 
   Operational tag.
@@ -7102,7 +7641,7 @@ defmodule Graphene.CarbonComponents do
 
     Defaults to `false`.
   * `kind` (`:string`) - Button kind. Defaults to `"primary"`. Must be one of `"primary"`, `"secondary"`, `"tertiary"`, `"danger"`, `"danger--tertiary"`, `"danger--ghost"`, or `"ghost"`.
-  * `leave_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before hiding the tooltip. Defaults to `"300"`.
+  * `leave_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before hiding the tooltip. Defaults to `"100"`.
   * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `"button"`.
   * `open` (`:boolean`) - `true` if the dropdown should be open. Defaults to `false`.
   * `open_tooltip` (`:boolean`) - Boolean to determine if tooltip is open. Defaults to `false`.
@@ -7204,7 +7743,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :leave_delay_ms, :string,
     doc: "Specify the duration in milliseconds to delay before hiding the tooltip",
-    default: "300"
+    default: "100"
 
   attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
   attr :open, :boolean, doc: "`true` if the dropdown should be open."
@@ -7561,6 +8100,12 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
+  * `content_actions` - Content actions for the breadcrumb. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `page_actions` - Page actions for the breadcrumb. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
@@ -7578,7 +8123,15 @@ defmodule Graphene.CarbonComponents do
     doc:
       "Set to `true` if the breadcrumb bar is sitting within a grid\n(ie. when used in tandem with page-header-hero-image)"
 
+  slot :content_actions, doc: "Content actions for the breadcrumb." do
+    attr :tag, :string
+  end
+
   slot :inner_block
+
+  slot :page_actions, doc: "Page actions for the breadcrumb." do
+    attr :tag, :string
+  end
 
   def page_header_breadcrumb(assigns) do
     CoreComponents.page_header_breadcrumb(assigns)
@@ -7601,6 +8154,12 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
+  * `contextual_actions` - Contextual actions for the page header. Accepts attributes:
+
+    * `tag` (`:string`)
+  * `page_actions` - Page actions for the page header. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
@@ -7611,7 +8170,15 @@ defmodule Graphene.CarbonComponents do
     doc:
       "Set to `true` if the breadcrumb bar is sitting within a grid\n(ie. when used in tandem with page-header-hero-image)"
 
+  slot :contextual_actions, doc: "Contextual actions for the page header." do
+    attr :tag, :string
+  end
+
   slot :inner_block
+
+  slot :page_actions, doc: "Page actions for the page header." do
+    attr :tag, :string
+  end
 
   def page_header_content(assigns) do
     CoreComponents.page_header_content(assigns)
@@ -7675,11 +8242,18 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
+  * `tags` - Tags for the page header. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
   attr :rest, :global
   slot :inner_block
+
+  slot :tags, doc: "Tags for the page header." do
+    attr :tag, :string
+  end
 
   def page_header_tabs(assigns) do
     CoreComponents.page_header_tabs(assigns)
@@ -7771,6 +8345,71 @@ defmodule Graphene.CarbonComponents do
 
   def pagination(assigns) do
     CoreComponents.pagination(assigns)
+  end
+
+  @doc """
+  Component `<cds-pagination-nav>` from `./src/components/pagination-nav/pagination-nav.ts`
+
+  Pagination Navigation.
+
+  ## Events
+
+  * `cds-page-changed` - The custom event fired when the the page has been changed.
+
+
+  ## Attributes
+
+  * `disable_overflow` (`:boolean`) - If true, the '...' pagination overflow will not render page links between the first and last rendered buttons.
+    Set this to true if you are having performance problems with large data sets.
+
+    Defaults to `nil`.
+  * `items_shown` (`:string`) - The number of items to be shown (minimum of 4 unless props.items < 4). Defaults to `"10"`.
+  * `loop` (`:boolean`) - Whether user should be able to loop through the items when reaching first / last. Defaults to `false`.
+  * `page` (`:string`) - The index of current page. Defaults to `"0"`.
+  * `size` (`:any`) - Specify the size of the PaginationNav. Defaults to `nil`.
+  * `tooltip_alignment` (`:any`) - Specify the alignment of the tooltip for the icon-only next/prev buttons.
+    Can be one of: start, center, or end.
+
+    Defaults to `nil`.
+  * `tooltip_position` (`:any`) - Specify the position of the tooltip for the icon-only next/prev buttons.
+    Can be one of: top, right, bottom, or left.
+
+    Defaults to `nil`.
+  * `total_items` (`:string`) - The total number of items. Defaults to `"1"`.
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :disable_overflow, :boolean,
+    doc:
+      "If true, the '...' pagination overflow will not render page links between the first and last rendered buttons.\nSet this to true if you are having performance problems with large data sets."
+
+  attr :items_shown, :string,
+    doc: "The number of items to be shown (minimum of 4 unless props.items < 4).",
+    default: "10"
+
+  attr :loop, :boolean,
+    doc: "Whether user should be able to loop through the items when reaching first / last."
+
+  attr :page, :string, doc: "The index of current page.", default: "0"
+  attr :rest, :global
+  attr :size, :any, doc: "Specify the size of the PaginationNav."
+
+  attr :tooltip_alignment, :any,
+    doc:
+      "Specify the alignment of the tooltip for the icon-only next/prev buttons.\nCan be one of: start, center, or end."
+
+  attr :tooltip_position, :any,
+    doc:
+      "Specify the position of the tooltip for the icon-only next/prev buttons.\nCan be one of: top, right, bottom, or left."
+
+  attr :total_items, :string, doc: "The total number of items.", default: "1"
+  slot :inner_block
+
+  def pagination_nav(assigns) do
+    CoreComponents.pagination_nav(assigns)
   end
 
   @doc """
@@ -8254,6 +8893,29 @@ defmodule Graphene.CarbonComponents do
   end
 
   @doc """
+  Component `<cds-progress-indicator-skeleton>` from `./src/components/progress-indicator/progress-indicator-skeleton.ts`
+
+  Progress indicator skeleton.
+
+
+  ## Attributes
+
+  * `vertical` (`:boolean`) - `true` to render the vertical variant. Defaults to `nil`.
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :rest, :global
+  attr :vertical, :boolean, doc: "`true` to render the vertical variant."
+  slot :inner_block
+
+  def progress_indicator_skeleton(assigns) do
+    CoreComponents.progress_indicator_skeleton(assigns)
+  end
+
+  @doc """
   Component `<cds-progress-step>` from `./src/components/progress-indicator/progress-step.ts`
 
   Progress step.
@@ -8314,6 +8976,29 @@ defmodule Graphene.CarbonComponents do
   end
 
   @doc """
+  Component `<cds-progress-step-skeleton>` from `./src/components/progress-indicator/progress-step-skeleton.ts`
+
+  Progress step skeleton.
+
+
+  ## Attributes
+
+  * `vertical` (`:boolean`) - `true` to render the vertical variant. Defaults to `nil`.
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :rest, :global
+  attr :vertical, :boolean, doc: "`true` to render the vertical variant."
+  slot :inner_block
+
+  def progress_step_skeleton(assigns) do
+    CoreComponents.progress_step_skeleton(assigns)
+  end
+
+  @doc """
   Component `<cds-radio-button>` from `./src/components/radio-button/radio-button.ts`
 
   Radio button.
@@ -8344,6 +9029,9 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
+  * `ai_label` - AI label content. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
@@ -8379,6 +9067,10 @@ defmodule Graphene.CarbonComponents do
 
   attr :warn_text, :string,
     doc: "Provide the text that is displayed when the control is in warning state"
+
+  slot :ai_label, doc: "AI label content." do
+    attr :tag, :string
+  end
 
   slot :inner_block
 
@@ -8514,6 +9206,27 @@ defmodule Graphene.CarbonComponents do
   end
 
   @doc """
+  Component `<cds-radio-button-skeleton>` from `./src/components/radio-button/radio-button-skeleton.ts`
+
+  Radio button skeleton.
+
+
+  ## Attributes
+
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def radio_button_skeleton(assigns) do
+    CoreComponents.radio_button_skeleton(assigns)
+  end
+
+  @doc """
   Component `<cds-radio-tile>` from `./src/components/tile/radio-tile.ts`
 
   Radio tile.
@@ -8590,6 +9303,7 @@ defmodule Graphene.CarbonComponents do
   * `size` (`:any`) - The search box size. Defaults to `nil`.
   * `type` (`:string`) - The `<input>` name. Defaults to `nil`.
   * `value` (`:string`) - The value. Defaults to `nil`.
+  * `color_scheme` (`:string`) - Color scheme for the search. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -8604,6 +9318,7 @@ defmodule Graphene.CarbonComponents do
   attr :close_button_label_text, :string,
     doc: "Specify a label to be read by screen readers on the \"close\" button"
 
+  attr :color_scheme, :string, doc: "Color scheme for the search."
   attr :disabled, :boolean, doc: "`true` if the search box should be disabled."
   attr :expandable, :boolean, doc: "`true` if the search bar can be expandable"
   attr :expanded, :boolean, doc: "`true` if the expandable search has been expanded"
@@ -8832,6 +9547,7 @@ defmodule Graphene.CarbonComponents do
   * `label` (`:string`) - The label. If this is not specified, the child text content is used. Defaults to `nil`.
   * `selected` (`:boolean`) - `true` to select this option. Defaults to `false`.
   * `value` (`:string`) - The value. Defaults to `nil`.
+  * `text` (`:string`) - Text for the select item. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -8845,6 +9561,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :rest, :global
   attr :selected, :boolean, doc: "`true` to select this option."
+  attr :text, :string, doc: "Text for the select item."
   attr :value, :string, doc: "The value."
   slot :inner_block
 
@@ -8876,6 +9593,29 @@ defmodule Graphene.CarbonComponents do
 
   def select_item_group(assigns) do
     CoreComponents.select_item_group(assigns)
+  end
+
+  @doc """
+  Component `<cds-select-skeleton>` from `./src/components/select/select-skeleton.ts`
+
+  Select skeleton.
+
+
+  ## Attributes
+
+  * `hide_label` (`:boolean`) - Specify whether the label should be hidden. Defaults to `nil`.
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :hide_label, :boolean, doc: "Specify whether the label should be hidden."
+  attr :rest, :global
+  slot :inner_block
+
+  def select_skeleton(assigns) do
+    CoreComponents.select_skeleton(assigns)
   end
 
   @doc """
@@ -9004,6 +9744,7 @@ defmodule Graphene.CarbonComponents do
   * `expanded` (`:boolean`) - `true` to expand the side nav. Defaults to `false`.
   * `is_not_child_of_header` (`:boolean`) - If `true` will style the side nav to sit below the header. Defaults to `false`.
   * `is_not_persistent` (`:boolean`) - Specify if the side-nav will be persistent above the lg breakpoint. Defaults to `false`.
+  * `usage_mode` (`:string`) - Usage mode for the side nav. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -9024,6 +9765,7 @@ defmodule Graphene.CarbonComponents do
     doc: "Specify if the side-nav will be persistent above the lg breakpoint"
 
   attr :rest, :global
+  attr :usage_mode, :string, doc: "Usage mode for the side nav."
   slot :inner_block
 
   def side_nav(assigns) do
@@ -9441,6 +10183,8 @@ defmodule Graphene.CarbonComponents do
   * `value_upper` (`:any`) - The upper bound when there are two handles.. Defaults to `nil`.
   * `warn` (`:boolean`) - true to specify if the control should display warn icon and text. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
+  * `controlled` (`:boolean`) - Whether the slider is controlled. Defaults to `nil`.
+  * `format_label` (`:any`) - Formatter for the slider label. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -9453,10 +10197,15 @@ defmodule Graphene.CarbonComponents do
   * `min_text` - The text for minimum value. Accepts attributes:
 
     * `tag` (`:string`)
+  * `lower_input` - Lower input content. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
+  attr :controlled, :boolean, doc: "Whether the slider is controlled."
   attr :disabled, :boolean, doc: "`true` if the check box should be disabled."
+  attr :format_label, :any, doc: "Formatter for the slider label."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -9500,6 +10249,10 @@ defmodule Graphene.CarbonComponents do
     attr :tag, :string
   end
 
+  slot :lower_input, doc: "Lower input content." do
+    attr :tag, :string
+  end
+
   slot :max_text, doc: "The text for maximum value." do
     attr :tag, :string
   end
@@ -9534,6 +10287,7 @@ defmodule Graphene.CarbonComponents do
   * `type` (`:string`) - The type of the `<input>`. Defaults to `"number"`.
   * `value` (`:any`) - The value. Defaults to `nil`.
   * `warn` (`:boolean`) - true to specify if the control should display warn icon and text. Defaults to `false`.
+  * `required` (`:boolean`) - Whether the input is required. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -9549,6 +10303,7 @@ defmodule Graphene.CarbonComponents do
   attr :max, :string, doc: "The maximum value."
   attr :min, :string, doc: "The minimum value."
   attr :readonly, :boolean, doc: "true` if the input should be readonly."
+  attr :required, :boolean, doc: "Whether the input is required."
   attr :rest, :global
   attr :step, :string, doc: "The snapping step of the value."
   attr :type, :string, doc: "The type of the `<input>`.", default: "number"
@@ -9558,6 +10313,29 @@ defmodule Graphene.CarbonComponents do
 
   def slider_input(assigns) do
     CoreComponents.slider_input(assigns)
+  end
+
+  @doc """
+  Component `<cds-slider-skeleton>` from `./src/components/slider/slider-skeleton.ts`
+
+  Slider skeleton.
+
+
+  ## Attributes
+
+  * `two_handles` (`:boolean`) - `true` to show two handles. Defaults to `nil`.
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :rest, :global
+  attr :two_handles, :boolean, doc: "`true` to show two handles."
+  slot :inner_block
+
+  def slider_skeleton(assigns) do
+    CoreComponents.slider_skeleton(assigns)
   end
 
   @doc """
@@ -9999,6 +10777,27 @@ defmodule Graphene.CarbonComponents do
 
   def structured_list_header_cell(assigns) do
     CoreComponents.structured_list_header_cell(assigns)
+  end
+
+  @doc """
+  Component `<cds-structured-list-header-cell-skeleton>` from `./src/components/structured-list/structured-list-header-cell-skeleton.ts`
+
+  Structured list header cell skeleton.
+
+
+  ## Attributes
+
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def structured_list_header_cell_skeleton(assigns) do
+    CoreComponents.structured_list_header_cell_skeleton(assigns)
   end
 
   @doc """
@@ -10970,12 +11769,14 @@ defmodule Graphene.CarbonComponents do
   * `trigger_content` (`:string`) - The content of the trigger button for narrow mode. Defaults to `nil`.
   * `type` (`:string`) - Tabs type. Defaults to `""`. Must be one of `""`, `"container"`, or `"contained"`.
   * `value` (`:string`) - The value of the selected item. Defaults to `nil`.
+  * `disabled` (`:boolean`) - Whether the tabs are disabled. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
   * `inner_block`
 
   """
+  attr :disabled, :boolean, doc: "Whether the tabs are disabled."
   attr :icon, :boolean, doc: "Icon only."
   attr :low_contrast, :boolean, doc: "`true` to use the low contrast version."
   attr :rest, :global
@@ -11013,6 +11814,7 @@ defmodule Graphene.CarbonComponents do
   def tabs(%{tab: [_ | _]} = assigns) do
     assigns =
       assigns
+      |> assign_new(:disabled, fn -> nil end)
       |> assign_new(:icon, fn -> false end)
       |> assign_new(:low_contrast, fn -> false end)
       |> assign_new(:size, fn -> nil end)
@@ -11616,6 +12418,9 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
+  * `decorator` - Decorator content. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
@@ -11626,10 +12431,57 @@ defmodule Graphene.CarbonComponents do
       "Specify if the `Tile` component should be rendered with rounded corners.\nOnly valid when `ai-label` prop is present"
 
   attr :rest, :global
+
+  slot :decorator, doc: "Decorator content." do
+    attr :tag, :string
+  end
+
   slot :inner_block
 
   def tile(assigns) do
     CoreComponents.tile(assigns)
+  end
+
+  @doc """
+  Component `<cds-tile-above-the-fold-content>` from `./src/components/tile/tile.ts`
+
+  Tile above-the-fold content.
+
+
+  ## Attributes
+
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def tile_above_the_fold_content(assigns) do
+    CoreComponents.tile_above_the_fold_content(assigns)
+  end
+
+  @doc """
+  Component `<cds-tile-below-the-fold-content>` from `./src/components/tile/tile.ts`
+
+  Tile below-the-fold content.
+
+
+  ## Attributes
+
+  * Global attributes are accepted.
+  ## Slots
+
+  * `inner_block`
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def tile_below_the_fold_content(assigns) do
+    CoreComponents.tile_below_the_fold_content(assigns)
   end
 
   @doc """
@@ -11654,6 +12506,9 @@ defmodule Graphene.CarbonComponents do
   * Global attributes are accepted.
   ## Slots
 
+  * `legend` - Legend content. Accepts attributes:
+
+    * `tag` (`:string`)
   * `inner_block`
 
   """
@@ -11668,6 +12523,10 @@ defmodule Graphene.CarbonComponents do
   attr :rest, :global
   attr :selectable_tiles, :any
   slot :inner_block
+
+  slot :legend, doc: "Legend content." do
+    attr :tag, :string
+  end
 
   def tile_group(assigns) do
     CoreComponents.tile_group(assigns)
@@ -12510,14 +13369,18 @@ defmodule Graphene.CarbonComponents do
   * `hide_label` (`:boolean`) - Specify whether or not the label should be hidden. Defaults to `false`.
   * `label` (`:string`) - Provide the label text that will be read by a screen reader. Defaults to `nil`.
   * `size` (`:any`) - Specify the size of the tree from a list of available sizes. Defaults to `nil`.
+  * `controlled` (`:boolean`) - Whether the tree view is controlled. Defaults to `nil`.
+  * `links` (`:boolean`) - Whether the tree view renders links. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
   * `inner_block`
 
   """
+  attr :controlled, :boolean, doc: "Whether the tree view is controlled."
   attr :hide_label, :boolean, doc: "Specify whether or not the label should be hidden"
   attr :label, :string, doc: "Provide the label text that will be read by a screen reader"
+  attr :links, :boolean, doc: "Whether the tree view renders links."
   attr :rest, :global
   attr :size, :any, doc: "Specify the size of the tree from a list of available sizes."
   slot :inner_block
@@ -12536,8 +13399,10 @@ defmodule Graphene.CarbonComponents do
   def tree_view(%{node: [_ | _]} = assigns) do
     assigns =
       assigns
+      |> assign_new(:controlled, fn -> nil end)
       |> assign_new(:hide_label, fn -> false end)
       |> assign_new(:label, fn -> nil end)
+      |> assign_new(:links, fn -> nil end)
       |> assign_new(:size, fn -> nil end)
 
     ~H"""
@@ -12793,225 +13658,6 @@ defmodule Graphene.CarbonComponents do
 
   def file_uploader(assigns) do
     FormComponents.file_uploader(assigns)
-  end
-
-  @doc """
-  Renders a menu using `cds-menu-button` with menu items and groups.
-  """
-  attr :label, :string, default: nil
-  attr :kind, :any, default: nil
-  attr :size, :any, default: nil
-  attr :disabled, :boolean, default: false
-  attr :menu_alignment, :string, default: nil
-  attr :menu_background_token, :any, default: nil
-  attr :menu_border, :boolean, default: false
-  attr :tab_index, :string, default: nil
-  attr :rest, :global
-
-  slot :item do
-    attr :label, :string
-    attr :disabled, :boolean
-    attr :kind, :any
-    attr :shortcut, :string
-    attr :divider, :boolean
-    attr :attrs, :map
-  end
-
-  slot :group do
-    attr :label, :string
-    attr :attrs, :map
-  end
-
-  slot :divider
-
-  def menu(assigns) do
-    ~H"""
-    <CoreComponents.menu_button
-      label={@label}
-      kind={@kind}
-      size={@size}
-      disabled={@disabled}
-      menu_alignment={@menu_alignment}
-      menu_background_token={@menu_background_token}
-      menu_border={@menu_border}
-      tab_index={@tab_index}
-      {@rest}
-    >
-      <CoreComponents.menu>
-        {render_menu_items(assigns)}
-      </CoreComponents.menu>
-    </CoreComponents.menu_button>
-    """
-  end
-
-  @doc """
-  Pagination navigation variant using `cds-pagination`.
-  """
-  attr :backward_text, :string,
-    doc: "The assistive text for the button to go to previous page.",
-    default: "Previous page"
-
-  attr :disabled, :boolean, doc: "`true` if the pagination UI should be disabled."
-
-  attr :forward_text, :string,
-    doc: "The assistive text for the button to go to next page.",
-    default: "Next page"
-
-  attr :is_last_page, :boolean, doc: "`true` to explicitly state that user is at the last page."
-
-  attr :items_per_page_text, :string,
-    doc: "The translatable text indicating the number of items per page.",
-    default: "Items per page:"
-
-  attr :page, :string, doc: "The current page", default: "1"
-
-  attr :page_input_disabled, :boolean,
-    doc: "true if the select box to change the page should be disabled."
-
-  attr :page_size, :string, doc: "Number of items per page.", default: "10"
-
-  attr :page_size_input_disabled, :any,
-    doc: "true if the select box to change the items per page should be disabled.",
-    default: true
-
-  attr :page_size_label_text, :string, doc: "The label text for the UI to select page size."
-  attr :pages_unknown, :boolean, doc: "true if the total number of items is unknown."
-  attr :rest, :global
-
-  attr :size, :string,
-    doc: "Specify the size of the Pagination.",
-    values: ["sm", "md", "lg"],
-    default: "md"
-
-  attr :start, :string,
-    doc: "The row number where current page start with, index that starts with zero.",
-    default: "0"
-
-  attr :total_items, :string, doc: "The number of total items."
-  attr :total_pages, :string, doc: "The number of total pages.", default: "1"
-
-  slot :inner_block
-
-  slot :page_sizes_select, doc: "Where to put in the `<page-sizes-select>`." do
-    attr :tag, :string
-  end
-
-  def pagination_nav(assigns) do
-    CoreComponents.pagination(assigns)
-  end
-
-  @doc """
-  Fluid time picker wrapper (aliases `cds-time-picker`).
-  """
-  attr :disabled, :boolean, doc: "Specify whether the control is disabled."
-  attr :hide_label, :boolean, doc: "Specify whether the label should be hidden."
-  attr :invalid, :boolean, doc: "Specify whether the control is currently invalid."
-
-  attr :invalid_text, :string,
-    doc: "Provide the text that is displayed when the control is in an invalid state",
-    default: "Invalid time format."
-
-  attr :max_length, :string, doc: "Specify the maximum length of the input value", default: "5"
-  attr :name, :string, doc: "Name for the input in FormData"
-
-  attr :pattern, :string,
-    doc: "Pattern for input validation",
-    default: "(1[012]|[1-9]):[0-5][0-9](\\s)?"
-
-  attr :placeholder, :string, doc: "Placeholder text for the input", default: "hh:mm"
-  attr :read_only, :boolean, doc: "Specify whether the control should be read-only"
-  attr :required, :boolean, doc: "Whether the input is required"
-
-  attr :required_validity_message, :string,
-    doc: "Custom message for required validation",
-    default: "Please fill out this field."
-
-  attr :rest, :global
-  attr :size, :any, doc: "Size of the time picker"
-  attr :type, :string, doc: "Input type", default: "text"
-  attr :value, :string, doc: "Value of the input"
-  attr :warning, :boolean, doc: "Specify whether the control is in warning state"
-
-  attr :warning_text, :string,
-    doc: "Provide the text that is displayed when the control is in a warning state",
-    default: "Warning message."
-
-  slot :inner_block
-
-  slot :label_text, doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :time_picker_select, doc: "Slot for time picker select components." do
-    attr :tag, :string
-  end
-
-  slot :select_item, doc: "Select items for the time picker." do
-    attr :label, :string
-    attr :value, :string
-    attr :selected, :boolean
-    attr :disabled, :boolean
-  end
-
-  slot :validity_message,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
-    attr :tag, :string
-  end
-
-  def fluid_time_picker(%{select_item: [_ | _]} = assigns) do
-    ~H"""
-    <FormComponents.time_picker
-      disabled={assigns[:disabled]}
-      hide_label={assigns[:hide_label]}
-      invalid={assigns[:invalid]}
-      invalid_text={assigns[:invalid_text]}
-      max_length={assigns[:max_length]}
-      name={assigns[:name]}
-      pattern={assigns[:pattern]}
-      placeholder={assigns[:placeholder]}
-      read_only={assigns[:read_only]}
-      required={assigns[:required]}
-      required_validity_message={assigns[:required_validity_message]}
-      size={assigns[:size]}
-      type={assigns[:type]}
-      value={assigns[:value]}
-      warning={assigns[:warning]}
-      warning_text={assigns[:warning_text]}
-      {@rest}
-    >
-      <.dynamic_tag
-        :for={label <- @label_text}
-        tag_name={Map.get(label, :tag, "div")}
-        slot="label-text"
-      >
-        {render_slot(label)}
-      </.dynamic_tag>
-      <.dynamic_tag
-        :for={message <- @validity_message}
-        tag_name={Map.get(message, :tag, "div")}
-        slot="validity-message"
-      >
-        {render_slot(message)}
-      </.dynamic_tag>
-      <CoreComponents.time_picker_select>
-        <%= for item <- @select_item do %>
-          <CoreComponents.select_item
-            label={item[:label]}
-            value={item[:value] || item[:label]}
-            selected={item[:selected]}
-            disabled={item[:disabled]}
-          >
-            {render_slot(item)}
-          </CoreComponents.select_item>
-        <% end %>
-      </CoreComponents.time_picker_select>
-    </FormComponents.time_picker>
-    """
-  end
-
-  def fluid_time_picker(assigns) do
-    FormComponents.time_picker(assigns)
   end
 
   @doc """

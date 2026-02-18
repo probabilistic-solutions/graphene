@@ -1,6 +1,6 @@
 {
     "name": "graphene",
-    "version": "2.47.0",
+    "version": "2.48.0",
     "type": "module",
     "module": "./dist/index.js",
     "main": "./dist/index.js",
@@ -27,7 +27,7 @@
     "dependencies": {
         "@carbon/styles": "^1.100.0",
         "@ibm/plex": "^6.4.1",
-        "@carbon/web-components": "2.47.0",
+        "@carbon/web-components": "2.48.0",
         "esbuild": "^0.20.2",
         "typescript": "^5.4.3"
     },

@@ -5,7 +5,7 @@ defmodule Graphene.CoreComponents do
 
   use Phoenix.Component
 
-  def version(), do: ~S|2.47.0|
+  def version(), do: ~S|2.48.0|
 
   @doc """
   Component `<cds-accordion>` from `./src/components/accordion/accordion.ts`
@@ -71,6 +71,7 @@ defmodule Graphene.CoreComponents do
 
   attr :open, :boolean, default: false, doc: "`true` if the accordion item should be open."
   attr :title, :string, default: nil, doc: "The title text."
+  attr :controlled, :boolean, default: nil, doc: "Whether the item is controlled by the parent."
   attr :rest, :global
 
   slot :inner_block
@@ -81,10 +82,44 @@ defmodule Graphene.CoreComponents do
       disabled={assigns[:disabled]}
       open={assigns[:open]}
       title={assigns[:title]}
+      controlled={assigns[:controlled]}
       {@rest}
     >
       {render_slot(@inner_block)}
     </cds-accordion-item>
+    """
+  end
+
+  @doc """
+  Component `<cds-accordion-skeleton>` from `./src/components/accordion/accordion-skeleton.ts`
+
+  Accordion skeleton.
+
+  """
+
+  attr :alignment, :string,
+    default: nil,
+    values: [nil, "start", "end"],
+    doc: "Specify the alignment of the accordion heading title and chevron."
+
+  attr :count, :string, default: nil, doc: "Set number of items to render."
+  attr :is_flush, :boolean, default: nil, doc: "Specify whether Accordion text should be flush."
+  attr :open, :boolean, default: nil, doc: "`true` if the first accordion item should be open."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def accordion_skeleton(assigns) do
+    ~H"""
+    <cds-accordion-skeleton
+      alignment={assigns[:alignment]}
+      count={assigns[:count]}
+      is-flush={assigns[:is_flush]}
+      open={assigns[:open]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-accordion-skeleton>
     """
   end
 
@@ -140,6 +175,7 @@ defmodule Graphene.CoreComponents do
 
   slot :subtitle, doc: "The subtitle.", do: attr(:tag, :string)
   slot :title, doc: "The title.", do: attr(:tag, :string)
+  slot :action, doc: "Action content for the notification.", do: attr(:tag, :string)
   slot :inner_block
 
   def actionable_notification(assigns) do
@@ -163,6 +199,9 @@ defmodule Graphene.CoreComponents do
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag :for={s <- assigns[:title]} tag_name={Map.get(s, :tag, "div")} slot="title">
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag :for={s <- assigns[:action]} tag_name={Map.get(s, :tag, "div")} slot="action">
         {render_slot(s)}
       </.dynamic_tag>
     </cds-actionable-notification>
@@ -847,7 +886,7 @@ defmodule Graphene.CoreComponents do
     doc: "Button kind."
 
   attr :leave_delay_ms, :string,
-    default: "300",
+    default: "100",
     doc: "Specify the duration in milliseconds to delay before hiding the tooltip"
 
   attr :link_role, :string, default: "button", doc: "The a11y role for `<a>`."
@@ -936,6 +975,33 @@ defmodule Graphene.CoreComponents do
         {render_slot(s)}
       </.dynamic_tag>
     </cds-breadcrumb-overflow-menu>
+    """
+  end
+
+  @doc """
+  Component `<cds-breadcrumb-skeleton>` from `./src/components/breadcrumb/breadcrumb-skeleton.ts`
+
+  Breadcrumb skeleton.
+
+  """
+
+  attr :items, :string, default: nil, doc: "Number of items to render."
+  attr :no_trailing_slash, :boolean, default: nil, doc: "`true` to omit the trailing slash."
+  attr :size, :string, default: nil, doc: "Breadcrumb size."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def breadcrumb_skeleton(assigns) do
+    ~H"""
+    <cds-breadcrumb-skeleton
+      items={assigns[:items]}
+      no-trailing-slash={assigns[:no_trailing_slash]}
+      size={assigns[:size]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-breadcrumb-skeleton>
     """
   end
 
@@ -1116,6 +1182,25 @@ defmodule Graphene.CoreComponents do
     <cds-button-set-base {@rest}>
       {render_slot(@inner_block)}
     </cds-button-set-base>
+    """
+  end
+
+  @doc """
+  Component `<cds-button-skeleton>` from `./src/components/button/button-skeleton.ts`
+
+  Button skeleton.
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def button_skeleton(assigns) do
+    ~H"""
+    <cds-button-skeleton {@rest}>
+      {render_slot(@inner_block)}
+    </cds-button-skeleton>
     """
   end
 
@@ -1442,6 +1527,25 @@ defmodule Graphene.CoreComponents do
   end
 
   @doc """
+  Component `<cds-checkbox-skeleton>` from `./src/components/checkbox/checkbox-skeleton.ts`
+
+  Checkbox skeleton.
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def checkbox_skeleton(assigns) do
+    ~H"""
+    <cds-checkbox-skeleton {@rest}>
+      {render_slot(@inner_block)}
+    </cds-checkbox-skeleton>
+    """
+  end
+
+  @doc """
   Component `<cds-clickable-tile>` from `./src/components/tile/clickable-tile.ts`
 
   Clickable tile.
@@ -1591,6 +1695,33 @@ defmodule Graphene.CoreComponents do
   end
 
   @doc """
+  Component `<cds-code-snippet-skeleton>` from `./src/components/code-snippet/code-snippet-skeleton.ts`
+
+  Code snippet skeleton.
+
+  """
+
+  attr :type, :string,
+    default: nil,
+    values: [nil, "single", "inline", "multi"],
+    doc: "Code snippet type."
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def code_snippet_skeleton(assigns) do
+    ~H"""
+    <cds-code-snippet-skeleton
+      type={assigns[:type]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-code-snippet-skeleton>
+    """
+  end
+
+  @doc """
   Component `<cds-column>` from `./src/components/grid/column.ts`
 
   The column component.
@@ -1599,14 +1730,16 @@ defmodule Graphene.CoreComponents do
   """
 
   attr :lg, :any, default: nil
+  attr :max, :any, default: nil
   attr :md, :any, default: nil
 
   attr :sm, :any,
     default: nil,
     doc:
-      "Specify column size\nKeys sm, md or lg\n\nValues\n- N, P, { span:N start:S}, { start: S, end: E}\nN = number\nP = percentage\nS = Start column\nE = End column (does not reach e.g. start 1 end 3 is same as start 1 span 2)"
+      "Specify column size\nKeys sm, md, lg, xlg, max\n\nValues\n- N, P, { span:N start:S}, { start: S, end: E}\nN = number\nP = percentage\nS = Start column\nE = End column (does not reach e.g. start 1 end 3 is same as start 1 span 2)"
 
   attr :span, :any, default: nil
+  attr :xlg, :any, default: nil
   attr :rest, :global
 
   slot :inner_block
@@ -1615,9 +1748,11 @@ defmodule Graphene.CoreComponents do
     ~H"""
     <cds-column
       lg={assigns[:lg]}
+      max={assigns[:max]}
       md={assigns[:md]}
       sm={assigns[:sm]}
       span={assigns[:span]}
+      xlg={assigns[:xlg]}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -1755,6 +1890,7 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "Provide the text that is displayed when the control is in warning state"
 
+  attr :controlled, :boolean, default: nil, doc: "Whether the combobox is controlled."
   attr :rest, :global
 
   slot :inner_block
@@ -1789,6 +1925,7 @@ defmodule Graphene.CoreComponents do
       value={assigns[:value]}
       warn={assigns[:warn]}
       warn-text={assigns[:warn_text]}
+      controlled={assigns[:controlled]}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -2082,6 +2219,7 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
+  slot :tooltip_content, doc: "Tooltip content for the item.", do: attr(:tag, :string)
   slot :inner_block
 
   def content_switcher_item(assigns) do
@@ -2096,6 +2234,13 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:tooltip_content]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="tooltip-content"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
     </cds-content-switcher-item>
     """
   end
@@ -2189,7 +2334,7 @@ defmodule Graphene.CoreComponents do
     doc: "Button kind."
 
   attr :leave_delay_ms, :string,
-    default: "300",
+    default: "100",
     doc: "Specify the duration in milliseconds to delay before hiding the tooltip"
 
   attr :link_role, :string, default: "button", doc: "The a11y role for `<a>`."
@@ -2488,6 +2633,38 @@ defmodule Graphene.CoreComponents do
   end
 
   @doc """
+  Component `<cds-date-picker-input-skeleton>` from `./src/components/date-picker/date-picker-input-skeleton.ts`
+
+  Date picker input skeleton.
+
+  """
+
+  attr :hide_label, :boolean, default: nil, doc: "Specify whether the label should be hidden."
+
+  attr :kind, :string,
+    default: nil,
+    values: [nil, "simple", "single", "from", "to"],
+    doc: "Date picker kind."
+
+  attr :range, :boolean, default: nil, doc: "`true` if the input is a range."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def date_picker_input_skeleton(assigns) do
+    ~H"""
+    <cds-date-picker-input-skeleton
+      hide-label={assigns[:hide_label]}
+      kind={assigns[:kind]}
+      range={assigns[:range]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-date-picker-input-skeleton>
+    """
+  end
+
+  @doc """
   Component `<cds-definition-tooltip>` from `./src/components/tooltip/definition-tooltip.ts`
 
   Definition tooltip.
@@ -2514,6 +2691,7 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
+  slot :definition, doc: "Definition content.", do: attr(:tag, :string)
   slot :inner_block
 
   def definition_tooltip(assigns) do
@@ -2526,6 +2704,13 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:definition]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="definition"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
     </cds-definition-tooltip>
     """
   end
@@ -2651,10 +2836,6 @@ defmodule Graphene.CoreComponents do
 
   attr :size, :string, default: "md", values: ["sm", "md", "lg"], doc: "Dropdown size."
 
-  attr :title_text, :string,
-    default: nil,
-    doc: "Provide the title text that will be read by a screen reader when visiting this control"
-
   attr :toggle_label_closed, :string,
     default: nil,
     doc: "The `aria-label` attribute for the UI indicating the closed state."
@@ -2681,6 +2862,7 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
+  slot :title_text, doc: "Title text content.", do: attr(:tag, :string)
   slot :inner_block
 
   def dropdown(assigns) do
@@ -2700,7 +2882,6 @@ defmodule Graphene.CoreComponents do
       required={assigns[:required]}
       required-validity-message={assigns[:required_validity_message]}
       size={assigns[:size]}
-      title-text={assigns[:title_text]}
       toggle-label-closed={assigns[:toggle_label_closed]}
       toggle-label-open={assigns[:toggle_label_open]}
       type={assigns[:type]}
@@ -2711,6 +2892,13 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:title_text]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="title-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
     </cds-dropdown>
     """
   end
@@ -2752,6 +2940,31 @@ defmodule Graphene.CoreComponents do
   end
 
   @doc """
+  Component `<cds-dropdown-skeleton>` from `./src/components/dropdown/dropdown-skeleton.ts`
+
+  Dropdown skeleton.
+
+  """
+
+  attr :hide_label, :boolean, default: nil, doc: "Specify whether the label should be hidden."
+  attr :size, :string, default: nil, values: [nil, "sm", "md", "lg"], doc: "Dropdown size."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def dropdown_skeleton(assigns) do
+    ~H"""
+    <cds-dropdown-skeleton
+      hide-label={assigns[:hide_label]}
+      size={assigns[:size]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-dropdown-skeleton>
+    """
+  end
+
+  @doc """
   Component `<cds-expandable-tile>` from `./src/components/tile/expandable-tile.ts`
 
   Expandable tile.
@@ -2775,6 +2988,7 @@ defmodule Graphene.CoreComponents do
   attr :with_interactive, :boolean, default: false, doc: "`true` to expand this expandable tile."
   attr :rest, :global
 
+  slot :above_the_fold_content, doc: "Above-the-fold content.", do: attr(:tag, :string)
   slot :inner_block
 
   def expandable_tile(assigns) do
@@ -2787,6 +3001,13 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:above_the_fold_content]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="above-the-fold-content"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
     </cds-expandable-tile>
     """
   end
@@ -2799,13 +3020,20 @@ defmodule Graphene.CoreComponents do
 
   """
 
+  attr :enable_v12_toggle_reduced_label_spacing, :boolean,
+    default: nil,
+    doc: "Enable reduced label spacing for v12 toggle."
+
   attr :rest, :global
 
   slot :inner_block
 
   def feature_flags(assigns) do
     ~H"""
-    <feature-flags {@rest}>
+    <feature-flags
+      enable-v12-toggle-reduced-label-spacing={assigns[:enable_v12_toggle_reduced_label_spacing]}
+      {@rest}
+    >
       {render_slot(@inner_block)}
     </feature-flags>
     """
@@ -2822,6 +3050,10 @@ defmodule Graphene.CoreComponents do
   attr :disabled, :boolean, default: false, doc: "`true` if the file uploader should disabled."
   attr :label_description, :string, default: nil, doc: "The description text."
   attr :label_title, :string, default: nil, doc: "The label title."
+  attr :multiple, :boolean, default: nil, doc: "`true` to enable multiple selection."
+  attr :input_state, :string, default: nil, doc: "Input state for the uploader."
+  attr :input_name, :string, default: nil, doc: "Name attribute for the input."
+  attr :icon_description, :string, default: nil, doc: "Description for the status icon."
   attr :rest, :global
 
   slot :inner_block
@@ -2832,6 +3064,10 @@ defmodule Graphene.CoreComponents do
       disabled={assigns[:disabled]}
       label-description={assigns[:label_description]}
       label-title={assigns[:label_title]}
+      multiple={assigns[:multiple]}
+      input-state={assigns[:input_state]}
+      input-name={assigns[:input_name]}
+      icon-description={assigns[:icon_description]}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -3920,7 +4156,7 @@ defmodule Graphene.CoreComponents do
   @doc """
   Component `<cds-fluid-textarea-skeleton>` from `./src/components/fluid-textarea/fluid-textarea-skeleton.ts`
 
-  Fluid text area input.
+  Fluid text area skeleton.
 
 
   """
@@ -3941,6 +4177,272 @@ defmodule Graphene.CoreComponents do
     >
       {render_slot(@inner_block)}
     </cds-fluid-textarea-skeleton>
+    """
+  end
+
+  @doc """
+  Component `<cds-fluid-time-picker>` from `./src/components/fluid-time-picker/fluid-time-picker.ts`
+
+  Fluid Time Picker component.
+
+  ## Events
+
+  * `change` - Undocumented
+  * `invalid` - Undocumented
+
+  """
+
+  attr :disabled, :boolean, default: false, doc: "Specify whether the control is disabled"
+  attr :hide_label, :boolean, default: false, doc: "Specify whether the label should be hidden"
+  attr :invalid, :boolean, default: false, doc: "Specify whether the control is currently invalid"
+  attr :max_length, :string, default: "5", doc: "Specify the maximum length of the input value"
+  attr :name, :string, default: nil, doc: "Name for the input in FormData"
+
+  attr :pattern, :string,
+    default: "(1[012]|[1-9]):[0-5][0-9](\\\\s)?",
+    doc: "Pattern for input validation"
+
+  attr :placeholder, :string, default: "hh:mm", doc: "Placeholder text for the input"
+
+  attr :read_only, :boolean,
+    default: false,
+    doc: "Specify whether the control should be read-only"
+
+  attr :required, :boolean, default: false, doc: "Whether the input is required"
+
+  attr :required_validity_message, :string,
+    default: "Please fill out this field.",
+    doc: "Custom message for required validation"
+
+  attr :size, :any, default: nil, doc: "Size of the time picker"
+  attr :type, :string, default: "text", doc: "Input type"
+  attr :value, :string, default: nil, doc: "Value of the input"
+  attr :warning, :boolean, default: false, doc: "Specify whether the control is in warning state"
+  attr :rest, :global
+
+  slot :invalid_text, doc: "The invalid text.", do: attr(:tag, :string)
+  slot :label_text, doc: "The label text.", do: attr(:tag, :string)
+
+  slot :time_picker_select,
+    doc: "Slot for time picker select components.",
+    do: attr(:tag, :string)
+
+  slot :validity_message,
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
+    do: attr(:tag, :string)
+
+  slot :warning_text, doc: "The warning text.", do: attr(:tag, :string)
+  slot :inner_block
+
+  def fluid_time_picker(assigns) do
+    ~H"""
+    <cds-fluid-time-picker
+      disabled={assigns[:disabled]}
+      hide-label={assigns[:hide_label]}
+      invalid={assigns[:invalid]}
+      max-length={assigns[:max_length]}
+      name={assigns[:name]}
+      pattern={assigns[:pattern]}
+      placeholder={assigns[:placeholder]}
+      readOnly={assigns[:read_only]}
+      required={assigns[:required]}
+      required-validity-message={assigns[:required_validity_message]}
+      size={assigns[:size]}
+      type={assigns[:type]}
+      value={assigns[:value]}
+      warning={assigns[:warning]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:invalid_text]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="invalid-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:label_text]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:time_picker_select]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="time-picker-select"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:validity_message]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:warning_text]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="warning-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+    </cds-fluid-time-picker>
+    """
+  end
+
+  @doc """
+  Component `<cds-fluid-time-picker-select>` from `./src/components/fluid-time-picker/fluid-time-picker-select.ts`
+
+  Fluid time picker select.
+
+  ## Events
+
+  * `cds-select-selected` - The name of the custom event fired after an item is selected.
+
+  """
+
+  attr :autofocus, :boolean,
+    default: false,
+    doc: "Sets the select to be focussed automatically on page load. Defaults to false"
+
+  attr :default_value, :string,
+    default: nil,
+    doc: "Optionally provide the default value of the select."
+
+  attr :disabled, :boolean, default: false, doc: "Controls the disabled state of the select"
+
+  attr :hide_label, :boolean,
+    default: false,
+    doc: "Specify whether the label should be hidden, or not"
+
+  attr :id, :string, default: nil, doc: "ID to link the `label` and `select`"
+
+  attr :inline, :boolean,
+    default: false,
+    doc: "Specify whether you want the inline version of this control"
+
+  attr :invalid, :boolean, default: false, doc: "Specify if the currently value is invalid."
+
+  attr :invalid_text, :string,
+    default: nil,
+    doc: "Message which is displayed if the value is invalid."
+
+  attr :is_fluid, :boolean, default: false, doc: "Specify whether the textarea is fluid or not"
+  attr :multiple, :boolean, default: nil, doc: "`true` to enable multiple selection."
+  attr :name, :string, default: nil, doc: "Name for the select in the `FormData`"
+
+  attr :pattern, :string,
+    default: nil,
+    doc: "Pattern to validate the select against for HTML validity checking"
+
+  attr :placeholder, :string,
+    default: nil,
+    doc: "Value to display when the select has an empty `value`"
+
+  attr :readonly, :boolean, default: false, doc: "Controls the readonly state of the select"
+  attr :required, :boolean, default: false, doc: "Boolean property to set the required status"
+
+  attr :required_validity_message, :string,
+    default: "Please fill out this field.",
+    doc: "The special validity message for `required`."
+
+  attr :selected_index, :string, default: nil, doc: "The selected index."
+  attr :size, :any, default: nil, doc: "The input box size."
+  attr :value, :string, default: nil, doc: "The value of the text area."
+  attr :warn, :boolean, default: false, doc: "Specify if the currently value is warn."
+  attr :warn_text, :string, default: nil, doc: "Message which is displayed if the value is warn."
+  attr :rest, :global
+
+  slot :helper_text, doc: "The helper text.", do: attr(:tag, :string)
+  slot :label_text, doc: "The label text.", do: attr(:tag, :string)
+
+  slot :validity_message,
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
+    do: attr(:tag, :string)
+
+  slot :inner_block
+
+  def fluid_time_picker_select(assigns) do
+    ~H"""
+    <cds-fluid-time-picker-select
+      autofocus={assigns[:autofocus]}
+      default-value={assigns[:default_value]}
+      disabled={assigns[:disabled]}
+      hide-label={assigns[:hide_label]}
+      id={assigns[:id]}
+      inline={assigns[:inline]}
+      invalid={assigns[:invalid]}
+      invalid-text={assigns[:invalid_text]}
+      isFluid={assigns[:is_fluid]}
+      multiple={assigns[:multiple]}
+      name={assigns[:name]}
+      pattern={assigns[:pattern]}
+      placeholder={assigns[:placeholder]}
+      readonly={assigns[:readonly]}
+      required={assigns[:required]}
+      required-validity-message={assigns[:required_validity_message]}
+      selectedIndex={assigns[:selected_index]}
+      size={assigns[:size]}
+      value={assigns[:value]}
+      warn={assigns[:warn]}
+      warn-text={assigns[:warn_text]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:helper_text]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="helper-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:label_text]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:validity_message]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+    </cds-fluid-time-picker-select>
+    """
+  end
+
+  @doc """
+  Component `<cds-fluid-time-picker-skeleton>` from `./src/components/fluid-time-picker/fluid-time-picker-skeleton.ts`
+
+  Fluid time picker skeleton.
+
+
+  """
+
+  attr :is_only_two, :boolean,
+    default: false,
+    doc: "Specify if there are only two TimePicker elements."
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def fluid_time_picker_skeleton(assigns) do
+    ~H"""
+    <cds-fluid-time-picker-skeleton
+      is-only-two={assigns[:is_only_two]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-fluid-time-picker-skeleton>
     """
   end
 
@@ -4649,7 +5151,7 @@ defmodule Graphene.CoreComponents do
     doc: "Button kind."
 
   attr :leave_delay_ms, :string,
-    default: "300",
+    default: "100",
     doc: "Specify the duration in milliseconds to delay before hiding the tooltip"
 
   attr :link_role, :string, default: "button", doc: "The a11y role for `<a>`."
@@ -4687,6 +5189,7 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
+  slot :tooltip_content, doc: "Tooltip content.", do: attr(:tag, :string)
   slot :inner_block
 
   def icon_button(assigns) do
@@ -4724,6 +5227,13 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:tooltip_content]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="tooltip-content"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
     </cds-icon-button>
     """
   end
@@ -4782,6 +5292,7 @@ defmodule Graphene.CoreComponents do
     default: "1500",
     doc: "Provide a delay for the setTimeout for success"
 
+  attr :controlled, :boolean, default: nil, doc: "Whether the loading state is controlled."
   attr :rest, :global
 
   slot :inner_block
@@ -4793,6 +5304,7 @@ defmodule Graphene.CoreComponents do
       icon-description={assigns[:icon_description]}
       status={assigns[:status]}
       success-delay={assigns[:success_delay]}
+      controlled={assigns[:controlled]}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -5022,13 +5534,27 @@ defmodule Graphene.CoreComponents do
 
   """
 
+  attr :open, :boolean, default: nil, doc: "Whether the menu is open."
+  attr :size, :string, default: nil, doc: "Menu size."
+  attr :label, :string, default: nil, doc: "Menu label."
+  attr :border, :boolean, default: nil, doc: "Whether the menu has a border."
+  attr :background_token, :string, default: nil, doc: "Background token for the menu."
+  attr :menu_alignment, :string, default: nil, doc: "Alignment of the menu."
   attr :rest, :global
 
   slot :inner_block
 
   def menu(assigns) do
     ~H"""
-    <cds-menu {@rest}>
+    <cds-menu
+      open={assigns[:open]}
+      size={assigns[:size]}
+      label={assigns[:label]}
+      border={assigns[:border]}
+      background-token={assigns[:background_token]}
+      menu-alignment={assigns[:menu_alignment]}
+      {@rest}
+    >
       {render_slot(@inner_block)}
     </cds-menu>
     """
@@ -5114,6 +5640,11 @@ defmodule Graphene.CoreComponents do
   """
 
   attr :boundaries, :any, default: nil, doc: "Menu boundaries."
+
+  attr :danger_description, :string,
+    default: "danger",
+    doc: "Specify the message read by screen readers for the danger menu item variant"
+
   attr :disabled, :any, default: nil, doc: "Disabled property for the menu item."
   attr :kind, :any, default: nil
   attr :label, :any, default: nil, doc: "Label for the menu item."
@@ -5123,22 +5654,29 @@ defmodule Graphene.CoreComponents do
     default: false,
     doc: "Whether the menu submen for an item is open or not."
 
+  attr :selected, :boolean, default: nil, doc: "Whether the menu item is selected."
   attr :rest, :global
 
+  slot :submenu, doc: "Submenu content.", do: attr(:tag, :string)
   slot :inner_block
 
   def menu_item(assigns) do
     ~H"""
     <cds-menu-item
       boundaries={assigns[:boundaries]}
+      danger-description={assigns[:danger_description]}
       disabled={assigns[:disabled]}
       kind={assigns[:kind]}
       label={assigns[:label]}
       shortcut={assigns[:shortcut]}
       submenuOpen={assigns[:submenu_open]}
+      selected={assigns[:selected]}
       {@rest}
     >
       {render_slot(@inner_block)}
+      <.dynamic_tag :for={s <- assigns[:submenu]} tag_name={Map.get(s, :tag, "div")} slot="submenu">
+        {render_slot(s)}
+      </.dynamic_tag>
     </cds-menu-item>
     """
   end
@@ -5220,7 +5758,7 @@ defmodule Graphene.CoreComponents do
   @doc """
   Component `<cds-menu-item-selectable>` from `./src/components/menu/menu-item-selectable.ts`
 
-  Menu Item.
+  Menu Item Selectable.
 
 
   """
@@ -5707,10 +6245,6 @@ defmodule Graphene.CoreComponents do
 
   attr :size, :string, default: "md", values: ["sm", "md", "lg"], doc: "Dropdown size."
 
-  attr :title_text, :string,
-    default: nil,
-    doc: "Provide the title text that will be read by a screen reader when visiting this control"
-
   attr :toggle_label_closed, :string,
     default: nil,
     doc: "The `aria-label` attribute for the UI indicating the closed state."
@@ -5737,6 +6271,7 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
+  slot :title_text, doc: "Title text content.", do: attr(:tag, :string)
   slot :inner_block
 
   def multi_select(assigns) do
@@ -5763,7 +6298,6 @@ defmodule Graphene.CoreComponents do
       select-all={assigns[:select_all]}
       selection-feedback={assigns[:selection_feedback]}
       size={assigns[:size]}
-      title-text={assigns[:title_text]}
       toggle-label-closed={assigns[:toggle_label_closed]}
       toggle-label-open={assigns[:toggle_label_open]}
       type={assigns[:type]}
@@ -5774,6 +6308,13 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:title_text]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="title-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
     </cds-multi-select>
     """
   end
@@ -5809,6 +6350,7 @@ defmodule Graphene.CoreComponents do
     doc:
       "The `value` attribute that is set to the parent `<cds-dropdown>` when this dropdown item is selected."
 
+  attr :selected, :boolean, default: nil, doc: "Whether the item is selected."
   attr :rest, :global
 
   slot :inner_block
@@ -5823,6 +6365,7 @@ defmodule Graphene.CoreComponents do
       selection-name={assigns[:selection_name]}
       size={assigns[:size]}
       value={assigns[:value]}
+      selected={assigns[:selected]}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -6047,6 +6590,29 @@ defmodule Graphene.CoreComponents do
   end
 
   @doc """
+  Component `<cds-number-input-skeleton>` from `./src/components/number-input/number-input-skeleton.ts`
+
+  Number input skeleton.
+
+  """
+
+  attr :hide_label, :boolean, default: nil, doc: "Specify whether the label should be hidden."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def number_input_skeleton(assigns) do
+    ~H"""
+    <cds-number-input-skeleton
+      hide-label={assigns[:hide_label]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-number-input-skeleton>
+    """
+  end
+
+  @doc """
   Component `<cds-operational-tag>` from `./src/components/tag/operational-tag.ts`
 
   Operational tag.
@@ -6212,7 +6778,7 @@ defmodule Graphene.CoreComponents do
     doc: "Button kind."
 
   attr :leave_delay_ms, :string,
-    default: "300",
+    default: "100",
     doc: "Specify the duration in milliseconds to delay before hiding the tooltip"
 
   attr :link_role, :string, default: "button", doc: "The a11y role for `<a>`."
@@ -6437,6 +7003,8 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
+  slot :content_actions, doc: "Content actions for the breadcrumb.", do: attr(:tag, :string)
+  slot :page_actions, doc: "Page actions for the breadcrumb.", do: attr(:tag, :string)
   slot :inner_block
 
   def page_header_breadcrumb(assigns) do
@@ -6449,6 +7017,20 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:content_actions]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="content-actions"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:page_actions]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="page-actions"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
     </cds-page-header-breadcrumb>
     """
   end
@@ -6470,6 +7052,11 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
+  slot :contextual_actions,
+    doc: "Contextual actions for the page header.",
+    do: attr(:tag, :string)
+
+  slot :page_actions, doc: "Page actions for the page header.", do: attr(:tag, :string)
   slot :inner_block
 
   def page_header_content(assigns) do
@@ -6480,6 +7067,20 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:contextual_actions]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="contextual-actions"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:page_actions]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="page-actions"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
     </cds-page-header-content>
     """
   end
@@ -6538,12 +7139,16 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
+  slot :tags, doc: "Tags for the page header.", do: attr(:tag, :string)
   slot :inner_block
 
   def page_header_tabs(assigns) do
     ~H"""
     <cds-page-header-tabs {@rest}>
       {render_slot(@inner_block)}
+      <.dynamic_tag :for={s <- assigns[:tags]} tag_name={Map.get(s, :tag, "div")} slot="tags">
+        {render_slot(s)}
+      </.dynamic_tag>
     </cds-page-header-tabs>
     """
   end
@@ -6646,6 +7251,66 @@ defmodule Graphene.CoreComponents do
         {render_slot(s)}
       </.dynamic_tag>
     </cds-pagination>
+    """
+  end
+
+  @doc """
+  Component `<cds-pagination-nav>` from `./src/components/pagination-nav/pagination-nav.ts`
+
+  Pagination Navigation.
+
+  ## Events
+
+  * `cds-page-changed` - The custom event fired when the the page has been changed.
+
+  """
+
+  attr :disable_overflow, :boolean,
+    default: nil,
+    doc:
+      "If true, the '...' pagination overflow will not render page links between the first and last rendered buttons.\nSet this to true if you are having performance problems with large data sets."
+
+  attr :items_shown, :string,
+    default: "10",
+    doc: "The number of items to be shown (minimum of 4 unless props.items < 4)."
+
+  attr :loop, :boolean,
+    default: false,
+    doc: "Whether user should be able to loop through the items when reaching first / last."
+
+  attr :page, :string, default: "0", doc: "The index of current page."
+  attr :size, :any, default: nil, doc: "Specify the size of the PaginationNav."
+
+  attr :tooltip_alignment, :any,
+    default: nil,
+    doc:
+      "Specify the alignment of the tooltip for the icon-only next/prev buttons.\nCan be one of: start, center, or end."
+
+  attr :tooltip_position, :any,
+    default: nil,
+    doc:
+      "Specify the position of the tooltip for the icon-only next/prev buttons.\nCan be one of: top, right, bottom, or left."
+
+  attr :total_items, :string, default: "1", doc: "The total number of items."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def pagination_nav(assigns) do
+    ~H"""
+    <cds-pagination-nav
+      disable-overflow={assigns[:disable_overflow]}
+      items-shown={assigns[:items_shown]}
+      loop={assigns[:loop]}
+      page={assigns[:page]}
+      size={assigns[:size]}
+      tooltip-alignment={assigns[:tooltip_alignment]}
+      tooltip-position={assigns[:tooltip_position]}
+      total-items={assigns[:total_items]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-pagination-nav>
     """
   end
 
@@ -7082,6 +7747,29 @@ defmodule Graphene.CoreComponents do
   end
 
   @doc """
+  Component `<cds-progress-indicator-skeleton>` from `./src/components/progress-indicator/progress-indicator-skeleton.ts`
+
+  Progress indicator skeleton.
+
+  """
+
+  attr :vertical, :boolean, default: nil, doc: "`true` to render the vertical variant."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def progress_indicator_skeleton(assigns) do
+    ~H"""
+    <cds-progress-indicator-skeleton
+      vertical={assigns[:vertical]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-progress-indicator-skeleton>
+    """
+  end
+
+  @doc """
   Component `<cds-progress-step>` from `./src/components/progress-indicator/progress-step.ts`
 
   Progress step.
@@ -7137,6 +7825,29 @@ defmodule Graphene.CoreComponents do
         {render_slot(s)}
       </.dynamic_tag>
     </cds-progress-step>
+    """
+  end
+
+  @doc """
+  Component `<cds-progress-step-skeleton>` from `./src/components/progress-indicator/progress-step-skeleton.ts`
+
+  Progress step skeleton.
+
+  """
+
+  attr :vertical, :boolean, default: nil, doc: "`true` to render the vertical variant."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def progress_step_skeleton(assigns) do
+    ~H"""
+    <cds-progress-step-skeleton
+      vertical={assigns[:vertical]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-progress-step-skeleton>
     """
   end
 
@@ -7205,6 +7916,7 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
+  slot :ai_label, doc: "AI label content.", do: attr(:tag, :string)
   slot :inner_block
 
   def radio_button(assigns) do
@@ -7229,6 +7941,9 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
+      <.dynamic_tag :for={s <- assigns[:ai_label]} tag_name={Map.get(s, :tag, "div")} slot="ai-label">
+        {render_slot(s)}
+      </.dynamic_tag>
     </cds-radio-button>
     """
   end
@@ -7322,6 +8037,25 @@ defmodule Graphene.CoreComponents do
   end
 
   @doc """
+  Component `<cds-radio-button-skeleton>` from `./src/components/radio-button/radio-button-skeleton.ts`
+
+  Radio button skeleton.
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def radio_button_skeleton(assigns) do
+    ~H"""
+    <cds-radio-button-skeleton {@rest}>
+      {render_slot(@inner_block)}
+    </cds-radio-button-skeleton>
+    """
+  end
+
+  @doc """
   Component `<cds-radio-tile>` from `./src/components/tile/radio-tile.ts`
 
   Radio tile.
@@ -7411,6 +8145,7 @@ defmodule Graphene.CoreComponents do
   attr :size, :any, default: nil, doc: "The search box size."
   attr :type, :string, default: nil, doc: "The `<input>` name."
   attr :value, :string, default: nil, doc: "The value."
+  attr :color_scheme, :string, default: nil, doc: "Color scheme for the search."
   attr :rest, :global
 
   slot :inner_block
@@ -7431,6 +8166,7 @@ defmodule Graphene.CoreComponents do
       size={assigns[:size]}
       type={assigns[:type]}
       value={assigns[:value]}
+      color-scheme={assigns[:color_scheme]}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -7574,6 +8310,7 @@ defmodule Graphene.CoreComponents do
 
   attr :selected, :boolean, default: false, doc: "`true` to select this option."
   attr :value, :string, default: nil, doc: "The value."
+  attr :text, :string, default: nil, doc: "Text for the select item."
   attr :rest, :global
 
   slot :inner_block
@@ -7585,6 +8322,7 @@ defmodule Graphene.CoreComponents do
       label={assigns[:label]}
       selected={assigns[:selected]}
       value={assigns[:value]}
+      text={assigns[:text]}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -7615,6 +8353,29 @@ defmodule Graphene.CoreComponents do
     >
       {render_slot(@inner_block)}
     </cds-select-item-group>
+    """
+  end
+
+  @doc """
+  Component `<cds-select-skeleton>` from `./src/components/select/select-skeleton.ts`
+
+  Select skeleton.
+
+  """
+
+  attr :hide_label, :boolean, default: nil, doc: "Specify whether the label should be hidden."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def select_skeleton(assigns) do
+    ~H"""
+    <cds-select-skeleton
+      hide-label={assigns[:hide_label]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-select-skeleton>
     """
   end
 
@@ -7756,6 +8517,7 @@ defmodule Graphene.CoreComponents do
     default: false,
     doc: "Specify if the side-nav will be persistent above the lg breakpoint"
 
+  attr :usage_mode, :string, default: nil, doc: "Usage mode for the side nav."
   attr :rest, :global
 
   slot :inner_block
@@ -7767,6 +8529,7 @@ defmodule Graphene.CoreComponents do
       expanded={assigns[:expanded]}
       is-not-child-of-header={assigns[:is_not_child_of_header]}
       is-not-persistent={assigns[:is_not_persistent]}
+      usage-mode={assigns[:usage_mode]}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -8220,11 +8983,14 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "Provide the text that is displayed when the control is in warning state"
 
+  attr :controlled, :boolean, default: nil, doc: "Whether the slider is controlled."
+  attr :format_label, :any, default: nil, doc: "Formatter for the slider label."
   attr :rest, :global
 
   slot :label_text, doc: "The label text.", do: attr(:tag, :string)
   slot :max_text, doc: "The text for maximum value.", do: attr(:tag, :string)
   slot :min_text, doc: "The text for minimum value.", do: attr(:tag, :string)
+  slot :lower_input, doc: "Lower input content.", do: attr(:tag, :string)
   slot :inner_block
 
   def slider(assigns) do
@@ -8249,6 +9015,8 @@ defmodule Graphene.CoreComponents do
       value-upper={assigns[:value_upper]}
       warn={assigns[:warn]}
       warn-text={assigns[:warn_text]}
+      controlled={assigns[:controlled]}
+      format-label={assigns[:format_label]}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -8263,6 +9031,13 @@ defmodule Graphene.CoreComponents do
         {render_slot(s)}
       </.dynamic_tag>
       <.dynamic_tag :for={s <- assigns[:min_text]} tag_name={Map.get(s, :tag, "div")} slot="min-text">
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- assigns[:lower_input]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="lower-input"
+      >
         {render_slot(s)}
       </.dynamic_tag>
     </cds-slider>
@@ -8298,6 +9073,7 @@ defmodule Graphene.CoreComponents do
     default: false,
     doc: "true to specify if the control should display warn icon and text."
 
+  attr :required, :boolean, default: nil, doc: "Whether the input is required."
   attr :rest, :global
 
   slot :inner_block
@@ -8315,10 +9091,34 @@ defmodule Graphene.CoreComponents do
       type={assigns[:type]}
       value={assigns[:value]}
       warn={assigns[:warn]}
+      required={assigns[:required]}
       {@rest}
     >
       {render_slot(@inner_block)}
     </cds-slider-input>
+    """
+  end
+
+  @doc """
+  Component `<cds-slider-skeleton>` from `./src/components/slider/slider-skeleton.ts`
+
+  Slider skeleton.
+
+  """
+
+  attr :two_handles, :boolean, default: nil, doc: "`true` to show two handles."
+  attr :rest, :global
+
+  slot :inner_block
+
+  def slider_skeleton(assigns) do
+    ~H"""
+    <cds-slider-skeleton
+      two-handles={assigns[:two_handles]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </cds-slider-skeleton>
     """
   end
 
@@ -8716,6 +9516,25 @@ defmodule Graphene.CoreComponents do
     <cds-structured-list-header-cell {@rest}>
       {render_slot(@inner_block)}
     </cds-structured-list-header-cell>
+    """
+  end
+
+  @doc """
+  Component `<cds-structured-list-header-cell-skeleton>` from `./src/components/structured-list/structured-list-header-cell-skeleton.ts`
+
+  Structured list header cell skeleton.
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def structured_list_header_cell_skeleton(assigns) do
+    ~H"""
+    <cds-structured-list-header-cell-skeleton {@rest}>
+      {render_slot(@inner_block)}
+    </cds-structured-list-header-cell-skeleton>
     """
   end
 
@@ -9725,6 +10544,7 @@ defmodule Graphene.CoreComponents do
 
   attr :type, :string, default: "", values: ["", "container", "contained"], doc: "Tabs type."
   attr :value, :string, default: nil, doc: "The value of the selected item."
+  attr :disabled, :boolean, default: nil, doc: "Whether the tabs are disabled."
   attr :rest, :global
 
   slot :inner_block
@@ -9742,6 +10562,7 @@ defmodule Graphene.CoreComponents do
       trigger-content={assigns[:trigger_content]}
       type={assigns[:type]}
       value={assigns[:value]}
+      disabled={assigns[:disabled]}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -10350,6 +11171,7 @@ defmodule Graphene.CoreComponents do
 
   attr :rest, :global
 
+  slot :decorator, doc: "Decorator content.", do: attr(:tag, :string)
   slot :inner_block
 
   def tile(assigns) do
@@ -10360,7 +11182,52 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- assigns[:decorator]}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="decorator"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
     </cds-tile>
+    """
+  end
+
+  @doc """
+  Component `<cds-tile-above-the-fold-content>` from `./src/components/tile/tile.ts`
+
+  Tile above-the-fold content.
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def tile_above_the_fold_content(assigns) do
+    ~H"""
+    <cds-tile-above-the-fold-content {@rest}>
+      {render_slot(@inner_block)}
+    </cds-tile-above-the-fold-content>
+    """
+  end
+
+  @doc """
+  Component `<cds-tile-below-the-fold-content>` from `./src/components/tile/tile.ts`
+
+  Tile below-the-fold content.
+
+  """
+
+  attr :rest, :global
+
+  slot :inner_block
+
+  def tile_below_the_fold_content(assigns) do
+    ~H"""
+    <cds-tile-below-the-fold-content {@rest}>
+      {render_slot(@inner_block)}
+    </cds-tile-below-the-fold-content>
     """
   end
 
@@ -10388,6 +11255,7 @@ defmodule Graphene.CoreComponents do
   attr :selectable_tiles, :any, default: nil
   attr :rest, :global
 
+  slot :legend, doc: "Legend content.", do: attr(:tag, :string)
   slot :inner_block
 
   def tile_group(assigns) do
@@ -10402,6 +11270,9 @@ defmodule Graphene.CoreComponents do
       {@rest}
     >
       {render_slot(@inner_block)}
+      <.dynamic_tag :for={s <- assigns[:legend]} tag_name={Map.get(s, :tag, "div")} slot="legend">
+        {render_slot(s)}
+      </.dynamic_tag>
     </cds-tile-group>
     """
   end
@@ -11084,6 +11955,8 @@ defmodule Graphene.CoreComponents do
     default: nil,
     doc: "Specify the size of the tree from a list of available sizes."
 
+  attr :controlled, :boolean, default: nil, doc: "Whether the tree view is controlled."
+  attr :links, :boolean, default: nil, doc: "Whether the tree view renders links."
   attr :rest, :global
 
   slot :inner_block
@@ -11094,6 +11967,8 @@ defmodule Graphene.CoreComponents do
       hide-label={assigns[:hide_label]}
       label={assigns[:label]}
       size={assigns[:size]}
+      controlled={assigns[:controlled]}
+      links={assigns[:links]}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -11131,6 +12006,7 @@ defmodule Graphene.CoreComponents do
     [
       "accordion",
       "accordion_item",
+      "accordion_skeleton",
       "actionable_notification",
       "actionable_notification_button",
       "ai_label",
@@ -11143,16 +12019,20 @@ defmodule Graphene.CoreComponents do
       "breadcrumb_item",
       "breadcrumb_link",
       "breadcrumb_overflow_menu",
+      "breadcrumb_skeleton",
       "button",
       "button_set",
       "button_set_base",
+      "button_skeleton",
       "callout_notification",
       "chat_button",
       "chat_button_skeleton",
       "checkbox",
       "checkbox_group",
+      "checkbox_skeleton",
       "clickable_tile",
       "code_snippet",
+      "code_snippet_skeleton",
       "column",
       "column_hang",
       "combo_box",
@@ -11167,10 +12047,12 @@ defmodule Graphene.CoreComponents do
       "copy_button",
       "date_picker",
       "date_picker_input",
+      "date_picker_input_skeleton",
       "definition_tooltip",
       "dismissible_tag",
       "dropdown",
       "dropdown_item",
+      "dropdown_skeleton",
       "expandable_tile",
       "feature_flags",
       "file_uploader",
@@ -11188,6 +12070,9 @@ defmodule Graphene.CoreComponents do
       "fluid_text_input_skeleton",
       "fluid_textarea",
       "fluid_textarea_skeleton",
+      "fluid_time_picker",
+      "fluid_time_picker_select",
+      "fluid_time_picker_skeleton",
       "form",
       "form_group",
       "form_item",
@@ -11231,6 +12116,7 @@ defmodule Graphene.CoreComponents do
       "multi_select",
       "multi_select_item",
       "number_input",
+      "number_input_skeleton",
       "operational_tag",
       "ordered_list",
       "overflow_menu",
@@ -11243,20 +12129,25 @@ defmodule Graphene.CoreComponents do
       "page_header_hero_image",
       "page_header_tabs",
       "pagination",
+      "pagination_nav",
       "password_input",
       "password_input_skeleton",
       "popover",
       "popover_content",
       "progress_bar",
       "progress_indicator",
+      "progress_indicator_skeleton",
       "progress_step",
+      "progress_step_skeleton",
       "radio_button",
       "radio_button_group",
+      "radio_button_skeleton",
       "radio_tile",
       "search",
       "select",
       "select_item",
       "select_item_group",
+      "select_skeleton",
       "selectable_tag",
       "selectable_tile",
       "shape_indicator",
@@ -11273,6 +12164,7 @@ defmodule Graphene.CoreComponents do
       "skip_to_content",
       "slider",
       "slider_input",
+      "slider_skeleton",
       "slug",
       "slug_action_button",
       "stack",
@@ -11281,6 +12173,7 @@ defmodule Graphene.CoreComponents do
       "structured_list_cell",
       "structured_list_head",
       "structured_list_header_cell",
+      "structured_list_header_cell_skeleton",
       "structured_list_header_row",
       "structured_list_row",
       "switcher",
@@ -11314,6 +12207,8 @@ defmodule Graphene.CoreComponents do
       "textarea",
       "textarea_skeleton",
       "tile",
+      "tile_above_the_fold_content",
+      "tile_below_the_fold_content",
       "tile_group",
       "time_picker",
       "time_picker_select",

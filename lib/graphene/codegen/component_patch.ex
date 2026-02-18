@@ -167,6 +167,160 @@ defmodule Graphene.CodeGen.ComponentPatches do
 
   @manual_components [
     %Component{
+      htmltag: "cds-accordion-skeleton",
+      componentname: "accordion_skeleton",
+      source: "./src/components/accordion/accordion-skeleton.ts",
+      docs: """
+      Component `<cds-accordion-skeleton>` from `./src/components/accordion/accordion-skeleton.ts`
+
+      Accordion skeleton.
+      """,
+      attrs: [
+        Attr.parse(%{
+          "name" => "alignment",
+          "type" => "ACCORDION_ALIGNMENT",
+          "description" => "Specify the alignment of the accordion heading title and chevron."
+        }),
+        Attr.parse(%{
+          "name" => "count",
+          "type" => "number",
+          "description" => "Set number of items to render."
+        }),
+        Attr.parse(%{
+          "name" => "is-flush",
+          "type" => "boolean",
+          "description" => "Specify whether Accordion text should be flush."
+        }),
+        Attr.parse(%{
+          "name" => "open",
+          "type" => "boolean",
+          "description" => "`true` if the first accordion item should be open."
+        })
+      ],
+      slots: []
+    },
+    %Component{
+      htmltag: "cds-breadcrumb-skeleton",
+      componentname: "breadcrumb_skeleton",
+      source: "./src/components/breadcrumb/breadcrumb-skeleton.ts",
+      docs: """
+      Component `<cds-breadcrumb-skeleton>` from `./src/components/breadcrumb/breadcrumb-skeleton.ts`
+
+      Breadcrumb skeleton.
+      """,
+      attrs: [
+        Attr.parse(%{
+          "name" => "items",
+          "type" => "number",
+          "description" => "Number of items to render."
+        }),
+        Attr.parse(%{
+          "name" => "no-trailing-slash",
+          "type" => "boolean",
+          "description" => "`true` to omit the trailing slash."
+        }),
+        Attr.parse(%{
+          "name" => "size",
+          "type" => "string",
+          "description" => "Breadcrumb size."
+        })
+      ],
+      slots: []
+    },
+    %Component{
+      htmltag: "cds-button-skeleton",
+      componentname: "button_skeleton",
+      source: "./src/components/button/button-skeleton.ts",
+      docs: """
+      Component `<cds-button-skeleton>` from `./src/components/button/button-skeleton.ts`
+
+      Button skeleton.
+      """,
+      attrs: [],
+      slots: []
+    },
+    %Component{
+      htmltag: "cds-checkbox-skeleton",
+      componentname: "checkbox_skeleton",
+      source: "./src/components/checkbox/checkbox-skeleton.ts",
+      docs: """
+      Component `<cds-checkbox-skeleton>` from `./src/components/checkbox/checkbox-skeleton.ts`
+
+      Checkbox skeleton.
+      """,
+      attrs: [],
+      slots: []
+    },
+    %Component{
+      htmltag: "cds-code-snippet-skeleton",
+      componentname: "code_snippet_skeleton",
+      source: "./src/components/code-snippet/code-snippet-skeleton.ts",
+      docs: """
+      Component `<cds-code-snippet-skeleton>` from `./src/components/code-snippet/code-snippet-skeleton.ts`
+
+      Code snippet skeleton.
+      """,
+      attrs: [
+        Attr.parse(%{
+          "name" => "type",
+          "type" => "CODE_SNIPPET_TYPE",
+          "description" => "Code snippet type."
+        })
+      ],
+      slots: []
+    },
+    %Component{
+      htmltag: "cds-date-picker-input-skeleton",
+      componentname: "date_picker_input_skeleton",
+      source: "./src/components/date-picker/date-picker-input-skeleton.ts",
+      docs: """
+      Component `<cds-date-picker-input-skeleton>` from `./src/components/date-picker/date-picker-input-skeleton.ts`
+
+      Date picker input skeleton.
+      """,
+      attrs: [
+        Attr.parse(%{
+          "name" => "hide-label",
+          "type" => "boolean",
+          "description" => "Specify whether the label should be hidden."
+        }),
+        Attr.parse(%{
+          "name" => "kind",
+          "type" => "DATE_PICKER_INPUT_KIND",
+          "description" => "Date picker kind."
+        }),
+        Attr.parse(%{
+          "name" => "range",
+          "type" => "boolean",
+          "description" => "`true` if the input is a range."
+        })
+      ],
+      slots: []
+    },
+    %Component{
+      htmltag: "cds-dropdown-skeleton",
+      componentname: "dropdown_skeleton",
+      source: "./src/components/dropdown/dropdown-skeleton.ts",
+      docs: """
+      Component `<cds-dropdown-skeleton>` from `./src/components/dropdown/dropdown-skeleton.ts`
+
+      Dropdown skeleton.
+      """,
+      attrs: [
+        Attr.parse(%{
+          "name" => "hide-label",
+          "type" => "boolean",
+          "description" => "Specify whether the label should be hidden."
+        }),
+        Attr.parse(%{
+          "name" => "size",
+          "type" => "DROPDOWN_SIZE",
+          "description" => "Dropdown size."
+        })
+      ],
+      slots: []
+    },
+    %Component{
       htmltag: "cds-menu",
       componentname: "menu",
       source: "./src/components/menu/menu.ts",
@@ -175,13 +329,184 @@ defmodule Graphene.CodeGen.ComponentPatches do
 
       Menu.
       """,
+      attrs: [
+        Attr.parse(%{
+          "name" => "open",
+          "type" => "boolean",
+          "description" => "Whether the menu is open."
+        }),
+        Attr.parse(%{
+          "name" => "size",
+          "type" => "string",
+          "description" => "Menu size."
+        }),
+        Attr.parse(%{
+          "name" => "label",
+          "type" => "string",
+          "description" => "Menu label."
+        }),
+        Attr.parse(%{
+          "name" => "border",
+          "type" => "boolean",
+          "description" => "Whether the menu has a border."
+        }),
+        Attr.parse(%{
+          "name" => "backgroundToken",
+          "attribute" => "background-token",
+          "type" => "string",
+          "description" => "Background token for the menu."
+        }),
+        Attr.parse(%{
+          "name" => "menuAlignment",
+          "attribute" => "menu-alignment",
+          "type" => "string",
+          "description" => "Alignment of the menu."
+        })
+      ],
+      slots: []
+    },
+    %Component{
+      htmltag: "cds-number-input-skeleton",
+      componentname: "number_input_skeleton",
+      source: "./src/components/number-input/number-input-skeleton.ts",
+      docs: """
+      Component `<cds-number-input-skeleton>` from `./src/components/number-input/number-input-skeleton.ts`
+
+      Number input skeleton.
+      """,
+      attrs: [
+        Attr.parse(%{
+          "name" => "hide-label",
+          "type" => "boolean",
+          "description" => "Specify whether the label should be hidden."
+        })
+      ],
+      slots: []
+    },
+    %Component{
+      htmltag: "cds-progress-indicator-skeleton",
+      componentname: "progress_indicator_skeleton",
+      source: "./src/components/progress-indicator/progress-indicator-skeleton.ts",
+      docs: """
+      Component `<cds-progress-indicator-skeleton>` from `./src/components/progress-indicator/progress-indicator-skeleton.ts`
+
+      Progress indicator skeleton.
+      """,
+      attrs: [
+        Attr.parse(%{
+          "name" => "vertical",
+          "type" => "boolean",
+          "description" => "`true` to render the vertical variant."
+        })
+      ],
+      slots: []
+    },
+    %Component{
+      htmltag: "cds-progress-step-skeleton",
+      componentname: "progress_step_skeleton",
+      source: "./src/components/progress-indicator/progress-step-skeleton.ts",
+      docs: """
+      Component `<cds-progress-step-skeleton>` from `./src/components/progress-indicator/progress-step-skeleton.ts`
+
+      Progress step skeleton.
+      """,
+      attrs: [
+        Attr.parse(%{
+          "name" => "vertical",
+          "type" => "boolean",
+          "description" => "`true` to render the vertical variant."
+        })
+      ],
+      slots: []
+    },
+    %Component{
+      htmltag: "cds-radio-button-skeleton",
+      componentname: "radio_button_skeleton",
+      source: "./src/components/radio-button/radio-button-skeleton.ts",
+      docs: """
+      Component `<cds-radio-button-skeleton>` from `./src/components/radio-button/radio-button-skeleton.ts`
+
+      Radio button skeleton.
+      """,
+      attrs: [],
+      slots: []
+    },
+    %Component{
+      htmltag: "cds-select-skeleton",
+      componentname: "select_skeleton",
+      source: "./src/components/select/select-skeleton.ts",
+      docs: """
+      Component `<cds-select-skeleton>` from `./src/components/select/select-skeleton.ts`
+
+      Select skeleton.
+      """,
+      attrs: [
+        Attr.parse(%{
+          "name" => "hide-label",
+          "type" => "boolean",
+          "description" => "Specify whether the label should be hidden."
+        })
+      ],
+      slots: []
+    },
+    %Component{
+      htmltag: "cds-slider-skeleton",
+      componentname: "slider_skeleton",
+      source: "./src/components/slider/slider-skeleton.ts",
+      docs: """
+      Component `<cds-slider-skeleton>` from `./src/components/slider/slider-skeleton.ts`
+
+      Slider skeleton.
+      """,
+      attrs: [
+        Attr.parse(%{
+          "name" => "two-handles",
+          "type" => "boolean",
+          "description" => "`true` to show two handles."
+        })
+      ],
+      slots: []
+    },
+    %Component{
+      htmltag: "cds-structured-list-header-cell-skeleton",
+      componentname: "structured_list_header_cell_skeleton",
+      source: "./src/components/structured-list/structured-list-header-cell-skeleton.ts",
+      docs: """
+      Component `<cds-structured-list-header-cell-skeleton>` from `./src/components/structured-list/structured-list-header-cell-skeleton.ts`
+
+      Structured list header cell skeleton.
+      """,
+      attrs: [],
+      slots: []
+    },
+    %Component{
+      htmltag: "cds-tile-above-the-fold-content",
+      componentname: "tile_above_the_fold_content",
+      source: "./src/components/tile/tile.ts",
+      docs: """
+      Component `<cds-tile-above-the-fold-content>` from `./src/components/tile/tile.ts`
+
+      Tile above-the-fold content.
+      """,
+      attrs: [],
+      slots: []
+    },
+    %Component{
+      htmltag: "cds-tile-below-the-fold-content",
+      componentname: "tile_below_the_fold_content",
+      source: "./src/components/tile/tile.ts",
+      docs: """
+      Component `<cds-tile-below-the-fold-content>` from `./src/components/tile/tile.ts`
+
+      Tile below-the-fold content.
+      """,
       attrs: [],
       slots: []
     }
   ]
 
   def carbon_component_overrides do
-    MapSet.new([:menu, :file_uploader])
+    MapSet.new([:file_uploader])
   end
 
   @carbon_component_recipes [
@@ -598,7 +923,6 @@ defmodule Graphene.CodeGen.ComponentPatches do
             required={@required}
             required_validity_message={@required_validity_message}
             size={@size}
-            title_text={@title_text}
             toggle_label_closed={@toggle_label_closed}
             toggle_label_open={@toggle_label_open}
             type={@type}
@@ -608,6 +932,13 @@ defmodule Graphene.CodeGen.ComponentPatches do
             warn_text={@warn_text}
             {@rest}
           >
+            <.dynamic_tag
+              :for={title <- @title_text}
+              tag_name={Map.get(title, :tag, "div")}
+              slot="title-text"
+            >
+              {render_slot(title)}
+            </.dynamic_tag>
             <%= for item <- @item do %>
               <CoreComponents.dropdown_item
                 value={item[:value] || item[:label]}
@@ -774,67 +1105,6 @@ defmodule Graphene.CodeGen.ComponentPatches do
               </CoreComponents.select_item>
             <% end %>
           </FormComponents.fluid_select>
-      """
-    },
-    %{
-      name: :fluid_time_picker,
-      delegate: :form,
-      patterns: ["%{select_item: [_ | _]}"],
-      extra_slots: ~S"""
-        slot :select_item do
-          attr :label, :string
-          attr :value, :string
-          attr :selected, :boolean
-          attr :disabled, :boolean
-        end
-      """,
-      body: ~S"""
-          <FormComponents.time_picker
-            disabled={@disabled}
-            hide_label={@hide_label}
-            invalid={@invalid}
-            invalid_text={@invalid_text}
-            max_length={@max_length}
-            name={@name}
-            pattern={@pattern}
-            placeholder={@placeholder}
-            read_only={@read_only}
-            required={@required}
-            required_validity_message={@required_validity_message}
-            size={@size}
-            type={@type}
-            value={@value}
-            warning={@warning}
-            warning_text={@warning_text}
-            {@rest}
-          >
-            <.dynamic_tag
-              :for={label <- @label_text}
-              tag_name={Map.get(label, :tag, "div")}
-              slot="label-text"
-            >
-              {render_slot(label)}
-            </.dynamic_tag>
-            <.dynamic_tag
-              :for={message <- @validity_message}
-              tag_name={Map.get(message, :tag, "div")}
-              slot="validity-message"
-            >
-              {render_slot(message)}
-            </.dynamic_tag>
-            <CoreComponents.time_picker_select>
-            <%= for item <- @select_item do %>
-              <CoreComponents.select_item
-                label={item[:label]}
-                value={item[:value] || item[:label]}
-                selected={item[:selected]}
-                disabled={item[:disabled]}
-              >
-                {item[:label] || render_slot(item)}
-              </CoreComponents.select_item>
-            <% end %>
-            </CoreComponents.time_picker_select>
-          </FormComponents.time_picker>
       """
     },
     %{
@@ -1191,7 +1461,6 @@ defmodule Graphene.CodeGen.ComponentPatches do
             select_all={@select_all}
             selection_feedback={@selection_feedback}
             size={@size}
-            title_text={@title_text}
             toggle_label_closed={@toggle_label_closed}
             toggle_label_open={@toggle_label_open}
             type={@type}
@@ -1201,6 +1470,13 @@ defmodule Graphene.CodeGen.ComponentPatches do
             warn_text={@warn_text}
             {@rest}
           >
+            <.dynamic_tag
+              :for={title <- @title_text}
+              tag_name={Map.get(title, :tag, "div")}
+              slot="title-text"
+            >
+              {render_slot(title)}
+            </.dynamic_tag>
             <%= for item <- @item do %>
               <CoreComponents.multi_select_item
                 value={item[:value] || item[:label]}
@@ -1852,6 +2128,299 @@ defmodule Graphene.CodeGen.ComponentPatches do
       end)
 
     %{component | attrs: attrs}
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-accordion-item"} = component) do
+    ensure_attr(component, %{
+      "name" => "controlled",
+      "type" => "boolean",
+      "description" => "Whether the item is controlled by the parent."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-actionable-notification"} = component) do
+    ensure_slot(component, %{
+      "name" => "action",
+      "description" => "Action content for the notification."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-combo-box"} = component) do
+    ensure_attr(component, %{
+      "name" => "controlled",
+      "type" => "boolean",
+      "description" => "Whether the combobox is controlled."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-content-switcher-item"} = component) do
+    ensure_slot(component, %{
+      "name" => "tooltip-content",
+      "description" => "Tooltip content for the item."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-definition-tooltip"} = component) do
+    ensure_slot(component, %{
+      "name" => "definition",
+      "description" => "Definition content."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-dropdown"} = component) do
+    ensure_slot(component, %{
+      "name" => "title-text",
+      "description" => "Title text content."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-expandable-tile"} = component) do
+    ensure_slot(component, %{
+      "name" => "above-the-fold-content",
+      "description" => "Above-the-fold content."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-file-uploader"} = component) do
+    component
+    |> ensure_attr(%{
+      "name" => "multiple",
+      "type" => "boolean",
+      "description" => "`true` to enable multiple selection."
+    })
+    |> ensure_attr(%{
+      "name" => "inputState",
+      "attribute" => "input-state",
+      "type" => "string",
+      "description" => "Input state for the uploader."
+    })
+    |> ensure_attr(%{
+      "name" => "inputName",
+      "attribute" => "input-name",
+      "type" => "string",
+      "description" => "Name attribute for the input."
+    })
+    |> ensure_attr(%{
+      "name" => "iconDescription",
+      "attribute" => "icon-description",
+      "type" => "string",
+      "description" => "Description for the status icon."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-icon-button"} = component) do
+    ensure_slot(component, %{
+      "name" => "tooltip-content",
+      "description" => "Tooltip content."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-inline-loading"} = component) do
+    ensure_attr(component, %{
+      "name" => "controlled",
+      "type" => "boolean",
+      "description" => "Whether the loading state is controlled."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-menu"} = component) do
+    component
+    |> ensure_attr(%{
+      "name" => "open",
+      "type" => "boolean",
+      "description" => "Whether the menu is open."
+    })
+    |> ensure_attr(%{
+      "name" => "size",
+      "type" => "string",
+      "description" => "Menu size."
+    })
+    |> ensure_attr(%{
+      "name" => "label",
+      "type" => "string",
+      "description" => "Menu label."
+    })
+    |> ensure_attr(%{
+      "name" => "border",
+      "type" => "boolean",
+      "description" => "Whether the menu has a border."
+    })
+    |> ensure_attr(%{
+      "name" => "backgroundToken",
+      "attribute" => "background-token",
+      "type" => "string",
+      "description" => "Background token for the menu."
+    })
+    |> ensure_attr(%{
+      "name" => "menuAlignment",
+      "attribute" => "menu-alignment",
+      "type" => "string",
+      "description" => "Alignment of the menu."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-menu-item"} = component) do
+    component
+    |> ensure_attr(%{
+      "name" => "selected",
+      "type" => "boolean",
+      "description" => "Whether the menu item is selected."
+    })
+    |> ensure_slot(%{
+      "name" => "submenu",
+      "description" => "Submenu content."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-multi-select"} = component) do
+    ensure_slot(component, %{
+      "name" => "title-text",
+      "description" => "Title text content."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-multi-select-item"} = component) do
+    ensure_attr(component, %{
+      "name" => "selected",
+      "type" => "boolean",
+      "description" => "Whether the item is selected."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-page-header-breadcrumb"} = component) do
+    component
+    |> ensure_slot(%{
+      "name" => "content-actions",
+      "description" => "Content actions for the breadcrumb."
+    })
+    |> ensure_slot(%{
+      "name" => "page-actions",
+      "description" => "Page actions for the breadcrumb."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-page-header-content"} = component) do
+    component
+    |> ensure_slot(%{
+      "name" => "contextual-actions",
+      "description" => "Contextual actions for the page header."
+    })
+    |> ensure_slot(%{
+      "name" => "page-actions",
+      "description" => "Page actions for the page header."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-page-header-tabs"} = component) do
+    ensure_slot(component, %{
+      "name" => "tags",
+      "description" => "Tags for the page header."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-radio-button"} = component) do
+    ensure_slot(component, %{
+      "name" => "ai-label",
+      "description" => "AI label content."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-search"} = component) do
+    ensure_attr(component, %{
+      "name" => "colorScheme",
+      "attribute" => "color-scheme",
+      "type" => "string",
+      "description" => "Color scheme for the search."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-select-item"} = component) do
+    ensure_attr(component, %{
+      "name" => "text",
+      "type" => "string",
+      "description" => "Text for the select item."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-side-nav"} = component) do
+    ensure_attr(component, %{
+      "name" => "usageMode",
+      "attribute" => "usage-mode",
+      "type" => "string",
+      "description" => "Usage mode for the side nav."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-slider"} = component) do
+    component
+    |> ensure_attr(%{
+      "name" => "controlled",
+      "type" => "boolean",
+      "description" => "Whether the slider is controlled."
+    })
+    |> ensure_attr(%{
+      "name" => "formatLabel",
+      "attribute" => "format-label",
+      "type" => "any",
+      "description" => "Formatter for the slider label."
+    })
+    |> ensure_slot(%{
+      "name" => "lower-input",
+      "description" => "Lower input content."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-slider-input"} = component) do
+    ensure_attr(component, %{
+      "name" => "required",
+      "type" => "boolean",
+      "description" => "Whether the input is required."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-tabs"} = component) do
+    ensure_attr(component, %{
+      "name" => "disabled",
+      "type" => "boolean",
+      "description" => "Whether the tabs are disabled."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-tile"} = component) do
+    ensure_slot(component, %{
+      "name" => "decorator",
+      "description" => "Decorator content."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-tile-group"} = component) do
+    ensure_slot(component, %{
+      "name" => "legend",
+      "description" => "Legend content."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "cds-tree-view"} = component) do
+    component
+    |> ensure_attr(%{
+      "name" => "controlled",
+      "type" => "boolean",
+      "description" => "Whether the tree view is controlled."
+    })
+    |> ensure_attr(%{
+      "name" => "links",
+      "type" => "boolean",
+      "description" => "Whether the tree view renders links."
+    })
+  end
+
+  defp add_missing_slots(%{htmltag: "feature-flags"} = component) do
+    ensure_attr(component, %{
+      "name" => "enableV12ToggleReducedLabelSpacing",
+      "attribute" => "enable-v12-toggle-reduced-label-spacing",
+      "type" => "boolean",
+      "description" => "Enable reduced label spacing for v12 toggle."
+    })
   end
 
   defp add_missing_slots(component), do: component
