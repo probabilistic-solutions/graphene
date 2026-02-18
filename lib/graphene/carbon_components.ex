@@ -20,18 +20,6 @@ defmodule Graphene.CarbonComponents do
   Accordion container.
 
 
-
-  ## Attributes
-
-  * `alignment` (`:string`) - Specify the alignment of the accordion heading title and chevron. Defaults to `nil`. Must be one of `nil`, `"start"`, or `"end"`.
-  * `disabled` (`:boolean`) - Disable all accordion items inside this accordion. Defaults to `false`.
-  * `is_flush` (`:boolean`) - Specify whether Accordion text should be flush, default is false, does not work with align="start". Defaults to `false`.
-  * `size` (`:string`) - Accordion size should be sm, md, lg. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :alignment, :string,
     doc: "Specify the alignment of the accordion heading title and chevron",
@@ -43,14 +31,12 @@ defmodule Graphene.CarbonComponents do
     doc:
       "Specify whether Accordion text should be flush, default is false, does not work with align=\"start\""
 
-  attr :rest, :global
-
   attr :size, :string,
     doc: "Accordion size should be sm, md, lg.",
     values: ["sm", "md", "lg"],
     default: "md"
 
-  slot :inner_block
+  attr :rest, :global
 
   slot :item do
     attr :title, :string
@@ -101,25 +87,12 @@ defmodule Graphene.CarbonComponents do
   Cancellation of this event stops the user-initiated action of toggling this accordion item.
   * `cds-accordion-item-toggled` - The custom event fired after this accordion item is toggled upon a user gesture.
 
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - `true` if the accordion item should be disabled. Defaults to `false`.
-  * `open` (`:boolean`) - `true` if the accordion item should be open. Defaults to `false`.
-  * `title` (`:string`) - The title text. Defaults to `nil`.
-  * `controlled` (`:boolean`) - Whether the item is controlled by the parent. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :controlled, :boolean, doc: "Whether the item is controlled by the parent."
   attr :disabled, :boolean, doc: "`true` if the accordion item should be disabled."
   attr :open, :boolean, doc: "`true` if the accordion item should be open."
-  attr :rest, :global
   attr :title, :string, doc: "The title text."
-  slot :inner_block
+  attr :controlled, :boolean, doc: "Whether the item is controlled by the parent."
+  attr :rest, :global
 
   def accordion_item(assigns) do
     CoreComponents.accordion_item(assigns)
@@ -130,18 +103,6 @@ defmodule Graphene.CarbonComponents do
 
   Accordion skeleton.
 
-
-  ## Attributes
-
-  * `alignment` (`:string`) - Specify the alignment of the accordion heading title and chevron. Defaults to `nil`. Must be one of `nil`, `"start"`, or `"end"`.
-  * `count` (`:string`) - Set number of items to render. Defaults to `nil`.
-  * `is_flush` (`:boolean`) - Specify whether Accordion text should be flush. Defaults to `nil`.
-  * `open` (`:boolean`) - `true` if the first accordion item should be open. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :alignment, :string,
     doc: "Specify the alignment of the accordion heading title and chevron.",
@@ -151,7 +112,6 @@ defmodule Graphene.CarbonComponents do
   attr :is_flush, :boolean, doc: "Specify whether Accordion text should be flush."
   attr :open, :boolean, doc: "`true` if the first accordion item should be open."
   attr :rest, :global
-  slot :inner_block
 
   def accordion_skeleton(assigns) do
     CoreComponents.accordion_skeleton(assigns)
@@ -167,34 +127,6 @@ defmodule Graphene.CarbonComponents do
   * `cds-notification-beingclosed` - The custom event fired before this notification is being closed upon a user gesture.
   Cancellation of this event stops the user-initiated action of closing this notification.
   * `cds-notification-closed` - The custom event fired after this notification is closed upon a user gesture.
-
-
-  ## Attributes
-
-  * `action_button_label` (`:string`) - Pass in the action button label that will be rendered within the ActionableNotification. Defaults to `nil`.
-  * `caption` (`:string`) - The caption. Defaults to `nil`.
-  * `close_on_escape` (`:boolean`) - Specify if pressing the escape key should close notifications. Defaults to `true`.
-  * `has_focus` (`:boolean`) - Specify if focus should be moved to the component when the notification contains actions. Defaults to `true`.
-  * `hide_close_button` (`:boolean`) - `true` to hide the close button. Defaults to `false`.
-  * `inline` (`:boolean`) - Inline notification type. Defaults to `false`.
-  * `kind` (`:string`) - Notification kind. Defaults to `"success"`. Must be one of `"success"`, `"info"`, `"info-square"`, `"warning"`, `"warning-alt"`, or `"error"`.
-  * `low_contrast` (`:boolean`) - Low contrast mode. Defaults to `false`.
-  * `open` (`:boolean`) - `true` if the notification should be open. Defaults to `true`.
-  * `status_icon_description` (`:string`) - Provide a description for "status" icon that can be read by screen readers. Defaults to `nil`.
-  * `timeout` (`:any`) - Specify an optional duration the notification should be closed in. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `subtitle` - The subtitle. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `title` - The title. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `action` - Action content for the notification. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :action_button_label, :string,
@@ -222,26 +154,15 @@ defmodule Graphene.CarbonComponents do
 
   attr :low_contrast, :boolean, doc: "Low contrast mode"
   attr :open, :boolean, doc: "`true` if the notification should be open.", default: true
-  attr :rest, :global
 
   attr :status_icon_description, :string,
     doc: "Provide a description for \"status\" icon that can be read by screen readers"
 
   attr :timeout, :any, doc: "Specify an optional duration the notification should be closed in"
-
-  slot :action, doc: "Action content for the notification." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :subtitle, doc: "The subtitle." do
-    attr :tag, :string
-  end
-
-  slot :title, doc: "The title." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :subtitle, doc: "The subtitle."
+  slot :title, doc: "The title."
+  slot :action, doc: "Action content for the notification."
 
   def actionable_notification(assigns) do
     CoreComponents.actionable_notification(assigns)
@@ -252,50 +173,6 @@ defmodule Graphene.CarbonComponents do
 
   Actionable notification action button.
 
-
-
-  ## Attributes
-
-  * `autofocus` (`:boolean`) - `true` if the button should have input focus when the page loads. Defaults to `false`.
-  * `batch_action` (`:boolean`) - `true` if the button is being used within a data table batch action toolbar. Defaults to `false`.
-  * `button_class_name` (`:any`) - Specify an optional className to be added to your Button. Defaults to `nil`.
-  * `danger_description` (`:any`) - Specify the message read by screen readers for the danger button variant. Defaults to `nil`.
-  * `disabled` (`:boolean`) - `true` if the button should be disabled. Defaults to `false`.
-  * `download` (`:string`) - The default file name, used if this button is rendered as `<a>`. Defaults to `nil`.
-  * `has_main_content` (`:boolean`) - `true` if there is a non-icon content. Defaults to `false`.
-  * `href` (`:string`) - Link `href`. If present, this button is rendered as `<a>`. Defaults to `nil`.
-  * `hreflang` (`:string`) - The language of what `href` points to, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `is_expressive` (`:boolean`) - `true` if expressive theme enabled. Defaults to `false`.
-  * `is_selected` (`:boolean`) - Specify whether the Button is currently selected.
-    Only applies to the Ghost variant.
-
-    Defaults to `false`.
-  * `kind` (`:string`) - Button kind. Defaults to `"primary"`. Must be one of `"primary"`, `"secondary"`, `"tertiary"`, `"danger"`, `"danger--tertiary"`, `"danger--ghost"`, or `"ghost"`.
-  * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `"button"`.
-  * `open_tooltip` (`:boolean`) - Boolean to determine if tooltip is open. Defaults to `false`.
-  * `ping` (`:string`) - URLs to ping, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `rel` (`:string`) - The link type, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `size` (`:string`) - Button size. Defaults to `"lg"`.
-  * `tab_index` (`:string`) - Specify the tabIndex of the button. Defaults to `"0"`.
-  * `target` (`:string`) - The link target, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `""`. Must be one of `"left"`, `"right"`, or `""`.
-  * `tooltip_position` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"top"`. Must be one of `"top"`, `"bottom"`, `"right"`, or `"left"`.
-  * `tooltip_text` (`:string`) - Specify the text to be rendered in the tooltip. If using
-    "cds-badge-indicator" with no count prop then the text
-    should include describing there is a new notification.
-
-    Defaults to `nil`.
-  * `type` (`:string`) - Button type. Defaults to `"button"`. Must be one of `"button"`, `"reset"`, or `"submit"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :autofocus, :boolean,
@@ -339,7 +216,6 @@ defmodule Graphene.CarbonComponents do
   attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
   attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
   attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
-  attr :rest, :global
   attr :size, :string, doc: "Button size.", default: "lg"
   attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
   attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
@@ -365,7 +241,7 @@ defmodule Graphene.CarbonComponents do
     values: ["button", "reset", "submit"],
     default: "button"
 
-  slot :inner_block
+  attr :rest, :global
 
   def actionable_notification_button(assigns) do
     CoreComponents.actionable_notification_button(assigns)
@@ -376,34 +252,6 @@ defmodule Graphene.CarbonComponents do
 
   Basic AI Label.
 
-
-
-  ## Attributes
-
-  * `ai_text` (`:string`) - Specify the correct translation of the AI text. Defaults to `"AI"`.
-  * `ai_text_label` (`:string`) - Specify additional text to be rendered next to the AI label in the inline variant. Defaults to `nil`.
-  * `alignment` (`:string`) - How the tooltip is aligned to the trigger button. Defaults to `"top"`. Must be one of `"top"`, `"top-start"`, `"top-end"`, `"bottom"`, `"bottom-start"`, `"bottom-end"`, `"left"`, `"left-start"`, `"left-end"`, `"right"`, `"right-start"`, or `"right-end"`.
-  * `alignment_axis_offset` (`:string`) - **Experimental:** Provide an offset value for alignment axis. Only takes effect when `autoalign` is enabled. Defaults to `"0"`.
-  * `autoalign` (`:boolean`) - Specify whether a auto align functionality should be applied. Defaults to `false`.
-  * `button_label` (`:string`) - Specify the text that will be provided to the aria-label of the `AI Label` button. Defaults to `"Show information"`.
-  * `default_open` (`:boolean`) - Set whether toggletip is open by default. Defaults to `false`.
-  * `kind` (`:any`) - Specify the type of AI Label, from the following list of types: (default, inline). Defaults to `nil`.
-  * `open` (`:boolean`) - Set whether toggletip is open. Defaults to `false`.
-  * `previous_value` (`:any`) - Defaults to `nil`.
-  * `revert_active` (`:boolean`) - Specify whether the revert button should be visible. Defaults to `false`.
-  * `revert_label` (`:string`) - Specify whether the revert button should be visible. Defaults to `"Revert to AI input"`.
-  * `size` (`:any`) - AI Label size should be mini, 2xs, xs, sm, md, lg, xl. Defaults to `nil`.
-  * `slot` (`:string`) - Defaults to `"ai-label"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `body_text` - Content for the AI label body. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `actions` - Action buttons for the AI label. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :ai_text, :string, doc: "Specify the correct translation of the AI text", default: "AI"
@@ -442,30 +290,28 @@ defmodule Graphene.CarbonComponents do
 
   attr :default_open, :boolean, doc: "Set whether toggletip is open by default."
 
-  attr :kind, :any,
-    doc: "Specify the type of AI Label, from the following list of types: (default, inline)"
+  attr :kind, :string,
+    doc: "Specify the type of AI Label, from the following list of types: (default, inline)",
+    values: ["", "inline"],
+    default: ""
 
   attr :open, :boolean, doc: "Set whether toggletip is open"
   attr :previous_value, :any
-  attr :rest, :global
   attr :revert_active, :boolean, doc: "Specify whether the revert button should be visible"
 
   attr :revert_label, :string,
     doc: "Specify whether the revert button should be visible",
     default: "Revert to AI input"
 
-  attr :size, :any, doc: "AI Label size should be mini, 2xs, xs, sm, md, lg, xl."
+  attr :size, :string,
+    doc: "AI Label size should be mini, 2xs, xs, sm, md, lg, xl.",
+    values: ["mini", "2xs", "xs", "sm", "md", "lg", "xl"],
+    default: "xs"
+
   attr :slot, :string, default: "ai-label"
-
-  slot :actions, doc: "Action buttons for the AI label." do
-    attr :tag, :string
-  end
-
-  slot :body_text, doc: "Content for the AI label body." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
+  attr :rest, :global
+  slot :body_text, doc: "Content for the AI label body."
+  slot :actions, doc: "Action buttons for the AI label."
 
   slot :action_button do
     attr :attrs, :map
@@ -477,11 +323,9 @@ defmodule Graphene.CarbonComponents do
       |> assign_new(:ai_text_label, fn -> nil end)
       |> assign_new(:autoalign, fn -> false end)
       |> assign_new(:default_open, fn -> false end)
-      |> assign_new(:kind, fn -> nil end)
       |> assign_new(:open, fn -> false end)
       |> assign_new(:previous_value, fn -> nil end)
       |> assign_new(:revert_active, fn -> false end)
-      |> assign_new(:size, fn -> nil end)
 
     ~H"""
     <CoreComponents.ai_label
@@ -527,51 +371,6 @@ defmodule Graphene.CarbonComponents do
   AI Label action button.
 
 
-
-  ## Attributes
-
-  * `autofocus` (`:boolean`) - `true` if the button should have input focus when the page loads. Defaults to `false`.
-  * `batch_action` (`:boolean`) - `true` if the button is being used within a data table batch action toolbar. Defaults to `false`.
-  * `button_class_name` (`:any`) - Specify an optional className to be added to your Button. Defaults to `nil`.
-  * `danger_description` (`:any`) - Specify the message read by screen readers for the danger button variant. Defaults to `nil`.
-  * `disabled` (`:boolean`) - `true` if the button should be disabled. Defaults to `false`.
-  * `download` (`:string`) - The default file name, used if this button is rendered as `<a>`. Defaults to `nil`.
-  * `has_main_content` (`:boolean`) - `true` if there is a non-icon content. Defaults to `false`.
-  * `href` (`:string`) - Link `href`. If present, this button is rendered as `<a>`. Defaults to `nil`.
-  * `hreflang` (`:string`) - The language of what `href` points to, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `is_expressive` (`:boolean`) - `true` if expressive theme enabled. Defaults to `false`.
-  * `is_selected` (`:boolean`) - Specify whether the Button is currently selected.
-    Only applies to the Ghost variant.
-
-    Defaults to `false`.
-  * `kind` (`:string`) - Button kind. Defaults to `"primary"`. Must be one of `"primary"`, `"secondary"`, `"tertiary"`, `"danger"`, `"danger--tertiary"`, `"danger--ghost"`, or `"ghost"`.
-  * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `"button"`.
-  * `open_tooltip` (`:boolean`) - Boolean to determine if tooltip is open. Defaults to `false`.
-  * `ping` (`:string`) - URLs to ping, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `rel` (`:string`) - The link type, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `size` (`:string`) - Button size. Defaults to `"lg"`.
-  * `slot` (`:string`) - The shadow slot this ai-label-action should be in. Defaults to `"actions"`.
-  * `tab_index` (`:string`) - Specify the tabIndex of the button. Defaults to `"0"`.
-  * `target` (`:string`) - The link target, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `""`. Must be one of `"left"`, `"right"`, or `""`.
-  * `tooltip_position` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"top"`. Must be one of `"top"`, `"bottom"`, `"right"`, or `"left"`.
-  * `tooltip_text` (`:string`) - Specify the text to be rendered in the tooltip. If using
-    "cds-badge-indicator" with no count prop then the text
-    should include describing there is a new notification.
-
-    Defaults to `nil`.
-  * `type` (`:string`) - Button type. Defaults to `"button"`. Must be one of `"button"`, `"reset"`, or `"submit"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :autofocus, :boolean,
     doc: "`true` if the button should have input focus when the page loads."
@@ -614,7 +413,6 @@ defmodule Graphene.CarbonComponents do
   attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
   attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
   attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
-  attr :rest, :global
   attr :size, :string, doc: "Button size.", default: "lg"
 
   attr :slot, :string,
@@ -645,7 +443,7 @@ defmodule Graphene.CarbonComponents do
     values: ["button", "reset", "submit"],
     default: "button"
 
-  slot :inner_block
+  attr :rest, :global
 
   def ai_label_action_button(assigns) do
     CoreComponents.ai_label_action_button(assigns)
@@ -657,19 +455,9 @@ defmodule Graphene.CarbonComponents do
   AI skeleton icon.
 
 
-
-  ## Attributes
-
-  * `custom_styles` (`:string`) - Custom styles to apply to skeleton icon. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :custom_styles, :string, doc: "Custom styles to apply to skeleton icon"
   attr :rest, :global
-  slot :inner_block
 
   def ai_skeleton_icon(assigns) do
     CoreComponents.ai_skeleton_icon(assigns)
@@ -681,17 +469,8 @@ defmodule Graphene.CarbonComponents do
   AI skeleton placeholder.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def ai_skeleton_placeholder(assigns) do
     CoreComponents.ai_skeleton_placeholder(assigns)
@@ -703,29 +482,16 @@ defmodule Graphene.CarbonComponents do
   AI skeleton text.
 
 
-
-  ## Attributes
-
-  * `heading` (`:boolean`) - Generates skeleton text at a larger size. Defaults to `false`.
-  * `line_count` (`:string`) - the number of lines in a paragraph. Defaults to `"3"`.
-  * `paragraph` (`:boolean`) - will generate multiple lines of text. Defaults to `false`.
-  * `width` (`:string`) - width (in px or %) of single line of text or max-width of paragraph lines. Defaults to `"100%"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :heading, :boolean, doc: "Generates skeleton text at a larger size."
   attr :line_count, :string, doc: "the number of lines in a paragraph", default: "3"
   attr :paragraph, :boolean, doc: "will generate multiple lines of text"
-  attr :rest, :global
 
   attr :width, :string,
     doc: "width (in px or %) of single line of text or max-width of paragraph lines",
     default: "100%"
 
-  slot :inner_block
+  attr :rest, :global
 
   def ai_skeleton_text(assigns) do
     CoreComponents.ai_skeleton_text(assigns)
@@ -737,25 +503,14 @@ defmodule Graphene.CarbonComponents do
   Badge Indicator.
 
 
-
-  ## Attributes
-
-  * `count` (`:any`) - Count of badge indicator. Defaults to `nil`.
-  * `slot` (`:string`) - The shadow slot the badge-indicator should be in. Defaults to `"badge-indicator"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :count, :any, doc: "Count of badge indicator"
-  attr :rest, :global
 
   attr :slot, :string,
     doc: "The shadow slot the badge-indicator should be in.",
     default: "badge-indicator"
 
-  slot :inner_block
+  attr :rest, :global
 
   def badge_indicator(assigns) do
     CoreComponents.badge_indicator(assigns)
@@ -767,30 +522,17 @@ defmodule Graphene.CarbonComponents do
   Breadcrumb.
 
 
-
-  ## Attributes
-
-  * `no_trailing_slash` (`:boolean`) - Optional prop to omit the trailing slash for the breadcrumbs. Defaults to `false`.
-  * `size` (`:any`) - Specify the size of the Breadcrumb. Currently
-    supports the following: `sm` & `md` (default: 'md')
-
-    Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :no_trailing_slash, :boolean,
     doc: "Optional prop to omit the trailing slash for the breadcrumbs"
 
-  attr :rest, :global
-
-  attr :size, :any,
+  attr :size, :string,
     doc:
-      "Specify the size of the Breadcrumb. Currently\nsupports the following: `sm` & `md` (default: 'md')"
+      "Specify the size of the Breadcrumb. Currently\nsupports the following: `sm` & `md` (default: 'md')",
+    values: ["sm", "md"],
+    default: "md"
 
-  slot :inner_block
+  attr :rest, :global
 
   slot :item do
     attr :href, :string
@@ -803,7 +545,6 @@ defmodule Graphene.CarbonComponents do
     assigns =
       assigns
       |> assign_new(:no_trailing_slash, fn -> false end)
-      |> assign_new(:size, fn -> nil end)
 
     ~H"""
     <CoreComponents.breadcrumb no_trailing_slash={@no_trailing_slash} size={@size} {@rest}>
@@ -836,17 +577,8 @@ defmodule Graphene.CarbonComponents do
   Breadcrumb item.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def breadcrumb_item(assigns) do
     CoreComponents.breadcrumb_item(assigns)
@@ -857,27 +589,6 @@ defmodule Graphene.CarbonComponents do
 
   Link in breadcrumb.
 
-
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - `true` if the link should be disabled. Defaults to `false`.
-  * `download` (`:string`) - The default file name. Defaults to `nil`.
-  * `href` (`:string`) - Link `href`. Defaults to `nil`.
-  * `hreflang` (`:string`) - The language of what `href` points to. Defaults to `nil`.
-  * `inline` (`:boolean`) - `true` if the link should be inline. Defaults to `false`.
-  * `is_currentpage` (`:boolean`) - Provide if this breadcrumb item represents the current page. Defaults to `false`.
-  * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `nil`.
-  * `ping` (`:string`) - URLs to ping. Defaults to `nil`.
-  * `rel` (`:string`) - The link type. Defaults to `nil`.
-  * `size` (`:string`) - Link size. Defaults to `"MEDIUM"`.
-  * `target` (`:string`) - The link target. Defaults to `nil`.
-  * `type` (`:string`) - MIME type of the `target`. Defaults to `nil`.
-  * `visited` (`:boolean`) - `true` if the link has been visited. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :disabled, :boolean, doc: "`true` if the link should be disabled."
@@ -892,12 +603,11 @@ defmodule Graphene.CarbonComponents do
   attr :link_role, :string, doc: "The a11y role for `<a>`."
   attr :ping, :string, doc: "URLs to ping."
   attr :rel, :string, doc: "The link type."
-  attr :rest, :global
   attr :size, :string, doc: "Link size.", default: "MEDIUM"
   attr :target, :string, doc: "The link target."
   attr :type, :string, doc: "MIME type of the `target`."
   attr :visited, :boolean, doc: "`true` if the link has been visited."
-  slot :inner_block
+  attr :rest, :global
 
   def breadcrumb_link(assigns) do
     CoreComponents.breadcrumb_link(assigns)
@@ -908,65 +618,6 @@ defmodule Graphene.CarbonComponents do
 
   Overflow menu in breadcrumb.
 
-
-
-  ## Attributes
-
-  * `align` (`:string`) - Checks if a badge indicator is being used with incorrect properties. Defaults to `"top"`.
-  * `autoalign` (`:boolean`) - Specify whether a auto align functionality should be applied. Defaults to `false`.
-  * `autofocus` (`:boolean`) - `true` if the button should have input focus when the page loads. Defaults to `false`.
-  * `batch_action` (`:boolean`) - `true` if the button is being used within a data table batch action toolbar. Defaults to `false`.
-  * `breadcrumb` (`:boolean`) - `true` if this overflow menu use inside breadcrumb. Defaults to `false`.
-  * `button_class_name` (`:any`) - Specify an optional className to be added to your Button. Defaults to `nil`.
-  * `close_on_activation` (`:boolean`) - Determines whether the tooltip should close when inner content is activated (click, Enter or Space). Defaults to `true`.
-  * `danger_description` (`:any`) - Specify the message read by screen readers for the danger button variant. Defaults to `nil`.
-  * `data_table` (`:boolean`) - `true` if this tooltip is in a data table row. Defaults to `false`.
-  * `default_open` (`:boolean`) - Specify whether the tooltip should be open when it first renders. Defaults to `false`.
-  * `disabled` (`:boolean`) - `true` if this overflow menu should be disabled. Defaults to `false`.
-  * `download` (`:string`) - The default file name, used if this button is rendered as `<a>`. Defaults to `nil`.
-  * `enter_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before displaying the tooltip. Defaults to `"100"`.
-  * `flipped` (`:boolean`) - `true` if this overflow menu body should be flipped. Defaults to `false`.
-  * `has_main_content` (`:boolean`) - `true` if there is a non-icon content. Defaults to `false`.
-  * `href` (`:string`) - Link `href`. If present, this button is rendered as `<a>`. Defaults to `nil`.
-  * `hreflang` (`:string`) - The language of what `href` points to, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `index` (`:string`) - Index (starting at 1) of overflow menu item to focus on open. Defaults to `"1"`.
-  * `is_expressive` (`:boolean`) - `true` if expressive theme enabled. Defaults to `false`.
-  * `is_selected` (`:boolean`) - Specify whether the Button is currently selected.
-    Only applies to the Ghost variant.
-
-    Defaults to `false`.
-  * `kind` (`:string`) - Button kind. Defaults to `"primary"`. Must be one of `"primary"`, `"secondary"`, `"tertiary"`, `"danger"`, `"danger--tertiary"`, `"danger--ghost"`, or `"ghost"`.
-  * `leave_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before hiding the tooltip. Defaults to `"100"`.
-  * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `"button"`.
-  * `open` (`:boolean`) - `true` if the dropdown should be open. Defaults to `false`.
-  * `open_tooltip` (`:boolean`) - Boolean to determine if tooltip is open. Defaults to `false`.
-  * `ping` (`:string`) - URLs to ping, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `rel` (`:string`) - The link type, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `size` (`:string`) - Overflow menu size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * `tab_index` (`:string`) - Specify the tabIndex of the button. Defaults to `"0"`.
-  * `target` (`:string`) - The link target, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `toolbar_action` (`:boolean`) - `true` if this menu is a toolbar action. Defaults to `false`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `""`. Must be one of `"left"`, `"right"`, or `""`.
-  * `tooltip_position` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"top"`. Must be one of `"top"`, `"bottom"`, `"right"`, or `"left"`.
-  * `tooltip_text` (`:string`) - Specify the text to be rendered in the tooltip. If using
-    "cds-badge-indicator" with no count prop then the text
-    should include describing there is a new notification.
-
-    Defaults to `nil`.
-  * `type` (`:string`) - Button type. Defaults to `"button"`. Must be one of `"button"`, `"reset"`, or `"submit"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `icon` - The icon for the trigger button. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :align, :string,
@@ -1035,14 +686,13 @@ defmodule Graphene.CarbonComponents do
 
   attr :leave_delay_ms, :string,
     doc: "Specify the duration in milliseconds to delay before hiding the tooltip",
-    default: "100"
+    default: "300"
 
   attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
   attr :open, :boolean, doc: "`true` if the dropdown should be open."
   attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
   attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
   attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
-  attr :rest, :global
   attr :size, :string, doc: "Overflow menu size.", values: ["sm", "md", "lg"], default: "md"
   attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
   attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
@@ -1069,11 +719,8 @@ defmodule Graphene.CarbonComponents do
     values: ["button", "reset", "submit"],
     default: "button"
 
-  slot :icon, doc: "The icon for the trigger button." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
+  attr :rest, :global
+  slot :icon, doc: "The icon for the trigger button."
 
   def breadcrumb_overflow_menu(assigns) do
     CoreComponents.breadcrumb_overflow_menu(assigns)
@@ -1084,23 +731,11 @@ defmodule Graphene.CarbonComponents do
 
   Breadcrumb skeleton.
 
-
-  ## Attributes
-
-  * `items` (`:string`) - Number of items to render. Defaults to `nil`.
-  * `no_trailing_slash` (`:boolean`) - `true` to omit the trailing slash. Defaults to `nil`.
-  * `size` (`:string`) - Breadcrumb size. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :items, :string, doc: "Number of items to render."
   attr :no_trailing_slash, :boolean, doc: "`true` to omit the trailing slash."
-  attr :rest, :global
   attr :size, :string, doc: "Breadcrumb size."
-  slot :inner_block
+  attr :rest, :global
 
   def breadcrumb_skeleton(assigns) do
     CoreComponents.breadcrumb_skeleton(assigns)
@@ -1111,53 +746,6 @@ defmodule Graphene.CarbonComponents do
 
   Button.
 
-
-
-  ## Attributes
-
-  * `autofocus` (`:boolean`) - `true` if the button should have input focus when the page loads. Defaults to `false`.
-  * `batch_action` (`:boolean`) - `true` if the button is being used within a data table batch action toolbar. Defaults to `false`.
-  * `button_class_name` (`:any`) - Specify an optional className to be added to your Button. Defaults to `nil`.
-  * `danger_description` (`:any`) - Specify the message read by screen readers for the danger button variant. Defaults to `nil`.
-  * `disabled` (`:boolean`) - `true` if the button should be disabled. Defaults to `false`.
-  * `download` (`:string`) - The default file name, used if this button is rendered as `<a>`. Defaults to `nil`.
-  * `has_main_content` (`:boolean`) - `true` if there is a non-icon content. Defaults to `false`.
-  * `href` (`:string`) - Link `href`. If present, this button is rendered as `<a>`. Defaults to `nil`.
-  * `hreflang` (`:string`) - The language of what `href` points to, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `is_expressive` (`:boolean`) - `true` if expressive theme enabled. Defaults to `false`.
-  * `is_selected` (`:boolean`) - Specify whether the Button is currently selected.
-    Only applies to the Ghost variant.
-
-    Defaults to `false`.
-  * `kind` (`:string`) - Button kind. Defaults to `"primary"`. Must be one of `"primary"`, `"secondary"`, `"tertiary"`, `"danger"`, `"danger--tertiary"`, `"danger--ghost"`, or `"ghost"`.
-  * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `"button"`.
-  * `open_tooltip` (`:boolean`) - Boolean to determine if tooltip is open. Defaults to `false`.
-  * `ping` (`:string`) - URLs to ping, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `rel` (`:string`) - The link type, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `size` (`:string`) - Button size. Defaults to `"lg"`.
-  * `tab_index` (`:string`) - Specify the tabIndex of the button. Defaults to `"0"`.
-  * `target` (`:string`) - The link target, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `""`. Must be one of `"left"`, `"right"`, or `""`.
-  * `tooltip_position` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"top"`. Must be one of `"top"`, `"bottom"`, `"right"`, or `"left"`.
-  * `tooltip_text` (`:string`) - Specify the text to be rendered in the tooltip. If using
-    "cds-badge-indicator" with no count prop then the text
-    should include describing there is a new notification.
-
-    Defaults to `nil`.
-  * `type` (`:string`) - Button type. Defaults to `"button"`. Must be one of `"button"`, `"reset"`, or `"submit"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `icon` - Icon. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :autofocus, :boolean,
@@ -1201,7 +789,6 @@ defmodule Graphene.CarbonComponents do
   attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
   attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
   attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
-  attr :rest, :global
   attr :size, :string, doc: "Button size.", default: "lg"
   attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
   attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
@@ -1227,11 +814,8 @@ defmodule Graphene.CarbonComponents do
     values: ["button", "reset", "submit"],
     default: "button"
 
-  slot :icon, doc: "Icon." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
+  attr :rest, :global
+  slot :icon, doc: "Icon."
 
   def button(assigns) do
     CoreComponents.button(assigns)
@@ -1243,22 +827,11 @@ defmodule Graphene.CarbonComponents do
   Button set.
 
 
-
-  ## Attributes
-
-  * `stacked` (`:boolean`) - `true` if the buttons should be stacked. Only applies to the button-set variant. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :rest, :global
-
   attr :stacked, :boolean,
     doc: "`true` if the buttons should be stacked. Only applies to the button-set variant."
 
-  slot :inner_block
+  attr :rest, :global
 
   def button_set(assigns) do
     CoreComponents.button_set(assigns)
@@ -1270,17 +843,8 @@ defmodule Graphene.CarbonComponents do
   Button set without button checks
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def button_set_base(assigns) do
     CoreComponents.button_set_base(assigns)
@@ -1291,17 +855,8 @@ defmodule Graphene.CarbonComponents do
 
   Button skeleton.
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def button_skeleton(assigns) do
     CoreComponents.button_skeleton(assigns)
@@ -1317,35 +872,6 @@ defmodule Graphene.CarbonComponents do
   * `cds-notification-beingclosed` - The custom event fired before this notification is being closed upon a user gesture.
   Cancellation of this event stops the user-initiated action of closing this notification.
   * `cds-notification-closed` - The custom event fired after this notification is closed upon a user gesture.
-
-
-  ## Attributes
-
-  * `action_button_label` (`:string`) - Pass in the action button label that will be rendered within the ActionableNotification. Defaults to `nil`.
-  * `caption` (`:string`) - The caption. Defaults to `nil`.
-  * `close_on_escape` (`:boolean`) - Specify if pressing the escape key should close notifications. Defaults to `true`.
-  * `has_focus` (`:boolean`) - Specify if focus should be moved to the component when the notification contains actions. Defaults to `true`.
-  * `hide_close_button` (`:boolean`) - `true` to hide the close button. Defaults to `false`.
-  * `inline` (`:boolean`) - Inline notification type. Defaults to `false`.
-  * `kind` (`:string`) - Specify the notification kind, Defaults to 'info'. Defaults to `"info"`. Must be one of `"success"`, `"info"`, `"info-square"`, `"warning"`, `"warning-alt"`, or `"error"`.
-  * `low_contrast` (`:boolean`) - Low contrast mode. Defaults to `false`.
-  * `open` (`:boolean`) - `true` if the notification should be open. Defaults to `true`.
-  * `status_icon_description` (`:string`) - Provide a description for "status" icon that can be read by screen readers. Defaults to `nil`.
-  * `timeout` (`:any`) - Specify an optional duration the notification should be closed in. Defaults to `nil`.
-  * `title_id` (`:string`) - Specify the id for the title element. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `action` - The action button. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `subtitle` - The subtitle. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `title` - The title. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :action_button_label, :string,
@@ -1373,27 +899,16 @@ defmodule Graphene.CarbonComponents do
 
   attr :low_contrast, :boolean, doc: "Low contrast mode"
   attr :open, :boolean, doc: "`true` if the notification should be open.", default: true
-  attr :rest, :global
 
   attr :status_icon_description, :string,
     doc: "Provide a description for \"status\" icon that can be read by screen readers"
 
   attr :timeout, :any, doc: "Specify an optional duration the notification should be closed in"
   attr :title_id, :string, doc: "Specify the id for the title element."
-
-  slot :action, doc: "The action button." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :subtitle, doc: "The subtitle." do
-    attr :tag, :string
-  end
-
-  slot :title, doc: "The title." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :action, doc: "The action button."
+  slot :subtitle, doc: "The subtitle."
+  slot :title, doc: "The title."
 
   def callout_notification(assigns) do
     CoreComponents.callout_notification(assigns)
@@ -1405,19 +920,6 @@ defmodule Graphene.CarbonComponents do
   Chat Button
 
 
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - `true` if the button should be disabled. Defaults to `false`.
-  * `is_quick_action` (`:boolean`) - Specify whether the `ChatButton` should be rendered as a quick action button. Defaults to `false`.
-  * `is_selected` (`:boolean`) - Specify whether the quick action `ChatButton` should be rendered as selected. This disables the input. Defaults to `false`.
-  * `kind` (`:any`) - Specify whether the `ChatButton` should be disabled. Defaults to `nil`.
-  * `size` (`:string`) - Chat button size. Defaults to `"lg"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :disabled, :boolean, doc: "`true` if the button should be disabled."
 
@@ -1428,10 +930,13 @@ defmodule Graphene.CarbonComponents do
     doc:
       "Specify whether the quick action `ChatButton` should be rendered as selected. This disables the input"
 
-  attr :kind, :any, doc: "Specify whether the `ChatButton` should be disabled"
-  attr :rest, :global
+  attr :kind, :string,
+    doc: "Specify whether the `ChatButton` should be disabled",
+    values: ["primary", "secondary", "tertiary", "ghost", "danger"],
+    default: "primary"
+
   attr :size, :string, doc: "Chat button size.", values: ["sm", "md", "lg"], default: "lg"
-  slot :inner_block
+  attr :rest, :global
 
   def chat_button(assigns) do
     CoreComponents.chat_button(assigns)
@@ -1443,25 +948,14 @@ defmodule Graphene.CarbonComponents do
   Chat button skeleton.
 
 
-
-  ## Attributes
-
-  * `size` (`:string`) - Specify the size of the `ChatButtonSkeleton`, from the following list of sizes: 'sm', 'md', 'lg'. Defaults to `"lg"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :rest, :global
-
   attr :size, :string,
     doc:
       "Specify the size of the `ChatButtonSkeleton`, from the following list of sizes: 'sm', 'md', 'lg'",
     values: ["sm", "md", "lg"],
     default: "lg"
 
-  slot :inner_block
+  attr :rest, :global
 
   def chat_button_skeleton(assigns) do
     CoreComponents.chat_button_skeleton(assigns)
@@ -1475,38 +969,6 @@ defmodule Graphene.CarbonComponents do
   ## Events
 
   * `cds-checkbox-changed` - The custom event fired after this changebox changes its checked state.
-
-
-  ## Attributes
-
-  * `checked` (`:boolean`) - Specify whether the underlying input should be checked. Defaults to `false`.
-  * `data_table` (`:boolean`) - Specify if checkbox is being used in a data table. Defaults to `false`.
-  * `default_checked` (`:any`) - Specify whether the underlying input should be checked by default. Defaults to `nil`.
-  * `disabled` (`:boolean`) - Specify whether the Checkbox should be disabled. Defaults to `false`.
-  * `helper_text` (`:any`) - Provide text for the form group for additional help. Defaults to `nil`.
-  * `hide_checkbox` (`:boolean`) - Specify whether the checkbox should be present in the DOM,
-    but invisible and uninteractable. Used for data-table purposes.
-
-    Defaults to `false`.
-  * `hide_label` (`:boolean`) - Specify whether the label should be hidden, or not. Defaults to `false`.
-  * `id` (`:string`) - Specify a custom id for the checkbox. Defaults to `"checkbox"`.
-  * `indeterminate` (`:boolean`) - Specify whether the Checkbox is in an indeterminate state. Defaults to `false`.
-  * `invalid` (`:boolean`) - Specify whether the Checkbox is currently invalid. Defaults to `false`.
-  * `invalid_text` (`:any`) - Provide the text that is displayed when the Checkbox is in an invalid state. Defaults to `nil`.
-  * `label_text` (`:string`) - Provide a label to provide a description of the Checkbox input that you are
-    exposing to the user
-
-    Defaults to `nil`.
-  * `name` (`:string`) - The form name. Defaults to `nil`.
-  * `readonly` (`:boolean`) - Specify whether the Checkbox is read-only. Defaults to `false`.
-  * `title` (`:string`) - Specify a title for the node for the Checkbox. Defaults to `nil`.
-  * `value` (`:string`) - The value. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify whether the Checkbox is in a warn state. Defaults to `false`.
-  * `warn_text` (`:boolean`) - Provide the text that is displayed when the Checkbox is in a warn state. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :checked, :boolean, doc: "Specify whether the underlying input should be checked"
@@ -1536,7 +998,6 @@ defmodule Graphene.CarbonComponents do
 
   attr :name, :string, doc: "The form name."
   attr :readonly, :boolean, doc: "Specify whether the Checkbox is read-only"
-  attr :rest, :global
   attr :title, :string, doc: "Specify a title for the node for the Checkbox"
   attr :value, :string, doc: "The value."
   attr :warn, :boolean, doc: "Specify whether the Checkbox is in a warn state"
@@ -1551,7 +1012,7 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :inner_block
+  attr :rest, :global
 
   def checkbox(assigns) do
     FormComponents.checkbox(assigns)
@@ -1562,27 +1023,6 @@ defmodule Graphene.CarbonComponents do
 
   Check box.
 
-
-
-  ## Attributes
-
-  * `disabled` (`:any`) - Specify whether the form group is currently disabled. Defaults to `nil`.
-  * `helper_text` (`:any`) - Provide text for the form group for additional help. Defaults to `nil`.
-  * `invalid` (`:any`) - Specify whether the form group is currently invalid. Defaults to `nil`.
-  * `invalid_text` (`:any`) - Provide the text that is displayed when the form group is in an invalid state. Defaults to `nil`.
-  * `legend_id` (`:any`) - Provide id for the fieldset <legend> which corresponds to the fieldset
-    `aria-labelledby`
-
-    Defaults to `nil`.
-  * `legend_text` (`:any`) - Provide the text to be rendered inside of the fieldset <legend>. Defaults to `nil`.
-  * `orientation` (`:any`) - Provide the orientation for how the checkbox should be displayed. Defaults to `nil`.
-  * `readonly` (`:boolean`) - Whether the CheckboxGroup should be read-only. Defaults to `false`.
-  * `warn` (`:boolean`) - Specify whether the form group is currently in warning state. Defaults to `false`.
-  * `warn_text` (`:string`) - Provide the text that is displayed when the form group is in warning state. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :disabled, :any, doc: "Specify whether the form group is currently disabled"
@@ -1597,15 +1037,19 @@ defmodule Graphene.CarbonComponents do
       "Provide id for the fieldset <legend> which corresponds to the fieldset\n`aria-labelledby`"
 
   attr :legend_text, :any, doc: "Provide the text to be rendered inside of the fieldset <legend>"
-  attr :orientation, :any, doc: "Provide the orientation for how the checkbox should be displayed"
+
+  attr :orientation, :string,
+    doc: "Provide the orientation for how the checkbox should be displayed",
+    values: ["horizontal", "vertical"],
+    default: "vertical"
+
   attr :readonly, :boolean, doc: "Whether the CheckboxGroup should be read-only"
-  attr :rest, :global
   attr :warn, :boolean, doc: "Specify whether the form group is currently in warning state"
 
   attr :warn_text, :string,
     doc: "Provide the text that is displayed when the form group is in warning state"
 
-  slot :inner_block
+  attr :rest, :global
 
   slot :item do
     attr :label, :string
@@ -1623,7 +1067,6 @@ defmodule Graphene.CarbonComponents do
       |> assign_new(:invalid_text, fn -> nil end)
       |> assign_new(:legend_id, fn -> nil end)
       |> assign_new(:legend_text, fn -> nil end)
-      |> assign_new(:orientation, fn -> nil end)
       |> assign_new(:readonly, fn -> false end)
       |> assign_new(:warn, fn -> false end)
       |> assign_new(:warn_text, fn -> nil end)
@@ -1663,17 +1106,8 @@ defmodule Graphene.CarbonComponents do
 
   Checkbox skeleton.
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def checkbox_skeleton(assigns) do
     CoreComponents.checkbox_skeleton(assigns)
@@ -1684,33 +1118,6 @@ defmodule Graphene.CarbonComponents do
 
   Clickable tile.
 
-
-
-  ## Attributes
-
-  * `ai_label` (`:boolean`) - Defaults to `false`.
-  * `color_scheme` (`:string`) - The color scheme. Defaults to `""`. Must be one of `""`, or `"light"`.
-  * `disabled` (`:boolean`) - `true` if the link should be disabled. Defaults to `false`.
-  * `download` (`:string`) - The default file name. Defaults to `nil`.
-  * `has_rounded_corners` (`:boolean`) - Specify if the `ClickableTile` component should be rendered with rounded corners.
-    Only valid when `ai-label` prop is present
-
-    Defaults to `false`.
-  * `href` (`:string`) - Link `href`. Defaults to `nil`.
-  * `hreflang` (`:string`) - The language of what `href` points to. Defaults to `nil`.
-  * `inline` (`:boolean`) - `true` if the link should be inline. Defaults to `false`.
-  * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `"button"`.
-  * `ping` (`:string`) - URLs to ping. Defaults to `nil`.
-  * `rel` (`:string`) - The link type. Defaults to `nil`.
-  * `size` (`:string`) - Link size. Defaults to `"MEDIUM"`.
-  * `slug` (`:boolean`) - deprecated - remove in v12. Defaults to `false`.
-  * `target` (`:string`) - The link target. Defaults to `nil`.
-  * `type` (`:string`) - MIME type of the `target`. Defaults to `nil`.
-  * `visited` (`:boolean`) - `true` if the link has been visited. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :ai_label, :boolean
@@ -1728,13 +1135,12 @@ defmodule Graphene.CarbonComponents do
   attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
   attr :ping, :string, doc: "URLs to ping."
   attr :rel, :string, doc: "The link type."
-  attr :rest, :global
   attr :size, :string, doc: "Link size.", default: "MEDIUM"
   attr :slug, :boolean, doc: "deprecated - remove in v12"
   attr :target, :string, doc: "The link target."
   attr :type, :string, doc: "MIME type of the `target`."
   attr :visited, :boolean, doc: "`true` if the link has been visited."
-  slot :inner_block
+  attr :rest, :global
 
   def clickable_tile(assigns) do
     CoreComponents.clickable_tile(assigns)
@@ -1745,37 +1151,6 @@ defmodule Graphene.CarbonComponents do
 
   Basic code snippet.
 
-
-
-  ## Attributes
-
-  * `copy_text` (`:string`) - Optional text to copy. If not specified, the `children` node's `innerText`
-    will be used as the copy value.
-
-    Defaults to `nil`.
-  * `disabled` (`:boolean`) - `true` if the button should be disabled. Defaults to `false`.
-  * `feedback` (`:string`) - Specify the string displayed when the snippet is copied. Defaults to `"Copied!"`.
-  * `feedback_timeout` (`:string`) - Specify the time it takes for the feedback message to timeout. Defaults to `"2000"`.
-  * `hide_copy_button` (`:boolean`) - Specify whether or not a copy button should be used/rendered. Defaults to `false`.
-  * `max_collapsed_number_of_rows` (`:string`) - Specify the maximum number of rows to be shown when in collapsed view. Defaults to `"15"`.
-  * `max_expanded_number_of_rows` (`:string`) - Specify the maximum number of rows to be shown when in expanded view. Defaults to `"0"`.
-  * `min_collapsed_number_of_rows` (`:string`) - Specify the minimum number of rows to be shown when in collapsed view. Defaults to `"3"`.
-  * `min_expanded_number_of_rows` (`:string`) - Specify the minimum number of rows to be shown when in expanded view. Defaults to `"16"`.
-  * `show_less_text` (`:string`) - Specify a string that is displayed when the Code Snippet has been
-    interacted with to show less lines
-
-    Defaults to `"Show less"`.
-  * `show_more_text` (`:string`) - Specify a string that is displayed when the Code Snippet text is more
-    than 15 lines
-
-    Defaults to `"Show more"`.
-  * `tooltip_content` (`:string`) - Tooltip content for the copy button. Defaults to `"Copy to clipboard"`.
-  * `type` (`:string`) - The type of code snippet. Defaults to `"single"`. Must be one of `"single"`, `"inline"`, or `"multi"`.
-  * `wrap_text` (`:boolean`) - `true` if the button should be disabled. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :copy_text, :string,
@@ -1811,8 +1186,6 @@ defmodule Graphene.CarbonComponents do
     doc: "Specify the minimum number of rows to be shown when in expanded view",
     default: "16"
 
-  attr :rest, :global
-
   attr :show_less_text, :string,
     doc:
       "Specify a string that is displayed when the Code Snippet has been\ninteracted with to show less lines",
@@ -1832,7 +1205,7 @@ defmodule Graphene.CarbonComponents do
     default: "single"
 
   attr :wrap_text, :boolean, doc: "`true` if the button should be disabled."
-  slot :inner_block
+  attr :rest, :global
 
   def code_snippet(%{copy_text: nil} = assigns) do
     assigns =
@@ -1881,19 +1254,9 @@ defmodule Graphene.CarbonComponents do
 
   Code snippet skeleton.
 
-
-  ## Attributes
-
-  * `type` (`:string`) - Code snippet type. Defaults to `nil`. Must be one of `nil`, `"single"`, `"inline"`, or `"multi"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :rest, :global
   attr :type, :string, doc: "Code snippet type.", values: [nil, "single", "inline", "multi"]
-  slot :inner_block
+  attr :rest, :global
 
   def code_snippet_skeleton(assigns) do
     CoreComponents.code_snippet_skeleton(assigns)
@@ -1905,43 +1268,16 @@ defmodule Graphene.CarbonComponents do
   The column component.
 
 
-
-  ## Attributes
-
-  * `lg` (`:any`) - Defaults to `nil`.
-  * `max` (`:any`) - Defaults to `nil`.
-  * `md` (`:any`) - Defaults to `nil`.
-  * `sm` (`:any`) - Specify column size
-    Keys sm, md, lg, xlg, max
-
-    Values
-    - N, P, { span:N start:S}, { start: S, end: E}
-    N = number
-    P = percentage
-    S = Start column
-    E = End column (does not reach e.g. start 1 end 3 is same as start 1 span 2)
-
-    Defaults to `nil`.
-  * `span` (`:any`) - Defaults to `nil`.
-  * `xlg` (`:any`) - Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :lg, :any
-  attr :max, :any
   attr :md, :any
-  attr :rest, :global
 
   attr :sm, :any,
     doc:
-      "Specify column size\nKeys sm, md, lg, xlg, max\n\nValues\n- N, P, { span:N start:S}, { start: S, end: E}\nN = number\nP = percentage\nS = Start column\nE = End column (does not reach e.g. start 1 end 3 is same as start 1 span 2)"
+      "Specify column size\nKeys sm, md or lg\n\nValues\n- N, P, { span:N start:S}, { start: S, end: E}\nN = number\nP = percentage\nS = Start column\nE = End column (does not reach e.g. start 1 end 3 is same as start 1 span 2)"
 
   attr :span, :any
-  attr :xlg, :any
-  slot :inner_block
+  attr :rest, :global
 
   def column(assigns) do
     CoreComponents.column(assigns)
@@ -1953,17 +1289,8 @@ defmodule Graphene.CarbonComponents do
   The column component.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def column_hang(assigns) do
     CoreComponents.column_hang(assigns)
@@ -1991,45 +1318,6 @@ defmodule Graphene.CarbonComponents do
   * `input` - Undocumented
   * `invalid` - Undocumented
 
-
-  ## Attributes
-
-  * `allow_custom_value` (`:boolean`) - `true` to allow custom values that do not match any item in the list. Defaults to `false`.
-  * `autoalign` (`:boolean`) - Specify whether auto align functionality should be applied. Defaults to `false`.
-  * `clear_selection_label` (`:string`) - The `aria-label` attribute for the icon to clear selection. Defaults to `"Clear selection"`.
-  * `direction` (`:string`) - Specify the direction of the dropdown. Can be either top or bottom. Defaults to `"bottom"`. Must be one of `"top"`, or `"bottom"`.
-  * `disabled` (`:boolean`) - `true` if this dropdown should be disabled. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
-  * `hide_label` (`:boolean`) - Specify whether the title text should be hidden or not. Defaults to `false`.
-  * `input_label` (`:string`) - The `aria-label` attribute for the `<input>` for filtering. Defaults to `nil`.
-  * `invalid` (`:boolean`) - `true` to show the UI of the invalid state. Defaults to `false`.
-  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
-  * `label` (`:string`) - Generic label that will be used as the textual representation of what this field is for. Defaults to `nil`.
-  * `name` (`:string`) - Name for the dropdown in the `FormData`. Defaults to `nil`.
-  * `open` (`:boolean`) - `true` if this dropdown should be open. Defaults to `false`.
-  * `read_only` (`:boolean`) - Whether or not the Dropdown is readonly. Defaults to `false`.
-  * `required` (`:boolean`) - `true` if the value is required. Defaults to `false`.
-  * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
-  * `should_filter_item` (`:any`) - Provide custom filtering behavior. This attribute will be ignored if
-    `typeahead` is enabled and will default to `true`
-
-    Defaults to `nil`.
-  * `size` (`:string`) - Dropdown size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * `title_text` (`:string`) - Provide the title text that will be read by a screen reader when visiting this control. Defaults to `nil`.
-  * `toggle_label_closed` (`:string`) - The `aria-label` attribute for the UI indicating the closed state. Defaults to `nil`.
-  * `toggle_label_open` (`:string`) - The `aria-label` attribute for the UI indicating the open state. Defaults to `nil`.
-  * `type` (`:string`) - `true` if this dropdown should use the inline UI variant. Defaults to `""`. Must be one of `""`, or `"inline"`.
-  * `typeahead` (`:boolean`) - **Experimental**: will enable autocomplete and typeahead for the input field. Defaults to `false`.
-  * `validity_message` (`:string`) - The validity message. Defaults to `nil`.
-  * `value` (`:string`) - The value of the selected item. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
-  * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
-  * `controlled` (`:boolean`) - Whether the combobox is controlled. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :allow_custom_value, :boolean,
     doc: "`true` to allow custom values that do not match any item in the list."
@@ -2039,8 +1327,6 @@ defmodule Graphene.CarbonComponents do
   attr :clear_selection_label, :string,
     doc: "The `aria-label` attribute for the icon to clear selection.",
     default: "Clear selection"
-
-  attr :controlled, :boolean, doc: "Whether the combobox is controlled."
 
   attr :direction, :string,
     doc: "Specify the direction of the dropdown. Can be either top or bottom.",
@@ -2065,8 +1351,6 @@ defmodule Graphene.CarbonComponents do
   attr :required_validity_message, :string,
     doc: "The special validity message for `required`.",
     default: "Please fill out this field."
-
-  attr :rest, :global
 
   attr :should_filter_item, :any,
     doc:
@@ -2098,6 +1382,7 @@ defmodule Graphene.CarbonComponents do
   attr :warn_text, :string,
     doc: "Provide the text that is displayed when the control is in warning state"
 
+  attr :controlled, :boolean, doc: "Whether the combobox is controlled."
   attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
   attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
 
@@ -2105,7 +1390,7 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :inner_block
+  attr :rest, :global
 
   slot :item do
     attr :label, :string
@@ -2118,7 +1403,6 @@ defmodule Graphene.CarbonComponents do
       assigns
       |> assign_new(:allow_custom_value, fn -> false end)
       |> assign_new(:autoalign, fn -> false end)
-      |> assign_new(:controlled, fn -> nil end)
       |> assign_new(:disabled, fn -> false end)
       |> assign_new(:helper_text, fn -> nil end)
       |> assign_new(:hide_label, fn -> false end)
@@ -2139,6 +1423,7 @@ defmodule Graphene.CarbonComponents do
       |> assign_new(:value, fn -> nil end)
       |> assign_new(:warn, fn -> false end)
       |> assign_new(:warn_text, fn -> nil end)
+      |> assign_new(:controlled, fn -> nil end)
 
     ~H"""
     <FormComponents.combo_box
@@ -2193,27 +1478,15 @@ defmodule Graphene.CarbonComponents do
   Combo box item.
 
 
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - `true` if this dropdown item should be disabled. Defaults to `false`.
-  * `size` (`:string`) - Dropdown size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * `value` (`:string`) - The `value` attribute that is set to the parent `<cds-dropdown>` when this dropdown item is selected. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :disabled, :boolean, doc: "`true` if this dropdown item should be disabled."
-  attr :rest, :global
   attr :size, :string, doc: "Dropdown size.", values: ["sm", "md", "lg"], default: "md"
 
   attr :value, :string,
     doc:
       "The `value` attribute that is set to the parent `<cds-dropdown>` when this dropdown item is selected."
 
-  slot :inner_block
+  attr :rest, :global
 
   def combo_box_item(assigns) do
     CoreComponents.combo_box_item(assigns)
@@ -2224,21 +1497,6 @@ defmodule Graphene.CarbonComponents do
 
   Combo button.
 
-
-
-  ## Attributes
-
-  * `disabled` (`:any`) - Specify whether the ComboButton should be disabled, or not. Defaults to `nil`.
-  * `label` (`:string`) - Provide the label to be rendered on the primary action button. Defaults to `nil`.
-  * `menu_alignment` (`:string`) - Experimental property. Specify how the menu should align with the button element. Defaults to `"top"`. Must be one of `"top"`, `"top-start"`, `"top-end"`, `"bottom"`, `"bottom-start"`, `"bottom-end"`, `"left"`, `"left-start"`, `"left-end"`, `"right"`, `"right-start"`, or `"right-end"`.
-  * `on_click` (`:any`) - Provide an optional function to be called when the primary action element is clicked. Defaults to `nil`.
-  * `size` (`:any`) - Specify the size of the button and menu. Defaults to `nil`.
-  * `tooltip_alignment` (`:any`) - Specify how the trigger tooltip should be aligned. Defaults to `nil`.
-  * `tooltip_content` (`:string`) - Provide the tooltip content for the icon button. Defaults to `"Additional actions"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :disabled, :any, doc: "Specify whether the ComboButton should be disabled, or not."
@@ -2265,15 +1523,30 @@ defmodule Graphene.CarbonComponents do
   attr :on_click, :any,
     doc: "Provide an optional function to be called when the primary action element is clicked."
 
-  attr :rest, :global
-  attr :size, :any, doc: "Specify the size of the button and menu."
-  attr :tooltip_alignment, :any, doc: "Specify how the trigger tooltip should be aligned."
+  attr :size, :string,
+    doc: "Specify the size of the button and menu.",
+    values: ["xs", "sm", "md", "lg"],
+    default: "lg"
+
+  attr :tooltip_alignment, :string,
+    doc: "Specify how the trigger tooltip should be aligned.",
+    values: [
+      "top",
+      "top-left",
+      "top-right",
+      "bottom",
+      "bottom-left",
+      "bottom-right",
+      "left",
+      "right"
+    ],
+    default: "top"
 
   attr :tooltip_content, :string,
     doc: "Provide the tooltip content for the icon button.",
     default: "Additional actions"
 
-  slot :inner_block
+  attr :rest, :global
 
   slot :item do
     attr :label, :string
@@ -2299,8 +1572,6 @@ defmodule Graphene.CarbonComponents do
       |> assign_new(:disabled, fn -> nil end)
       |> assign_new(:label, fn -> nil end)
       |> assign_new(:on_click, fn -> nil end)
-      |> assign_new(:size, fn -> nil end)
-      |> assign_new(:tooltip_alignment, fn -> nil end)
 
     ~H"""
     <CoreComponents.combo_button
@@ -2330,40 +1601,15 @@ defmodule Graphene.CarbonComponents do
   Contained list.
 
 
-
-  ## Attributes
-
-  * `is_inset` (`:boolean`) - Specify whether the dividing lines in between list items should be inset. Defaults to `false`.
-  * `kind` (`:any`) - The kind of ContainedList you want to display. Defaults to `nil`.
-  * `size` (`:any`) - Specify the size of the contained list. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `action` - The action slot for interactive elements in header. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `label` - The label text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :is_inset, :boolean,
     doc: "Specify whether the dividing lines in between list items should be inset."
 
   attr :kind, :any, doc: "The kind of ContainedList you want to display"
-  attr :rest, :global
   attr :size, :any, doc: "Specify the size of the contained list."
-
-  slot :action, doc: "The action slot for interactive elements in header" do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :label, doc: "The label text" do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :action, doc: "The action slot for interactive elements in header"
+  slot :label, doc: "The label text"
 
   slot :item do
     attr :clickable, :boolean
@@ -2412,17 +1658,8 @@ defmodule Graphene.CarbonComponents do
   Contained list description text.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def contained_list_description(assigns) do
     CoreComponents.contained_list_description(assigns)
@@ -2437,36 +1674,12 @@ defmodule Graphene.CarbonComponents do
 
   * `cds-contained-list-item-click` - Fires when clickable item is clicked
 
-
-  ## Attributes
-
-  * `clickable` (`:boolean`) - Whether this item is clickable. Defaults to `false`.
-  * `disabled` (`:boolean`) - Whether this item is disabled. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `action` - The action slot for interactive elements. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `icon` - The icon slot for rendering an icon. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :clickable, :boolean, doc: "Whether this item is clickable"
   attr :disabled, :boolean, doc: "Whether this item is disabled."
   attr :rest, :global
-
-  slot :action, doc: "The action slot for interactive elements" do
-    attr :tag, :string
-  end
-
-  slot :icon, doc: "The icon slot for rendering an icon" do
-    attr :tag, :string
-  end
-
-  slot :inner_block
+  slot :action, doc: "The action slot for interactive elements"
+  slot :icon, doc: "The icon slot for rendering an icon"
 
   def contained_list_item(assigns) do
     CoreComponents.contained_list_item(assigns)
@@ -2483,24 +1696,9 @@ defmodule Graphene.CarbonComponents do
   Cancellation of this event stops changing the user-initiated selection.
   * `cds-content-switcher-selected` - The custom event fired after a a content switcher item is selected upon a user gesture.
 
-
-  ## Attributes
-
-  * `icon` (`:boolean`) - Icon only. Defaults to `false`.
-  * `low_contrast` (`:boolean`) - `true` to use the low contrast version. Defaults to `false`.
-  * `selected_index` (`:string`) - Specify a selected index for the initially selected content. Defaults to `"0"`.
-  * `selection_mode` (`:string`) - Choose whether or not to automatically change selection on focus when left/right arrow pressed. Defaults to 'automatic'. Defaults to `"automatic"`.
-  * `size` (`:string`) - Content switcher size. Defaults to `nil`. Must be one of `nil`, `"sm"`, `"md"`, `"lg"`, or `"xl"`.
-  * `value` (`:string`) - The value of the selected item. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :icon, :boolean, doc: "Icon only."
   attr :low_contrast, :boolean, doc: "`true` to use the low contrast version."
-  attr :rest, :global
 
   attr :selected_index, :string,
     doc: "Specify a selected index for the initially selected content",
@@ -2513,7 +1711,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :size, :string, doc: "Content switcher size.", values: [nil, "sm", "md", "lg", "xl"]
   attr :value, :string, doc: "The value of the selected item."
-  slot :inner_block
+  attr :rest, :global
 
   slot :item do
     attr :label, :string
@@ -2565,32 +1763,6 @@ defmodule Graphene.CarbonComponents do
   Content switcher button.
 
 
-
-  ## Attributes
-
-  * `align` (`:string`) - Specify how the trigger should align with the tooltip for icon-only
-    switcher item
-
-    Defaults to `"top"`.
-  * `close_on_activation` (`:boolean`) - Determines whether the tooltip should close when inner content is
-    activated (click, Enter or Space)
-
-    Defaults to `true`.
-  * `disabled` (`:boolean`) - `true` if this content switcher item should be disabled. Defaults to `false`.
-  * `icon` (`:boolean`) - `true` if the content switcher button should be icon-only. Defaults to `false`.
-  * `target` (`:string`) - The element ID of target panel. Defaults to `nil`.
-  * `value` (`:string`) - The `value` attribute that is set to the parent `<cds-content-switcher>`
-    when this content switcher item is selected.
-
-    Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `tooltip_content` - Tooltip content for the item. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :align, :string,
     doc: "Specify how the trigger should align with the tooltip for icon-only\nswitcher item",
@@ -2603,18 +1775,14 @@ defmodule Graphene.CarbonComponents do
 
   attr :disabled, :boolean, doc: "`true` if this content switcher item should be disabled."
   attr :icon, :boolean, doc: "`true` if the content switcher button should be icon-only."
-  attr :rest, :global
   attr :target, :string, doc: "The element ID of target panel."
 
   attr :value, :string,
     doc:
       "The `value` attribute that is set to the parent `<cds-content-switcher>`\nwhen this content switcher item is selected."
 
-  slot :inner_block
-
-  slot :tooltip_content, doc: "Tooltip content for the item." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :tooltip_content, doc: "Tooltip content for the item."
 
   def content_switcher_item(assigns) do
     CoreComponents.content_switcher_item(assigns)
@@ -2625,58 +1793,6 @@ defmodule Graphene.CarbonComponents do
 
   Copy.
 
-
-
-  ## Attributes
-
-  * `align` (`:string`) - Checks if a badge indicator is being used with incorrect properties. Defaults to `"top"`.
-  * `autoalign` (`:boolean`) - Specify whether a auto align functionality should be applied. Defaults to `false`.
-  * `autofocus` (`:boolean`) - `true` if the button should have input focus when the page loads. Defaults to `false`.
-  * `batch_action` (`:boolean`) - `true` if the button is being used within a data table batch action toolbar. Defaults to `false`.
-  * `button_class_name` (`:any`) - Specify an optional className to be added to your Button. Defaults to `nil`.
-  * `close_on_activation` (`:boolean`) - Determines whether the tooltip should close when inner content is activated (click, Enter or Space). Defaults to `true`.
-  * `danger_description` (`:any`) - Specify the message read by screen readers for the danger button variant. Defaults to `nil`.
-  * `default_open` (`:boolean`) - Specify whether the tooltip should be open when it first renders. Defaults to `false`.
-  * `disabled` (`:boolean`) - `true` if the button should be disabled. Defaults to `false`.
-  * `download` (`:string`) - The default file name, used if this button is rendered as `<a>`. Defaults to `nil`.
-  * `enter_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before displaying the tooltip. Defaults to `"100"`.
-  * `feedback` (`:string`) - Specify the string that is displayed when the button is clicked and the content is copi. Defaults to `"Copied!"`.
-  * `feedback_timeout` (`:string`) - The number in milliseconds to determine how long the tooltip should remain. Defaults to `"2000"`.
-  * `has_main_content` (`:boolean`) - `true` if there is a non-icon content. Defaults to `false`.
-  * `href` (`:string`) - Link `href`. If present, this button is rendered as `<a>`. Defaults to `nil`.
-  * `hreflang` (`:string`) - The language of what `href` points to, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `is_expressive` (`:boolean`) - `true` if expressive theme enabled. Defaults to `false`.
-  * `is_selected` (`:boolean`) - Specify whether the Button is currently selected.
-    Only applies to the Ghost variant.
-
-    Defaults to `false`.
-  * `kind` (`:string`) - Button kind. Defaults to `"primary"`. Must be one of `"primary"`, `"secondary"`, `"tertiary"`, `"danger"`, `"danger--tertiary"`, `"danger--ghost"`, or `"ghost"`.
-  * `leave_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before hiding the tooltip. Defaults to `"100"`.
-  * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `"button"`.
-  * `open_tooltip` (`:boolean`) - Boolean to determine if tooltip is open. Defaults to `false`.
-  * `ping` (`:string`) - URLs to ping, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `rel` (`:string`) - The link type, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `size` (`:string`) - Specify the size of the Button. Defaults to `md`. Defaults to `"md"`.
-  * `tab_index` (`:string`) - Specify the tabIndex of the button. Defaults to `"0"`.
-  * `target` (`:string`) - The link target, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `""`. Must be one of `"left"`, `"right"`, or `""`.
-  * `tooltip_position` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"top"`. Must be one of `"top"`, `"bottom"`, `"right"`, or `"left"`.
-  * `tooltip_text` (`:string`) - Specify the text to be rendered in the tooltip. If using
-    "cds-badge-indicator" with no count prop then the text
-    should include describing there is a new notification.
-
-    Defaults to `nil`.
-  * `type` (`:string`) - Button type. Defaults to `"button"`. Must be one of `"button"`, `"reset"`, or `"submit"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :align, :string,
@@ -2746,13 +1862,12 @@ defmodule Graphene.CarbonComponents do
 
   attr :leave_delay_ms, :string,
     doc: "Specify the duration in milliseconds to delay before hiding the tooltip",
-    default: "100"
+    default: "300"
 
   attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
   attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
   attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
   attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
-  attr :rest, :global
   attr :size, :string, doc: "Specify the size of the Button. Defaults to `md`.", default: "md"
   attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
   attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
@@ -2778,7 +1893,7 @@ defmodule Graphene.CarbonComponents do
     values: ["button", "reset", "submit"],
     default: "button"
 
-  slot :inner_block
+  attr :rest, :global
 
   def copy(assigns) do
     CoreComponents.copy(assigns)
@@ -2789,20 +1904,6 @@ defmodule Graphene.CarbonComponents do
 
   Copy button.
 
-
-
-  ## Attributes
-
-  * `align` (`:string`) - How the tooltip is aligned to the trigger button. Defaults to `"bottom"`. Must be one of `"top"`, `"top-start"`, `"top-end"`, `"bottom"`, `"bottom-start"`, `"bottom-end"`, `"left"`, `"left-start"`, `"left-end"`, `"right"`, `"right-start"`, or `"right-end"`.
-  * `auto_align` (`:boolean`) - Specify whether a auto align functionality should be applied. Defaults to `false`.
-  * `button_class_name` (`:any`) - Specify an optional className to be added to your Button. Defaults to `nil`.
-  * `disabled` (`:boolean`) - `true` if the button should be disabled. Defaults to `false`.
-  * `feedback` (`:string`) - Specify the string that is displayed when the button is clicked and the content is copi. Defaults to `"Copied!"`.
-  * `feedback_timeout` (`:string`) - The number in milliseconds to determine how long the tooltip should remain. Defaults to `"2000"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :align, :string,
@@ -2837,7 +1938,6 @@ defmodule Graphene.CarbonComponents do
     default: "2000"
 
   attr :rest, :global
-  slot :inner_block
 
   def copy_button(assigns) do
     CoreComponents.copy_button(assigns)
@@ -2852,25 +1952,6 @@ defmodule Graphene.CarbonComponents do
 
   * `cds-date-picker-changed` - The custom event fired on this element when Flatpickr updates its value.
   * `cds-date-picker-flatpickr-error` - The name of the custom event when Flatpickr throws an error.
-
-
-  ## Attributes
-
-  * `allow_input` (`:boolean`) - flatpickr prop passthrough. Allows the user to enter a date directly into the input field. Defaults to `true`.
-  * `close_on_select` (`:boolean`) - flatpickr prop passthrough. Controls whether the calendar dropdown closes upon selection. Defaults to `true`.
-  * `date_format` (`:string`) - The date format to let Flatpickr use. Defaults to `nil`.
-  * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
-  * `enabled_range` (`:string`) - The date range that a user can pick in calendar dropdown. Defaults to `nil`.
-  * `max_date` (`:string`) - The maximum date that a user can start picking from. Defaults to `nil`.
-  * `min_date` (`:string`) - The minimum date that a user can start picking from. Defaults to `nil`.
-  * `name` (`:string`) - Name for the input in the `FormData`. Defaults to `nil`.
-  * `open` (`:boolean`) - `true` if the date picker should be open. Defaults to `false`.
-  * `readonly` (`:boolean`) - Specify if the component should be read-only. Defaults to `false`.
-  * `value` (`:string`) - The date(s) in ISO8601 format (date portion only), for range mode, '/' is used for separate start/end dates. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :allow_input, :boolean,
@@ -2891,7 +1972,6 @@ defmodule Graphene.CarbonComponents do
   attr :name, :string, doc: "Name for the input in the `FormData`"
   attr :open, :boolean, doc: "`true` if the date picker should be open."
   attr :readonly, :boolean, doc: "Specify if the component should be read-only"
-  attr :rest, :global
 
   attr :value, :string,
     doc:
@@ -2904,7 +1984,7 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :inner_block
+  attr :rest, :global
 
   slot :input do
     attr :label, :string
@@ -2973,31 +2053,6 @@ defmodule Graphene.CarbonComponents do
   The input box for date picker.
 
 
-
-  ## Attributes
-
-  * `color_scheme` (`:string`) - The color scheme. Defaults to `""`. Must be one of `""`, or `"light"`.
-  * `disabled` (`:boolean`) - `true` if the check box should be disabled. Defaults to `false`.
-  * `hide_label` (`:boolean`) - `true` if the label should be hidden. Defaults to `false`.
-  * `invalid` (`:boolean`) - Controls the invalid state and visibility of the `validityMessage`. Defaults to `false`.
-  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
-  * `kind` (`:string`) - Date picker input kind. Defaults to `"simple"`. Must be one of `"simple"`, `"single"`, `"from"`, or `"to"`.
-  * `label_text` (`:string`) - The label text. Defaults to `nil`.
-  * `pattern` (`:string`) - The `pattern` attribute for the `<input>` in the shadow DOM. Defaults to `nil`.
-  * `placeholder` (`:string`) - The placeholder text. Defaults to `nil`.
-  * `readonly` (`:boolean`) - Specify if the component should be read-only. Defaults to `false`.
-  * `required` (`:boolean`) - `true` if the value is required. Defaults to `false`.
-  * `short` (`:boolean`) - true to use the short version. Defaults to `false`.
-  * `size` (`:any`) - Vertical size of this date picker input. Defaults to `nil`.
-  * `type` (`:string`) - The `type` attribute for the `<input>` in the shadow DOM. Defaults to `nil`.
-  * `value` (`:string`) - The value. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
-  * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :color_scheme, :string, doc: "The color scheme.", values: ["", "light"], default: ""
   attr :disabled, :boolean, doc: "`true` if the check box should be disabled."
@@ -3018,9 +2073,13 @@ defmodule Graphene.CarbonComponents do
   attr :placeholder, :string, doc: "The placeholder text."
   attr :readonly, :boolean, doc: "Specify if the component should be read-only"
   attr :required, :boolean, doc: "`true` if the value is required."
-  attr :rest, :global
   attr :short, :boolean, doc: "true to use the short version."
-  attr :size, :any, doc: "Vertical size of this date picker input."
+
+  attr :size, :string,
+    doc: "Vertical size of this date picker input.",
+    values: ["sm", "md", "lg", "xl"],
+    default: "md"
+
   attr :type, :string, doc: "The `type` attribute for the `<input>` in the shadow DOM."
   attr :value, :string, doc: "The value."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
@@ -3028,7 +2087,7 @@ defmodule Graphene.CarbonComponents do
   attr :warn_text, :string,
     doc: "Provide the text that is displayed when the control is in warning state"
 
-  slot :inner_block
+  attr :rest, :global
 
   def date_picker_input(assigns) do
     CoreComponents.date_picker_input(assigns)
@@ -3039,23 +2098,11 @@ defmodule Graphene.CarbonComponents do
 
   Date picker input skeleton.
 
-
-  ## Attributes
-
-  * `hide_label` (`:boolean`) - Specify whether the label should be hidden. Defaults to `nil`.
-  * `kind` (`:string`) - Date picker kind. Defaults to `nil`. Must be one of `nil`, `"simple"`, `"single"`, `"from"`, or `"to"`.
-  * `range` (`:boolean`) - `true` if the input is a range. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden."
   attr :kind, :string, doc: "Date picker kind.", values: [nil, "simple", "single", "from", "to"]
   attr :range, :boolean, doc: "`true` if the input is a range."
   attr :rest, :global
-  slot :inner_block
 
   def date_picker_input_skeleton(assigns) do
     CoreComponents.date_picker_input_skeleton(assigns)
@@ -3066,21 +2113,6 @@ defmodule Graphene.CarbonComponents do
 
   Definition tooltip.
 
-
-
-  ## Attributes
-
-  * `align` (`:string`) - Specify how the trigger should align with the tooltip. Defaults to `"bottom"`.
-  * `autoalign` (`:boolean`) - Will auto-align Definition Tooltip. This prop is currently experimental and is subject to future changes. Defaults to `false`.
-  * `default_open` (`:boolean`) - Specify whether the tooltip should be open when it first renders. Defaults to `false`.
-  * `open_on_hover` (`:boolean`) - Specifies whether the `DefinitionTooltip` should open on hover or not. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `definition` - Definition content. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :align, :string,
@@ -3098,12 +2130,7 @@ defmodule Graphene.CarbonComponents do
     doc: "Specifies whether the `DefinitionTooltip` should open on hover or not"
 
   attr :rest, :global
-
-  slot :definition, doc: "Definition content." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
+  slot :definition, doc: "Definition content."
 
   def definition_tooltip(assigns) do
     CoreComponents.definition_tooltip(assigns)
@@ -3121,25 +2148,6 @@ defmodule Graphene.CarbonComponents do
   * `cds-tag-beingclosed` - The custom event fired as the element is being closed
   * `cds-tag-closed` - The custom event fired after the element has been closed
 
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - `true` if the tag should be disabled. Defaults to `false`.
-  * `dismiss_tooltip_alignment` (`:string`) - Specify the tooltip alignment for the dismiss button. Defaults to `"bottom"`.
-  * `dismiss_tooltip_label` (`:string`) - Provide a custom tooltip label for the dismiss button. Defaults to `nil`.
-  * `filter` (`:boolean`) - Determine if is a filter/chip. Defaults to `false`.
-  * `has_custom_icon` (`:boolean`) - `true` if there is a custom icon. Defaults to `false`.
-  * `open` (`:boolean`) - `true` if the tag should be open. Defaults to `true`.
-  * `size` (`:any`) - The size of the tag. Defaults to `nil`.
-  * `tag_title` (`:string`) - Provide a custom `title` to be inserted in the tag. Defaults to `nil`.
-  * `text` (`:string`) - Provide text to be rendered inside of a the tag. Defaults to `nil`.
-  * `title` (`:string`) - Text to show on filter tag "clear" buttons. Corresponds to the attribute with the same name. Defaults to `"Clear filter"`.
-  * `type` (`:any`) - The type of the tag. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :disabled, :boolean, doc: "`true` if the tag should be disabled"
 
@@ -3153,8 +2161,7 @@ defmodule Graphene.CarbonComponents do
   attr :filter, :boolean, doc: "Determine if is a filter/chip"
   attr :has_custom_icon, :boolean, doc: "`true` if there is a custom icon."
   attr :open, :boolean, doc: "`true` if the tag should be open.", default: true
-  attr :rest, :global
-  attr :size, :any, doc: "The size of the tag."
+  attr :size, :string, doc: "The size of the tag.", values: ["lg", "md", "sm"], default: "md"
   attr :tag_title, :string, doc: "Provide a custom `title` to be inserted in the tag."
   attr :text, :string, doc: "Provide text to be rendered inside of a the tag."
 
@@ -3163,8 +2170,25 @@ defmodule Graphene.CarbonComponents do
       "Text to show on filter tag \"clear\" buttons. Corresponds to the attribute with the same name",
     default: "Clear filter"
 
-  attr :type, :any, doc: "The type of the tag."
-  slot :inner_block
+  attr :type, :string,
+    doc: "The type of the tag.",
+    values: [
+      "red",
+      "magenta",
+      "purple",
+      "blue",
+      "cyan",
+      "teal",
+      "green",
+      "gray",
+      "COOL-GRAY",
+      "cool-gray",
+      "WARM-GRAY",
+      "warm-gray"
+    ],
+    default: "gray"
+
+  attr :rest, :global
 
   def dismissible_tag(assigns) do
     CoreComponents.dismissible_tag(assigns)
@@ -3185,38 +2209,6 @@ defmodule Graphene.CarbonComponents do
   * `cds-dropdown-toggled` - The custom event fired after the open state of this dropdown is toggled upon a user gesture.
   * `input` - Undocumented
   * `invalid` - Undocumented
-
-
-  ## Attributes
-
-  * `autoalign` (`:boolean`) - Specify whether auto align functionality should be applied. Defaults to `false`.
-  * `direction` (`:string`) - Specify the direction of the dropdown. Can be either top or bottom. Defaults to `"bottom"`. Must be one of `"top"`, or `"bottom"`.
-  * `disabled` (`:boolean`) - `true` if this dropdown should be disabled. Defaults to `false`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
-  * `hide_label` (`:boolean`) - Specify whether the title text should be hidden or not. Defaults to `false`.
-  * `invalid` (`:boolean`) - `true` to show the UI of the invalid state. Defaults to `false`.
-  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
-  * `label` (`:string`) - Generic label that will be used as the textual representation of what this field is for. Defaults to `nil`.
-  * `name` (`:string`) - Name for the dropdown in the `FormData`. Defaults to `nil`.
-  * `open` (`:boolean`) - `true` if this dropdown should be open. Defaults to `false`.
-  * `read_only` (`:boolean`) - Whether or not the Dropdown is readonly. Defaults to `false`.
-  * `required` (`:boolean`) - `true` if the value is required. Defaults to `false`.
-  * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
-  * `size` (`:string`) - Dropdown size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * `toggle_label_closed` (`:string`) - The `aria-label` attribute for the UI indicating the closed state. Defaults to `nil`.
-  * `toggle_label_open` (`:string`) - The `aria-label` attribute for the UI indicating the open state. Defaults to `nil`.
-  * `type` (`:string`) - `true` if this dropdown should use the inline UI variant. Defaults to `""`. Must be one of `""`, or `"inline"`.
-  * `validity_message` (`:string`) - The validity message. Defaults to `nil`.
-  * `value` (`:string`) - The value of the selected item. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
-  * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `title_text` - Title text content. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :autoalign, :boolean, doc: "Specify whether auto align functionality should be applied"
@@ -3244,7 +2236,6 @@ defmodule Graphene.CarbonComponents do
     doc: "The special validity message for `required`.",
     default: "Please fill out this field."
 
-  attr :rest, :global
   attr :size, :string, doc: "Dropdown size.", values: ["sm", "md", "lg"], default: "md"
 
   attr :toggle_label_closed, :string,
@@ -3272,11 +2263,8 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :inner_block
-
-  slot :title_text, doc: "Title text content." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :title_text, doc: "Title text content."
 
   slot :item do
     attr :label, :string
@@ -3359,27 +2347,15 @@ defmodule Graphene.CarbonComponents do
   Dropdown item.
 
 
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - `true` if this dropdown item should be disabled. Defaults to `false`.
-  * `size` (`:string`) - Dropdown size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * `value` (`:string`) - The `value` attribute that is set to the parent `<cds-dropdown>` when this dropdown item is selected. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :disabled, :boolean, doc: "`true` if this dropdown item should be disabled."
-  attr :rest, :global
   attr :size, :string, doc: "Dropdown size.", values: ["sm", "md", "lg"], default: "md"
 
   attr :value, :string,
     doc:
       "The `value` attribute that is set to the parent `<cds-dropdown>` when this dropdown item is selected."
 
-  slot :inner_block
+  attr :rest, :global
 
   def dropdown_item(assigns) do
     CoreComponents.dropdown_item(assigns)
@@ -3390,21 +2366,10 @@ defmodule Graphene.CarbonComponents do
 
   Dropdown skeleton.
 
-
-  ## Attributes
-
-  * `hide_label` (`:boolean`) - Specify whether the label should be hidden. Defaults to `nil`.
-  * `size` (`:string`) - Dropdown size. Defaults to `nil`. Must be one of `nil`, `"sm"`, `"md"`, or `"lg"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden."
-  attr :rest, :global
   attr :size, :string, doc: "Dropdown size.", values: [nil, "sm", "md", "lg"]
-  slot :inner_block
+  attr :rest, :global
 
   def dropdown_skeleton(assigns) do
     CoreComponents.dropdown_skeleton(assigns)
@@ -3421,24 +2386,6 @@ defmodule Graphene.CarbonComponents do
   Cancellation of this event stops changing the user-initiated change in expanded state.
   * `cds-expandable-tile-toggled` - The custom event fired after a the expanded state is changed upon a user gesture.
 
-
-  ## Attributes
-
-  * `color_scheme` (`:string`) - The color scheme. Defaults to `""`. Must be one of `""`, or `"light"`.
-  * `expanded` (`:boolean`) - `true` to expand this expandable tile. Defaults to `false`.
-  * `has_rounded_corners` (`:boolean`) - Specify if the `ExpandableTile` component should be rendered with rounded corners.
-    Only valid when `ai-label` prop is present
-
-    Defaults to `false`.
-  * `with_interactive` (`:boolean`) - `true` to expand this expandable tile. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `above_the_fold_content` - Above-the-fold content. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :color_scheme, :string, doc: "The color scheme.", values: ["", "light"], default: ""
   attr :expanded, :boolean, doc: "`true` to expand this expandable tile."
@@ -3447,14 +2394,9 @@ defmodule Graphene.CarbonComponents do
     doc:
       "Specify if the `ExpandableTile` component should be rendered with rounded corners.\nOnly valid when `ai-label` prop is present"
 
-  attr :rest, :global
   attr :with_interactive, :boolean, doc: "`true` to expand this expandable tile."
-
-  slot :above_the_fold_content, doc: "Above-the-fold content." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
+  attr :rest, :global
+  slot :above_the_fold_content, doc: "Above-the-fold content."
 
   def expandable_tile(assigns) do
     CoreComponents.expandable_tile(assigns)
@@ -3466,21 +2408,11 @@ defmodule Graphene.CarbonComponents do
   Undocumented
 
 
-
-  ## Attributes
-
-  * `enable_v12_toggle_reduced_label_spacing` (`:boolean`) - Enable reduced label spacing for v12 toggle. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :enable_v12_toggle_reduced_label_spacing, :boolean,
     doc: "Enable reduced label spacing for v12 toggle."
 
   attr :rest, :global
-  slot :inner_block
 
   def feature_flags(assigns) do
     CoreComponents.feature_flags(assigns)
@@ -3494,24 +2426,6 @@ defmodule Graphene.CarbonComponents do
   ## Events
 
   * `cds-file-uploader-button-changed` - The custom event fired when there is a user gesture to select files to upload.
-
-
-  ## Attributes
-
-  * `accept` (`:string`) - The file types the file input should accept, separated by space. Defaults to `nil`.
-  * `button_kind` (`:string`) - Button kind. Defaults to `"primary"`. Must be one of `"primary"`, `"secondary"`, `"tertiary"`, `"danger"`, `"danger--tertiary"`, `"danger--ghost"`, or `"ghost"`.
-  * `disabled` (`:boolean`) - `true` if this drop container should be disabled. Defaults to `false`.
-  * `multiple` (`:boolean`) - `true` if this drop container should accept more than one files at once.
-    Note that even with `false` set here, user _can_ select multiple files one by one.
-
-    Defaults to `false`.
-  * `name` (`:string`) - The name of the input. Defaults to `nil`.
-  * `size` (`:string`) - Button size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, `"lg"`, `"xl"`, or `"2xl"`.
-  * `slot` (`:string`) - The shadow DOM slot to put this drop container in. Defaults to `"drop-container"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :accept, :string, doc: "The file types the file input should accept, separated by space."
@@ -3536,14 +2450,13 @@ defmodule Graphene.CarbonComponents do
       "`true` if this drop container should accept more than one files at once.\nNote that even with `false` set here, user _can_ select multiple files one by one."
 
   attr :name, :string, doc: "The name of the input."
-  attr :rest, :global
   attr :size, :string, doc: "Button size.", values: ["sm", "md", "lg", "xl", "2xl"], default: "md"
 
   attr :slot, :string,
     doc: "The shadow DOM slot to put this drop container in.",
     default: "drop-container"
 
-  slot :inner_block
+  attr :rest, :global
 
   def file_uploader_button(assigns) do
     CoreComponents.file_uploader_button(assigns)
@@ -3558,22 +2471,6 @@ defmodule Graphene.CarbonComponents do
 
   * `cds-file-uploader-drop-container-changed` - The custom event fired when there is a user gesture to select files to upload.
 
-
-  ## Attributes
-
-  * `accept` (`:string`) - The file types the file input should accept, separated by space. Defaults to `nil`.
-  * `disabled` (`:boolean`) - `true` if this drop container should be disabled. Defaults to `false`.
-  * `multiple` (`:boolean`) - `true` if this drop container should accept more than one files at once.
-    Note that even with `false` set here, user _can_ select multiple files one by one.
-
-    Defaults to `false`.
-  * `name` (`:string`) - The name of the input. Defaults to `nil`.
-  * `slot` (`:string`) - The shadow DOM slot to put this drop container in. Defaults to `"drop-container"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :accept, :string, doc: "The file types the file input should accept, separated by space."
   attr :disabled, :boolean, doc: "`true` if this drop container should be disabled."
@@ -3583,13 +2480,12 @@ defmodule Graphene.CarbonComponents do
       "`true` if this drop container should accept more than one files at once.\nNote that even with `false` set here, user _can_ select multiple files one by one."
 
   attr :name, :string, doc: "The name of the input."
-  attr :rest, :global
 
   attr :slot, :string,
     doc: "The shadow DOM slot to put this drop container in.",
     default: "drop-container"
 
-  slot :inner_block
+  attr :rest, :global
 
   def file_uploader_drop_container(assigns) do
     CoreComponents.file_uploader_drop_container(assigns)
@@ -3606,26 +2502,6 @@ defmodule Graphene.CarbonComponents do
   Cancellation of this event stops the user-initiated action of deleting this file uploader item.
   * `cds-file-uploader-item-deleted` - The custom event fired after this file uploader item is deleted upon a user gesture.
 
-
-  ## Attributes
-
-  * `error_body` (`:string`) - The error body text. Defaults to `nil`.
-  * `error_subject` (`:string`) - The error subject text. Defaults to `nil`.
-  * `icon_description` (`:string`) - The `aria-label` attribute for the icon to delete this file uploader item. Defaults to `"Delete this file"`.
-  * `invalid` (`:boolean`) - Controls the invalid state and visibility of the `validityMessage`. Defaults to `false`.
-  * `size` (`:string`) - The size of this file uploader item. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * `state` (`:string`) - The state of this file uploader item. Defaults to `"uploading"`. Must be one of `"uploading"`, `"complete"`, or `"edit"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `validity` - message The validity message. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `validity_message` - supplement The supplemental validity message. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :error_body, :string, doc: "The error body text"
   attr :error_subject, :string, doc: "The error subject text."
@@ -3637,8 +2513,6 @@ defmodule Graphene.CarbonComponents do
   attr :invalid, :boolean,
     doc: "Controls the invalid state and visibility of the `validityMessage`."
 
-  attr :rest, :global
-
   attr :size, :string,
     doc: "The size of this file uploader item.",
     values: ["sm", "md", "lg"],
@@ -3649,15 +2523,9 @@ defmodule Graphene.CarbonComponents do
     values: ["uploading", "complete", "edit"],
     default: "uploading"
 
-  slot :inner_block
-
-  slot :validity, doc: "message The validity message." do
-    attr :tag, :string
-  end
-
-  slot :validity_message, doc: "supplement The supplemental validity message." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :validity, doc: "message The validity message."
+  slot :validity_message, doc: "supplement The supplemental validity message."
 
   def file_uploader_item(assigns) do
     CoreComponents.file_uploader_item(assigns)
@@ -3669,17 +2537,8 @@ defmodule Graphene.CarbonComponents do
   The File uploader skeleton.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def file_uploader_skeleton(assigns) do
     CoreComponents.file_uploader_skeleton(assigns)
@@ -3694,66 +2553,6 @@ defmodule Graphene.CarbonComponents do
 
   * `cds-number-input` - The name of the custom event fired after the value is changed upon a user gesture.
   * `invalid` - Undocumented
-
-
-  ## Attributes
-
-  * `allow_empty` (`:boolean`) - `true` to allow empty string. Defaults to `false`.
-  * `autocomplete` (`:string`) - May be any of the standard HTML autocomplete options. Defaults to `nil`.
-  * `autofocus` (`:boolean`) - Sets the input to be focussed automatically on page load. Defaults to false. Defaults to `false`.
-  * `decrement_button_assistive_text` (`:string`) - Aria text for the button that decrements the value. Defaults to `"decrease number input"`.
-  * `default_value` (`:string`) - Optional starting value for uncontrolled state. Defaults to `nil`.
-  * `disable_wheel` (`:boolean`) - Specify if the wheel functionality for the input should be disabled, or not. Defaults to `false`.
-  * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
-  * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
-  * `hide_steppers` (`:boolean`) - Specify whether you want the steppers to be hidden. Defaults to `false`.
-  * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
-  * `icon_description` (`:string`) - Provide a description for up/down icons that can be read by screen readers. Defaults to `nil`.
-  * `increment_button_assistive_text` (`:string`) - Aria text for the button that increments the value. Defaults to `"increase number input"`.
-  * `inline` (`:boolean`) - true to use the inline version. Defaults to `false`.
-  * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
-  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
-  * `is_fluid` (`:boolean`) - Set to true to use the fluid variant. Defaults to `false`.
-  * `label` (`:string`) - Generic label that will be used as the textual representation of what this field is for. Defaults to `nil`.
-  * `max` (`:string`) - The maximum value allowed in the input. Defaults to `"Infty"`.
-  * `max_count` (`:any`) - Max character count allowed for input. This is needed in order for enableCounter to display. Defaults to `nil`.
-  * `min` (`:string`) - The minimum value allowed in the input. Defaults to `"-Infty"`.
-  * `name` (`:string`) - Name for the input in the `FormData`. Defaults to `nil`.
-  * `pattern` (`:string`) - Pattern to validate the input against for HTML validity checking. Defaults to `nil`.
-  * `placeholder` (`:string`) - Value to display when the input has an empty `value`. Defaults to `nil`.
-  * `readonly` (`:boolean`) - Specify if the component should be read-only. Defaults to `false`.
-  * `required` (`:boolean`) - Boolean property to set the required status. Defaults to `false`.
-  * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
-  * `show_password_visibility_toggle` (`:boolean`) - Boolean property to render password visibility toggle. Defaults to `false`.
-  * `show_password_label` (`:string`) - "Show password" tooltip text on password visibility toggle. Defaults to `"Show password"`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
-  * `step` (`:string`) - The amount the value should increase or decrease by. Defaults to `"1"`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `"center"`. Must be one of `"start"`, `"center"`, or `"end"`.
-  * `tooltip_direction` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
-  * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `value` (`:string`) - The value of the input. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
-  * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `helper_text` - The helper text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `label_text` - The label text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :allow_empty, :boolean, doc: "`true` to allow empty string."
@@ -3777,11 +2576,11 @@ defmodule Graphene.CarbonComponents do
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
 
+  attr :hide_steppers, :boolean, doc: "Specify whether you want the steppers to be hidden"
+
   attr :hide_password_label, :string,
     doc: "\"Hide password\" tooltip text on password visibility toggle",
     default: "Hide password"
-
-  attr :hide_steppers, :boolean, doc: "Specify whether you want the steppers to be hidden"
 
   attr :icon_description, :string,
     doc: "Provide a description for up/down icons that can be read by screen readers"
@@ -3815,16 +2614,14 @@ defmodule Graphene.CarbonComponents do
     doc: "The special validity message for `required`.",
     default: "Please fill out this field."
 
-  attr :rest, :global
+  attr :show_password_visibility_toggle, :boolean,
+    doc: "Boolean property to render password visibility toggle"
 
   attr :show_password_label, :string,
     doc: "\"Show password\" tooltip text on password visibility toggle",
     default: "Show password"
 
-  attr :show_password_visibility_toggle, :boolean,
-    doc: "Boolean property to render password visibility toggle"
-
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
   attr :step, :string, doc: "The amount the value should increase or decrease by", default: "1"
 
   attr :tooltip_alignment, :string,
@@ -3857,21 +2654,13 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :helper_text, doc: "The helper text." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :label_text, doc: "The label text." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :helper_text, doc: "The helper text."
+  slot :label_text, doc: "The label text."
 
   slot :validity_message,
     doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
-    attr :tag, :string
-  end
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
   def fluid_number_input(assigns) do
     FormComponents.fluid_number_input(assigns)
@@ -3883,21 +2672,11 @@ defmodule Graphene.CarbonComponents do
   Fluid number input.
 
 
-
-  ## Attributes
-
-  * `hide_label` (`:boolean`) - `true` if the label should be hidden. Corresponds to the attribute with the same name. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :hide_label, :boolean,
     doc: "`true` if the label should be hidden. Corresponds to the attribute with the same name."
 
   attr :rest, :global
-  slot :inner_block
 
   def fluid_number_input_skeleton(assigns) do
     CoreComponents.fluid_number_input_skeleton(assigns)
@@ -3911,30 +2690,6 @@ defmodule Graphene.CarbonComponents do
   ## Events
 
   * `cds-search-input` - The custom event fired after the search content is changed upon a user gesture.
-
-
-  ## Attributes
-
-  * `autocomplete` (`:string`) - Specify an optional value for the autocomplete property on the underlying <input>,
-    defaults to "off"
-
-    Defaults to `"off"`.
-  * `close_button_label_text` (`:string`) - Specify a label to be read by screen readers on the "close" button. Defaults to `nil`.
-  * `disabled` (`:boolean`) - `true` if the search box should be disabled. Defaults to `false`.
-  * `expandable` (`:boolean`) - `true` if the search bar can be expandable. Defaults to `false`.
-  * `expanded` (`:boolean`) - `true` if the expandable search has been expanded. Defaults to `false`.
-  * `has_custom_icon` (`:boolean`) - Defaults to `false`.
-  * `label_text` (`:string`) - The label text. Defaults to `nil`.
-  * `name` (`:string`) - The form name in `FormData`. Defaults to `nil`.
-  * `placeholder` (`:string`) - The placeholder text. Defaults to `"Search"`.
-  * `role` (`:string`) - Specify the role for the underlying <input>, defaults to searchbox. Defaults to `nil`.
-  * `size` (`:any`) - The search box size. Defaults to `nil`.
-  * `type` (`:string`) - The `<input>` name. Defaults to `nil`.
-  * `value` (`:string`) - The value. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :autocomplete, :string,
@@ -3952,9 +2707,13 @@ defmodule Graphene.CarbonComponents do
   attr :label_text, :string, doc: "The label text."
   attr :name, :string, doc: "The form name in `FormData`."
   attr :placeholder, :string, doc: "The placeholder text.", default: "Search"
-  attr :rest, :global
   attr :role, :string, doc: "Specify the role for the underlying <input>, defaults to searchbox"
-  attr :size, :any, doc: "The search box size."
+
+  attr :size, :string,
+    doc: "The search box size.",
+    values: ["sm", "md", "lg", "xl"],
+    default: "md"
+
   attr :type, :string, doc: "The `<input>` name."
   attr :value, :string, doc: "The value."
   attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
@@ -3964,7 +2723,7 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :inner_block
+  attr :rest, :global
 
   def fluid_search(assigns) do
     FormComponents.fluid_search(assigns)
@@ -3976,19 +2735,13 @@ defmodule Graphene.CarbonComponents do
   Fluid Search.
 
 
-
-  ## Attributes
-
-  * `size` (`:any`) - The search box size. Corresponds to the attribute with the same name. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
+  attr :size, :string,
+    doc: "The search box size. Corresponds to the attribute with the same name.",
+    values: ["sm", "md", "lg", "xl"],
+    default: "md"
+
   attr :rest, :global
-  attr :size, :any, doc: "The search box size. Corresponds to the attribute with the same name."
-  slot :inner_block
 
   def fluid_search_skeleton(assigns) do
     CoreComponents.fluid_search_skeleton(assigns)
@@ -4002,43 +2755,6 @@ defmodule Graphene.CarbonComponents do
   ## Events
 
   * `cds-select-selected` - The name of the custom event fired after an item is selected.
-
-
-  ## Attributes
-
-  * `autofocus` (`:boolean`) - Sets the select to be focussed automatically on page load. Defaults to false. Defaults to `false`.
-  * `disabled` (`:boolean`) - Controls the disabled state of the select. Defaults to `false`.
-  * `hide_label` (`:boolean`) - Specify whether the label should be hidden, or not. Defaults to `false`.
-  * `id` (`:string`) - ID to link the `label` and `select`. Defaults to `nil`.
-  * `inline` (`:boolean`) - Specify whether you want the inline version of this control. Defaults to `false`.
-  * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
-  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
-  * `is_fluid` (`:boolean`) - Specify whether the textarea is fluid or not. Defaults to `false`.
-  * `multiple` (`:boolean`) - `true` to enable multiple selection. Defaults to `nil`.
-  * `name` (`:string`) - Name for the select in the `FormData`. Defaults to `nil`.
-  * `pattern` (`:string`) - Pattern to validate the select against for HTML validity checking. Defaults to `nil`.
-  * `placeholder` (`:string`) - Value to display when the select has an empty `value`. Defaults to `nil`.
-  * `readonly` (`:boolean`) - Controls the readonly state of the select. Defaults to `false`.
-  * `required` (`:boolean`) - Boolean property to set the required status. Defaults to `false`.
-  * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
-  * `selected_index` (`:string`) - The selected index. Defaults to `nil`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
-  * `value` (`:string`) - The value of the text area. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify if the currently value is warn. Defaults to `false`.
-  * `warn_text` (`:string`) - Message which is displayed if the value is warn. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `helper_text` - The helper text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `label_text` - The label text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :autofocus, :boolean,
@@ -4062,9 +2778,8 @@ defmodule Graphene.CarbonComponents do
     doc: "The special validity message for `required`.",
     default: "Please fill out this field."
 
-  attr :rest, :global
   attr :selected_index, :string, doc: "The selected index."
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
   attr :value, :string, doc: "The value of the text area."
   attr :warn, :boolean, doc: "Specify if the currently value is warn."
   attr :warn_text, :string, doc: "Message which is displayed if the value is warn."
@@ -4075,21 +2790,13 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :helper_text, doc: "The helper text." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :label_text, doc: "The label text." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :helper_text, doc: "The helper text."
+  slot :label_text, doc: "The label text."
 
   slot :validity_message,
     doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
-    attr :tag, :string
-  end
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
   slot :item do
     attr :label, :string
@@ -4116,7 +2823,6 @@ defmodule Graphene.CarbonComponents do
       |> assign_new(:readonly, fn -> false end)
       |> assign_new(:required, fn -> false end)
       |> assign_new(:selected_index, fn -> nil end)
-      |> assign_new(:size, fn -> nil end)
       |> assign_new(:value, fn -> nil end)
       |> assign_new(:warn, fn -> false end)
       |> assign_new(:warn_text, fn -> nil end)
@@ -4190,21 +2896,11 @@ defmodule Graphene.CarbonComponents do
   Fluid text area input.
 
 
-
-  ## Attributes
-
-  * `hide_label` (`:boolean`) - `true` if the label should be hidden. Corresponds to the attribute with the same name. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :hide_label, :boolean,
     doc: "`true` if the label should be hidden. Corresponds to the attribute with the same name."
 
   attr :rest, :global
-  slot :inner_block
 
   def fluid_select_skeleton(assigns) do
     CoreComponents.fluid_select_skeleton(assigns)
@@ -4218,56 +2914,6 @@ defmodule Graphene.CarbonComponents do
   ## Events
 
   * `invalid` - Undocumented
-
-
-  ## Attributes
-
-  * `autocomplete` (`:string`) - May be any of the standard HTML autocomplete options. Defaults to `nil`.
-  * `autofocus` (`:boolean`) - Sets the input to be focussed automatically on page load. Defaults to false. Defaults to `false`.
-  * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
-  * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
-  * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
-  * `inline` (`:boolean`) - true to use the inline version. Defaults to `false`.
-  * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
-  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
-  * `is_fluid` (`:boolean`) - Defaults to `false`.
-  * `label` (`:string`) - Generic label that will be used as the textual representation of what this field is for. Defaults to `nil`.
-  * `max_count` (`:any`) - Max character count allowed for input. This is needed in order for enableCounter to display. Defaults to `nil`.
-  * `name` (`:string`) - Name for the input in the `FormData`. Defaults to `nil`.
-  * `pattern` (`:string`) - Pattern to validate the input against for HTML validity checking. Defaults to `nil`.
-  * `placeholder` (`:string`) - Value to display when the input has an empty `value`. Defaults to `nil`.
-  * `readonly` (`:boolean`) - Specify if the component should be read-only. Defaults to `false`.
-  * `required` (`:boolean`) - Boolean property to set the required status. Defaults to `false`.
-  * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
-  * `show_password_visibility_toggle` (`:boolean`) - Boolean property to render password visibility toggle. Defaults to `false`.
-  * `show_password_label` (`:string`) - "Show password" tooltip text on password visibility toggle. Defaults to `"Show password"`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `"center"`. Must be one of `"start"`, `"center"`, or `"end"`.
-  * `tooltip_direction` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
-  * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `value` (`:string`) - The value of the input. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
-  * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `helper_text` - The helper text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `label_text` - The label text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :autocomplete, :string, doc: "May be any of the standard HTML autocomplete options"
@@ -4307,16 +2953,14 @@ defmodule Graphene.CarbonComponents do
     doc: "The special validity message for `required`.",
     default: "Please fill out this field."
 
-  attr :rest, :global
+  attr :show_password_visibility_toggle, :boolean,
+    doc: "Boolean property to render password visibility toggle"
 
   attr :show_password_label, :string,
     doc: "\"Show password\" tooltip text on password visibility toggle",
     default: "Show password"
 
-  attr :show_password_visibility_toggle, :boolean,
-    doc: "Boolean property to render password visibility toggle"
-
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
 
   attr :tooltip_alignment, :string,
     doc:
@@ -4348,21 +2992,13 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :helper_text, doc: "The helper text." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :label_text, doc: "The label text." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :helper_text, doc: "The helper text."
+  slot :label_text, doc: "The label text."
 
   slot :validity_message,
     doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
-    attr :tag, :string
-  end
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
   def fluid_text_input(assigns) do
     FormComponents.fluid_text_input(assigns)
@@ -4374,19 +3010,9 @@ defmodule Graphene.CarbonComponents do
   Fluid text area input.
 
 
-
-  ## Attributes
-
-  * `hide_label` (`:boolean`) - Specify whether the label should be hidden, or not. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
   attr :rest, :global
-  slot :inner_block
 
   def fluid_text_input_skeleton(assigns) do
     CoreComponents.fluid_text_input_skeleton(assigns)
@@ -4401,60 +3027,6 @@ defmodule Graphene.CarbonComponents do
 
   * `input` - Undocumented
   * `invalid` - Undocumented
-
-
-  ## Attributes
-
-  * `autocomplete` (`:string`) - May be any of the standard HTML autocomplete options. Defaults to `nil`.
-  * `autofocus` (`:boolean`) - Sets the input to be focussed automatically on page load. Defaults to false. Defaults to `false`.
-  * `cols` (`:any`) - The number of columns for the textarea to show by default. Defaults to `nil`.
-  * `counter_mode` (`:any`) - Specify the method used for calculating the counter number. Defaults to `nil`.
-  * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
-  * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
-  * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
-  * `id` (`:string`) - ID to link the `label` and `textarea`. Defaults to `nil`.
-  * `inline` (`:boolean`) - true to use the inline version. Defaults to `false`.
-  * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
-  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
-  * `is_fluid` (`:boolean`) - Specify whether the textarea is fluid or not. Defaults to `false`.
-  * `label` (`:string`) - Generic label that will be used as the textual representation of what this field is for. Defaults to `nil`.
-  * `max_count` (`:any`) - Max character count allowed for input. This is needed in order for enableCounter to display. Defaults to `nil`.
-  * `name` (`:string`) - Name for the input in the `FormData`. Defaults to `nil`.
-  * `pattern` (`:string`) - Pattern to validate the textarea against for HTML validity checking. Defaults to `nil`.
-  * `placeholder` (`:string`) - Value to display when the input has an empty `value`. Defaults to `nil`.
-  * `readonly` (`:boolean`) - Specify if the component should be read-only. Defaults to `false`.
-  * `required` (`:boolean`) - Boolean property to set the required status. Defaults to `false`.
-  * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
-  * `rows` (`:string`) - The number of rows for the textarea to show by default. Defaults to `"4"`.
-  * `show_password_visibility_toggle` (`:boolean`) - Boolean property to render password visibility toggle. Defaults to `false`.
-  * `show_password_label` (`:string`) - "Show password" tooltip text on password visibility toggle. Defaults to `"Show password"`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `"center"`. Must be one of `"start"`, `"center"`, or `"end"`.
-  * `tooltip_direction` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
-  * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `value` (`:string`) - The value of the input. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
-  * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `helper_text` - The helper text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `label_text` - The label text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :autocomplete, :string, doc: "May be any of the standard HTML autocomplete options"
@@ -4500,17 +3072,16 @@ defmodule Graphene.CarbonComponents do
     doc: "The special validity message for `required`.",
     default: "Please fill out this field."
 
-  attr :rest, :global
   attr :rows, :string, doc: "The number of rows for the textarea to show by default", default: "4"
+
+  attr :show_password_visibility_toggle, :boolean,
+    doc: "Boolean property to render password visibility toggle"
 
   attr :show_password_label, :string,
     doc: "\"Show password\" tooltip text on password visibility toggle",
     default: "Show password"
 
-  attr :show_password_visibility_toggle, :boolean,
-    doc: "Boolean property to render password visibility toggle"
-
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
 
   attr :tooltip_alignment, :string,
     doc:
@@ -4542,21 +3113,13 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :helper_text, doc: "The helper text." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :label_text, doc: "The label text." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :helper_text, doc: "The helper text."
+  slot :label_text, doc: "The label text."
 
   slot :validity_message,
     doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
-    attr :tag, :string
-  end
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
   def fluid_textarea(assigns) do
     FormComponents.fluid_textarea(assigns)
@@ -4565,245 +3128,15 @@ defmodule Graphene.CarbonComponents do
   @doc """
   Component `<cds-fluid-textarea-skeleton>` from `./src/components/fluid-textarea/fluid-textarea-skeleton.ts`
 
-  Fluid text area skeleton.
+  Fluid text area input.
 
-
-
-  ## Attributes
-
-  * `hide_label` (`:boolean`) - Specify whether the label should be hidden, or not. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
   attr :rest, :global
-  slot :inner_block
 
   def fluid_textarea_skeleton(assigns) do
     CoreComponents.fluid_textarea_skeleton(assigns)
-  end
-
-  @doc """
-  Component `<cds-fluid-time-picker>` from `./src/components/fluid-time-picker/fluid-time-picker.ts`
-
-  Fluid Time Picker component.
-
-  ## Events
-
-  * `change` - Undocumented
-  * `invalid` - Undocumented
-
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - Specify whether the control is disabled. Defaults to `false`.
-  * `hide_label` (`:boolean`) - Specify whether the label should be hidden. Defaults to `false`.
-  * `invalid` (`:boolean`) - Specify whether the control is currently invalid. Defaults to `false`.
-  * `max_length` (`:string`) - Specify the maximum length of the input value. Defaults to `"5"`.
-  * `name` (`:string`) - Name for the input in FormData. Defaults to `nil`.
-  * `pattern` (`:string`) - Pattern for input validation. Defaults to `"(1[012]|[1-9]):[0-5][0-9](\\\\s)?"`.
-  * `placeholder` (`:string`) - Placeholder text for the input. Defaults to `"hh:mm"`.
-  * `read_only` (`:boolean`) - Specify whether the control should be read-only. Defaults to `false`.
-  * `required` (`:boolean`) - Whether the input is required. Defaults to `false`.
-  * `required_validity_message` (`:string`) - Custom message for required validation. Defaults to `"Please fill out this field."`.
-  * `size` (`:any`) - Size of the time picker. Defaults to `nil`.
-  * `type` (`:string`) - Input type. Defaults to `"text"`.
-  * `value` (`:string`) - Value of the input. Defaults to `nil`.
-  * `warning` (`:boolean`) - Specify whether the control is in warning state. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `invalid_text` - The invalid text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `label_text` - The label text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `time_picker_select` - Slot for time picker select components. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `warning_text` - The warning text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
-  """
-  attr :disabled, :boolean, doc: "Specify whether the control is disabled"
-  attr :hide_label, :boolean, doc: "Specify whether the label should be hidden"
-  attr :invalid, :boolean, doc: "Specify whether the control is currently invalid"
-  attr :max_length, :string, doc: "Specify the maximum length of the input value", default: "5"
-  attr :name, :string, doc: "Name for the input in FormData"
-
-  attr :pattern, :string,
-    doc: "Pattern for input validation",
-    default: "(1[012]|[1-9]):[0-5][0-9](\\\\s)?"
-
-  attr :placeholder, :string, doc: "Placeholder text for the input", default: "hh:mm"
-  attr :read_only, :boolean, doc: "Specify whether the control should be read-only"
-  attr :required, :boolean, doc: "Whether the input is required"
-
-  attr :required_validity_message, :string,
-    doc: "Custom message for required validation",
-    default: "Please fill out this field."
-
-  attr :rest, :global
-  attr :size, :any, doc: "Size of the time picker"
-  attr :type, :string, doc: "Input type", default: "text"
-  attr :value, :string, doc: "Value of the input"
-  attr :warning, :boolean, doc: "Specify whether the control is in warning state"
-  slot :inner_block
-
-  slot :invalid_text, doc: "The invalid text." do
-    attr :tag, :string
-  end
-
-  slot :label_text, doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :time_picker_select, doc: "Slot for time picker select components." do
-    attr :tag, :string
-  end
-
-  slot :validity_message,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
-    attr :tag, :string
-  end
-
-  slot :warning_text, doc: "The warning text." do
-    attr :tag, :string
-  end
-
-  def fluid_time_picker(assigns) do
-    CoreComponents.fluid_time_picker(assigns)
-  end
-
-  @doc """
-  Component `<cds-fluid-time-picker-select>` from `./src/components/fluid-time-picker/fluid-time-picker-select.ts`
-
-  Fluid time picker select.
-
-  ## Events
-
-  * `cds-select-selected` - The name of the custom event fired after an item is selected.
-
-
-  ## Attributes
-
-  * `autofocus` (`:boolean`) - Sets the select to be focussed automatically on page load. Defaults to false. Defaults to `false`.
-  * `default_value` (`:string`) - Optionally provide the default value of the select. Defaults to `nil`.
-  * `disabled` (`:boolean`) - Controls the disabled state of the select. Defaults to `false`.
-  * `hide_label` (`:boolean`) - Specify whether the label should be hidden, or not. Defaults to `false`.
-  * `id` (`:string`) - ID to link the `label` and `select`. Defaults to `nil`.
-  * `inline` (`:boolean`) - Specify whether you want the inline version of this control. Defaults to `false`.
-  * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
-  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
-  * `is_fluid` (`:boolean`) - Specify whether the textarea is fluid or not. Defaults to `false`.
-  * `multiple` (`:boolean`) - `true` to enable multiple selection. Defaults to `nil`.
-  * `name` (`:string`) - Name for the select in the `FormData`. Defaults to `nil`.
-  * `pattern` (`:string`) - Pattern to validate the select against for HTML validity checking. Defaults to `nil`.
-  * `placeholder` (`:string`) - Value to display when the select has an empty `value`. Defaults to `nil`.
-  * `readonly` (`:boolean`) - Controls the readonly state of the select. Defaults to `false`.
-  * `required` (`:boolean`) - Boolean property to set the required status. Defaults to `false`.
-  * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
-  * `selected_index` (`:string`) - The selected index. Defaults to `nil`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
-  * `value` (`:string`) - The value of the text area. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify if the currently value is warn. Defaults to `false`.
-  * `warn_text` (`:string`) - Message which is displayed if the value is warn. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `helper_text` - The helper text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `label_text` - The label text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
-  """
-  attr :autofocus, :boolean,
-    doc: "Sets the select to be focussed automatically on page load. Defaults to false"
-
-  attr :default_value, :string, doc: "Optionally provide the default value of the select."
-  attr :disabled, :boolean, doc: "Controls the disabled state of the select"
-  attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
-  attr :id, :string, doc: "ID to link the `label` and `select`"
-  attr :inline, :boolean, doc: "Specify whether you want the inline version of this control"
-  attr :invalid, :boolean, doc: "Specify if the currently value is invalid."
-  attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
-  attr :is_fluid, :boolean, doc: "Specify whether the textarea is fluid or not"
-  attr :multiple, :boolean, doc: "`true` to enable multiple selection."
-  attr :name, :string, doc: "Name for the select in the `FormData`"
-  attr :pattern, :string, doc: "Pattern to validate the select against for HTML validity checking"
-  attr :placeholder, :string, doc: "Value to display when the select has an empty `value`"
-  attr :readonly, :boolean, doc: "Controls the readonly state of the select"
-  attr :required, :boolean, doc: "Boolean property to set the required status"
-
-  attr :required_validity_message, :string,
-    doc: "The special validity message for `required`.",
-    default: "Please fill out this field."
-
-  attr :rest, :global
-  attr :selected_index, :string, doc: "The selected index."
-  attr :size, :any, doc: "The input box size."
-  attr :value, :string, doc: "The value of the text area."
-  attr :warn, :boolean, doc: "Specify if the currently value is warn."
-  attr :warn_text, :string, doc: "Message which is displayed if the value is warn."
-
-  slot :helper_text, doc: "The helper text." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :label_text, doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :validity_message,
-    doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
-    attr :tag, :string
-  end
-
-  def fluid_time_picker_select(assigns) do
-    CoreComponents.fluid_time_picker_select(assigns)
-  end
-
-  @doc """
-  Component `<cds-fluid-time-picker-skeleton>` from `./src/components/fluid-time-picker/fluid-time-picker-skeleton.ts`
-
-  Fluid time picker skeleton.
-
-
-
-  ## Attributes
-
-  * `is_only_two` (`:boolean`) - Specify if there are only two TimePicker elements. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
-  """
-  attr :is_only_two, :boolean, doc: "Specify if there are only two TimePicker elements."
-  attr :rest, :global
-  slot :inner_block
-
-  def fluid_time_picker_skeleton(assigns) do
-    CoreComponents.fluid_time_picker_skeleton(assigns)
   end
 
   @doc """
@@ -4812,16 +3145,7 @@ defmodule Graphene.CarbonComponents do
   Presentational element for form
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :rest, :global
   attr :for, :any, default: nil, doc: "form data passed to Phoenix.Component.form/1"
   attr :as, :any, default: nil, doc: "form name passed to Phoenix.Component.form/1"
   attr :action, :string, default: nil, doc: "form action"
@@ -4829,7 +3153,7 @@ defmodule Graphene.CarbonComponents do
   attr :multipart, :boolean, default: false, doc: "multipart form"
   attr :csrf_token, :any, default: nil, doc: "CSRF token"
   attr :errors, :list, default: nil, doc: "form errors"
-  slot :inner_block
+  attr :rest, :global
 
   def form(%{} = assigns) do
     ~H"""
@@ -4861,22 +3185,6 @@ defmodule Graphene.CarbonComponents do
   The shell UI for file uploader.
 
 
-
-  ## Attributes
-
-  * `invalid` (`:boolean`) - Specify whether the Form Group is invalid. Defaults to `false`.
-  * `legend_id` (`:any`) - Provide id for the fieldset <legend> which corresponds to the fieldset
-    `aria-labelledby`
-
-    Defaults to `nil`.
-  * `legend_text` (`:string`) - Provide the text to be rendered inside of the fieldset <legend>. Defaults to `nil`.
-  * `message` (`:boolean`) - Specify whether the message should be displayed in the Form Group. Defaults to `false`.
-  * `message_text` (`:any`) - Provide the text for the message in the Form Group. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :invalid, :boolean, doc: "Specify whether the Form Group is invalid"
 
@@ -4892,7 +3200,6 @@ defmodule Graphene.CarbonComponents do
 
   attr :message_text, :any, doc: "Provide the text for the message in the Form Group"
   attr :rest, :global
-  slot :inner_block
 
   def form_group(assigns) do
     CoreComponents.form_group(assigns)
@@ -4904,17 +3211,8 @@ defmodule Graphene.CarbonComponents do
   Presentational element for form items
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def form_item(assigns) do
     CoreComponents.form_item(assigns)
@@ -4925,24 +3223,6 @@ defmodule Graphene.CarbonComponents do
 
   The grid component.
 
-
-
-  ## Attributes
-
-  * `align` (`:any`) - Specify grid alignment. Default is center. Defaults to `nil`.
-  * `condensed` (`:boolean`) - Collapse the gutter to 1px. Useful for fluid layouts.
-    Rows have 1px of margin between them to match gutter.
-
-    Defaults to `false`.
-  * `full_width` (`:boolean`) - Remove the default max width that the grid has set. Defaults to `false`.
-  * `narrow` (`:boolean`) - Container hangs 16px into the gutter. Useful for
-    typographic alignment with and without containers.
-
-    Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :align, :any, doc: "Specify grid alignment. Default is center"
@@ -4958,7 +3238,6 @@ defmodule Graphene.CarbonComponents do
       "Container hangs 16px into the gutter. Useful for\ntypographic alignment with and without containers."
 
   attr :rest, :global
-  slot :inner_block
 
   slot :column do
     attr :sm, :string
@@ -5009,17 +3288,8 @@ defmodule Graphene.CarbonComponents do
   Header.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   slot :name do
     attr :href, :string
@@ -5053,54 +3323,6 @@ defmodule Graphene.CarbonComponents do
 
   Header global action button
 
-
-
-  ## Attributes
-
-  * `active` (`:any`) - Specify whether the action is currently active. Defaults to `nil`.
-  * `autofocus` (`:boolean`) - `true` if the button should have input focus when the page loads. Defaults to `false`.
-  * `batch_action` (`:boolean`) - `true` if the button is being used within a data table batch action toolbar. Defaults to `false`.
-  * `button_class_name` (`:any`) - Specify an optional className to be added to your Button. Defaults to `nil`.
-  * `button_label_active` (`:any`) - The `aria-label` attribute for the button in its active state. Defaults to `nil`.
-  * `button_label_inactive` (`:any`) - The `aria-label` attribute for the button in its inactive state. Defaults to `nil`.
-  * `danger_description` (`:any`) - Specify the message read by screen readers for the danger button variant. Defaults to `nil`.
-  * `disabled` (`:boolean`) - `true` if the button should be disabled. Defaults to `false`.
-  * `download` (`:string`) - The default file name, used if this button is rendered as `<a>`. Defaults to `nil`.
-  * `has_main_content` (`:boolean`) - `true` if there is a non-icon content. Defaults to `false`.
-  * `href` (`:string`) - Link `href`. If present, this button is rendered as `<a>`. Defaults to `nil`.
-  * `hreflang` (`:string`) - The language of what `href` points to, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `is_expressive` (`:boolean`) - `true` if expressive theme enabled. Defaults to `false`.
-  * `is_selected` (`:boolean`) - Specify whether the Button is currently selected.
-    Only applies to the Ghost variant.
-
-    Defaults to `false`.
-  * `kind` (`:string`) - Button kind. Defaults to `"primary"`. Must be one of `"primary"`, `"secondary"`, `"tertiary"`, `"danger"`, `"danger--tertiary"`, `"danger--ghost"`, or `"ghost"`.
-  * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `"button"`.
-  * `open_tooltip` (`:boolean`) - Boolean to determine if tooltip is open. Defaults to `false`.
-  * `panel_id` (`:any`) - Specify which header panel the button is associated with. Defaults to `nil`.
-  * `ping` (`:string`) - URLs to ping, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `rel` (`:string`) - The link type, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `size` (`:string`) - Button size. Defaults to `"lg"`.
-  * `tab_index` (`:string`) - Specify the tabIndex of the button. Defaults to `"0"`.
-  * `target` (`:string`) - The link target, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `""`. Must be one of `"left"`, `"right"`, or `""`.
-  * `tooltip_position` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"top"`. Must be one of `"top"`, `"bottom"`, `"right"`, or `"left"`.
-  * `tooltip_text` (`:string`) - Specify the text to be rendered in the tooltip. If using
-    "cds-badge-indicator" with no count prop then the text
-    should include describing there is a new notification.
-
-    Defaults to `nil`.
-  * `type` (`:string`) - Button type. Defaults to `"button"`. Must be one of `"button"`, `"reset"`, or `"submit"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :active, :any, doc: "Specify whether the action is currently active"
@@ -5153,7 +3375,6 @@ defmodule Graphene.CarbonComponents do
   attr :panel_id, :any, doc: "Specify which header panel the button is associated with."
   attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
   attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
-  attr :rest, :global
   attr :size, :string, doc: "Button size.", default: "lg"
   attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
   attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
@@ -5179,7 +3400,7 @@ defmodule Graphene.CarbonComponents do
     values: ["button", "reset", "submit"],
     default: "button"
 
-  slot :inner_block
+  attr :rest, :global
 
   def header_global_action(assigns) do
     CoreComponents.header_global_action(assigns)
@@ -5191,18 +3412,6 @@ defmodule Graphene.CarbonComponents do
   Header menu.
 
 
-
-  ## Attributes
-
-  * `expanded` (`:boolean`) - `true` if the menu should be expanded. Defaults to `false`.
-  * `is_active` (`:boolean`) - Applies selected styles to the item if a user sets this to true and `aria-current !== 'page'`. Defaults to `false`.
-  * `menu_label` (`:string`) - The `aria-label` attribute for the menu UI. Defaults to `nil`.
-  * `trigger_content` (`:string`) - The content of the trigger button. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :expanded, :boolean, doc: "`true` if the menu should be expanded."
 
@@ -5211,9 +3420,8 @@ defmodule Graphene.CarbonComponents do
       "Applies selected styles to the item if a user sets this to true and `aria-current !== 'page'`."
 
   attr :menu_label, :string, doc: "The `aria-label` attribute for the menu UI."
-  attr :rest, :global
   attr :trigger_content, :string, doc: "The content of the trigger button."
-  slot :inner_block
+  attr :rest, :global
 
   def header_menu(assigns) do
     CoreComponents.header_menu(assigns)
@@ -5227,20 +3435,6 @@ defmodule Graphene.CarbonComponents do
   ## Events
 
   * `cds-header-menu-button-toggled` - The custom event fired after this header menu button is toggled upon a user gesture.
-
-
-  ## Attributes
-
-  * `active` (`:boolean`) - `true` if the button should represent its active state. Defaults to `false`.
-  * `button_label_active` (`:string`) - The `aria-label` attribute for the button in its active state. Defaults to `"Close navigation menu"`.
-  * `button_label_inactive` (`:string`) - The `aria-label` attribute for the button in its inactive state. Defaults to `"Open navigation menu"`.
-  * `collapse_mode` (`:string`) - Collapse mode of the side nav. Defaults to `"responsive"`. Must be one of `"fixed"`, `"rail"`, or `"responsive"`.
-  * `disabled` (`:boolean`) - `true` if the button should be disabled. Defaults to `false`.
-  * `is_not_child_of_header` (`:boolean`) - If `true` will style the side nav to sit below the header. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :active, :boolean, doc: "`true` if the button should represent its active state."
@@ -5264,7 +3458,6 @@ defmodule Graphene.CarbonComponents do
     doc: "If `true` will style the side nav to sit below the header"
 
   attr :rest, :global
-  slot :inner_block
 
   def header_menu_button(assigns) do
     CoreComponents.header_menu_button(assigns)
@@ -5276,20 +3469,6 @@ defmodule Graphene.CarbonComponents do
   Header submenu item.
 
 
-
-  ## Attributes
-
-  * `href` (`:string`) - Link `href`. Defaults to `nil`.
-  * `is_active` (`:boolean`) - Applies selected styles to the item if a user sets this to true and `aria-current !== 'page'`. Defaults to `false`.
-  * `rel` (`:string`) - The link type. Defaults to `nil`.
-  * `role` (`:string`) - As child of <ul>, this element must have role of listitem. Defaults to `"listitem"`.
-  * `target` (`:string`) - The link target. Defaults to `nil`.
-  * `title` (`:string`) - The title. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :href, :string, doc: "Link `href`."
 
@@ -5298,7 +3477,6 @@ defmodule Graphene.CarbonComponents do
       "Applies selected styles to the item if a user sets this to true and `aria-current !== 'page'`."
 
   attr :rel, :string, doc: "The link type."
-  attr :rest, :global
 
   attr :role, :string,
     doc: "As child of <ul>, this element must have role of listitem",
@@ -5306,7 +3484,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :target, :string, doc: "The link target."
   attr :title, :string, doc: "The title."
-  slot :inner_block
+  attr :rest, :global
 
   def header_menu_item(assigns) do
     CoreComponents.header_menu_item(assigns)
@@ -5318,21 +3496,10 @@ defmodule Graphene.CarbonComponents do
   The product name UI in header nav.
 
 
-
-  ## Attributes
-
-  * `href` (`:string`) - Link `href`. Defaults to `nil`.
-  * `prefix` (`:string`) - The product name prefix. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :href, :string, doc: "Link `href`."
   attr :prefix, :string, doc: "The product name prefix."
   attr :rest, :global
-  slot :inner_block
 
   def header_name(assigns) do
     CoreComponents.header_name(assigns)
@@ -5344,19 +3511,9 @@ defmodule Graphene.CarbonComponents do
   Header.
 
 
-
-  ## Attributes
-
-  * `menu_bar_label` (`:string`) - The `aria-label` attribute for the menu bar UI. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :menu_bar_label, :string, doc: "The `aria-label` attribute for the menu bar UI."
   attr :rest, :global
-  slot :inner_block
 
   def header_nav(assigns) do
     CoreComponents.header_nav(assigns)
@@ -5368,20 +3525,6 @@ defmodule Graphene.CarbonComponents do
   Header nav item.
 
 
-
-  ## Attributes
-
-  * `href` (`:string`) - Link `href`. Defaults to `nil`.
-  * `is_active` (`:boolean`) - Applies selected styles to the item if a user sets this to true and `aria-current !== 'page'`. Defaults to `false`.
-  * `rel` (`:string`) - The link type. Defaults to `nil`.
-  * `role` (`:string`) - As child of <ul>, this element must have role of listitem. Defaults to `"listitem"`.
-  * `target` (`:string`) - The link target. Defaults to `nil`.
-  * `title` (`:string`) - The title. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :href, :string, doc: "Link `href`."
 
@@ -5390,7 +3533,6 @@ defmodule Graphene.CarbonComponents do
       "Applies selected styles to the item if a user sets this to true and `aria-current !== 'page'`."
 
   attr :rel, :string, doc: "The link type."
-  attr :rest, :global
 
   attr :role, :string,
     doc: "As child of <ul>, this element must have role of listitem",
@@ -5398,7 +3540,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :target, :string, doc: "The link target."
   attr :title, :string, doc: "The title."
-  slot :inner_block
+  attr :rest, :global
 
   def header_nav_item(assigns) do
     CoreComponents.header_nav_item(assigns)
@@ -5410,19 +3552,9 @@ defmodule Graphene.CarbonComponents do
   Header panel
 
 
-
-  ## Attributes
-
-  * `expanded` (`:any`) - Specify whether the panel is expanded. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :expanded, :any, doc: "Specify whether the panel is expanded"
   attr :rest, :global
-  slot :inner_block
 
   def header_panel(assigns) do
     CoreComponents.header_panel(assigns)
@@ -5434,25 +3566,12 @@ defmodule Graphene.CarbonComponents do
   Header Side Nav Items section
 
 
-
-  ## Attributes
-
-  * `has_divider` (`:boolean`) - Optionally specify if container will have a bottom divider to differentiate
-    between original sidenav items and header menu items. False by default.
-
-    Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :has_divider, :boolean,
     doc:
       "Optionally specify if container will have a bottom divider to differentiate\nbetween original sidenav items and header menu items. False by default."
 
   attr :rest, :global
-  slot :inner_block
 
   def header_side_nav_items(assigns) do
     CoreComponents.header_side_nav_items(assigns)
@@ -5464,17 +3583,8 @@ defmodule Graphene.CarbonComponents do
   The heading component
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def heading(assigns) do
     CoreComponents.heading(assigns)
@@ -5486,24 +3596,12 @@ defmodule Graphene.CarbonComponents do
   Icon component that renders imported icons or custom SVG content.
 
 
-
-  ## Attributes
-
-  * `class` (`:string`) - Custom CSS classes. Defaults to `nil`.
-  * `icon` (`:any`) - The imported icon. Defaults to `nil`.
-  * `size` (`:string`) - The size of the icon (16, 20, 24, 32). Defaults to `"16"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :class, :string, doc: "Custom CSS classes"
   attr :icon, :any, doc: "The imported icon"
-  attr :rest, :global
   attr :size, :string, doc: "The size of the icon (16, 20, 24, 32)", default: "16"
   attr :name, :string, doc: "Carbon icon name"
-  slot :inner_block
+  attr :rest, :global
 
   def icon(%{name: name} = assigns) when not is_nil(name) do
     assigns =
@@ -5540,59 +3638,6 @@ defmodule Graphene.CarbonComponents do
 
   Icon Button
 
-
-
-  ## Attributes
-
-  * `align` (`:string`) - Checks if a badge indicator is being used with incorrect properties. Defaults to `"top"`.
-  * `autoalign` (`:boolean`) - Specify whether a auto align functionality should be applied. Defaults to `false`.
-  * `autofocus` (`:boolean`) - `true` if the button should have input focus when the page loads. Defaults to `false`.
-  * `batch_action` (`:boolean`) - `true` if the button is being used within a data table batch action toolbar. Defaults to `false`.
-  * `button_class_name` (`:any`) - Specify an optional className to be added to your Button. Defaults to `nil`.
-  * `close_on_activation` (`:boolean`) - Determines whether the tooltip should close when inner content is activated (click, Enter or Space). Defaults to `true`.
-  * `danger_description` (`:any`) - Specify the message read by screen readers for the danger button variant. Defaults to `nil`.
-  * `default_open` (`:boolean`) - Specify whether the tooltip should be open when it first renders. Defaults to `false`.
-  * `disabled` (`:boolean`) - `true` if the button should be disabled. Defaults to `false`.
-  * `download` (`:string`) - The default file name, used if this button is rendered as `<a>`. Defaults to `nil`.
-  * `enter_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before displaying the tooltip. Defaults to `"100"`.
-  * `has_main_content` (`:boolean`) - `true` if there is a non-icon content. Defaults to `false`.
-  * `href` (`:string`) - Link `href`. If present, this button is rendered as `<a>`. Defaults to `nil`.
-  * `hreflang` (`:string`) - The language of what `href` points to, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `is_expressive` (`:boolean`) - `true` if expressive theme enabled. Defaults to `false`.
-  * `is_selected` (`:boolean`) - Specify whether the Button is currently selected.
-    Only applies to the Ghost variant.
-
-    Defaults to `false`.
-  * `kind` (`:string`) - Button kind. Defaults to `"primary"`. Must be one of `"primary"`, `"secondary"`, `"tertiary"`, `"danger"`, `"danger--tertiary"`, `"danger--ghost"`, or `"ghost"`.
-  * `leave_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before hiding the tooltip. Defaults to `"100"`.
-  * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `"button"`.
-  * `open_tooltip` (`:boolean`) - Boolean to determine if tooltip is open. Defaults to `false`.
-  * `ping` (`:string`) - URLs to ping, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `rel` (`:string`) - The link type, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `size` (`:string`) - Specify the size of the Button. Defaults to `md`. Defaults to `"md"`.
-  * `tab_index` (`:string`) - Specify the tabIndex of the button. Defaults to `"0"`.
-  * `target` (`:string`) - The link target, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `""`. Must be one of `"left"`, `"right"`, or `""`.
-  * `tooltip_position` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"top"`. Must be one of `"top"`, `"bottom"`, `"right"`, or `"left"`.
-  * `tooltip_text` (`:string`) - Specify the text to be rendered in the tooltip. If using
-    "cds-badge-indicator" with no count prop then the text
-    should include describing there is a new notification.
-
-    Defaults to `nil`.
-  * `type` (`:string`) - Button type. Defaults to `"button"`. Must be one of `"button"`, `"reset"`, or `"submit"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `tooltip_content` - Tooltip content. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :align, :string,
@@ -5653,13 +3698,12 @@ defmodule Graphene.CarbonComponents do
 
   attr :leave_delay_ms, :string,
     doc: "Specify the duration in milliseconds to delay before hiding the tooltip",
-    default: "100"
+    default: "300"
 
   attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
   attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
   attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
   attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
-  attr :rest, :global
   attr :size, :string, doc: "Specify the size of the Button. Defaults to `md`.", default: "md"
   attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
   attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
@@ -5685,11 +3729,8 @@ defmodule Graphene.CarbonComponents do
     values: ["button", "reset", "submit"],
     default: "button"
 
-  slot :inner_block
-
-  slot :tooltip_content, doc: "Tooltip content." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :tooltip_content, doc: "Tooltip content."
 
   slot :icon do
     attr :name, :string
@@ -5791,23 +3832,32 @@ defmodule Graphene.CarbonComponents do
   Icon Indicator.
 
 
-
-  ## Attributes
-
-  * `kind` (`:any`) - Icon Indicator kind. Defaults to `nil`.
-  * `label` (`:string`) - Label next to the icon. Defaults to `nil`.
-  * `size` (`:string`) - Icon indicator should be size 16 or 20. Defaults to `"16"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :kind, :any, doc: "Icon Indicator kind"
+  attr :kind, :string,
+    doc: "Icon Indicator kind",
+    values: [
+      nil,
+      "failed",
+      "CAUTION-MAJOR",
+      "caution-major",
+      "CAUTION-MINOR",
+      "caution-minor",
+      "undefined",
+      "succeeded",
+      "normal",
+      "IN-PROGRESS",
+      "in-progress",
+      "incomplete",
+      "NOT-STARTED",
+      "not-started",
+      "pending",
+      "unknown",
+      "informative"
+    ]
+
   attr :label, :string, doc: "Label next to the icon."
-  attr :rest, :global
   attr :size, :string, doc: "Icon indicator should be size 16 or 20", default: "16"
-  slot :inner_block
+  attr :rest, :global
 
   def icon_indicator(assigns) do
     CoreComponents.icon_indicator(assigns)
@@ -5822,28 +3872,12 @@ defmodule Graphene.CarbonComponents do
 
   * `cds-inline-loading-onsuccess` - The custom event fired when inline-loading has finished status
 
-
-  ## Attributes
-
-  * `assistive_text` (`:string`) - Defaults to `nil`.
-  * `icon_description` (`:string`) - The assistive text for the spinner icon. Defaults to `"Loading"`.
-  * `status` (`:string`) - The loading status. Defaults to `"active"`. Must be one of `"inactive"`, `"active"`, `"finished"`, or `"error"`.
-  * `success_delay` (`:string`) - Provide a delay for the setTimeout for success. Defaults to `"1500"`.
-  * `controlled` (`:boolean`) - Whether the loading state is controlled. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :assistive_text, :string
-  attr :controlled, :boolean, doc: "Whether the loading state is controlled."
 
   attr :icon_description, :string,
     doc: "The assistive text for the spinner icon.",
     default: "Loading"
-
-  attr :rest, :global
 
   attr :status, :string,
     doc: "The loading status.",
@@ -5854,7 +3888,8 @@ defmodule Graphene.CarbonComponents do
     doc: "Provide a delay for the setTimeout for success",
     default: "1500"
 
-  slot :inner_block
+  attr :controlled, :boolean, doc: "Whether the loading state is controlled."
+  attr :rest, :global
 
   def inline_loading(assigns) do
     CoreComponents.inline_loading(assigns)
@@ -5871,26 +3906,6 @@ defmodule Graphene.CarbonComponents do
   Cancellation of this event stops the user-initiated action of closing this notification.
   * `cds-notification-closed` - The custom event fired after this notification is closed upon a user gesture.
 
-
-  ## Attributes
-
-  * `hide_close_button` (`:boolean`) - `true` to hide the close button. Defaults to `false`.
-  * `kind` (`:string`) - Notification kind. Defaults to `"success"`. Must be one of `"success"`, `"info"`, `"info-square"`, `"warning"`, `"warning-alt"`, or `"error"`.
-  * `low_contrast` (`:boolean`) - Low contrast mode. Defaults to `false`.
-  * `open` (`:boolean`) - `true` if the notification should be open. Defaults to `true`.
-  * `status_icon_description` (`:string`) - Provide a description for "status" icon that can be read by screen readers. Defaults to `nil`.
-  * `timeout` (`:any`) - Specify an optional duration the notification should be closed in. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `subtitle` - The subtitle. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `title` - The title. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :hide_close_button, :boolean, doc: "`true` to hide the close button."
 
@@ -5901,21 +3916,14 @@ defmodule Graphene.CarbonComponents do
 
   attr :low_contrast, :boolean, doc: "Low contrast mode"
   attr :open, :boolean, doc: "`true` if the notification should be open.", default: true
-  attr :rest, :global
 
   attr :status_icon_description, :string,
     doc: "Provide a description for \"status\" icon that can be read by screen readers"
 
   attr :timeout, :any, doc: "Specify an optional duration the notification should be closed in"
-  slot :inner_block
-
-  slot :subtitle, doc: "The subtitle." do
-    attr :tag, :string
-  end
-
-  slot :title, doc: "The title." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :subtitle, doc: "The subtitle."
+  slot :title, doc: "The title."
 
   def inline_notification(assigns) do
     CoreComponents.inline_notification(assigns)
@@ -5930,20 +3938,6 @@ defmodule Graphene.CarbonComponents do
 
   * `cds-use-layer` - The custom event that returns the layer level and the layer element.
 
-
-  ## Attributes
-
-  * `layers` (`:any`) - Defaults to `nil`.
-  * `level` (`:string`) - Specify the layer level and override any existing levels based on hierarchy. Defaults to `"0"`.
-  * `with_background` (`:any`) - Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `children` - The elements contained within the component. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :layers, :any
 
@@ -5951,14 +3945,9 @@ defmodule Graphene.CarbonComponents do
     doc: "Specify the layer level and override any existing levels based on hierarchy",
     default: "0"
 
-  attr :rest, :global
   attr :with_background, :any
-
-  slot :children, doc: "The elements contained within the component." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
+  attr :rest, :global
+  slot :children, doc: "The elements contained within the component."
 
   def layer(assigns) do
     CoreComponents.layer(assigns)
@@ -5970,26 +3959,6 @@ defmodule Graphene.CarbonComponents do
   Link.
 
 
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - `true` if the link should be disabled. Defaults to `false`.
-  * `download` (`:string`) - The default file name. Defaults to `nil`.
-  * `href` (`:string`) - Link `href`. Defaults to `nil`.
-  * `hreflang` (`:string`) - The language of what `href` points to. Defaults to `nil`.
-  * `inline` (`:boolean`) - `true` if the link should be inline. Defaults to `false`.
-  * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `nil`.
-  * `ping` (`:string`) - URLs to ping. Defaults to `nil`.
-  * `rel` (`:string`) - The link type. Defaults to `nil`.
-  * `size` (`:string`) - Link size. Defaults to `"MEDIUM"`.
-  * `target` (`:string`) - The link target. Defaults to `nil`.
-  * `type` (`:string`) - MIME type of the `target`. Defaults to `nil`.
-  * `visited` (`:boolean`) - `true` if the link has been visited. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :disabled, :boolean, doc: "`true` if the link should be disabled."
   attr :download, :string, doc: "The default file name."
@@ -5999,12 +3968,11 @@ defmodule Graphene.CarbonComponents do
   attr :link_role, :string, doc: "The a11y role for `<a>`."
   attr :ping, :string, doc: "URLs to ping."
   attr :rel, :string, doc: "The link type."
-  attr :rest, :global
   attr :size, :string, doc: "Link size.", default: "MEDIUM"
   attr :target, :string, doc: "The link target."
   attr :type, :string, doc: "MIME type of the `target`."
   attr :visited, :boolean, doc: "`true` if the link has been visited."
-  slot :inner_block
+  attr :rest, :global
 
   def link(assigns) do
     CoreComponents.link(assigns)
@@ -6016,24 +3984,9 @@ defmodule Graphene.CarbonComponents do
   List item.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `nested` - The nested child list. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
-
-  slot :nested, doc: "The nested child list." do
-    attr :tag, :string
-  end
+  slot :nested, doc: "The nested child list."
 
   def list_item(assigns) do
     CoreComponents.list_item(assigns)
@@ -6044,21 +3997,6 @@ defmodule Graphene.CarbonComponents do
 
   Spinner indicating loading state.
 
-
-
-  ## Attributes
-
-  * `active` (`:boolean`) - Specify whether you want the loading indicator to be spinning or not. Defaults to `false`.
-  * `assistive_text` (`:string`) - Defaults to `nil`.
-  * `description` (`:string`) - Specify a description that would be used to best describe the loading state. Defaults to `"Loading"`.
-  * `inactive` (`:boolean`) - Defaults to `nil`.
-  * `overlay` (`:boolean`) - `true` if overlay should be applied. Defaults to `false`.
-  * `small` (`:boolean`) - Specify whether you would like the small variant of <Loading>. Defaults to `false`.
-  * `type` (`:string`) - Defaults to `nil`.Must be one of `nil`, `"regular"`, or `"small"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :active, :boolean,
@@ -6072,10 +4010,9 @@ defmodule Graphene.CarbonComponents do
 
   attr :inactive, :boolean
   attr :overlay, :boolean, doc: "`true` if overlay should be applied."
-  attr :rest, :global
   attr :small, :boolean, doc: "Specify whether you would like the small variant of <Loading>"
   attr :type, :string, values: [nil, "regular", "small"]
-  slot :inner_block
+  attr :rest, :global
 
   def loading(assigns) do
     CoreComponents.loading(assigns)
@@ -6086,33 +4023,16 @@ defmodule Graphene.CarbonComponents do
 
   Menu.
 
-
-  ## Attributes
-
-  * `open` (`:boolean`) - Whether the menu is open. Defaults to `nil`.
-  * `size` (`:string`) - Menu size. Defaults to `nil`.
-  * `label` (`:string`) - Menu label. Defaults to `nil`.
-  * `border` (`:boolean`) - Whether the menu has a border. Defaults to `nil`.
-  * `background_token` (`:string`) - Background token for the menu. Defaults to `nil`.
-  * `menu_alignment` (`:string`) - Alignment of the menu. Defaults to `nil`.
-  * `x` (`:string`) - Horizontal position of the menu. Defaults to `nil`.
-  * `y` (`:string`) - Vertical position of the menu. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :background_token, :string, doc: "Background token for the menu."
-  attr :border, :boolean, doc: "Whether the menu has a border."
-  attr :label, :string, doc: "Menu label."
-  attr :menu_alignment, :string, doc: "Alignment of the menu."
   attr :open, :boolean, doc: "Whether the menu is open."
-  attr :rest, :global
   attr :size, :string, doc: "Menu size."
+  attr :label, :string, doc: "Menu label."
+  attr :border, :boolean, doc: "Whether the menu has a border."
+  attr :background_token, :string, doc: "Background token for the menu."
+  attr :menu_alignment, :string, doc: "Alignment of the menu."
   attr :x, :string, doc: "Horizontal position of the menu."
   attr :y, :string, doc: "Vertical position of the menu."
-  slot :inner_block
+  attr :rest, :global
 
   def menu(assigns) do
     CoreComponents.menu(assigns)
@@ -6124,27 +4044,13 @@ defmodule Graphene.CarbonComponents do
   Menu button.
 
 
-
-  ## Attributes
-
-  * `disabled` (`:any`) - Specify whether the MenuButton should be disabled, or not. Defaults to `nil`.
-  * `kind` (`:any`) - Specify the type of button to be used as the base for the trigger button. Defaults to `nil`.
-  * `label` (`:any`) - Provide the label to be rendered on the trigger button. Defaults to `nil`.
-  * `menu_alignment` (`:string`) - Experimental property. Specify how the menu should align with the button element. Defaults to `"bottom"`. Must be one of `"top"`, `"top-start"`, `"top-end"`, `"bottom"`, `"bottom-start"`, `"bottom-end"`, `"left"`, `"left-start"`, `"left-end"`, `"right"`, `"right-start"`, or `"right-end"`.
-  * `menu_background_token` (`:any`) - Specify the background token to use for the menu. Default is 'layer'. Defaults to `nil`.
-  * `menu_border` (`:boolean`) - Specify whether the menu should have a border. Defaults to `false`.
-  * `size` (`:any`) - Specify the size of the button and menu. Defaults to `nil`.
-  * `tab_index` (`:string`) - Specify the tabIndex of the button. Defaults to `"0"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :disabled, :any, doc: "Specify whether the MenuButton should be disabled, or not."
 
-  attr :kind, :any,
-    doc: "Specify the type of button to be used as the base for the trigger button."
+  attr :kind, :string,
+    doc: "Specify the type of button to be used as the base for the trigger button.",
+    values: ["primary", "tertiary", "ghost"],
+    default: "primary"
 
   attr :label, :any, doc: "Provide the label to be rendered on the trigger button."
 
@@ -6166,14 +4072,20 @@ defmodule Graphene.CarbonComponents do
     ],
     default: "bottom"
 
-  attr :menu_background_token, :any,
-    doc: "Specify the background token to use for the menu. Default is 'layer'."
+  attr :menu_background_token, :string,
+    doc: "Specify the background token to use for the menu. Default is 'layer'.",
+    values: ["layer", "background"],
+    default: "layer"
 
   attr :menu_border, :boolean, doc: "Specify whether the menu should have a border."
-  attr :rest, :global
-  attr :size, :any, doc: "Specify the size of the button and menu."
+
+  attr :size, :string,
+    doc: "Specify the size of the button and menu.",
+    values: ["xs", "sm", "md", "lg"],
+    default: "lg"
+
   attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
-  slot :inner_block
+  attr :rest, :global
 
   slot :item do
     attr :label, :string
@@ -6196,11 +4108,8 @@ defmodule Graphene.CarbonComponents do
     assigns =
       assigns
       |> assign_new(:disabled, fn -> nil end)
-      |> assign_new(:kind, fn -> nil end)
       |> assign_new(:label, fn -> nil end)
-      |> assign_new(:menu_background_token, fn -> nil end)
       |> assign_new(:menu_border, fn -> false end)
-      |> assign_new(:size, fn -> nil end)
 
     ~H"""
     <CoreComponents.menu_button
@@ -6234,44 +4143,16 @@ defmodule Graphene.CarbonComponents do
 
   * `icon-detect` - Undocumented
 
-
-  ## Attributes
-
-  * `boundaries` (`:any`) - Menu boundaries. Defaults to `nil`.
-  * `danger_description` (`:string`) - Specify the message read by screen readers for the danger menu item variant. Defaults to `"danger"`.
-  * `disabled` (`:any`) - Disabled property for the menu item. Defaults to `nil`.
-  * `kind` (`:any`) - Defaults to `nil`.
-  * `label` (`:any`) - Label for the menu item. Defaults to `nil`.
-  * `shortcut` (`:any`) - Shortcut for the menu item. Defaults to `nil`.
-  * `submenu_open` (`:boolean`) - Whether the menu submen for an item is open or not. Defaults to `false`.
-  * `selected` (`:boolean`) - Whether the menu item is selected. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `submenu` - Submenu content. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :boundaries, :any, doc: "Menu boundaries."
-
-  attr :danger_description, :string,
-    doc: "Specify the message read by screen readers for the danger menu item variant",
-    default: "danger"
-
   attr :disabled, :any, doc: "Disabled property for the menu item."
-  attr :kind, :any
+  attr :kind, :string, values: ["default", "danger"], default: "default"
   attr :label, :any, doc: "Label for the menu item."
-  attr :rest, :global
-  attr :selected, :boolean, doc: "Whether the menu item is selected."
   attr :shortcut, :any, doc: "Shortcut for the menu item."
   attr :submenu_open, :boolean, doc: "Whether the menu submen for an item is open or not."
-  slot :inner_block
-
-  slot :submenu, doc: "Submenu content." do
-    attr :tag, :string
-  end
+  attr :selected, :boolean, doc: "Whether the menu item is selected."
+  attr :rest, :global
+  slot :submenu, doc: "Submenu content."
 
   def menu_item(assigns) do
     CoreComponents.menu_item(assigns)
@@ -6283,17 +4164,8 @@ defmodule Graphene.CarbonComponents do
   Menu Item.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def menu_item_divider(assigns) do
     CoreComponents.menu_item_divider(assigns)
@@ -6305,19 +4177,9 @@ defmodule Graphene.CarbonComponents do
   Menu Item.
 
 
-
-  ## Attributes
-
-  * `label` (`:any`) - Label for the menu item. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :label, :any, doc: "Label for the menu item."
   attr :rest, :global
-  slot :inner_block
 
   def menu_item_group(assigns) do
     CoreComponents.menu_item_group(assigns)
@@ -6329,25 +4191,12 @@ defmodule Graphene.CarbonComponents do
   Menu Item.
 
 
-
-  ## Attributes
-
-  * `item_to_string` (`:any`) - List of items in the radio group. Defaults to `nil`.
-  * `items` (`:any`) - List of items in the radio group. Defaults to `nil`.
-  * `label` (`:any`) - Label for the menu item radio group. Defaults to `nil`.
-  * `selected_item` (`:any`) - Selected item in the radio group. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :item_to_string, :any, doc: "List of items in the radio group."
   attr :items, :any, doc: "List of items in the radio group."
   attr :label, :any, doc: "Label for the menu item radio group."
-  attr :rest, :global
   attr :selected_item, :any, doc: "Selected item in the radio group."
-  slot :inner_block
+  attr :rest, :global
 
   def menu_item_radio_group(assigns) do
     CoreComponents.menu_item_radio_group(assigns)
@@ -6356,28 +4205,15 @@ defmodule Graphene.CarbonComponents do
   @doc """
   Component `<cds-menu-item-selectable>` from `./src/components/menu/menu-item-selectable.ts`
 
-  Menu Item Selectable.
+  Menu Item.
 
-
-
-  ## Attributes
-
-  * `label` (`:any`) - Label for the menu item selectable. Defaults to `nil`.
-  * `render_icon` (`:any`) - Sets the menu item's icon. Defaults to `nil`.
-  * `selected` (`:boolean`) - Whether the menu item is selected or not. Defaults to `false`.
-  * `shortcut` (`:any`) - Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :label, :any, doc: "Label for the menu item selectable."
   attr :render_icon, :any, doc: "Sets the menu item's icon."
-  attr :rest, :global
   attr :selected, :boolean, doc: "Whether the menu item is selected or not."
   attr :shortcut, :any
-  slot :inner_block
+  attr :rest, :global
 
   def menu_item_selectable(assigns) do
     CoreComponents.menu_item_selectable(assigns)
@@ -6393,30 +4229,6 @@ defmodule Graphene.CarbonComponents do
   * `cds-modal-beingclosed` - The custom event fired before this modal is being closed upon a user gesture.
   Cancellation of this event stops the user-initiated action of closing this modal.
   * `cds-modal-closed` - The custom event fired after this modal is closed upon a user gesture.
-
-
-  ## Attributes
-
-  * `alert` (`:boolean`) - Specify whether the Modal is displaying an alert, error or warning.
-    Should go hand in hand with the danger prop.
-
-    Defaults to `false`.
-  * `container_class` (`:string`) - The additional CSS class names for the container <div> of the element. Defaults to `nil`.
-  * `full_width` (`:boolean`) - Specify whether or not the Modal content should have any inner padding. Defaults to `false`.
-  * `has_scrolling_content` (`:boolean`) - Specify whether the modal contains scrolling content. Defaults to `false`.
-  * `loading_description` (`:string`) - Specify the description for the loading text. Defaults to `nil`.
-  * `loading_icon_description` (`:string`) - Specify the description for the loading icon. Defaults to `"Loading"`.
-  * `loading_status` (`:any`) - Specify the loading status. Defaults to `nil`.
-  * `loading_success_delay` (`:string`) - Provide a delay for the setTimeout for success. Defaults to `"1500"`.
-  * `open` (`:boolean`) - `true` if the modal should be open. Defaults to `false`.
-  * `prevent_close` (`:boolean`) - Prevent the modal from closing after clicking the close button. Defaults to `false`.
-  * `prevent_close_on_click_outside` (`:boolean`) - Prevent closing on click outside of modal. Defaults to `false`.
-  * `should_submit_on_enter` (`:boolean`) - Specify if Enter key should be used as "submit" action that clicks the primary footer button. Defaults to `false`.
-  * `size` (`:string`) - Modal size. Defaults to `"md"`. Must be one of `"xs"`, `"sm"`, `"md"`, or `"lg"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :alert, :boolean,
@@ -6450,14 +4262,13 @@ defmodule Graphene.CarbonComponents do
     doc: "Prevent the modal from closing after clicking the close button"
 
   attr :prevent_close_on_click_outside, :boolean, doc: "Prevent closing on click outside of modal"
-  attr :rest, :global
 
   attr :should_submit_on_enter, :boolean,
     doc:
       "Specify if Enter key should be used as \"submit\" action that clicks the primary footer button"
 
   attr :size, :string, doc: "Modal size.", values: ["xs", "sm", "md", "lg"], default: "md"
-  slot :inner_block
+  attr :rest, :global
   slot :label
   slot :heading
   slot :body
@@ -6737,17 +4548,8 @@ defmodule Graphene.CarbonComponents do
   Modal body.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def modal_body(assigns) do
     CoreComponents.modal_body(assigns)
@@ -6759,17 +4561,8 @@ defmodule Graphene.CarbonComponents do
   Modal body content
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def modal_body_content(assigns) do
     CoreComponents.modal_body_content(assigns)
@@ -6781,22 +4574,12 @@ defmodule Graphene.CarbonComponents do
   Modal close button.
 
 
-
-  ## Attributes
-
-  * `close_button_label` (`:string`) - Specify a label for the close button of the modal; defaults to close. Defaults to `"Close"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :close_button_label, :string,
     doc: "Specify a label for the close button of the modal; defaults to close",
     default: "Close"
 
   attr :rest, :global
-  slot :inner_block
 
   def modal_close_button(assigns) do
     CoreComponents.modal_close_button(assigns)
@@ -6808,19 +4591,9 @@ defmodule Graphene.CarbonComponents do
   Modal footer.
 
 
-
-  ## Attributes
-
-  * `has_three_buttons` (`:boolean`) - `true` if this modal footer has more than two buttons. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :has_three_buttons, :boolean, doc: "`true` if this modal footer has more than two buttons."
   attr :rest, :global
-  slot :inner_block
 
   def modal_footer(assigns) do
     CoreComponents.modal_footer(assigns)
@@ -6831,50 +4604,6 @@ defmodule Graphene.CarbonComponents do
 
   Modal footer button.
 
-
-
-  ## Attributes
-
-  * `autofocus` (`:boolean`) - `true` if the button should have input focus when the page loads. Defaults to `false`.
-  * `batch_action` (`:boolean`) - `true` if the button is being used within a data table batch action toolbar. Defaults to `false`.
-  * `button_class_name` (`:any`) - Specify an optional className to be added to your Button. Defaults to `nil`.
-  * `danger_description` (`:any`) - Specify the message read by screen readers for the danger button variant. Defaults to `nil`.
-  * `disabled` (`:boolean`) - `true` if the button should be disabled. Defaults to `false`.
-  * `download` (`:string`) - The default file name, used if this button is rendered as `<a>`. Defaults to `nil`.
-  * `has_main_content` (`:boolean`) - `true` if there is a non-icon content. Defaults to `false`.
-  * `href` (`:string`) - Link `href`. If present, this button is rendered as `<a>`. Defaults to `nil`.
-  * `hreflang` (`:string`) - The language of what `href` points to, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `is_expressive` (`:boolean`) - `true` if expressive theme enabled. Defaults to `false`.
-  * `is_selected` (`:boolean`) - Specify whether the Button is currently selected.
-    Only applies to the Ghost variant.
-
-    Defaults to `false`.
-  * `kind` (`:string`) - Button kind. Defaults to `"primary"`. Must be one of `"primary"`, `"secondary"`, `"tertiary"`, `"danger"`, `"danger--tertiary"`, `"danger--ghost"`, or `"ghost"`.
-  * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `"button"`.
-  * `open_tooltip` (`:boolean`) - Boolean to determine if tooltip is open. Defaults to `false`.
-  * `ping` (`:string`) - URLs to ping, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `rel` (`:string`) - The link type, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `size` (`:string`) - Button size. Defaults to `"lg"`.
-  * `tab_index` (`:string`) - Specify the tabIndex of the button. Defaults to `"0"`.
-  * `target` (`:string`) - The link target, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `""`. Must be one of `"left"`, `"right"`, or `""`.
-  * `tooltip_position` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"top"`. Must be one of `"top"`, `"bottom"`, `"right"`, or `"left"`.
-  * `tooltip_text` (`:string`) - Specify the text to be rendered in the tooltip. If using
-    "cds-badge-indicator" with no count prop then the text
-    should include describing there is a new notification.
-
-    Defaults to `nil`.
-  * `type` (`:string`) - Button type. Defaults to `"button"`. Must be one of `"button"`, `"reset"`, or `"submit"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :autofocus, :boolean,
@@ -6918,7 +4647,6 @@ defmodule Graphene.CarbonComponents do
   attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
   attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
   attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
-  attr :rest, :global
   attr :size, :string, doc: "Button size.", default: "lg"
   attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
   attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
@@ -6944,7 +4672,7 @@ defmodule Graphene.CarbonComponents do
     values: ["button", "reset", "submit"],
     default: "button"
 
-  slot :inner_block
+  attr :rest, :global
 
   def modal_footer_button(assigns) do
     CoreComponents.modal_footer_button(assigns)
@@ -6956,17 +4684,8 @@ defmodule Graphene.CarbonComponents do
   Modal header.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def modal_header(assigns) do
     CoreComponents.modal_header(assigns)
@@ -6978,17 +4697,8 @@ defmodule Graphene.CarbonComponents do
   Modal heading.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def modal_heading(assigns) do
     CoreComponents.modal_heading(assigns)
@@ -7000,17 +4710,8 @@ defmodule Graphene.CarbonComponents do
   Modal label.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def modal_label(assigns) do
     CoreComponents.modal_label(assigns)
@@ -7037,50 +4738,6 @@ defmodule Graphene.CarbonComponents do
   * `cds-dropdown-selected` - The custom event fired after a dropdown item is selected upon a user gesture.
   * `cds-dropdown-toggled` - The custom event fired after the open state of this dropdown is toggled upon a user gesture.
   * `invalid` - Undocumented
-
-
-  ## Attributes
-
-  * `autoalign` (`:boolean`) - Specify whether auto align functionality should be applied. Defaults to `false`.
-  * `clear_selection_description` (`:string`) - Specify the text that should be read for screen readers that describes total items selected. Defaults to `"Total items selected: "`.
-  * `clear_selection_label` (`:string`) - The `aria-label` attribute for the icon to clear selection. Defaults to `nil`.
-  * `clear_selection_text` (`:string`) - Specify the text that should be read for screen readers to clear selection. Defaults to `"To clear selection, press Delete or Backspace."`.
-  * `direction` (`:string`) - Specify the direction of the dropdown. Can be either top or bottom. Defaults to `"bottom"`. Must be one of `"top"`, or `"bottom"`.
-  * `disabled` (`:boolean`) - `true` if this dropdown should be disabled. Defaults to `false`.
-  * `filterable` (`:any`) - Defaults to `nil`.
-  * `helper_text` (`:string`) - The helper text. Defaults to `nil`.
-  * `hide_label` (`:boolean`) - Specify whether the title text should be hidden or not. Defaults to `false`.
-  * `invalid` (`:boolean`) - `true` to show the UI of the invalid state. Defaults to `false`.
-  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
-  * `label` (`:string`) - Generic label that will be used as the textual representation of what this field is for. Defaults to `nil`.
-  * `locale` (`:string`) - Specify the locale of the control. Used for the default compareItems used for sorting the list of items in the control. Defaults to `"en"`.
-  * `name` (`:string`) - Name for the dropdown in the `FormData`. Defaults to `nil`.
-  * `open` (`:boolean`) - `true` if this dropdown should be open. Defaults to `false`.
-  * `read_only` (`:boolean`) - Whether or not the Dropdown is readonly. Defaults to `false`.
-  * `required` (`:boolean`) - `true` if the value is required. Defaults to `false`.
-  * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
-  * `select_all` (`:boolean`) - Enables rendering of a “Select all” multi-select-item. Defaults to `false`.
-  * `selection_feedback` (`:string`) - Specify feedback (mode) of the selection.
-    `top`: selected item jumps to top
-    `fixed`: selected item stays at it's position
-    `top-after-reopen`: selected item jump to top after reopen dropdown
-
-    Defaults to `"top-after-reopen"`. Must be one of `"fixed"`, `"top"`, or `"top-after-reopen"`.
-  * `size` (`:string`) - Dropdown size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * `toggle_label_closed` (`:string`) - The `aria-label` attribute for the UI indicating the closed state. Defaults to `nil`.
-  * `toggle_label_open` (`:string`) - The `aria-label` attribute for the UI indicating the open state. Defaults to `nil`.
-  * `type` (`:string`) - `true` if this dropdown should use the inline UI variant. Defaults to `""`. Must be one of `""`, or `"inline"`.
-  * `validity_message` (`:string`) - The validity message. Defaults to `nil`.
-  * `value` (`:string`) - The value of the selected item. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
-  * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `title_text` - Title text content. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :autoalign, :boolean, doc: "Specify whether auto align functionality should be applied"
@@ -7126,7 +4783,6 @@ defmodule Graphene.CarbonComponents do
     doc: "The special validity message for `required`.",
     default: "Please fill out this field."
 
-  attr :rest, :global
   attr :select_all, :boolean, doc: "Enables rendering of a “Select all” multi-select-item"
 
   attr :selection_feedback, :string,
@@ -7162,11 +4818,8 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :inner_block
-
-  slot :title_text, doc: "Title text content." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :title_text, doc: "Title text content."
 
   slot :item do
     attr :label, :string
@@ -7259,22 +4912,6 @@ defmodule Graphene.CarbonComponents do
   Multi select item.
 
 
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - `true` if this dropdown item should be disabled. Defaults to `false`.
-  * `filtered` (`:any`) - The property to hide when item is filtered from input. Defaults to `nil`.
-  * `indeterminate` (`:boolean`) - When `true`, renders the checkbox in its indeterminate state. Defaults to `false`.
-  * `is_select_all` (`:boolean`) - Marks this item as the “select all” item. Defaults to `false`.
-  * `selection_name` (`:string`) - The `name` attribute for the `<input>` for selection. Defaults to `nil`.
-  * `size` (`:string`) - Dropdown size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * `value` (`:string`) - The `value` attribute that is set to the parent `<cds-dropdown>` when this dropdown item is selected. Defaults to `nil`.
-  * `selected` (`:boolean`) - Whether the item is selected. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :disabled, :boolean, doc: "`true` if this dropdown item should be disabled."
   attr :filtered, :any, doc: "The property to hide when item is filtered from input"
@@ -7283,8 +4920,6 @@ defmodule Graphene.CarbonComponents do
     doc: "When `true`, renders the checkbox in its indeterminate state."
 
   attr :is_select_all, :boolean, doc: "Marks this item as the “select all” item."
-  attr :rest, :global
-  attr :selected, :boolean, doc: "Whether the item is selected."
   attr :selection_name, :string, doc: "The `name` attribute for the `<input>` for selection."
   attr :size, :string, doc: "Dropdown size.", values: ["sm", "md", "lg"], default: "md"
 
@@ -7292,7 +4927,8 @@ defmodule Graphene.CarbonComponents do
     doc:
       "The `value` attribute that is set to the parent `<cds-dropdown>` when this dropdown item is selected."
 
-  slot :inner_block
+  attr :selected, :boolean, doc: "Whether the item is selected."
+  attr :rest, :global
 
   def multi_select_item(assigns) do
     CoreComponents.multi_select_item(assigns)
@@ -7307,66 +4943,6 @@ defmodule Graphene.CarbonComponents do
 
   * `cds-number-input` - The name of the custom event fired after the value is changed upon a user gesture.
   * `invalid` - Undocumented
-
-
-  ## Attributes
-
-  * `allow_empty` (`:boolean`) - `true` to allow empty string. Defaults to `false`.
-  * `autocomplete` (`:string`) - May be any of the standard HTML autocomplete options. Defaults to `nil`.
-  * `autofocus` (`:boolean`) - Sets the input to be focussed automatically on page load. Defaults to false. Defaults to `false`.
-  * `decrement_button_assistive_text` (`:string`) - Aria text for the button that decrements the value. Defaults to `"decrease number input"`.
-  * `default_value` (`:string`) - Optional starting value for uncontrolled state. Defaults to `nil`.
-  * `disable_wheel` (`:boolean`) - Specify if the wheel functionality for the input should be disabled, or not. Defaults to `false`.
-  * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
-  * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
-  * `hide_steppers` (`:boolean`) - Specify whether you want the steppers to be hidden. Defaults to `false`.
-  * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
-  * `icon_description` (`:string`) - Provide a description for up/down icons that can be read by screen readers. Defaults to `nil`.
-  * `increment_button_assistive_text` (`:string`) - Aria text for the button that increments the value. Defaults to `"increase number input"`.
-  * `inline` (`:boolean`) - true to use the inline version. Defaults to `false`.
-  * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
-  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
-  * `is_fluid` (`:boolean`) - Set to true to use the fluid variant. Defaults to `false`.
-  * `label` (`:string`) - Generic label that will be used as the textual representation of what this field is for. Defaults to `nil`.
-  * `max` (`:string`) - The maximum value allowed in the input. Defaults to `"Infty"`.
-  * `max_count` (`:any`) - Max character count allowed for input. This is needed in order for enableCounter to display. Defaults to `nil`.
-  * `min` (`:string`) - The minimum value allowed in the input. Defaults to `"-Infty"`.
-  * `name` (`:string`) - Name for the input in the `FormData`. Defaults to `nil`.
-  * `pattern` (`:string`) - Pattern to validate the input against for HTML validity checking. Defaults to `nil`.
-  * `placeholder` (`:string`) - Value to display when the input has an empty `value`. Defaults to `nil`.
-  * `readonly` (`:boolean`) - Specify if the component should be read-only. Defaults to `false`.
-  * `required` (`:boolean`) - Boolean property to set the required status. Defaults to `false`.
-  * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
-  * `show_password_visibility_toggle` (`:boolean`) - Boolean property to render password visibility toggle. Defaults to `false`.
-  * `show_password_label` (`:string`) - "Show password" tooltip text on password visibility toggle. Defaults to `"Show password"`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
-  * `step` (`:string`) - The amount the value should increase or decrease by. Defaults to `"1"`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `"center"`. Must be one of `"start"`, `"center"`, or `"end"`.
-  * `tooltip_direction` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
-  * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `value` (`:string`) - The value of the input. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
-  * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `helper_text` - The helper text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `label_text` - The label text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :allow_empty, :boolean, doc: "`true` to allow empty string."
@@ -7390,11 +4966,11 @@ defmodule Graphene.CarbonComponents do
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
 
+  attr :hide_steppers, :boolean, doc: "Specify whether you want the steppers to be hidden"
+
   attr :hide_password_label, :string,
     doc: "\"Hide password\" tooltip text on password visibility toggle",
     default: "Hide password"
-
-  attr :hide_steppers, :boolean, doc: "Specify whether you want the steppers to be hidden"
 
   attr :icon_description, :string,
     doc: "Provide a description for up/down icons that can be read by screen readers"
@@ -7428,16 +5004,14 @@ defmodule Graphene.CarbonComponents do
     doc: "The special validity message for `required`.",
     default: "Please fill out this field."
 
-  attr :rest, :global
+  attr :show_password_visibility_toggle, :boolean,
+    doc: "Boolean property to render password visibility toggle"
 
   attr :show_password_label, :string,
     doc: "\"Show password\" tooltip text on password visibility toggle",
     default: "Show password"
 
-  attr :show_password_visibility_toggle, :boolean,
-    doc: "Boolean property to render password visibility toggle"
-
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
   attr :step, :string, doc: "The amount the value should increase or decrease by", default: "1"
 
   attr :tooltip_alignment, :string,
@@ -7470,21 +5044,13 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :helper_text, doc: "The helper text." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :label_text, doc: "The label text." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :helper_text, doc: "The helper text."
+  slot :label_text, doc: "The label text."
 
   slot :validity_message,
     doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
-    attr :tag, :string
-  end
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
   def number_input(assigns) do
     FormComponents.number_input(assigns)
@@ -7495,19 +5061,9 @@ defmodule Graphene.CarbonComponents do
 
   Number input skeleton.
 
-
-  ## Attributes
-
-  * `hide_label` (`:boolean`) - Specify whether the label should be hidden. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden."
   attr :rest, :global
-  slot :inner_block
 
   def number_input_skeleton(assigns) do
     CoreComponents.number_input_skeleton(assigns)
@@ -7523,27 +5079,31 @@ defmodule Graphene.CarbonComponents do
   * `cds-operational-tag-beforeselected` - The custom event fired as the element is being selected
   * `cds-operational-tag-selected` - The custom event fired after the element has been selected
 
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - `true` if the tag should be disabled. Defaults to `false`.
-  * `selected` (`:boolean`) - Specify the state of the selectable tag. Defaults to `false`.
-  * `size` (`:any`) - The size of the tag. Defaults to `nil`.
-  * `text` (`:string`) - Provide text to be rendered inside of a the tag. Defaults to `nil`.
-  * `type` (`:any`) - The type of the tag. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :disabled, :boolean, doc: "`true` if the tag should be disabled"
-  attr :rest, :global
   attr :selected, :boolean, doc: "Specify the state of the selectable tag."
-  attr :size, :any, doc: "The size of the tag."
+  attr :size, :string, doc: "The size of the tag.", values: ["lg", "md", "sm"], default: "md"
   attr :text, :string, doc: "Provide text to be rendered inside of a the tag."
-  attr :type, :any, doc: "The type of the tag."
-  slot :inner_block
+
+  attr :type, :string,
+    doc: "The type of the tag.",
+    values: [
+      "red",
+      "magenta",
+      "purple",
+      "blue",
+      "cyan",
+      "teal",
+      "green",
+      "gray",
+      "COOL-GRAY",
+      "cool-gray",
+      "WARM-GRAY",
+      "warm-gray"
+    ],
+    default: "gray"
+
+  attr :rest, :global
 
   def operational_tag(assigns) do
     CoreComponents.operational_tag(assigns)
@@ -7555,20 +5115,6 @@ defmodule Graphene.CarbonComponents do
   Ordered list.
 
 
-
-  ## Attributes
-
-  * `is_expressive` (`:boolean`) - `true` if expressive theme enabled. Defaults to `false`.
-  * `native` (`:boolean`) - Specify whether the ordered list should use native list styles instead of
-    custom counter
-
-    Defaults to `false`.
-  * `nested` (`:boolean`) - Specify whether the list is nested, or not. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :is_expressive, :boolean, doc: "`true` if expressive theme enabled."
 
@@ -7578,7 +5124,6 @@ defmodule Graphene.CarbonComponents do
 
   attr :nested, :boolean, doc: "Specify whether the list is nested, or not"
   attr :rest, :global
-  slot :inner_block
 
   slot :item do
     attr :attrs, :map
@@ -7617,68 +5162,6 @@ defmodule Graphene.CarbonComponents do
 
   Overflow menu.
 
-
-
-  ## Attributes
-
-  * `align` (`:string`) - Checks if a badge indicator is being used with incorrect properties. Defaults to `"top"`.
-  * `autoalign` (`:boolean`) - Specify whether a auto align functionality should be applied. Defaults to `false`.
-  * `autofocus` (`:boolean`) - `true` if the button should have input focus when the page loads. Defaults to `false`.
-  * `batch_action` (`:boolean`) - `true` if the button is being used within a data table batch action toolbar. Defaults to `false`.
-  * `breadcrumb` (`:boolean`) - `true` if this overflow menu use inside breadcrumb. Defaults to `false`.
-  * `button_class_name` (`:any`) - Specify an optional className to be added to your Button. Defaults to `nil`.
-  * `close_on_activation` (`:boolean`) - Determines whether the tooltip should close when inner content is activated (click, Enter or Space). Defaults to `true`.
-  * `danger_description` (`:any`) - Specify the message read by screen readers for the danger button variant. Defaults to `nil`.
-  * `data_table` (`:boolean`) - `true` if this tooltip is in a data table row. Defaults to `false`.
-  * `default_open` (`:boolean`) - Specify whether the tooltip should be open when it first renders. Defaults to `false`.
-  * `disabled` (`:boolean`) - `true` if this overflow menu should be disabled. Defaults to `false`.
-  * `download` (`:string`) - The default file name, used if this button is rendered as `<a>`. Defaults to `nil`.
-  * `enter_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before displaying the tooltip. Defaults to `"100"`.
-  * `flipped` (`:boolean`) - `true` if this overflow menu body should be flipped. Defaults to `false`.
-  * `has_main_content` (`:boolean`) - `true` if there is a non-icon content. Defaults to `false`.
-  * `href` (`:string`) - Link `href`. If present, this button is rendered as `<a>`. Defaults to `nil`.
-  * `hreflang` (`:string`) - The language of what `href` points to, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `index` (`:string`) - Index (starting at 1) of overflow menu item to focus on open. Defaults to `"1"`.
-  * `is_expressive` (`:boolean`) - `true` if expressive theme enabled. Defaults to `false`.
-  * `is_selected` (`:boolean`) - Specify whether the Button is currently selected.
-    Only applies to the Ghost variant.
-
-    Defaults to `false`.
-  * `kind` (`:string`) - Button kind. Defaults to `"primary"`. Must be one of `"primary"`, `"secondary"`, `"tertiary"`, `"danger"`, `"danger--tertiary"`, `"danger--ghost"`, or `"ghost"`.
-  * `leave_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before hiding the tooltip. Defaults to `"100"`.
-  * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `"button"`.
-  * `open` (`:boolean`) - `true` if the dropdown should be open. Defaults to `false`.
-  * `open_tooltip` (`:boolean`) - Boolean to determine if tooltip is open. Defaults to `false`.
-  * `ping` (`:string`) - URLs to ping, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `rel` (`:string`) - The link type, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `size` (`:string`) - Overflow menu size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * `tab_index` (`:string`) - Specify the tabIndex of the button. Defaults to `"0"`.
-  * `target` (`:string`) - The link target, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `toolbar_action` (`:boolean`) - `true` if this menu is a toolbar action. Defaults to `false`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `""`. Must be one of `"left"`, `"right"`, or `""`.
-  * `tooltip_position` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"top"`. Must be one of `"top"`, `"bottom"`, `"right"`, or `"left"`.
-  * `tooltip_text` (`:string`) - Specify the text to be rendered in the tooltip. If using
-    "cds-badge-indicator" with no count prop then the text
-    should include describing there is a new notification.
-
-    Defaults to `nil`.
-  * `type` (`:string`) - Button type. Defaults to `"button"`. Must be one of `"button"`, `"reset"`, or `"submit"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `icon` - The icon for the trigger button. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `tooltip_content` - Tooltip content for the overflow menu trigger. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :align, :string,
@@ -7747,14 +5230,13 @@ defmodule Graphene.CarbonComponents do
 
   attr :leave_delay_ms, :string,
     doc: "Specify the duration in milliseconds to delay before hiding the tooltip",
-    default: "100"
+    default: "300"
 
   attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
   attr :open, :boolean, doc: "`true` if the dropdown should be open."
   attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
   attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
   attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
-  attr :rest, :global
   attr :size, :string, doc: "Overflow menu size.", values: ["sm", "md", "lg"], default: "md"
   attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
   attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
@@ -7781,15 +5263,9 @@ defmodule Graphene.CarbonComponents do
     values: ["button", "reset", "submit"],
     default: "button"
 
-  slot :icon, doc: "The icon for the trigger button." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :tooltip_content, doc: "Tooltip content for the overflow menu trigger." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :icon, doc: "The icon for the trigger button."
+  slot :tooltip_content, doc: "Tooltip content for the overflow menu trigger."
 
   slot :item do
     attr :label, :string
@@ -7894,17 +5370,6 @@ defmodule Graphene.CarbonComponents do
   Overflow menu body.
 
 
-
-  ## Attributes
-
-  * `direction` (`:string`) - The menu direction. Defaults to `"bottom"`. Must be one of `"top"`, or `"bottom"`.
-  * `flipped` (`:boolean`) - How the menu is aligned to the trigger button. Defaults to `false`.
-  * `size` (`:string`) - The overflow menu size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :direction, :string,
     doc: "The menu direction.",
@@ -7912,9 +5377,8 @@ defmodule Graphene.CarbonComponents do
     default: "bottom"
 
   attr :flipped, :boolean, doc: "How the menu is aligned to the trigger button."
-  attr :rest, :global
   attr :size, :string, doc: "The overflow menu size.", values: ["sm", "md", "lg"], default: "md"
-  slot :inner_block
+  attr :rest, :global
 
   def overflow_menu_body(assigns) do
     CoreComponents.overflow_menu_body(assigns)
@@ -7929,32 +5393,18 @@ defmodule Graphene.CarbonComponents do
 
   * `cds-overflow-menu-item-clicked` - The custom event fired when an overflow menu item is clicked.
 
-
-  ## Attributes
-
-  * `danger` (`:boolean`) - `true` if the action is danger. Defaults to `false`.
-  * `disabled` (`:boolean`) - `true` if the overflow menu item should be disabled. Defaults to `false`.
-  * `divider` (`:boolean`) - `true` if the item has a divider. Defaults to `false`.
-  * `href` (`:string`) - The link href of the overflow menu item. Defaults to `nil`.
-  * `size` (`:string`) - The size of the overflow menu item. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :danger, :boolean, doc: "`true` if the action is danger."
   attr :disabled, :boolean, doc: "`true` if the overflow menu item should be disabled."
   attr :divider, :boolean, doc: "`true` if the item has a divider"
   attr :href, :string, doc: "The link href of the overflow menu item."
-  attr :rest, :global
 
   attr :size, :string,
     doc: "The size of the overflow menu item.",
     values: ["sm", "md", "lg"],
     default: "md"
 
-  slot :inner_block
+  attr :rest, :global
 
   def overflow_menu_item(assigns) do
     CoreComponents.overflow_menu_item(assigns)
@@ -7966,17 +5416,8 @@ defmodule Graphene.CarbonComponents do
   Page header.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   slot :breadcrumb do
     attr :border, :boolean
@@ -8091,27 +5532,6 @@ defmodule Graphene.CarbonComponents do
   Page header Breadcrumb Bar.
 
 
-
-  ## Attributes
-
-  * `border` (`:boolean`) - Specify if breadcrumb bar has bottom border. Defaults to `true`.
-  * `content_actions_flush` (`:boolean`) - Set to `true` if content actions should be flush (no padding). Defaults to `false`.
-  * `page_actions_flush` (`:boolean`) - Set to `true` if page actions should be flush (no padding). Defaults to `false`.
-  * `within_grid` (`:boolean`) - Set to `true` if the breadcrumb bar is sitting within a grid
-    (ie. when used in tandem with page-header-hero-image)
-
-    Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `content_actions` - Content actions for the breadcrumb. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `page_actions` - Page actions for the breadcrumb. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :border, :boolean, doc: "Specify if breadcrumb bar has bottom border.", default: true
 
@@ -8121,21 +5541,13 @@ defmodule Graphene.CarbonComponents do
   attr :page_actions_flush, :boolean,
     doc: "Set to `true` if page actions should be flush (no padding)"
 
-  attr :rest, :global
-
   attr :within_grid, :boolean,
     doc:
       "Set to `true` if the breadcrumb bar is sitting within a grid\n(ie. when used in tandem with page-header-hero-image)"
 
-  slot :content_actions, doc: "Content actions for the breadcrumb." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :page_actions, doc: "Page actions for the breadcrumb." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :content_actions, doc: "Content actions for the breadcrumb."
+  slot :page_actions, doc: "Page actions for the breadcrumb."
 
   def page_header_breadcrumb(assigns) do
     CoreComponents.page_header_breadcrumb(assigns)
@@ -8147,42 +5559,16 @@ defmodule Graphene.CarbonComponents do
   Page header content.
 
 
-
-  ## Attributes
-
-  * `title` (`:string`) - Title text of the page-header-content. Defaults to `nil`.
-  * `within_grid` (`:boolean`) - Set to `true` if the breadcrumb bar is sitting within a grid
-    (ie. when used in tandem with page-header-hero-image)
-
-    Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `contextual_actions` - Contextual actions for the page header. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `page_actions` - Page actions for the page header. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
-  attr :rest, :global
   attr :title, :string, doc: "Title text of the page-header-content"
 
   attr :within_grid, :boolean,
     doc:
       "Set to `true` if the breadcrumb bar is sitting within a grid\n(ie. when used in tandem with page-header-hero-image)"
 
-  slot :contextual_actions, doc: "Contextual actions for the page header." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :page_actions, doc: "Page actions for the page header." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :contextual_actions, doc: "Contextual actions for the page header."
+  slot :page_actions, doc: "Page actions for the page header."
 
   def page_header_content(assigns) do
     CoreComponents.page_header_content(assigns)
@@ -8194,19 +5580,9 @@ defmodule Graphene.CarbonComponents do
   Page header Content Text.
 
 
-
-  ## Attributes
-
-  * `subtitle` (`:string`) - Subtitle text of the page-header-content. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :rest, :global
   attr :subtitle, :string, doc: "Subtitle text of the page-header-content"
-  slot :inner_block
+  attr :rest, :global
 
   def page_header_content_text(assigns) do
     CoreComponents.page_header_content_text(assigns)
@@ -8218,17 +5594,8 @@ defmodule Graphene.CarbonComponents do
   Page header Hero Image.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def page_header_hero_image(assigns) do
     CoreComponents.page_header_hero_image(assigns)
@@ -8240,24 +5607,9 @@ defmodule Graphene.CarbonComponents do
   Page header Tabs Bar.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `tags` - Tags for the page header. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
-
-  slot :tags, doc: "Tags for the page header." do
-    attr :tag, :string
-  end
+  slot :tags, doc: "Tags for the page header."
 
   def page_header_tabs(assigns) do
     CoreComponents.page_header_tabs(assigns)
@@ -8272,32 +5624,6 @@ defmodule Graphene.CarbonComponents do
 
   * `cds-pagination-changed-current` - The custom event fired after the current page is changed from `<cds-pages-select>`.
   * `cds-page-sizes-select-changed` - The custom event fired after the number of rows per page is changed from `<cds-page-sizes-select>`.
-
-
-  ## Attributes
-
-  * `backward_text` (`:string`) - The assistive text for the button to go to previous page. Defaults to `"Previous page"`.
-  * `disabled` (`:boolean`) - `true` if the pagination UI should be disabled. Defaults to `false`.
-  * `forward_text` (`:string`) - The assistive text for the button to go to next page. Defaults to `"Next page"`.
-  * `is_last_page` (`:boolean`) - `true` to explicitly state that user is at the last page. Defaults to `nil`.
-  * `items_per_page_text` (`:string`) - The translatable text indicating the number of items per page. Defaults to `"Items per page:"`.
-  * `page` (`:string`) - The current page. Defaults to `"1"`.
-  * `page_input_disabled` (`:boolean`) - true if the select box to change the page should be disabled. Defaults to `false`.
-  * `page_size` (`:string`) - Number of items per page. Defaults to `"10"`.
-  * `page_size_input_disabled` (`:any`) - true if the select box to change the items per page should be disabled. Defaults to `nil`.
-  * `page_size_label_text` (`:string`) - The label text for the UI to select page size. Defaults to `nil`.
-  * `pages_unknown` (`:boolean`) - true if the total number of items is unknown. Defaults to `false`.
-  * `size` (`:string`) - Specify the size of the Pagination. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
-  * `start` (`:string`) - The row number where current page start with, index that starts with zero. Defaults to `"0"`.
-  * `total_items` (`:string`) - The number of total items. Defaults to `nil`.
-  * `total_pages` (`:string`) - The number of total pages. Defaults to `"1"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `page_sizes_select` - Where to put in the `<page-sizes-select>`. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :backward_text, :string,
@@ -8328,7 +5654,6 @@ defmodule Graphene.CarbonComponents do
 
   attr :page_size_label_text, :string, doc: "The label text for the UI to select page size."
   attr :pages_unknown, :boolean, doc: "true if the total number of items is unknown."
-  attr :rest, :global
 
   attr :size, :string,
     doc: "Specify the size of the Pagination.",
@@ -8341,79 +5666,11 @@ defmodule Graphene.CarbonComponents do
 
   attr :total_items, :string, doc: "The number of total items."
   attr :total_pages, :string, doc: "The number of total pages.", default: "1"
-  slot :inner_block
-
-  slot :page_sizes_select, doc: "Where to put in the `<page-sizes-select>`." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :page_sizes_select, doc: "Where to put in the `<page-sizes-select>`."
 
   def pagination(assigns) do
     CoreComponents.pagination(assigns)
-  end
-
-  @doc """
-  Component `<cds-pagination-nav>` from `./src/components/pagination-nav/pagination-nav.ts`
-
-  Pagination Navigation.
-
-  ## Events
-
-  * `cds-page-changed` - The custom event fired when the the page has been changed.
-
-
-  ## Attributes
-
-  * `disable_overflow` (`:boolean`) - If true, the '...' pagination overflow will not render page links between the first and last rendered buttons.
-    Set this to true if you are having performance problems with large data sets.
-
-    Defaults to `nil`.
-  * `items_shown` (`:string`) - The number of items to be shown (minimum of 4 unless props.items < 4). Defaults to `"10"`.
-  * `loop` (`:boolean`) - Whether user should be able to loop through the items when reaching first / last. Defaults to `false`.
-  * `page` (`:string`) - The index of current page. Defaults to `"0"`.
-  * `size` (`:any`) - Specify the size of the PaginationNav. Defaults to `nil`.
-  * `tooltip_alignment` (`:any`) - Specify the alignment of the tooltip for the icon-only next/prev buttons.
-    Can be one of: start, center, or end.
-
-    Defaults to `nil`.
-  * `tooltip_position` (`:any`) - Specify the position of the tooltip for the icon-only next/prev buttons.
-    Can be one of: top, right, bottom, or left.
-
-    Defaults to `nil`.
-  * `total_items` (`:string`) - The total number of items. Defaults to `"1"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
-  """
-  attr :disable_overflow, :boolean,
-    doc:
-      "If true, the '...' pagination overflow will not render page links between the first and last rendered buttons.\nSet this to true if you are having performance problems with large data sets."
-
-  attr :items_shown, :string,
-    doc: "The number of items to be shown (minimum of 4 unless props.items < 4).",
-    default: "10"
-
-  attr :loop, :boolean,
-    doc: "Whether user should be able to loop through the items when reaching first / last."
-
-  attr :page, :string, doc: "The index of current page.", default: "0"
-  attr :rest, :global
-  attr :size, :any, doc: "Specify the size of the PaginationNav."
-
-  attr :tooltip_alignment, :any,
-    doc:
-      "Specify the alignment of the tooltip for the icon-only next/prev buttons.\nCan be one of: start, center, or end."
-
-  attr :tooltip_position, :any,
-    doc:
-      "Specify the position of the tooltip for the icon-only next/prev buttons.\nCan be one of: top, right, bottom, or left."
-
-  attr :total_items, :string, doc: "The total number of items.", default: "1"
-  slot :inner_block
-
-  def pagination_nav(assigns) do
-    CoreComponents.pagination_nav(assigns)
   end
 
   @doc """
@@ -8424,56 +5681,6 @@ defmodule Graphene.CarbonComponents do
   ## Events
 
   * `invalid` - Undocumented
-
-
-  ## Attributes
-
-  * `autocomplete` (`:string`) - May be any of the standard HTML autocomplete options. Defaults to `nil`.
-  * `autofocus` (`:boolean`) - Sets the input to be focussed automatically on page load. Defaults to false. Defaults to `false`.
-  * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
-  * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
-  * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
-  * `inline` (`:boolean`) - true to use the inline version. Defaults to `false`.
-  * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
-  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
-  * `is_fluid` (`:boolean`) - Defaults to `false`.
-  * `label` (`:string`) - Generic label that will be used as the textual representation of what this field is for. Defaults to `nil`.
-  * `max_count` (`:any`) - Max character count allowed for input. This is needed in order for enableCounter to display. Defaults to `nil`.
-  * `name` (`:string`) - Name for the input in the `FormData`. Defaults to `nil`.
-  * `pattern` (`:string`) - Pattern to validate the input against for HTML validity checking. Defaults to `nil`.
-  * `placeholder` (`:string`) - Value to display when the input has an empty `value`. Defaults to `nil`.
-  * `readonly` (`:boolean`) - Specify if the component should be read-only. Defaults to `false`.
-  * `required` (`:boolean`) - Boolean property to set the required status. Defaults to `false`.
-  * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
-  * `show_password_label` (`:string`) - "Show password" tooltip text on password visibility toggle. Defaults to `"Show password"`.
-  * `show_password_visibility_toggle` (`:boolean`) - Boolean property to render password visibility toggle. Defaults to `false`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `"center"`. Must be one of `"start"`, `"center"`, or `"end"`.
-  * `tooltip_position` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
-  * `type` (`:string`) - The native `<input>` type. Defaults to “password”. Defaults to `"password"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `value` (`:string`) - The value of the input. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
-  * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `helper_text` - The helper text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `label_text` - The label text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :autocomplete, :string, doc: "May be any of the standard HTML autocomplete options"
@@ -8513,8 +5720,6 @@ defmodule Graphene.CarbonComponents do
     doc: "The special validity message for `required`.",
     default: "Please fill out this field."
 
-  attr :rest, :global
-
   attr :show_password_label, :string,
     doc: "\"Show password\" tooltip text on password visibility toggle",
     default: "Show password"
@@ -8522,7 +5727,7 @@ defmodule Graphene.CarbonComponents do
   attr :show_password_visibility_toggle, :boolean,
     doc: "Boolean property to render password visibility toggle"
 
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
 
   attr :tooltip_alignment, :string,
     doc:
@@ -8554,21 +5759,13 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :helper_text, doc: "The helper text." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :label_text, doc: "The label text." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :helper_text, doc: "The helper text."
+  slot :label_text, doc: "The label text."
 
   slot :validity_message,
     doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
-    attr :tag, :string
-  end
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
   def password_input(assigns) do
     FormComponents.password_input(assigns)
@@ -8580,19 +5777,9 @@ defmodule Graphene.CarbonComponents do
   Undocumented
 
 
-
-  ## Attributes
-
-  * `hide_label` (`:boolean`) - Specify whether the label should be hidden, or not. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
   attr :rest, :global
-  slot :inner_block
 
   def password_input_skeleton(assigns) do
     CoreComponents.password_input_skeleton(assigns)
@@ -8603,29 +5790,6 @@ defmodule Graphene.CarbonComponents do
 
   Popover.
 
-
-
-  ## Attributes
-
-  * `align` (`:string`) - Specify direction of alignment. Defaults to `nil`.
-  * `alignment_axis_offset` (`:string`) - **Experimental:** Provide an offset value for alignment axis. Only takes effect when `autoalign` is enabled. Defaults to `nil`.
-  * `autoalign` (`:boolean`) - Specify whether a auto align functionality should be applied. Defaults to `false`.
-  * `autoalign_boundary` (`:string`) - Specify a bounding element to be used for autoAlign calculations. The viewport is used by default.
-    Takes one of the following: 'clippingAncestors', '#elementid', '#elementid_1, #elementid_2', 'rect(x, y, width, height)'
-    This prop is currently experimental and is subject to future changes.
-
-    Defaults to `nil`.
-  * `background_token` (`:any`) - Specify the background token to use. Default is 'layer'. Defaults to `nil`.
-  * `border` (`:boolean`) - Specify whether a border should be rendered on the popover. Defaults to `false`.
-  * `caret` (`:boolean`) - Specify whether a caret should be rendered. Defaults to `true`.
-  * `drop_shadow` (`:boolean`) - Specify whether a dropShadow should be rendered. Defaults to `true`.
-  * `high_contrast` (`:boolean`) - Render the component using the high-contrast variant. Defaults to `false`.
-  * `open` (`:boolean`) - Specify whether the component is currently open or closed. Defaults to `false`.
-  * `tab_tip` (`:boolean`) - Render the component using the tab tip variant. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :align, :string, doc: "Specify direction of alignment"
@@ -8640,7 +5804,11 @@ defmodule Graphene.CarbonComponents do
     doc:
       "Specify a bounding element to be used for autoAlign calculations. The viewport is used by default.\nTakes one of the following: 'clippingAncestors', '#elementid', '#elementid_1, #elementid_2', 'rect(x, y, width, height)'\nThis prop is currently experimental and is subject to future changes."
 
-  attr :background_token, :any, doc: "Specify the background token to use. Default is 'layer'."
+  attr :background_token, :string,
+    doc: "Specify the background token to use. Default is 'layer'.",
+    values: ["layer", "background"],
+    default: "layer"
+
   attr :border, :boolean, doc: "Specify whether a border should be rendered on the popover"
   attr :caret, :boolean, doc: "Specify whether a caret should be rendered", default: true
 
@@ -8650,9 +5818,8 @@ defmodule Graphene.CarbonComponents do
 
   attr :high_contrast, :boolean, doc: "Render the component using the high-contrast variant"
   attr :open, :boolean, doc: "Specify whether the component is currently open or closed"
-  attr :rest, :global
   attr :tab_tip, :boolean, doc: "Render the component using the tab tip variant"
-  slot :inner_block
+  attr :rest, :global
   slot :trigger
   slot :content
 
@@ -8663,7 +5830,6 @@ defmodule Graphene.CarbonComponents do
       |> assign_new(:alignment_axis_offset, fn -> nil end)
       |> assign_new(:autoalign, fn -> false end)
       |> assign_new(:autoalign_boundary, fn -> nil end)
-      |> assign_new(:background_token, fn -> nil end)
       |> assign_new(:border, fn -> false end)
       |> assign_new(:high_contrast, fn -> false end)
       |> assign_new(:open, fn -> false end)
@@ -8707,28 +5873,15 @@ defmodule Graphene.CarbonComponents do
   Popover.
 
 
-
-  ## Attributes
-
-  * `align` (`:string`) - Specify the popover alignment. Defaults to `nil`.
-  * `autoalign` (`:boolean`) - Specify whether a auto align functionality should be applied. Defaults to `false`.
-  * `background_token` (`:any`) - Specify the background token to use. Default is 'layer'. Defaults to `nil`.
-  * `border` (`:boolean`) - Specify whether a border should be rendered on the popover. Defaults to `false`.
-  * `caret` (`:any`) - Specify whether a caret should be rendered. Defaults to `nil`.
-  * `drop_shadow` (`:boolean`) - Specify whether a dropShadow should be rendered. Defaults to `true`.
-  * `high_contrast` (`:boolean`) - Render the component using the high-contrast variant. Defaults to `false`.
-  * `open` (`:boolean`) - Specify whether the component is currently open or closed. Defaults to `false`.
-  * `slot` (`:string`) - The shadow slot this popover content should be in. Defaults to `"content"`.
-  * `tab_tip` (`:boolean`) - Render the component using the tab tip variant. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :align, :string, doc: "Specify the popover alignment"
   attr :autoalign, :boolean, doc: "Specify whether a auto align functionality should be applied"
-  attr :background_token, :any, doc: "Specify the background token to use. Default is 'layer'."
+
+  attr :background_token, :string,
+    doc: "Specify the background token to use. Default is 'layer'.",
+    values: ["layer", "background"],
+    default: "layer"
+
   attr :border, :boolean, doc: "Specify whether a border should be rendered on the popover"
   attr :caret, :any, doc: "Specify whether a caret should be rendered"
 
@@ -8738,14 +5891,13 @@ defmodule Graphene.CarbonComponents do
 
   attr :high_contrast, :boolean, doc: "Render the component using the high-contrast variant"
   attr :open, :boolean, doc: "Specify whether the component is currently open or closed"
-  attr :rest, :global
 
   attr :slot, :string,
     doc: "The shadow slot this popover content should be in.",
     default: "content"
 
   attr :tab_tip, :boolean, doc: "Render the component using the tab tip variant"
-  slot :inner_block
+  attr :rest, :global
 
   def popover_content(assigns) do
     CoreComponents.popover_content(assigns)
@@ -8757,28 +5909,11 @@ defmodule Graphene.CarbonComponents do
   Progress bar.
 
 
-
-  ## Attributes
-
-  * `helper_text` (`:any`) - The current progress as a textual representation. Defaults to `nil`.
-  * `hide_label` (`:any`) - Whether the label should be visually hidden. Defaults to `nil`.
-  * `label` (`:any`) - A label describing the progress bar. Defaults to `nil`.
-  * `max` (`:string`) - The maximum value. Defaults to `"100"`.
-  * `size` (`:string`) - Specify the size of the ProgressBar. Defaults to `"big"`. Must be one of `"small"`, or `"big"`.
-  * `status` (`:string`) - Specify the status. Defaults to `"active"`. Must be one of `"active"`, `"finished"`, or `"error"`.
-  * `type` (`:string`) - Defines the alignment variant of the progress bar. Defaults to `"default"`. Must be one of `"default"`, `"inline"`, or `"indented"`.
-  * `value` (`:any`) - The current value. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :helper_text, :any, doc: "The current progress as a textual representation."
   attr :hide_label, :any, doc: "Whether the label should be visually hidden."
   attr :label, :any, doc: "A label describing the progress bar."
   attr :max, :string, doc: "The maximum value.", default: "100"
-  attr :rest, :global
 
   attr :size, :string,
     doc: "Specify the size of the ProgressBar.",
@@ -8796,7 +5931,7 @@ defmodule Graphene.CarbonComponents do
     default: "default"
 
   attr :value, :any, doc: "The current value."
-  slot :inner_block
+  attr :rest, :global
 
   def progress_bar(assigns) do
     CoreComponents.progress_bar(assigns)
@@ -8812,29 +5947,10 @@ defmodule Graphene.CarbonComponents do
   * `change` - Undocumented
   * `onChange` - Undocumented
 
-
-  ## Attributes
-
-  * `current_index` (`:string`) - Optionally specify the current step array index. Defaults to `"0"`.
-  * `space_equally` (`:boolean`) - Specify whether the progress steps should be split equally in size in the
-    container (horizontal only).
-
-    Defaults to `false`.
-  * `vertical` (`:boolean`) - Determines whether or not the progress indicator should be rendered
-    vertically.
-
-    Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :current_index, :string,
     doc: "Optionally specify the current step array index.",
     default: "0"
-
-  attr :rest, :global
 
   attr :space_equally, :boolean,
     doc:
@@ -8843,7 +5959,7 @@ defmodule Graphene.CarbonComponents do
   attr :vertical, :boolean,
     doc: "Determines whether or not the progress indicator should be rendered\nvertically."
 
-  slot :inner_block
+  attr :rest, :global
 
   slot :step do
     attr :label, :string
@@ -8901,19 +6017,9 @@ defmodule Graphene.CarbonComponents do
 
   Progress indicator skeleton.
 
-
-  ## Attributes
-
-  * `vertical` (`:boolean`) - `true` to render the vertical variant. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :rest, :global
   attr :vertical, :boolean, doc: "`true` to render the vertical variant."
-  slot :inner_block
+  attr :rest, :global
 
   def progress_indicator_skeleton(assigns) do
     CoreComponents.progress_indicator_skeleton(assigns)
@@ -8924,30 +6030,6 @@ defmodule Graphene.CarbonComponents do
 
   Progress step.
 
-
-
-  ## Attributes
-
-  * `clickable` (`:boolean`) - Set by the parent indicator. If true, the step is interactive unless it is
-    current or disabled. This mirrors React's "onChange prop exists" semantics.
-
-    Defaults to `false`.
-  * `complete` (`:boolean`) - Specify whether the step has been completed. Defaults to `false`.
-  * `current` (`:boolean`) - Specify whether the step is the current step. Defaults to `false`.
-  * `description` (`:string`) - Defaults to `nil`.
-  * `disabled` (`:boolean`) - `true` if the progress step should be disabled. Defaults to `false`.
-  * `icon_label` (`:string`) - The a11y text for the icon. Defaults to `nil`.
-  * `invalid` (`:boolean`) - Specify whether the step is invalid. Defaults to `false`.
-  * `label` (`:string`) - Defaults to `nil`.
-  * `secondary_label` (`:string`) - Defaults to `nil`.
-  * `state` (`:string`) - The progress state. Defaults to `"incomplete"`. Must be one of `"complete"`, `"current"`, `"incomplete"`, or `"invalid"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `secondary_label_text` - The secondary progress label. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :clickable, :boolean,
@@ -8961,7 +6043,6 @@ defmodule Graphene.CarbonComponents do
   attr :icon_label, :string, doc: "The a11y text for the icon."
   attr :invalid, :boolean, doc: "Specify whether the step is invalid"
   attr :label, :string
-  attr :rest, :global
   attr :secondary_label, :string
 
   attr :state, :string,
@@ -8969,11 +6050,8 @@ defmodule Graphene.CarbonComponents do
     values: ["complete", "current", "incomplete", "invalid"],
     default: "incomplete"
 
-  slot :inner_block
-
-  slot :secondary_label_text, doc: "The secondary progress label." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :secondary_label_text, doc: "The secondary progress label."
 
   def progress_step(assigns) do
     CoreComponents.progress_step(assigns)
@@ -8984,19 +6062,9 @@ defmodule Graphene.CarbonComponents do
 
   Progress step skeleton.
 
-
-  ## Attributes
-
-  * `vertical` (`:boolean`) - `true` to render the vertical variant. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :rest, :global
   attr :vertical, :boolean, doc: "`true` to render the vertical variant."
-  slot :inner_block
+  attr :rest, :global
 
   def progress_step_skeleton(assigns) do
     CoreComponents.progress_step_skeleton(assigns)
@@ -9010,33 +6078,6 @@ defmodule Graphene.CarbonComponents do
   ## Events
 
   * `cds-radio-button-changed` - The custom event fired after this radio button changes its checked state.
-
-
-  ## Attributes
-
-  * `checked` (`:boolean`) - `true` if this radio button should be checked. Defaults to `false`.
-  * `data_table` (`:boolean`) - `true` if the radio button is used in a data table. Defaults to `false`.
-  * `default_checked` (`:boolean`) - Specify whether the `<radio-button>` should be checked by default. Defaults to `false`.
-  * `disabled` (`:boolean`) - `true` if the radio button group should be disabled. Defaults to `false`.
-  * `disabled_item` (`:boolean`) - `true` if the radio button item should be disabled. Defaults to `false`.
-  * `hide_label` (`:boolean`) - `true` if the label should be hidden. Defaults to `false`.
-  * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
-  * `label_position` (`:string`) - The label position. Defaults to `"right"`. Must be one of `"left"`, or `"right"`.
-  * `label_text` (`:string`) - The label text. Defaults to `nil`.
-  * `name` (`:string`) - The `name` attribute for the `<input>` for selection. Defaults to `nil`.
-  * `orientation` (`:string`) - The orientation to lay out radio buttons. Defaults to `"horizontal"`. Must be one of `"horizontal"`, or `"vertical"`.
-  * `read_only` (`:boolean`) - `true` if the radio button group should be disabled. Defaults to `false`.
-  * `required` (`:boolean`) - `true` if the radio button is required. Defaults to `false`.
-  * `value` (`:string`) - The `value` attribute for the `<input>` for selection. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
-  * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `ai_label` - AI label content. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :checked, :boolean, doc: "`true` if this radio button should be checked."
@@ -9065,18 +6106,14 @@ defmodule Graphene.CarbonComponents do
 
   attr :read_only, :boolean, doc: "`true` if the radio button group should be disabled."
   attr :required, :boolean, doc: "`true` if the radio button is required."
-  attr :rest, :global
   attr :value, :string, doc: "The `value` attribute for the `<input>` for selection."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
 
   attr :warn_text, :string,
     doc: "Provide the text that is displayed when the control is in warning state"
 
-  slot :ai_label, doc: "AI label content." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
+  attr :rest, :global
+  slot :ai_label, doc: "AI label content."
 
   def radio_button(assigns) do
     CoreComponents.radio_button(assigns)
@@ -9091,28 +6128,6 @@ defmodule Graphene.CarbonComponents do
 
   * `cds-radio-button-group-changed` - The custom event fired after this radio button group changes its selected item.
   * `cds-radio-button-changed` - The name of the custom event fired after a radio button changes its checked state.
-
-
-  ## Attributes
-
-  * `default_selected` (`:string`) - The `value` attribute for the `<input>` for selection. Defaults to `nil`.
-  * `disabled` (`:boolean`) - `true` if the radio button group should be disabled. Defaults to `false`.
-  * `helper_text` (`:any`) - The helper text. Defaults to `nil`.
-  * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
-  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
-  * `label_position` (`:string`) - The label position. Defaults to `"right"`. Must be one of `"left"`, or `"right"`.
-  * `legend_text` (`:string`) - The label position. Defaults to `nil`.
-  * `name` (`:string`) - The `name` attribute for the `<input>` for selection. Defaults to `nil`.
-  * `orientation` (`:string`) - The orientation to lay out radio buttons. Defaults to `"horizontal"`. Must be one of `"horizontal"`, or `"vertical"`.
-  * `read_only` (`:boolean`) - Controls the readonly state of the radio button group. Defaults to `false`.
-  * `required` (`:boolean`) - `true` to specify if input selection in group is required. Defaults to `false`.
-  * `value` (`:string`) - The `value` attribute for the `<input>` for selection. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
-  * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :default_selected, :string, doc: "The `value` attribute for the `<input>` for selection."
@@ -9136,7 +6151,6 @@ defmodule Graphene.CarbonComponents do
 
   attr :read_only, :boolean, doc: "Controls the readonly state of the radio button group."
   attr :required, :boolean, doc: "`true` to specify if input selection in group is required."
-  attr :rest, :global
   attr :value, :string, doc: "The `value` attribute for the `<input>` for selection."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
 
@@ -9150,7 +6164,7 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :inner_block
+  attr :rest, :global
 
   slot :item do
     attr :label, :string
@@ -9214,17 +6228,8 @@ defmodule Graphene.CarbonComponents do
 
   Radio button skeleton.
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def radio_button_skeleton(assigns) do
     CoreComponents.radio_button_skeleton(assigns)
@@ -9240,24 +6245,6 @@ defmodule Graphene.CarbonComponents do
   * `cds-radio-tile-selected` - The name of the custom event fired after this radio tile changes its selected state.
   * `cds-selectable-tile-changed` - The custom event fired after this selectable tile changes its selected state.
 
-
-  ## Attributes
-
-  * `checkmark_label` (`:string`) - The a11y text for the checkmark icon of the selected state. Defaults to `nil`.
-  * `color_scheme` (`:string`) - The color scheme. Defaults to `""`. Must be one of `""`, or `"light"`.
-  * `disabled` (`:boolean`) - `true` if the seletable tile should be disabled. Defaults to `false`.
-  * `has_rounded_corners` (`:boolean`) - Specify if the `SeletableTile` component should be rendered with rounded corners.
-    Only valid when `ai-label` prop is present
-
-    Defaults to `false`.
-  * `name` (`:string`) - Defaults to `nil`.
-  * `selected` (`:boolean`) - `true` to show the selected state. Defaults to `false`.
-  * `value` (`:string`) - Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :checkmark_label, :string,
     doc: "The a11y text for the checkmark icon of the selected state."
@@ -9270,10 +6257,9 @@ defmodule Graphene.CarbonComponents do
       "Specify if the `SeletableTile` component should be rendered with rounded corners.\nOnly valid when `ai-label` prop is present"
 
   attr :name, :string
-  attr :rest, :global
   attr :selected, :boolean, doc: "`true` to show the selected state."
   attr :value, :string
-  slot :inner_block
+  attr :rest, :global
 
   def radio_tile(assigns) do
     CoreComponents.radio_tile(assigns)
@@ -9288,31 +6274,6 @@ defmodule Graphene.CarbonComponents do
 
   * `cds-search-input` - The custom event fired after the search content is changed upon a user gesture.
 
-
-  ## Attributes
-
-  * `autocomplete` (`:string`) - Specify an optional value for the autocomplete property on the underlying <input>,
-    defaults to "off"
-
-    Defaults to `"off"`.
-  * `close_button_label_text` (`:string`) - Specify a label to be read by screen readers on the "close" button. Defaults to `nil`.
-  * `disabled` (`:boolean`) - `true` if the search box should be disabled. Defaults to `false`.
-  * `expandable` (`:boolean`) - `true` if the search bar can be expandable. Defaults to `false`.
-  * `expanded` (`:boolean`) - `true` if the expandable search has been expanded. Defaults to `false`.
-  * `has_custom_icon` (`:boolean`) - Defaults to `false`.
-  * `label_text` (`:string`) - The label text. Defaults to `nil`.
-  * `name` (`:string`) - The form name in `FormData`. Defaults to `nil`.
-  * `placeholder` (`:string`) - The placeholder text. Defaults to `"Search"`.
-  * `role` (`:string`) - Specify the role for the underlying <input>, defaults to searchbox. Defaults to `nil`.
-  * `size` (`:any`) - The search box size. Defaults to `nil`.
-  * `type` (`:string`) - The `<input>` name. Defaults to `nil`.
-  * `value` (`:string`) - The value. Defaults to `nil`.
-  * `color_scheme` (`:string`) - Color scheme for the search. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :autocomplete, :string,
     doc:
@@ -9322,7 +6283,6 @@ defmodule Graphene.CarbonComponents do
   attr :close_button_label_text, :string,
     doc: "Specify a label to be read by screen readers on the \"close\" button"
 
-  attr :color_scheme, :string, doc: "Color scheme for the search."
   attr :disabled, :boolean, doc: "`true` if the search box should be disabled."
   attr :expandable, :boolean, doc: "`true` if the search bar can be expandable"
   attr :expanded, :boolean, doc: "`true` if the expandable search has been expanded"
@@ -9330,11 +6290,16 @@ defmodule Graphene.CarbonComponents do
   attr :label_text, :string, doc: "The label text."
   attr :name, :string, doc: "The form name in `FormData`."
   attr :placeholder, :string, doc: "The placeholder text.", default: "Search"
-  attr :rest, :global
   attr :role, :string, doc: "Specify the role for the underlying <input>, defaults to searchbox"
-  attr :size, :any, doc: "The search box size."
+
+  attr :size, :string,
+    doc: "The search box size.",
+    values: ["sm", "md", "lg", "xl"],
+    default: "md"
+
   attr :type, :string, doc: "The `<input>` name."
   attr :value, :string, doc: "The value."
+  attr :color_scheme, :string, doc: "Color scheme for the search."
   attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
   attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
 
@@ -9342,7 +6307,7 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :inner_block
+  attr :rest, :global
 
   def search(assigns) do
     FormComponents.search(assigns)
@@ -9356,43 +6321,6 @@ defmodule Graphene.CarbonComponents do
   ## Events
 
   * `cds-select-selected` - The name of the custom event fired after an item is selected.
-
-
-  ## Attributes
-
-  * `autofocus` (`:boolean`) - Sets the select to be focussed automatically on page load. Defaults to false. Defaults to `false`.
-  * `disabled` (`:boolean`) - Controls the disabled state of the select. Defaults to `false`.
-  * `hide_label` (`:boolean`) - Specify whether the label should be hidden, or not. Defaults to `false`.
-  * `id` (`:string`) - ID to link the `label` and `select`. Defaults to `nil`.
-  * `inline` (`:boolean`) - Specify whether you want the inline version of this control. Defaults to `false`.
-  * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
-  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
-  * `is_fluid` (`:boolean`) - Specify whether the textarea is fluid or not. Defaults to `false`.
-  * `multiple` (`:boolean`) - `true` to enable multiple selection. Defaults to `nil`.
-  * `name` (`:string`) - Name for the select in the `FormData`. Defaults to `nil`.
-  * `pattern` (`:string`) - Pattern to validate the select against for HTML validity checking. Defaults to `nil`.
-  * `placeholder` (`:string`) - Value to display when the select has an empty `value`. Defaults to `nil`.
-  * `readonly` (`:boolean`) - Controls the readonly state of the select. Defaults to `false`.
-  * `required` (`:boolean`) - Boolean property to set the required status. Defaults to `false`.
-  * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
-  * `selected_index` (`:string`) - The selected index. Defaults to `nil`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
-  * `value` (`:string`) - The value of the text area. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify if the currently value is warn. Defaults to `false`.
-  * `warn_text` (`:string`) - Message which is displayed if the value is warn. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `helper_text` - The helper text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `label_text` - The label text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :autofocus, :boolean,
@@ -9416,9 +6344,8 @@ defmodule Graphene.CarbonComponents do
     doc: "The special validity message for `required`.",
     default: "Please fill out this field."
 
-  attr :rest, :global
   attr :selected_index, :string, doc: "The selected index."
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
   attr :value, :string, doc: "The value of the text area."
   attr :warn, :boolean, doc: "Specify if the currently value is warn."
   attr :warn_text, :string, doc: "Message which is displayed if the value is warn."
@@ -9429,21 +6356,13 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :helper_text, doc: "The helper text." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :label_text, doc: "The label text." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :helper_text, doc: "The helper text."
+  slot :label_text, doc: "The label text."
 
   slot :validity_message,
     doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
-    attr :tag, :string
-  end
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
   slot :item do
     attr :label, :string
@@ -9470,7 +6389,6 @@ defmodule Graphene.CarbonComponents do
       |> assign_new(:readonly, fn -> false end)
       |> assign_new(:required, fn -> false end)
       |> assign_new(:selected_index, fn -> nil end)
-      |> assign_new(:size, fn -> nil end)
       |> assign_new(:value, fn -> nil end)
       |> assign_new(:warn, fn -> false end)
       |> assign_new(:warn_text, fn -> nil end)
@@ -9544,30 +6462,16 @@ defmodule Graphene.CarbonComponents do
   An option in select box.
 
 
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - `true` to disable this option. Defaults to `false`.
-  * `label` (`:string`) - The label. If this is not specified, the child text content is used. Defaults to `nil`.
-  * `selected` (`:boolean`) - `true` to select this option. Defaults to `false`.
-  * `value` (`:string`) - The value. Defaults to `nil`.
-  * `text` (`:string`) - Text for the select item. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :disabled, :boolean, doc: "`true` to disable this option."
 
   attr :label, :string,
     doc: "The label. If this is not specified, the child text content is used."
 
-  attr :rest, :global
   attr :selected, :boolean, doc: "`true` to select this option."
-  attr :text, :string, doc: "Text for the select item."
   attr :value, :string, doc: "The value."
-  slot :inner_block
+  attr :text, :string, doc: "Text for the select item."
+  attr :rest, :global
 
   def select_item(assigns) do
     CoreComponents.select_item(assigns)
@@ -9579,21 +6483,10 @@ defmodule Graphene.CarbonComponents do
   An option group in select box.
 
 
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - `true` to disable this option. Defaults to `false`.
-  * `label` (`:string`) - The label. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :disabled, :boolean, doc: "`true` to disable this option."
   attr :label, :string, doc: "The label."
   attr :rest, :global
-  slot :inner_block
 
   def select_item_group(assigns) do
     CoreComponents.select_item_group(assigns)
@@ -9604,19 +6497,9 @@ defmodule Graphene.CarbonComponents do
 
   Select skeleton.
 
-
-  ## Attributes
-
-  * `hide_label` (`:boolean`) - Specify whether the label should be hidden. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden."
   attr :rest, :global
-  slot :inner_block
 
   def select_skeleton(assigns) do
     CoreComponents.select_skeleton(assigns)
@@ -9632,25 +6515,12 @@ defmodule Graphene.CarbonComponents do
   * `cds-selectable-tag-beforeselected` - The custom event fired as the element is being selected
   * `cds-selectable-tag-selected` - The custom event fired after the element has been selected
 
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - `true` if the tag should be disabled. Defaults to `false`.
-  * `selected` (`:boolean`) - Specify the state of the selectable tag. Defaults to `false`.
-  * `size` (`:any`) - The size of the tag. Defaults to `nil`.
-  * `text` (`:string`) - Provide text to be rendered inside of a the tag. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :disabled, :boolean, doc: "`true` if the tag should be disabled"
-  attr :rest, :global
   attr :selected, :boolean, doc: "Specify the state of the selectable tag."
-  attr :size, :any, doc: "The size of the tag."
+  attr :size, :string, doc: "The size of the tag.", values: ["lg", "md", "sm"], default: "md"
   attr :text, :string, doc: "Provide text to be rendered inside of a the tag."
-  slot :inner_block
+  attr :rest, :global
 
   def selectable_tag(assigns) do
     CoreComponents.selectable_tag(assigns)
@@ -9665,24 +6535,6 @@ defmodule Graphene.CarbonComponents do
 
   * `cds-selectable-tile-changed` - The custom event fired after this selectable tile changes its selected state.
 
-
-  ## Attributes
-
-  * `checkmark_label` (`:string`) - The a11y text for the checkmark icon of the selected state. Defaults to `nil`.
-  * `color_scheme` (`:string`) - The color scheme. Defaults to `""`. Must be one of `""`, or `"light"`.
-  * `disabled` (`:boolean`) - `true` if the seletable tile should be disabled. Defaults to `false`.
-  * `has_rounded_corners` (`:boolean`) - Specify if the `SeletableTile` component should be rendered with rounded corners.
-    Only valid when `ai-label` prop is present
-
-    Defaults to `false`.
-  * `name` (`:string`) - Defaults to `nil`.
-  * `selected` (`:boolean`) - `true` to show the selected state. Defaults to `false`.
-  * `value` (`:string`) - Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :checkmark_label, :string,
     doc: "The a11y text for the checkmark icon of the selected state."
@@ -9695,10 +6547,9 @@ defmodule Graphene.CarbonComponents do
       "Specify if the `SeletableTile` component should be rendered with rounded corners.\nOnly valid when `ai-label` prop is present"
 
   attr :name, :string
-  attr :rest, :global
   attr :selected, :boolean, doc: "`true` to show the selected state."
   attr :value, :string
-  slot :inner_block
+  attr :rest, :global
 
   def selectable_tile(assigns) do
     CoreComponents.selectable_tile(assigns)
@@ -9710,23 +6561,27 @@ defmodule Graphene.CarbonComponents do
   Shape Indicator.
 
 
-
-  ## Attributes
-
-  * `kind` (`:any`) - Shape Indicator kind. Defaults to `nil`.
-  * `label` (`:string`) - Label next to the shape. Defaults to `nil`.
-  * `text_size` (`:string`) - Shape indicator size (12 or 14). Defaults to `"12"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :kind, :any, doc: "Shape Indicator kind"
+  attr :kind, :string,
+    doc: "Shape Indicator kind",
+    values: [
+      nil,
+      "failed",
+      "critical",
+      "high",
+      "medium",
+      "low",
+      "cautious",
+      "undefined",
+      "stable",
+      "informative",
+      "incomplete",
+      "draft"
+    ]
+
   attr :label, :string, doc: "Label next to the shape."
-  attr :rest, :global
   attr :text_size, :string, doc: "Shape indicator size (12 or 14)", default: "12"
-  slot :inner_block
+  attr :rest, :global
 
   def shape_indicator(assigns) do
     CoreComponents.shape_indicator(assigns)
@@ -9740,19 +6595,6 @@ defmodule Graphene.CarbonComponents do
   ## Events
 
   * `cds-header-menu-button-toggled` - The name of the custom event fired after the header menu button in the document is toggled upon a user gesture.
-
-
-  ## Attributes
-
-  * `collapse_mode` (`:string`) - Collapse mode of the side nav. Defaults to `"responsive"`. Must be one of `"fixed"`, `"rail"`, or `"responsive"`.
-  * `expanded` (`:boolean`) - `true` to expand the side nav. Defaults to `false`.
-  * `is_not_child_of_header` (`:boolean`) - If `true` will style the side nav to sit below the header. Defaults to `false`.
-  * `is_not_persistent` (`:boolean`) - Specify if the side-nav will be persistent above the lg breakpoint. Defaults to `false`.
-  * `usage_mode` (`:string`) - Usage mode for the side nav. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :collapse_mode, :string,
@@ -9768,9 +6610,8 @@ defmodule Graphene.CarbonComponents do
   attr :is_not_persistent, :boolean,
     doc: "Specify if the side-nav will be persistent above the lg breakpoint"
 
-  attr :rest, :global
   attr :usage_mode, :string, doc: "Usage mode for the side nav."
-  slot :inner_block
+  attr :rest, :global
 
   def side_nav(assigns) do
     CoreComponents.side_nav(assigns)
@@ -9782,17 +6623,8 @@ defmodule Graphene.CarbonComponents do
   A divider in side nav.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def side_nav_divider(assigns) do
     CoreComponents.side_nav_divider(assigns)
@@ -9804,17 +6636,8 @@ defmodule Graphene.CarbonComponents do
   Side nav items.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def side_nav_items(assigns) do
     CoreComponents.side_nav_items(assigns)
@@ -9826,48 +6649,16 @@ defmodule Graphene.CarbonComponents do
   Side nav menu item.
 
 
-
-  ## Attributes
-
-  * `active` (`:boolean`) - `true` if the menu item should be active. Defaults to `false`.
-  * `href` (`:string`) - Link `href`. Defaults to `nil`.
-  * `large` (`:boolean`) - Specify if this is a large variation of the side nav link. Defaults to `false`.
-  * `rel` (`:string`) - The link type. Defaults to `nil`.
-  * `target` (`:string`) - The link target. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `link` - The link. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `title` - The title. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `title_icon_container` - The title icon container. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :active, :boolean, doc: "`true` if the menu item should be active."
   attr :href, :string, doc: "Link `href`."
   attr :large, :boolean, doc: "Specify if this is a large variation of the side nav link"
   attr :rel, :string, doc: "The link type."
-  attr :rest, :global
   attr :target, :string, doc: "The link target."
-  slot :inner_block
-
-  slot :link, doc: "The link." do
-    attr :tag, :string
-  end
-
-  slot :title, doc: "The title." do
-    attr :tag, :string
-  end
-
-  slot :title_icon_container, doc: "The title icon container." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :link, doc: "The link."
+  slot :title, doc: "The title."
+  slot :title_icon_container, doc: "The title icon container."
 
   def side_nav_link(assigns) do
     CoreComponents.side_nav_link(assigns)
@@ -9884,22 +6675,6 @@ defmodule Graphene.CarbonComponents do
   Cancellation of this event stops the user-initiated action of toggling this side nav menu.
   * `cds-side-nav-menu-toggled` - The name of the custom event fired after this side nav menu is toggled upon a user gesture.
 
-
-  ## Attributes
-
-  * `active` (`:boolean`) - `true` if the menu has active menu item. Defaults to `false`.
-  * `expanded` (`:boolean`) - `true` if the menu should be open. Defaults to `false`.
-  * `force_collapsed` (`:boolean`) - `true` if the menu should be forced collapsed upon side nav's expanded state. Defaults to `false`.
-  * `large` (`:boolean`) - Specify if this is a large variation of the side nav menu. Defaults to `false`.
-  * `title` (`:string`) - The title text. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `title_icon` - The icon. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :active, :boolean, doc: "`true` if the menu has active menu item."
   attr :expanded, :boolean, doc: "`true` if the menu should be open."
@@ -9908,13 +6683,9 @@ defmodule Graphene.CarbonComponents do
     doc: "`true` if the menu should be forced collapsed upon side nav's expanded state."
 
   attr :large, :boolean, doc: "Specify if this is a large variation of the side nav menu"
-  attr :rest, :global
   attr :title, :string, doc: "The title text."
-  slot :inner_block
-
-  slot :title_icon, doc: "The icon." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :title_icon, doc: "The icon."
 
   def side_nav_menu(assigns) do
     CoreComponents.side_nav_menu(assigns)
@@ -9926,25 +6697,12 @@ defmodule Graphene.CarbonComponents do
   Side nav menu item.
 
 
-
-  ## Attributes
-
-  * `active` (`:boolean`) - `true` if the menu item should be active. Defaults to `false`.
-  * `href` (`:string`) - Link `href`. Defaults to `nil`.
-  * `target` (`:string`) - Link `target`. Defaults to `nil`.
-  * `title` (`:string`) - The title. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :active, :boolean, doc: "`true` if the menu item should be active."
   attr :href, :string, doc: "Link `href`."
-  attr :rest, :global
   attr :target, :string, doc: "Link `target`."
   attr :title, :string, doc: "The title."
-  slot :inner_block
+  attr :rest, :global
 
   def side_nav_menu_item(assigns) do
     CoreComponents.side_nav_menu_item(assigns)
@@ -9961,29 +6719,6 @@ defmodule Graphene.CarbonComponents do
   Cancellation of this event stops the user-initiated action of closing this side-panel.
   * `cds-side-panel-closed` - The custom event fired after this side-panel is closed upon a user gesture.
   * `cds-side-panel-navigate-back` - custom event fired when clicking navigate back (available when step > 0)
-
-
-  ## Attributes
-
-  * `animate_title` (`:boolean`) - Determines if the title will animate on scroll. Defaults to `true`.
-  * `close_icon_description` (`:string`) - Sets the close button icon description. Defaults to `"Close"`.
-  * `condensed_actions` (`:boolean`) - Determines whether the side panel should render the condensed version (affects action buttons primarily). Defaults to `false`.
-  * `current_step` (`:any`) - Sets the current step of the side panel. Defaults to `nil`.
-  * `include_overlay` (`:boolean`) - Determines whether the side panel should render with an overlay. Defaults to `false`.
-  * `label_text` (`:any`) - Sets the label text which will display above the title text. Defaults to `nil`.
-  * `navigation_back_icon_description` (`:string`) - Sets the icon description for the navigation back icon button. Defaults to `"Back"`.
-  * `open` (`:boolean`) - `true` if the side-panel should be open. Defaults to `false`.
-  * `placement` (`:string`) - SidePanel placement. Defaults to `"right"`. Must be one of `"right"`, or `"left"`.
-  * `prevent_close_on_click_outside` (`:boolean`) - Prevent closing on click outside of side-panel. Defaults to `false`.
-  * `selector_initial_focus` (`:any`) - The initial location of focus in the side panel. Defaults to `nil`.
-  * `selector_page_content` (`:string`) - Selector for page content, used to push content to side except. Defaults to `nil`.
-  * `size` (`:string`) - SidePanel size. Defaults to `"md"`. Must be one of `"xs"`, `"sm"`, `"md"`, `"lg"`, or `"2xl"`.
-  * `slide_in` (`:boolean`) - Determines if this panel slides in. Defaults to `false`.
-  * `title` (`:any`) - Sets the title text. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :animate_title, :boolean,
@@ -10019,7 +6754,6 @@ defmodule Graphene.CarbonComponents do
   attr :prevent_close_on_click_outside, :boolean,
     doc: "Prevent closing on click outside of side-panel"
 
-  attr :rest, :global
   attr :selector_initial_focus, :any, doc: "The initial location of focus in the side panel"
 
   attr :selector_page_content, :string,
@@ -10032,7 +6766,7 @@ defmodule Graphene.CarbonComponents do
 
   attr :slide_in, :boolean, doc: "Determines if this panel slides in"
   attr :title, :any, doc: "Sets the title text"
-  slot :inner_block
+  attr :rest, :global
 
   def side_panel(assigns) do
     CoreComponents.side_panel(assigns)
@@ -10044,17 +6778,8 @@ defmodule Graphene.CarbonComponents do
   Skeleton icon.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def skeleton_icon(assigns) do
     CoreComponents.skeleton_icon(assigns)
@@ -10066,19 +6791,9 @@ defmodule Graphene.CarbonComponents do
   Skeleton placeholder.
 
 
-
-  ## Attributes
-
-  * `optional_classes` (`:any`) - Specify optional classes to be added to your SkeletonText. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :optional_classes, :any, doc: "Specify optional classes to be added to your SkeletonText"
   attr :rest, :global
-  slot :inner_block
 
   def skeleton_placeholder(assigns) do
     CoreComponents.skeleton_placeholder(assigns)
@@ -10090,33 +6805,18 @@ defmodule Graphene.CarbonComponents do
   Skeleton text.
 
 
-
-  ## Attributes
-
-  * `heading` (`:boolean`) - Determines if the skeleton text should be rendered as a heading. Defaults to `false`.
-  * `line_count` (`:string`) - the number of lines in a paragraph. Defaults to `"3"`.
-  * `optional_classes` (`:any`) - Specify optional classes to be added to your SkeletonText. Defaults to `nil`.
-  * `paragraph` (`:boolean`) - will generate multiple lines of text. Defaults to `false`.
-  * `type` (`:string`) - The type of skeleton text. Defaults to `""`. Must be one of `""`, or `"heading"`.
-  * `width` (`:string`) - width (in px or %) of single line of text or max-width of paragraph lines. Defaults to `"100%"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :heading, :boolean, doc: "Determines if the skeleton text should be rendered as a heading."
   attr :line_count, :string, doc: "the number of lines in a paragraph", default: "3"
   attr :optional_classes, :any, doc: "Specify optional classes to be added to your SkeletonText"
   attr :paragraph, :boolean, doc: "will generate multiple lines of text"
-  attr :rest, :global
   attr :type, :string, doc: "The type of skeleton text.", values: ["", "heading"], default: ""
 
   attr :width, :string,
     doc: "width (in px or %) of single line of text or max-width of paragraph lines",
     default: "100%"
 
-  slot :inner_block
+  attr :rest, :global
 
   def skeleton_text(assigns) do
     CoreComponents.skeleton_text(assigns)
@@ -10128,16 +6828,6 @@ defmodule Graphene.CarbonComponents do
   Skip-to-content link.
 
 
-
-  ## Attributes
-
-  * `href` (`:string`) - The skip link href. Defaults to `nil`.
-  * `link_assistive_text` (`:string`) - The assistive text for the link,. Defaults to `"Skip to main content"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :href, :string, doc: "The skip link href."
 
@@ -10146,7 +6836,6 @@ defmodule Graphene.CarbonComponents do
     default: "Skip to main content"
 
   attr :rest, :global
-  slot :inner_block
 
   def skip_to_content(assigns) do
     CoreComponents.skip_to_content(assigns)
@@ -10162,54 +6851,8 @@ defmodule Graphene.CarbonComponents do
   * `cds-slider-input-changed` - The name of the custom event fired after the value is changed in `<cds-slider-input>` by user gesture.
   * `cds-slider-changed` - The custom event fired after the value is changed by user gesture.
 
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - `true` if the check box should be disabled. Defaults to `false`.
-  * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
-  * `hide_text_input` (`:boolean`) - Checks whether the input field is hidden or not. Defaults to `false`.
-  * `invalid` (`:boolean`) - true to specify if the control is invalid. Defaults to `false`.
-  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
-  * `is_valid` (`:any`) - is slide input valid. Defaults to `nil`.
-  * `max` (`:string`) - The maximum value. Defaults to `nil`.
-  * `max_label` (`:string`) - The label associated with the maximum value. Defaults to `nil`.
-  * `min` (`:string`) - The minimum value. Defaults to `nil`.
-  * `min_label` (`:string`) - The label associated with the minimum value. Defaults to `nil`.
-  * `name` (`:string`) - The form name. Defaults to `nil`.
-  * `readonly` (`:boolean`) - Whether the slider should be read-only. Defaults to `false`.
-  * `required` (`:boolean`) - true to specify if the control is required. Defaults to `false`.
-  * `step` (`:string`) - The snapping step of the value. Defaults to `nil`.
-  * `step_multiplier` (`:string`) - A value determining how much the value should increase/decrease by Shift+arrow keys,
-    which will be `(max - min) / stepMultiplier`.
-
-    Defaults to `"4"`.
-  * `value` (`:any`) - The value. Defaults to `nil`.
-  * `value_upper` (`:any`) - The upper bound when there are two handles.. Defaults to `nil`.
-  * `warn` (`:boolean`) - true to specify if the control should display warn icon and text. Defaults to `false`.
-  * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
-  * `controlled` (`:boolean`) - Whether the slider is controlled. Defaults to `nil`.
-  * `format_label` (`:any`) - Formatter for the slider label. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `label_text` - The label text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `max_text` - The text for maximum value. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `min_text` - The text for minimum value. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `lower_input` - Lower input content. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
-  attr :controlled, :boolean, doc: "Whether the slider is controlled."
   attr :disabled, :boolean, doc: "`true` if the check box should be disabled."
-  attr :format_label, :any, doc: "Formatter for the slider label."
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -10225,7 +6868,6 @@ defmodule Graphene.CarbonComponents do
   attr :name, :string, doc: "The form name."
   attr :readonly, :boolean, doc: "Whether the slider should be read-only"
   attr :required, :boolean, doc: "true to specify if the control is required."
-  attr :rest, :global
   attr :step, :string, doc: "The snapping step of the value."
 
   attr :step_multiplier, :string,
@@ -10240,6 +6882,8 @@ defmodule Graphene.CarbonComponents do
   attr :warn_text, :string,
     doc: "Provide the text that is displayed when the control is in warning state"
 
+  attr :controlled, :boolean, doc: "Whether the slider is controlled."
+  attr :format_label, :any, doc: "Formatter for the slider label."
   attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
   attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
 
@@ -10247,23 +6891,11 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :inner_block
-
-  slot :label_text, doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :lower_input, doc: "Lower input content." do
-    attr :tag, :string
-  end
-
-  slot :max_text, doc: "The text for maximum value." do
-    attr :tag, :string
-  end
-
-  slot :min_text, doc: "The text for minimum value." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :label_text, doc: "The label text."
+  slot :max_text, doc: "The text for maximum value."
+  slot :min_text, doc: "The text for minimum value."
+  slot :lower_input, doc: "Lower input content."
 
   def slider(assigns) do
     FormComponents.slider(assigns)
@@ -10278,25 +6910,6 @@ defmodule Graphene.CarbonComponents do
 
   * `cds-slider-input-changed` - The custom event fired after the value is changed by user gesture.
 
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - `true` if the input should be disabled. Defaults to `false`.
-  * `hide_text_input` (`:boolean`) - true to specify if the control should display warn icon and text. Defaults to `false`.
-  * `invalid` (`:boolean`) - true to specify if the control is invalid. Defaults to `false`.
-  * `max` (`:string`) - The maximum value. Defaults to `nil`.
-  * `min` (`:string`) - The minimum value. Defaults to `nil`.
-  * `readonly` (`:boolean`) - true` if the input should be readonly. Defaults to `false`.
-  * `step` (`:string`) - The snapping step of the value. Defaults to `nil`.
-  * `type` (`:string`) - The type of the `<input>`. Defaults to `"number"`.
-  * `value` (`:any`) - The value. Defaults to `nil`.
-  * `warn` (`:boolean`) - true to specify if the control should display warn icon and text. Defaults to `false`.
-  * `required` (`:boolean`) - Whether the input is required. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :disabled, :boolean, doc: "`true` if the input should be disabled."
 
@@ -10307,13 +6920,12 @@ defmodule Graphene.CarbonComponents do
   attr :max, :string, doc: "The maximum value."
   attr :min, :string, doc: "The minimum value."
   attr :readonly, :boolean, doc: "true` if the input should be readonly."
-  attr :required, :boolean, doc: "Whether the input is required."
-  attr :rest, :global
   attr :step, :string, doc: "The snapping step of the value."
   attr :type, :string, doc: "The type of the `<input>`.", default: "number"
   attr :value, :any, doc: "The value."
   attr :warn, :boolean, doc: "true to specify if the control should display warn icon and text."
-  slot :inner_block
+  attr :required, :boolean, doc: "Whether the input is required."
+  attr :rest, :global
 
   def slider_input(assigns) do
     CoreComponents.slider_input(assigns)
@@ -10324,19 +6936,9 @@ defmodule Graphene.CarbonComponents do
 
   Slider skeleton.
 
-
-  ## Attributes
-
-  * `two_handles` (`:boolean`) - `true` to show two handles. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :rest, :global
   attr :two_handles, :boolean, doc: "`true` to show two handles."
-  slot :inner_block
+  attr :rest, :global
 
   def slider_skeleton(assigns) do
     CoreComponents.slider_skeleton(assigns)
@@ -10347,29 +6949,6 @@ defmodule Graphene.CarbonComponents do
 
   Basic slug.
 
-
-
-  ## Attributes
-
-  * `ai_text` (`:string`) - Specify the correct translation of the AI text. Defaults to `"AI"`.
-  * `ai_text_label` (`:string`) - Specify additional text to be rendered next to the AI label in the inline variant. Defaults to `nil`.
-  * `alignment` (`:string`) - How the tooltip is aligned to the trigger button. Defaults to `"top"`. Must be one of `"top"`, `"top-start"`, `"top-end"`, `"bottom"`, `"bottom-start"`, `"bottom-end"`, `"left"`, `"left-start"`, `"left-end"`, `"right"`, `"right-start"`, or `"right-end"`.
-  * `alignment_axis_offset` (`:string`) - **Experimental:** Provide an offset value for alignment axis. Only takes effect when `autoalign` is enabled. Defaults to `"0"`.
-  * `autoalign` (`:boolean`) - Specify whether a auto align functionality should be applied. Defaults to `false`.
-  * `button_label` (`:string`) - The label for the toggle button. Defaults to `"Show information"`.
-  * `default_open` (`:boolean`) - Set whether toggletip is open by default. Defaults to `false`.
-  * `kind` (`:string`) - Specify the type of Slug, from the following list of types: (default, inline). Defaults to `""`. Must be one of `""`, or `"inline"`.
-  * `open` (`:boolean`) - Set whether toggletip is open. Defaults to `false`.
-  * `previous_value` (`:any`) - Defaults to `nil`.
-  * `revert_active` (`:boolean`) - Specify whether the revert button should be visible. Defaults to `false`.
-  * `revert_label` (`:string`) - Specify whether the revert button should be visible. Defaults to `"Revert to AI input"`.
-  * `size` (`:string`) - Slug size should be mini, 2xs, xs, sm, md, lg, xl. Defaults to `"xs"`. Must be one of `"mini"`, `"2xs"`, `"xs"`, `"sm"`, `"md"`, `"lg"`, or `"xl"`.
-  * `slot` (`:string`) - Defaults to `"slug"`.
-  * `slug_label` (`:string`) - Specify the text that will be provided to the aria-label of the `Slug` button. Defaults to `"Show information"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :ai_text, :string, doc: "Specify the correct translation of the AI text", default: "AI"
@@ -10411,7 +6990,6 @@ defmodule Graphene.CarbonComponents do
 
   attr :open, :boolean, doc: "Set whether toggletip is open"
   attr :previous_value, :any
-  attr :rest, :global
   attr :revert_active, :boolean, doc: "Specify whether the revert button should be visible"
 
   attr :revert_label, :string,
@@ -10429,7 +7007,7 @@ defmodule Graphene.CarbonComponents do
     doc: "Specify the text that will be provided to the aria-label of the `Slug` button",
     default: "Show information"
 
-  slot :inner_block
+  attr :rest, :global
 
   def slug(assigns) do
     CoreComponents.slug(assigns)
@@ -10440,51 +7018,6 @@ defmodule Graphene.CarbonComponents do
 
   Slug action button.
 
-
-
-  ## Attributes
-
-  * `autofocus` (`:boolean`) - `true` if the button should have input focus when the page loads. Defaults to `false`.
-  * `batch_action` (`:boolean`) - `true` if the button is being used within a data table batch action toolbar. Defaults to `false`.
-  * `button_class_name` (`:any`) - Specify an optional className to be added to your Button. Defaults to `nil`.
-  * `danger_description` (`:any`) - Specify the message read by screen readers for the danger button variant. Defaults to `nil`.
-  * `disabled` (`:boolean`) - `true` if the button should be disabled. Defaults to `false`.
-  * `download` (`:string`) - The default file name, used if this button is rendered as `<a>`. Defaults to `nil`.
-  * `has_main_content` (`:boolean`) - `true` if there is a non-icon content. Defaults to `false`.
-  * `href` (`:string`) - Link `href`. If present, this button is rendered as `<a>`. Defaults to `nil`.
-  * `hreflang` (`:string`) - The language of what `href` points to, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `is_expressive` (`:boolean`) - `true` if expressive theme enabled. Defaults to `false`.
-  * `is_selected` (`:boolean`) - Specify whether the Button is currently selected.
-    Only applies to the Ghost variant.
-
-    Defaults to `false`.
-  * `kind` (`:string`) - Button kind. Defaults to `"primary"`. Must be one of `"primary"`, `"secondary"`, `"tertiary"`, `"danger"`, `"danger--tertiary"`, `"danger--ghost"`, or `"ghost"`.
-  * `link_role` (`:string`) - The a11y role for `<a>`. Defaults to `"button"`.
-  * `open_tooltip` (`:boolean`) - Boolean to determine if tooltip is open. Defaults to `false`.
-  * `ping` (`:string`) - URLs to ping, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `rel` (`:string`) - The link type, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `size` (`:string`) - Button size. Defaults to `"lg"`.
-  * `slot` (`:string`) - The shadow slot this slug-action should be in. Defaults to `"actions"`.
-  * `tab_index` (`:string`) - Specify the tabIndex of the button. Defaults to `"0"`.
-  * `target` (`:string`) - The link target, if this button is rendered as `<a>`. Defaults to `nil`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `""`. Must be one of `"left"`, `"right"`, or `""`.
-  * `tooltip_position` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"top"`. Must be one of `"top"`, `"bottom"`, `"right"`, or `"left"`.
-  * `tooltip_text` (`:string`) - Specify the text to be rendered in the tooltip. If using
-    "cds-badge-indicator" with no count prop then the text
-    should include describing there is a new notification.
-
-    Defaults to `nil`.
-  * `type` (`:string`) - Button type. Defaults to `"button"`. Must be one of `"button"`, `"reset"`, or `"submit"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :autofocus, :boolean,
@@ -10528,7 +7061,6 @@ defmodule Graphene.CarbonComponents do
   attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
   attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
   attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
-  attr :rest, :global
   attr :size, :string, doc: "Button size.", default: "lg"
   attr :slot, :string, doc: "The shadow slot this slug-action should be in.", default: "actions"
   attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
@@ -10555,7 +7087,7 @@ defmodule Graphene.CarbonComponents do
     values: ["button", "reset", "submit"],
     default: "button"
 
-  slot :inner_block
+  attr :rest, :global
 
   def slug_action_button(assigns) do
     CoreComponents.slug_action_button(assigns)
@@ -10576,20 +7108,6 @@ defmodule Graphene.CarbonComponents do
   This component supports both horizontal and vertical orientations.
 
 
-
-  ## Attributes
-
-  * `gap` (`:any`) - Provide either a custom value or a step from the spacing scale to be used
-    as the gap in the layout
-
-    Defaults to `nil`.
-  * `orientation` (`:string`) - Specify the orientation of them items in the Stack. Defaults to `"vertical"`. Must be one of `"vertical"`, or `"horizontal"`.
-  * `use_custom_gap_value` (`:boolean`) - Turn on when passing in custom value to 'gap' attribute (ie. gap="2rem"). Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :gap, :any,
     doc:
@@ -10600,12 +7118,10 @@ defmodule Graphene.CarbonComponents do
     values: ["vertical", "horizontal"],
     default: "vertical"
 
-  attr :rest, :global
-
   attr :use_custom_gap_value, :boolean,
     doc: "Turn on when passing in custom value to 'gap' attribute (ie. gap=\"2rem\")"
 
-  slot :inner_block
+  attr :rest, :global
 
   def stack(assigns) do
     CoreComponents.stack(assigns)
@@ -10617,24 +7133,9 @@ defmodule Graphene.CarbonComponents do
   Structured list wrapper.
 
 
-
-  ## Attributes
-
-  * `condensed` (`:boolean`) - Specify if structured list is condensed, default is false. Defaults to `false`.
-  * `flush` (`:boolean`) - Specify if structured list is flush, default is false. Defaults to `false`.
-  * `selection_name` (`:string`) - The `name` attribute for the `<input>` for selection.
-    If present, this structured list will be a selectable one.
-
-    Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :condensed, :boolean, doc: "Specify if structured list is condensed, default is false"
   attr :flush, :boolean, doc: "Specify if structured list is flush, default is false"
-  attr :rest, :global
 
   attr :selection_name, :string,
     doc:
@@ -10643,7 +7144,7 @@ defmodule Graphene.CarbonComponents do
   attr :rows, :list, default: nil
   attr :row_id, :any, default: nil
   attr :selected_ids, :list, default: nil
-  slot :inner_block
+  attr :rest, :global
 
   slot :col do
     attr :label, :any
@@ -10701,17 +7202,8 @@ defmodule Graphene.CarbonComponents do
   Structured list body.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def structured_list_body(assigns) do
     CoreComponents.structured_list_body(assigns)
@@ -10723,17 +7215,8 @@ defmodule Graphene.CarbonComponents do
   Structured list cell.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def structured_list_cell(assigns) do
     CoreComponents.structured_list_cell(assigns)
@@ -10745,17 +7228,8 @@ defmodule Graphene.CarbonComponents do
   Structured list header.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def structured_list_head(assigns) do
     CoreComponents.structured_list_head(assigns)
@@ -10767,17 +7241,8 @@ defmodule Graphene.CarbonComponents do
   Structured list header cell.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def structured_list_header_cell(assigns) do
     CoreComponents.structured_list_header_cell(assigns)
@@ -10788,17 +7253,8 @@ defmodule Graphene.CarbonComponents do
 
   Structured list header cell skeleton.
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def structured_list_header_cell_skeleton(assigns) do
     CoreComponents.structured_list_header_cell_skeleton(assigns)
@@ -10810,26 +7266,12 @@ defmodule Graphene.CarbonComponents do
   Structured list header row.
 
 
-
-  ## Attributes
-
-  * `selection_name` (`:string`) - The `name` attribute for the `<input>` for selection.
-    If present, this structured list header row will show its selectable version of the UI.
-
-    Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :rest, :global
-
   attr :selection_name, :string,
     doc:
       "The `name` attribute for the `<input>` for selection.\nIf present, this structured list header row will show its selectable version of the UI."
 
-  slot :inner_block
+  attr :rest, :global
 
   def structured_list_header_row(assigns) do
     CoreComponents.structured_list_header_row(assigns)
@@ -10841,24 +7283,7 @@ defmodule Graphene.CarbonComponents do
   Structured list row.
 
 
-
-  ## Attributes
-
-  * `selected` (`:boolean`) - `true` if this structured list row should be selectable and selected. Defaults to `false`.
-  * `selection_icon_title` (`:string`) - The content to put into the `<title>` attribute of the selection icon. Defaults to `nil`.
-  * `selection_name` (`:string`) - The `name` attribute for the `<input>` for selection.
-    If present, this structured list row will be a selectable one.
-
-    Defaults to `nil`.
-  * `selection_value` (`:string`) - The `value` attribute for the `<input>` for selection. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :rest, :global
-
   attr :selected, :boolean,
     doc: "`true` if this structured list row should be selectable and selected."
 
@@ -10870,7 +7295,7 @@ defmodule Graphene.CarbonComponents do
       "The `name` attribute for the `<input>` for selection.\nIf present, this structured list row will be a selectable one."
 
   attr :selection_value, :string, doc: "The `value` attribute for the `<input>` for selection."
-  slot :inner_block
+  attr :rest, :global
 
   def structured_list_row(assigns) do
     CoreComponents.structured_list_row(assigns)
@@ -10882,17 +7307,8 @@ defmodule Graphene.CarbonComponents do
   Switcher
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def switcher(assigns) do
     CoreComponents.switcher(assigns)
@@ -10904,17 +7320,8 @@ defmodule Graphene.CarbonComponents do
   A divider in switcher.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def switcher_divider(assigns) do
     CoreComponents.switcher_divider(assigns)
@@ -10926,27 +7333,15 @@ defmodule Graphene.CarbonComponents do
   Switcher menu item.
 
 
-
-  ## Attributes
-
-  * `href` (`:string`) - Link `href`. Defaults to `nil`.
-  * `selected` (`:boolean`) - Specify if this is a large variation of the side nav link. Defaults to `false`.
-  * `tab_index` (`:string`) - Specify if this is a large variation of the side nav link. Defaults to `"0"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :href, :string, doc: "Link `href`."
-  attr :rest, :global
   attr :selected, :boolean, doc: "Specify if this is a large variation of the side nav link"
 
   attr :tab_index, :string,
     doc: "Specify if this is a large variation of the side nav link",
     default: "0"
 
-  slot :inner_block
+  attr :rest, :global
 
   def switcher_item(assigns) do
     CoreComponents.switcher_item(assigns)
@@ -10957,31 +7352,6 @@ defmodule Graphene.CarbonComponents do
 
   Basic tab.
 
-
-
-  ## Attributes
-
-  * `align` (`:string`) - Specify how the trigger should align with the tooltip for icon-only
-    switcher item
-
-    Defaults to `"top"`.
-  * `close_on_activation` (`:boolean`) - Determines whether the tooltip should close when inner content is
-    activated (click, Enter or Space)
-
-    Defaults to `true`.
-  * `disabled` (`:boolean`) - `true` if this content switcher item should be disabled. Defaults to `false`.
-  * `icon` (`:boolean`) - `true` if the content switcher button should be icon-only. Defaults to `false`.
-  * `tab_title` (`:any`) - The tab text content. Defaults to `nil`.
-  * `target` (`:string`) - The element ID of target panel. Defaults to `nil`.
-  * `type` (`:string`) - Tab type. Defaults to `""`. Must be one of `""`, `"container"`, or `"contained"`.
-  * `value` (`:string`) - The `value` attribute that is set to the parent `<cds-content-switcher>`
-    when this content switcher item is selected.
-
-    Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :align, :string,
@@ -10995,7 +7365,6 @@ defmodule Graphene.CarbonComponents do
 
   attr :disabled, :boolean, doc: "`true` if this content switcher item should be disabled."
   attr :icon, :boolean, doc: "`true` if the content switcher button should be icon-only."
-  attr :rest, :global
   attr :tab_title, :any, doc: "The tab text content."
   attr :target, :string, doc: "The element ID of target panel."
   attr :type, :string, doc: "Tab type.", values: ["", "container", "contained"], default: ""
@@ -11004,7 +7373,7 @@ defmodule Graphene.CarbonComponents do
     doc:
       "The `value` attribute that is set to the parent `<cds-content-switcher>`\nwhen this content switcher item is selected."
 
-  slot :inner_block
+  attr :rest, :global
 
   def tab(assigns) do
     CoreComponents.tab(assigns)
@@ -11016,17 +7385,8 @@ defmodule Graphene.CarbonComponents do
   Skeleton of tab.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def tab_skeleton(assigns) do
     CoreComponents.tab_skeleton(assigns)
@@ -11052,45 +7412,6 @@ defmodule Graphene.CarbonComponents do
   * `cds-table-sorted` - The name of the custom event fired after the table has been sorted.
   * `cds-table-filtered` - The name of the custom event fired after the table has been filtered containing remaining rows.
 
-
-  ## Attributes
-
-  * `batch_expansion` (`:boolean`) - `true` if this table should support batch expansion. Defaults to `false`.
-  * `expandable` (`:boolean`) - Specify whether the rows should be able to be expandable. Defaults to `false`.
-  * `filter_rows` (`:any`) - The method used when filtering the table with the search bar.
-    Can be replaced with custom method.
-
-    Defaults to `nil`.
-  * `header_count` (`:string`) - The total headers. Defaults to `"0"`.
-  * `is_selectable` (`:boolean`) - `true` if this table contains selectable rows. Defaults to `false`.
-  * `is_sortable` (`:boolean`) - `true` if this table should support sorting. Defaults to `false`.
-  * `locale` (`:string`) - The table size. Defaults to `"en"`.
-  * `overflow_menu_on_hover` (`:boolean`) - Specify whether the overflow menu (if it exists) should be shown always, or only on hover. Defaults to `false`.
-  * `radio` (`:boolean`) - Specify whether the control should be a radio button or inline checkbox. Defaults to `false`.
-  * `size` (`:string`) - The table size. Defaults to `"lg"`. Must be one of `"xs"`, `"sm"`, `"md"`, `"lg"`, or `"xl"`.
-  * `use_static_width` (`:boolean`) - TODO: Uncomment when Carbon fully implements sticky header
-    Specify whether the header should be sticky.
-    Still experimental: may not work with every combination of table props
-
-    Defaults to `false`.
-  * `use_zebra_styles` (`:boolean`) - true to add useZebraStyles striping. Defaults to `false`.
-  * `with_header` (`:any`) - Defaults to `nil`.
-  * `with_row_ai_labels` (`:boolean`) - true if AI Labels are added in the rows. Defaults to `false`.
-  * `with_row_slugs` (`:boolean`) - true if slugs are added in the rows. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `title` - Title. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `description` - Description. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `toolbar` - Toolbar. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :batch_expansion, :boolean, doc: "`true` if this table should support batch expansion"
   attr :expandable, :boolean, doc: "Specify whether the rows should be able to be expandable"
@@ -11111,8 +7432,6 @@ defmodule Graphene.CarbonComponents do
   attr :radio, :boolean,
     doc: "Specify whether the control should be a radio button or inline checkbox"
 
-  attr :rest, :global
-
   attr :size, :string,
     doc: "The table size.",
     values: ["xs", "sm", "md", "lg", "xl"],
@@ -11126,20 +7445,10 @@ defmodule Graphene.CarbonComponents do
   attr :with_header, :any
   attr :with_row_ai_labels, :boolean, doc: "true if AI Labels are added in the rows"
   attr :with_row_slugs, :boolean, doc: "true if slugs are added in the rows"
-
-  slot :description, doc: "Description" do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :title, doc: "Title" do
-    attr :tag, :string
-  end
-
-  slot :toolbar, doc: "Toolbar" do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :title, doc: "Title"
+  slot :description, doc: "Description"
+  slot :toolbar, doc: "Toolbar"
 
   def table(assigns) do
     CoreComponents.table(assigns)
@@ -11155,28 +7464,8 @@ defmodule Graphene.CarbonComponents do
   * `cds-table-batch-actions-cancel-clicked` - The custom event fired after the Cancel button is clicked.
   * `cds-table-batch-actions-select-all-clicked` - The custom event fired after the Select all button is clicked.
 
-
-  ## Attributes
-
-  * `active` (`:boolean`) - `true` if this batch actions bar should be active. Defaults to `false`.
-  * `selected_rows_count` (`:string`) - Numeric representation of the total number of items selected in a table.
-    This number is used to derive the selection message.
-
-    Defaults to `"0"`.
-  * `size` (`:string`) - The table size. Defaults to `"lg"`.
-  * `total_rows_count` (`:string`) - Numeric representation of the total number of items in a table.
-    This number is used in the select all button text
-    This property controls the rendering of the Select all button
-
-    Defaults to `"0"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :active, :boolean, doc: "`true` if this batch actions bar should be active."
-  attr :rest, :global
 
   attr :selected_rows_count, :string,
     doc:
@@ -11190,7 +7479,7 @@ defmodule Graphene.CarbonComponents do
       "Numeric representation of the total number of items in a table.\nThis number is used in the select all button text\nThis property controls the rendering of the Select all button",
     default: "0"
 
-  slot :inner_block
+  attr :rest, :global
 
   def table_batch_actions(assigns) do
     CoreComponents.table_batch_actions(assigns)
@@ -11202,27 +7491,12 @@ defmodule Graphene.CarbonComponents do
   Data table body.
 
 
-
-  ## Attributes
-
-  * `use_zebra_styles` (`:boolean`) - TODO: Uncomment when Carbon fully implements sticky header
-    Specify whether the header should be sticky.
-    Still experimental: may not work with every combination of table props
-
-    Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :rest, :global
-
   attr :use_zebra_styles, :boolean,
     doc:
       "TODO: Uncomment when Carbon fully implements sticky header\nSpecify whether the header should be sticky.\nStill experimental: may not work with every combination of table props"
 
-  slot :inner_block
+  attr :rest, :global
 
   def table_body(assigns) do
     CoreComponents.table_body(assigns)
@@ -11234,24 +7508,13 @@ defmodule Graphene.CarbonComponents do
   Data table cell.
 
 
-
-  ## Attributes
-
-  * `overflow_menu_on_hover` (`:boolean`) - Specify whether the overflow menu (if it exists) should be shown always, or only on hover. Defaults to `false`.
-  * `size` (`:any`) - The table size. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :overflow_menu_on_hover, :boolean,
     doc:
       "Specify whether the overflow menu (if it exists) should be shown always, or only on hover"
 
-  attr :rest, :global
   attr :size, :any, doc: "The table size."
-  slot :inner_block
+  attr :rest, :global
 
   def table_cell(assigns) do
     CoreComponents.table_cell(assigns)
@@ -11263,17 +7526,8 @@ defmodule Graphene.CarbonComponents do
   Data table cell content.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def table_cell_content(assigns) do
     CoreComponents.table_cell_content(assigns)
@@ -11285,27 +7539,13 @@ defmodule Graphene.CarbonComponents do
   Table row of collapsible details.
 
 
-
-  ## Attributes
-
-  * `colspan` (`:string`) - The colspan. Defaults to `"1"`.
-  * `expanded` (`:boolean`) - `true` if the table row should be expanded. Defaults to `false`.
-  * `filtered` (`:boolean`) - `true` if the table row should be filtered. Defaults to `false`.
-  * `highlighted` (`:boolean`) - `true` if the table row should be highlighted. Defaults to `false`.
-  * `selected` (`:boolean`) - `true` if the previous table row has been selected. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :colspan, :string, doc: "The colspan.", default: "1"
   attr :expanded, :boolean, doc: "`true` if the table row should be expanded."
   attr :filtered, :boolean, doc: "`true` if the table row should be filtered."
   attr :highlighted, :boolean, doc: "`true` if the table row should be highlighted."
-  attr :rest, :global
   attr :selected, :boolean, doc: "`true` if the previous table row has been selected"
-  slot :inner_block
+  attr :rest, :global
 
   def table_expanded_row(assigns) do
     CoreComponents.table_expanded_row(assigns)
@@ -11317,17 +7557,8 @@ defmodule Graphene.CarbonComponents do
   Data table header.
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def table_head(assigns) do
     CoreComponents.table_head(assigns)
@@ -11343,28 +7574,10 @@ defmodule Graphene.CarbonComponents do
   * `cds-table-header-cell-sort` - The custom event fired before a new sort direction is set upon a user gesture.
   Cancellation of this event stops the user-initiated change in sort direction.
 
-
-  ## Attributes
-
-  * `expandable` (`:boolean`) - `true` if the table has expandable rows. Defaults to `false`.
-  * `is_selectable` (`:boolean`) - `true` if this table has selectable rows. Defaults to `false`.
-  * `is_sortable` (`:boolean`) - `true` if this table header column should be sortable. Defaults to `false`.
-  * `sort_active` (`:boolean`) - `true` if this table header cell is of a primary sorting column. Defaults to `false`.
-  * `sort_cycle` (`:string`) - The table sort cycle in use. Defaults to `nil`. Must be one of `nil`, `nil`, `"bi-states-from-ascending"`, `"bi-states-from-descending"`, `"tri-states-from-ascending"`, or `"tri-states-from-descending"`.
-  * `sort_direction` (`:string`) - The table sort direction.
-    If present, this table header cell will have a sorting UI. Choose between `ascending` or `descending`.
-
-    Defaults to `nil`. Must be one of `nil`, `nil`, `"xs"`, `"sm"`, `"md"`, `"lg"`, or `"xl"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :expandable, :boolean, doc: "`true` if the table has expandable rows"
   attr :is_selectable, :boolean, doc: "`true` if this table has selectable rows"
   attr :is_sortable, :boolean, doc: "`true` if this table header column should be sortable"
-  attr :rest, :global
 
   attr :sort_active, :boolean,
     doc: "`true` if this table header cell is of a primary sorting column."
@@ -11385,7 +7598,7 @@ defmodule Graphene.CarbonComponents do
       "The table sort direction.\nIf present, this table header cell will have a sorting UI. Choose between `ascending` or `descending`.",
     values: [nil, nil, "xs", "sm", "md", "lg", "xl"]
 
-  slot :inner_block
+  attr :rest, :global
 
   def table_header_cell(assigns) do
     CoreComponents.table_header_cell(assigns)
@@ -11397,17 +7610,8 @@ defmodule Graphene.CarbonComponents do
   Data table header description
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def table_header_description(assigns) do
     CoreComponents.table_header_description(assigns)
@@ -11430,30 +7634,6 @@ defmodule Graphene.CarbonComponents do
   Cancellation of this event stops the user-initiated action of toggling the expanded state.
   * `cds-table-row-expando-toggled` - The name of the custom event fired after the expanded state of this row is toggled upon a user gesture.
 
-
-  ## Attributes
-
-  * `batch_expansion` (`:boolean`) - `true` if this table should support batch expansion. Defaults to `false`.
-  * `disabled` (`:boolean`) - `true` if this table row should be disabled. Defaults to `false`.
-  * `filtered` (`:boolean`) - `true` if this table row should be filtered out. Defaults to `false`.
-  * `hide_checkbox` (`:boolean`) - Specify whether the checkbox should be present in the DOM,
-    but invisible and uninteractable.
-
-    Defaults to `false`.
-  * `highlighted` (`:boolean`) - `true` if the table row should be highlighted. Defaults to `false`.
-  * `overflow_menu_on_hover` (`:boolean`) - Specify whether the overflow menu (if it exists) should be shown always, or only on hover. Defaults to `false`.
-  * `selected` (`:boolean`) - `true` if this table row should be selected. Defaults to `false`.
-  * `selection_label` (`:string`) - The `aria-label` attribute for the `<label>` for selection. Defaults to `"Select row"`.
-  * `selection_name` (`:string`) - The `name` attribute for the `<input>` for selection.
-    If present, this table row will be a selectable one.
-
-    Defaults to `nil`.
-  * `selection_value` (`:string`) - The `value` attribute for the `<input>` for selection. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :batch_expansion, :boolean, doc: "`true` if this table should support batch expansion"
   attr :disabled, :boolean, doc: "`true` if this table row should be disabled."
@@ -11469,7 +7649,6 @@ defmodule Graphene.CarbonComponents do
     doc:
       "Specify whether the overflow menu (if it exists) should be shown always, or only on hover"
 
-  attr :rest, :global
   attr :selected, :boolean, doc: "`true` if this table row should be selected."
 
   attr :selection_label, :string,
@@ -11481,7 +7660,7 @@ defmodule Graphene.CarbonComponents do
       "The `name` attribute for the `<input>` for selection.\nIf present, this table row will be a selectable one."
 
   attr :selection_value, :string, doc: "The `value` attribute for the `<input>` for selection."
-  slot :inner_block
+  attr :rest, :global
 
   def table_header_row(assigns) do
     CoreComponents.table_header_row(assigns)
@@ -11493,17 +7672,8 @@ defmodule Graphene.CarbonComponents do
   Data table header title
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def table_header_title(assigns) do
     CoreComponents.table_header_title(assigns)
@@ -11524,31 +7694,6 @@ defmodule Graphene.CarbonComponents do
   Cancellation of this event stops the user-initiated action of toggling the expanded state.
   * `cds-table-row-expando-toggled` - The name of the custom event fired after the expanded state of this row is toggled upon a user gesture.
 
-
-  ## Attributes
-
-  * `batch_expansion` (`:boolean`) - `true` if this table should support batch expansion. Defaults to `false`.
-  * `disabled` (`:boolean`) - `true` if this table row should be disabled. Defaults to `false`.
-  * `filtered` (`:boolean`) - `true` if this table row should be filtered out. Defaults to `false`.
-  * `hide_checkbox` (`:boolean`) - Specify whether the checkbox should be present in the DOM,
-    but invisible and uninteractable.
-
-    Defaults to `false`.
-  * `highlighted` (`:boolean`) - `true` if the table row should be highlighted. Defaults to `false`.
-  * `overflow_menu_on_hover` (`:boolean`) - Specify whether the overflow menu (if it exists) should be shown always, or only on hover. Defaults to `false`.
-  * `selected` (`:boolean`) - `true` if this table row should be selected. Defaults to `false`.
-  * `selection_label` (`:string`) - The `aria-label` attribute for the `<label>` for selection. Defaults to `"Select row"`.
-  * `selection_name` (`:string`) - The `name` attribute for the `<input>` for selection.
-    If present, this table row will be a selectable one.
-
-    Defaults to `nil`.
-  * `selection_value` (`:string`) - The `value` attribute for the `<input>` for selection. Defaults to `nil`.
-  * `radio` (`:boolean`) - Specify whether the control should be a radio button or inline checkbox. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :batch_expansion, :boolean, doc: "`true` if this table should support batch expansion"
   attr :disabled, :boolean, doc: "`true` if this table row should be disabled."
@@ -11564,10 +7709,6 @@ defmodule Graphene.CarbonComponents do
     doc:
       "Specify whether the overflow menu (if it exists) should be shown always, or only on hover"
 
-  attr :radio, :boolean,
-    doc: "Specify whether the control should be a radio button or inline checkbox."
-
-  attr :rest, :global
   attr :selected, :boolean, doc: "`true` if this table row should be selected."
 
   attr :selection_label, :string,
@@ -11579,7 +7720,11 @@ defmodule Graphene.CarbonComponents do
       "The `name` attribute for the `<input>` for selection.\nIf present, this table row will be a selectable one."
 
   attr :selection_value, :string, doc: "The `value` attribute for the `<input>` for selection."
-  slot :inner_block
+
+  attr :radio, :boolean,
+    doc: "Specify whether the control should be a radio button or inline checkbox."
+
+  attr :rest, :global
 
   def table_row(assigns) do
     CoreComponents.table_row(assigns)
@@ -11591,20 +7736,6 @@ defmodule Graphene.CarbonComponents do
   Data table skeleton
 
 
-
-  ## Attributes
-
-  * `column_count` (`:string`) - Specify the number of columns that you want to render in the skeleton state. Defaults to `"5"`.
-  * `compact` (`:boolean`) - Optionally specify whether you want the Skeleton to be rendered as a compact DataTable. Defaults to `false`.
-  * `row_count` (`:string`) - Specify the number of rows that you want to render in the skeleton state. Defaults to `"5"`.
-  * `show_header` (`:boolean`) - Specify if the table header should be rendered as part of the skeleton. Defaults to `true`.
-  * `show_toolbar` (`:boolean`) - Specify if the table toolbar should be rendered as part of the skeleton. Defaults to `true`.
-  * `zebra` (`:boolean`) - true to add useZebraStyles striping. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :column_count, :string,
     doc: "Specify the number of columns that you want to render in the skeleton state",
@@ -11612,8 +7743,6 @@ defmodule Graphene.CarbonComponents do
 
   attr :compact, :boolean,
     doc: "Optionally specify whether you want the Skeleton to be rendered as a compact DataTable"
-
-  attr :rest, :global
 
   attr :row_count, :string,
     doc: "Specify the number of rows that you want to render in the skeleton state",
@@ -11628,7 +7757,7 @@ defmodule Graphene.CarbonComponents do
     default: true
 
   attr :zebra, :boolean, doc: "true to add useZebraStyles striping."
-  slot :inner_block
+  attr :rest, :global
 
   def table_skeleton(assigns) do
     CoreComponents.table_skeleton(assigns)
@@ -11640,19 +7769,9 @@ defmodule Graphene.CarbonComponents do
   Table toolbar.
 
 
-
-  ## Attributes
-
-  * `size` (`:any`) - Toolbar size. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :rest, :global
   attr :size, :any, doc: "Toolbar size"
-  slot :inner_block
+  attr :rest, :global
 
   def table_toolbar(assigns) do
     CoreComponents.table_toolbar(assigns)
@@ -11664,21 +7783,10 @@ defmodule Graphene.CarbonComponents do
   Table toolbar content.
 
 
-
-  ## Attributes
-
-  * `has_batch_actions` (`:boolean`) - `true` if this batch actions bar is active. Defaults to `false`.
-  * `size` (`:any`) - Table toolbar contents size. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :has_batch_actions, :boolean, doc: "`true` if this batch actions bar is active."
-  attr :rest, :global
   attr :size, :any, doc: "Table toolbar contents size"
-  slot :inner_block
+  attr :rest, :global
 
   def table_toolbar_content(assigns) do
     CoreComponents.table_toolbar_content(assigns)
@@ -11692,31 +7800,6 @@ defmodule Graphene.CarbonComponents do
   ## Events
 
   * `cds-search-input` - The custom event fired after the search content is changed upon a user gesture.
-
-
-  ## Attributes
-
-  * `autocomplete` (`:string`) - Specify an optional value for the autocomplete property on the underlying <input>,
-    defaults to "off"
-
-    Defaults to `"off"`.
-  * `close_button_label_text` (`:string`) - Specify a label to be read by screen readers on the "close" button. Defaults to `nil`.
-  * `disabled` (`:boolean`) - `true` if the search box should be disabled. Defaults to `false`.
-  * `expandable` (`:boolean`) - `true` if the search bar can be expandable. Defaults to `false`.
-  * `expanded` (`:boolean`) - `true` if the search box should be expanded. Defaults to `false`.
-  * `has_custom_icon` (`:boolean`) - Defaults to `false`.
-  * `label_text` (`:string`) - The label text. Defaults to `nil`.
-  * `name` (`:string`) - The form name in `FormData`. Defaults to `nil`.
-  * `persistent` (`:boolean`) - `true` if the search box should be always be open. Defaults to `false`.
-  * `placeholder` (`:string`) - The placeholder text. Defaults to `"Search"`.
-  * `role` (`:string`) - Specify the role for the underlying <input>, defaults to searchbox. Defaults to `nil`.
-  * `size` (`:any`) - The search box size. Defaults to `nil`.
-  * `type` (`:string`) - The `<input>` name. Defaults to `nil`.
-  * `value` (`:string`) - The value. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :autocomplete, :string,
@@ -11735,12 +7818,16 @@ defmodule Graphene.CarbonComponents do
   attr :name, :string, doc: "The form name in `FormData`."
   attr :persistent, :boolean, doc: "`true` if the search box should be always be open."
   attr :placeholder, :string, doc: "The placeholder text.", default: "Search"
-  attr :rest, :global
   attr :role, :string, doc: "Specify the role for the underlying <input>, defaults to searchbox"
-  attr :size, :any, doc: "The search box size."
+
+  attr :size, :string,
+    doc: "The search box size.",
+    values: ["sm", "md", "lg", "xl"],
+    default: "lg"
+
   attr :type, :string, doc: "The `<input>` name."
   attr :value, :string, doc: "The value."
-  slot :inner_block
+  attr :rest, :global
 
   def table_toolbar_search(assigns) do
     CoreComponents.table_toolbar_search(assigns)
@@ -11760,30 +7847,9 @@ defmodule Graphene.CarbonComponents do
   Cancellation of this event stops changing the user-initiated selection.
   * `cds-content-switcher-selected` - The custom event fired after a a content switcher item is selected upon a user gesture.
 
-
-  ## Attributes
-
-  * `icon` (`:boolean`) - Icon only. Defaults to `false`.
-  * `low_contrast` (`:boolean`) - `true` to use the low contrast version. Defaults to `false`.
-  * `selected_index` (`:string`) - Specify a selected index for the initially selected content. Defaults to `"0"`.
-  * `selected_item_assistive_text` (`:string`) - An assistive text for screen reader to announce, telling that an item is selected. Defaults to `"Selected an item."`.
-  * `selecting_items_assistive_text` (`:string`) - An assistive text for screen reader to announce, telling the open state. Defaults to `"Selecting items. Use up and down arrow keys to navigate."`.
-  * `selection_mode` (`:string`) - Choose whether or not to automatically change selection on focus when left/right arrow pressed. Defaults to 'automatic'. Defaults to `"automatic"`.
-  * `size` (`:string`) - Content switcher size. Defaults to `nil`. Must be one of `nil`, `"sm"`, `"md"`, `"lg"`, or `"xl"`.
-  * `trigger_content` (`:string`) - The content of the trigger button for narrow mode. Defaults to `nil`.
-  * `type` (`:string`) - Tabs type. Defaults to `""`. Must be one of `""`, `"container"`, or `"contained"`.
-  * `value` (`:string`) - The value of the selected item. Defaults to `nil`.
-  * `disabled` (`:boolean`) - Whether the tabs are disabled. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :disabled, :boolean, doc: "Whether the tabs are disabled."
   attr :icon, :boolean, doc: "Icon only."
   attr :low_contrast, :boolean, doc: "`true` to use the low contrast version."
-  attr :rest, :global
 
   attr :selected_index, :string,
     doc: "Specify a selected index for the initially selected content",
@@ -11806,7 +7872,8 @@ defmodule Graphene.CarbonComponents do
   attr :trigger_content, :string, doc: "The content of the trigger button for narrow mode."
   attr :type, :string, doc: "Tabs type.", values: ["", "container", "contained"], default: ""
   attr :value, :string, doc: "The value of the selected item."
-  slot :inner_block
+  attr :disabled, :boolean, doc: "Whether the tabs are disabled."
+  attr :rest, :global
 
   slot :tab do
     attr :title, :string
@@ -11818,12 +7885,12 @@ defmodule Graphene.CarbonComponents do
   def tabs(%{tab: [_ | _]} = assigns) do
     assigns =
       assigns
-      |> assign_new(:disabled, fn -> nil end)
       |> assign_new(:icon, fn -> false end)
       |> assign_new(:low_contrast, fn -> false end)
       |> assign_new(:size, fn -> nil end)
       |> assign_new(:trigger_content, fn -> nil end)
       |> assign_new(:value, fn -> nil end)
+      |> assign_new(:disabled, fn -> nil end)
 
     ~H"""
     <CoreComponents.tabs
@@ -11863,19 +7930,9 @@ defmodule Graphene.CarbonComponents do
   Skeleton of tabs.
 
 
-
-  ## Attributes
-
-  * `contained` (`:boolean`) - Provide the type of Tab. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :contained, :boolean, doc: "Provide the type of Tab"
   attr :rest, :global
-  slot :inner_block
 
   def tabs_skeleton(assigns) do
     CoreComponents.tabs_skeleton(assigns)
@@ -11891,36 +7948,37 @@ defmodule Graphene.CarbonComponents do
   * `cds-tag-beingclosed` - The custom event fired as the element is being closed
   * `cds-tag-closed` - The custom event fired after the element has been closed
 
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - `true` if the tag should be disabled. Defaults to `false`.
-  * `filter` (`:boolean`) - Determine if is a filter/chip. Defaults to `false`.
-  * `has_custom_icon` (`:boolean`) - `true` if there is a custom icon. Defaults to `false`.
-  * `open` (`:boolean`) - `true` if the tag should be open. Defaults to `true`.
-  * `size` (`:any`) - The size of the tag. Defaults to `nil`.
-  * `title` (`:string`) - Text to show on filter tag "clear" buttons. Corresponds to the attribute with the same name. Defaults to `"Clear filter"`.
-  * `type` (`:any`) - The type of the tag. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :disabled, :boolean, doc: "`true` if the tag should be disabled"
   attr :filter, :boolean, doc: "Determine if is a filter/chip"
   attr :has_custom_icon, :boolean, doc: "`true` if there is a custom icon."
   attr :open, :boolean, doc: "`true` if the tag should be open.", default: true
-  attr :rest, :global
-  attr :size, :any, doc: "The size of the tag."
+  attr :size, :string, doc: "The size of the tag.", values: ["lg", "md", "sm"], default: "md"
 
   attr :title, :string,
     doc:
       "Text to show on filter tag \"clear\" buttons. Corresponds to the attribute with the same name",
     default: "Clear filter"
 
-  attr :type, :any, doc: "The type of the tag."
-  slot :inner_block
+  attr :type, :string,
+    doc: "The type of the tag.",
+    values: [
+      "red",
+      "magenta",
+      "purple",
+      "blue",
+      "cyan",
+      "teal",
+      "green",
+      "gray",
+      "COOL-GRAY",
+      "cool-gray",
+      "WARM-GRAY",
+      "warm-gray"
+    ],
+    default: "gray"
+
+  attr :rest, :global
 
   def tag(assigns) do
     CoreComponents.tag(assigns)
@@ -11932,26 +7990,14 @@ defmodule Graphene.CarbonComponents do
   Skeleton of tag.
 
 
-
-  ## Attributes
-
-  * `size` (`:any`) - Specify the size of the Tag. Currently supports either `sm`,
-    `md` (default) or `lg` sizes.
-
-    Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :rest, :global
-
-  attr :size, :any,
+  attr :size, :string,
     doc:
-      "Specify the size of the Tag. Currently supports either `sm`,\n`md` (default) or `lg` sizes."
+      "Specify the size of the Tag. Currently supports either `sm`,\n`md` (default) or `lg` sizes.",
+    values: ["lg", "md", "sm"],
+    default: "sm"
 
-  slot :inner_block
+  attr :rest, :global
 
   def tag_skeleton(assigns) do
     CoreComponents.tag_skeleton(assigns)
@@ -11967,29 +8013,6 @@ defmodule Graphene.CarbonComponents do
   * `cds-tearsheet-beingclosed` - The custom event fired before this tearsheet is being closed upon a user gesture.
   Cancellation of this event stops the user-initiated action of closing this tearsheet.
   * `cds-tearsheet-closed` - The custom event fired after this tearsheet is closed upon a user gesture.
-
-
-  ## Attributes
-
-  * `close_icon_description` (`:string`) - Sets the close button icon description. Defaults to `"Close"`.
-  * `has_close_icon` (`:boolean`) - Enable a close icon ('x') in the header area of the tearsheet. By default,
-    (when this prop is omitted, or undefined or null) a tearsheet does not
-    display a close icon if there are navigation actions ("transactional
-    tearsheet") and displays one if there are no navigation actions ("passive
-    tearsheet"), and that behavior can be overridden if required by setting
-    this prop to either true or false.
-
-    Defaults to `false`.
-  * `influencer_placement` (`:string`) - The placement of the influencer section, 'left' or 'right'. Defaults to `"right"`. Must be one of `"right"`, or `"left"`.
-  * `influencer_width` (`:string`) - The width of the influencer section, 'narrow' or 'wide'. Defaults to `"narrow"`. Must be one of `"narrow"`, or `"wide"`.
-  * `open` (`:boolean`) - `true` if the tearsheet should be open. Defaults to `false`.
-  * `prevent_close_on_click_outside` (`:boolean`) - Prevent closing on click outside of tearsheet. Defaults to `false`.
-  * `selector_initial_focus` (`:any`) - The initial location of focus in the side panel. Defaults to `nil`.
-  * `width` (`:string`) - The width of the influencer section, 'narrow' or 'wide'. Defaults to `"narrow"`. Must be one of `"narrow"`, or `"wide"`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :close_icon_description, :string,
@@ -12015,7 +8038,6 @@ defmodule Graphene.CarbonComponents do
   attr :prevent_close_on_click_outside, :boolean,
     doc: "Prevent closing on click outside of tearsheet"
 
-  attr :rest, :global
   attr :selector_initial_focus, :any, doc: "The initial location of focus in the side panel"
 
   attr :width, :string,
@@ -12023,7 +8045,7 @@ defmodule Graphene.CarbonComponents do
     values: ["narrow", "wide"],
     default: "narrow"
 
-  slot :inner_block
+  attr :rest, :global
 
   def tearsheet(assigns) do
     CoreComponents.tearsheet(assigns)
@@ -12037,56 +8059,6 @@ defmodule Graphene.CarbonComponents do
   ## Events
 
   * `invalid` - Undocumented
-
-
-  ## Attributes
-
-  * `autocomplete` (`:string`) - May be any of the standard HTML autocomplete options. Defaults to `nil`.
-  * `autofocus` (`:boolean`) - Sets the input to be focussed automatically on page load. Defaults to false. Defaults to `false`.
-  * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
-  * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
-  * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
-  * `inline` (`:boolean`) - true to use the inline version. Defaults to `false`.
-  * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
-  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
-  * `is_fluid` (`:boolean`) - Defaults to `false`.
-  * `label` (`:string`) - Generic label that will be used as the textual representation of what this field is for. Defaults to `nil`.
-  * `max_count` (`:any`) - Max character count allowed for input. This is needed in order for enableCounter to display. Defaults to `nil`.
-  * `name` (`:string`) - Name for the input in the `FormData`. Defaults to `nil`.
-  * `pattern` (`:string`) - Pattern to validate the input against for HTML validity checking. Defaults to `nil`.
-  * `placeholder` (`:string`) - Value to display when the input has an empty `value`. Defaults to `nil`.
-  * `readonly` (`:boolean`) - Specify if the component should be read-only. Defaults to `false`.
-  * `required` (`:boolean`) - Boolean property to set the required status. Defaults to `false`.
-  * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
-  * `show_password_visibility_toggle` (`:boolean`) - Boolean property to render password visibility toggle. Defaults to `false`.
-  * `show_password_label` (`:string`) - "Show password" tooltip text on password visibility toggle. Defaults to `"Show password"`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `"center"`. Must be one of `"start"`, `"center"`, or `"end"`.
-  * `tooltip_direction` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
-  * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `value` (`:string`) - The value of the input. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
-  * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `helper_text` - The helper text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `label_text` - The label text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :autocomplete, :string, doc: "May be any of the standard HTML autocomplete options"
@@ -12126,16 +8098,14 @@ defmodule Graphene.CarbonComponents do
     doc: "The special validity message for `required`.",
     default: "Please fill out this field."
 
-  attr :rest, :global
+  attr :show_password_visibility_toggle, :boolean,
+    doc: "Boolean property to render password visibility toggle"
 
   attr :show_password_label, :string,
     doc: "\"Show password\" tooltip text on password visibility toggle",
     default: "Show password"
 
-  attr :show_password_visibility_toggle, :boolean,
-    doc: "Boolean property to render password visibility toggle"
-
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
 
   attr :tooltip_alignment, :string,
     doc:
@@ -12167,21 +8137,13 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :helper_text, doc: "The helper text." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :label_text, doc: "The label text." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :helper_text, doc: "The helper text."
+  slot :label_text, doc: "The label text."
 
   slot :validity_message,
     doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
-    attr :tag, :string
-  end
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
   def text_input(assigns) do
     FormComponents.text_input(assigns)
@@ -12193,19 +8155,9 @@ defmodule Graphene.CarbonComponents do
   Undocumented
 
 
-
-  ## Attributes
-
-  * `hide_label` (`:boolean`) - Specify whether the label should be hidden, or not. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
   attr :rest, :global
-  slot :inner_block
 
   def text_input_skeleton(assigns) do
     CoreComponents.text_input_skeleton(assigns)
@@ -12220,60 +8172,6 @@ defmodule Graphene.CarbonComponents do
 
   * `input` - Undocumented
   * `invalid` - Undocumented
-
-
-  ## Attributes
-
-  * `autocomplete` (`:string`) - May be any of the standard HTML autocomplete options. Defaults to `nil`.
-  * `autofocus` (`:boolean`) - Sets the input to be focussed automatically on page load. Defaults to false. Defaults to `false`.
-  * `cols` (`:any`) - The number of columns for the textarea to show by default. Defaults to `nil`.
-  * `counter_mode` (`:any`) - Specify the method used for calculating the counter number. Defaults to `nil`.
-  * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
-  * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
-  * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
-  * `hide_password_label` (`:string`) - "Hide password" tooltip text on password visibility toggle. Defaults to `"Hide password"`.
-  * `id` (`:string`) - ID to link the `label` and `textarea`. Defaults to `nil`.
-  * `inline` (`:boolean`) - true to use the inline version. Defaults to `false`.
-  * `invalid` (`:boolean`) - Specify if the currently value is invalid. Defaults to `false`.
-  * `invalid_text` (`:string`) - Message which is displayed if the value is invalid. Defaults to `nil`.
-  * `is_fluid` (`:boolean`) - Specify whether the textarea is fluid or not. Defaults to `false`.
-  * `label` (`:string`) - Generic label that will be used as the textual representation of what this field is for. Defaults to `nil`.
-  * `max_count` (`:any`) - Max character count allowed for input. This is needed in order for enableCounter to display. Defaults to `nil`.
-  * `name` (`:string`) - Name for the input in the `FormData`. Defaults to `nil`.
-  * `pattern` (`:string`) - Pattern to validate the textarea against for HTML validity checking. Defaults to `nil`.
-  * `placeholder` (`:string`) - Value to display when the input has an empty `value`. Defaults to `nil`.
-  * `readonly` (`:boolean`) - Specify if the component should be read-only. Defaults to `false`.
-  * `required` (`:boolean`) - Boolean property to set the required status. Defaults to `false`.
-  * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
-  * `rows` (`:string`) - The number of rows for the textarea to show by default. Defaults to `"4"`.
-  * `show_password_visibility_toggle` (`:boolean`) - Boolean property to render password visibility toggle. Defaults to `false`.
-  * `show_password_label` (`:string`) - "Show password" tooltip text on password visibility toggle. Defaults to `"Show password"`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
-  * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
-    Can be one of: start, center, or end.
-
-    Defaults to `"center"`. Must be one of `"start"`, `"center"`, or `"end"`.
-  * `tooltip_direction` (`:string`) - Specify the direction of the tooltip for icon-only buttons.
-    Can be either top, right, bottom, or left.
-
-    Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
-  * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
-  * `value` (`:string`) - The value of the input. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
-  * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `helper_text` - The helper text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `label_text` - The label text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :autocomplete, :string, doc: "May be any of the standard HTML autocomplete options"
@@ -12319,17 +8217,16 @@ defmodule Graphene.CarbonComponents do
     doc: "The special validity message for `required`.",
     default: "Please fill out this field."
 
-  attr :rest, :global
   attr :rows, :string, doc: "The number of rows for the textarea to show by default", default: "4"
+
+  attr :show_password_visibility_toggle, :boolean,
+    doc: "Boolean property to render password visibility toggle"
 
   attr :show_password_label, :string,
     doc: "\"Show password\" tooltip text on password visibility toggle",
     default: "Show password"
 
-  attr :show_password_visibility_toggle, :boolean,
-    doc: "Boolean property to render password visibility toggle"
-
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
 
   attr :tooltip_alignment, :string,
     doc:
@@ -12361,21 +8258,13 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :helper_text, doc: "The helper text." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :label_text, doc: "The label text." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :helper_text, doc: "The helper text."
+  slot :label_text, doc: "The label text."
 
   slot :validity_message,
     doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
-    attr :tag, :string
-  end
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
   def textarea(assigns) do
     FormComponents.textarea(assigns)
@@ -12387,19 +8276,9 @@ defmodule Graphene.CarbonComponents do
   Undocumented
 
 
-
-  ## Attributes
-
-  * `hide_label` (`:boolean`) - Specify whether the label should be hidden, or not. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
   attr :rest, :global
-  slot :inner_block
 
   def textarea_skeleton(assigns) do
     CoreComponents.textarea_skeleton(assigns)
@@ -12411,22 +8290,6 @@ defmodule Graphene.CarbonComponents do
   Basic tile.
 
 
-
-  ## Attributes
-
-  * `color_scheme` (`:string`) - The color scheme. Defaults to `""`. Must be one of `""`, or `"light"`.
-  * `has_rounded_corners` (`:boolean`) - Specify if the `Tile` component should be rendered with rounded corners.
-    Only valid when `ai-label` prop is present
-
-    Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `decorator` - Decorator content. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :color_scheme, :string, doc: "The color scheme.", values: ["", "light"], default: ""
 
@@ -12435,12 +8298,7 @@ defmodule Graphene.CarbonComponents do
       "Specify if the `Tile` component should be rendered with rounded corners.\nOnly valid when `ai-label` prop is present"
 
   attr :rest, :global
-
-  slot :decorator, doc: "Decorator content." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
+  slot :decorator, doc: "Decorator content."
 
   def tile(assigns) do
     CoreComponents.tile(assigns)
@@ -12451,17 +8309,8 @@ defmodule Graphene.CarbonComponents do
 
   Tile above-the-fold content.
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def tile_above_the_fold_content(assigns) do
     CoreComponents.tile_above_the_fold_content(assigns)
@@ -12472,17 +8321,8 @@ defmodule Graphene.CarbonComponents do
 
   Tile below-the-fold content.
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def tile_below_the_fold_content(assigns) do
     CoreComponents.tile_below_the_fold_content(assigns)
@@ -12498,23 +8338,6 @@ defmodule Graphene.CarbonComponents do
   * `cds-current-radio-tile-selection` - The name of the custom event fired after a radio tile changes its selected state.
   * `cds-current-selectable-tile-selections` - The name of the custom event fired after a selectable tile changes its selected state.
 
-
-  ## Attributes
-
-  * `current_radio_selection` (`:any`) - Defaults to `nil`.
-  * `current_selections` (`:any`) - Defaults to `nil`.
-  * `disabled` (`:any`) - Specify whether the group is disabled. Defaults to `nil`.
-  * `fieldset_class_name` (`:any`) - Provide an optional className to be applied to the component. Defaults to `nil`.
-  * `radio_tiles` (`:any`) - Defaults to `nil`.
-  * `selectable_tiles` (`:any`) - Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `legend` - Legend content. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :current_radio_selection, :any
   attr :current_selections, :any
@@ -12524,13 +8347,9 @@ defmodule Graphene.CarbonComponents do
     doc: "Provide an optional className to be applied to the component"
 
   attr :radio_tiles, :any
-  attr :rest, :global
   attr :selectable_tiles, :any
-  slot :inner_block
-
-  slot :legend, doc: "Legend content." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :legend, doc: "Legend content."
 
   def tile_group(assigns) do
     CoreComponents.tile_group(assigns)
@@ -12545,39 +8364,6 @@ defmodule Graphene.CarbonComponents do
 
   * `change` - Undocumented
   * `invalid` - Undocumented
-
-
-  ## Attributes
-
-  * `disabled` (`:boolean`) - Specify whether the control is disabled. Defaults to `false`.
-  * `hide_label` (`:boolean`) - Specify whether the label should be hidden. Defaults to `false`.
-  * `invalid` (`:boolean`) - Specify whether the control is currently invalid. Defaults to `false`.
-  * `invalid_text` (`:string`) - Provide the text that is displayed when the control is in an invalid state. Defaults to `"Invalid time format."`.
-  * `max_length` (`:string`) - Specify the maximum length of the input value. Defaults to `"5"`.
-  * `name` (`:string`) - Name for the input in FormData. Defaults to `nil`.
-  * `pattern` (`:string`) - Pattern for input validation. Defaults to `"(1[012]|[1-9]):[0-5][0-9](\\\\s)?"`.
-  * `placeholder` (`:string`) - Placeholder text for the input. Defaults to `"hh:mm"`.
-  * `read_only` (`:boolean`) - Specify whether the control should be read-only. Defaults to `false`.
-  * `required` (`:boolean`) - Whether the input is required. Defaults to `false`.
-  * `required_validity_message` (`:string`) - Custom message for required validation. Defaults to `"Please fill out this field."`.
-  * `size` (`:any`) - Size of the time picker. Defaults to `nil`.
-  * `type` (`:string`) - Input type. Defaults to `"text"`.
-  * `value` (`:string`) - Value of the input. Defaults to `nil`.
-  * `warning` (`:boolean`) - Specify whether the control is in warning state. Defaults to `false`.
-  * `warning_text` (`:string`) - Provide the text that is displayed when the control is in a warning state. Defaults to `"Warning message."`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `label_text` - The label text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `time_picker_select` - Slot for time picker select components. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `validity_message` - The validity message. If present and non-empty, this input shows the UI of its invalid state. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :disabled, :boolean, doc: "Specify whether the control is disabled"
@@ -12603,8 +8389,7 @@ defmodule Graphene.CarbonComponents do
     doc: "Custom message for required validation",
     default: "Please fill out this field."
 
-  attr :rest, :global
-  attr :size, :any, doc: "Size of the time picker"
+  attr :size, :string, doc: "Size of the time picker", values: ["sm", "md", "lg"], default: "md"
   attr :type, :string, doc: "Input type", default: "text"
   attr :value, :string, doc: "Value of the input"
   attr :warning, :boolean, doc: "Specify whether the control is in warning state"
@@ -12620,21 +8405,13 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :inner_block
-
-  slot :label_text, doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :time_picker_select, doc: "Slot for time picker select components." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :label_text, doc: "The label text."
+  slot :time_picker_select, doc: "Slot for time picker select components."
 
   slot :validity_message,
     doc:
-      "The validity message. If present and non-empty, this input shows the UI of its invalid state." do
-    attr :tag, :string
-  end
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
 
   slot :select_item do
     attr :label, :string
@@ -12652,7 +8429,6 @@ defmodule Graphene.CarbonComponents do
       |> assign_new(:name, fn -> nil end)
       |> assign_new(:read_only, fn -> false end)
       |> assign_new(:required, fn -> false end)
-      |> assign_new(:size, fn -> nil end)
       |> assign_new(:value, fn -> nil end)
       |> assign_new(:warning, fn -> false end)
 
@@ -12716,31 +8492,20 @@ defmodule Graphene.CarbonComponents do
   Time picker select dropdown.
 
 
-
-  ## Attributes
-
-  * `default_value` (`:string`) - Optionally provide the default value of the select. Defaults to `nil`.
-  * `disabled` (`:boolean`) - Specify whether the control is disabled. Defaults to `false`.
-  * `id` (`:string`) - Specify a custom id for the select box. Defaults to `nil`.
-  * `name` (`:string`) - Name for the select in the `FormData`. Defaults to `nil`.
-  * `read_only` (`:boolean`) - Controls the readOnly state of the select. Defaults to `false`.
-  * `size` (`:any`) - Size of the time picker select. Defaults to `nil`.
-  * `value` (`:string`) - The value of the select. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :default_value, :string, doc: "Optionally provide the default value of the select"
   attr :disabled, :boolean, doc: "Specify whether the control is disabled"
   attr :id, :string, doc: "Specify a custom id for the select box"
   attr :name, :string, doc: "Name for the select in the `FormData`"
   attr :read_only, :boolean, doc: "Controls the readOnly state of the select"
-  attr :rest, :global
-  attr :size, :any, doc: "Size of the time picker select"
+
+  attr :size, :string,
+    doc: "Size of the time picker select",
+    values: ["sm", "md", "lg"],
+    default: "md"
+
   attr :value, :string, doc: "The value of the select."
-  slot :inner_block
+  attr :rest, :global
 
   def time_picker_select(assigns) do
     CoreComponents.time_picker_select(assigns)
@@ -12757,27 +8522,6 @@ defmodule Graphene.CarbonComponents do
   Cancellation of this event stops the user-initiated action of closing this notification.
   * `cds-notification-closed` - The custom event fired after this notification is closed upon a user gesture.
 
-
-  ## Attributes
-
-  * `caption` (`:string`) - Specify the caption. Defaults to `nil`.
-  * `hide_close_button` (`:boolean`) - `true` to hide the close button. Defaults to `false`.
-  * `kind` (`:string`) - Notification kind. Defaults to `"success"`. Must be one of `"success"`, `"info"`, `"info-square"`, `"warning"`, `"warning-alt"`, or `"error"`.
-  * `low_contrast` (`:boolean`) - Low contrast mode. Defaults to `false`.
-  * `open` (`:boolean`) - `true` if the notification should be open. Defaults to `true`.
-  * `status_icon_description` (`:string`) - Provide a description for "status" icon that can be read by screen readers. Defaults to `nil`.
-  * `timeout` (`:any`) - Specify an optional duration the notification should be closed in. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `subtitle` - The subtitle. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `title` - The title. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
-
   """
   attr :caption, :string, doc: "Specify the caption"
   attr :hide_close_button, :boolean, doc: "`true` to hide the close button."
@@ -12789,21 +8533,14 @@ defmodule Graphene.CarbonComponents do
 
   attr :low_contrast, :boolean, doc: "Low contrast mode"
   attr :open, :boolean, doc: "`true` if the notification should be open.", default: true
-  attr :rest, :global
 
   attr :status_icon_description, :string,
     doc: "Provide a description for \"status\" icon that can be read by screen readers"
 
   attr :timeout, :any, doc: "Specify an optional duration the notification should be closed in"
-  slot :inner_block
-
-  slot :subtitle, doc: "The subtitle." do
-    attr :tag, :string
-  end
-
-  slot :title, doc: "The title." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :subtitle, doc: "The subtitle."
+  slot :title, doc: "The title."
 
   def toast_notification(assigns) do
     CoreComponents.toast_notification(assigns)
@@ -12818,51 +8555,6 @@ defmodule Graphene.CarbonComponents do
 
   * `cds-toggle-changed` - The custom event fired after this changebox changes its checked state.
   * `cds-checkbox-changed` - The custom event fired after this changebox changes its checked state.
-
-
-  ## Attributes
-
-  * `checked` (`:boolean`) - **Deprecated:** Use `toggled` instead.
-    The `checked` attribute will be removed in the next major version.
-
-    Defaults to `false`.
-  * `data_table` (`:boolean`) - Specify if checkbox is being used in a data table. Defaults to `false`.
-  * `default_checked` (`:any`) - Specify whether the underlying input should be checked by default. Defaults to `nil`.
-  * `disabled` (`:boolean`) - Specify whether the Checkbox should be disabled. Defaults to `false`.
-  * `helper_text` (`:any`) - Provide text for the form group for additional help. Defaults to `nil`.
-  * `hide_checkbox` (`:boolean`) - Specify whether the checkbox should be present in the DOM,
-    but invisible and uninteractable. Used for data-table purposes.
-
-    Defaults to `false`.
-  * `hide_label` (`:boolean`) - Hide label text. Defaults to `false`.
-  * `id` (`:string`) - Specify a custom id for the checkbox. Defaults to `"checkbox"`.
-  * `indeterminate` (`:boolean`) - Specify whether the Checkbox is in an indeterminate state. Defaults to `false`.
-  * `invalid` (`:boolean`) - Specify whether the Checkbox is currently invalid. Defaults to `false`.
-  * `invalid_text` (`:any`) - Provide the text that is displayed when the Checkbox is in an invalid state. Defaults to `nil`.
-  * `label_a` (`:string`) - Specify the label for the "on" position. Defaults to `"On"`.
-  * `label_b` (`:string`) - Specify the label for the "off" position. Defaults to `"Off"`.
-  * `name` (`:string`) - The form name. Defaults to `nil`.
-  * `read_only` (`:boolean`) - Read only boolean. Defaults to `false`.
-  * `readonly` (`:boolean`) - Specify whether the Checkbox is read-only. Defaults to `false`.
-  * `size` (`:string`) - Toggle size. Defaults to `""`. Must be one of `""`, or `"sm"`.
-  * `title` (`:string`) - Specify a title for the node for the Checkbox. Defaults to `nil`.
-  * `toggled` (`:boolean`) - Specify whether the control is toggled. Defaults to `nil`.
-  * `value` (`:string`) - The value. Defaults to `nil`.
-  * `warn` (`:boolean`) - Specify whether the Checkbox is in a warn state. Defaults to `false`.
-  * `warn_text` (`:boolean`) - Provide the text that is displayed when the Checkbox is in a warn state. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `checked_text` - The text for the checked state. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `label_text` - The label text. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `unchecked_text` - The text for the unchecked state. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :checked, :boolean,
@@ -12894,7 +8586,6 @@ defmodule Graphene.CarbonComponents do
   attr :name, :string, doc: "The form name."
   attr :read_only, :boolean, doc: "Read only boolean."
   attr :readonly, :boolean, doc: "Specify whether the Checkbox is read-only"
-  attr :rest, :global
   attr :size, :string, doc: "Toggle size.", values: ["", "sm"], default: ""
   attr :title, :string, doc: "Specify a title for the node for the Checkbox"
   attr :toggled, :boolean, doc: "Specify whether the control is toggled"
@@ -12911,19 +8602,10 @@ defmodule Graphene.CarbonComponents do
     default: nil,
     doc: "override the custom event used to sync form values"
 
-  slot :checked_text, doc: "The text for the checked state." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
-
-  slot :label_text, doc: "The label text." do
-    attr :tag, :string
-  end
-
-  slot :unchecked_text, doc: "The text for the unchecked state." do
-    attr :tag, :string
-  end
+  attr :rest, :global
+  slot :checked_text, doc: "The text for the checked state."
+  slot :label_text, doc: "The label text."
+  slot :unchecked_text, doc: "The text for the unchecked state."
 
   def toggle(assigns) do
     FormComponents.toggle(assigns)
@@ -12935,17 +8617,8 @@ defmodule Graphene.CarbonComponents do
   Undocumented
 
 
-
-  ## Attributes
-
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :rest, :global
-  slot :inner_block
 
   def toggle_skeleton(assigns) do
     CoreComponents.toggle_skeleton(assigns)
@@ -12956,26 +8629,6 @@ defmodule Graphene.CarbonComponents do
 
   Definition tooltip.
 
-
-
-  ## Attributes
-
-  * `alignment` (`:string`) - How the tooltip is aligned to the trigger button. Defaults to `"top"`. Must be one of `"top"`, `"top-start"`, `"top-end"`, `"bottom"`, `"bottom-start"`, `"bottom-end"`, `"left"`, `"left-start"`, `"left-end"`, `"right"`, `"right-start"`, or `"right-end"`.
-  * `alignment_axis_offset` (`:string`) - **Experimental:** Provide an offset value for alignment axis. Only takes effect when `autoalign` is enabled. Defaults to `"0"`.
-  * `autoalign` (`:boolean`) - Specify whether a auto align functionality should be applied. Defaults to `false`.
-  * `button_label` (`:string`) - The label for the toggle button. Defaults to `"Show information"`.
-  * `default_open` (`:boolean`) - Set whether toggletip is open by default. Defaults to `false`.
-  * `open` (`:boolean`) - Set whether toggletip is open. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `body_text` - Body text content for the toggletip. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `actions` - Action buttons for the toggletip. Accepts attributes:
-
-    * `tag` (`:string`)
-  * `inner_block`
 
   """
   attr :alignment, :string,
@@ -13006,16 +8659,8 @@ defmodule Graphene.CarbonComponents do
   attr :default_open, :boolean, doc: "Set whether toggletip is open by default."
   attr :open, :boolean, doc: "Set whether toggletip is open"
   attr :rest, :global
-
-  slot :actions, doc: "Action buttons for the toggletip." do
-    attr :tag, :string
-  end
-
-  slot :body_text, doc: "Body text content for the toggletip." do
-    attr :tag, :string
-  end
-
-  slot :inner_block
+  slot :body_text, doc: "Body text content for the toggletip."
+  slot :actions, doc: "Action buttons for the toggletip."
 
   slot :action do
     attr :tag, :string
@@ -13103,41 +8748,6 @@ defmodule Graphene.CarbonComponents do
   Trigger button of tooltip.
 
 
-
-  ## Attributes
-
-  * `align` (`:string`) - Specify how the trigger should align with the tooltip. Defaults to `"top"`.
-  * `alignment_axis_offset` (`:string`) - **Experimental:** Provide an offset value for alignment axis. Only takes effect when `autoalign` is enabled. Defaults to `nil`.
-  * `autoalign` (`:boolean`) - Specify whether a auto align functionality should be applied. Defaults to `false`.
-  * `autoalign_boundary` (`:string`) - Specify a bounding element to be used for autoAlign calculations. The viewport is used by default.
-    Takes one of the following: 'clippingAncestors', '#elementid', '#elementid_1, #elementid_2', 'rect(x, y, width, height)'
-    This prop is currently experimental and is subject to future changes.
-
-    Defaults to `nil`.
-  * `background_token` (`:any`) - Specify the background token to use. Default is 'layer'. Defaults to `nil`.
-  * `border` (`:boolean`) - Specify whether a border should be rendered on the popover. Defaults to `false`.
-  * `caret` (`:boolean`) - Specify whether a caret should be rendered. Defaults to `true`.
-  * `close_on_activation` (`:boolean`) - Specify whether the tooltip should be closed when clicked. Defaults to `false`.
-  * `data_table` (`:boolean`) - `true` if this tooltip is in a data table row. Defaults to `false`.
-  * `default_open` (`:boolean`) - Specify whether the tooltip should be open when it first renders. Defaults to `false`.
-  * `drop_shadow` (`:boolean`) - Specify whether a dropShadow should be rendered. Defaults to `true`.
-  * `enter_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before displaying the tooltip. Defaults to `"100"`.
-  * `high_contrast` (`:boolean`) - Render the component using the high-contrast variant. Defaults to `false`.
-  * `keyboard_only` (`:boolean`) - Only open tooltip on keyboard interactions, this is used for interactive tags
-    (ie. operational-tag, selectable-tag)
-
-    Defaults to `false`.
-  * `leave_delay_ms` (`:string`) - Specify the duration in milliseconds to delay before hiding the tooltip. Defaults to `"300"`.
-  * `open` (`:boolean`) - Specify whether the component is currently open or closed. Defaults to `false`.
-  * `size` (`:boolean`) - Specify the size of the tooltip. Defaults to `false`.
-  * `tab_tip` (`:boolean`) - Render the component using the tab tip variant. Defaults to `false`.
-  * `timeout_id` (`:string`) - Specify the timeout reference for the tooltip. Defaults to `"0"`.
-  * `toolbar_action` (`:boolean`) - Specify whether the tooltip should be open when it first renders. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :align, :string,
     doc: "Specify how the trigger should align with the tooltip",
@@ -13153,7 +8763,11 @@ defmodule Graphene.CarbonComponents do
     doc:
       "Specify a bounding element to be used for autoAlign calculations. The viewport is used by default.\nTakes one of the following: 'clippingAncestors', '#elementid', '#elementid_1, #elementid_2', 'rect(x, y, width, height)'\nThis prop is currently experimental and is subject to future changes."
 
-  attr :background_token, :any, doc: "Specify the background token to use. Default is 'layer'."
+  attr :background_token, :string,
+    doc: "Specify the background token to use. Default is 'layer'.",
+    values: ["layer", "background"],
+    default: "layer"
+
   attr :border, :boolean, doc: "Specify whether a border should be rendered on the popover"
   attr :caret, :boolean, doc: "Specify whether a caret should be rendered", default: true
 
@@ -13184,7 +8798,6 @@ defmodule Graphene.CarbonComponents do
     default: "300"
 
   attr :open, :boolean, doc: "Specify whether the component is currently open or closed"
-  attr :rest, :global
   attr :size, :boolean, doc: "Specify the size of the tooltip"
   attr :tab_tip, :boolean, doc: "Render the component using the tab tip variant"
   attr :timeout_id, :string, doc: "Specify the timeout reference for the tooltip", default: "0"
@@ -13192,7 +8805,7 @@ defmodule Graphene.CarbonComponents do
   attr :toolbar_action, :boolean,
     doc: "Specify whether the tooltip should be open when it first renders"
 
-  slot :inner_block
+  attr :rest, :global
   slot :trigger
 
   slot :content do
@@ -13206,7 +8819,6 @@ defmodule Graphene.CarbonComponents do
       |> assign_new(:alignment_axis_offset, fn -> nil end)
       |> assign_new(:autoalign, fn -> false end)
       |> assign_new(:autoalign_boundary, fn -> nil end)
-      |> assign_new(:background_token, fn -> nil end)
       |> assign_new(:border, fn -> false end)
       |> assign_new(:close_on_activation, fn -> false end)
       |> assign_new(:data_table, fn -> false end)
@@ -13268,28 +8880,15 @@ defmodule Graphene.CarbonComponents do
   Tooltip content.
 
 
-
-  ## Attributes
-
-  * `align` (`:string`) - Specify the popover alignment. Defaults to `nil`.
-  * `autoalign` (`:boolean`) - Specify whether a auto align functionality should be applied. Defaults to `false`.
-  * `background_token` (`:any`) - Specify the background token to use. Default is 'layer'. Defaults to `nil`.
-  * `border` (`:boolean`) - Specify whether a border should be rendered on the popover. Defaults to `false`.
-  * `caret` (`:any`) - Specify whether a caret should be rendered. Defaults to `nil`.
-  * `drop_shadow` (`:boolean`) - Specify whether a dropShadow should be rendered. Defaults to `true`.
-  * `high_contrast` (`:boolean`) - Render the component using the high-contrast variant. Defaults to `false`.
-  * `open` (`:boolean`) - Specify whether the component is currently open or closed. Defaults to `false`.
-  * `slot` (`:string`) - The shadow slot this popover content should be in. Defaults to `"content"`.
-  * `tab_tip` (`:boolean`) - Render the component using the tab tip variant. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :align, :string, doc: "Specify the popover alignment"
   attr :autoalign, :boolean, doc: "Specify whether a auto align functionality should be applied"
-  attr :background_token, :any, doc: "Specify the background token to use. Default is 'layer'."
+
+  attr :background_token, :string,
+    doc: "Specify the background token to use. Default is 'layer'.",
+    values: ["layer", "background"],
+    default: "layer"
+
   attr :border, :boolean, doc: "Specify whether a border should be rendered on the popover"
   attr :caret, :any, doc: "Specify whether a caret should be rendered"
 
@@ -13299,14 +8898,13 @@ defmodule Graphene.CarbonComponents do
 
   attr :high_contrast, :boolean, doc: "Render the component using the high-contrast variant"
   attr :open, :boolean, doc: "Specify whether the component is currently open or closed"
-  attr :rest, :global
 
   attr :slot, :string,
     doc: "The shadow slot this popover content should be in.",
     default: "content"
 
   attr :tab_tip, :boolean, doc: "Render the component using the tab tip variant"
-  slot :inner_block
+  attr :rest, :global
 
   def tooltip_content(assigns) do
     CoreComponents.tooltip_content(assigns)
@@ -13321,22 +8919,6 @@ defmodule Graphene.CarbonComponents do
 
   * `eventSelected` - The name of the custom event fired when node is selected.
   * `eventToggled` - The name of the custom event fired when a node is toggled.
-
-
-  ## Attributes
-
-  * `active` (`:boolean`) - sets if tree node is active. Defaults to `false`.
-  * `disabled` (`:boolean`) - disabled property. Defaults to `false`.
-  * `href` (`:any`) - Optional: The URL the TreeNode is linking to. Defaults to `nil`.
-  * `id` (`:string`) - Specify the TreeNode's ID. Must be unique in the DOM and is used for props.active, props.selected and aria-owns. Defaults to `"Math.random().toString(16).slice(2)"`.
-  * `is_expanded` (`:boolean`) - Specify if the TreeNode is expanded (only applicable to parent nodes). Defaults to `false`.
-  * `label` (`:string`) - Rendered label for the TreeNode. Defaults to `nil`.
-  * `on_click` (`:any`) - when adding an href to control the click functionality. Defaults to `nil`.
-  * `selected` (`:boolean`) - sets if tree node is selected. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
 
   """
   attr :active, :boolean, doc: "sets if tree node is active"
@@ -13353,9 +8935,8 @@ defmodule Graphene.CarbonComponents do
 
   attr :label, :string, doc: "Rendered label for the TreeNode"
   attr :on_click, :any, doc: "when adding an href to control the click functionality"
-  attr :rest, :global
   attr :selected, :boolean, doc: "sets if tree node is selected"
-  slot :inner_block
+  attr :rest, :global
 
   def tree_node(assigns) do
     CoreComponents.tree_node(assigns)
@@ -13367,27 +8948,18 @@ defmodule Graphene.CarbonComponents do
   Tree view.
 
 
-
-  ## Attributes
-
-  * `hide_label` (`:boolean`) - Specify whether or not the label should be hidden. Defaults to `false`.
-  * `label` (`:string`) - Provide the label text that will be read by a screen reader. Defaults to `nil`.
-  * `size` (`:any`) - Specify the size of the tree from a list of available sizes. Defaults to `nil`.
-  * `controlled` (`:boolean`) - Whether the tree view is controlled. Defaults to `nil`.
-  * `links` (`:boolean`) - Whether the tree view renders links. Defaults to `nil`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
-  attr :controlled, :boolean, doc: "Whether the tree view is controlled."
   attr :hide_label, :boolean, doc: "Specify whether or not the label should be hidden"
   attr :label, :string, doc: "Provide the label text that will be read by a screen reader"
+
+  attr :size, :string,
+    doc: "Specify the size of the tree from a list of available sizes.",
+    values: ["sm", "xs"],
+    default: "sm"
+
+  attr :controlled, :boolean, doc: "Whether the tree view is controlled."
   attr :links, :boolean, doc: "Whether the tree view renders links."
   attr :rest, :global
-  attr :size, :any, doc: "Specify the size of the tree from a list of available sizes."
-  slot :inner_block
 
   slot :node do
     attr :label, :string
@@ -13403,11 +8975,10 @@ defmodule Graphene.CarbonComponents do
   def tree_view(%{node: [_ | _]} = assigns) do
     assigns =
       assigns
-      |> assign_new(:controlled, fn -> nil end)
       |> assign_new(:hide_label, fn -> false end)
       |> assign_new(:label, fn -> nil end)
+      |> assign_new(:controlled, fn -> nil end)
       |> assign_new(:links, fn -> nil end)
-      |> assign_new(:size, fn -> nil end)
 
     ~H"""
     <CoreComponents.tree_view
@@ -13446,21 +9017,10 @@ defmodule Graphene.CarbonComponents do
   Unordered list.
 
 
-
-  ## Attributes
-
-  * `is_expressive` (`:boolean`) - `true` if expressive theme enabled. Defaults to `false`.
-  * `nested` (`:boolean`) - Specify whether the list is nested, or not. Defaults to `false`.
-  * Global attributes are accepted.
-  ## Slots
-
-  * `inner_block`
-
   """
   attr :is_expressive, :boolean, doc: "`true` if expressive theme enabled."
   attr :nested, :boolean, doc: "Specify whether the list is nested, or not"
   attr :rest, :global
-  slot :inner_block
 
   slot :item do
     attr :attrs, :map

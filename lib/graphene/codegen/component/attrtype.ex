@@ -240,7 +240,13 @@ defmodule Graphene.CodeGen.Component.AttrType do
           %{kind: :string, values: ["", "sm"]}
 
         _ ->
-          %{}
+          case Graphene.CodeGen.Metadata.type_values() do
+            %{^cleanname => values} when is_list(values) and values != [] ->
+              %{kind: :string, values: values}
+
+            _ ->
+              %{}
+          end
       end
 
     case {undefined?, info} do

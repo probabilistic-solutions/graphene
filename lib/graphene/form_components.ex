@@ -1,10 +1,5 @@
 defmodule Graphene.FormComponents do
-  @moduledoc """
-  Form-aware wrappers for Carbon web components.
-
-  These components bridge Carbon custom change events into native `change`
-  events on a hidden input so Phoenix forms can use `phx-change` normally.
-  """
+  @moduledoc false
 
   use Phoenix.Component
 
@@ -773,7 +768,7 @@ defmodule Graphene.FormComponents do
   * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
   * `show_password_visibility_toggle` (`:boolean`) - Boolean property to render password visibility toggle. Defaults to `false`.
   * `show_password_label` (`:string`) - "Show password" tooltip text on password visibility toggle. Defaults to `"Show password"`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
+  * `size` (`:string`) - The input box size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, `"lg"`, or `"xl"`.
   * `step` (`:string`) - The amount the value should increase or decrease by. Defaults to `"1"`.
   * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
     Can be one of: start, center, or end.
@@ -783,7 +778,7 @@ defmodule Graphene.FormComponents do
     Can be either top, right, bottom, or left.
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
-  * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
+  * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"number"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, `"url"`, or `"number"`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
@@ -882,7 +877,7 @@ defmodule Graphene.FormComponents do
   attr :show_password_visibility_toggle, :boolean,
     doc: "Boolean property to render password visibility toggle"
 
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
   attr :step, :string, doc: "The amount the value should increase or decrease by", default: "1"
 
   attr :tooltip_alignment, :string,
@@ -899,8 +894,8 @@ defmodule Graphene.FormComponents do
 
   attr :type, :string,
     doc: "The type of the input. Can be one of the types listed in the INPUT_TYPE enum",
-    values: ["email", "password", "tel", "text", "url"],
-    default: "text"
+    values: ["email", "password", "tel", "text", "url", "number"],
+    default: "number"
 
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
@@ -985,7 +980,7 @@ defmodule Graphene.FormComponents do
   * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
   * `show_password_visibility_toggle` (`:boolean`) - Boolean property to render password visibility toggle. Defaults to `false`.
   * `show_password_label` (`:string`) - "Show password" tooltip text on password visibility toggle. Defaults to `"Show password"`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
+  * `size` (`:string`) - The input box size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, `"lg"`, or `"xl"`.
   * `step` (`:string`) - The amount the value should increase or decrease by. Defaults to `"1"`.
   * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
     Can be one of: start, center, or end.
@@ -995,7 +990,7 @@ defmodule Graphene.FormComponents do
     Can be either top, right, bottom, or left.
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
-  * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
+  * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"number"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, `"url"`, or `"number"`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
@@ -1094,7 +1089,7 @@ defmodule Graphene.FormComponents do
   attr :show_password_visibility_toggle, :boolean,
     doc: "Boolean property to render password visibility toggle"
 
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
   attr :step, :string, doc: "The amount the value should increase or decrease by", default: "1"
 
   attr :tooltip_alignment, :string,
@@ -1111,8 +1106,8 @@ defmodule Graphene.FormComponents do
 
   attr :type, :string,
     doc: "The type of the input. Can be one of the types listed in the INPUT_TYPE enum",
-    values: ["email", "password", "tel", "text", "url"],
-    default: "text"
+    values: ["email", "password", "tel", "text", "url", "number"],
+    default: "number"
 
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
@@ -1187,7 +1182,7 @@ defmodule Graphene.FormComponents do
   * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
   * `show_password_visibility_toggle` (`:boolean`) - Boolean property to render password visibility toggle. Defaults to `false`.
   * `show_password_label` (`:string`) - "Show password" tooltip text on password visibility toggle. Defaults to `"Show password"`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
+  * `size` (`:string`) - The input box size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, `"lg"`, or `"xl"`.
   * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
     Can be one of: start, center, or end.
 
@@ -1273,7 +1268,7 @@ defmodule Graphene.FormComponents do
   attr :show_password_visibility_toggle, :boolean,
     doc: "Boolean property to render password visibility toggle"
 
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
 
   attr :tooltip_alignment, :string,
     doc:
@@ -1358,7 +1353,7 @@ defmodule Graphene.FormComponents do
   * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
   * `show_password_visibility_toggle` (`:boolean`) - Boolean property to render password visibility toggle. Defaults to `false`.
   * `show_password_label` (`:string`) - "Show password" tooltip text on password visibility toggle. Defaults to `"Show password"`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
+  * `size` (`:string`) - The input box size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, `"lg"`, or `"xl"`.
   * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
     Can be one of: start, center, or end.
 
@@ -1444,7 +1439,7 @@ defmodule Graphene.FormComponents do
   attr :show_password_visibility_toggle, :boolean,
     doc: "Boolean property to render password visibility toggle"
 
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
 
   attr :tooltip_alignment, :string,
     doc:
@@ -1529,7 +1524,7 @@ defmodule Graphene.FormComponents do
   * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
   * `show_password_label` (`:string`) - "Show password" tooltip text on password visibility toggle. Defaults to `"Show password"`.
   * `show_password_visibility_toggle` (`:boolean`) - Boolean property to render password visibility toggle. Defaults to `false`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
+  * `size` (`:string`) - The input box size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, `"lg"`, or `"xl"`.
   * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
     Can be one of: start, center, or end.
 
@@ -1615,7 +1610,7 @@ defmodule Graphene.FormComponents do
   attr :show_password_visibility_toggle, :boolean,
     doc: "Boolean property to render password visibility toggle"
 
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
 
   attr :tooltip_alignment, :string,
     doc:
@@ -1705,7 +1700,7 @@ defmodule Graphene.FormComponents do
   * `rows` (`:string`) - The number of rows for the textarea to show by default. Defaults to `"4"`.
   * `show_password_visibility_toggle` (`:boolean`) - Boolean property to render password visibility toggle. Defaults to `false`.
   * `show_password_label` (`:string`) - "Show password" tooltip text on password visibility toggle. Defaults to `"Show password"`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
+  * `size` (`:string`) - The input box size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, `"lg"`, or `"xl"`.
   * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
     Can be one of: start, center, or end.
 
@@ -1798,7 +1793,7 @@ defmodule Graphene.FormComponents do
   attr :show_password_visibility_toggle, :boolean,
     doc: "Boolean property to render password visibility toggle"
 
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
 
   attr :tooltip_alignment, :string,
     doc:
@@ -1888,7 +1883,7 @@ defmodule Graphene.FormComponents do
   * `rows` (`:string`) - The number of rows for the textarea to show by default. Defaults to `"4"`.
   * `show_password_visibility_toggle` (`:boolean`) - Boolean property to render password visibility toggle. Defaults to `false`.
   * `show_password_label` (`:string`) - "Show password" tooltip text on password visibility toggle. Defaults to `"Show password"`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
+  * `size` (`:string`) - The input box size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, `"lg"`, or `"xl"`.
   * `tooltip_alignment` (`:string`) - Specify the alignment of the tooltip to the icon-only button.
     Can be one of: start, center, or end.
 
@@ -1981,7 +1976,7 @@ defmodule Graphene.FormComponents do
   attr :show_password_visibility_toggle, :boolean,
     doc: "Boolean property to render password visibility toggle"
 
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
 
   attr :tooltip_alignment, :string,
     doc:
@@ -2059,7 +2054,7 @@ defmodule Graphene.FormComponents do
   * `name` (`:string`) - The form name in `FormData`. Defaults to `nil`.
   * `placeholder` (`:string`) - The placeholder text. Defaults to `"Search"`.
   * `role` (`:string`) - Specify the role for the underlying <input>, defaults to searchbox. Defaults to `nil`.
-  * `size` (`:any`) - The search box size. Defaults to `nil`.
+  * `size` (`:string`) - The search box size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, `"lg"`, or `"xl"`.
   * `type` (`:string`) - The `<input>` name. Defaults to `nil`.
   * `value` (`:string`) - The value. Defaults to `nil`.
   * `color_scheme` (`:string`) - Color scheme for the search. Defaults to `nil`.
@@ -2099,7 +2094,12 @@ defmodule Graphene.FormComponents do
   attr :placeholder, :string, doc: "The placeholder text.", default: "Search"
   attr :rest, :global
   attr :role, :string, doc: "Specify the role for the underlying <input>, defaults to searchbox"
-  attr :size, :any, doc: "The search box size."
+
+  attr :size, :string,
+    doc: "The search box size.",
+    values: ["sm", "md", "lg", "xl"],
+    default: "md"
+
   attr :type, :string, doc: "The `<input>` name."
   attr :value, :string, doc: "The value."
   slot :inner_block
@@ -2141,7 +2141,7 @@ defmodule Graphene.FormComponents do
   * `name` (`:string`) - The form name in `FormData`. Defaults to `nil`.
   * `placeholder` (`:string`) - The placeholder text. Defaults to `"Search"`.
   * `role` (`:string`) - Specify the role for the underlying <input>, defaults to searchbox. Defaults to `nil`.
-  * `size` (`:any`) - The search box size. Defaults to `nil`.
+  * `size` (`:string`) - The search box size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, `"lg"`, or `"xl"`.
   * `type` (`:string`) - The `<input>` name. Defaults to `nil`.
   * `value` (`:string`) - The value. Defaults to `nil`.
   * Global attributes are accepted.
@@ -2179,7 +2179,12 @@ defmodule Graphene.FormComponents do
   attr :placeholder, :string, doc: "The placeholder text.", default: "Search"
   attr :rest, :global
   attr :role, :string, doc: "Specify the role for the underlying <input>, defaults to searchbox"
-  attr :size, :any, doc: "The search box size."
+
+  attr :size, :string,
+    doc: "The search box size.",
+    values: ["sm", "md", "lg", "xl"],
+    default: "md"
+
   attr :type, :string, doc: "The `<input>` name."
   attr :value, :string, doc: "The value."
   slot :inner_block
@@ -2226,7 +2231,7 @@ defmodule Graphene.FormComponents do
   * `required` (`:boolean`) - Boolean property to set the required status. Defaults to `false`.
   * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
   * `selected_index` (`:string`) - The selected index. Defaults to `nil`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
+  * `size` (`:string`) - The input box size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, `"lg"`, or `"xl"`.
   * `value` (`:string`) - The value of the text area. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify if the currently value is warn. Defaults to `false`.
   * `warn_text` (`:string`) - Message which is displayed if the value is warn. Defaults to `nil`.
@@ -2280,7 +2285,7 @@ defmodule Graphene.FormComponents do
 
   attr :rest, :global
   attr :selected_index, :string, doc: "The selected index."
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
   attr :value, :string, doc: "The value of the text area."
   attr :warn, :boolean, doc: "Specify if the currently value is warn."
   attr :warn_text, :string, doc: "Message which is displayed if the value is warn."
@@ -2395,7 +2400,7 @@ defmodule Graphene.FormComponents do
   * `required` (`:boolean`) - Boolean property to set the required status. Defaults to `false`.
   * `required_validity_message` (`:string`) - The special validity message for `required`. Defaults to `"Please fill out this field."`.
   * `selected_index` (`:string`) - The selected index. Defaults to `nil`.
-  * `size` (`:any`) - The input box size. Defaults to `nil`.
+  * `size` (`:string`) - The input box size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, `"lg"`, or `"xl"`.
   * `value` (`:string`) - The value of the text area. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify if the currently value is warn. Defaults to `false`.
   * `warn_text` (`:string`) - Message which is displayed if the value is warn. Defaults to `nil`.
@@ -2449,7 +2454,7 @@ defmodule Graphene.FormComponents do
 
   attr :rest, :global
   attr :selected_index, :string, doc: "The selected index."
-  attr :size, :any, doc: "The input box size."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
   attr :value, :string, doc: "The value of the text area."
   attr :warn, :boolean, doc: "Specify if the currently value is warn."
   attr :warn_text, :string, doc: "Message which is displayed if the value is warn."
@@ -3189,7 +3194,7 @@ defmodule Graphene.FormComponents do
   * `read_only` (`:boolean`) - Specify whether the control should be read-only. Defaults to `false`.
   * `required` (`:boolean`) - Whether the input is required. Defaults to `false`.
   * `required_validity_message` (`:string`) - Custom message for required validation. Defaults to `"Please fill out this field."`.
-  * `size` (`:any`) - Size of the time picker. Defaults to `nil`.
+  * `size` (`:string`) - Size of the time picker. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, or `"lg"`.
   * `type` (`:string`) - Input type. Defaults to `"text"`.
   * `value` (`:string`) - Value of the input. Defaults to `nil`.
   * `warning` (`:boolean`) - Specify whether the control is in warning state. Defaults to `false`.
@@ -3245,7 +3250,7 @@ defmodule Graphene.FormComponents do
     default: "Please fill out this field."
 
   attr :rest, :global
-  attr :size, :any, doc: "Size of the time picker"
+  attr :size, :string, doc: "Size of the time picker", values: ["sm", "md", "lg"], default: "md"
   attr :type, :string, doc: "Input type", default: "text"
   attr :value, :string, doc: "Value of the input"
   attr :warning, :boolean, doc: "Specify whether the control is in warning state"

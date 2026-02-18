@@ -2,7 +2,7 @@ if Mix.env() == :dev do
   defmodule Mix.Tasks.Graphene.CoreComponents.Generate do
     use Mix.Task
     require Logger
-    alias Jason
+    alias Graphene.CodeGen.Metadata
 
     defp template_core_components(:src) do
       Path.join(["assets", "eex", "graphene_core_components.ex"])
@@ -24,28 +24,12 @@ if Mix.env() == :dev do
       "Graphene.CoreComponents"
     end
 
-    def components_json_path() do
-      Path.join(["assets", "node_modules", "@carbon", "web-components", "custom-elements.json"])
-    end
-
-    def get_components_json() do
-      components_json_path() |> File.read!() |> Jason.decode!() |> Map.fetch!("tags")
-    end
-
     def get_version() do
-      Path.join(["assets", "node_modules", "@carbon", "web-components", "package.json"])
-      |> File.read!()
-      |> Jason.decode!()
-      |> Map.fetch!("version")
+      Metadata.version()
     end
 
     def get_components() do
-      get_components_json()
-      |> Stream.map(&Graphene.CodeGen.Component.parse(&1, "cds-"))
-      |> Stream.map(&Graphene.CodeGen.ComponentPatches.patch/1)
-      |> Enum.to_list()
-      |> Graphene.CodeGen.ComponentPatches.append_missing_components()
-      |> Enum.sort(fn a, b -> a.componentname < b.componentname end)
+      Metadata.components()
     end
 
     defp template_assigns(components) do
@@ -53,7 +37,7 @@ if Mix.env() == :dev do
         version: get_version(),
         module: module(),
         components: components,
-        source: components_json_path()
+        source: Metadata.source()
       ]
     end
 

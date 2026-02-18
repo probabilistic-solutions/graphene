@@ -8,6 +8,7 @@ if Mix.env() == :dev do
       Logger.debug("Running #{__MODULE__}")
 
       for task <- [
+            "graphene.codegen.extract",
             "graphene.core_components.generate",
             "graphene.form_components.generate",
             "graphene.carbon_components.generate"

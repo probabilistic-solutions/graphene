@@ -20,7 +20,10 @@ if Mix.env() == :dev do
     end
 
     defp components do
-      Graphene.CoreComponents.__components__()
+      Graphene.CodeGen.Metadata.components()
+      |> Map.new(fn component ->
+        {String.to_atom(component.componentname), component}
+      end)
     end
 
     defp carbon_component_overrides do
@@ -45,23 +48,9 @@ if Mix.env() == :dev do
       end
     end
 
-    defp docs_map do
-      case Code.fetch_docs(Graphene.CoreComponents) do
-        {:docs_v1, _, _, _, _, _, docs} ->
-          for {{:function, name, 1}, _, _, doc, _} <- docs, into: %{} do
-            doc_text =
-              case doc do
-                %{"en" => text} when is_binary(text) -> text
-                :hidden -> nil
-                :none -> nil
-                _ -> nil
-              end
-
-            {name, doc_text}
-          end
-
-        _ ->
-          %{}
+    defp docs_map(components) do
+      for {name, component} <- components, into: %{} do
+        {name, component.docs}
       end
     end
 
@@ -96,9 +85,11 @@ if Mix.env() == :dev do
       |> Enum.join(", ")
     end
 
-    defp atom_name(atom) do
-      name = Atom.to_string(atom)
+    defp atom_name(atom) when is_atom(atom) do
+      atom |> Atom.to_string() |> atom_name()
+    end
 
+    defp atom_name(name) when is_binary(name) do
       if Regex.match?(~r/^[a-z_][a-zA-Z0-9_]*$/, name) do
         ":#{name}"
       else
@@ -111,11 +102,11 @@ if Mix.env() == :dev do
         []
         |> maybe_add_opt(:default, Keyword.get(attr.opts, :default))
         |> maybe_add_opt(:values, Keyword.get(attr.opts, :values))
-        |> maybe_add_opt(:required, attr.required)
-        |> maybe_add_opt(:doc, attr.doc)
+        |> maybe_add_opt(:required, Map.get(attr, :required, false))
+        |> maybe_add_opt(:doc, Keyword.get(attr.opts, :doc))
 
       opt_str = opt_string(opts)
-      name = atom_name(attr.name)
+      name = attr.atomname
 
       if opt_str do
         "  attr #{name}, :#{attr.type}, #{opt_str}\n"
@@ -127,11 +118,11 @@ if Mix.env() == :dev do
     defp build_slot(slot) do
       slot_opts =
         []
-        |> maybe_add_opt(:required, slot.required)
-        |> maybe_add_opt(:doc, slot.doc)
+        |> maybe_add_opt(:required, Map.get(slot, :required, false))
+        |> maybe_add_opt(:doc, Keyword.get(slot.opts, :doc))
 
       slot_opt_str = opt_string(slot_opts)
-      name = atom_name(slot.name)
+      name = slot.atomname
 
       header =
         if slot_opt_str do
@@ -140,20 +131,22 @@ if Mix.env() == :dev do
           "  slot #{name}"
         end
 
-      if slot.attrs == [] do
+      slot_attrs = Map.get(slot, :attrs, [])
+
+      if slot_attrs == [] do
         header <> "\n"
       else
         attrs =
-          slot.attrs
+          slot_attrs
           |> Enum.map(fn attr ->
             opts =
               []
               |> maybe_add_opt(:values, Keyword.get(attr.opts, :values))
-              |> maybe_add_opt(:required, attr.required)
-              |> maybe_add_opt(:doc, attr.doc)
+              |> maybe_add_opt(:required, Map.get(attr, :required, false))
+              |> maybe_add_opt(:doc, Keyword.get(attr.opts, :doc))
 
             opt_str = opt_string(opts)
-            attr_name = atom_name(attr.name)
+            attr_name = attr.atomname
 
             if opt_str do
               "    attr #{attr_name}, :#{attr.type}, #{opt_str}\n"
@@ -207,6 +200,7 @@ if Mix.env() == :dev do
         |> Enum.map(&build_attr/1)
         |> Enum.join("")
         |> Kernel.<>(form_delegate_attrs(component, delegate))
+        |> Kernel.<>(rest_attr())
 
       slots = component.slots |> Enum.map(&build_slot/1) |> Enum.join("")
 
@@ -240,6 +234,7 @@ if Mix.env() == :dev do
         |> Enum.join("")
         |> Kernel.<>(form_delegate_attrs(component, delegate))
         |> Kernel.<>(Map.get(recipe, :extra_attrs, ""))
+        |> Kernel.<>(rest_attr(Map.get(recipe, :extra_attrs, "")))
 
       slots =
         component.slots
@@ -265,7 +260,8 @@ if Mix.env() == :dev do
       attrs =
         Enum.filter(attrs, fn attr ->
           default = Keyword.get(attr.opts, :default, :__missing__)
-          not attr.required and default in [nil, false]
+          required = Map.get(attr, :required, false)
+          not required and default in [nil, false]
         end)
 
       case attrs do
@@ -276,14 +272,16 @@ if Mix.env() == :dev do
           assigns =
             attrs
             |> Enum.map(fn attr ->
+              name = attr.atomname
+
               default =
                 cond do
-                  attr.name == :rest -> "%{}"
+                  name == ":rest" -> "%{}"
                   Keyword.get(attr.opts, :default, :__missing__) == false -> "false"
                   true -> "nil"
                 end
 
-              "      |> assign_new(#{atom_name(attr.name)}, fn -> #{default} end)\n"
+              "      |> assign_new(#{name}, fn -> #{default} end)\n"
             end)
             |> Enum.join("")
 
@@ -295,6 +293,14 @@ if Mix.env() == :dev do
     defp merge_prelude(prelude, nil), do: prelude
     defp merge_prelude(nil, prelude), do: prelude
     defp merge_prelude(prelude, extra), do: prelude <> "\n" <> extra
+
+    defp rest_attr(extra_attrs \\ "") do
+      if String.contains?(extra_attrs, "attr :rest") do
+        ""
+      else
+        "  attr :rest, :global\n"
+      end
+    end
 
     defp render_recipe_clause(name, pattern, prelude, body) do
       {pattern, guard} = split_pattern(pattern)
@@ -374,17 +380,18 @@ if Mix.env() == :dev do
     end
 
     defp render_wrappers do
-      docs = docs_map()
+      components = components()
+      docs = docs_map(components)
       recipes = carbon_component_recipes() |> Map.new(&{&1.name, &1})
       overrides = carbon_component_overrides()
       form_delegates = form_delegate_names()
 
-      components()
+      components
       |> Map.keys()
       |> Enum.sort()
       |> Enum.reject(&MapSet.member?(overrides, &1))
       |> Enum.map(fn name ->
-        component = Map.fetch!(components(), name)
+        component = Map.fetch!(components, name)
         doc = Map.get(docs, name)
         recipe = Map.get(recipes, name)
         render_component(name, component, doc, recipe, form_delegates)

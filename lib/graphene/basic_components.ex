@@ -11,6 +11,8 @@ defmodule Graphene.BasicComponents do
 
   alias Phoenix.LiveView.JS
   alias Graphene.CarbonComponents
+  alias Graphene.CoreComponents
+  alias Graphene.FormComponents
 
   @basic_icon_names Graphene.Icons.available_icons()
 
@@ -35,7 +37,7 @@ defmodule Graphene.BasicComponents do
     assigns = assign(assigns, :carbon_kind, flash_kind(assigns.kind))
 
     ~H"""
-    <CarbonComponents.toast_notification
+    <CoreComponents.toast_notification
       :if={msg = render_slot(@inner_block) || Phoenix.Flash.get(@flash, @kind)}
       id={@id}
       kind={@carbon_kind}
@@ -45,7 +47,7 @@ defmodule Graphene.BasicComponents do
     >
       <:title :if={@title}>{@title}</:title>
       <:subtitle>{msg}</:subtitle>
-    </CarbonComponents.toast_notification>
+    </CoreComponents.toast_notification>
     """
   end
 
@@ -90,9 +92,9 @@ defmodule Graphene.BasicComponents do
       |> assign(:carbon_kind, kind)
 
     ~H"""
-    <CarbonComponents.button kind={@carbon_kind} class={@class} phx-click={@phx_click} {@rest}>
+    <CoreComponents.button kind={@carbon_kind} class={@class} phx-click={@phx_click} {@rest}>
       {render_slot(@inner_block)}
-    </CarbonComponents.button>
+    </CoreComponents.button>
     """
   end
 
@@ -162,7 +164,7 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CarbonComponents.form_item>
-      <CarbonComponents.checkbox
+      <FormComponents.checkbox
         id={@id}
         name={@name}
         checked={@checked}
@@ -184,17 +186,20 @@ defmodule Graphene.BasicComponents do
     class = input_class(assigns.class, assigns.error_class, invalid)
     selected = selected_values(assigns.value, assigns.multiple)
 
+    items = build_select_items(assigns.options, selected, assigns.prompt, assigns.value)
+
     assigns =
       assign(assigns,
         selected: selected,
         invalid: invalid,
         invalid_text: invalid_text,
-        class: class
+        class: class,
+        items: items
       )
 
     ~H"""
     <CarbonComponents.form_item>
-      <CarbonComponents.select
+      <FormComponents.select
         id={@id}
         name={@name}
         value={select_value(@value, @multiple)}
@@ -204,19 +209,16 @@ defmodule Graphene.BasicComponents do
         class={@class}
         {@rest}
       >
-        <:label_text>{@label}</:label_text>
-        <CarbonComponents.select_item
-          :if={@prompt}
-          value=""
-          label={@prompt}
-          selected={prompt_selected?(@value)}
+        <:label_text :if={@label}>{@label}</:label_text>
+        <:item
+          :for={item <- @items}
+          label={item.label}
+          value={item.value}
+          selected={item.selected}
         >
-          {@prompt}
-        </CarbonComponents.select_item>
-        <%= for option <- normalize_options(@options) do %>
-          {render_select_option(option, @selected)}
-        <% end %>
-      </CarbonComponents.select>
+          {item.label}
+        </:item>
+      </FormComponents.select>
     </CarbonComponents.form_item>
     """
   end
@@ -231,16 +233,17 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CarbonComponents.form_item>
-      <CarbonComponents.textarea
+      <FormComponents.textarea
         id={@id}
         name={@name}
-        label={@label}
         value={Phoenix.HTML.Form.normalize_value("textarea", @value)}
         invalid={@invalid}
         invalid_text={@invalid_text}
         class={@class}
         {@rest}
-      />
+      >
+        <:label_text :if={@label}>{@label}</:label_text>
+      </FormComponents.textarea>
     </CarbonComponents.form_item>
     """
   end
@@ -254,7 +257,7 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CarbonComponents.form_item>
-      <CarbonComponents.search
+      <FormComponents.search
         name={@name}
         label_text={@label}
         value={Phoenix.HTML.Form.normalize_value("search", @value)}
@@ -287,10 +290,9 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CarbonComponents.form_item>
-      <CarbonComponents.number_input
+      <FormComponents.number_input
         id={@id}
         name={@name}
-        label={@label}
         value={Phoenix.HTML.Form.normalize_value("number", @value)}
         min={@min}
         max={@max}
@@ -298,7 +300,9 @@ defmodule Graphene.BasicComponents do
         invalid_text={@invalid_text}
         class={@class}
         {@rest}
-      />
+      >
+        <:label_text :if={@label}>{@label}</:label_text>
+      </FormComponents.number_input>
     </CarbonComponents.form_item>
     """
   end
@@ -313,16 +317,23 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CarbonComponents.form_item>
-      <CarbonComponents.file_uploader id={@id} name={@name} label_title={@label} label_description={@prompt}>
-        <CarbonComponents.file_uploader_button
+      <FormComponents.file_uploader
+        id={@id}
+        name={@name}
+        label_title={@label}
+        label_description={@prompt}
+        {@rest}
+      >
+        <:button
+          label={if @label, do: @label, else: "Upload"}
           name={@name}
           accept={@rest[:accept]}
           multiple={@multiple}
           disabled={@rest[:disabled]}
         >
           {if @label, do: @label, else: "Upload"}
-        </CarbonComponents.file_uploader_button>
-      </CarbonComponents.file_uploader>
+        </:button>
+      </FormComponents.file_uploader>
       <.error :for={msg <- @errors}>{msg}</.error>
     </CarbonComponents.form_item>
     """
@@ -338,17 +349,18 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CarbonComponents.form_item>
-      <CarbonComponents.text_input
+      <FormComponents.text_input
         id={@id}
         name={@name}
-        label={@label}
         type={@type}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         invalid={@invalid}
         invalid_text={@invalid_text}
         class={@class}
         {@rest}
-      />
+      >
+        <:label_text :if={@label}>{@label}</:label_text>
+      </FormComponents.text_input>
     </CarbonComponents.form_item>
     """
   end
@@ -392,13 +404,13 @@ defmodule Graphene.BasicComponents do
 
   def header(assigns) do
     ~H"""
-    <CarbonComponents.stack orientation="horizontal" gap="3">
-      <CarbonComponents.stack gap="1">
+    <CoreComponents.stack orientation="horizontal" gap="3">
+      <CoreComponents.stack gap="1">
         <CarbonComponents.heading>{render_slot(@inner_block)}</CarbonComponents.heading>
         <p :if={@subtitle != []}>{render_slot(@subtitle)}</p>
-      </CarbonComponents.stack>
+      </CoreComponents.stack>
       <div :if={@actions != []}>{render_slot(@actions)}</div>
-    </CarbonComponents.stack>
+    </CoreComponents.stack>
     """
   end
 
@@ -633,33 +645,34 @@ defmodule Graphene.BasicComponents do
     end)
   end
 
-  defp render_select_option({:group, label, options}, selected) do
-    assigns = %{label: to_string(label), options: options, selected: selected}
+  defp build_select_items(options, selected, prompt, value) do
+    items =
+      options
+      |> normalize_options()
+      |> flatten_options()
+      |> Enum.map(fn {label, item_value} ->
+        %{
+          label: label,
+          value: item_value,
+          selected: MapSet.member?(selected, item_value)
+        }
+      end)
 
-    ~H"""
-    <CarbonComponents.select_item_group label={@label}>
-      <%= for option <- @options do %>
-        {render_select_option(option, @selected)}
-      <% end %>
-    </CarbonComponents.select_item_group>
-    """
+    if is_nil(prompt) do
+      items
+    else
+      [
+        %{label: prompt, value: "", selected: prompt_selected?(value)}
+        | items
+      ]
+    end
   end
 
-  defp render_select_option({:option, label, value}, selected) do
-    label_text = to_string(label)
-    value_text = to_string(value)
-
-    assigns = %{
-      label: label_text,
-      value: value_text,
-      selected: MapSet.member?(selected, value_text)
-    }
-
-    ~H"""
-    <CarbonComponents.select_item label={@label} value={@value} selected={@selected}>
-      {@label}
-    </CarbonComponents.select_item>
-    """
+  defp flatten_options(options) do
+    Enum.flat_map(options, fn
+      {:group, _label, group_options} -> flatten_options(group_options)
+      {:option, label, value} -> [{to_string(label), to_string(value)}]
+    end)
   end
 
   defp select_value(_value, true), do: nil

@@ -40,6 +40,7 @@ defmodule Graphene.MixProject do
       {:esbuild, "~> 0.8", runtime: false},
       # dev deps (e.g. for code gen)
       {:jason, "~> 1.4"},
+      {:phoenix_storybook, "~> 0.9.3", only: :dev},
       # testing
       {:floki, ">= 0.30.0", only: :test},
       # stories

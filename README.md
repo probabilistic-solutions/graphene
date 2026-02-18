@@ -52,6 +52,15 @@ const liveSocket = new LiveSocket("/live", Socket, {
 liveSocket.connect();
 ```
 
+5) Expose Graphene components in your app:
+
+```elixir
+defmodule MyAppWeb.Components do
+  use Phoenix.Component
+  use Graphene.Components
+end
+```
+
 Notes:
 - Add Carbon + IBM Plex to your stylesheet (for example in `assets/css/app.scss`), as above.
 - Import Carbon + IBM Plex explicitly in your app stylesheet:
