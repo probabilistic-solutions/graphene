@@ -478,8 +478,8 @@ defmodule Graphene.FormComponents do
       form_input_assigns(assigns,
         name: :checkbox,
         mode: :boolean,
-        checked_attr: :checked,
-        event: "cds-checkbox-changed"
+        event: "cds-checkbox-changed",
+        checked_attr: :checked
       )
 
     component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
@@ -618,8 +618,8 @@ defmodule Graphene.FormComponents do
       form_input_assigns(assigns,
         name: :toggle,
         mode: :boolean,
-        checked_attr: :toggled,
         event: "cds-toggle-changed",
+        checked_attr: :toggled,
         detail_key: "toggled"
       )
 
@@ -778,7 +778,7 @@ defmodule Graphene.FormComponents do
     Can be either top, right, bottom, or left.
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
-  * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"number"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, `"url"`, or `"number"`.
+  * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
@@ -894,8 +894,8 @@ defmodule Graphene.FormComponents do
 
   attr :type, :string,
     doc: "The type of the input. Can be one of the types listed in the INPUT_TYPE enum",
-    values: ["email", "password", "tel", "text", "url", "number"],
-    default: "number"
+    values: ["email", "password", "tel", "text", "url"],
+    default: "text"
 
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
@@ -990,7 +990,7 @@ defmodule Graphene.FormComponents do
     Can be either top, right, bottom, or left.
 
     Defaults to `"bottom"`. Must be one of `"top"`, `"right"`, `"bottom"`, or `"left"`.
-  * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"number"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, `"url"`, or `"number"`.
+  * `type` (`:string`) - The type of the input. Can be one of the types listed in the INPUT_TYPE enum. Defaults to `"text"`. Must be one of `"email"`, `"password"`, `"tel"`, `"text"`, or `"url"`.
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
@@ -1106,8 +1106,8 @@ defmodule Graphene.FormComponents do
 
   attr :type, :string,
     doc: "The type of the input. Can be one of the types listed in the INPUT_TYPE enum",
-    values: ["email", "password", "tel", "text", "url", "number"],
-    default: "number"
+    values: ["email", "password", "tel", "text", "url"],
+    default: "text"
 
   attr :value, :string, doc: "The value of the input."
   attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
