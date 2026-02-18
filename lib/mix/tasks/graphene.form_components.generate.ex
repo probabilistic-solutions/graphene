@@ -57,13 +57,13 @@ if Mix.env() == :dev do
         %{
           name: :number_input,
           mode: :value,
-          value_attr: :default_value,
+          value_attr: :value,
           event: "cds-number-input"
         },
         %{
           name: :fluid_number_input,
           mode: :value,
-          value_attr: :default_value,
+          value_attr: :value,
           event: "cds-number-input"
         },
         %{name: :text_input, mode: :value, event: "input"},
