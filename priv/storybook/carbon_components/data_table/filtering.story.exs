@@ -2,7 +2,21 @@ Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.Filtering do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.data_table/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Filtering reduces large datasets to relevant rows. Use toolbar search and
+filters when users need to locate specific rows quickly.
+
+Combine .table_toolbar_search with .overflow_menu filters and keep filtering
+state visible to users.
+""")
+  end
+
+  
 
   def variations do
     [

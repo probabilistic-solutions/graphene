@@ -1,7 +1,20 @@
 defmodule Storybook.CarbonComponents.Toggle.FeatureFlag do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.feature_flags/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Feature flag toggles expose optional or experimental functionality. Use them for
+controlled rollouts or user opt-ins.
+
+Pair .toggle with .inline_notification or helper text to clarify consequences.
+""")
+  end
+
+  
 
   def variations do
     [

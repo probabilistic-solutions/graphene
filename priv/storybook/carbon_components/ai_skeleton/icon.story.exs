@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.AISkeleton.Icon do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.ai_skeleton_icon/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+AI skeleton icons are lightweight placeholders while AI-driven iconography or
+badges load. Use them when generation time is noticeable to avoid layout shift.
+
+Replace them with the final .icon and include .ai_label nearby to maintain AI
+transparency.
+""")
+  end
+
+  
 
   def variations do
     [

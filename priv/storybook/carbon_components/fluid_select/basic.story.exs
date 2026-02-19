@@ -1,7 +1,20 @@
 defmodule Storybook.CarbonComponents.FluidSelect.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.fluid_select/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Fluid selects fill the container width for fluid layout patterns. Use them when
+forms align to the grid edges or within panels.
+
+Combine .fluid_select with .form validation and use .select for compact layouts.
+""")
+  end
+
+  
 
   def variations do
     [

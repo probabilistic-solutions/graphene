@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.ComboBox.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.combo_box/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Combo boxes let users type to filter long option lists. Use them when the list
+is large or when search-as-you-type is helpful.
+
+Combine .combo_box with .form validation or .inline_notification feedback, and
+prefer .select or .dropdown for short, static lists.
+""")
+  end
+
+  
 
   def variations do
     [
@@ -25,6 +39,8 @@ defmodule Storybook.CarbonComponents.ComboBox.Basic do
       },
       %VariationGroup{
         id: :sizes,
+        description: "Size and density",
+        note: "Keep size consistent within a form; md is the default.",
         variations:
           for size <- ~w(sm md lg) do
             %Variation{

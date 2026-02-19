@@ -1,7 +1,20 @@
 defmodule Storybook.CarbonComponents.Skeleton.Icon do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.skeleton_icon/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Skeleton icons reserve space for icons while content loads. Use them alongside
+skeleton text or placeholders to avoid layout shift.
+
+Replace with the final .icon once data is available.
+""")
+  end
+
+  
 
   def variations do
     [

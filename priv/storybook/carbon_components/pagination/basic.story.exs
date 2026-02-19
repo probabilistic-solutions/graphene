@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.Pagination.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.pagination/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Pagination splits long datasets into pages. Use it when loading all items at
+once would be slow or overwhelming.
+
+Pair .pagination with .data_table or list views and provide a page-size .select
+when users need control.
+""")
+  end
+
+  
 
   def variations do
     [

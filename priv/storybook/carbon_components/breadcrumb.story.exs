@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.Breadcrumb do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.breadcrumb/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Breadcrumbs provide secondary navigation that reflects hierarchy and lets users
+move up levels. Use them for experiences with three or more hierarchy levels.
+
+Place .breadcrumb within a .page_header or below the .ui_shell header, and pair
+with .tabs when sections share the same parent.
+""")
+  end
+
+  
 
   def variations do
     [

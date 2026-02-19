@@ -308,7 +308,9 @@ defmodule Graphene.CarbonComponents.Table do
       |> assign_new(:use_static_width, fn -> false end)
       |> assign_new(:with_row_ai_labels, fn -> false end)
       |> assign_new(:with_row_slugs, fn -> false end)
-      |> assign_new(:locale, fn -> "en" end)
+      # Carbon's <cds-table> blows up if `locale` ends up as null.
+      # Treat nil/empty locale as "en", matching DataTableComponent behavior.
+      |> assign(:locale, if(is_nil(assigns[:locale]) || assigns[:locale] == "", do: "en", else: assigns[:locale]))
       |> assign(:selected_set, selected_set(assigns.selected_ids))
       |> assign(:effective_selectable, effective_selectable?(assigns))
       |> assign(:effective_sortable, effective_sortable?(assigns))

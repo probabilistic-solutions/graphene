@@ -2,7 +2,21 @@ Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.BatchExpansion do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.data_table/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Batch expansion reveals details for multiple rows at once. Use it when users
+need to review or compare row-level detail in bulk.
+
+Pair with clear expansion content, such as a .structured_list, and keep row
+actions in the toolbar for consistency.
+""")
+  end
+
+  
 
   def variations do
     [

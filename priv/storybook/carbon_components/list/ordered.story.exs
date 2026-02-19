@@ -1,7 +1,20 @@
 defmodule Storybook.CarbonComponents.List.Ordered do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.ordered_list/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Ordered lists are for step-by-step sequences where order matters. Use them for
+procedures, instructions, or ranked items.
+
+Pair .ordered_list with .heading or .link elements to provide context for steps.
+""")
+  end
+
+  
 
   def variations do
     [

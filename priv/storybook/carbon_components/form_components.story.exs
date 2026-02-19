@@ -9,9 +9,14 @@ defmodule Storybook.CarbonComponents.FormComponents do
   alias Phoenix.LiveView.JS
 
   alias Graphene.Internal.CoreComponents
-
   def doc do
-    "All form-aware components with a live form state preview."
+    """
+This page demonstrates form-aware components sharing a single form state. Use
+it as a reference for how fields, selects, and pickers work together.
+
+Combine inputs with .form_group and .button actions, and surface validation with
+.inline_notification or per-field error text.
+"""
   end
 
   @impl true

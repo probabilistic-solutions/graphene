@@ -1,7 +1,20 @@
 defmodule Storybook.CarbonComponents.Slider.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.slider/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Sliders let users pick a value or range along a track. Use them when the range
+is bounded and approximate selection is acceptable.
+
+Pair .slider with .number_input for precise entry and show min and max labels.
+""")
+  end
+
+  
 
   def variations do
     [

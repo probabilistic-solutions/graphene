@@ -2,9 +2,14 @@ defmodule Storybook.CarbonComponents.FileUploader.Upload do
   use PhoenixStorybook.Story, :example
 
   import Graphene.CarbonComponents
-
   def doc do
-    "Upload a file and display the server-computed size and hash."
+    """
+This example shows a file upload flow that returns server-computed metadata.
+Use it when you need to validate uploads or display hashes, sizes, or previews.
+
+Pair .file_uploader with .button actions for submit and clear, and use
+.inline_notification or .toast_notification to confirm completion.
+"""
   end
 
   @impl true

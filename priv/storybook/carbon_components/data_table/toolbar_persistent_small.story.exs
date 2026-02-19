@@ -2,7 +2,20 @@ Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.ToolbarPersistentSmall do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.data_table/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Compact persistent toolbars are for dense tables and constrained layouts. Use
+them when space is limited but search must remain available.
+
+Combine with compact table sizes and keep secondary actions in .overflow_menu.
+""")
+  end
+
+  
 
   def variations do
     [

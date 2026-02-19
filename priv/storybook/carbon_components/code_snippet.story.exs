@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.CodeSnippet do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.code_snippet/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Code snippets present short, copyable commands or tokens. Use them in setup
+flows and documentation when users need to paste values quickly.
+
+Pair .code_snippet with .copy_button and place it near explanatory .text or
+.link guidance.
+""")
+  end
+
+  
 
   def variations do
     [

@@ -1,7 +1,20 @@
 defmodule Storybook.CarbonComponents.Toggle.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.toggle/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Toggles switch between two immediate states. Use them for settings that take
+effect instantly, not for form submission choices.
+
+Pair .toggle with .form_group or .inline_notification to explain the impact.
+""")
+  end
+
+  
 
   def variations do
     [

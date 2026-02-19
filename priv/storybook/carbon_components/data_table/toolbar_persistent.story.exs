@@ -2,7 +2,21 @@ Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.ToolbarPersistent do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.data_table/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Persistent toolbars keep search controls visible while scrolling. Use them on
+long tables where users frequently filter or search.
+
+Pair persistent search with clear filter state and keep actions minimal to avoid
+visual clutter.
+""")
+  end
+
+  
 
   def variations do
     [

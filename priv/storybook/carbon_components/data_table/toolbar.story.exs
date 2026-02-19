@@ -2,7 +2,21 @@ Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.Toolbar do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.data_table/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Table toolbars provide search, filters, and actions above the data table. Use
+them when users need to manage or refine table content.
+
+Combine .table_toolbar with .overflow_menu and primary .button actions to keep
+commands grouped and consistent.
+""")
+  end
+
+  
 
   def variations do
     [

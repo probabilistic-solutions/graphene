@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.Stack do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.stack/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Stack arranges items with consistent spacing in one direction. Use it to align
+tags, buttons, or status chips without custom CSS.
+
+Combine .stack with .grid or .tile for layout structure and adjust gap to match
+density needs.
+""")
+  end
+
+  
 
   def variations do
     [

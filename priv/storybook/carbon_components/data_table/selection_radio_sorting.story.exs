@@ -2,7 +2,20 @@ Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.SelectionRadioSorting do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.data_table/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Single-row selection with sorting helps users pick the best match from a
+sortable dataset. Use this when users compare rows before choosing one.
+
+Pair with column sorting and concise detail views for the selected row.
+""")
+  end
+
+  
 
   def variations do
     [

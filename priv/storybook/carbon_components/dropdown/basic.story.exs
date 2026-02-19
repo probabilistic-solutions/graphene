@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.Dropdown.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.dropdown/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Dropdowns present a list of options for filtering or sorting. Use them in forms,
+toolbars, or side panels when the option list is moderate.
+
+Pair .dropdown with .table_toolbar_search or .form validation, and use inline
+type for compact UI.
+""")
+  end
+
+  
 
   def variations do
     [
@@ -27,6 +41,8 @@ defmodule Storybook.CarbonComponents.Dropdown.Basic do
       },
       %VariationGroup{
         id: :sizes,
+        description: "Size variants",
+        note: "Keep size consistent within the form or toolbar.",
         variations:
           for size <- ~w(sm md lg) do
             %Variation{

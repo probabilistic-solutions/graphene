@@ -1,7 +1,20 @@
 defmodule Storybook.CarbonComponents.Select.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.select/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Select fields allow one choice from a list and are best for form submissions.
+Use them when the list is short and predictable.
+
+Pair .select with .form validation and consider .combo_box for long lists.
+""")
+  end
+
+  
 
   def variations do
     [

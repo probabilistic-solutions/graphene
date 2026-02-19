@@ -2,14 +2,14 @@ defmodule Storybook.CarbonComponents.UIShell do
   use PhoenixStorybook.Story, :example
 
   import Graphene.CarbonComponents
-
   def doc do
     """
-    UI shell layout.
+The UI shell is the persistent frame for product navigation, including header
+and side nav. Use it to provide consistent navigation and branding.
 
-    For full page layouts, wrap your main content inside a top-level `<.grid full_width>`
-    so sections align to the Carbon grid and spacing is controlled via `row_gap`.
-    """
+Pair .ui_shell with a top-level .grid in the content area so sections align to
+the Carbon grid.
+"""
   end
 
   @impl true

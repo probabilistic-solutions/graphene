@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.NumberInput.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.number_input/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Number inputs collect numeric values and include stepper controls. Use them when
+precision matters or when users adjust values in small increments.
+
+Pair .number_input with .form validation and consider .slider for approximate
+ranges.
+""")
+  end
+
+  
 
   def variations do
     [

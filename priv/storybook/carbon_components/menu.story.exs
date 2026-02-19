@@ -1,13 +1,20 @@
 defmodule Storybook.CarbonComponents.Menu do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.menu/1
-  def container,
-    do:
-      {:iframe,
-       style:
-         "display: flex; flex-direction: column; justify-content: center; align-items: center; " <>
-           "margin: 0; gap: 5px; padding: 5px; min-height: 240px;"}
+
+  def doc do
+    Storybook.Doc.markdown("""
+Menus are contextual lists of actions. Use them when multiple secondary actions
+belong to a trigger element.
+
+Pair .menu with .menu_button or .overflow_menu and keep menu items short and
+action-focused.
+""")
+  end
+
   def template do
     """
     <div class="psb" style="position: relative; min-height: 240px;">
@@ -38,6 +45,8 @@ defmodule Storybook.CarbonComponents.Menu do
       },
       %VariationGroup{
         id: :sizes,
+        description: "Menu sizing",
+        note: "Keep menu size consistent on a page and use smaller sizes for dense toolbars.",
         variations:
           for {size, index} <- Enum.with_index(~w(sm md lg xl)) do
             %Variation{

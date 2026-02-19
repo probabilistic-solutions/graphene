@@ -8,9 +8,9 @@ defmodule Storybook.BasicComponents.Header do
       %Variation{
         id: :default,
         slots: [
+          ~S|<:name href="#" prefix="IBM">Nimbus</:name>|,
           "Dashboard",
-          ~S|<:subtitle>Monthly summary</:subtitle>|,
-          ~S|<:actions><Graphene.BasicComponents.button kind="ghost">New</Graphene.BasicComponents.button></:actions>|
+          ~S|<:global><Graphene.BasicComponents.button kind="ghost">New</Graphene.BasicComponents.button></:global>|
         ]
       }
     ]

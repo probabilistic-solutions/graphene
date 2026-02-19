@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.FluidTextarea.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.fluid_textarea/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Fluid textareas provide full-width multi-line input. Use them for longer
+responses in fluid forms or panels.
+
+Combine .fluid_textarea with .form and helper text, and use .textarea for
+compact layouts.
+""")
+  end
+
+  
 
   def variations do
     [

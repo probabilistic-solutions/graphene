@@ -2,7 +2,21 @@ Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.OverflowMenuSmall do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.data_table/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Small overflow menus keep table actions available in tight spaces. Use them in
+dense toolbars or compact tables where full-width actions do not fit.
+
+Combine .overflow_menu with primary actions in .table_toolbar and keep the menu
+items focused on secondary actions.
+""")
+  end
+
+  
 
   def variations do
     [

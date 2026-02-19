@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.PageHeader do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.page_header/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Page headers summarize the page title, context, and actions. Use them to orient
+users and provide top-level controls.
+
+Combine .page_header with .breadcrumb and action .button slots, and pair with
+.tabs when switching between page sections.
+""")
+  end
+
+  
 
   def variations do
     [

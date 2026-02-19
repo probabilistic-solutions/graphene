@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.OverflowMenu.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.overflow_menu/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Overflow menus hold additional actions when space is limited. Use them for
+secondary actions in toolbars, cards, or tables.
+
+Pair .overflow_menu with .icon_button triggers and keep the menu focused on less
+frequent actions.
+""")
+  end
+
+  
 
   def variations do
     [

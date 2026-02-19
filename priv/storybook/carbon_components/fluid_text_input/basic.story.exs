@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.FluidTextInput.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.fluid_text_input/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Fluid text inputs are full-width fields for fluid layout patterns. Use them in
+forms that align to the grid edges or in side panels.
+
+Pair .fluid_text_input with .form_group and .inline_notification for validation
+feedback.
+""")
+  end
+
+  
 
   def variations do
     [

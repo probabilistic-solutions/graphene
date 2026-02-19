@@ -1,7 +1,22 @@
 defmodule Storybook.CarbonComponents.Accordion.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.accordion/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Accordions reveal or hide related content to reduce scrolling and support
+progressive disclosure. Use them for grouped, non-critical content and avoid
+them when users must read everything or when content is deeply nested.
+
+Combine .accordion with .heading, .link, and .button inside panels, and prefer
+one item open by default to keep scanning easy.
+""")
+  end
+
+  
 
   def variations do
     [
@@ -28,6 +43,8 @@ defmodule Storybook.CarbonComponents.Accordion.Basic do
       },
       %VariationGroup{
         id: :sizes,
+        description: "Density sizes",
+        note: "Use sm for tight panels, md for default, and lg for spacious content.",
         variations:
           for size <- ~w(sm md lg) do
             %Variation{

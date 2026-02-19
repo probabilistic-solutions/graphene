@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.MenuButton do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.menu_button/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Menu buttons open a menu of related actions from a single control. Use them when
+actions are secondary and should be grouped.
+
+Combine .menu_button with .table_toolbar or header actions and keep the primary
+action elsewhere when needed.
+""")
+  end
+
+  
 
   def variations do
     [
@@ -24,6 +38,8 @@ defmodule Storybook.CarbonComponents.MenuButton do
       },
       %VariationGroup{
         id: :sizes,
+        description: "Size variants",
+        note: "Use sm in compact toolbars and lg for prominent menus.",
         variations:
           for size <- ~w(sm md lg) do
             %Variation{

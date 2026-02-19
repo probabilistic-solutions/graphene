@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.ContainedList.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.contained_list/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Contained lists group related items in a bounded container and can be static or
+interactive. Use them in constrained layouts, side panels, or disclosure areas.
+
+Combine .contained_list with .tag, .link, or .button for metadata and actions,
+and use status indicators for quick scanning.
+""")
+  end
+
+  
 
   def variations do
     [
@@ -25,6 +39,8 @@ defmodule Storybook.CarbonComponents.ContainedList.Basic do
       },
       %VariationGroup{
         id: :sizes,
+        description: "Size variants",
+        note: "Use sm for dense lists and lg for comfortable reading.",
         variations:
           for size <- ~w(sm md lg) do
               %Variation{

@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.FormGroup do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.form_group/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Form groups provide a legend and group related fields. Use them for checkbox
+and radio collections or when multiple inputs share a single label.
+
+Pair .form_group with .checkbox_group or .radio_button_group and include help or
+error text for clarity.
+""")
+  end
+
+  
 
   def variations do
     [

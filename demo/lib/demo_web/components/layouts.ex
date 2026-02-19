@@ -10,7 +10,5 @@ defmodule DemoWeb.Layouts do
   """
   use DemoWeb, :html
 
-  alias Graphene.Icons
-
   embed_templates("layouts/*")
 end
