@@ -35,7 +35,7 @@
 ### selected
 
 ```heex
-<.chat_button is_selected is_quick_action>
+<.chat_button is_quick_action is_selected>
   Selected
 </.chat_button>
 ```

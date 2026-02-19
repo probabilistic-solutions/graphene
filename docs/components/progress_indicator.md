@@ -98,7 +98,7 @@
 ### spaced
 
 ```heex
-<.progress_indicator current_index="0" space_equally>
+<.progress_indicator space_equally current_index="0">
   <:step label="Step one" current />
   <:step label="Step two" />
   <:step label="Step three" />

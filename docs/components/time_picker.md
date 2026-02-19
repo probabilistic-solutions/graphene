@@ -15,7 +15,7 @@
 ```html
 <input type="hidden" id="time-picker-default-input" name="time-picker-default" value="12:00">
 
-<cds-time-picker invalid-text="Invalid time format." max-length="5" name="time-picker-default" pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?" placeholder="hh:mm" required-validity-message="Please fill out this field." size="md" type="text" value="12:00" warning-text="Warning message." id="basic-single-default" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="time-picker-default-input" data-form-event="change" data-form-mode="value" data-form-detail="checked">
+<cds-time-picker invalid-text="Invalid time format." max-length="5" name="time-picker-default" pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?" placeholder="hh:mm" required-validity-message="Please fill out this field." size="md" type="text" value="12:00" warning-text="Warning message." id="basic-single-default" data-form-detail="checked" data-form-event="change" data-form-input="time-picker-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   <div slot="label-text">
     Start time
@@ -61,7 +61,7 @@
 ```html
 <input type="hidden" id="time-picker-timezone-input" name="time-picker-timezone" value="09:30">
 
-<cds-time-picker invalid-text="Invalid time format." max-length="5" name="time-picker-timezone" pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?" placeholder="hh:mm" required-validity-message="Please fill out this field." size="md" type="text" value="09:30" warning-text="Warning message." id="basic-single-with-timezone" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="time-picker-timezone-input" data-form-event="change" data-form-mode="value" data-form-detail="checked">
+<cds-time-picker invalid-text="Invalid time format." max-length="5" name="time-picker-timezone" pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?" placeholder="hh:mm" required-validity-message="Please fill out this field." size="md" type="text" value="09:30" warning-text="Warning message." id="basic-single-with-timezone" data-form-detail="checked" data-form-event="change" data-form-input="time-picker-timezone-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   <div slot="label-text">
     Meeting time
@@ -106,7 +106,7 @@
 ```html
 <input type="hidden" id="time-picker-invalid-input" name="time-picker-invalid" value="">
 
-<cds-time-picker invalid invalid-text="Enter a time" max-length="5" name="time-picker-invalid" pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?" placeholder="hh:mm" required-validity-message="Please fill out this field." size="md" type="text" value="" warning-text="Warning message." id="basic-single-invalid" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="time-picker-invalid-input" data-form-event="change" data-form-mode="value" data-form-detail="checked">
+<cds-time-picker invalid invalid-text="Enter a time" max-length="5" name="time-picker-invalid" pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?" placeholder="hh:mm" required-validity-message="Please fill out this field." size="md" type="text" value="" warning-text="Warning message." id="basic-single-invalid" data-form-detail="checked" data-form-event="change" data-form-input="time-picker-invalid-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   <div slot="label-text">
     Start time

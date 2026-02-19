@@ -198,9 +198,9 @@
 ```heex
 <.structured_list
   rows={[%{id: "1", name: "Load Balancer 1", status: "Active"}, %{id: "2", name: "Load Balancer 2", status: "Disabled"}, %{id: "3", name: "Gateway", status: "Active"}]}
+  row_id={#Function<0.122453106/1 in Storybook.CarbonComponents.StructuredList.row_id>}
   selection_name="structured-list"
   selected_ids={["1"]}
-  row_id={#Function<0.76831300/1 in Storybook.CarbonComponents.StructuredList.row_id>}
 >
   <:col :let={row} label="Name"><%= row.name %></:col>
   <:col :let={row} label="Status"><%= row.status %></:col>

@@ -3,7 +3,7 @@
 ### horizontal
 
 ```heex
-<.stack gap="4" orientation="horizontal">
+<.stack orientation="horizontal" gap="4">
   <Graphene.CarbonComponents.tag type="green">One</Graphene.CarbonComponents.tag>
   <Graphene.CarbonComponents.tag type="blue">Two</Graphene.CarbonComponents.tag>
   <Graphene.CarbonComponents.tag type="red">Three</Graphene.CarbonComponents.tag>
@@ -32,7 +32,7 @@
 ### vertical
 
 ```heex
-<.stack gap="3" orientation="vertical">
+<.stack orientation="vertical" gap="3">
   <Graphene.CarbonComponents.tag type="purple">Alpha</Graphene.CarbonComponents.tag>
   <Graphene.CarbonComponents.tag type="cool-gray">Beta</Graphene.CarbonComponents.tag>
 </.stack>
@@ -56,7 +56,7 @@
 ### tight
 
 ```heex
-<.stack gap="2" orientation="horizontal">
+<.stack orientation="horizontal" gap="2">
   <Graphene.CarbonComponents.tag type="magenta">A</Graphene.CarbonComponents.tag>
   <Graphene.CarbonComponents.tag type="cyan">B</Graphene.CarbonComponents.tag>
   <Graphene.CarbonComponents.tag type="teal">C</Graphene.CarbonComponents.tag>

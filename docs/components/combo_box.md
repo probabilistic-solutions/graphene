@@ -15,7 +15,7 @@
 ```html
 <input type="hidden" id="combo-box-default-input" name="combo-box-default" value="">
 
-<cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="Combo box" name="combo-box-default" required-validity-message="Please fill out this field." size="md" title-text="Choose an option" type="" id="basic-single-default" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="combo-box-default-input" data-form-event="cds-combo-box-selected" data-form-mode="value" data-form-detail="checked">
+<cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="Combo box" name="combo-box-default" required-validity-message="Please fill out this field." size="md" title-text="Choose an option" type="" id="basic-single-default" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="combo-box-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   
@@ -59,7 +59,7 @@
 ```html
 <input type="hidden" id="combo-box-inline-input" name="combo-box-inline" value="">
 
-<cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="Inline" name="combo-box-inline" required-validity-message="Please fill out this field." size="md" title-text="Inline combo" type="inline" id="basic-single-inline" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="combo-box-inline-input" data-form-event="cds-combo-box-selected" data-form-mode="value" data-form-detail="checked">
+<cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="Inline" name="combo-box-inline" required-validity-message="Please fill out this field." size="md" title-text="Inline combo" type="inline" id="basic-single-inline" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="combo-box-inline-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   
@@ -110,7 +110,7 @@
 ```html
 <input type="hidden" id="combo-box-sm-input" name="combo-box-sm" value="">
 
-<cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="SM" name="combo-box-sm" required-validity-message="Please fill out this field." size="sm" title-text="Size sm" type="" id="basic-sizes-sm" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="combo-box-sm-input" data-form-event="cds-combo-box-selected" data-form-mode="value" data-form-detail="checked">
+<cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="SM" name="combo-box-sm" required-validity-message="Please fill out this field." size="sm" title-text="Size sm" type="" id="basic-sizes-sm" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="combo-box-sm-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   
@@ -135,7 +135,7 @@
 
 <input type="hidden" id="combo-box-md-input" name="combo-box-md" value="">
 
-<cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="MD" name="combo-box-md" required-validity-message="Please fill out this field." size="md" title-text="Size md" type="" id="basic-sizes-md" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="combo-box-md-input" data-form-event="cds-combo-box-selected" data-form-mode="value" data-form-detail="checked">
+<cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="MD" name="combo-box-md" required-validity-message="Please fill out this field." size="md" title-text="Size md" type="" id="basic-sizes-md" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="combo-box-md-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   
@@ -160,7 +160,7 @@
 
 <input type="hidden" id="combo-box-lg-input" name="combo-box-lg" value="">
 
-<cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="LG" name="combo-box-lg" required-validity-message="Please fill out this field." size="lg" title-text="Size lg" type="" id="basic-sizes-lg" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="combo-box-lg-input" data-form-event="cds-combo-box-selected" data-form-mode="value" data-form-detail="checked">
+<cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="LG" name="combo-box-lg" required-validity-message="Please fill out this field." size="lg" title-text="Size lg" type="" id="basic-sizes-lg" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="combo-box-lg-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   
