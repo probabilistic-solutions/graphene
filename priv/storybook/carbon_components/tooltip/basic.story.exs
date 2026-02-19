@@ -9,7 +9,9 @@ defmodule Storybook.CarbonComponents.Tooltip.Basic do
         id: :bottom,
         attributes: %{align: "bottom"},
         slots: [
-          ~S|<Graphene.CarbonComponents.button kind="ghost" aria-labelledby="tooltip-content">Hover me</Graphene.CarbonComponents.button>
+          ~S|<:trigger>
+  <Graphene.CarbonComponents.button kind="ghost" aria-labelledby="tooltip-content">Hover me</Graphene.CarbonComponents.button>
+</:trigger>
 <:content id="tooltip-content">Tooltip content</:content>|
         ]
       },
@@ -17,7 +19,9 @@ defmodule Storybook.CarbonComponents.Tooltip.Basic do
         id: :top,
         attributes: %{align: "top"},
         slots: [
-          ~S|<Graphene.CarbonComponents.button kind="ghost" aria-labelledby="tooltip-top">Top tooltip</Graphene.CarbonComponents.button>
+          ~S|<:trigger>
+  <Graphene.CarbonComponents.button kind="ghost" aria-labelledby="tooltip-top">Top tooltip</Graphene.CarbonComponents.button>
+</:trigger>
 <:content id="tooltip-top">Top content</:content>|
         ]
       },
@@ -25,7 +29,9 @@ defmodule Storybook.CarbonComponents.Tooltip.Basic do
         id: :right,
         attributes: %{align: "right"},
         slots: [
-          ~S|<Graphene.CarbonComponents.button kind="ghost" aria-labelledby="tooltip-right">Right tooltip</Graphene.CarbonComponents.button>
+          ~S|<:trigger>
+  <Graphene.CarbonComponents.button kind="ghost" aria-labelledby="tooltip-right">Right tooltip</Graphene.CarbonComponents.button>
+</:trigger>
 <:content id="tooltip-right">Right content</:content>|
         ]
       }

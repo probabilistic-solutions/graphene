@@ -98,7 +98,6 @@ defmodule Graphene.CodeGen.Component do
     def <%= @component.componentname %>(assigns) do
     <%= @prelude %>
         ~H"""
-        <%%= Phoenix.HTML.raw(assigns[:graphene_before] || "") %>
         <<%= @component.htmltag %><%= for attr <- @component.attrs do %>
          <%= Graphene.CodeGen.Component.Attr.display_use attr, trim: true %><% end %>
          {@rest}>

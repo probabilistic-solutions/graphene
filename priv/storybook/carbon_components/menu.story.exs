@@ -2,12 +2,14 @@ defmodule Storybook.CarbonComponents.Menu do
   use PhoenixStorybook.Story, :component
 
   def function, do: &Graphene.CarbonComponents.menu/1
+
   def container,
     do:
       {:iframe,
        style:
          "display: flex; flex-direction: column; justify-content: center; align-items: center; " <>
            "margin: 0; gap: 5px; padding: 5px; min-height: 240px;"}
+
   def template do
     """
     <div class="psb" style="position: relative; min-height: 240px;">

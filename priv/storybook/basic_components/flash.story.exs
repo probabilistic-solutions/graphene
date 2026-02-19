@@ -1,5 +1,6 @@
 defmodule Storybook.BasicComponents.Flash do
   use PhoenixStorybook.Story, :component
+  use Graphene, [:html, :live]
 
   def function, do: &Graphene.BasicComponents.flash/1
 
@@ -13,7 +14,7 @@ defmodule Storybook.BasicComponents.Flash do
       %Variation{
         id: :error,
         attributes: %{kind: :error, title: "Error"},
-        slots: ["Something went wrong."]
+        slots: ["Request failed."]
       }
     ]
   end

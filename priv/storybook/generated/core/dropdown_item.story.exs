@@ -1,4 +1,5 @@
 defmodule Storybook.CodeGen.CoreComponents.Dropdownitem do
+  use Graphene, [:html, :live]
   use Graphene.CodeGen.Component.Story,
     func: &Graphene.Internal.CoreComponents.dropdown_item/1,
     component_module: Graphene.Internal.CoreComponents,

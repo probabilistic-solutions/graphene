@@ -522,7 +522,7 @@ if Mix.env() == :dev do
       manual =
         MapSet.new([
           Path.join(["lib", "graphene", "carbon_components", "data_table_component.ex"]),
-          Path.join(["lib", "graphene", "carbon_components", "table_live.ex"]),
+          Path.join(["lib", "graphene", "carbon_components", "data_table.ex"]),
           Path.join(["lib", "graphene", "carbon_components", "helpers.ex"])
         ])
 

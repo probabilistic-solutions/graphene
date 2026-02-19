@@ -1,4 +1,4 @@
-defmodule Graphene.CarbonComponents.TableLive do
+defmodule Graphene.CarbonComponents.DataTable do
   @moduledoc false
 
   use Phoenix.Component
@@ -81,7 +81,7 @@ defmodule Graphene.CarbonComponents.TableLive do
 
   slot :expanded_row, doc: "content rendered as expanded rows"
 
-  def table_live(assigns) do
+  def data_table(assigns) do
     assigns =
       assigns
       |> table_assigns()
@@ -129,9 +129,6 @@ defmodule Graphene.CarbonComponents.TableLive do
     />
     """
   end
-
-  @doc false
-  def data_table(assigns), do: table_live(assigns)
 
   defp table_assigns(assigns) do
     assigns =

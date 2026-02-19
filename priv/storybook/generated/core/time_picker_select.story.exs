@@ -1,4 +1,5 @@
 defmodule Storybook.CodeGen.CoreComponents.Timepickerselect do
+  use Graphene, [:html, :live]
   use Graphene.CodeGen.Component.Story,
     func: &Graphene.Internal.CoreComponents.time_picker_select/1,
     component_module: Graphene.Internal.CoreComponents,

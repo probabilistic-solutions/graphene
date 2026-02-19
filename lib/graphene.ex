@@ -3895,7 +3895,6 @@ defmodule Graphene do
       import Graphene.CarbonComponents,
         except: [
           button: 1,
-          data_table: 1,
           header: 1,
           icon: 1,
           modal: 1,

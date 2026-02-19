@@ -1,5 +1,6 @@
 defmodule Storybook.BasicComponents.Input do
   use PhoenixStorybook.Story, :component
+  use Graphene, [:html, :live]
 
   def function, do: &Graphene.BasicComponents.input/1
 
@@ -40,7 +41,12 @@ defmodule Storybook.BasicComponents.Input do
       },
       %Variation{
         id: :url,
-        attributes: %{name: "website", type: "url", label: "Website", value: "https://example.com"}
+        attributes: %{
+          name: "website",
+          type: "url",
+          label: "Website",
+          value: "https://example.com"
+        }
       },
       %Variation{
         id: :time,

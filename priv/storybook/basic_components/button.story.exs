@@ -1,5 +1,6 @@
 defmodule Storybook.BasicComponents.Button do
   use PhoenixStorybook.Story, :component
+  use Graphene, [:html, :live]
 
   def function, do: &Graphene.BasicComponents.button/1
 

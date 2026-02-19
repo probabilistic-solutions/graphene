@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-19T11:21:36.040139Z",
+  "generated_at": "2026-02-19T21:33:56.119888Z",
   "source": "assets/node_modules/@carbon/web-components/custom-elements.json",
   "tags": [
     {
@@ -1024,7 +1024,7 @@
           "type": "number"
         },
         {
-          "default": "300",
+          "default": "100",
           "description": "Specify the duration in milliseconds to delay before hiding the tooltip",
           "name": "leave-delay-ms",
           "type": "number"
@@ -1247,7 +1247,7 @@
         },
         {
           "attribute": "leave-delay-ms",
-          "default": "300",
+          "default": "100",
           "description": "Specify the duration in milliseconds to delay before hiding the tooltip",
           "name": "leaveDelayMs",
           "type": "number"
@@ -3573,7 +3573,7 @@
           "type": "number"
         },
         {
-          "default": "300",
+          "default": "100",
           "description": "Specify the duration in milliseconds to delay before hiding the tooltip",
           "name": "leave-delay-ms",
           "type": "number"
@@ -3761,7 +3761,7 @@
         },
         {
           "attribute": "leave-delay-ms",
-          "default": "300",
+          "default": "100",
           "description": "Specify the duration in milliseconds to delay before hiding the tooltip",
           "name": "leaveDelayMs",
           "type": "number"
@@ -8111,8 +8111,8 @@
           "type": "boolean"
         }
       ],
-      "description": "Fluid text area input.",
-      "name": "cds-fluid-textarea",
+      "description": "Fluid text area skeleton.",
+      "name": "cds-fluid-textarea-skeleton",
       "path": "./src/components/fluid-textarea/fluid-textarea-skeleton.ts",
       "properties": [
         {
@@ -8598,6 +8598,666 @@
     {
       "attributes": [
         {
+          "default": "\"\"",
+          "description": "Optionally provide the default value of the select.",
+          "name": "default-value",
+          "type": "string"
+        },
+        {
+          "default": "false",
+          "description": "Specify whether the textarea is fluid or not",
+          "name": "isFluid",
+          "type": "boolean"
+        },
+        {
+          "default": "false",
+          "description": "Sets the select to be focussed automatically on page load. Defaults to false",
+          "name": "autofocus",
+          "type": "boolean"
+        },
+        {
+          "default": "false",
+          "description": "Controls the disabled state of the select",
+          "name": "disabled",
+          "type": "boolean"
+        },
+        {
+          "default": "\"\"",
+          "description": "The helper text.",
+          "name": "helper-text",
+          "type": "string"
+        },
+        {
+          "default": "false",
+          "description": "Specify whether the label should be hidden, or not",
+          "name": "hide-label",
+          "type": "boolean"
+        },
+        {
+          "default": "\"\"",
+          "description": "ID to link the `label` and `select`",
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "default": "false",
+          "description": "Specify if the currently value is invalid.",
+          "name": "invalid",
+          "type": "boolean"
+        },
+        {
+          "default": "\"\"",
+          "description": "Message which is displayed if the value is invalid.",
+          "name": "invalid-text",
+          "type": "string"
+        },
+        {
+          "default": "false",
+          "description": "Specify if the currently value is warn.",
+          "name": "warn",
+          "type": "boolean"
+        },
+        {
+          "default": "\"\"",
+          "description": "Message which is displayed if the value is warn.",
+          "name": "warn-text",
+          "type": "string"
+        },
+        {
+          "default": "\"\"",
+          "description": "The label text.",
+          "name": "label-text",
+          "type": "string"
+        },
+        {
+          "default": "false",
+          "description": "Specify whether you want the inline version of this control",
+          "name": "inline",
+          "type": "boolean"
+        },
+        {
+          "description": "`true` to enable multiple selection.",
+          "name": "multiple",
+          "type": "boolean"
+        },
+        {
+          "default": "\"\"",
+          "description": "Name for the select in the `FormData`",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "default": "\"\"",
+          "description": "Pattern to validate the select against for HTML validity checking",
+          "name": "pattern",
+          "type": "string"
+        },
+        {
+          "default": "\"\"",
+          "description": "Value to display when the select has an empty `value`",
+          "name": "placeholder",
+          "type": "string"
+        },
+        {
+          "default": "false",
+          "description": "Controls the readonly state of the select",
+          "name": "readonly",
+          "type": "boolean"
+        },
+        {
+          "default": "false",
+          "description": "Boolean property to set the required status",
+          "name": "required",
+          "type": "boolean"
+        },
+        {
+          "default": "\"Please fill out this field.\"",
+          "description": "The special validity message for `required`.",
+          "name": "required-validity-message",
+          "type": "string"
+        },
+        {
+          "description": "The selected index.",
+          "name": "selectedIndex",
+          "type": "number"
+        },
+        {
+          "default": "\"md\"",
+          "description": "The input box size.",
+          "name": "size",
+          "type": "INPUT_SIZE"
+        },
+        {
+          "default": "\"\"",
+          "description": "The value of the text area.",
+          "name": "value",
+          "type": "string"
+        }
+      ],
+      "description": "Fluid time picker select.",
+      "events": [
+        {
+          "description": "The name of the custom event fired after an item is selected.",
+          "name": "cds-select-selected"
+        }
+      ],
+      "name": "cds-fluid-time-picker-select",
+      "path": "./src/components/fluid-time-picker/fluid-time-picker-select.ts",
+      "properties": [
+        {
+          "attribute": "default-value",
+          "default": "\"\"",
+          "description": "Optionally provide the default value of the select.",
+          "name": "defaultValue",
+          "type": "string"
+        },
+        {
+          "attribute": "isFluid",
+          "default": "false",
+          "description": "Specify whether the textarea is fluid or not",
+          "name": "isFluid",
+          "type": "boolean"
+        },
+        {
+          "description": "The count of child `<option>`s.\nIf the placeholder is in effect, it includes the `<option>` for the placeholder.",
+          "name": "length",
+          "type": "number"
+        },
+        {
+          "description": "The child `<option>`s.",
+          "name": "options",
+          "type": "HTMLOptionsCollection"
+        },
+        {
+          "description": "This form control's type.",
+          "name": "type",
+          "type": "string"
+        },
+        {
+          "attribute": "autofocus",
+          "default": "false",
+          "description": "Sets the select to be focussed automatically on page load. Defaults to false",
+          "name": "autofocus",
+          "type": "boolean"
+        },
+        {
+          "attribute": "disabled",
+          "default": "false",
+          "description": "Controls the disabled state of the select",
+          "name": "disabled",
+          "type": "boolean"
+        },
+        {
+          "attribute": "helper-text",
+          "default": "\"\"",
+          "description": "The helper text.",
+          "name": "helperText",
+          "type": "string"
+        },
+        {
+          "attribute": "hide-label",
+          "default": "false",
+          "description": "Specify whether the label should be hidden, or not",
+          "name": "hideLabel",
+          "type": "boolean"
+        },
+        {
+          "attribute": "id",
+          "default": "\"\"",
+          "description": "ID to link the `label` and `select`",
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "attribute": "invalid",
+          "default": "false",
+          "description": "Specify if the currently value is invalid.",
+          "name": "invalid",
+          "type": "boolean"
+        },
+        {
+          "attribute": "invalid-text",
+          "default": "\"\"",
+          "description": "Message which is displayed if the value is invalid.",
+          "name": "invalidText",
+          "type": "string"
+        },
+        {
+          "attribute": "warn",
+          "default": "false",
+          "description": "Specify if the currently value is warn.",
+          "name": "warn",
+          "type": "boolean"
+        },
+        {
+          "attribute": "warn-text",
+          "default": "\"\"",
+          "description": "Message which is displayed if the value is warn.",
+          "name": "warnText",
+          "type": "string"
+        },
+        {
+          "attribute": "label-text",
+          "default": "\"\"",
+          "description": "The label text.",
+          "name": "labelText",
+          "type": "string"
+        },
+        {
+          "attribute": "inline",
+          "default": "false",
+          "description": "Specify whether you want the inline version of this control",
+          "name": "inline",
+          "type": "boolean"
+        },
+        {
+          "attribute": "multiple",
+          "description": "`true` to enable multiple selection.",
+          "name": "multiple",
+          "type": "boolean"
+        },
+        {
+          "attribute": "name",
+          "default": "\"\"",
+          "description": "Name for the select in the `FormData`",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "attribute": "pattern",
+          "default": "\"\"",
+          "description": "Pattern to validate the select against for HTML validity checking",
+          "name": "pattern",
+          "type": "string"
+        },
+        {
+          "attribute": "placeholder",
+          "default": "\"\"",
+          "description": "Value to display when the select has an empty `value`",
+          "name": "placeholder",
+          "type": "string"
+        },
+        {
+          "attribute": "readonly",
+          "default": "false",
+          "description": "Controls the readonly state of the select",
+          "name": "readonly",
+          "type": "boolean"
+        },
+        {
+          "attribute": "required",
+          "default": "false",
+          "description": "Boolean property to set the required status",
+          "name": "required",
+          "type": "boolean"
+        },
+        {
+          "attribute": "required-validity-message",
+          "default": "\"Please fill out this field.\"",
+          "description": "The special validity message for `required`.",
+          "name": "requiredValidityMessage",
+          "type": "string"
+        },
+        {
+          "attribute": "selectedIndex",
+          "description": "The selected index.",
+          "name": "selectedIndex",
+          "type": "number"
+        },
+        {
+          "attribute": "size",
+          "default": "\"md\"",
+          "description": "The input box size.",
+          "name": "size",
+          "type": "INPUT_SIZE"
+        },
+        {
+          "attribute": "value",
+          "default": "\"\"",
+          "description": "The value of the text area.",
+          "name": "value",
+          "type": "string"
+        },
+        {
+          "default": "{\"delegatesFocus\":true}",
+          "name": "shadowRootOptions",
+          "type": "{ delegatesFocus: boolean; mode: ShadowRootMode; slotAssignment?: SlotAssignmentMode | undefined; customElements?: CustomElementRegistry | undefined; registry?: CustomElementRegistry | undefined; }"
+        },
+        {
+          "default": "[null,\"styles\"]",
+          "name": "styles",
+          "type": "array"
+        }
+      ],
+      "slots": [
+        {
+          "description": "The helper text.",
+          "name": "helper-text"
+        },
+        {
+          "description": "The label text.",
+          "name": "label-text"
+        },
+        {
+          "description": "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
+          "name": "validity-message"
+        }
+      ]
+    },
+    {
+      "attributes": [
+        {
+          "default": "false",
+          "description": "Specify if there are only two TimePicker elements.",
+          "name": "is-only-two",
+          "type": "boolean"
+        }
+      ],
+      "description": "Fluid time picker skeleton.",
+      "name": "cds-fluid-time-picker-skeleton",
+      "path": "./src/components/fluid-time-picker/fluid-time-picker-skeleton.ts",
+      "properties": [
+        {
+          "attribute": "is-only-two",
+          "default": "false",
+          "description": "Specify if there are only two TimePicker elements.",
+          "name": "isOnlyTwo",
+          "type": "boolean"
+        },
+        {
+          "default": "\"styles\"",
+          "name": "styles"
+        }
+      ]
+    },
+    {
+      "attributes": [
+        {
+          "default": "false",
+          "description": "Specify whether the control is disabled",
+          "name": "disabled",
+          "type": "boolean"
+        },
+        {
+          "default": "\"Invalid time format.\"",
+          "description": "Provide the text that is displayed when the control is in an invalid state",
+          "name": "invalid-text",
+          "type": "string"
+        },
+        {
+          "default": "false",
+          "description": "Specify whether the control is in warning state",
+          "name": "warning",
+          "type": "boolean"
+        },
+        {
+          "default": "\"Warning message.\"",
+          "description": "Provide the text that is displayed when the control is in a warning state",
+          "name": "warning-text",
+          "type": "string"
+        },
+        {
+          "default": "false",
+          "description": "Specify whether the label should be hidden",
+          "name": "hide-label",
+          "type": "boolean"
+        },
+        {
+          "default": "\"\"",
+          "description": "Name for the input in FormData",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "default": "\"Select a time\"",
+          "description": "Provide label text to be read by screen readers",
+          "name": "label-text",
+          "type": "string"
+        },
+        {
+          "default": "\"hh:mm\"",
+          "description": "Placeholder text for the input",
+          "name": "placeholder",
+          "type": "string"
+        },
+        {
+          "default": "false",
+          "description": "Specify whether the control should be read-only",
+          "name": "readOnly",
+          "type": "boolean"
+        },
+        {
+          "default": "5",
+          "description": "Specify the maximum length of the input value",
+          "name": "max-length",
+          "type": "number"
+        },
+        {
+          "default": "\"(1[012]|[1-9]):[0-5][0-9](\\\\s)?\"",
+          "description": "Pattern for input validation",
+          "name": "pattern",
+          "type": "string"
+        },
+        {
+          "default": "\"md\"",
+          "description": "Size of the time picker",
+          "name": "size",
+          "type": "TIME_PICKER_SIZE"
+        },
+        {
+          "default": "\"text\"",
+          "description": "Input type",
+          "name": "type",
+          "type": "string"
+        },
+        {
+          "default": "false",
+          "description": "Specify whether the control is currently invalid",
+          "name": "invalid",
+          "type": "boolean"
+        },
+        {
+          "default": "false",
+          "description": "Whether the input is required",
+          "name": "required",
+          "type": "boolean"
+        },
+        {
+          "default": "\"Please fill out this field.\"",
+          "description": "Custom message for required validation",
+          "name": "required-validity-message",
+          "type": "string"
+        },
+        {
+          "default": "\"\"",
+          "description": "Validity message",
+          "name": "validity-message",
+          "type": "string"
+        },
+        {
+          "description": "Value of the input",
+          "name": "value",
+          "type": "string"
+        }
+      ],
+      "description": "Fluid Time Picker component.",
+      "events": [
+        {
+          "name": "change"
+        },
+        {
+          "name": "invalid"
+        }
+      ],
+      "name": "cds-fluid-time-picker",
+      "path": "./src/components/fluid-time-picker/fluid-time-picker.ts",
+      "properties": [
+        {
+          "attribute": "disabled",
+          "default": "false",
+          "description": "Specify whether the control is disabled",
+          "name": "disabled",
+          "type": "boolean"
+        },
+        {
+          "attribute": "invalid-text",
+          "default": "\"Invalid time format.\"",
+          "description": "Provide the text that is displayed when the control is in an invalid state",
+          "name": "invalidText",
+          "type": "string"
+        },
+        {
+          "attribute": "warning",
+          "default": "false",
+          "description": "Specify whether the control is in warning state",
+          "name": "warning",
+          "type": "boolean"
+        },
+        {
+          "attribute": "warning-text",
+          "default": "\"Warning message.\"",
+          "description": "Provide the text that is displayed when the control is in a warning state",
+          "name": "warningText",
+          "type": "string"
+        },
+        {
+          "attribute": "hide-label",
+          "default": "false",
+          "description": "Specify whether the label should be hidden",
+          "name": "hideLabel",
+          "type": "boolean"
+        },
+        {
+          "attribute": "name",
+          "default": "\"\"",
+          "description": "Name for the input in FormData",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "attribute": "label-text",
+          "default": "\"Select a time\"",
+          "description": "Provide label text to be read by screen readers",
+          "name": "labelText",
+          "type": "string"
+        },
+        {
+          "attribute": "placeholder",
+          "default": "\"hh:mm\"",
+          "description": "Placeholder text for the input",
+          "name": "placeholder",
+          "type": "string"
+        },
+        {
+          "attribute": "readOnly",
+          "default": "false",
+          "description": "Specify whether the control should be read-only",
+          "name": "readOnly",
+          "type": "boolean"
+        },
+        {
+          "attribute": "max-length",
+          "default": "5",
+          "description": "Specify the maximum length of the input value",
+          "name": "maxLength",
+          "type": "number"
+        },
+        {
+          "attribute": "pattern",
+          "default": "\"(1[012]|[1-9]):[0-5][0-9](\\\\s)?\"",
+          "description": "Pattern for input validation",
+          "name": "pattern",
+          "type": "string"
+        },
+        {
+          "attribute": "size",
+          "default": "\"md\"",
+          "description": "Size of the time picker",
+          "name": "size",
+          "type": "TIME_PICKER_SIZE"
+        },
+        {
+          "attribute": "type",
+          "default": "\"text\"",
+          "description": "Input type",
+          "name": "type",
+          "type": "string"
+        },
+        {
+          "default": "{\"delegatesFocus\":true}",
+          "name": "shadowRootOptions",
+          "type": "{ delegatesFocus: boolean; mode: ShadowRootMode; slotAssignment?: SlotAssignmentMode | undefined; customElements?: CustomElementRegistry | undefined; registry?: CustomElementRegistry | undefined; }"
+        },
+        {
+          "default": "[\"styles\",\"styles\"]",
+          "name": "styles",
+          "type": "array"
+        },
+        {
+          "attribute": "invalid",
+          "default": "false",
+          "description": "Specify whether the control is currently invalid",
+          "name": "invalid",
+          "type": "boolean"
+        },
+        {
+          "attribute": "required",
+          "default": "false",
+          "description": "Whether the input is required",
+          "name": "required",
+          "type": "boolean"
+        },
+        {
+          "attribute": "required-validity-message",
+          "default": "\"Please fill out this field.\"",
+          "description": "Custom message for required validation",
+          "name": "requiredValidityMessage",
+          "type": "string"
+        },
+        {
+          "attribute": "validity-message",
+          "default": "\"\"",
+          "description": "Validity message",
+          "name": "validityMessage",
+          "type": "string"
+        },
+        {
+          "attribute": "value",
+          "description": "Value of the input",
+          "name": "value",
+          "type": "string"
+        }
+      ],
+      "slots": [
+        {
+          "description": "The label text.",
+          "name": "label-text"
+        },
+        {
+          "description": "The invalid text.",
+          "name": "invalid-text"
+        },
+        {
+          "description": "The warning text.",
+          "name": "warning-text"
+        },
+        {
+          "description": "slot for fluid time picker select components.",
+          "name": ""
+        },
+        {
+          "description": "Slot for time picker select components.",
+          "name": "time-picker-select"
+        },
+        {
+          "description": "The validity message. If present and non-empty, this input shows the UI of its invalid state.",
+          "name": "validity-message"
+        }
+      ]
+    },
+    {
+      "attributes": [
+        {
           "default": "false",
           "description": "Specify whether the Form Group is invalid",
           "name": "invalid",
@@ -8699,7 +9359,7 @@
     {
       "attributes": [
         {
-          "description": "Specify column size\nKeys sm, md or lg\n\nValues\n- N, P, { span:N start:S}, { start: S, end: E}\nN = number\nP = percentage\nS = Start column\nE = End column (does not reach e.g. start 1 end 3 is same as start 1 span 2)",
+          "description": "Specify column size\nKeys sm, md, lg, xlg, max\n\nValues\n- N, P, { span:N start:S}, { start: S, end: E}\nN = number\nP = percentage\nS = Start column\nE = End column (does not reach e.g. start 1 end 3 is same as start 1 span 2)",
           "name": "sm",
           "type": "ColumnSpec | undefined"
         },
@@ -8709,6 +9369,14 @@
         },
         {
           "name": "lg",
+          "type": "ColumnSpec | undefined"
+        },
+        {
+          "name": "xlg",
+          "type": "ColumnSpec | undefined"
+        },
+        {
+          "name": "max",
           "type": "ColumnSpec | undefined"
         },
         {
@@ -8722,7 +9390,7 @@
       "properties": [
         {
           "attribute": "sm",
-          "description": "Specify column size\nKeys sm, md or lg\n\nValues\n- N, P, { span:N start:S}, { start: S, end: E}\nN = number\nP = percentage\nS = Start column\nE = End column (does not reach e.g. start 1 end 3 is same as start 1 span 2)",
+          "description": "Specify column size\nKeys sm, md, lg, xlg, max\n\nValues\n- N, P, { span:N start:S}, { start: S, end: E}\nN = number\nP = percentage\nS = Start column\nE = End column (does not reach e.g. start 1 end 3 is same as start 1 span 2)",
           "name": "sm",
           "type": "ColumnSpec | undefined"
         },
@@ -8734,6 +9402,16 @@
         {
           "attribute": "lg",
           "name": "lg",
+          "type": "ColumnSpec | undefined"
+        },
+        {
+          "attribute": "xlg",
+          "name": "xlg",
+          "type": "ColumnSpec | undefined"
+        },
+        {
+          "attribute": "max",
+          "name": "max",
           "type": "ColumnSpec | undefined"
         },
         {
@@ -8859,7 +9537,7 @@
           "type": "number"
         },
         {
-          "default": "300",
+          "default": "100",
           "description": "Specify the duration in milliseconds to delay before hiding the tooltip",
           "name": "leave-delay-ms",
           "type": "number"
@@ -9033,7 +9711,7 @@
         },
         {
           "attribute": "leave-delay-ms",
-          "default": "300",
+          "default": "100",
           "description": "Specify the duration in milliseconds to delay before hiding the tooltip",
           "name": "leaveDelayMs",
           "type": "number"
@@ -10029,8 +10707,8 @@
           "name": "shortcut"
         }
       ],
-      "description": "Menu Item.",
-      "name": "cds-menu-item",
+      "description": "Menu Item Selectable.",
+      "name": "cds-menu-item-selectable",
       "path": "./src/components/menu/menu-item-selectable.ts",
       "properties": [
         {
@@ -10083,6 +10761,12 @@
         {
           "description": "Disabled property for the menu item.",
           "name": "disabled"
+        },
+        {
+          "default": "\"danger\"",
+          "description": "Specify the message read by screen readers for the danger menu item variant",
+          "name": "danger-description",
+          "type": "string"
         },
         {
           "default": "false",
@@ -10141,6 +10825,13 @@
           "attribute": "disabled",
           "description": "Disabled property for the menu item.",
           "name": "disabled"
+        },
+        {
+          "attribute": "danger-description",
+          "default": "\"danger\"",
+          "description": "Specify the message read by screen readers for the danger menu item variant",
+          "name": "dangerDescription",
+          "type": "string"
         },
         {
           "attribute": "submenuOpen",
@@ -13212,7 +13903,7 @@
           "type": "number"
         },
         {
-          "default": "300",
+          "default": "100",
           "description": "Specify the duration in milliseconds to delay before hiding the tooltip",
           "name": "leave-delay-ms",
           "type": "number"
@@ -13433,7 +14124,7 @@
         },
         {
           "attribute": "leave-delay-ms",
-          "default": "300",
+          "default": "100",
           "description": "Specify the duration in milliseconds to delay before hiding the tooltip",
           "name": "leaveDelayMs",
           "type": "number"
@@ -13762,6 +14453,133 @@
       "name": "cds-page-header",
       "path": "./src/components/page-header/page-header.ts",
       "properties": [
+        {
+          "default": "\"styles\"",
+          "name": "styles"
+        }
+      ]
+    },
+    {
+      "attributes": [
+        {
+          "default": "10",
+          "description": "The number of items to be shown (minimum of 4 unless props.items < 4).",
+          "name": "items-shown",
+          "type": "number"
+        },
+        {
+          "default": "false",
+          "description": "Whether user should be able to loop through the items when reaching first / last.",
+          "name": "loop",
+          "type": "boolean"
+        },
+        {
+          "default": "0",
+          "description": "The index of current page.",
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "default": "1",
+          "description": "The total number of items.",
+          "name": "total-items",
+          "type": "number"
+        },
+        {
+          "default": "\"lg\"",
+          "description": "Specify the size of the PaginationNav.",
+          "name": "size",
+          "type": "PAGINATION_NAV_SIZE"
+        },
+        {
+          "default": "\"center\"",
+          "description": "Specify the alignment of the tooltip for the icon-only next/prev buttons.\nCan be one of: start, center, or end.",
+          "name": "tooltip-alignment",
+          "type": "PAGINATION_TOOLTIP_ALIGNMENT"
+        },
+        {
+          "default": "\"bottom\"",
+          "description": "Specify the position of the tooltip for the icon-only next/prev buttons.\nCan be one of: top, right, bottom, or left.",
+          "name": "tooltip-position",
+          "type": "PAGINATION_TOOLTIP_POSITION"
+        },
+        {
+          "description": "If true, the '...' pagination overflow will not render page links between the first and last rendered buttons.\nSet this to true if you are having performance problems with large data sets.",
+          "name": "disable-overflow",
+          "type": "boolean | undefined"
+        }
+      ],
+      "description": "Pagination Navigation.",
+      "events": [
+        {
+          "description": "The custom event fired when the the page has been changed.",
+          "name": "cds-page-changed"
+        }
+      ],
+      "name": "cds-pagination-nav",
+      "path": "./src/components/pagination-nav/pagination-nav.ts",
+      "properties": [
+        {
+          "attribute": "items-shown",
+          "default": "10",
+          "description": "The number of items to be shown (minimum of 4 unless props.items < 4).",
+          "name": "itemsShown",
+          "type": "number"
+        },
+        {
+          "attribute": "loop",
+          "default": "false",
+          "description": "Whether user should be able to loop through the items when reaching first / last.",
+          "name": "loop",
+          "type": "boolean"
+        },
+        {
+          "attribute": "page",
+          "default": "0",
+          "description": "The index of current page.",
+          "name": "page",
+          "type": "number"
+        },
+        {
+          "attribute": "total-items",
+          "default": "1",
+          "description": "The total number of items.",
+          "name": "totalItems",
+          "type": "number"
+        },
+        {
+          "attribute": "size",
+          "default": "\"lg\"",
+          "description": "Specify the size of the PaginationNav.",
+          "name": "size",
+          "type": "PAGINATION_NAV_SIZE"
+        },
+        {
+          "attribute": "tooltip-alignment",
+          "default": "\"center\"",
+          "description": "Specify the alignment of the tooltip for the icon-only next/prev buttons.\nCan be one of: start, center, or end.",
+          "name": "tooltipAlignment",
+          "type": "PAGINATION_TOOLTIP_ALIGNMENT"
+        },
+        {
+          "attribute": "tooltip-position",
+          "default": "\"bottom\"",
+          "description": "Specify the position of the tooltip for the icon-only next/prev buttons.\nCan be one of: top, right, bottom, or left.",
+          "name": "tooltipPosition",
+          "type": "PAGINATION_TOOLTIP_POSITION"
+        },
+        {
+          "attribute": "disable-overflow",
+          "description": "If true, the '...' pagination overflow will not render page links between the first and last rendered buttons.\nSet this to true if you are having performance problems with large data sets.",
+          "name": "disableOverflow",
+          "type": "boolean | undefined"
+        },
+        {
+          "default": "\"defaultTranslateWithId\"",
+          "description": "Translates component strings using your i18n tool.",
+          "name": "translateWithId",
+          "type": "(messageId: \"carbon.pagination-nav.next\" | \"carbon.pagination-nav.previous\" | \"carbon.pagination-nav.item\" | \"carbon.pagination-nav.active\" | \"carbon.pagination-nav.of\") => string"
+        },
         {
           "default": "\"styles\"",
           "name": "styles"
@@ -23321,6 +24139,11 @@
       "home",
       "end"
     ],
+    "PAGINATION_NAV_SIZE": [
+      "sm",
+      "md",
+      "lg"
+    ],
     "GRID_ALIGNMENT": [
       "start",
       "center",
@@ -23479,6 +24302,12 @@
       "layer",
       "background"
     ],
+    "PAGINATION_TOOLTIP_POSITION": [
+      "top",
+      "right",
+      "bottom",
+      "left"
+    ],
     "BUTTON_TYPE": [
       "button",
       "reset",
@@ -23502,6 +24331,11 @@
       "lg",
       "md",
       "sm"
+    ],
+    "PAGINATION_TOOLTIP_ALIGNMENT": [
+      "start",
+      "center",
+      "end"
     ],
     "PROGRESS_BAR_TYPE": [
       "default",
@@ -23551,5 +24385,5 @@
       "right"
     ]
   },
-  "version": "2.47.0"
+  "version": "2.48.0"
 }

@@ -1,6 +1,6 @@
 /* _dynamic_loader_mapping.ts */
 
-/* generated from assets/node_modules/@carbon/web-components/custom-elements.json of carbon web-components v2.47.0 for Graphene.Internal.CoreComponents */
+/* generated from assets/node_modules/@carbon/web-components/custom-elements.json of carbon web-components v2.48.0 for Graphene.Internal.CoreComponents */
 
 type ComponentImports = { [componentName: string]: () => Promise<any> };
 
@@ -72,6 +72,9 @@ export const componentImports: ComponentImports = {
   'cds-fluid-text-input-skeleton': () => import("@carbon/web-components/es/components/fluid-text-input/index.js"),
   'cds-fluid-textarea': () => import("@carbon/web-components/es/components/fluid-textarea/index.js"),
   'cds-fluid-textarea-skeleton': () => import("@carbon/web-components/es/components/fluid-textarea/index.js"),
+  'cds-fluid-time-picker': () => import("@carbon/web-components/es/components/fluid-time-picker/index.js"),
+  'cds-fluid-time-picker-select': () => import("@carbon/web-components/es/components/fluid-time-picker/index.js"),
+  'cds-fluid-time-picker-skeleton': () => import("@carbon/web-components/es/components/fluid-time-picker/index.js"),
   'cds-form': () => import("@carbon/web-components/es/components/form/index.js"),
   'cds-form-group': () => import("@carbon/web-components/es/components/form-group/index.js"),
   'cds-form-item': () => import("@carbon/web-components/es/components/form/index.js"),
@@ -128,6 +131,7 @@ export const componentImports: ComponentImports = {
   'cds-page-header-hero-image': () => import("@carbon/web-components/es/components/page-header/index.js"),
   'cds-page-header-tabs': () => import("@carbon/web-components/es/components/page-header/index.js"),
   'cds-pagination': () => import("@carbon/web-components/es/components/pagination/index.js"),
+  'cds-pagination-nav': () => import("@carbon/web-components/es/components/pagination-nav/index.js"),
   'cds-password-input': () => import("@carbon/web-components/es/components/password-input/index.js"),
   'cds-password-input-skeleton': () => import("@carbon/web-components/es/components/password-input/index.js"),
   'cds-popover': () => import("@carbon/web-components/es/components/popover/index.js"),
@@ -179,11 +183,11 @@ export const componentImports: ComponentImports = {
   'cds-switcher-item': () => import("@carbon/web-components/es/components/ui-shell/index.js"),
   'cds-tab': () => import("@carbon/web-components/es/components/tabs/index.js"),
   'cds-tab-skeleton': () => import("@carbon/web-components/es/components/tabs/index.js"),
-  'cds-table': () => import("@carbon/web-components/es/components/data-table/index.js"),
   'cds-table-batch-actions': () => import("@carbon/web-components/es/components/data-table/index.js"),
   'cds-table-body': () => import("@carbon/web-components/es/components/data-table/index.js"),
   'cds-table-cell': () => import("@carbon/web-components/es/components/data-table/index.js"),
   'cds-table-cell-content': () => import("@carbon/web-components/es/components/data-table/index.js"),
+  'cds-table': () => import("@carbon/web-components/es/components/data-table/index.js"),
   'cds-table-expanded-row': () => import("@carbon/web-components/es/components/data-table/index.js"),
   'cds-table-head': () => import("@carbon/web-components/es/components/data-table/index.js"),
   'cds-table-header-cell': () => import("@carbon/web-components/es/components/data-table/index.js"),

@@ -1,5 +1,6 @@
 defmodule Storybook.BasicComponents.Icon do
   use PhoenixStorybook.Story, :component
+  use Graphene, [:html, :live]
   alias PhoenixStorybook.Stories.Attr
 
   def function, do: &Graphene.BasicComponents.icon/1
@@ -21,7 +22,7 @@ defmodule Storybook.BasicComponents.Icon do
       %Variation{
         id: :carbon,
         attributes: %{name: "add", size: 20}
-      },
+      }
     ]
   end
 end

@@ -23,7 +23,12 @@ defmodule Storybook.CarbonComponents.FormGroup do
       },
       %Variation{
         id: :invalid,
-        attributes: %{legend_text: "Required", invalid: true, message: true, message_text: "Select one option"},
+        attributes: %{
+          legend_text: "Required",
+          invalid: true,
+          message: true,
+          message_text: "Select one option"
+        },
         slots: [
           ~S|<Graphene.CarbonComponents.checkbox id="form-group-a" label_text="Option A" />
 <Graphene.CarbonComponents.checkbox id="form-group-b" label_text="Option B" />|

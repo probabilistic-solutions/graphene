@@ -3,8 +3,6 @@ Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.Interactivity do
   use PhoenixStorybook.Story, :example
 
-  import Graphene.CarbonComponents
-
   alias Phoenix.LiveView.JS
 
   def doc do
@@ -25,7 +23,7 @@ defmodule Storybook.CarbonComponents.DataTable.Interactivity do
     assigns = assign(assigns, :columns, Storybook.CarbonComponents.DataTable.Shared.columns())
 
     ~H"""
-    <.data_table
+    <Graphene.CarbonComponents.data_table
       id="carbon-events-table"
       rows={@rows}
       row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
@@ -45,15 +43,15 @@ defmodule Storybook.CarbonComponents.DataTable.Interactivity do
       <:title>DataTable</:title>
       <:description>Advanced interactivity with callbacks</:description>
       <:toolbar>
-        <.table_toolbar>
-          <.table_batch_actions total_rows_count="6">
-            <.button kind="ghost">Delete</.button>
-            <.button kind="ghost">Save</.button>
-            <.button kind="ghost" href="#">Download</.button>
-          </.table_batch_actions>
-          <.table_toolbar_content has_batch_actions>
-            <.table_toolbar_search placeholder="Filter table" />
-            <.overflow_menu toolbar_action>
+        <Graphene.CarbonComponents.table_toolbar>
+          <Graphene.CarbonComponents.table_batch_actions total_rows_count="6">
+            <Graphene.CarbonComponents.button kind="ghost">Delete</Graphene.CarbonComponents.button>
+            <Graphene.CarbonComponents.button kind="ghost">Save</Graphene.CarbonComponents.button>
+            <Graphene.CarbonComponents.button kind="ghost" href="#">Download</Graphene.CarbonComponents.button>
+          </Graphene.CarbonComponents.table_batch_actions>
+          <Graphene.CarbonComponents.table_toolbar_content has_batch_actions>
+            <Graphene.CarbonComponents.table_toolbar_search placeholder="Filter table" />
+            <Graphene.CarbonComponents.overflow_menu toolbar_action>
               <:icon>
                 <Storybook.CarbonComponents.DataTable.Shared.overflow_icon />
               </:icon>
@@ -61,10 +59,10 @@ defmodule Storybook.CarbonComponents.DataTable.Interactivity do
               <:item>Action 1</:item>
               <:item>Action 2</:item>
               <:item>Action 3</:item>
-            </.overflow_menu>
-            <.button>Add new</.button>
-          </.table_toolbar_content>
-        </.table_toolbar>
+            </Graphene.CarbonComponents.overflow_menu>
+            <Graphene.CarbonComponents.button>Add new</Graphene.CarbonComponents.button>
+          </Graphene.CarbonComponents.table_toolbar_content>
+        </Graphene.CarbonComponents.table_toolbar>
       </:toolbar>
 
       <:row_decorator :let={row}>
@@ -78,7 +76,7 @@ defmodule Storybook.CarbonComponents.DataTable.Interactivity do
       </:col>
 
       <:action :let={_row}>
-        <.overflow_menu toolbar_action flipped>
+        <Graphene.CarbonComponents.overflow_menu toolbar_action flipped>
           <:icon>
             <Storybook.CarbonComponents.DataTable.Shared.overflow_icon />
           </:icon>
@@ -86,14 +84,14 @@ defmodule Storybook.CarbonComponents.DataTable.Interactivity do
           <:item>Stop app</:item>
           <:item>Restart app</:item>
           <:item>Rename</:item>
-        </.overflow_menu>
+        </Graphene.CarbonComponents.overflow_menu>
       </:action>
 
       <:expanded_row :let={row}>
         <h6>Expandable row content</h6>
         <div>{Storybook.CarbonComponents.DataTable.Shared.expanded_content(row)}</div>
       </:expanded_row>
-    </.data_table>
+    </Graphene.CarbonComponents.data_table>
 
     <h4>Event log</h4>
     <pre id="carbon-events-log">
@@ -106,7 +104,7 @@ defmodule Storybook.CarbonComponents.DataTable.Interactivity do
     <p>These buttons dispatch the same events as the built-in controls.</p>
     <div id="carbon-events-simulator">
       <%= for {label, detail} <- simulator_events() do %>
-        <.button
+        <Graphene.CarbonComponents.button
           kind="tertiary"
           phx-click={
             JS.dispatch(
@@ -117,7 +115,7 @@ defmodule Storybook.CarbonComponents.DataTable.Interactivity do
           }
         >
           {label}
-        </.button>
+        </Graphene.CarbonComponents.button>
       <% end %>
     </div>
     """

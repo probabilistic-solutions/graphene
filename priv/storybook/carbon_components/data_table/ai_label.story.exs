@@ -12,6 +12,9 @@ defmodule Storybook.CarbonComponents.DataTable.AILabel do
           id: "carbon-ai-label-table",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
           row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
+          selectable: true,
+          expandable: true,
+          batch_expansion: true,
           with_row_ai_labels: true
         },
         slots: [
@@ -33,6 +36,9 @@ defmodule Storybook.CarbonComponents.DataTable.AILabel do
           id: "carbon-ai-label-table-compact",
           rows: Storybook.CarbonComponents.DataTable.Shared.rows(),
           row_id: &Graphene.CarbonComponents.DataTable.Shared.row_id/1,
+          selectable: true,
+          expandable: true,
+          batch_expansion: true,
           with_row_ai_labels: true,
           size: "sm"
         },

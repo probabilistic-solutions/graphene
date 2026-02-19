@@ -7,6 +7,7 @@
 @use '@carbon/styles/scss/themes';
 @use '@carbon/styles/scss/components';
 @use '@carbon/styles/scss/layout';
+@use '@carbon/grid' as grid;
 @use '@carbon/layout/scss/spacing' as carbon_spacing;
 
 @import '@ibm/plex/css/ibm-plex.css';
@@ -14,6 +15,7 @@
 @include reset.reset;
 @include type.reset;
 @include type.default-type;
+@include grid.css-grid();
 
 :root {
   @include theme.theme(themes.$g10);
@@ -35,6 +37,26 @@
 
 cds-grid::part(grid) {
   row-gap: var(--graphene-grid-row-gap, var(--cds-spacing-07));
+}
+
+cds-header ~ cds-side-nav,
+cds-header ~ .cds--side-nav {
+  block-size: calc(100% - var(--cds-spacing-09, 3rem));
+  margin-block-start: var(--cds-spacing-09, 3rem);
+}
+
+cds-header ~ .cds--content {
+  margin-block-start: var(--cds-spacing-09, 3rem);
+}
+
+cds-side-nav ~ .cds--content {
+  transition: margin-inline-start 0.11s cubic-bezier(0.2, 0, 1, 0.9);
+}
+
+cds-side-nav[expanded] ~ .cds--content,
+cds-side-nav[collapse-mode='fixed'] ~ .cds--content,
+.cds--side-nav[expanded] ~ .cds--content {
+  margin-inline-start: 16rem;
 }
 
 html.graphene-loading .graphene-app {

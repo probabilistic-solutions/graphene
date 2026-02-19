@@ -1,4 +1,5 @@
 defmodule Storybook.CodeGen.CoreComponents.Link do
+  use Graphene, [:html, :live]
   use Graphene.CodeGen.Component.Story,
     func: &Graphene.StorybookAliases.core_link/1,
     component_module: Graphene.Internal.CoreComponents,

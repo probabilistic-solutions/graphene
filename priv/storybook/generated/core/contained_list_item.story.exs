@@ -1,4 +1,5 @@
 defmodule Storybook.CodeGen.CoreComponents.Containedlistitem do
+  use Graphene, [:html, :live]
   use Graphene.CodeGen.Component.Story,
     func: &Graphene.Internal.CoreComponents.contained_list_item/1,
     component_module: Graphene.Internal.CoreComponents,

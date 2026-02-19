@@ -1,8 +1,7 @@
 Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.BasicComponents.Table.Filtering do
   use PhoenixStorybook.Story, :example
-
-  import Graphene.BasicComponents
+  use Graphene, [:html, :live]
   alias Graphene.CarbonComponents, as: Carbon
 
   alias Storybook.BasicComponents.Table.Shared, as: TableData

@@ -70,7 +70,7 @@ defmodule Graphene.CarbonComponents.DataTableComponent do
 
     ~H"""
     <div id={@id}>
-      <CoreComponents.table
+      <CoreComponents.table_element
         id={@table_id}
         size={@size}
         expandable={@effective_expandable}
@@ -161,7 +161,7 @@ defmodule Graphene.CarbonComponents.DataTableComponent do
             </CoreComponents.table_expanded_row>
           <% end %>
         </CoreComponents.table_body>
-      </CoreComponents.table>
+      </CoreComponents.table_element>
     </div>
     """
   end
@@ -252,7 +252,7 @@ defmodule Graphene.CarbonComponents.DataTableComponent do
     |> MapSet.new()
   end
 
-  defp selected_ids_attr(nil), do: ""
+  defp selected_ids_attr(nil), do: nil
 
   defp selected_ids_attr(ids) when is_list(ids) do
     ids

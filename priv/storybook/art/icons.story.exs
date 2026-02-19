@@ -1,5 +1,6 @@
 defmodule Storybook.Art.Icons do
   use PhoenixStorybook.Story, :component
+  use Graphene, [:html, :live]
 
   def function, do: &Graphene.Icons.icon/1
 

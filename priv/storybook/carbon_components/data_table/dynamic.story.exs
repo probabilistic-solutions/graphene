@@ -2,8 +2,6 @@ Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.Dynamic do
   use PhoenixStorybook.Story, :example
 
-  import Graphene.CarbonComponents
-
   def doc do
     "Data table with rows added dynamically."
   end
@@ -19,10 +17,10 @@ defmodule Storybook.CarbonComponents.DataTable.Dynamic do
 
     ~H"""
     <div class="psb-sandbox">
-      <.button phx-click="add-row">Add row</.button>
+      <Graphene.CarbonComponents.button phx-click="add-row">Add row</Graphene.CarbonComponents.button>
     </div>
 
-    <.data_table
+    <Graphene.CarbonComponents.data_table
       id="carbon-dynamic-table"
       rows={@rows}
       row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
@@ -34,7 +32,7 @@ defmodule Storybook.CarbonComponents.DataTable.Dynamic do
       <:col :for={col <- @columns} :let={row} label={col.label}>
         <%= Map.get(row, col.key) %>
       </:col>
-    </.data_table>
+    </Graphene.CarbonComponents.data_table>
     """
   end
 

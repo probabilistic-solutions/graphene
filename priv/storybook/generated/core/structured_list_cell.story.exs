@@ -1,4 +1,5 @@
 defmodule Storybook.CodeGen.CoreComponents.Structuredlistcell do
+  use Graphene, [:html, :live]
   use Graphene.CodeGen.Component.Story,
     func: &Graphene.Internal.CoreComponents.structured_list_cell/1,
     component_module: Graphene.Internal.CoreComponents,

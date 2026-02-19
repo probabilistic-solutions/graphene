@@ -11,10 +11,10 @@
   * `graphene:table-search-input` - Search input changed.
   * `graphene:table-batch-cancel` - Batch selection canceled.
   """
-  defdelegate table_live(assigns), to: Graphene.CarbonComponents.TableLive
+  defdelegate table_live(assigns), to: Graphene.CarbonComponents, as: :data_table
 
   @doc false
-  defdelegate data_table(assigns), to: Graphene.CarbonComponents.TableLive
+  defdelegate data_table(assigns), to: Graphene.CarbonComponents.DataTable
 
   @doc """
   File uploader wrapper for Carbon web components.

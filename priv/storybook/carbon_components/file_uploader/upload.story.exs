@@ -1,8 +1,6 @@
 defmodule Storybook.CarbonComponents.FileUploader.Upload do
   use PhoenixStorybook.Story, :example
 
-  import Graphene.CarbonComponents
-
   def doc do
     "Upload a file and display the server-computed size and hash."
   end
@@ -26,7 +24,7 @@ defmodule Storybook.CarbonComponents.FileUploader.Upload do
           phx-hook={"#{inspect(__MODULE__)}.CarbonFileUploaderBridge"}
           data-accept=".pdf .png .txt"
         >
-          <.file_uploader
+          <Graphene.CarbonComponents.file_uploader
             id="file-uploader"
             name="file_uploader_upload"
             label_title="Upload evidence"
@@ -35,35 +33,35 @@ defmodule Storybook.CarbonComponents.FileUploader.Upload do
             <:button>Select files</:button>
 
           <%= for entry <- @selected_files do %>
-            <.file_uploader_item
+            <Graphene.CarbonComponents.file_uploader_item
               id={"file-upload-entry-#{entry.id}"}
               data-file-id={entry.id}
               state="edit"
             >
               {entry.name} ({format_size(entry.size)})
-            </.file_uploader_item>
+            </Graphene.CarbonComponents.file_uploader_item>
           <% end %>
 
           <%= for file <- @uploaded_files do %>
-            <.file_uploader_item
+            <Graphene.CarbonComponents.file_uploader_item
               id={"file-upload-complete-#{file.id}"}
               data-file-id={file.id}
               state="complete"
             >
               {file.name} ({format_size(file.size)}) —
               <code data-testid="carbon-file-upload-hash">{file.hash}</code>
-            </.file_uploader_item>
+            </Graphene.CarbonComponents.file_uploader_item>
           <% end %>
-          </.file_uploader>
+          </Graphene.CarbonComponents.file_uploader>
         </div>
 
-        <.file_uploader_bridge_hook />
+        <Graphene.CarbonComponents.file_uploader_bridge_hook />
 
         <div style="display: flex; gap: 0.75rem; margin-top: 0.75rem;">
-          <.button kind="secondary" type="button" phx-click="clear_uploads">
+          <Graphene.CarbonComponents.button kind="secondary" type="button" phx-click="clear_uploads">
             Clear
-          </.button>
-          <.button
+          </Graphene.CarbonComponents.button>
+          <Graphene.CarbonComponents.button
             kind="primary"
             type="button"
             phx-click="upload_submit"
@@ -71,7 +69,7 @@ defmodule Storybook.CarbonComponents.FileUploader.Upload do
             disabled={@selected_files == []}
           >
             Upload & compute hash
-          </.button>
+          </Graphene.CarbonComponents.button>
         </div>
 
     </div>

@@ -113,8 +113,23 @@ defmodule Graphene.CodeGen.ComponentPatches do
     set_attr_default(component, "step-multiplier", "4")
   end
 
-  defp do_patch(%{htmltag: "cds-grid"} = component) do
-    ensure_attr(component, %{
+  defp do_patch(%{htmltag: "cds-grid", docs: docs} = component) do
+    docs =
+      cond do
+        is_binary(docs) and String.contains?(docs, "Rows are formed implicitly") ->
+          docs
+
+        is_binary(docs) ->
+          String.trim_trailing(docs) <>
+            "\n\nRows are formed implicitly as columns fill the 16-unit span."
+
+        true ->
+          docs
+      end
+
+    component
+    |> Map.put(:docs, docs)
+    |> ensure_attr(%{
       "name" => "row-gap",
       "type" => "GRID_ROW_GAP",
       "description" =>
@@ -540,7 +555,7 @@ defmodule Graphene.CodeGen.ComponentPatches do
     %{
       name: :table_element,
       delegate: :core,
-      delegate_to: :table
+      delegate_to: :table_element
     },
     %{
       name: :accordion,
@@ -1202,7 +1217,7 @@ defmodule Graphene.CodeGen.ComponentPatches do
     %{
       name: :header,
       delegate: :core,
-      patterns: ["%{name: [_ | _]}"],
+      patterns: ["%{name: [_ | _]}", "%{global: [_ | _]}"],
       extra_slots: ~S"""
         slot :name do
           attr :href, :string

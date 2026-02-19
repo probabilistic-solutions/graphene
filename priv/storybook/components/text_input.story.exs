@@ -1,5 +1,6 @@
 defmodule Storybook.CoreComponents.TextInput do
   use PhoenixStorybook.Story, :component
+  use Graphene, [:html, :live]
 
   def function, do: &Graphene.Internal.CoreComponents.text_input/1
 
@@ -95,7 +96,7 @@ defmodule Storybook.CoreComponents.TextInput do
           warn_text: "This is a warning message.",
           value: "I'm doing wrong"
         }
-      },
+      }
     ]
   end
 end

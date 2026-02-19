@@ -11,7 +11,7 @@
       <.header_menu_button
         button_label_active="Close menu"
         button_label_inactive="Open menu"
-        collapse_mode="responsive"
+        collapse_mode="rail"
       />
       <.header_name href={~p"/demo"} prefix="IBM">Nimbus Cloud</.header_name>
       <.header_nav menu_bar_label="IBM Nimbus Cloud">
@@ -46,7 +46,7 @@
           <.header_menu_item href={~p"/"}>Storybook</.header_menu_item>
         </.header_menu>
       </.header_nav>
-      <div class="cds--header__global">
+      <:global>
         <.header_global_action
           button_label_inactive="Search"
           button_label_active="Search"
@@ -65,11 +65,11 @@
         >
           <:icon name="user--avatar" size={20} />
         </.header_global_action>
-      </div>
+      </:global>
     </.header>
   </:header>
   <:side_nav>
-    <.side_nav aria-label="Side navigation" collapse_mode="responsive">
+    <.side_nav aria-label="Side navigation" collapse_mode="rail">
       <.side_nav_items>
         <.header_side_nav_items has_divider>
           <.side_nav_link href={~p"/demo"} active={@active_page == :overview}>

@@ -1,6 +1,6 @@
 defmodule Storybook.Examples.CoreComponents do
   use PhoenixStorybook.Story, :example
-  import Graphene.Internal.CoreComponents
+  use Graphene, [:html, :live]
 
   def doc do
     "An example of what you can achieve with Phoenix core components."
@@ -30,7 +30,9 @@ defmodule Storybook.Examples.CoreComponents do
     <.header style="position: relative;" aria-label="Probabilistic Platform Name">
       <.header_menu_button
         button_label_active="Close menu"
-        button_label_inactive="Open menu"></.header_menu_button>
+        button_label_inactive="Open menu"
+      >
+      </.header_menu_button>
       <.header_name href="javascript:void 0" prefix="Probabilistic">[Platform]</.header_name>
       <.header_nav menu_bar_label="Probabilistic [Platform]">
         <.header_nav_item href="javascript:void 0">Link 1</.header_nav_item>

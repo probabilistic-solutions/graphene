@@ -102,7 +102,7 @@ defmodule Graphene.BasicComponents do
         :if={@show_system_messages}
         id="server-error"
         kind={:error}
-        title="Something went wrong!"
+        title="Service interruption"
         open={false}
         phx-disconnected={open_component("body.graphene-live-connected .phx-server-error #server-error")}
         phx-connected={close_component("#server-error")}
@@ -126,6 +126,7 @@ defmodule Graphene.BasicComponents do
   attr :id, :string, default: nil
   attr :show, :boolean, default: false
   attr :open, :boolean, default: false
+  attr :size, :string, default: "md", values: ["xs", "sm", "md", "lg"]
   attr :on_cancel, JS, default: %JS{}
   attr :rest, :global
 
@@ -157,6 +158,7 @@ defmodule Graphene.BasicComponents do
     <CarbonComponents.modal
       id={@id}
       open={@open || @show}
+      size={@size}
       phx-window-keydown={@on_cancel}
       phx-key="escape"
       {@rest}
@@ -625,7 +627,7 @@ defmodule Graphene.BasicComponents do
         <:col :let={user} label="username">{user.username}</:col>
       </.table_live>
   """
-  defdelegate table_live(assigns), to: Graphene.CarbonComponents.TableLive
+  defdelegate table_live(assigns), to: Graphene.CarbonComponents, as: :table_live
 
   @doc """
   Renders a data list.
