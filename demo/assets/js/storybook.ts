@@ -1,14 +1,16 @@
-import { WebComponentManager, mergeWebComponentsAttrs as onBeforeElUpdated } from "graphene";
-import { Hooks } from "./hooks";
+import * as Graphene from "/graphene/assets/index.js";
+import { buildHooks } from "./hooks";
 
 (function () {
+  (window as any).Graphene = Graphene;
+  const { WebComponentManager, mergeWebComponentsAttrs } = Graphene;
   const componentManager = new WebComponentManager();
   componentManager.connect();
   (window as any).storybook = {
-    Hooks,
+    Hooks: buildHooks(),
     LiveSocketOptions: {
       dom: {
-        onBeforeElUpdated
+        onBeforeElUpdated: mergeWebComponentsAttrs
       }
     }
   };

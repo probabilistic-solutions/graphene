@@ -1,5 +1,4 @@
 /* Place for custom hooks */
-import { Hooks as GrapheneHooks } from "graphene";
 
 type CustomEventHandler = (event: Event) => void;
 
@@ -93,4 +92,7 @@ const StorybookCustomEvents: StorybookCustomEventsHook = {
   }
 };
 
-export const Hooks = { ...GrapheneHooks, StorybookCustomEvents };
+export const buildHooks = () => {
+  const GrapheneHooks = (window as any).Graphene?.Hooks ?? {};
+  return { ...GrapheneHooks, StorybookCustomEvents };
+};

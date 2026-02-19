@@ -19,7 +19,7 @@
 ```html
 <input type="hidden" id="basic-single-default-input" name="file_uploader_default" value="">
 
-<cds-file-uploader label-description="Max file size 500mb" label-title="Upload files" id="basic-single-default" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="basic-single-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-file-uploader label-description="Max file size 500mb" label-title="Upload files" id="basic-single-default" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="basic-single-default-input" data-form-event="cds-file-uploader-button-changed" data-form-mode="value" data-form-detail="checked">
   
   
   
@@ -64,7 +64,7 @@
 ```html
 <input type="hidden" id="basic-single-multiple-input" name="file_uploader_multiple" value="">
 
-<cds-file-uploader label-description="PNG or SVG" label-title="Upload assets" id="basic-single-multiple" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="basic-single-multiple-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-file-uploader label-description="PNG or SVG" label-title="Upload assets" id="basic-single-multiple" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="basic-single-multiple-input" data-form-event="cds-file-uploader-button-changed" data-form-mode="value" data-form-detail="checked">
   
   
   
@@ -117,7 +117,7 @@
 ```html
 <input type="hidden" id="basic-single-disabled-input" name="file_uploader_disabled" value="">
 
-<cds-file-uploader disabled label-description="Uploads disabled" label-title="Disabled" id="basic-single-disabled" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="basic-single-disabled-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-file-uploader disabled label-description="Uploads disabled" label-title="Disabled" id="basic-single-disabled" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="basic-single-disabled-input" data-form-event="cds-file-uploader-button-changed" data-form-mode="value" data-form-detail="checked">
   
   
   
@@ -203,7 +203,7 @@
     <div id="file-uploader-bridge" phx-hook="Storybook.CarbonComponents.FileUploader.Upload.CarbonFileUploaderBridge" data-accept=".pdf .png .txt">
       <input type="hidden" id="file-uploader-input" name="file_uploader_upload" value="">
 
-<cds-file-uploader label-description="PDF, PNG, or TXT (max 5 MB)" label-title="Upload evidence" id="file-uploader" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="file-uploader-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-file-uploader label-description="PDF, PNG, or TXT (max 5 MB)" label-title="Upload evidence" id="file-uploader" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="file-uploader-input" data-form-event="cds-file-uploader-button-changed" data-form-mode="value" data-form-detail="checked">
   
   
   

@@ -13,7 +13,7 @@
 ```html
 <input type="hidden" id="basic-single-on-input" name="toggle-on" value="true">
 
-<cds-toggle checked id="basic-single-on" label-a="On" label-b="Off" name="toggle-on" size="" toggled id="basic-single-on" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="basic-single-on-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-toggle checked id="basic-single-on" label-a="On" label-b="Off" name="toggle-on" size="" toggled id="basic-single-on" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="basic-single-on-input" data-form-event="cds-toggle-changed" data-form-mode="boolean" data-form-detail="toggled">
   
   
   
@@ -35,7 +35,7 @@
 ```html
 <input type="hidden" id="basic-single-off-input" name="toggle-off" value="false">
 
-<cds-toggle id="basic-single-off" label-a="On" label-b="Off" name="toggle-off" size="" id="basic-single-off" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="basic-single-off-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-toggle id="basic-single-off" label-a="On" label-b="Off" name="toggle-off" size="" id="basic-single-off" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="basic-single-off-input" data-form-event="cds-toggle-changed" data-form-mode="boolean" data-form-detail="toggled">
   
   
   
@@ -57,7 +57,7 @@
 ```html
 <input type="hidden" id="basic-single-disabled-input" name="toggle-disabled" value="false">
 
-<cds-toggle disabled id="basic-single-disabled" label-a="On" label-b="Off" name="toggle-disabled" size="" id="basic-single-disabled" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="basic-single-disabled-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-toggle disabled id="basic-single-disabled" label-a="On" label-b="Off" name="toggle-disabled" size="" id="basic-single-disabled" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="basic-single-disabled-input" data-form-event="cds-toggle-changed" data-form-mode="boolean" data-form-detail="toggled">
   
   
   

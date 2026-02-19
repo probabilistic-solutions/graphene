@@ -19,7 +19,7 @@ defmodule Storybook.CarbonComponents.CodeSnippet do
         id: :multi,
         attributes: %{type: "multi"},
         slots: [
-          "mix graphene.core_components.generate\nmix graphene.stories.generate"
+          "mix graphene.generate"
         ]
       },
       %Variation{

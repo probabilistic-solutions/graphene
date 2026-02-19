@@ -59,7 +59,7 @@
 ### invalid
 
 ```heex
-<.checkbox_group invalid legend_text="Required" invalid_text="Select at least one">
+<.checkbox_group invalid invalid_text="Select at least one" legend_text="Required">
   <:item label="Option A" value="a" />
   <:item label="Option B" value="b" />
 </.checkbox_group>

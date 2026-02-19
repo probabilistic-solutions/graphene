@@ -36,16 +36,14 @@
 
 ```heex
 <.code_snippet type="multi">
-  mix graphene.core_components.generate
-  mix graphene.stories.generate
+  mix graphene.generate
 </.code_snippet>
 ```
 
 ```html
 <cds-code-snippet feedback="Copied!" feedback-timeout="2000" maxCollapsedNumberOfRows="15" maxExpandedNumberOfRows="0" minCollapsedNumberOfRows="3" minExpandedNumberOfRows="16" show-less-text="Show less" show-more-text="Show more" tooltip-content="Copy to clipboard" type="multi" id="code-snippet-single-multi">
   
-  mix graphene.core_components.generate
-mix graphene.stories.generate
+  mix graphene.generate
 
 </cds-code-snippet>
 ```

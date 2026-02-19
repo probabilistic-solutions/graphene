@@ -52,6 +52,8 @@ let opts = {
     platform: "browser",
     target: "es2017",
     format: "esm",
+    splitting: true,
+    chunkNames: "chunks/[name]-[hash]",
     outdir: outDirPath,
     loader: loader,
     plugins: plugins,
@@ -84,6 +86,7 @@ if (deploy) {
         ...opts,
         //minify: true,
         splitting: true,
+        chunkNames: "chunks/[name]-[hash]",
     };
 }
 

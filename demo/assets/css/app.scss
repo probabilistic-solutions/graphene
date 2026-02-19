@@ -1,25 +1,9 @@
-/* Carbon base + Graphene styles for the demo console */
-@use '@carbon/styles/scss/config' with (
-  $css--font-face: false
-);
-@use '@carbon/styles/scss/theme';
-@use '@carbon/styles/scss/themes';
-@use '@carbon/styles/scss/reset';
-@use '@carbon/styles/scss/type';
-@use '@carbon/styles/scss/components';
-@use '@carbon/grid';
-
-@import '@ibm/plex/css/ibm-plex.css';
-@include reset.reset;
-@include type.reset;
-@include type.default-type;
-@include grid.css-grid();
+/* Demo-specific styling layered on top of Graphene's vendored assets. */
 
 .demo-web {
-  @include theme.theme(themes.$g10);
-  @include type.font-family('sans');
   background-color: var(--cds-background);
   color: var(--cds-text-primary);
+  font-family: var(--cds-font-sans);
   min-height: 100vh;
 }
 

@@ -619,8 +619,8 @@ defmodule Graphene.Internal.FormComponents do
         name: :toggle,
         mode: :boolean,
         checked_attr: :toggled,
-        event: "cds-toggle-changed",
-        detail_key: "toggled"
+        detail_key: "toggled",
+        event: "cds-toggle-changed"
       )
 
     component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])

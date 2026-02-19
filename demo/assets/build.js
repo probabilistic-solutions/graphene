@@ -7,7 +7,6 @@ const { sassPlugin } = require('esbuild-sass-plugin');
 // const autoprefixer = require('autoprefixer')
 // const postcssPresetEnv = require('postcss-preset-env')
 
-const { copy } = require('esbuild-plugin-copy')
 
 const args = process.argv.slice(2);
 const watch = args.includes('--watch');
@@ -19,17 +18,6 @@ const loader = {
 };
 
 const plugins = [
-    copy({
-        assets: [
-            {
-                from: [
-                    'node_modules/@ibm/plex/**/*.woff',
-                    'node_modules/@ibm/plex/**/*.woff2',
-                ],
-                to: 'fonts'
-            }
-        ],
-    }),
     sassPlugin({
         // TODO: Those are copied from elixir task make sure to apply similar flags
         // "sass default --no-source-map --style=compressed --load-path node-modules",
@@ -58,7 +46,7 @@ let opts = {
     target: "es2020",
     format: "esm",
     outdir: "../priv/static/assets",
-    external: ["../fonts/*", "images/*"],
+    external: ["../fonts/*", "images/*", "/graphene/assets/*"],
     loader: loader,
     plugins: plugins,
     inject: ["./process_polyfill.js"],

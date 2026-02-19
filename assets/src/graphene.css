@@ -1,2 +1,13 @@
 @import "@ibm/plex/css/ibm-plex.css";
 @import "@carbon/styles/css/styles.css";
+
+:root {
+  --cds-font-sans: "IBM Plex Sans", system-ui, -apple-system, BlinkMacSystemFont,
+    ".SFNSText-Regular", sans-serif;
+  --cds-font-mono: "IBM Plex Mono", system-ui, -apple-system, BlinkMacSystemFont,
+    ".SFNSText-Regular", monospace;
+}
+
+cds-grid::part(grid) {
+  row-gap: var(--graphene-grid-row-gap, var(--cds-spacing-07));
+}

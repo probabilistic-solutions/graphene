@@ -17,7 +17,7 @@
 ```html
 <input type="hidden" id="basic-single-default-input" name="select-default" value="">
 
-<cds-select name="select-default" required-validity-message="Please fill out this field." size="md" id="basic-single-default" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="basic-single-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-select name="select-default" required-validity-message="Please fill out this field." size="md" id="basic-single-default" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="basic-single-default-input" data-form-event="cds-select-selected" data-form-mode="value" data-form-detail="checked">
   
   
   <div slot="label-text">
@@ -79,7 +79,7 @@
 ```html
 <input type="hidden" id="basic-single-inline-input" name="select-inline" value="">
 
-<cds-select inline name="select-inline" required-validity-message="Please fill out this field." size="md" id="basic-single-inline" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="basic-single-inline-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-select inline name="select-inline" required-validity-message="Please fill out this field." size="md" id="basic-single-inline" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="basic-single-inline-input" data-form-event="cds-select-selected" data-form-mode="value" data-form-detail="checked">
   
   
   <div slot="label-text">
@@ -127,7 +127,7 @@
 ```html
 <input type="hidden" id="basic-single-invalid-input" name="select-invalid" value="">
 
-<cds-select invalid invalid-text="Pick a value" name="select-invalid" required-validity-message="Please fill out this field." size="md" id="basic-single-invalid" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="basic-single-invalid-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-select invalid invalid-text="Pick a value" name="select-invalid" required-validity-message="Please fill out this field." size="md" id="basic-single-invalid" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="basic-single-invalid-input" data-form-event="cds-select-selected" data-form-mode="value" data-form-detail="checked">
   
   
   <div slot="label-text">

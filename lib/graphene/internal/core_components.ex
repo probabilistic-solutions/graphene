@@ -4423,7 +4423,7 @@ defmodule Graphene.Internal.CoreComponents do
       "13"
     ],
     doc:
-      "Row gap spacing token suffix for grid rows (for example \"05\"). Defaults to \"07\" (wide), \"05\" (narrow), or \"gutter\" (condensed)."
+      "Row gap spacing token suffix for grid rows (for example \"05\"). Defaults to \"07\" via CSS fallback; \"narrow\" defaults to \"05\" and \"condensed\" defaults to \"gutter\". You can set --graphene-grid-row-gap on a parent to let nested grids inherit."
 
   attr :rest, :global
 
@@ -4446,18 +4446,23 @@ defmodule Graphene.Internal.CoreComponents do
       if assigns[:graphene_grid_row_gap] do
         rest = Map.get(assigns, :rest, %{})
 
-        grid_id =
-          Map.get(rest, :"data-graphene-grid-id") ||
-            assigns[:id] ||
-            "graphene-grid-#{System.unique_integer([:positive])}"
+        style =
+          case Map.get(rest, :style) do
+            nil ->
+              ""
 
-        rest = Map.put_new(rest, :"data-graphene-grid-id", grid_id)
+            "" ->
+              ""
+
+            existing ->
+              existing = to_string(existing) |> String.trim()
+              if String.ends_with?(existing, ";"), do: existing <> " ", else: existing <> "; "
+          end
+
+        style = style <> "--graphene-grid-row-gap: #{assigns.graphene_grid_row_gap};"
+        rest = Map.put(rest, :style, style)
 
         assigns
-        |> assign(
-          :graphene_before,
-          "<style>cds-grid[data-graphene-grid-id='#{grid_id}']::part(grid){row-gap: #{assigns.graphene_grid_row_gap};}</style>"
-        )
         |> assign(:row_gap, nil)
         |> assign(:rest, rest)
       else

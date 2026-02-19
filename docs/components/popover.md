@@ -5,7 +5,7 @@
 ### default
 
 ```heex
-<.popover autoalign alignment_axis_offset="8">
+<.popover alignment_axis_offset="8" autoalign>
   <:trigger>
     <Graphene.CarbonComponents.button kind="secondary">Auto align popover</Graphene.CarbonComponents.button>
   </:trigger>
@@ -46,7 +46,7 @@
 ### offset_16
 
 ```heex
-<.popover autoalign alignment_axis_offset="16">
+<.popover alignment_axis_offset="16" autoalign>
   <:trigger>
     <Graphene.CarbonComponents.button kind="secondary">Offset 16</Graphene.CarbonComponents.button>
   </:trigger>
@@ -87,7 +87,7 @@
 ### with_caret
 
 ```heex
-<.popover autoalign caret border>
+<.popover autoalign border caret>
   <:trigger>
     <Graphene.CarbonComponents.button kind="secondary">Caret popover</Graphene.CarbonComponents.button>
   </:trigger>

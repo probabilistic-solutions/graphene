@@ -1,0 +1,1 @@
+import{b as e}from"./chunk-S4Z7DAZ3.js";var c=o=>class extends o{focus(){if(this.shadowRoot.delegatesFocus)super.focus();else{let s=this.shadowRoot.querySelector(e)||this.querySelector(e);s?s.focus():super.focus()}}};export{c as a};

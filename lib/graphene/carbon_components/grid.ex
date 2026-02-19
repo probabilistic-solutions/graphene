@@ -26,7 +26,7 @@ defmodule Graphene.CarbonComponents.Grid do
 
   attr :row_gap, :string,
     doc:
-      "Row gap spacing token suffix for grid rows (for example \"05\"). Defaults to \"07\" (wide), \"05\" (narrow), or \"gutter\" (condensed).",
+      "Row gap spacing token suffix for grid rows (for example \"05\"). Defaults to \"07\" via CSS fallback; \"narrow\" defaults to \"05\" and \"condensed\" defaults to \"gutter\". You can set --graphene-grid-row-gap on a parent to let nested grids inherit.",
     values: [
       nil,
       "gutter",
@@ -79,10 +79,14 @@ defmodule Graphene.CarbonComponents.Grid do
           cond do
             assigns[:condensed] -> "gutter"
             assigns[:narrow] -> "05"
-            true -> "07"
+            true -> nil
           end
 
-        assign(assigns, :row_gap, gap)
+        if gap do
+          assign(assigns, :row_gap, gap)
+        else
+          assigns
+        end
       end
 
     ~H"""

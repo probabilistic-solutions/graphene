@@ -7,7 +7,12 @@
     <.live_title suffix=" · Nimbus Cloud">
       <%= assigns[:page_title] || "Nimbus Cloud Console" %>
     </.live_title>
+    <link phx-track-static rel="stylesheet" href={~p"/graphene/assets/graphene.css"} />
     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
+    <script type="module">
+      import * as Graphene from "<%= ~p"/graphene/assets/index.js" %>";
+      window.Graphene = Graphene;
+    </script>
     <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
     </script>
   </head>

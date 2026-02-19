@@ -139,19 +139,19 @@ defmodule Graphene.CodeGen.Component do
         assigns =
           if assigns[:graphene_grid_row_gap] do
             rest = Map.get(assigns, :rest, %{})
+            style =
+              case Map.get(rest, :style) do
+                nil -> ""
+                "" -> ""
+                existing ->
+                  existing = to_string(existing) |> String.trim()
+                  if String.ends_with?(existing, ";"), do: existing <> " ", else: existing <> "; "
+              end
 
-            grid_id =
-              Map.get(rest, :"data-graphene-grid-id") ||
-                assigns[:id] ||
-                "graphene-grid-#{System.unique_integer([:positive])}"
-
-            rest = Map.put_new(rest, :"data-graphene-grid-id", grid_id)
+            style = style <> "--graphene-grid-row-gap: #{assigns.graphene_grid_row_gap};"
+            rest = Map.put(rest, :style, style)
 
             assigns
-            |> assign(
-              :graphene_before,
-              "<style>cds-grid[data-graphene-grid-id='#{grid_id}']::part(grid){row-gap: #{assigns.graphene_grid_row_gap};}</style>"
-            )
             |> assign(:row_gap, nil)
             |> assign(:rest, rest)
           else

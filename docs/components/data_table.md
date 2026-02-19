@@ -8,8 +8,8 @@
 <.data_table
   id="ai-label-single-row-labels"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
   with_row_ai_labels
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>AI labels</:description>
@@ -27,7 +27,7 @@
 ```html
 <div id="ai-label-single-row-labels-component">
   
-<cds-table headerCount="0" locale="en" size="lg" use-zebra-styles with-row-ai-labels id="ai-label-single-row-labels" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" locale="en" size="lg" use-zebra-styles with-row-ai-labels id="ai-label-single-row-labels" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -707,8 +707,8 @@
   id="ai-label-single-compact"
   size="sm"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
   with_row_ai_labels
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Compact AI labels</:description>
@@ -726,7 +726,7 @@
 ```html
 <div id="ai-label-single-compact-component">
   
-<cds-table headerCount="0" locale="en" size="sm" use-zebra-styles with-row-ai-labels id="ai-label-single-compact" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" locale="en" size="sm" use-zebra-styles with-row-ai-labels id="ai-label-single-compact" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -1408,10 +1408,10 @@
 <.data_table
   id="ai-label-expansion-single-ai-expand"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
   expandable
-  with_row_ai_labels
   batch_expansion
+  with_row_ai_labels
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>AI labels with expansion</:description>
@@ -1433,7 +1433,7 @@
 ```html
 <div id="ai-label-expansion-single-ai-expand-component">
   
-<cds-table batch-expansion expandable headerCount="0" locale="en" size="lg" use-zebra-styles with-row-ai-labels id="ai-label-expansion-single-ai-expand" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table batch-expansion expandable headerCount="0" locale="en" size="lg" use-zebra-styles with-row-ai-labels id="ai-label-expansion-single-ai-expand" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -2173,10 +2173,10 @@
   id="ai-label-expansion-single-compact"
   size="sm"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
   expandable
-  with_row_ai_labels
   batch_expansion
+  with_row_ai_labels
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Compact AI expansion</:description>
@@ -2198,7 +2198,7 @@
 ```html
 <div id="ai-label-expansion-single-compact-component">
   
-<cds-table batch-expansion expandable headerCount="0" locale="en" size="sm" use-zebra-styles with-row-ai-labels id="ai-label-expansion-single-compact" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table batch-expansion expandable headerCount="0" locale="en" size="sm" use-zebra-styles with-row-ai-labels id="ai-label-expansion-single-compact" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -2940,8 +2940,8 @@
 <.data_table
   id="ai-label-sort-single-sorting"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
   sortable
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>AI label in header with sorting</:description>
@@ -2957,7 +2957,7 @@
 ```html
 <div id="ai-label-sort-single-sorting-component">
   
-<cds-table headerCount="0" is-sortable locale="en" size="lg" use-zebra-styles id="ai-label-sort-single-sorting" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" is-sortable locale="en" size="lg" use-zebra-styles id="ai-label-sort-single-sorting" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -3484,8 +3484,8 @@
   id="ai-label-sort-single-compact"
   size="sm"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
   sortable
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Compact AI label header</:description>
@@ -3501,7 +3501,7 @@
 ```html
 <div id="ai-label-sort-single-compact-component">
   
-<cds-table headerCount="0" is-sortable locale="en" size="sm" use-zebra-styles id="ai-label-sort-single-compact" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" is-sortable locale="en" size="sm" use-zebra-styles id="ai-label-sort-single-compact" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -4043,7 +4043,7 @@
 ```html
 <div id="basic-single-default-component">
   
-<cds-table headerCount="0" locale="en" size="lg" use-zebra-styles id="basic-single-default" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" locale="en" size="lg" use-zebra-styles id="basic-single-default" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -4631,7 +4631,7 @@
 ```html
 <div id="basic-single-compact-component">
   
-<cds-table headerCount="0" locale="en" size="sm" id="basic-single-compact" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" locale="en" size="sm" id="basic-single-compact" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -5208,9 +5208,9 @@
 <.data_table
   id="batch-actions-single-batch-actions"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
-  selectable
   selection_name="carbon-batch-actions"
+  selectable
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>With batch actions</:description>
@@ -5245,7 +5245,7 @@
 ```html
 <div id="batch-actions-single-batch-actions-component">
   
-<cds-table headerCount="0" is-selectable locale="en" size="lg" use-zebra-styles id="batch-actions-single-batch-actions" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" is-selectable locale="en" size="lg" use-zebra-styles id="batch-actions-single-batch-actions" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -5909,9 +5909,9 @@
   id="batch-actions-single-compact"
   size="sm"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
-  selectable
   selection_name="carbon-batch-actions"
+  selectable
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Compact batch actions</:description>
@@ -5943,7 +5943,7 @@
 ```html
 <div id="batch-actions-single-compact-component">
   
-<cds-table headerCount="0" is-selectable locale="en" size="sm" use-zebra-styles id="batch-actions-single-compact" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" is-selectable locale="en" size="sm" use-zebra-styles id="batch-actions-single-compact" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -6592,9 +6592,9 @@
 <.data_table
   id="batch-expansion-single-batch-expansion"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
   expandable
   batch_expansion
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Batch expansion</:description>
@@ -6611,7 +6611,7 @@
 ```html
 <div id="batch-expansion-single-batch-expansion-component">
   
-<cds-table batch-expansion expandable headerCount="0" locale="en" size="lg" use-zebra-styles id="batch-expansion-single-batch-expansion" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table batch-expansion expandable headerCount="0" locale="en" size="lg" use-zebra-styles id="batch-expansion-single-batch-expansion" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -7245,8 +7245,8 @@
 <.data_table
   id="batch-expansion-single-expandable-only"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
   expandable
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Expandable rows</:description>
@@ -7263,7 +7263,7 @@
 ```html
 <div id="batch-expansion-single-expandable-only-component">
   
-<cds-table expandable headerCount="0" locale="en" size="lg" use-zebra-styles id="batch-expansion-single-expandable-only" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table expandable headerCount="0" locale="en" size="lg" use-zebra-styles id="batch-expansion-single-expandable-only" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -7927,7 +7927,7 @@
 
 <div id="carbon-dynamic-table-component">
   
-<cds-table headerCount="0" locale="en" size="lg" use-zebra-styles id="carbon-dynamic-table" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1">
+<cds-table headerCount="0" locale="en" size="lg" use-zebra-styles id="carbon-dynamic-table" phx-target="1" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -8258,8 +8258,8 @@
 <.data_table
   id="expansion-single-expandable"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
   expandable
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Expandable rows</:description>
@@ -8276,7 +8276,7 @@
 ```html
 <div id="expansion-single-expandable-component">
   
-<cds-table expandable headerCount="0" locale="en" size="lg" use-zebra-styles id="expansion-single-expandable" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table expandable headerCount="0" locale="en" size="lg" use-zebra-styles id="expansion-single-expandable" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -8911,8 +8911,8 @@
   id="expansion-single-compact"
   size="sm"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
   expandable
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Compact expandable</:description>
@@ -8929,7 +8929,7 @@
 ```html
 <div id="expansion-single-compact-component">
   
-<cds-table expandable headerCount="0" locale="en" size="sm" id="expansion-single-compact" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table expandable headerCount="0" locale="en" size="sm" id="expansion-single-compact" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -9596,7 +9596,7 @@
 ```html
 <div id="filtering-single-persistent-component">
   
-<cds-table headerCount="0" locale="en" size="lg" use-zebra-styles id="filtering-single-persistent" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" locale="en" size="lg" use-zebra-styles id="filtering-single-persistent" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -10268,7 +10268,7 @@
 ```html
 <div id="filtering-single-compact-component">
   
-<cds-table headerCount="0" locale="en" size="sm" use-zebra-styles id="filtering-single-compact" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" locale="en" size="sm" use-zebra-styles id="filtering-single-compact" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -10999,7 +10999,7 @@
 ```html
 <div id="carbon-events-table-component">
   
-<cds-table batch-expansion expandable headerCount="0" is-selectable is-sortable locale="en" size="lg" use-zebra-styles with-row-ai-labels id="carbon-events-table" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table batch-expansion expandable headerCount="0" is-selectable is-sortable locale="en" size="lg" use-zebra-styles with-row-ai-labels id="carbon-events-table" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -12177,7 +12177,7 @@
 <div id="carbon-events-simulator">
   
     
-<cds-button kind="tertiary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="[[&quot;dispatch&quot;,{&quot;to&quot;:&quot;#carbon-events-table&quot;,&quot;detail&quot;:{&quot;selected&quot;:true,&quot;action&quot;:&quot;select_row&quot;,&quot;row_id&quot;:&quot;row-2&quot;},&quot;event&quot;:&quot;graphene:table-simulate&quot;}]]">
+<cds-button kind="tertiary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="[[&quot;dispatch&quot;,{&quot;to&quot;:&quot;#carbon-events-table&quot;,&quot;event&quot;:&quot;graphene:table-simulate&quot;,&quot;detail&quot;:{&quot;selected&quot;:true,&quot;action&quot;:&quot;select_row&quot;,&quot;row_id&quot;:&quot;row-2&quot;}}]]">
   
       Select row 2
     
@@ -12185,7 +12185,7 @@
 </cds-button>
   
     
-<cds-button kind="tertiary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="[[&quot;dispatch&quot;,{&quot;to&quot;:&quot;#carbon-events-table&quot;,&quot;detail&quot;:{&quot;action&quot;:&quot;select_none&quot;},&quot;event&quot;:&quot;graphene:table-simulate&quot;}]]">
+<cds-button kind="tertiary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="[[&quot;dispatch&quot;,{&quot;to&quot;:&quot;#carbon-events-table&quot;,&quot;event&quot;:&quot;graphene:table-simulate&quot;,&quot;detail&quot;:{&quot;action&quot;:&quot;select_none&quot;}}]]">
   
       Clear selection
     
@@ -12193,7 +12193,7 @@
 </cds-button>
   
     
-<cds-button kind="tertiary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="[[&quot;dispatch&quot;,{&quot;to&quot;:&quot;#carbon-events-table&quot;,&quot;detail&quot;:{&quot;selected&quot;:true,&quot;action&quot;:&quot;select_all&quot;},&quot;event&quot;:&quot;graphene:table-simulate&quot;}]]">
+<cds-button kind="tertiary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="[[&quot;dispatch&quot;,{&quot;to&quot;:&quot;#carbon-events-table&quot;,&quot;event&quot;:&quot;graphene:table-simulate&quot;,&quot;detail&quot;:{&quot;selected&quot;:true,&quot;action&quot;:&quot;select_all&quot;}}]]">
   
       Select all
     
@@ -12201,7 +12201,7 @@
 </cds-button>
   
     
-<cds-button kind="tertiary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="[[&quot;dispatch&quot;,{&quot;to&quot;:&quot;#carbon-events-table&quot;,&quot;detail&quot;:{&quot;action&quot;:&quot;sort&quot;,&quot;direction&quot;:&quot;ascending&quot;,&quot;column_index&quot;:0},&quot;event&quot;:&quot;graphene:table-simulate&quot;}]]">
+<cds-button kind="tertiary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="[[&quot;dispatch&quot;,{&quot;to&quot;:&quot;#carbon-events-table&quot;,&quot;event&quot;:&quot;graphene:table-simulate&quot;,&quot;detail&quot;:{&quot;action&quot;:&quot;sort&quot;,&quot;direction&quot;:&quot;ascending&quot;,&quot;column_index&quot;:0}}]]">
   
       Sort by name (asc)
     
@@ -12209,7 +12209,7 @@
 </cds-button>
   
     
-<cds-button kind="tertiary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="[[&quot;dispatch&quot;,{&quot;to&quot;:&quot;#carbon-events-table&quot;,&quot;detail&quot;:{&quot;action&quot;:&quot;sort&quot;,&quot;direction&quot;:&quot;descending&quot;,&quot;column_index&quot;:0},&quot;event&quot;:&quot;graphene:table-simulate&quot;}]]">
+<cds-button kind="tertiary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="[[&quot;dispatch&quot;,{&quot;to&quot;:&quot;#carbon-events-table&quot;,&quot;event&quot;:&quot;graphene:table-simulate&quot;,&quot;detail&quot;:{&quot;action&quot;:&quot;sort&quot;,&quot;direction&quot;:&quot;descending&quot;,&quot;column_index&quot;:0}}]]">
   
       Sort by name (desc)
     
@@ -12217,7 +12217,7 @@
 </cds-button>
   
     
-<cds-button kind="tertiary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="[[&quot;dispatch&quot;,{&quot;to&quot;:&quot;#carbon-events-table&quot;,&quot;detail&quot;:{&quot;value&quot;:&quot;Balancer 1&quot;,&quot;action&quot;:&quot;search&quot;},&quot;event&quot;:&quot;graphene:table-simulate&quot;}]]">
+<cds-button kind="tertiary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="[[&quot;dispatch&quot;,{&quot;to&quot;:&quot;#carbon-events-table&quot;,&quot;event&quot;:&quot;graphene:table-simulate&quot;,&quot;detail&quot;:{&quot;value&quot;:&quot;Balancer 1&quot;,&quot;action&quot;:&quot;search&quot;}}]]">
   
       Search &#39;Balancer 1&#39;
     
@@ -12225,7 +12225,7 @@
 </cds-button>
   
     
-<cds-button kind="tertiary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="[[&quot;dispatch&quot;,{&quot;to&quot;:&quot;#carbon-events-table&quot;,&quot;detail&quot;:{&quot;value&quot;:&quot;&quot;,&quot;action&quot;:&quot;search&quot;},&quot;event&quot;:&quot;graphene:table-simulate&quot;}]]">
+<cds-button kind="tertiary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="[[&quot;dispatch&quot;,{&quot;to&quot;:&quot;#carbon-events-table&quot;,&quot;event&quot;:&quot;graphene:table-simulate&quot;,&quot;detail&quot;:{&quot;value&quot;:&quot;&quot;,&quot;action&quot;:&quot;search&quot;}}]]">
   
       Clear search
     
@@ -12245,8 +12245,8 @@
   id="overflow-menu-small-single-small"
   size="sm"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
   overflow_menu_on_hover
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Small overflow menu</:description>
@@ -12278,7 +12278,7 @@
 ```html
 <div id="overflow-menu-small-single-small-component">
   
-<cds-table headerCount="0" locale="en" overflow-menu-on-hover size="sm" use-zebra-styles id="overflow-menu-small-single-small" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" locale="en" overflow-menu-on-hover size="sm" use-zebra-styles id="overflow-menu-small-single-small" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -13222,8 +13222,8 @@
   id="overflow-menu-small-single-extra-small"
   size="xs"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
   overflow_menu_on_hover
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Extra small overflow</:description>
@@ -13253,7 +13253,7 @@
 ```html
 <div id="overflow-menu-small-single-extra-small-component">
   
-<cds-table headerCount="0" locale="en" overflow-menu-on-hover size="xs" use-zebra-styles id="overflow-menu-small-single-extra-small" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" locale="en" overflow-menu-on-hover size="xs" use-zebra-styles id="overflow-menu-small-single-extra-small" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -14152,9 +14152,9 @@
 <.data_table
   id="selection-single-checkboxes"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
-  selectable
   selection_name="carbon-selection"
+  selectable
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Row selection</:description>
@@ -14167,7 +14167,7 @@
 ```html
 <div id="selection-single-checkboxes-component">
   
-<cds-table headerCount="0" is-selectable locale="en" size="lg" use-zebra-styles id="selection-single-checkboxes" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" is-selectable locale="en" size="lg" use-zebra-styles id="selection-single-checkboxes" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -14741,10 +14741,10 @@
 <.data_table
   id="selection-single-preselected"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
-  selectable
-  selected_ids={[2]}
   selection_name="carbon-selection"
+  selected_ids={[2]}
+  selectable
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Preselected row</:description>
@@ -14757,7 +14757,7 @@
 ```html
 <div id="selection-single-preselected-component">
   
-<cds-table headerCount="0" is-selectable locale="en" size="lg" use-zebra-styles id="selection-single-preselected" phx-hook="BasicComponentsTable" data-selected-ids="2" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" is-selectable locale="en" size="lg" use-zebra-styles id="selection-single-preselected" phx-target="1" phx-update="ignore" data-selected-ids="2" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -15334,10 +15334,10 @@
 <.data_table
   id="selection-radio-single-radio"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
-  selectable
-  radio
   selection_name="carbon-radio-selection"
+  radio
+  selectable
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Radio selection</:description>
@@ -15350,7 +15350,7 @@
 ```html
 <div id="selection-radio-single-radio-component">
   
-<cds-table headerCount="0" is-selectable locale="en" radio size="lg" use-zebra-styles id="selection-radio-single-radio" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" is-selectable locale="en" radio size="lg" use-zebra-styles id="selection-radio-single-radio" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -15924,11 +15924,11 @@
 <.data_table
   id="selection-radio-single-radio-selected"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
-  selectable
+  selection_name="carbon-radio-selection"
   radio
   selected_ids={[3]}
-  selection_name="carbon-radio-selection"
+  selectable
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Preselected radio</:description>
@@ -15941,7 +15941,7 @@
 ```html
 <div id="selection-radio-single-radio-selected-component">
   
-<cds-table headerCount="0" is-selectable locale="en" radio size="lg" use-zebra-styles id="selection-radio-single-radio-selected" phx-hook="BasicComponentsTable" data-selected-ids="3" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" is-selectable locale="en" radio size="lg" use-zebra-styles id="selection-radio-single-radio-selected" phx-target="1" phx-update="ignore" data-selected-ids="3" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -16518,11 +16518,11 @@
 <.data_table
   id="selection-radio-sorting-single-radio-sorting"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
-  selectable
-  radio
   selection_name="carbon-radio-sorting"
+  radio
+  selectable
   sortable
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Radio selection and sorting</:description>
@@ -16535,7 +16535,7 @@
 ```html
 <div id="selection-radio-sorting-single-radio-sorting-component">
   
-<cds-table headerCount="0" is-selectable is-sortable locale="en" radio size="lg" use-zebra-styles id="selection-radio-sorting-single-radio-sorting" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" is-selectable is-sortable locale="en" radio size="lg" use-zebra-styles id="selection-radio-sorting-single-radio-sorting" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -17110,11 +17110,11 @@
   id="selection-radio-sorting-single-compact"
   size="sm"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
-  selectable
-  radio
   selection_name="carbon-radio-sorting"
+  radio
+  selectable
   sortable
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Compact sorting</:description>
@@ -17127,7 +17127,7 @@
 ```html
 <div id="selection-radio-sorting-single-compact-component">
   
-<cds-table headerCount="0" is-selectable is-sortable locale="en" radio size="sm" use-zebra-styles id="selection-radio-sorting-single-compact" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" is-selectable is-sortable locale="en" radio size="sm" use-zebra-styles id="selection-radio-sorting-single-compact" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -17704,8 +17704,8 @@
 <.data_table
   id="sorting-single-sorting"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
   sortable
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Sorting enabled</:description>
@@ -17718,7 +17718,7 @@
 ```html
 <div id="sorting-single-sorting-component">
   
-<cds-table headerCount="0" is-sortable locale="en" size="lg" use-zebra-styles id="sorting-single-sorting" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" is-sortable locale="en" size="lg" use-zebra-styles id="sorting-single-sorting" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -18293,8 +18293,8 @@
   id="sorting-single-compact"
   size="sm"
   rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
   sortable
+  row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
 >
   <:title>DataTable</:title>
   <:description>Compact sorting</:description>
@@ -18307,7 +18307,7 @@
 ```html
 <div id="sorting-single-compact-component">
   
-<cds-table headerCount="0" is-sortable locale="en" size="sm" use-zebra-styles id="sorting-single-compact" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" is-sortable locale="en" size="sm" use-zebra-styles id="sorting-single-compact" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -18914,7 +18914,7 @@
 ```html
 <div id="toolbar-single-actions-component">
   
-<cds-table headerCount="0" locale="en" size="lg" use-zebra-styles id="toolbar-single-actions" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" locale="en" size="lg" use-zebra-styles id="toolbar-single-actions" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -19586,7 +19586,7 @@
 ```html
 <div id="toolbar-single-compact-component">
   
-<cds-table headerCount="0" locale="en" size="sm" use-zebra-styles id="toolbar-single-compact" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" locale="en" size="sm" use-zebra-styles id="toolbar-single-compact" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -20250,7 +20250,7 @@
 ```html
 <div id="toolbar-persistent-single-persistent-component">
   
-<cds-table headerCount="0" locale="en" size="lg" use-zebra-styles id="toolbar-persistent-single-persistent" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" locale="en" size="lg" use-zebra-styles id="toolbar-persistent-single-persistent" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -20922,7 +20922,7 @@
 ```html
 <div id="toolbar-persistent-single-compact-component">
   
-<cds-table headerCount="0" locale="en" size="sm" use-zebra-styles id="toolbar-persistent-single-compact" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" locale="en" size="sm" use-zebra-styles id="toolbar-persistent-single-compact" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -21587,7 +21587,7 @@
 ```html
 <div id="toolbar-persistent-small-single-small-component">
   
-<cds-table headerCount="0" locale="en" size="sm" use-zebra-styles id="toolbar-persistent-small-single-small" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" locale="en" size="sm" use-zebra-styles id="toolbar-persistent-small-single-small" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>
@@ -22259,7 +22259,7 @@
 ```html
 <div id="toolbar-persistent-small-single-extra-small-component">
   
-<cds-table headerCount="0" locale="en" size="xs" use-zebra-styles id="toolbar-persistent-small-single-extra-small" phx-hook="BasicComponentsTable" data-selected-ids="" phx-target="1" phx-update="ignore">
+<cds-table headerCount="0" locale="en" size="xs" use-zebra-styles id="toolbar-persistent-small-single-extra-small" phx-target="1" phx-update="ignore" data-selected-ids="" phx-hook="BasicComponentsTable">
   
     
 <cds-table-head>

@@ -38,7 +38,7 @@
     
     <input type="hidden" id="name-input" name="name" value="Ada Lovelace">
 
-<cds-text-input hidePasswordLabel="Hide password" name="name" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Ada Lovelace" id="form-name" data-form-detail="checked" data-form-event="input" data-form-input="name-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-text-input hidePasswordLabel="Hide password" name="name" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Ada Lovelace" id="form-name" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="name-input" data-form-event="input" data-form-mode="value" data-form-detail="checked">
   
       
   
@@ -50,7 +50,7 @@
 
     <input type="hidden" id="role-input" name="role" value="Engineer">
 
-<cds-text-input hidePasswordLabel="Hide password" name="role" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Engineer" id="form-role" data-form-detail="checked" data-form-event="input" data-form-input="role-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-text-input hidePasswordLabel="Hide password" name="role" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Engineer" id="form-role" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="role-input" data-form-event="input" data-form-mode="value" data-form-detail="checked">
   
       
   
@@ -81,7 +81,7 @@
     
     <input type="hidden" id="email-input" name="email" value="ada@graphene.dev">
 
-<cds-text-input hidePasswordLabel="Hide password" name="email" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="email" value="ada@graphene.dev" id="form-email" data-form-detail="checked" data-form-event="input" data-form-input="email-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-text-input hidePasswordLabel="Hide password" name="email" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="email" value="ada@graphene.dev" id="form-email" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="email-input" data-form-event="input" data-form-mode="value" data-form-detail="checked">
   
       
   
@@ -93,7 +93,7 @@
 
     <input type="hidden" id="password-input" name="password" value="password">
 
-<cds-password-input hide-password-label="Hide password" name="password" required-validity-message="Please fill out this field." show-password-label="Show password" size="md" tooltip-alignment="center" tooltip-position="bottom" type="password" value="password" id="form-password" data-form-detail="checked" data-form-event="input" data-form-input="password-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-password-input hide-password-label="Hide password" name="password" required-validity-message="Please fill out this field." show-password-label="Show password" size="md" tooltip-alignment="center" tooltip-position="bottom" type="password" value="password" id="form-password" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="password-input" data-form-event="input" data-form-mode="value" data-form-detail="checked">
   
       
   

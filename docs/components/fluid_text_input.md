@@ -13,7 +13,7 @@
 ```html
 <input type="hidden" id="fluid-text-input-default-input" name="fluid-text-input-default" value="">
 
-<cds-fluid-text-input hidePasswordLabel="Hide password" name="fluid-text-input-default" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="" id="basic-single-default" data-form-detail="checked" data-form-event="input" data-form-input="fluid-text-input-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-fluid-text-input hidePasswordLabel="Hide password" name="fluid-text-input-default" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="" id="basic-single-default" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="fluid-text-input-default-input" data-form-event="input" data-form-mode="value" data-form-detail="checked">
   
   
   
@@ -36,7 +36,7 @@
 ```html
 <input type="hidden" id="fluid-text-input-helper-input" name="fluid-text-input-helper" value="Ada">
 
-<cds-fluid-text-input hidePasswordLabel="Hide password" name="fluid-text-input-helper" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Ada" id="basic-single-helper-text" data-form-detail="checked" data-form-event="input" data-form-input="fluid-text-input-helper-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-fluid-text-input hidePasswordLabel="Hide password" name="fluid-text-input-helper" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Ada" id="basic-single-helper-text" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="fluid-text-input-helper-input" data-form-event="input" data-form-mode="value" data-form-detail="checked">
   
   
   <div slot="helper-text">
@@ -61,7 +61,7 @@
 ```html
 <input type="hidden" id="fluid-text-input-invalid-input" name="fluid-text-input-invalid" value="">
 
-<cds-fluid-text-input hidePasswordLabel="Hide password" name="fluid-text-input-invalid" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="" id="basic-single-invalid" data-form-detail="checked" data-form-event="input" data-form-input="fluid-text-input-invalid-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
+<cds-fluid-text-input hidePasswordLabel="Hide password" name="fluid-text-input-invalid" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="" id="basic-single-invalid" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge" data-form-input="fluid-text-input-invalid-input" data-form-event="input" data-form-mode="value" data-form-detail="checked">
   
   
   

@@ -7,6 +7,9 @@ config :esbuild,
       src/index.ts
       src/graphene.css
       --bundle
+      --splitting
+      --chunk-names=chunks/[name]-[hash]
+      --minify
       --target=es2017
       --format=esm
       --outdir=../priv/static/assets
@@ -23,9 +26,11 @@ config :esbuild,
       --target=es2017
       --format=esm
       --outdir=../priv/static/assets
+      --splitting
+      --chunk-names=chunks/[name]-[hash]
+      --minify
       --loader:.woff=file
       --loader:.woff2=file
-      --splitting
     ),
     cd: Path.expand("../assets", __DIR__)
   ]

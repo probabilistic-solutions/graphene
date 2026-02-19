@@ -5,7 +5,7 @@
 ### default
 
 ```heex
-<.pagination total_items="105" page_size="10"/>
+<.pagination page_size="10" total_items="105"/>
 ```
 
 ```html
@@ -18,7 +18,7 @@
 ### small
 
 ```heex
-<.pagination size="sm" total_items="42" page_size="5"/>
+<.pagination size="sm" page_size="5" total_items="42"/>
 ```
 
 ```html
@@ -31,7 +31,7 @@
 ### unknown
 
 ```heex
-<.pagination total_items="" pages_unknown page_size="10"/>
+<.pagination page_size="10" pages_unknown total_items=""/>
 ```
 
 ```html

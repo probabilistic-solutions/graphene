@@ -41,6 +41,8 @@ defmodule Graphene.MixProject do
       # dev deps (e.g. for code gen)
       {:jason, "~> 1.4"},
       {:phoenix_storybook, "~> 0.9.3", only: :dev},
+      {:earmark, "~> 1.4", only: :dev},
+      {:makeup_js, "~> 0.1.0", only: :dev},
       # testing
       {:floki, ">= 0.30.0", only: :test},
       # stories
