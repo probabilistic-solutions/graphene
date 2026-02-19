@@ -67,6 +67,18 @@ end
 Notes:
 - Graphene ships Carbon styles + IBM Plex fonts inside `priv/static/assets`, so no Carbon-related npm packages are required.
 - When developing this repo locally (the `demo` app), run `mix assets.build` at the repo root to refresh vendored Graphene assets.
+- Optional (reduce flicker): preload Graphene’s CSS + a couple of IBM Plex font files. Use the helper to avoid hardcoding hashed filenames:
+
+```heex
+<link rel="preload" as="style" href={~p"/graphene/assets/graphene.css"} />
+<link rel="stylesheet" href={~p"/graphene/assets/graphene.css"} />
+<%= if path = Graphene.Font.path("Regular", "Latin1") do %>
+  <link rel="preload" as="font" type="font/woff2" crossorigin href={path} />
+<% end %>
+<%= if path = Graphene.Font.path("SemiBold", "Latin1") do %>
+  <link rel="preload" as="font" type="font/woff2" crossorigin href={path} />
+<% end %>
+```
 
 <!-- GRAPHENE_INSTALL:END -->
 

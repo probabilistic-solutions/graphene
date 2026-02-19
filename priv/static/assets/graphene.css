@@ -33950,6 +33950,134 @@ em {
 cds-grid::part(grid) {
   row-gap: var(--graphene-grid-row-gap, var(--cds-spacing-07));
 }
-html.graphene-loading body {
+html.graphene-loading .graphene-app {
   visibility: hidden;
+}
+.graphene-loading-skeleton {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--cds-background);
+  color: var(--cds-text-primary);
+  display: grid;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+html.graphene-loading .graphene-loading-skeleton {
+  opacity: 1;
+  pointer-events: auto;
+}
+.graphene-loading-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.graphene-loading-header {
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--cds-spacing-05, 1rem);
+  border-bottom: 1px solid var(--cds-border-subtle, #e0e0e0);
+}
+.graphene-loading-brand,
+.graphene-loading-nav-item,
+.graphene-loading-title,
+.graphene-loading-subtitle,
+.graphene-loading-card,
+.graphene-loading-wide,
+.graphene-loading-dot {
+  background:
+    linear-gradient(
+      90deg,
+      var(--cds-layer-01, #f4f4f4),
+      var(--cds-layer-02, #e8e8e8),
+      var(--cds-layer-01, #f4f4f4));
+  background-size: 200% 100%;
+  animation: graphene-skeleton-shimmer 1.2s ease-in-out infinite;
+  border-radius: 4px;
+}
+.graphene-loading-brand {
+  width: 10rem;
+  height: 1rem;
+}
+.graphene-loading-actions {
+  display: flex;
+  gap: var(--cds-spacing-03, 0.75rem);
+}
+.graphene-loading-dot {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 999px;
+}
+.graphene-loading-body {
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+  min-height: calc(100vh - 3rem);
+}
+.graphene-loading-nav {
+  border-right: 1px solid var(--cds-border-subtle, #e0e0e0);
+  padding: var(--cds-spacing-05, 1rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cds-spacing-03, 0.75rem);
+}
+.graphene-loading-nav-item {
+  height: 0.75rem;
+}
+.graphene-loading-main {
+  padding: var(--cds-spacing-07, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cds-spacing-05, 1rem);
+}
+.graphene-loading-title {
+  width: 12rem;
+  height: 1.5rem;
+}
+.graphene-loading-subtitle {
+  width: 24rem;
+  height: 1rem;
+}
+.graphene-loading-grid {
+  display: grid;
+  gap: var(--cds-spacing-05, 1rem);
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+}
+.graphene-loading-card {
+  height: 6.5rem;
+}
+.graphene-loading-wide {
+  height: 8rem;
+}
+@keyframes graphene-skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .graphene-loading-brand,
+  .graphene-loading-nav-item,
+  .graphene-loading-title,
+  .graphene-loading-subtitle,
+  .graphene-loading-card,
+  .graphene-loading-wide,
+  .graphene-loading-dot {
+    animation: none;
+  }
+}
+@media (max-width: 768px) {
+  .graphene-loading-body {
+    grid-template-columns: 1fr;
+  }
+  .graphene-loading-nav {
+    border-right: none;
+    border-bottom: 1px solid var(--cds-border-subtle, #e0e0e0);
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 }

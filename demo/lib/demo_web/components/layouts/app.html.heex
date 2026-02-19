@@ -70,7 +70,7 @@
       <.side_nav_items>
         <.side_nav_link href={~p"/demo"} active={@active_page == :overview}>
           <span class="demo-nav-link">
-            <Icons.icon name="dashboard" size={16} /> Overview
+            <.icon name="dashboard" size={16} /> Overview
           </span>
         </.side_nav_link>
         <.side_nav_link
@@ -78,7 +78,7 @@
           active={@active_page == :infrastructure}
         >
           <span class="demo-nav-link">
-            <Icons.icon name="cloud" size={16} /> Infrastructure
+            <.icon name="cloud" size={16} /> Infrastructure
           </span>
         </.side_nav_link>
         <.side_nav_menu
@@ -87,7 +87,7 @@
           active={@active_page in [:operations, :activity]}
         >
           <:title_icon>
-            <Icons.icon name="cloud-services" size={16} />
+            <.icon name="cloud-services" size={16} />
           </:title_icon>
           <.side_nav_menu_item
             href={~p"/demo/operations"}
@@ -108,7 +108,7 @@
           active={@active_page in [:costs, :security]}
         >
           <:title_icon>
-            <Icons.icon name="security" size={16} />
+            <.icon name="security" size={16} />
           </:title_icon>
           <.side_nav_menu_item
             href={~p"/demo/costs"}
@@ -129,7 +129,7 @@
           active={@active_page in [:settings, :support]}
         >
           <:title_icon>
-            <Icons.icon name="tools" size={16} />
+            <.icon name="tools" size={16} />
           </:title_icon>
           <.side_nav_menu_item
             href={~p"/demo/settings"}
@@ -146,7 +146,7 @@
         </.side_nav_menu>
         <.side_nav_link href={~p"/demo/components"} active={@active_page == :components}>
           <span class="demo-nav-link">
-            <Icons.icon name="catalog" size={16} /> Component Catalog
+            <.icon name="catalog" size={16} /> Component Catalog
           </span>
         </.side_nav_link>
       </.side_nav_items>

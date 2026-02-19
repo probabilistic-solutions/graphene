@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="[scrollbar-gutter:stable]">
+<html lang="en" class="[scrollbar-gutter:stable] graphene-loading">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,6 +7,16 @@
     <.live_title suffix=" · Nimbus Cloud">
       <%= assigns[:page_title] || "Nimbus Cloud Console" %>
     </.live_title>
+    <link rel="preload" as="style" href={~p"/graphene/assets/graphene.css"} />
+    <%= if path = Graphene.Font.path("Regular", "Latin1") do %>
+      <link rel="preload" as="font" type="font/woff2" crossorigin href={path} />
+    <% end %>
+    <%= if path = Graphene.Font.path("SemiBold", "Latin1") do %>
+      <link rel="preload" as="font" type="font/woff2" crossorigin href={path} />
+    <% end %>
+    <%= if path = Graphene.Font.path("Italic") do %>
+      <link rel="preload" as="font" type="font/woff2" crossorigin href={path} />
+    <% end %>
     <link phx-track-static rel="stylesheet" href={~p"/graphene/assets/graphene.css"} />
     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
     <script type="module">
@@ -17,6 +27,40 @@
     </script>
   </head>
   <body class="demo-web">
-    <%= @inner_content %>
+    <div class="graphene-loading-skeleton" role="status" aria-live="polite" aria-busy="true">
+      <div class="graphene-loading-shell">
+        <div class="graphene-loading-header">
+          <div class="graphene-loading-brand"></div>
+          <div class="graphene-loading-actions">
+            <span class="graphene-loading-dot"></span>
+            <span class="graphene-loading-dot"></span>
+            <span class="graphene-loading-dot"></span>
+          </div>
+        </div>
+        <div class="graphene-loading-body">
+          <aside class="graphene-loading-nav">
+            <div class="graphene-loading-nav-item"></div>
+            <div class="graphene-loading-nav-item"></div>
+            <div class="graphene-loading-nav-item"></div>
+            <div class="graphene-loading-nav-item"></div>
+            <div class="graphene-loading-nav-item"></div>
+          </aside>
+          <main class="graphene-loading-main">
+            <div class="graphene-loading-title"></div>
+            <div class="graphene-loading-subtitle"></div>
+            <div class="graphene-loading-grid">
+              <div class="graphene-loading-card"></div>
+              <div class="graphene-loading-card"></div>
+              <div class="graphene-loading-card"></div>
+              <div class="graphene-loading-card"></div>
+            </div>
+            <div class="graphene-loading-wide"></div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="graphene-app">
+      <%= @inner_content %>
+    </div>
   </body>
 </html>
