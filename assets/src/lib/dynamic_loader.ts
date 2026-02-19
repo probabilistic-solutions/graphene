@@ -3,6 +3,13 @@ import { componentImports } from "./_dynamic_loader_mapping";
 
 type ComponentImporter = () => Promise<unknown>;
 
+export interface WebComponentManagerOptions {
+  hideUntilReady?: boolean;
+  readyTimeoutMs?: number;
+  loadingClass?: string;
+  root?: ParentNode | null;
+}
+
 const componentNames = Object.keys(componentImports);
 const componentSelector = componentNames.join(",");
 const componentSet = new Set(componentNames);
@@ -181,11 +188,59 @@ function scanAndLoad(root: ParentNode | null): void {
     });
 }
 
+function collectComponentTags(root: ParentNode | null): string[] {
+  if (!root) {
+    return [];
+  }
+
+  const tags = new Set<string>();
+
+  if (root instanceof Element && isComponentTag(root.tagName)) {
+    tags.add(root.tagName.toLowerCase());
+  }
+
+  if (componentSelector && "querySelectorAll" in root) {
+    root
+      .querySelectorAll(componentSelector)
+      .forEach((el) => tags.add(el.tagName.toLowerCase()));
+  }
+
+  return Array.from(tags);
+}
+
+async function waitForComponent(tagName: string): Promise<void> {
+  const loadPromise = loadComponentByTag(tagName);
+  if (loadPromise) {
+    await loadPromise;
+  }
+  await customElements.whenDefined(tagName);
+}
+
 export class WebComponentManager {
   private observer: MutationObserver | null = null;
+  private options: WebComponentManagerOptions;
+  private readyPromise: Promise<void> | null = null;
+
+  constructor(options: WebComponentManagerOptions = {}) {
+    this.options = options;
+  }
 
   public connect(): void {
     const doConnect = () => {
+      if (this.options.hideUntilReady) {
+        this.applyLoadingClass();
+        const ready = this.whenReady();
+        const timeoutMs = this.options.readyTimeoutMs ?? 0;
+        if (timeoutMs > 0) {
+          Promise.race([
+            ready,
+            new Promise((resolve) => setTimeout(resolve, timeoutMs))
+          ]).finally(() => this.clearLoadingClass());
+        } else {
+          ready.finally(() => this.clearLoadingClass());
+        }
+      }
+
       ensureDefinePatched();
       ensureNumberInputPatched("cds-number-input");
       ensureNumberInputPatched("cds-fluid-number-input");
@@ -203,6 +258,21 @@ export class WebComponentManager {
   public disconnect(): void {
     this.observer?.disconnect();
     this.observer = null;
+  }
+
+  public whenReady(root: ParentNode | null = this.options.root ?? document.body): Promise<void> {
+    if (this.readyPromise) {
+      return this.readyPromise;
+    }
+
+    this.loadExistingComponents();
+    const tags = collectComponentTags(root ?? document.documentElement);
+
+    this.readyPromise = Promise.all(tags.map((tag) => waitForComponent(tag))).then(
+      () => undefined
+    );
+
+    return this.readyPromise;
   }
 
   private loadExistingComponents(): void {
@@ -232,6 +302,16 @@ export class WebComponentManager {
 
     this.observer = new MutationObserver(observerCallback);
     this.observer.observe(root, observerOptions);
+  }
+
+  private applyLoadingClass(): void {
+    const className = this.options.loadingClass ?? "graphene-loading";
+    document.documentElement?.classList.add(className);
+  }
+
+  private clearLoadingClass(): void {
+    const className = this.options.loadingClass ?? "graphene-loading";
+    document.documentElement?.classList.remove(className);
   }
 }
 

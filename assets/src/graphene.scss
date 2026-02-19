@@ -36,3 +36,7 @@
 cds-grid::part(grid) {
   row-gap: var(--graphene-grid-row-gap, var(--cds-spacing-07));
 }
+
+html.graphene-loading body {
+  visibility: hidden;
+}

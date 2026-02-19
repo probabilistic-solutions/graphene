@@ -3,4 +3,5 @@
 
 export * as Hooks from "./lib/hooks";
 export { WebComponentManager } from "./lib/dynamic_loader";
+export type { WebComponentManagerOptions } from "./lib/dynamic_loader";
 export { mergeWebComponentsAttrs } from "./lib/socket_utils";

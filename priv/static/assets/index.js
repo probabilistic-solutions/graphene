@@ -802,12 +802,48 @@ function scanAndLoad(root) {
     loadComponentByTag(el.tagName);
   });
 }
+function collectComponentTags(root) {
+  if (!root) {
+    return [];
+  }
+  const tags = /* @__PURE__ */ new Set();
+  if (root instanceof Element && isComponentTag(root.tagName)) {
+    tags.add(root.tagName.toLowerCase());
+  }
+  if (componentSelector && "querySelectorAll" in root) {
+    root.querySelectorAll(componentSelector).forEach((el) => tags.add(el.tagName.toLowerCase()));
+  }
+  return Array.from(tags);
+}
+async function waitForComponent(tagName) {
+  const loadPromise = loadComponentByTag(tagName);
+  if (loadPromise) {
+    await loadPromise;
+  }
+  await customElements.whenDefined(tagName);
+}
 var WebComponentManager = class {
-  constructor() {
+  constructor(options = {}) {
     this.observer = null;
+    this.readyPromise = null;
+    this.options = options;
   }
   connect() {
     const doConnect = () => {
+      var _a;
+      if (this.options.hideUntilReady) {
+        this.applyLoadingClass();
+        const ready = this.whenReady();
+        const timeoutMs = (_a = this.options.readyTimeoutMs) != null ? _a : 0;
+        if (timeoutMs > 0) {
+          Promise.race([
+            ready,
+            new Promise((resolve) => setTimeout(resolve, timeoutMs))
+          ]).finally(() => this.clearLoadingClass());
+        } else {
+          ready.finally(() => this.clearLoadingClass());
+        }
+      }
       ensureDefinePatched();
       ensureNumberInputPatched("cds-number-input");
       ensureNumberInputPatched("cds-fluid-number-input");
@@ -824,6 +860,17 @@ var WebComponentManager = class {
     var _a;
     (_a = this.observer) == null ? void 0 : _a.disconnect();
     this.observer = null;
+  }
+  whenReady(root = ((_a) => (_a = this.options.root) != null ? _a : document.body)()) {
+    if (this.readyPromise) {
+      return this.readyPromise;
+    }
+    this.loadExistingComponents();
+    const tags = collectComponentTags(root != null ? root : document.documentElement);
+    this.readyPromise = Promise.all(tags.map((tag) => waitForComponent(tag))).then(
+      () => void 0
+    );
+    return this.readyPromise;
   }
   loadExistingComponents() {
     var _a;
@@ -850,6 +897,16 @@ var WebComponentManager = class {
     }
     this.observer = new MutationObserver(observerCallback);
     this.observer.observe(root, observerOptions);
+  }
+  applyLoadingClass() {
+    var _a, _b;
+    const className = (_a = this.options.loadingClass) != null ? _a : "graphene-loading";
+    (_b = document.documentElement) == null ? void 0 : _b.classList.add(className);
+  }
+  clearLoadingClass() {
+    var _a, _b;
+    const className = (_a = this.options.loadingClass) != null ? _a : "graphene-loading";
+    (_b = document.documentElement) == null ? void 0 : _b.classList.remove(className);
   }
 };
 ensureDefinePatched();

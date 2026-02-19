@@ -4,7 +4,10 @@ import { buildHooks } from "./hooks";
 (function () {
   (window as any).Graphene = Graphene;
   const { WebComponentManager, mergeWebComponentsAttrs } = Graphene;
-  const componentManager = new WebComponentManager();
+  const componentManager = new WebComponentManager({
+    hideUntilReady: true,
+    readyTimeoutMs: 3000
+  });
   componentManager.connect();
   (window as any).storybook = {
     Hooks: buildHooks(),

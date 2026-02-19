@@ -24,7 +24,10 @@ const start = async () => {
   const Graphene = await resolveGraphene()
   const { WebComponentManager, mergeWebComponentsAttrs } = Graphene
 
-  const componentManager = new WebComponentManager()
+  const componentManager = new WebComponentManager({
+    hideUntilReady: true,
+    readyTimeoutMs: 3000
+  })
   componentManager.connect()
 
   const liveSocket = new LiveSocket("/live", Socket, {
