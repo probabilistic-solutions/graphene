@@ -27,29 +27,26 @@ if Code.ensure_loaded?(PhoenixStorybook.Rendering.ComponentRenderer) do
       lines =
         ["## Carbon Components Examples", ""] ++
           Enum.flat_map(entries, fn {component, stories} ->
-            [
-              "### `#{component}`",
-              ""
-            ] ++
-              Enum.flat_map(stories, fn story ->
-                story_lines =
-                  case story.story_label do
-                    nil -> []
-                    label -> ["#### #{label}", ""]
-                  end
-
-                story_lines ++
-                  Enum.flat_map(story.snippets, &snippet_lines/1) ++
-                  [""]
-              end)
+            component_lines(component, stories, component_heading_level: 3)
           end)
 
       lines
-      |> Enum.join("\n")
-      |> String.trim_trailing()
-      |> Kernel.<>("\n")
+      |> join_lines()
       |> escape_doc()
       |> indent_lines(indent)
+    end
+
+    def generate_component_markdown(opts \\ []) do
+      include_html = Keyword.get(opts, :include_html, true)
+      entries = story_entries(include_html)
+
+      Enum.map(entries, fn {component, stories} ->
+        lines =
+          [heading(1, "`#{component}`"), ""] ++
+            component_body_lines(stories, story_label_level: 2, snippet_label_level: 3)
+
+        {component, join_lines(lines)}
+      end)
     end
 
     defp story_entries(include_html) do
@@ -355,11 +352,40 @@ if Code.ensure_loaded?(PhoenixStorybook.Rendering.ComponentRenderer) do
       end
     end
 
-    defp snippet_lines(%{label: label, code: code, lang: lang} = snippet) do
+    defp component_lines(component, stories, opts) do
+      component_heading_level = Keyword.fetch!(opts, :component_heading_level)
+      story_label_level = component_heading_level + 1
+      snippet_label_level = component_heading_level + 2
+
+      [heading(component_heading_level, "`#{component}`"), ""] ++
+        component_body_lines(stories,
+          story_label_level: story_label_level,
+          snippet_label_level: snippet_label_level
+        )
+    end
+
+    defp component_body_lines(stories, opts) do
+      story_label_level = Keyword.fetch!(opts, :story_label_level)
+      snippet_label_level = Keyword.fetch!(opts, :snippet_label_level)
+
+      Enum.flat_map(stories, fn story ->
+        story_lines =
+          case story.story_label do
+            nil -> []
+            label -> [heading(story_label_level, label), ""]
+          end
+
+        story_lines ++
+          Enum.flat_map(story.snippets, &snippet_lines(&1, snippet_label_level)) ++
+          [""]
+      end)
+    end
+
+    defp snippet_lines(%{label: label, code: code, lang: lang} = snippet, label_level) do
       header =
         case label do
           nil -> []
-          _ -> ["##### #{label}", ""]
+          _ -> [heading(label_level, label), ""]
         end
 
       html_block =
@@ -426,6 +452,17 @@ if Code.ensure_loaded?(PhoenixStorybook.Rendering.ComponentRenderer) do
       |> String.replace(~s(\"\"\"), ~s(\\\"\\\"\\\"))
     end
 
+    defp heading(level, text) when is_integer(level) and level > 0 do
+      String.duplicate("#", level) <> " " <> text
+    end
+
+    defp join_lines(lines) do
+      lines
+      |> Enum.join("\n")
+      |> String.trim_trailing()
+      |> Kernel.<>("\n")
+    end
+
     defp rendered_to_string(rendered) do
       rendered
       |> Safe.to_iodata()
@@ -470,6 +507,10 @@ else
 
     def generate_markdown(_opts \\ []) do
       ""
+    end
+
+    def generate_component_markdown(_opts \\ []) do
+      []
     end
   end
 end
