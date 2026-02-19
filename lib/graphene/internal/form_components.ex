@@ -6,138 +6,7 @@ defmodule Graphene.Internal.FormComponents do
   alias Graphene.Internal.CoreComponents
 
   defp form_bridge_hook(assigns) do
-    ~H"""
-    <script :type={Phoenix.LiveView.ColocatedHook} name=".GrapheneFormBridge" runtime>
-      {
-        mounted() {
-          const whenDefined = (tagName, cb) => {
-            if (!tagName || !customElements || !customElements.whenDefined) {
-              cb();
-              return;
-            }
-            customElements.whenDefined(tagName).then(cb).catch(cb);
-          };
-
-          const parseFileNames = (files) => {
-            return Array.from(files || []).map((file) => {
-              if (file && typeof file === "object" && "name" in file) return file.name;
-              return file;
-            });
-          };
-
-          const parseValue = (detail, target) => {
-            if (detail && Object.prototype.hasOwnProperty.call(detail, "value")) return detail.value;
-            if (detail && detail.item && Object.prototype.hasOwnProperty.call(detail.item, "value")) {
-              return detail.item.value;
-            }
-            if (detail && detail.selectedItem && Object.prototype.hasOwnProperty.call(detail.selectedItem, "value")) {
-              return detail.selectedItem.value;
-            }
-            if (detail && Array.isArray(detail.selectedItems)) {
-              return detail.selectedItems.map((item) =>
-                item && Object.prototype.hasOwnProperty.call(item, "value") ? item.value : item
-              );
-            }
-            if (detail && Array.isArray(detail.addedFiles)) {
-              return parseFileNames(detail.addedFiles);
-            }
-            if (target && Object.prototype.hasOwnProperty.call(target, "value")) return target.value;
-            if (target && target.files) return parseFileNames(target.files);
-            if (target && Object.prototype.hasOwnProperty.call(target, "selectedItem")) {
-              const selected = target.selectedItem;
-              if (selected && Object.prototype.hasOwnProperty.call(selected, "value")) return selected.value;
-            }
-            return "";
-          };
-
-          const parseChecked = (detail, target, detailKey) => {
-            if (detailKey && detail && Object.prototype.hasOwnProperty.call(detail, detailKey)) {
-              return detail[detailKey];
-            }
-            if (detail && Object.prototype.hasOwnProperty.call(detail, "toggled")) return detail.toggled;
-            if (detail && Object.prototype.hasOwnProperty.call(detail, "checked")) return detail.checked;
-            if (target && Object.prototype.hasOwnProperty.call(target, "toggled")) return target.toggled;
-            if (target && Object.prototype.hasOwnProperty.call(target, "checked")) return target.checked;
-            return false;
-          };
-
-          this._formBridgeHandler = (event) => {
-            const inputId = this.el.dataset.formInput;
-            if (!inputId) return;
-            const input = document.getElementById(inputId);
-            if (!input) return;
-
-            const mode = this.el.dataset.formMode || "value";
-            const detailKey = this.el.dataset.formDetail || null;
-            const detail = event && event.detail ? event.detail : null;
-            const target = event && event.target ? event.target : this.el;
-
-            if (mode === "boolean") {
-              const checked = Boolean(parseChecked(detail, target, detailKey));
-              input.value = checked ? "true" : "false";
-            } else {
-              const value = parseValue(detail, target);
-              if (Array.isArray(value)) {
-                input.value = JSON.stringify(value);
-              } else if (value === null || typeof value === "undefined") {
-                input.value = "";
-              } else {
-                input.value = String(value);
-              }
-            }
-
-            input.dispatchEvent(new Event("input", { bubbles: true }));
-            input.dispatchEvent(new Event("change", { bubbles: true }));
-          };
-
-          const eventName = this.el.dataset.formEvent || "change";
-          this._formBridgeEvent = eventName;
-
-          const isNativeEvent = eventName === "input" || eventName === "change";
-          const attachNativeListener = () => {
-            const shadowTarget =
-              this.el.shadowRoot && this.el.shadowRoot.querySelector("input, textarea, select");
-            if (shadowTarget) {
-              this._formBridgeTarget = shadowTarget;
-              this._formBridgeTarget.addEventListener(eventName, this._formBridgeHandler);
-              return true;
-            }
-            return false;
-          };
-
-          const tagName = (this.el.tagName || "").toLowerCase();
-          whenDefined(tagName, () => {
-
-            if (isNativeEvent) {
-              if (!attachNativeListener()) {
-                let attempts = 0;
-                const retry = () => {
-                  attempts += 1;
-                  if (attachNativeListener()) return;
-                  if (attempts < 20) {
-                    this._formBridgeTimer = requestAnimationFrame(retry);
-                  }
-                };
-                this._formBridgeTimer = requestAnimationFrame(retry);
-              }
-            } else {
-              this._formBridgeTarget = this.el;
-              this._formBridgeTarget.addEventListener(eventName, this._formBridgeHandler);
-            }
-          });
-        },
-
-        destroyed() {
-          if (this._formBridgeHandler && this._formBridgeEvent && this._formBridgeTarget) {
-            this._formBridgeTarget.removeEventListener(this._formBridgeEvent, this._formBridgeHandler);
-          }
-          if (this._formBridgeTimer) {
-            cancelAnimationFrame(this._formBridgeTimer);
-          }
-        }
-      }
-    </script>
-    """
+    ~H""
   end
 
   defp form_input_assigns(assigns, opts) do
@@ -194,7 +63,7 @@ defmodule Graphene.Internal.FormComponents do
     input_value = form_hidden_value(assigns, mode)
     assigns = if value_attr == :value, do: assigns, else: assign(assigns, :value, nil)
 
-    hook_name = "#{inspect(__MODULE__)}.GrapheneFormBridge"
+    hook_name = "GrapheneFormBridge"
 
     rest =
       (assigns[:rest] || %{})
@@ -619,8 +488,8 @@ defmodule Graphene.Internal.FormComponents do
         name: :toggle,
         mode: :boolean,
         checked_attr: :toggled,
-        detail_key: "toggled",
-        event: "cds-toggle-changed"
+        event: "cds-toggle-changed",
+        detail_key: "toggled"
       )
 
     component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
