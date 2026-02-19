@@ -7,8 +7,16 @@ if Mix.env() == :dev do
       Path.join(["assets", "eex", "graphene_component_story.exs"])
     end
 
+    defp template_index(:src) do
+      Path.join(["assets", "eex", "graphene_core_storybook_index.exs"])
+    end
+
     defp template_story(:dst, base, name) do
       Path.join([base, "#{name}.story.exs"])
+    end
+
+    defp template_index(:dst, base) do
+      Path.join([base, "_index.index.exs"])
     end
 
     defp storybook_location(folder) do
@@ -20,7 +28,7 @@ if Mix.env() == :dev do
       Logger.debug("Running #{__MODULE__}")
 
       Tmp.dir(fn path ->
-        for name <- Map.keys(Graphene.CoreComponents.__components__()) do
+        for name <- Map.keys(Graphene.Internal.CoreComponents.__components__()) do
           component = to_string(name)
           {func_module, func_name} = story_function(component)
 
@@ -30,9 +38,16 @@ if Mix.env() == :dev do
             component: component,
             module: "CoreComponents",
             func_module: func_module,
-            func_name: func_name
+            func_name: func_name,
+            component_module: "Graphene.Internal.CoreComponents"
           )
         end
+
+        Mix.Generator.copy_template(
+          template_index(:src),
+          template_index(:dst, path),
+          []
+        )
 
         maybe_compile_generated_stories(path)
 
@@ -58,6 +73,6 @@ if Mix.env() == :dev do
 
     defp story_function("form"), do: {"Graphene.StorybookAliases", "core_form"}
     defp story_function("link"), do: {"Graphene.StorybookAliases", "core_link"}
-    defp story_function(component), do: {"Graphene.CoreComponents", component}
+    defp story_function(component), do: {"Graphene.Internal.CoreComponents", component}
   end
 end

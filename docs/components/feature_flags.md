@@ -16,7 +16,8 @@
 <feature-flags id="feature-flag-single-single">
   
   <input type="hidden" id="checkbox-input" name="feature-flag-single" value="true">
-<cds-toggle checked id="checkbox" label-a="On" label-b="Off" name="feature-flag-single" size="" toggled id="checkbox" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="checkbox-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+
+<cds-toggle checked id="checkbox" label-a="On" label-b="Off" name="feature-flag-single" size="" toggled id="checkbox" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="checkbox-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   
@@ -47,7 +48,8 @@
 <feature-flags id="feature-flag-single-multiple">
   
   <input type="hidden" id="checkbox-input" name="feature-flag-a" value="true">
-<cds-toggle checked id="checkbox" label-a="On" label-b="Off" name="feature-flag-a" size="" toggled id="checkbox" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="checkbox-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+
+<cds-toggle checked id="checkbox" label-a="On" label-b="Off" name="feature-flag-a" size="" toggled id="checkbox" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="checkbox-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   
@@ -58,7 +60,8 @@
 </cds-toggle>
 
 <input type="hidden" id="checkbox-input" name="feature-flag-b" value="false">
-<cds-toggle id="checkbox" label-a="On" label-b="Off" name="feature-flag-b" size="" id="checkbox" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="checkbox-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+
+<cds-toggle id="checkbox" label-a="On" label-b="Off" name="feature-flag-b" size="" id="checkbox" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="checkbox-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   
@@ -86,7 +89,8 @@
 <feature-flags id="feature-flag-single-disabled">
   
   <input type="hidden" id="checkbox-input" name="feature-flag-disabled" value="false">
-<cds-toggle disabled id="checkbox" label-a="On" label-b="Off" name="feature-flag-disabled" size="" id="checkbox" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="checkbox-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+
+<cds-toggle disabled id="checkbox" label-a="On" label-b="Off" name="feature-flag-disabled" size="" id="checkbox" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="checkbox-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   

@@ -32,22 +32,26 @@
   <span slot="tooltip-content">
     Options
   </span>
-  <cds-overflow-menu-body direction="bottom" size="md">
+  
+<cds-overflow-menu-body direction="bottom" size="md">
   
     
-      <cds-overflow-menu-item size="md">
+      
+<cds-overflow-menu-item size="md">
   
         Action 1
       
 </cds-overflow-menu-item>
     
-      <cds-overflow-menu-item size="md">
+      
+<cds-overflow-menu-item size="md">
   
         Action 2
       
 </cds-overflow-menu-item>
     
-      <cds-overflow-menu-item danger size="md">
+      
+<cds-overflow-menu-item danger size="md">
   
         Delete
       
@@ -90,16 +94,19 @@
   <span slot="tooltip-content">
     Auto align
   </span>
-  <cds-overflow-menu-body direction="bottom" size="md">
+  
+<cds-overflow-menu-body direction="bottom" size="md">
   
     
-      <cds-overflow-menu-item size="md">
+      
+<cds-overflow-menu-item size="md">
   
         Edit
       
 </cds-overflow-menu-item>
     
-      <cds-overflow-menu-item size="md">
+      
+<cds-overflow-menu-item size="md">
   
         Duplicate
       
@@ -141,10 +148,12 @@
   <span slot="tooltip-content">
     Disabled
   </span>
-  <cds-overflow-menu-body direction="bottom" size="md">
+  
+<cds-overflow-menu-body direction="bottom" size="md">
   
     
-      <cds-overflow-menu-item size="md">
+      
+<cds-overflow-menu-item size="md">
   
         Action 1
       

@@ -15,26 +15,30 @@
 
 ```html
 <input type="hidden" id="dropdown-default-input" name="dropdown-default" value="all">
-<cds-dropdown direction="bottom" name="dropdown-default" required-validity-message="Please fill out this field." size="md" type="" value="all" id="basic-single-default" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+
+<cds-dropdown direction="bottom" name="dropdown-default" required-validity-message="Please fill out this field." size="md" type="" value="all" id="basic-single-default" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   <div slot="title-text">
     Dropdown
   </div>
   
-    <cds-dropdown-item size="md" value="all">
+    
+<cds-dropdown-item size="md" value="all">
   
       All
     
 </cds-dropdown-item>
   
-    <cds-dropdown-item size="md" value="cloud">
+    
+<cds-dropdown-item size="md" value="cloud">
   
       Cloud
     
 </cds-dropdown-item>
   
-    <cds-dropdown-item size="md" value="edge">
+    
+<cds-dropdown-item size="md" value="edge">
   
       Edge
     
@@ -61,26 +65,30 @@
 
 ```html
 <input type="hidden" id="dropdown-inline-input" name="dropdown-inline" value="alpha">
-<cds-dropdown direction="bottom" name="dropdown-inline" required-validity-message="Please fill out this field." size="md" type="inline" value="alpha" id="basic-single-inline" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-inline-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+
+<cds-dropdown direction="bottom" name="dropdown-inline" required-validity-message="Please fill out this field." size="md" type="inline" value="alpha" id="basic-single-inline" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-inline-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   <div slot="title-text">
     Inline
   </div>
   
-    <cds-dropdown-item size="md" value="alpha">
+    
+<cds-dropdown-item size="md" value="alpha">
   
       Alpha
     
 </cds-dropdown-item>
   
-    <cds-dropdown-item size="md" value="beta">
+    
+<cds-dropdown-item size="md" value="beta">
   
       Beta
     
 </cds-dropdown-item>
   
-    <cds-dropdown-item size="md" value="gamma">
+    
+<cds-dropdown-item size="md" value="gamma">
   
       Gamma
     
@@ -116,20 +124,23 @@
 
 ```html
 <input type="hidden" id="dropdown-sm-input" name="dropdown-sm" value="one">
-<cds-dropdown direction="bottom" name="dropdown-sm" required-validity-message="Please fill out this field." size="sm" type="" value="one" id="basic-sizes-sm" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-sm-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+
+<cds-dropdown direction="bottom" name="dropdown-sm" required-validity-message="Please fill out this field." size="sm" type="" value="one" id="basic-sizes-sm" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-sm-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   <div slot="title-text">
     Size sm
   </div>
   
-    <cds-dropdown-item size="md" value="one">
+    
+<cds-dropdown-item size="md" value="one">
   
       One
     
 </cds-dropdown-item>
   
-    <cds-dropdown-item size="md" value="two">
+    
+<cds-dropdown-item size="md" value="two">
   
       Two
     
@@ -143,20 +154,23 @@
 </cds-dropdown>
 
 <input type="hidden" id="dropdown-md-input" name="dropdown-md" value="one">
-<cds-dropdown direction="bottom" name="dropdown-md" required-validity-message="Please fill out this field." size="md" type="" value="one" id="basic-sizes-md" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-md-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+
+<cds-dropdown direction="bottom" name="dropdown-md" required-validity-message="Please fill out this field." size="md" type="" value="one" id="basic-sizes-md" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-md-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   <div slot="title-text">
     Size md
   </div>
   
-    <cds-dropdown-item size="md" value="one">
+    
+<cds-dropdown-item size="md" value="one">
   
       One
     
 </cds-dropdown-item>
   
-    <cds-dropdown-item size="md" value="two">
+    
+<cds-dropdown-item size="md" value="two">
   
       Two
     
@@ -170,20 +184,23 @@
 </cds-dropdown>
 
 <input type="hidden" id="dropdown-lg-input" name="dropdown-lg" value="one">
-<cds-dropdown direction="bottom" name="dropdown-lg" required-validity-message="Please fill out this field." size="lg" type="" value="one" id="basic-sizes-lg" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-lg-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+
+<cds-dropdown direction="bottom" name="dropdown-lg" required-validity-message="Please fill out this field." size="lg" type="" value="one" id="basic-sizes-lg" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-lg-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   <div slot="title-text">
     Size lg
   </div>
   
-    <cds-dropdown-item size="md" value="one">
+    
+<cds-dropdown-item size="md" value="one">
   
       One
     
 </cds-dropdown-item>
   
-    <cds-dropdown-item size="md" value="two">
+    
+<cds-dropdown-item size="md" value="two">
   
       Two
     

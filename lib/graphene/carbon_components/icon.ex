@@ -1,0 +1,284 @@
+defmodule Graphene.CarbonComponents.Icon do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-icon>` from `./src/components/icon/icon.ts`
+
+  Icon component that renders imported icons or custom SVG content.
+
+
+  """
+  attr :class, :string, doc: "Custom CSS classes"
+  attr :icon, :any, doc: "The imported icon"
+  attr :size, :string, doc: "The size of the icon (16, 20, 24, 32)", default: "16"
+  attr :name, :string, doc: "Carbon icon name"
+  attr :rest, :global
+  slot :inner_block
+
+  def icon(%{name: name} = assigns) when not is_nil(name) do
+    assigns =
+      assigns
+      |> assign_new(:class, fn -> nil end)
+      |> assign_new(:icon, fn -> nil end)
+
+    ~H"""
+    <% icon_rest = if @class, do: Map.put(@rest || %{}, :class, @class), else: @rest || %{} %>
+    <% size_value =
+      case @size do
+        size when is_integer(size) ->
+          size
+
+        size when is_binary(size) ->
+          case Integer.parse(size) do
+            {value, _} -> value
+            _ -> 16
+          end
+
+        _ ->
+          16
+      end %>
+    <Graphene.Icons.icon name={@name} size={size_value} {icon_rest} />
+    """
+  end
+
+  def icon(assigns) do
+    CoreComponents.icon(assigns)
+  end
+
+  @doc """
+  Component `<cds-icon-button>` from `./src/components/icon-button/icon-button.ts`
+
+  Icon Button
+
+
+  """
+  attr :align, :string,
+    doc: "Checks if a badge indicator is being used with incorrect properties",
+    default: "top"
+
+  attr :autoalign, :boolean, doc: "Specify whether a auto align functionality should be applied"
+
+  attr :autofocus, :boolean,
+    doc: "`true` if the button should have input focus when the page loads."
+
+  attr :batch_action, :boolean,
+    doc: "`true` if the button is being used within a data table batch action toolbar"
+
+  attr :button_class_name, :any, doc: "Specify an optional className to be added to your Button"
+
+  attr :close_on_activation, :boolean,
+    doc:
+      "Determines whether the tooltip should close when inner content is activated (click, Enter or Space)",
+    default: true
+
+  attr :danger_description, :any,
+    doc: "Specify the message read by screen readers for the danger button variant"
+
+  attr :default_open, :boolean,
+    doc: "Specify whether the tooltip should be open when it first renders"
+
+  attr :disabled, :boolean, doc: "`true` if the button should be disabled."
+  attr :download, :string, doc: "The default file name, used if this button is rendered as `<a>`."
+
+  attr :enter_delay_ms, :string,
+    doc: "Specify the duration in milliseconds to delay before displaying the tooltip",
+    default: "100"
+
+  attr :has_main_content, :boolean, doc: "`true` if there is a non-icon content."
+  attr :href, :string, doc: "Link `href`. If present, this button is rendered as `<a>`."
+
+  attr :hreflang, :string,
+    doc: "The language of what `href` points to, if this button is rendered as `<a>`."
+
+  attr :is_expressive, :boolean, doc: "`true` if expressive theme enabled."
+
+  attr :is_selected, :boolean,
+    doc: "Specify whether the Button is currently selected.\nOnly applies to the Ghost variant."
+
+  attr :kind, :string,
+    doc: "Button kind.",
+    values: [
+      "primary",
+      "secondary",
+      "tertiary",
+      "danger",
+      "danger--tertiary",
+      "danger--ghost",
+      "ghost"
+    ],
+    default: "primary"
+
+  attr :leave_delay_ms, :string,
+    doc: "Specify the duration in milliseconds to delay before hiding the tooltip",
+    default: "300"
+
+  attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
+  attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
+  attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
+  attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
+  attr :size, :string, doc: "Specify the size of the Button. Defaults to `md`.", default: "md"
+  attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
+  attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
+
+  attr :tooltip_alignment, :string,
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end.",
+    values: ["left", "right", ""],
+    default: ""
+
+  attr :tooltip_position, :string,
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left.",
+    values: ["top", "bottom", "right", "left"],
+    default: "top"
+
+  attr :tooltip_text, :string,
+    doc:
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
+
+  attr :type, :string,
+    doc: "Button type.",
+    values: ["button", "reset", "submit"],
+    default: "button"
+
+  attr :rest, :global
+  slot :tooltip_content, doc: "Tooltip content."
+
+  slot :icon do
+    attr :name, :string
+    attr :size, :any
+    attr :attrs, :map
+  end
+
+  slot :inner_block
+
+  def icon_button(%{icon: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:autofocus, fn -> false end)
+      |> assign_new(:batch_action, fn -> false end)
+      |> assign_new(:button_class_name, fn -> nil end)
+      |> assign_new(:danger_description, fn -> nil end)
+      |> assign_new(:default_open, fn -> false end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:download, fn -> nil end)
+      |> assign_new(:has_main_content, fn -> false end)
+      |> assign_new(:href, fn -> nil end)
+      |> assign_new(:hreflang, fn -> nil end)
+      |> assign_new(:is_expressive, fn -> false end)
+      |> assign_new(:is_selected, fn -> false end)
+      |> assign_new(:open_tooltip, fn -> false end)
+      |> assign_new(:ping, fn -> nil end)
+      |> assign_new(:rel, fn -> nil end)
+      |> assign_new(:target, fn -> nil end)
+      |> assign_new(:tooltip_text, fn -> nil end)
+
+    ~H"""
+    <CoreComponents.icon_button
+      align={assigns[:align]}
+      autoalign={assigns[:autoalign]}
+      autofocus={assigns[:autofocus]}
+      batch_action={assigns[:batch_action]}
+      button_class_name={assigns[:button_class_name]}
+      close_on_activation={assigns[:close_on_activation]}
+      danger_description={assigns[:danger_description]}
+      default_open={assigns[:default_open]}
+      disabled={assigns[:disabled]}
+      download={assigns[:download]}
+      enter_delay_ms={assigns[:enter_delay_ms]}
+      has_main_content={assigns[:has_main_content]}
+      href={assigns[:href]}
+      hreflang={assigns[:hreflang]}
+      is_expressive={assigns[:is_expressive]}
+      is_selected={assigns[:is_selected]}
+      kind={assigns[:kind]}
+      leave_delay_ms={assigns[:leave_delay_ms]}
+      link_role={assigns[:link_role]}
+      open_tooltip={assigns[:open_tooltip]}
+      ping={assigns[:ping]}
+      rel={assigns[:rel]}
+      size={assigns[:size]}
+      tab_index={assigns[:tab_index]}
+      target={assigns[:target]}
+      tooltip_alignment={assigns[:tooltip_alignment]}
+      tooltip_position={assigns[:tooltip_position]}
+      tooltip_text={assigns[:tooltip_text]}
+      type={assigns[:type]}
+      {@rest}
+    >
+      <%= for icon <- @icon do %>
+        <% size_value =
+          case icon[:size] do
+            size when is_integer(size) ->
+              size
+
+            size when is_binary(size) ->
+              case Integer.parse(size) do
+                {value, _} -> value
+                _ -> 16
+              end
+
+            _ ->
+              16
+          end %>
+        <% size_string = Integer.to_string(size_value) %>
+        <%= if icon[:name] do %>
+          <Graphene.Icons.icon name={icon[:name]} size={size_value} {icon[:attrs] || %{}} />
+        <% else %>
+          <CoreComponents.icon size={size_string} {icon[:attrs] || %{}}>
+            {render_slot(icon)}
+          </CoreComponents.icon>
+        <% end %>
+      <% end %>
+      {render_slot(@inner_block)}
+    </CoreComponents.icon_button>
+    """
+  end
+
+  def icon_button(assigns) do
+    CoreComponents.icon_button(assigns)
+  end
+
+  @doc """
+  Component `<cds-icon-indicator>` from `./src/components/icon-indicator/icon-indicator.ts`
+
+  Icon Indicator.
+
+
+  """
+  attr :kind, :string,
+    doc: "Icon Indicator kind",
+    values: [
+      nil,
+      "failed",
+      "CAUTION-MAJOR",
+      "caution-major",
+      "CAUTION-MINOR",
+      "caution-minor",
+      "undefined",
+      "succeeded",
+      "normal",
+      "IN-PROGRESS",
+      "in-progress",
+      "incomplete",
+      "NOT-STARTED",
+      "not-started",
+      "pending",
+      "unknown",
+      "informative"
+    ]
+
+  attr :label, :string, doc: "Label next to the icon."
+  attr :size, :string, doc: "Icon indicator should be size 16 or 20", default: "16"
+  attr :rest, :global
+  slot :inner_block
+
+  def icon_indicator(assigns) do
+    CoreComponents.icon_indicator(assigns)
+  end
+end

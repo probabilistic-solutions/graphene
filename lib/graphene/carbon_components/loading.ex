@@ -1,0 +1,34 @@
+defmodule Graphene.CarbonComponents.Loading do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-loading>` from `./src/components/loading/loading.ts`
+
+  Spinner indicating loading state.
+
+
+  """
+  attr :active, :boolean,
+    doc: "Specify whether you want the loading indicator to be spinning or not"
+
+  attr :assistive_text, :string
+
+  attr :description, :string,
+    doc: "Specify a description that would be used to best describe the loading state",
+    default: "Loading"
+
+  attr :inactive, :boolean
+  attr :overlay, :boolean, doc: "`true` if overlay should be applied."
+  attr :small, :boolean, doc: "Specify whether you would like the small variant of <Loading>"
+  attr :type, :string, values: [nil, "regular", "small"]
+  attr :rest, :global
+  slot :inner_block
+
+  def loading(assigns) do
+    CoreComponents.loading(assigns)
+  end
+end

@@ -1,0 +1,112 @@
+defmodule Graphene.CarbonComponents.Combo do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-combo-button>` from `./src/components/combo-button/combo-button.ts`
+
+  Combo button.
+
+
+  """
+  attr :disabled, :any, doc: "Specify whether the ComboButton should be disabled, or not."
+  attr :label, :string, doc: "Provide the label to be rendered on the primary action button."
+
+  attr :menu_alignment, :string,
+    doc: "Experimental property. Specify how the menu should align with the button element",
+    values: [
+      "top",
+      "top-start",
+      "top-end",
+      "bottom",
+      "bottom-start",
+      "bottom-end",
+      "left",
+      "left-start",
+      "left-end",
+      "right",
+      "right-start",
+      "right-end"
+    ],
+    default: "top"
+
+  attr :on_click, :any,
+    doc: "Provide an optional function to be called when the primary action element is clicked."
+
+  attr :size, :string,
+    doc: "Specify the size of the button and menu.",
+    values: ["xs", "sm", "md", "lg"],
+    default: "lg"
+
+  attr :tooltip_alignment, :string,
+    doc: "Specify how the trigger tooltip should be aligned.",
+    values: [
+      "top",
+      "top-left",
+      "top-right",
+      "bottom",
+      "bottom-left",
+      "bottom-right",
+      "left",
+      "right"
+    ],
+    default: "top"
+
+  attr :tooltip_content, :string,
+    doc: "Provide the tooltip content for the icon button.",
+    default: "Additional actions"
+
+  attr :rest, :global
+
+  slot :item do
+    attr :label, :string
+    attr :disabled, :boolean
+    attr :kind, :any
+    attr :shortcut, :string
+    attr :divider, :boolean
+    attr :attrs, :map
+  end
+
+  slot :group do
+    attr :label, :string
+    attr :attrs, :map
+  end
+
+  slot :divider do
+    attr :attrs, :map
+  end
+
+  slot :inner_block
+
+  def combo_button(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:disabled, fn -> nil end)
+      |> assign_new(:label, fn -> nil end)
+      |> assign_new(:on_click, fn -> nil end)
+
+    ~H"""
+    <CoreComponents.combo_button
+      disabled={assigns[:disabled]}
+      label={assigns[:label]}
+      menu_alignment={assigns[:menu_alignment]}
+      on_click={assigns[:on_click]}
+      size={assigns[:size]}
+      tooltip_alignment={assigns[:tooltip_alignment]}
+      tooltip_content={assigns[:tooltip_content]}
+      {@rest}
+    >
+      <CoreComponents.menu>
+        {Graphene.CarbonComponents.Helpers.render_menu_items(assigns)}
+      </CoreComponents.menu>
+    </CoreComponents.combo_button>
+    """
+  end
+
+  def combo_button(assigns) do
+    CoreComponents.combo_button(assigns)
+  end
+end

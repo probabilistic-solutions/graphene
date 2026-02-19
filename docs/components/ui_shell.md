@@ -41,42 +41,52 @@
     <a href="#main-content">Skip to content</a>
   
   
-    <cds-header>
+    
+<cds-header class="cds--header">
   
   
-    <cds-header-name href="#">
+    
+<cds-header-name href="#">
   
       Graphene
     
 </cds-header-name>
   
   
-      <cds-header-nav>
+      
+<cds-header-nav>
   
-        <cds-header-nav-item href="#" role="listitem">
+        
+<cds-header-nav-item href="#" role="listitem">
   Home
 </cds-header-nav-item>
-        <cds-header-nav-item href="#" role="listitem">
+        
+<cds-header-nav-item href="#" role="listitem">
   Docs
 </cds-header-nav-item>
       
 </cds-header-nav>
     
+  
 
 </cds-header>
   
   
-    <cds-side-nav collapse-mode="responsive" expanded>
+    
+<cds-side-nav collapse-mode="responsive" expanded class="cds--side-nav cds--side-nav--expanded">
   
-      <cds-side-nav-items>
+      
+<cds-side-nav-items>
   
-        <cds-side-nav-link href="#">
+        
+<cds-side-nav-link href="#">
   Dashboard
   
   
   
 </cds-side-nav-link>
-        <cds-side-nav-link href="#">
+        
+<cds-side-nav-link href="#">
   Settings
   
   
@@ -87,10 +97,11 @@
     
 </cds-side-nav>
   
-  <main class="psb-ui-shell-content">
+  <main class="psb-ui-shell-content cds--content">
     
     <div id="main-content" style="padding: 1rem;">
-      <cds-button href="/" kind="secondary" link-role="button" size="sm" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button">
+      
+<cds-button href="/" kind="secondary" link-role="button" size="sm" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button">
   Return to storybook
   
 </cds-button>

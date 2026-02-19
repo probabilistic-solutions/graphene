@@ -16,21 +16,24 @@
 <cds-progress-indicator current-index="1" id="basic-single-default">
   
   
-    <cds-progress-step complete label="First" state="incomplete">
+    
+<cds-progress-step complete label="First" state="incomplete">
   
       
     
   
 </cds-progress-step>
   
-    <cds-progress-step current label="Second" state="incomplete">
+    
+<cds-progress-step current label="Second" state="incomplete">
   
       
     
   
 </cds-progress-step>
   
-    <cds-progress-step label="Third" state="incomplete">
+    
+<cds-progress-step label="Third" state="incomplete">
   
       
     
@@ -56,28 +59,32 @@
 <cds-progress-indicator current-index="2" vertical id="basic-single-vertical">
   
   
-    <cds-progress-step complete label="Plan" state="incomplete">
+    
+<cds-progress-step complete label="Plan" state="incomplete">
   
       
     
   
 </cds-progress-step>
   
-    <cds-progress-step complete label="Build" state="incomplete">
+    
+<cds-progress-step complete label="Build" state="incomplete">
   
       
     
   
 </cds-progress-step>
   
-    <cds-progress-step current label="Launch" state="incomplete">
+    
+<cds-progress-step current label="Launch" state="incomplete">
   
       
     
   
 </cds-progress-step>
   
-    <cds-progress-step label="Iterate" state="incomplete">
+    
+<cds-progress-step label="Iterate" state="incomplete">
   
       
     
@@ -102,21 +109,24 @@
 <cds-progress-indicator current-index="0" space-equally id="basic-single-spaced">
   
   
-    <cds-progress-step current label="Step one" state="incomplete">
+    
+<cds-progress-step current label="Step one" state="incomplete">
   
       
     
   
 </cds-progress-step>
   
-    <cds-progress-step label="Step two" state="incomplete">
+    
+<cds-progress-step label="Step two" state="incomplete">
   
       
     
   
 </cds-progress-step>
   
-    <cds-progress-step label="Step three" state="incomplete">
+    
+<cds-progress-step label="Step three" state="incomplete">
   
       
     

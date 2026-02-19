@@ -1,0 +1,264 @@
+defmodule Graphene.CarbonComponents.OverflowMenu do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-overflow-menu>` from `./src/components/overflow-menu/overflow-menu.ts`
+
+  Overflow menu.
+
+
+  """
+  attr :align, :string,
+    doc: "Checks if a badge indicator is being used with incorrect properties",
+    default: "top"
+
+  attr :autoalign, :boolean, doc: "Specify whether a auto align functionality should be applied"
+
+  attr :autofocus, :boolean,
+    doc: "`true` if the button should have input focus when the page loads."
+
+  attr :batch_action, :boolean,
+    doc: "`true` if the button is being used within a data table batch action toolbar"
+
+  attr :breadcrumb, :boolean, doc: "`true` if this overflow menu use inside breadcrumb."
+  attr :button_class_name, :any, doc: "Specify an optional className to be added to your Button"
+
+  attr :close_on_activation, :boolean,
+    doc:
+      "Determines whether the tooltip should close when inner content is activated (click, Enter or Space)",
+    default: true
+
+  attr :danger_description, :any,
+    doc: "Specify the message read by screen readers for the danger button variant"
+
+  attr :data_table, :boolean, doc: "`true` if this tooltip is in a data table row"
+
+  attr :default_open, :boolean,
+    doc: "Specify whether the tooltip should be open when it first renders"
+
+  attr :disabled, :boolean, doc: "`true` if this overflow menu should be disabled."
+  attr :download, :string, doc: "The default file name, used if this button is rendered as `<a>`."
+
+  attr :enter_delay_ms, :string,
+    doc: "Specify the duration in milliseconds to delay before displaying the tooltip",
+    default: "100"
+
+  attr :flipped, :boolean, doc: "`true` if this overflow menu body should be flipped."
+  attr :has_main_content, :boolean, doc: "`true` if there is a non-icon content."
+  attr :href, :string, doc: "Link `href`. If present, this button is rendered as `<a>`."
+
+  attr :hreflang, :string,
+    doc: "The language of what `href` points to, if this button is rendered as `<a>`."
+
+  attr :index, :string,
+    doc: "Index (starting at 1) of overflow menu item to focus on open.",
+    default: "1"
+
+  attr :is_expressive, :boolean, doc: "`true` if expressive theme enabled."
+
+  attr :is_selected, :boolean,
+    doc: "Specify whether the Button is currently selected.\nOnly applies to the Ghost variant."
+
+  attr :kind, :string,
+    doc: "Button kind.",
+    values: [
+      "primary",
+      "secondary",
+      "tertiary",
+      "danger",
+      "danger--tertiary",
+      "danger--ghost",
+      "ghost"
+    ],
+    default: "primary"
+
+  attr :leave_delay_ms, :string,
+    doc: "Specify the duration in milliseconds to delay before hiding the tooltip",
+    default: "300"
+
+  attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
+  attr :open, :boolean, doc: "`true` if the dropdown should be open."
+  attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
+  attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
+  attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
+  attr :size, :string, doc: "Overflow menu size.", values: ["sm", "md", "lg"], default: "md"
+  attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
+  attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
+  attr :toolbar_action, :boolean, doc: "`true` if this menu is a toolbar action"
+
+  attr :tooltip_alignment, :string,
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end.",
+    values: ["left", "right", ""],
+    default: ""
+
+  attr :tooltip_position, :string,
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left.",
+    values: ["top", "bottom", "right", "left"],
+    default: "top"
+
+  attr :tooltip_text, :string,
+    doc:
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
+
+  attr :type, :string,
+    doc: "Button type.",
+    values: ["button", "reset", "submit"],
+    default: "button"
+
+  attr :rest, :global
+  slot :icon, doc: "The icon for the trigger button."
+  slot :tooltip_content, doc: "Tooltip content for the overflow menu trigger."
+
+  slot :item do
+    attr :label, :string
+    attr :disabled, :boolean
+    attr :danger, :boolean
+  end
+
+  slot :inner_block
+
+  def overflow_menu(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:autofocus, fn -> false end)
+      |> assign_new(:batch_action, fn -> false end)
+      |> assign_new(:breadcrumb, fn -> false end)
+      |> assign_new(:button_class_name, fn -> nil end)
+      |> assign_new(:danger_description, fn -> nil end)
+      |> assign_new(:data_table, fn -> false end)
+      |> assign_new(:default_open, fn -> false end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:download, fn -> nil end)
+      |> assign_new(:flipped, fn -> false end)
+      |> assign_new(:has_main_content, fn -> false end)
+      |> assign_new(:href, fn -> nil end)
+      |> assign_new(:hreflang, fn -> nil end)
+      |> assign_new(:is_expressive, fn -> false end)
+      |> assign_new(:is_selected, fn -> false end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:open_tooltip, fn -> false end)
+      |> assign_new(:ping, fn -> nil end)
+      |> assign_new(:rel, fn -> nil end)
+      |> assign_new(:target, fn -> nil end)
+      |> assign_new(:toolbar_action, fn -> false end)
+      |> assign_new(:tooltip_text, fn -> nil end)
+
+    ~H"""
+    <CoreComponents.overflow_menu
+      align={assigns[:align]}
+      autoalign={assigns[:autoalign]}
+      autofocus={assigns[:autofocus]}
+      batch_action={assigns[:batch_action]}
+      breadcrumb={assigns[:breadcrumb]}
+      button_class_name={assigns[:button_class_name]}
+      close_on_activation={assigns[:close_on_activation]}
+      danger_description={assigns[:danger_description]}
+      data_table={assigns[:data_table]}
+      default_open={assigns[:default_open]}
+      disabled={assigns[:disabled]}
+      download={assigns[:download]}
+      enter_delay_ms={assigns[:enter_delay_ms]}
+      flipped={assigns[:flipped]}
+      has_main_content={assigns[:has_main_content]}
+      href={assigns[:href]}
+      hreflang={assigns[:hreflang]}
+      index={assigns[:index]}
+      is_expressive={assigns[:is_expressive]}
+      is_selected={assigns[:is_selected]}
+      kind={assigns[:kind]}
+      leave_delay_ms={assigns[:leave_delay_ms]}
+      link_role={assigns[:link_role]}
+      open={assigns[:open]}
+      open_tooltip={assigns[:open_tooltip]}
+      ping={assigns[:ping]}
+      rel={assigns[:rel]}
+      size={assigns[:size]}
+      tab_index={assigns[:tab_index]}
+      target={assigns[:target]}
+      toolbar_action={assigns[:toolbar_action]}
+      tooltip_alignment={assigns[:tooltip_alignment]}
+      tooltip_position={assigns[:tooltip_position]}
+      tooltip_text={assigns[:tooltip_text]}
+      type={assigns[:type]}
+      {@rest}
+    >
+      <.dynamic_tag :for={icon <- @icon} tag_name={Map.get(icon, :tag, "span")} slot="icon">
+        {render_slot(icon)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={tooltip <- @tooltip_content}
+        tag_name={Map.get(tooltip, :tag, "span")}
+        slot="tooltip-content"
+      >
+        {render_slot(tooltip)}
+      </.dynamic_tag>
+      <CoreComponents.overflow_menu_body>
+        <%= for item <- @item do %>
+          <CoreComponents.overflow_menu_item disabled={item[:disabled]} danger={item[:danger]}>
+            {item[:label] || render_slot(item)}
+          </CoreComponents.overflow_menu_item>
+        <% end %>
+      </CoreComponents.overflow_menu_body>
+    </CoreComponents.overflow_menu>
+    """
+  end
+
+  def overflow_menu(assigns) do
+    CoreComponents.overflow_menu(assigns)
+  end
+
+  @doc """
+  Component `<cds-overflow-menu-body>` from `./src/components/overflow-menu/overflow-menu-body.ts`
+
+  Overflow menu body.
+
+
+  """
+  attr :direction, :string,
+    doc: "The menu direction.",
+    values: ["top", "bottom"],
+    default: "bottom"
+
+  attr :flipped, :boolean, doc: "How the menu is aligned to the trigger button."
+  attr :size, :string, doc: "The overflow menu size.", values: ["sm", "md", "lg"], default: "md"
+  attr :rest, :global
+  slot :inner_block
+
+  def overflow_menu_body(assigns) do
+    CoreComponents.overflow_menu_body(assigns)
+  end
+
+  @doc """
+  Component `<cds-overflow-menu-item>` from `./src/components/overflow-menu/overflow-menu-item.ts`
+
+  Overflow menu item.
+
+  ## Events
+
+  * `cds-overflow-menu-item-clicked` - The custom event fired when an overflow menu item is clicked.
+
+  """
+  attr :danger, :boolean, doc: "`true` if the action is danger."
+  attr :disabled, :boolean, doc: "`true` if the overflow menu item should be disabled."
+  attr :divider, :boolean, doc: "`true` if the item has a divider"
+  attr :href, :string, doc: "The link href of the overflow menu item."
+
+  attr :size, :string,
+    doc: "The size of the overflow menu item.",
+    values: ["sm", "md", "lg"],
+    default: "md"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def overflow_menu_item(assigns) do
+    CoreComponents.overflow_menu_item(assigns)
+  end
+end

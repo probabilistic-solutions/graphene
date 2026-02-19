@@ -1,0 +1,239 @@
+defmodule Graphene.CarbonComponents.Table do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-table>` from `./src/components/data-table/table.ts`
+
+  Data table.
+
+  ## Events
+
+  * `cds-table-header-cell-sort` - The name of the custom event fired before a new sort direction is set upon a user gesture.
+  Cancellation of this event stops the user-initiated change in sort direction.
+  * `cds-search` - input
+  The name of the custom event fired during search bar input
+  * `cds-table-change-selection-all` - The name of the custom event fired before header row is selected/unselected upon a user gesture.
+  * `cds-table-row-change-selection` - The name of the custom event fired before a row is selected/unselected upon a user gesture.
+  * `cds-table-batch-actions-cancel-clicked` - The name of the custom event fired after the Cancel button is clicked.
+  * `cds-table-row-expando-toggled` - The name of the custom event fired after the expanded state of a row is toggled upon a user gesture.
+  * `cds-table-row-selected` - The name of the custom event fired after a row has been selected.
+  * `cds-table-row-all-selected` - The name of the custom event fired after all rows have been selected.
+  * `cds-table-sorted` - The name of the custom event fired after the table has been sorted.
+  * `cds-table-filtered` - The name of the custom event fired after the table has been filtered containing remaining rows.
+
+  """
+  attr :batch_expansion, :boolean, doc: "`true` if this table should support batch expansion"
+  attr :expandable, :boolean, doc: "Specify whether the rows should be able to be expandable"
+
+  attr :filter_rows, :any,
+    doc:
+      "The method used when filtering the table with the search bar.\nCan be replaced with custom method."
+
+  attr :header_count, :string, doc: "The total headers", default: "0"
+  attr :is_selectable, :boolean, doc: "`true` if this table contains selectable rows"
+  attr :is_sortable, :boolean, doc: "`true` if this table should support sorting."
+  attr :locale, :string, doc: "The table size.", default: "en"
+
+  attr :overflow_menu_on_hover, :boolean,
+    doc:
+      "Specify whether the overflow menu (if it exists) should be shown always, or only on hover"
+
+  attr :radio, :boolean,
+    doc: "Specify whether the control should be a radio button or inline checkbox"
+
+  attr :size, :string,
+    doc: "The table size.",
+    values: ["xs", "sm", "md", "lg", "xl"],
+    default: "lg"
+
+  attr :use_static_width, :boolean,
+    doc:
+      "TODO: Uncomment when Carbon fully implements sticky header\nSpecify whether the header should be sticky.\nStill experimental: may not work with every combination of table props"
+
+  attr :use_zebra_styles, :boolean, doc: "true to add useZebraStyles striping."
+  attr :with_header, :any
+  attr :with_row_ai_labels, :boolean, doc: "true if AI Labels are added in the rows"
+  attr :with_row_slugs, :boolean, doc: "true if slugs are added in the rows"
+  attr :rest, :global
+  slot :title, doc: "Title"
+  slot :description, doc: "Description"
+  slot :toolbar, doc: "Toolbar"
+  slot :inner_block
+
+  def table(assigns) do
+    CoreComponents.table(assigns)
+  end
+
+  @doc """
+  Component `<cds-table-batch-actions>` from `./src/components/data-table/table-batch-actions.ts`
+
+  Table batch actions.
+
+  ## Events
+
+  * `cds-table-batch-actions-cancel-clicked` - The custom event fired after the Cancel button is clicked.
+  * `cds-table-batch-actions-select-all-clicked` - The custom event fired after the Select all button is clicked.
+
+  """
+  attr :active, :boolean, doc: "`true` if this batch actions bar should be active."
+
+  attr :selected_rows_count, :string,
+    doc:
+      "Numeric representation of the total number of items selected in a table.\nThis number is used to derive the selection message.",
+    default: "0"
+
+  attr :size, :string, doc: "The table size.", default: "lg"
+
+  attr :total_rows_count, :string,
+    doc:
+      "Numeric representation of the total number of items in a table.\nThis number is used in the select all button text\nThis property controls the rendering of the Select all button",
+    default: "0"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def table_batch_actions(assigns) do
+    CoreComponents.table_batch_actions(assigns)
+  end
+
+  @doc """
+  Component `<cds-table-body>` from `./src/components/data-table/table-body.ts`
+
+  Data table body.
+
+
+  """
+  attr :use_zebra_styles, :boolean,
+    doc:
+      "TODO: Uncomment when Carbon fully implements sticky header\nSpecify whether the header should be sticky.\nStill experimental: may not work with every combination of table props"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def table_body(assigns) do
+    CoreComponents.table_body(assigns)
+  end
+
+  @doc """
+  Component `<cds-table-expanded-row>` from `./src/components/data-table/table-expanded-row.ts`
+
+  Table row of collapsible details.
+
+
+  """
+  attr :colspan, :string, doc: "The colspan.", default: "1"
+  attr :expanded, :boolean, doc: "`true` if the table row should be expanded."
+  attr :filtered, :boolean, doc: "`true` if the table row should be filtered."
+  attr :highlighted, :boolean, doc: "`true` if the table row should be highlighted."
+  attr :selected, :boolean, doc: "`true` if the previous table row has been selected"
+  attr :rest, :global
+  slot :inner_block
+
+  def table_expanded_row(assigns) do
+    CoreComponents.table_expanded_row(assigns)
+  end
+
+  @doc """
+  Component `<cds-table-head>` from `./src/components/data-table/table-head.ts`
+
+  Data table header.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def table_head(assigns) do
+    CoreComponents.table_head(assigns)
+  end
+
+  @doc """
+  Component `<cds-table-row>` from `./src/components/data-table/table-row.ts`
+
+  Data table row.
+
+  ## Events
+
+  * `cds-table-row-change-selection` - The custom event fired before this row is selected/unselected upon a user gesture.
+  Cancellation of this event stops the user-initiated change in selection.
+  * `cds-radio-button-changed` - The name of the custom event fired after this radio button changes its checked state.
+  * `cds-checkbox-changed` - The name of the custom event fired after this checkbox changes its checked state.
+  * `cds-table-row-expando-beingtoggled` - The name of the custom event fired before the expanded state of this row is being toggled upon a user gesture.
+  Cancellation of this event stops the user-initiated action of toggling the expanded state.
+  * `cds-table-row-expando-toggled` - The name of the custom event fired after the expanded state of this row is toggled upon a user gesture.
+
+  """
+  attr :batch_expansion, :boolean, doc: "`true` if this table should support batch expansion"
+  attr :disabled, :boolean, doc: "`true` if this table row should be disabled."
+  attr :filtered, :boolean, doc: "`true` if this table row should be filtered out."
+
+  attr :hide_checkbox, :boolean,
+    doc:
+      "Specify whether the checkbox should be present in the DOM,\nbut invisible and uninteractable."
+
+  attr :highlighted, :boolean, doc: "`true` if the table row should be highlighted."
+
+  attr :overflow_menu_on_hover, :boolean,
+    doc:
+      "Specify whether the overflow menu (if it exists) should be shown always, or only on hover"
+
+  attr :selected, :boolean, doc: "`true` if this table row should be selected."
+
+  attr :selection_label, :string,
+    doc: "The `aria-label` attribute for the `<label>` for selection.",
+    default: "Select row"
+
+  attr :selection_name, :string,
+    doc:
+      "The `name` attribute for the `<input>` for selection.\nIf present, this table row will be a selectable one."
+
+  attr :selection_value, :string, doc: "The `value` attribute for the `<input>` for selection."
+
+  attr :radio, :boolean,
+    doc: "Specify whether the control should be a radio button or inline checkbox."
+
+  attr :rest, :global
+  slot :inner_block
+
+  def table_row(assigns) do
+    CoreComponents.table_row(assigns)
+  end
+
+  @doc """
+  Component `<cds-table-skeleton>` from `./src/components/data-table/table-skeleton.ts`
+
+  Data table skeleton
+
+
+  """
+  attr :column_count, :string,
+    doc: "Specify the number of columns that you want to render in the skeleton state",
+    default: "5"
+
+  attr :compact, :boolean,
+    doc: "Optionally specify whether you want the Skeleton to be rendered as a compact DataTable"
+
+  attr :row_count, :string,
+    doc: "Specify the number of rows that you want to render in the skeleton state",
+    default: "5"
+
+  attr :show_header, :boolean,
+    doc: "Specify if the table header should be rendered as part of the skeleton.",
+    default: true
+
+  attr :show_toolbar, :boolean,
+    doc: "Specify if the table toolbar should be rendered as part of the skeleton.",
+    default: true
+
+  attr :zebra, :boolean, doc: "true to add useZebraStyles striping."
+  attr :rest, :global
+  slot :inner_block
+
+  def table_skeleton(assigns) do
+    CoreComponents.table_skeleton(assigns)
+  end
+end

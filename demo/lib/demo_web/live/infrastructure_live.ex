@@ -4,6 +4,7 @@ defmodule DemoWeb.InfrastructureLive do
   alias Demo.CloudData
   alias Demo.CloudEvents
   alias Graphene.CarbonComponents, as: CarbonComponents
+  alias Graphene.Icons
   import DemoWeb.CloudHelpers
 
   @impl true
@@ -22,11 +23,13 @@ defmodule DemoWeb.InfrastructureLive do
 
   @impl true
   def handle_event("filter", %{"filter" => %{"query" => query}}, socket) do
-    {:noreply, assign(socket, search: query, filter_form: to_form(%{"query" => query}, as: :filter))}
+    {:noreply,
+     assign(socket, search: query, filter_form: to_form(%{"query" => query}, as: :filter))}
   end
 
   def handle_event("scale_cluster", %{"id" => id}, socket) do
-    {clusters, scaled} = update_cluster(socket.assigns.clusters, id, &Map.update!(&1, :nodes, fn v -> v + 2 end))
+    {clusters, scaled} =
+      update_cluster(socket.assigns.clusters, id, &Map.update!(&1, :nodes, fn v -> v + 2 end))
 
     if scaled do
       CloudEvents.broadcast(%{
@@ -46,7 +49,8 @@ defmodule DemoWeb.InfrastructureLive do
   end
 
   def handle_event("restart_cluster", %{"id" => id}, socket) do
-    {clusters, restarted} = update_cluster(socket.assigns.clusters, id, &Map.put(&1, :status, "Maintenance"))
+    {clusters, restarted} =
+      update_cluster(socket.assigns.clusters, id, &Map.put(&1, :status, "Maintenance"))
 
     if restarted do
       CloudEvents.broadcast(%{
@@ -104,57 +108,146 @@ defmodule DemoWeb.InfrastructureLive do
     assigns = assign(assigns, :filtered_clusters, clusters)
 
     ~H"""
-    <CarbonComponents.page_header>
-      <:breadcrumb>
-        <CarbonComponents.breadcrumb>
-          <:item href={~p"/"} text="Cloud Admin" />
-          <:item text="Infrastructure" />
-        </CarbonComponents.breadcrumb>
-      </:breadcrumb>
-      <:content title="Infrastructure">
-        <CarbonComponents.tag type="blue">Kubernetes</CarbonComponents.tag>
-      </:content>
-      <:content_text subtitle="Manage multi-region clusters, node pools, and workload scaling." />
-    </CarbonComponents.page_header>
+    <CarbonComponents.grid full_width>
+      <:column span="16">
+        <CarbonComponents.page_header>
+          <:breadcrumb>
+            <CarbonComponents.breadcrumb>
+              <:item href={~p"/demo"} text="Cloud Admin" />
+              <:item text="Infrastructure" />
+            </CarbonComponents.breadcrumb>
+          </:breadcrumb>
+          <:content title="Infrastructure">
+            <CarbonComponents.tag type="blue">Kubernetes</CarbonComponents.tag>
+          </:content>
+          <:content_text subtitle="Manage multi-region clusters, node pools, and workload scaling." />
+        </CarbonComponents.page_header>
+      </:column>
 
-    <div class="demo-section demo-card">
-      <.form for={@filter_form} phx-change="filter">
-        <CarbonComponents.text_input field={@filter_form[:query]} label="Search clusters" />
-      </.form>
-    </div>
+      <:column span="16">
+        <div class="demo-section demo-card">
+          <.form for={@filter_form} phx-change="filter">
+            <CarbonComponents.text_input field={@filter_form[:query]} label="Search clusters" />
+          </.form>
+        </div>
+      </:column>
 
-    <div class="demo-section demo-card demo-card--elevated">
-      <CarbonComponents.data_table id="cluster-table" rows={@filtered_clusters} size="md">
-        <:col :let={cluster} label="Cluster">{cluster.name}</:col>
-        <:col :let={cluster} label="Region">{cluster.region}</:col>
-        <:col :let={cluster} label="Env">{String.capitalize(cluster.environment)}</:col>
-        <:col :let={cluster} label="Nodes">{cluster.nodes}</:col>
-        <:col :let={cluster} label="Version">{cluster.version}</:col>
-        <:col :let={cluster} label="Status">
-          <CarbonComponents.tag type={status_kind(cluster.status)}>{cluster.status}</CarbonComponents.tag>
-        </:col>
-        <:action :let={cluster}>
-          <CarbonComponents.stack orientation="horizontal" gap="2">
-            <CarbonComponents.button
-              kind="ghost"
-              size="sm"
-              phx-click="scale_cluster"
-              phx-value-id={cluster.id}
-            >
-              Scale +2
-            </CarbonComponents.button>
-            <CarbonComponents.button
-              kind="ghost"
-              size="sm"
-              phx-click="restart_cluster"
-              phx-value-id={cluster.id}
-            >
-              Restart
-            </CarbonComponents.button>
-          </CarbonComponents.stack>
-        </:action>
-      </CarbonComponents.data_table>
-    </div>
+      <:column span="16">
+        <div class="demo-section demo-card">
+          <div class="demo-kicker">Grid</div>
+          <h3>Implicit rows in practice</h3>
+          <p class="demo-muted">Spans wrap automatically when they exceed the grid width.</p>
+          <CarbonComponents.grid class="demo-grid-example">
+            <:column span="6">
+              <div class="demo-grid-widget">
+                <div class="demo-grid-widget__header">
+                  <Icons.icon name="chip" size={16} />
+                  <span class="demo-grid-widget__title">Compute pools</span>
+                  <span class="demo-grid-widget__tag">
+                    <CarbonComponents.tag type="green">Stable</CarbonComponents.tag>
+                  </span>
+                </div>
+                <div class="demo-grid-widget__value">42</div>
+                <div class="demo-grid-widget__meta">6 reserved for failover</div>
+              </div>
+            </:column>
+            <:column span="6">
+              <div class="demo-grid-widget">
+                <div class="demo-grid-widget__header">
+                  <Icons.icon name="cloud-satellite" size={16} />
+                  <span class="demo-grid-widget__title">Edge clusters</span>
+                </div>
+                <div class="demo-grid-widget__value">18</div>
+                <div class="demo-grid-widget__meta">4 under maintenance</div>
+              </div>
+            </:column>
+            <:column span="4">
+              <div class="demo-grid-widget">
+                <div class="demo-grid-widget__header">
+                  <Icons.icon name="security" size={16} />
+                  <span class="demo-grid-widget__title">Patch compliance</span>
+                </div>
+                <div class="demo-grid-widget__value">92%</div>
+                <CarbonComponents.progress_bar value={92} />
+                <div class="demo-grid-widget__meta">Next window in 6 days</div>
+              </div>
+            </:column>
+            <:column span="8">
+              <div class="demo-grid-widget demo-grid-widget--wide">
+                <div class="demo-grid-widget__header">
+                  <Icons.icon name="network--3" size={16} />
+                  <span class="demo-grid-widget__title">Ingress capacity</span>
+                  <span class="demo-grid-widget__tag">
+                    <CarbonComponents.tag type="blue">Moderate</CarbonComponents.tag>
+                  </span>
+                </div>
+                <div class="demo-grid-widget__value">68%</div>
+                <CarbonComponents.progress_bar value={68} />
+                <div class="demo-grid-widget__meta">Route shift recommended in 2 regions</div>
+              </div>
+            </:column>
+            <:column span="8">
+              <div class="demo-grid-widget demo-grid-widget--wide">
+                <div class="demo-grid-widget__header">
+                  <Icons.icon name="notification" size={16} />
+                  <span class="demo-grid-widget__title">Snapshot backlog</span>
+                  <span class="demo-grid-widget__tag">
+                    <CarbonComponents.tag type="red">Action</CarbonComponents.tag>
+                  </span>
+                </div>
+                <div class="demo-grid-widget__list">
+                  <div class="demo-grid-widget__list-row">
+                    <span>Database Aurora - 12 pending</span>
+                    <span class="demo-grid-widget__meta">ETA 45m</span>
+                  </div>
+                  <div class="demo-grid-widget__list-row">
+                    <span>Object storage - 3 pending</span>
+                    <span class="demo-grid-widget__meta">ETA 30m</span>
+                  </div>
+                </div>
+              </div>
+            </:column>
+          </CarbonComponents.grid>
+        </div>
+      </:column>
+
+      <:column span="16">
+        <div class="demo-section demo-card demo-card--elevated">
+          <CarbonComponents.data_table id="cluster-table" rows={@filtered_clusters} size="md">
+            <:col :let={cluster} label="Cluster">{cluster.name}</:col>
+            <:col :let={cluster} label="Region">{cluster.region}</:col>
+            <:col :let={cluster} label="Env">{String.capitalize(cluster.environment)}</:col>
+            <:col :let={cluster} label="Nodes">{cluster.nodes}</:col>
+            <:col :let={cluster} label="Version">{cluster.version}</:col>
+            <:col :let={cluster} label="Status">
+              <CarbonComponents.tag type={status_kind(cluster.status)}>
+                {cluster.status}
+              </CarbonComponents.tag>
+            </:col>
+            <:action :let={cluster}>
+              <CarbonComponents.stack orientation="horizontal" gap="2">
+                <CarbonComponents.button
+                  kind="ghost"
+                  size="sm"
+                  phx-click="scale_cluster"
+                  phx-value-id={cluster.id}
+                >
+                  Scale +2
+                </CarbonComponents.button>
+                <CarbonComponents.button
+                  kind="ghost"
+                  size="sm"
+                  phx-click="restart_cluster"
+                  phx-value-id={cluster.id}
+                >
+                  Restart
+                </CarbonComponents.button>
+              </CarbonComponents.stack>
+            </:action>
+          </CarbonComponents.data_table>
+        </div>
+      </:column>
+    </CarbonComponents.grid>
     """
   end
 end

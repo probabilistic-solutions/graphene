@@ -1,0 +1,177 @@
+defmodule Graphene.CarbonComponents.RadioButton do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+  alias Graphene.Internal.FormComponents
+
+  @doc """
+  Component `<cds-radio-button>` from `./src/components/radio-button/radio-button.ts`
+
+  Radio button.
+
+  ## Events
+
+  * `cds-radio-button-changed` - The custom event fired after this radio button changes its checked state.
+
+  """
+  attr :checked, :boolean, doc: "`true` if this radio button should be checked."
+  attr :data_table, :boolean, doc: "`true` if the radio button is used in a data table"
+
+  attr :default_checked, :boolean,
+    doc: "Specify whether the `<radio-button>` should be checked by default"
+
+  attr :disabled, :boolean, doc: "`true` if the radio button group should be disabled."
+  attr :disabled_item, :boolean, doc: "`true` if the radio button item should be disabled."
+  attr :hide_label, :boolean, doc: "`true` if the label should be hidden."
+  attr :invalid, :boolean, doc: "Specify if the currently value is invalid."
+
+  attr :label_position, :string,
+    doc: "The label position.",
+    values: ["left", "right"],
+    default: "right"
+
+  attr :label_text, :string, doc: "The label text."
+  attr :name, :string, doc: "The `name` attribute for the `<input>` for selection."
+
+  attr :orientation, :string,
+    doc: "The orientation to lay out radio buttons.",
+    values: ["horizontal", "vertical"],
+    default: "horizontal"
+
+  attr :read_only, :boolean, doc: "`true` if the radio button group should be disabled."
+  attr :required, :boolean, doc: "`true` if the radio button is required."
+  attr :value, :string, doc: "The `value` attribute for the `<input>` for selection."
+  attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
+
+  attr :warn_text, :string,
+    doc: "Provide the text that is displayed when the control is in warning state"
+
+  attr :rest, :global
+  slot :ai_label, doc: "AI label content."
+  slot :inner_block
+
+  def radio_button(assigns) do
+    CoreComponents.radio_button(assigns)
+  end
+
+  @doc """
+  Component `<cds-radio-button-group>` from `./src/components/radio-button/radio-button-group.ts`
+
+  Radio button group.
+
+  ## Events
+
+  * `cds-radio-button-group-changed` - The custom event fired after this radio button group changes its selected item.
+  * `cds-radio-button-changed` - The name of the custom event fired after a radio button changes its checked state.
+
+  """
+  attr :default_selected, :string, doc: "The `value` attribute for the `<input>` for selection."
+  attr :disabled, :boolean, doc: "`true` if the radio button group should be disabled."
+  attr :helper_text, :any, doc: "The helper text."
+  attr :invalid, :boolean, doc: "Specify if the currently value is invalid."
+  attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
+
+  attr :label_position, :string,
+    doc: "The label position.",
+    values: ["left", "right"],
+    default: "right"
+
+  attr :legend_text, :string, doc: "The label position."
+  attr :name, :string, doc: "The `name` attribute for the `<input>` for selection."
+
+  attr :orientation, :string,
+    doc: "The orientation to lay out radio buttons.",
+    values: ["horizontal", "vertical"],
+    default: "horizontal"
+
+  attr :read_only, :boolean, doc: "Controls the readonly state of the radio button group."
+  attr :required, :boolean, doc: "`true` to specify if input selection in group is required."
+  attr :value, :string, doc: "The `value` attribute for the `<input>` for selection."
+  attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
+
+  attr :warn_text, :string,
+    doc: "Provide the text that is displayed when the control is in warning state"
+
+  attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
+  attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
+
+  attr :form_event, :string,
+    default: nil,
+    doc: "override the custom event used to sync form values"
+
+  attr :rest, :global
+
+  slot :item do
+    attr :label, :string
+    attr :value, :string
+    attr :checked, :boolean
+    attr :disabled, :boolean
+  end
+
+  slot :inner_block
+
+  def radio_button_group(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:default_selected, fn -> nil end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:helper_text, fn -> nil end)
+      |> assign_new(:invalid, fn -> false end)
+      |> assign_new(:invalid_text, fn -> nil end)
+      |> assign_new(:legend_text, fn -> nil end)
+      |> assign_new(:name, fn -> nil end)
+      |> assign_new(:read_only, fn -> false end)
+      |> assign_new(:required, fn -> false end)
+      |> assign_new(:value, fn -> nil end)
+      |> assign_new(:warn, fn -> false end)
+      |> assign_new(:warn_text, fn -> nil end)
+
+    ~H"""
+    <FormComponents.radio_button_group
+      default_selected={@default_selected}
+      disabled={@disabled}
+      helper_text={@helper_text}
+      invalid={@invalid}
+      invalid_text={@invalid_text}
+      label_position={@label_position}
+      legend_text={@legend_text}
+      name={@name}
+      orientation={@orientation}
+      read_only={@read_only}
+      required={@required}
+      value={@value}
+      warn={@warn}
+      warn_text={@warn_text}
+      {@rest}
+    >
+      <%= for item <- @item do %>
+        <CoreComponents.radio_button
+          label_text={item[:label]}
+          value={item[:value]}
+          checked={item[:checked]}
+          disabled={item[:disabled]}
+        />
+      <% end %>
+    </FormComponents.radio_button_group>
+    """
+  end
+
+  def radio_button_group(assigns) do
+    FormComponents.radio_button_group(assigns)
+  end
+
+  @doc """
+  Component `<cds-radio-button-skeleton>` from `./src/components/radio-button/radio-button-skeleton.ts`
+
+  Radio button skeleton.
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def radio_button_skeleton(assigns) do
+    CoreComponents.radio_button_skeleton(assigns)
+  end
+end

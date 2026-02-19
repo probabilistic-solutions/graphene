@@ -106,7 +106,7 @@ defmodule Graphene do
   ##### inline
 
   ```heex
-  <.ai_label kind="inline" ai_text_label="Status" ai_text="AI-generated">
+  <.ai_label kind="inline" ai_text="AI-generated" ai_text_label="Status">
     <:body_text>
       <p class="secondary">Inline AI summary</p>
       <p class="secondary">Updated 2 mins ago</p>
@@ -381,7 +381,7 @@ defmodule Graphene do
   ##### selected
 
   ```heex
-  <.chat_button is_selected is_quick_action>
+  <.chat_button is_quick_action is_selected>
     Selected
   </.chat_button>
   ```
@@ -426,7 +426,7 @@ defmodule Graphene do
   ##### invalid
 
   ```heex
-  <.checkbox_group invalid invalid_text="Select at least one" legend_text="Required">
+  <.checkbox_group invalid legend_text="Required" invalid_text="Select at least one">
     <:item label="Option A" value="a" />
     <:item label="Option B" value="b" />
   </.checkbox_group>
@@ -721,8 +721,8 @@ defmodule Graphene do
     rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
     row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
     expandable
-    batch_expansion
     with_row_ai_labels
+    batch_expansion
   >
     <:title>DataTable</:title>
     <:description>AI labels with expansion</:description>
@@ -750,8 +750,8 @@ defmodule Graphene do
     rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
     row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
     expandable
-    batch_expansion
     with_row_ai_labels
+    batch_expansion
   >
     <:title>DataTable</:title>
     <:description>Compact AI expansion</:description>
@@ -859,9 +859,9 @@ defmodule Graphene do
   <.data_table
     id="batch-actions-single-batch-actions"
     rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-    selection_name="carbon-batch-actions"
     row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
     selectable
+    selection_name="carbon-batch-actions"
   >
     <:title>DataTable</:title>
     <:description>With batch actions</:description>
@@ -900,9 +900,9 @@ defmodule Graphene do
     id="batch-actions-single-compact"
     size="sm"
     rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-    selection_name="carbon-batch-actions"
     row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
     selectable
+    selection_name="carbon-batch-actions"
   >
     <:title>DataTable</:title>
     <:description>Compact batch actions</:description>
@@ -1303,9 +1303,9 @@ defmodule Graphene do
   <.data_table
     id="selection-single-checkboxes"
     rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-    selection_name="carbon-selection"
     row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
     selectable
+    selection_name="carbon-selection"
   >
     <:title>DataTable</:title>
     <:description>Row selection</:description>
@@ -1321,10 +1321,10 @@ defmodule Graphene do
   <.data_table
     id="selection-single-preselected"
     rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-    selection_name="carbon-selection"
-    selected_ids={[2]}
     row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
     selectable
+    selected_ids={[2]}
+    selection_name="carbon-selection"
   >
     <:title>DataTable</:title>
     <:description>Preselected row</:description>
@@ -1343,10 +1343,10 @@ defmodule Graphene do
   <.data_table
     id="selection-radio-single-radio"
     rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-    selection_name="carbon-radio-selection"
     row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
-    radio
     selectable
+    radio
+    selection_name="carbon-radio-selection"
   >
     <:title>DataTable</:title>
     <:description>Radio selection</:description>
@@ -1362,11 +1362,11 @@ defmodule Graphene do
   <.data_table
     id="selection-radio-single-radio-selected"
     rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-    selection_name="carbon-radio-selection"
-    selected_ids={[3]}
     row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
-    radio
     selectable
+    radio
+    selected_ids={[3]}
+    selection_name="carbon-radio-selection"
   >
     <:title>DataTable</:title>
     <:description>Preselected radio</:description>
@@ -1385,11 +1385,11 @@ defmodule Graphene do
   <.data_table
     id="selection-radio-sorting-single-radio-sorting"
     rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-    selection_name="carbon-radio-sorting"
     row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
-    sortable
-    radio
     selectable
+    radio
+    selection_name="carbon-radio-sorting"
+    sortable
   >
     <:title>DataTable</:title>
     <:description>Radio selection and sorting</:description>
@@ -1406,11 +1406,11 @@ defmodule Graphene do
     id="selection-radio-sorting-single-compact"
     size="sm"
     rows={[%{id: 1, name: "Load Balancer 3", port: "3000", status: "Disabled", protocol: "HTTP", group: "Kevin's VM Groups", rule: "Round robin"}, %{id: 2, name: "Load Balancer 1", port: "443", status: "Starting", protocol: "HTTP", group: "Maureen's VM Groups", rule: "Round robin"}, %{id: 3, name: "Load Balancer 2", port: "80", status: "Active", protocol: "HTTP", group: "Andrew's VM Groups", rule: "DNS delegation"}, %{id: 4, name: "Load Balancer 6", port: "3000", status: "Disabled", protocol: "HTTP", group: "Marc's VM Groups", rule: "Round robin"}, %{id: 5, name: "Load Balancer 4", port: "443", status: "Starting", protocol: "HTTP", group: "Mel's VM Groups", rule: "Round robin"}, %{id: 6, name: "Load Balancer 5", port: "80", status: "Active", protocol: "HTTP", group: "Ronja's VM Groups", rule: "DNS delegation"}]}
-    selection_name="carbon-radio-sorting"
     row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
-    sortable
-    radio
     selectable
+    radio
+    selection_name="carbon-radio-sorting"
+    sortable
   >
     <:title>DataTable</:title>
     <:description>Compact sorting</:description>
@@ -1963,7 +1963,7 @@ defmodule Graphene do
   ##### expandable
 
   ```heex
-  <.fluid_search name="fluid-search-expandable" label_text="Search" expandable expanded/>
+  <.fluid_search name="fluid-search-expandable" expandable label_text="Search" expanded/>
   ```
 
   ##### disabled
@@ -1988,7 +1988,7 @@ defmodule Graphene do
   ##### default
 
   ```heex
-  <.fluid_select id="basic-single-default" name="fluid-select-default">
+  <.fluid_select name="fluid-select-default">
     <:label_text>Select an option</:label_text>
     <:item value="">Choose one</:item>
     <:item value="option-1">Option 1</:item>
@@ -2000,7 +2000,7 @@ defmodule Graphene do
   ##### inline
 
   ```heex
-  <.fluid_select id="basic-single-inline" name="fluid-select-inline" inline>
+  <.fluid_select name="fluid-select-inline" inline>
     <:label_text>Inline</:label_text>
     <:item value="alpha">Alpha</:item>
     <:item value="beta">Beta</:item>
@@ -2010,12 +2010,7 @@ defmodule Graphene do
   ##### invalid
 
   ```heex
-  <.fluid_select
-    id="basic-single-invalid"
-    invalid
-    name="fluid-select-invalid"
-    invalid_text="Pick a value"
-  >
+  <.fluid_select invalid name="fluid-select-invalid" invalid_text="Pick a value">
     <:label_text>Required</:label_text>
     <:item value="one">One</:item>
     <:item value="two">Two</:item>
@@ -2061,7 +2056,7 @@ defmodule Graphene do
   ##### default
 
   ```heex
-  <.fluid_textarea id="basic-single-default" name="fluid-textarea-default" rows="3">
+  <.fluid_textarea name="fluid-textarea-default" rows="3">
     <:label_text>Notes</:label_text>
   </.fluid_textarea>
   ```
@@ -2069,7 +2064,7 @@ defmodule Graphene do
   ##### helper_text
 
   ```heex
-  <.fluid_textarea id="basic-single-helper-text" name="fluid-textarea-helper" rows="4">
+  <.fluid_textarea name="fluid-textarea-helper" rows="4">
     <:label_text>Description</:label_text>
     <:helper_text>Max 300 characters</:helper_text>
   </.fluid_textarea>
@@ -2078,7 +2073,7 @@ defmodule Graphene do
   ##### invalid
 
   ```heex
-  <.fluid_textarea id="basic-single-invalid" name="fluid-textarea-invalid" rows="3">
+  <.fluid_textarea name="fluid-textarea-invalid" rows="3">
     <:label_text>Reason</:label_text>
     <:validity_message>Required</:validity_message>
   </.fluid_textarea>
@@ -2915,19 +2910,19 @@ defmodule Graphene do
   ##### default
 
   ```heex
-  <.pagination page_size="10" total_items="105"/>
+  <.pagination total_items="105" page_size="10"/>
   ```
 
   ##### small
 
   ```heex
-  <.pagination size="sm" page_size="5" total_items="42"/>
+  <.pagination size="sm" total_items="42" page_size="5"/>
   ```
 
   ##### unknown
 
   ```heex
-  <.pagination page_size="10" pages_unknown total_items=""/>
+  <.pagination total_items="" pages_unknown page_size="10"/>
   ```
 
 
@@ -2994,7 +2989,7 @@ defmodule Graphene do
   ##### with_caret
 
   ```heex
-  <.popover autoalign border caret>
+  <.popover autoalign caret border>
     <:trigger>
       <Graphene.CarbonComponents.button kind="secondary">Caret popover</Graphene.CarbonComponents.button>
     </:trigger>
@@ -3129,7 +3124,7 @@ defmodule Graphene do
   ##### with_helper
 
   ```heex
-  <.radio_button_group name="choices-help" helper_text="Pick a single option" legend_text="Select one">
+  <.radio_button_group name="choices-help" legend_text="Select one" helper_text="Pick a single option">
     <:item value="a" label="Alpha" />
     <:item value="b" label="Beta" />
   </.radio_button_group>
@@ -3149,7 +3144,7 @@ defmodule Graphene do
   ##### expandable
 
   ```heex
-  <.search name="search-expandable" label_text="Search" expandable expanded/>
+  <.search name="search-expandable" expandable label_text="Search" expanded/>
   ```
 
   ##### group: sizes
@@ -3168,7 +3163,7 @@ defmodule Graphene do
   ##### default
 
   ```heex
-  <.select id="basic-single-default" name="select-default">
+  <.select name="select-default">
     <:label_text>Select an option</:label_text>
     <:item value="">Choose one</:item>
     <:item value="option-1">Option 1</:item>
@@ -3180,7 +3175,7 @@ defmodule Graphene do
   ##### inline
 
   ```heex
-  <.select id="basic-single-inline" name="select-inline" inline>
+  <.select name="select-inline" inline>
     <:label_text>Inline</:label_text>
     <:item value="alpha">Alpha</:item>
     <:item value="beta">Beta</:item>
@@ -3190,12 +3185,7 @@ defmodule Graphene do
   ##### invalid
 
   ```heex
-  <.select
-    id="basic-single-invalid"
-    invalid
-    name="select-invalid"
-    invalid_text="Pick a value"
-  >
+  <.select invalid name="select-invalid" invalid_text="Pick a value">
     <:label_text>Required</:label_text>
     <:item value="one">One</:item>
     <:item value="two">Two</:item>
@@ -3384,9 +3374,9 @@ defmodule Graphene do
   ```heex
   <.structured_list
     rows={[%{id: "1", name: "Load Balancer 1", status: "Active"}, %{id: "2", name: "Load Balancer 2", status: "Disabled"}, %{id: "3", name: "Gateway", status: "Active"}]}
-    selection_name="structured-list"
+    row_id={#Function<0.15879361/1 in Storybook.CarbonComponents.StructuredList.row_id>}
     selected_ids={["1"]}
-    row_id={#Function<0.90062870/1 in Storybook.CarbonComponents.StructuredList.row_id>}
+    selection_name="structured-list"
   >
     <:col :let={row} label="Name"><%= row.name %></:col>
     <:col :let={row} label="Status"><%= row.status %></:col>
@@ -3542,7 +3532,7 @@ defmodule Graphene do
   ##### default
 
   ```heex
-  <.textarea id="basic-single-default" name="textarea-default" rows="3">
+  <.textarea name="textarea-default" rows="3">
     <:label_text>Notes</:label_text>
   </.textarea>
   ```
@@ -3550,7 +3540,7 @@ defmodule Graphene do
   ##### helper_text
 
   ```heex
-  <.textarea id="basic-single-helper-text" name="textarea-helper" rows="4">
+  <.textarea name="textarea-helper" rows="4">
     <:label_text>Description</:label_text>
     <:helper_text>Max 300 characters</:helper_text>
   </.textarea>
@@ -3559,13 +3549,7 @@ defmodule Graphene do
   ##### invalid
 
   ```heex
-  <.textarea
-    id="basic-single-invalid"
-    invalid
-    name="textarea-invalid"
-    rows="3"
-    invalid_text="Required"
-  >
+  <.textarea invalid name="textarea-invalid" rows="3" invalid_text="Required">
     <:label_text>Reason</:label_text>
   </.textarea>
   ```
@@ -3671,7 +3655,7 @@ defmodule Graphene do
   ##### on
 
   ```heex
-  <.toggle id="basic-single-on" name="toggle-on" label_a="On" label_b="Off" toggled>
+  <.toggle name="toggle-on" label_a="On" label_b="Off" toggled>
     <:label_text>Notifications</:label_text>
   </.toggle>
   ```
@@ -3679,7 +3663,7 @@ defmodule Graphene do
   ##### off
 
   ```heex
-  <.toggle id="basic-single-off" name="toggle-off" label_a="On" label_b="Off">
+  <.toggle name="toggle-off" label_a="On" label_b="Off">
     <:label_text>Notifications</:label_text>
   </.toggle>
   ```
@@ -3687,13 +3671,7 @@ defmodule Graphene do
   ##### disabled
 
   ```heex
-  <.toggle
-    disabled
-    id="basic-single-disabled"
-    name="toggle-disabled"
-    label_a="On"
-    label_b="Off"
-  >
+  <.toggle disabled name="toggle-disabled" label_a="On" label_b="Off">
     <:label_text>Disabled</:label_text>
   </.toggle>
   ```

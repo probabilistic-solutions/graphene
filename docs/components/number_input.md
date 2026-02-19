@@ -12,7 +12,8 @@
 
 ```html
 <input type="hidden" id="number-input-default-input" name="number-input-default" value="10">
-<cds-number-input decrement-button-assistive-text="decrease number input" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infty" min="-Infty" name="number-input-default" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="10" id="basic-single-default" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="number-input-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+
+<cds-number-input decrement-button-assistive-text="decrease number input" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infty" min="-Infty" name="number-input-default" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="10" id="basic-single-default" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="number-input-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   
@@ -34,7 +35,8 @@
 
 ```html
 <input type="hidden" id="number-input-helper-input" name="number-input-helper" value="2">
-<cds-number-input decrement-button-assistive-text="decrease number input" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infty" min="-Infty" name="number-input-helper" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="2" id="basic-single-helper-text" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="number-input-helper-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+
+<cds-number-input decrement-button-assistive-text="decrease number input" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infty" min="-Infty" name="number-input-helper" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="2" id="basic-single-helper-text" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="number-input-helper-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   <div slot="helper-text">
@@ -57,7 +59,8 @@
 
 ```html
 <input type="hidden" id="number-input-invalid-input" name="number-input-invalid" value="0">
-<cds-number-input decrement-button-assistive-text="decrease number input" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" invalid invalid-text="Minimum is 1" max="Infty" min="-Infty" name="number-input-invalid" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="0" id="basic-single-invalid" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="number-input-invalid-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+
+<cds-number-input decrement-button-assistive-text="decrease number input" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" invalid invalid-text="Minimum is 1" max="Infty" min="-Infty" name="number-input-invalid" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="0" id="basic-single-invalid" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="number-input-invalid-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   

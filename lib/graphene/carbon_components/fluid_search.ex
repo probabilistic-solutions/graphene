@@ -1,0 +1,75 @@
+defmodule Graphene.CarbonComponents.FluidSearch do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+  alias Graphene.Internal.FormComponents
+
+  @doc """
+  Component `<cds-fluid-search>` from `./src/components/fluid-search/fluid-search.ts`
+
+  Fluid text input.
+
+  ## Events
+
+  * `cds-search-input` - The custom event fired after the search content is changed upon a user gesture.
+
+  """
+  attr :autocomplete, :string,
+    doc:
+      "Specify an optional value for the autocomplete property on the underlying <input>,\ndefaults to \"off\"",
+    default: "off"
+
+  attr :close_button_label_text, :string,
+    doc: "Specify a label to be read by screen readers on the \"close\" button"
+
+  attr :disabled, :boolean, doc: "`true` if the search box should be disabled."
+  attr :expandable, :boolean, doc: "`true` if the search bar can be expandable"
+  attr :expanded, :boolean, doc: "`true` if the expandable search has been expanded"
+  attr :has_custom_icon, :boolean
+  attr :label_text, :string, doc: "The label text."
+  attr :name, :string, doc: "The form name in `FormData`."
+  attr :placeholder, :string, doc: "The placeholder text.", default: "Search"
+  attr :role, :string, doc: "Specify the role for the underlying <input>, defaults to searchbox"
+
+  attr :size, :string,
+    doc: "The search box size.",
+    values: ["sm", "md", "lg", "xl"],
+    default: "md"
+
+  attr :type, :string, doc: "The `<input>` name."
+  attr :value, :string, doc: "The value."
+  attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
+  attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
+
+  attr :form_event, :string,
+    default: nil,
+    doc: "override the custom event used to sync form values"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def fluid_search(assigns) do
+    FormComponents.fluid_search(assigns)
+  end
+
+  @doc """
+  Component `<cds-fluid-search-skeleton>` from `./src/components/fluid-search/fluid-search-skeleton.ts`
+
+  Fluid Search.
+
+
+  """
+  attr :size, :string,
+    doc: "The search box size. Corresponds to the attribute with the same name.",
+    values: ["sm", "md", "lg", "xl"],
+    default: "md"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def fluid_search_skeleton(assigns) do
+    CoreComponents.fluid_search_skeleton(assigns)
+  end
+end

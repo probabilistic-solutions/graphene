@@ -7,6 +7,8 @@ defmodule Storybook.CarbonComponents.Grid do
     [
       %Variation{
         id: :default,
+        note:
+          "Use a top-level `<.grid full_width>` inside UI shell content so sections align to the Carbon grid. Control vertical rhythm with `row_gap`.",
         slots: [
           ~S|<:column sm="2">Column 1</:column>
 <:column sm="2">Column 2</:column>

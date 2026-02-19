@@ -1,6 +1,6 @@
 defmodule Storybook.CodeGen.CoreComponents.Tagskeleton do
   use Graphene.CodeGen.Component.Story,
-    func: &Graphene.CoreComponents.tag_skeleton/1,
-    component_module: Graphene.CoreComponents,
+    func: &Graphene.Internal.CoreComponents.tag_skeleton/1,
+    component_module: Graphene.Internal.CoreComponents,
     component_name: :tag_skeleton
 end

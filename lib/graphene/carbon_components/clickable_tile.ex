@@ -1,0 +1,41 @@
+defmodule Graphene.CarbonComponents.ClickableTile do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-clickable-tile>` from `./src/components/tile/clickable-tile.ts`
+
+  Clickable tile.
+
+
+  """
+  attr :ai_label, :boolean
+  attr :color_scheme, :string, doc: "The color scheme.", values: ["", "light"], default: ""
+  attr :disabled, :boolean, doc: "`true` if the link should be disabled."
+  attr :download, :string, doc: "The default file name."
+
+  attr :has_rounded_corners, :boolean,
+    doc:
+      "Specify if the `ClickableTile` component should be rendered with rounded corners.\nOnly valid when `ai-label` prop is present"
+
+  attr :href, :string, doc: "Link `href`."
+  attr :hreflang, :string, doc: "The language of what `href` points to."
+  attr :inline, :boolean, doc: "`true` if the link should be inline."
+  attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
+  attr :ping, :string, doc: "URLs to ping."
+  attr :rel, :string, doc: "The link type."
+  attr :size, :string, doc: "Link size.", default: "MEDIUM"
+  attr :slug, :boolean, doc: "deprecated - remove in v12"
+  attr :target, :string, doc: "The link target."
+  attr :type, :string, doc: "MIME type of the `target`."
+  attr :visited, :boolean, doc: "`true` if the link has been visited."
+  attr :rest, :global
+  slot :inner_block
+
+  def clickable_tile(assigns) do
+    CoreComponents.clickable_tile(assigns)
+  end
+end

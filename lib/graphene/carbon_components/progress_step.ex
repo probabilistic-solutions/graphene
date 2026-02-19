@@ -1,0 +1,54 @@
+defmodule Graphene.CarbonComponents.ProgressStep do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-progress-step>` from `./src/components/progress-indicator/progress-step.ts`
+
+  Progress step.
+
+
+  """
+  attr :clickable, :boolean,
+    doc:
+      "Set by the parent indicator. If true, the step is interactive unless it is\ncurrent or disabled. This mirrors React's \"onChange prop exists\" semantics."
+
+  attr :complete, :boolean, doc: "Specify whether the step has been completed"
+  attr :current, :boolean, doc: "Specify whether the step is the current step"
+  attr :description, :string
+  attr :disabled, :boolean, doc: "`true` if the progress step should be disabled."
+  attr :icon_label, :string, doc: "The a11y text for the icon."
+  attr :invalid, :boolean, doc: "Specify whether the step is invalid"
+  attr :label, :string
+  attr :secondary_label, :string
+
+  attr :state, :string,
+    doc: "The progress state.",
+    values: ["complete", "current", "incomplete", "invalid"],
+    default: "incomplete"
+
+  attr :rest, :global
+  slot :secondary_label_text, doc: "The secondary progress label."
+  slot :inner_block
+
+  def progress_step(assigns) do
+    CoreComponents.progress_step(assigns)
+  end
+
+  @doc """
+  Component `<cds-progress-step-skeleton>` from `./src/components/progress-indicator/progress-step-skeleton.ts`
+
+  Progress step skeleton.
+
+  """
+  attr :vertical, :boolean, doc: "`true` to render the vertical variant."
+  attr :rest, :global
+  slot :inner_block
+
+  def progress_step_skeleton(assigns) do
+    CoreComponents.progress_step_skeleton(assigns)
+  end
+end

@@ -1,0 +1,126 @@
+defmodule Graphene.CarbonComponents.Menu do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-menu>` from `./src/components/menu/menu.ts`
+
+  Menu.
+
+  """
+  attr :open, :boolean, doc: "Whether the menu is open."
+  attr :size, :string, doc: "Menu size."
+  attr :label, :string, doc: "Menu label."
+  attr :border, :boolean, doc: "Whether the menu has a border."
+  attr :background_token, :string, doc: "Background token for the menu."
+  attr :menu_alignment, :string, doc: "Alignment of the menu."
+  attr :x, :string, doc: "Horizontal position of the menu."
+  attr :y, :string, doc: "Vertical position of the menu."
+  attr :rest, :global
+  slot :inner_block
+
+  def menu(assigns) do
+    CoreComponents.menu(assigns)
+  end
+
+  @doc """
+  Component `<cds-menu-button>` from `./src/components/menu-button/menu-button.ts`
+
+  Menu button.
+
+
+  """
+  attr :disabled, :any, doc: "Specify whether the MenuButton should be disabled, or not."
+
+  attr :kind, :string,
+    doc: "Specify the type of button to be used as the base for the trigger button.",
+    values: ["primary", "tertiary", "ghost"],
+    default: "primary"
+
+  attr :label, :any, doc: "Provide the label to be rendered on the trigger button."
+
+  attr :menu_alignment, :string,
+    doc: "Experimental property. Specify how the menu should align with the button element",
+    values: [
+      "top",
+      "top-start",
+      "top-end",
+      "bottom",
+      "bottom-start",
+      "bottom-end",
+      "left",
+      "left-start",
+      "left-end",
+      "right",
+      "right-start",
+      "right-end"
+    ],
+    default: "bottom"
+
+  attr :menu_background_token, :string,
+    doc: "Specify the background token to use for the menu. Default is 'layer'.",
+    values: ["layer", "background"],
+    default: "layer"
+
+  attr :menu_border, :boolean, doc: "Specify whether the menu should have a border."
+
+  attr :size, :string,
+    doc: "Specify the size of the button and menu.",
+    values: ["xs", "sm", "md", "lg"],
+    default: "lg"
+
+  attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
+  attr :rest, :global
+
+  slot :item do
+    attr :label, :string
+    attr :disabled, :boolean
+    attr :kind, :any
+    attr :shortcut, :string
+    attr :attrs, :map
+  end
+
+  slot :group do
+    attr :label, :string
+    attr :attrs, :map
+  end
+
+  slot :divider do
+    attr :attrs, :map
+  end
+
+  slot :inner_block
+
+  def menu_button(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:disabled, fn -> nil end)
+      |> assign_new(:label, fn -> nil end)
+      |> assign_new(:menu_border, fn -> false end)
+
+    ~H"""
+    <CoreComponents.menu_button
+      disabled={assigns[:disabled]}
+      kind={assigns[:kind]}
+      label={assigns[:label]}
+      menu_alignment={assigns[:menu_alignment]}
+      menu_background_token={assigns[:menu_background_token]}
+      menu_border={assigns[:menu_border]}
+      size={assigns[:size]}
+      tab_index={assigns[:tab_index]}
+      {@rest}
+    >
+      <CoreComponents.menu>
+        {Graphene.CarbonComponents.Helpers.render_menu_items(assigns)}
+      </CoreComponents.menu>
+    </CoreComponents.menu_button>
+    """
+  end
+
+  def menu_button(assigns) do
+    CoreComponents.menu_button(assigns)
+  end
+end

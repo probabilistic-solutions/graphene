@@ -1,0 +1,42 @@
+defmodule Graphene.CarbonComponents.Progress do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-progress-bar>` from `./src/components/progress-bar/progress-bar.ts`
+
+  Progress bar.
+
+
+  """
+  attr :helper_text, :any, doc: "The current progress as a textual representation."
+  attr :hide_label, :any, doc: "Whether the label should be visually hidden."
+  attr :label, :any, doc: "A label describing the progress bar."
+  attr :max, :string, doc: "The maximum value.", default: "100"
+
+  attr :size, :string,
+    doc: "Specify the size of the ProgressBar.",
+    values: ["small", "big"],
+    default: "big"
+
+  attr :status, :string,
+    doc: "Specify the status.",
+    values: ["active", "finished", "error"],
+    default: "active"
+
+  attr :type, :string,
+    doc: "Defines the alignment variant of the progress bar.",
+    values: ["default", "inline", "indented"],
+    default: "default"
+
+  attr :value, :any, doc: "The current value."
+  attr :rest, :global
+  slot :inner_block
+
+  def progress_bar(assigns) do
+    CoreComponents.progress_bar(assigns)
+  end
+end

@@ -1,0 +1,127 @@
+defmodule Graphene.CarbonComponents.Toggletip do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-toggletip>` from `./src/components/toggle-tip/toggletip.ts`
+
+  Definition tooltip.
+
+
+  """
+  attr :alignment, :string,
+    doc: "How the tooltip is aligned to the trigger button.",
+    values: [
+      "top",
+      "top-start",
+      "top-end",
+      "bottom",
+      "bottom-start",
+      "bottom-end",
+      "left",
+      "left-start",
+      "left-end",
+      "right",
+      "right-start",
+      "right-end"
+    ],
+    default: "top"
+
+  attr :alignment_axis_offset, :string,
+    doc:
+      "**Experimental:** Provide an offset value for alignment axis. Only takes effect when `autoalign` is enabled.",
+    default: "0"
+
+  attr :autoalign, :boolean, doc: "Specify whether a auto align functionality should be applied"
+  attr :button_label, :string, doc: "The label for the toggle button", default: "Show information"
+  attr :default_open, :boolean, doc: "Set whether toggletip is open by default."
+  attr :open, :boolean, doc: "Set whether toggletip is open"
+  attr :rest, :global
+  slot :body_text, doc: "Body text content for the toggletip."
+  slot :actions, doc: "Action buttons for the toggletip."
+
+  slot :action do
+    attr :tag, :string
+  end
+
+  slot :inner_block
+
+  def toggletip(%{action: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:default_open, fn -> false end)
+      |> assign_new(:open, fn -> false end)
+
+    ~H"""
+    <CoreComponents.toggletip
+      alignment={@alignment}
+      alignment_axis_offset={@alignment_axis_offset}
+      autoalign={@autoalign}
+      button_label={@button_label}
+      default_open={@default_open}
+      open={@open}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- @body_text}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="body-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- @actions ++ @action}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="actions"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+    </CoreComponents.toggletip>
+    """
+  end
+
+  def toggletip(%{actions: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:default_open, fn -> false end)
+      |> assign_new(:open, fn -> false end)
+
+    ~H"""
+    <CoreComponents.toggletip
+      alignment={@alignment}
+      alignment_axis_offset={@alignment_axis_offset}
+      autoalign={@autoalign}
+      button_label={@button_label}
+      default_open={@default_open}
+      open={@open}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <.dynamic_tag
+        :for={s <- @body_text}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="body-text"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={s <- @actions ++ @action}
+        tag_name={Map.get(s, :tag, "div")}
+        slot="actions"
+      >
+        {render_slot(s)}
+      </.dynamic_tag>
+    </CoreComponents.toggletip>
+    """
+  end
+
+  def toggletip(assigns) do
+    CoreComponents.toggletip(assigns)
+  end
+end

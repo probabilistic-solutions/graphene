@@ -1,8 +1,12 @@
 /* This is your custom storybook stylesheet. */
+@use '@carbon/styles/scss/config' with (
+  $css--font-face: false
+);
 @use '@carbon/styles/scss/theme';
 @use '@carbon/styles/scss/themes';
 @use '@carbon/styles/scss/reset';
 @use '@carbon/styles/scss/type';
+@use '@carbon/styles/scss/components';
 @use '@carbon/grid';
 
 @import '@ibm/plex/css/ibm-plex.css';

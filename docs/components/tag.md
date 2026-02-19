@@ -70,11 +70,13 @@
   SM
 
 </cds-tag>
+
 <cds-tag open size="md" title="Clear filter" type="cool-gray" id="basic-sizes-md">
   
   MD
 
 </cds-tag>
+
 <cds-tag open size="lg" title="Clear filter" type="cool-gray" id="basic-sizes-lg">
   
   LG

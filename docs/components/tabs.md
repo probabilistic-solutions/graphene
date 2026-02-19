@@ -15,13 +15,15 @@
 <cds-tabs selected-index="0" selected-item-assistive-text="Selected an item." selecting-items-assistive-text="Selecting items. Use up and down arrow keys to navigate." selection-mode="automatic" type="" id="basic-single-default">
   
   
-    <cds-tab align="top" close-on-activation tabTitle="First" target="tab-panel-1" type="">
+    
+<cds-tab align="top" close-on-activation tabTitle="First" target="tab-panel-1" type="">
   
       First
     
 </cds-tab>
   
-    <cds-tab align="top" close-on-activation tabTitle="Second" target="tab-panel-2" type="">
+    
+<cds-tab align="top" close-on-activation tabTitle="Second" target="tab-panel-2" type="">
   
       Second
     
@@ -45,19 +47,22 @@
 <cds-tabs selected-index="0" selected-item-assistive-text="Selected an item." selecting-items-assistive-text="Selecting items. Use up and down arrow keys to navigate." selection-mode="automatic" type="contained" id="basic-single-contained">
   
   
-    <cds-tab align="top" close-on-activation tabTitle="Overview" target="tab-panel-a" type="">
+    
+<cds-tab align="top" close-on-activation tabTitle="Overview" target="tab-panel-a" type="">
   
       Overview
     
 </cds-tab>
   
-    <cds-tab align="top" close-on-activation tabTitle="Details" target="tab-panel-b" type="">
+    
+<cds-tab align="top" close-on-activation tabTitle="Details" target="tab-panel-b" type="">
   
       Details
     
 </cds-tab>
   
-    <cds-tab align="top" close-on-activation tabTitle="Activity" target="tab-panel-c" type="">
+    
+<cds-tab align="top" close-on-activation tabTitle="Activity" target="tab-panel-c" type="">
   
       Activity
     
@@ -92,13 +97,15 @@
 <cds-tabs selected-index="0" selected-item-assistive-text="Selected an item." selecting-items-assistive-text="Selecting items. Use up and down arrow keys to navigate." selection-mode="automatic" size="sm" type="" id="basic-sizes-sm">
   
   
-    <cds-tab align="top" close-on-activation tabTitle="One" target="tab-panel-one" type="">
+    
+<cds-tab align="top" close-on-activation tabTitle="One" target="tab-panel-one" type="">
   
       One
     
 </cds-tab>
   
-    <cds-tab align="top" close-on-activation tabTitle="Two" target="tab-panel-two" type="">
+    
+<cds-tab align="top" close-on-activation tabTitle="Two" target="tab-panel-two" type="">
   
       Two
     
@@ -106,16 +113,19 @@
   
 
 </cds-tabs>
+
 <cds-tabs selected-index="0" selected-item-assistive-text="Selected an item." selecting-items-assistive-text="Selecting items. Use up and down arrow keys to navigate." selection-mode="automatic" size="md" type="" id="basic-sizes-md">
   
   
-    <cds-tab align="top" close-on-activation tabTitle="One" target="tab-panel-one" type="">
+    
+<cds-tab align="top" close-on-activation tabTitle="One" target="tab-panel-one" type="">
   
       One
     
 </cds-tab>
   
-    <cds-tab align="top" close-on-activation tabTitle="Two" target="tab-panel-two" type="">
+    
+<cds-tab align="top" close-on-activation tabTitle="Two" target="tab-panel-two" type="">
   
       Two
     
@@ -123,16 +133,19 @@
   
 
 </cds-tabs>
+
 <cds-tabs selected-index="0" selected-item-assistive-text="Selected an item." selecting-items-assistive-text="Selecting items. Use up and down arrow keys to navigate." selection-mode="automatic" size="lg" type="" id="basic-sizes-lg">
   
   
-    <cds-tab align="top" close-on-activation tabTitle="One" target="tab-panel-one" type="">
+    
+<cds-tab align="top" close-on-activation tabTitle="One" target="tab-panel-one" type="">
   
       One
     
 </cds-tab>
   
-    <cds-tab align="top" close-on-activation tabTitle="Two" target="tab-panel-two" type="">
+    
+<cds-tab align="top" close-on-activation tabTitle="Two" target="tab-panel-two" type="">
   
       Two
     
@@ -140,16 +153,19 @@
   
 
 </cds-tabs>
+
 <cds-tabs selected-index="0" selected-item-assistive-text="Selected an item." selecting-items-assistive-text="Selecting items. Use up and down arrow keys to navigate." selection-mode="automatic" size="xl" type="" id="basic-sizes-xl">
   
   
-    <cds-tab align="top" close-on-activation tabTitle="One" target="tab-panel-one" type="">
+    
+<cds-tab align="top" close-on-activation tabTitle="One" target="tab-panel-one" type="">
   
       One
     
 </cds-tab>
   
-    <cds-tab align="top" close-on-activation tabTitle="Two" target="tab-panel-two" type="">
+    
+<cds-tab align="top" close-on-activation tabTitle="Two" target="tab-panel-two" type="">
   
       Two
     

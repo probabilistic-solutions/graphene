@@ -1,156 +1,305 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env nix-shell
+#!nix-shell -i python3 -p python3 python3Packages.selenium
+import argparse
+import datetime as dt
+import os
+import subprocess
+import sys
+import time
+from pathlib import Path
 
-CHROME_BIN=${CHROME_BIN:-chromium}
-if ! command -v "$CHROME_BIN" >/dev/null 2>&1; then
-  echo "Chromium not found in PATH. Set CHROME_BIN if needed." >&2
-  exit 1
-fi
+from selenium import webdriver
+from selenium.common.exceptions import TimeoutException, WebDriverException
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
 
-ROOT_DIR_NAME=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")
-BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)
-if [[ -z "$BRANCH_NAME" ]]; then
-  BRANCH_NAME="no-git"
-elif [[ "$BRANCH_NAME" == "HEAD" ]]; then
-  SHORT_SHA=$(git rev-parse --short HEAD 2>/dev/null || echo "detached")
-  BRANCH_NAME="detached-${SHORT_SHA}"
-fi
+PROXY_ENV_KEYS = [
+    "HTTPS_PROXY",
+    "https_proxy",
+    "HTTP_PROXY",
+    "http_proxy",
+    "ALL_PROXY",
+    "all_proxy",
+]
 
-OUT_DIR=${OUT_DIR:-/tmp/screenshots/${ROOT_DIR_NAME}/${BRANCH_NAME}}
-WAIT_MS=${WAIT_MS:-8000}
-TIMEOUT_SEC=${TIMEOUT_SEC:-45}
-SHOT_TIMESTAMP=${SHOT_TIMESTAMP:-1}
-MAX_RETRIES=${MAX_RETRIES:-2}
+CHROME_ARGS = [
+    "--headless=new",
+    "--no-sandbox",
+    "--disable-dev-shm-usage",
+    "--no-proxy-server",
+    "--proxy-server=direct://",
+    "--proxy-bypass-list=*",
+    "--disable-background-networking",
+    "--disable-client-side-phishing-detection",
+    "--disable-component-update",
+    "--disable-default-apps",
+    "--disable-domain-reliability",
+    "--disable-hang-monitor",
+    "--disable-logging",
+    "--disable-popup-blocking",
+    "--disable-prompt-on-repost",
+    "--disable-sync",
+    "--disable-features=Translate,MediaRouter,OptimizationHints,PrivacySandboxSettings4,PrivacySandboxAdsAPIs,Gcm",
+    "--log-level=3",
+    "--metrics-recording-only",
+    "--no-default-browser-check",
+    "--no-first-run",
+    "--password-store=basic",
+    "--use-mock-keychain",
+    "--force-device-scale-factor=1",
+    "--enable-unsafe-swiftshader",
+    "--enable-webgl",
+    "--ignore-gpu-blocklist",
+    "--use-gl=swiftshader",
+    "--use-angle=swiftshader",
+    "--hide-scrollbars",
+    "--run-all-compositor-stages-before-draw",
+]
 
-usage() {
-  cat <<USAGE
-Usage:
-  ./scripts/screenshot <addr:port> <route> [resolution]
 
-Examples:
-  ./scripts/screenshot localhost:6006 / 2560x1440
-  ./scripts/screenshot localhost:6006 /?path=/story/button--default 1600x900
-  ./scripts/screenshot localhost:4000 / 2560x1440
+def parse_resolution(value: str) -> tuple[int, int]:
+    if "x" not in value.lower():
+        raise ValueError("Resolution must be in WxH format (e.g. 2560x1440)")
+    width_str, height_str = value.lower().split("x", 1)
+    width = int(width_str)
+    height = int(height_str)
+    if width <= 0 or height <= 0:
+        raise ValueError("Resolution must be positive")
+    return width, height
 
-Notes:
-  - Screenshots are written to $OUT_DIR
-  - Set WAIT_MS to give JS extra time to render (default: 8000)
-  - Set SHOT_TIMESTAMP=0 to overwrite instead of timestamping
-  - Set MAX_RETRIES to re-attempt failed shots (default: 2)
-USAGE
-}
 
-take_shot() {
-  local url=$1
-  local outfile=$2
-  local res=$3
-  local timeout_bin
-  local width
-  local height
-  local attempt=0
+def read_js(js_inline: str | None, js_file: str | None) -> str | None:
+    payload = None
+    if js_inline:
+        payload = js_inline
+    elif js_file:
+        payload = Path(js_file).read_text(encoding="utf-8")
+    elif not sys.stdin.isatty():
+        payload = sys.stdin.read()
 
-  if [[ "$res" =~ ^([0-9]+)[xX]([0-9]+)$ ]]; then
-    width="${BASH_REMATCH[1]}"
-    height="${BASH_REMATCH[2]}"
-  else
-    echo "Invalid resolution '$res' (expected WxH, e.g. 2560x1440)" >&2
-    usage >&2
-    return 1
-  fi
+    if payload is None:
+        return None
 
-  mkdir -p "$OUT_DIR"
-  timeout_bin=$(command -v timeout || true)
+    payload = payload.strip()
+    return payload or None
 
-  while (( attempt <= MAX_RETRIES )); do
-    local attempt_wait=$(( WAIT_MS * (attempt + 1) ))
-    local cmd=(
-      "$CHROME_BIN"
-      --headless=new
-      --no-sandbox
-      --disable-gpu
-      --disable-dev-shm-usage
-      --disable-background-networking
-      --disable-client-side-phishing-detection
-      --disable-component-update
-      --disable-default-apps
-      --disable-domain-reliability
-      --disable-hang-monitor
-      --disable-logging
-      --disable-popup-blocking
-      --disable-prompt-on-repost
-      --disable-sync
-      --disable-features=Translate,MediaRouter,OptimizationHints,PrivacySandboxSettings4,PrivacySandboxAdsAPIs,Gcm
-      --log-level=3
-      --metrics-recording-only
-      --no-default-browser-check
-      --no-first-run
-      --password-store=basic
-      --use-mock-keychain
-      --force-device-scale-factor=1
-      --enable-unsafe-swiftshader
-      --use-angle=swiftshader
-      --hide-scrollbars
-      --run-all-compositor-stages-before-draw
-      --virtual-time-budget="$attempt_wait"
-      --window-size="${width},${height}"
-      --screenshot="$outfile"
-      "$url"
+
+def safe_route_name(route: str) -> str:
+    cleaned = route.strip()
+    if not cleaned or cleaned == "/":
+        return "home"
+    cleaned = cleaned.lstrip("/")
+    for ch in ["/", "?", "&", "=", "#"]:
+        cleaned = cleaned.replace(ch, "_")
+    while "__" in cleaned:
+        cleaned = cleaned.replace("__", "_")
+    return cleaned.rstrip("_") or "home"
+
+
+def build_url(addr: str, route: str) -> str:
+    route = "/" + route.lstrip("/")
+    return f"http://{addr}{route}"
+
+
+def build_driver(width: int, height: int) -> webdriver.Chrome:
+    for key in PROXY_ENV_KEYS:
+        os.environ.pop(key, None)
+
+    options = Options()
+    options.add_argument(f"--window-size={width},{height}")
+    for arg in CHROME_ARGS:
+        options.add_argument(arg)
+    options.set_capability("goog:loggingPrefs", {"browser": "ALL"})
+
+    return webdriver.Chrome(options=options)
+
+
+def wait_ready(driver: webdriver.Chrome, timeout_sec: int) -> None:
+    WebDriverWait(driver, timeout_sec).until(
+        lambda d: d.execute_script("return document.readyState") == "complete"
     )
 
-    if [[ -n "$timeout_bin" ]]; then
-      "$timeout_bin" "${TIMEOUT_SEC}s" "${cmd[@]}" || true
-    else
-      "${cmd[@]}" || true
-    fi
 
-    if [[ -f "$outfile" ]]; then
-      break
-    fi
+def run_js(driver: webdriver.Chrome, js: str, timeout_sec: int, js_wait_ms: int) -> None:
+    driver.set_script_timeout(timeout_sec)
+    wrapper = f"""
+const done = arguments[arguments.length - 1];
+(async () => {{
+  try {{
+    {js}
+    done(true);
+  }} catch (err) {{
+    done({{error: String(err)}});
+  }}
+}})();
+"""
+    result = driver.execute_async_script(wrapper)
+    if isinstance(result, dict) and "error" in result:
+        raise RuntimeError(result["error"])
+    if js_wait_ms > 0:
+        time.sleep(js_wait_ms / 1000)
 
-    attempt=$(( attempt + 1 ))
-  done
 
-  if [[ -f "$outfile" ]]; then
-    echo "$outfile"
-  else
-    echo "Screenshot failed to write: $outfile" >&2
+def take_screenshot(
+    url: str,
+    outfile: Path,
+    log_path: Path | None,
+    width: int,
+    height: int,
+    timeout_sec: int,
+    page_wait_ms: int,
+    js_payload: str | None,
+    js_wait_ms: int,
+) -> None:
+    driver = build_driver(width, height)
+    try:
+        driver.set_page_load_timeout(timeout_sec)
+        driver.get(url)
+        try:
+            wait_ready(driver, timeout_sec)
+        except TimeoutException:
+            pass
+        if page_wait_ms > 0:
+            time.sleep(page_wait_ms / 1000)
+        if js_payload:
+            run_js(driver, js_payload, timeout_sec, js_wait_ms)
+        outfile.parent.mkdir(parents=True, exist_ok=True)
+        if log_path:
+            log_path.parent.mkdir(parents=True, exist_ok=True)
+        driver.save_screenshot(str(outfile))
+        if log_path:
+            write_browser_logs(driver, log_path)
+    finally:
+        driver.quit()
+
+
+def write_browser_logs(driver: webdriver.Chrome, log_path: Path) -> None:
+    try:
+        entries = driver.get_log("browser")
+    except Exception as err:  # noqa: BLE001
+        log_path.write_text(f"Failed to read browser logs: {err}\n", encoding="utf-8")
+        return
+
+    if not entries:
+        log_path.write_text("", encoding="utf-8")
+        return
+
+    lines = []
+    for entry in entries:
+        ts = entry.get("timestamp")
+        level = entry.get("level", "")
+        message = entry.get("message", "")
+        if ts:
+            stamp = dt.datetime.fromtimestamp(ts / 1000).isoformat()
+            lines.append(f"[{stamp}] {level} {message}")
+        else:
+            lines.append(f"{level} {message}")
+
+    log_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Capture screenshots using Selenium/Chromium. Reads JS from stdin and executes before capture. "
+            "Writes browser console logs next to the screenshot as .log."
+        ),
+        formatter_class=argparse.RawTextHelpFormatter,
+    )
+
+    parser.add_argument(
+        "addr",
+        help="Target addr:port (e.g. localhost:4001)",
+    )
+    parser.add_argument("route", nargs="?", help="Route to capture (e.g. /data/noise)")
+    parser.add_argument("resolution", nargs="?", help="Resolution WxH (e.g. 2880x1800)")
+
+    parser.add_argument(
+        "--out-dir",
+        default=None,
+        help="Output directory (default: /tmp/screenshots/<repo>/<branch> when in git)",
+    )
+    parser.add_argument("--wait-ms", type=int, default=8000, help="Extra wait after load (ms)")
+    parser.add_argument("--page-wait-ms", type=int, help="Override wait after load (ms)")
+    parser.add_argument("--js-wait-ms", type=int, default=1000, help="Wait after JS execution (ms)")
+    parser.add_argument("--timeout-sec", type=int, default=45, help="Page/script timeout (sec)")
+    parser.add_argument("--max-retries", type=int, default=2, help="Retry attempts")
+    parser.add_argument("--timestamp", action="store_true", help="Add timestamp to filename")
+    parser.add_argument("--no-timestamp", action="store_true", help="Overwrite instead of timestamp")
+    parser.add_argument("--js", dest="js_inline", help="Inline JS to execute before capture")
+    parser.add_argument("--js-file", help="Path to JS file to execute before capture")
+
+    return parser.parse_args()
+
+
+def resolve_default_out_dir() -> Path:
+    def git_output(args: list[str]) -> str | None:
+        try:
+            return subprocess.check_output(
+                ["git", *args], stderr=subprocess.DEVNULL, text=True
+            ).strip()
+        except Exception:  # noqa: BLE001
+            return None
+
+    repo_root = git_output(["rev-parse", "--show-toplevel"])
+    repo_name = Path(repo_root).name if repo_root else "repo"
+    branch = git_output(["rev-parse", "--abbrev-ref", "HEAD"]) or "unknown"
+    if branch == "HEAD":
+        branch = "detached"
+
+    return Path("/tmp/screenshots") / repo_name / branch
+
+
+def main() -> int:
+    args = parse_args()
+
+    page_wait_ms = args.page_wait_ms if args.page_wait_ms is not None else args.wait_ms
+    timestamp = args.timestamp or not args.no_timestamp
+
+    out_dir = Path(args.out_dir) if args.out_dir else resolve_default_out_dir()
+
+    js_payload = read_js(args.js_inline, args.js_file)
+
+    addr = args.addr
+    route = args.route or "/"
+    resolution = args.resolution or "2880x1800"
+    width, height = parse_resolution(resolution)
+
+    route = "/" + route.lstrip("/")
+    safe_name = safe_route_name(route)
+    if timestamp:
+        stamp = dt.datetime.now().strftime("%Y%m%d_%H%M%S")
+        outfile = out_dir / f"{safe_name}_{resolution}_{stamp}.png"
+    else:
+        outfile = out_dir / f"{safe_name}_{resolution}.png"
+    log_path = outfile.with_suffix(".log")
+
+    target_url = build_url(addr, route)
+
+    for attempt in range(args.max_retries + 1):
+        attempt_wait = page_wait_ms * (attempt + 1)
+        try:
+            take_screenshot(
+                target_url,
+                outfile,
+                log_path,
+                width,
+                height,
+                args.timeout_sec,
+                attempt_wait,
+                js_payload,
+                args.js_wait_ms,
+            )
+            if outfile.exists():
+                print(outfile)
+                return 0
+        except (WebDriverException, RuntimeError, ValueError) as err:
+            print(f"Attempt {attempt + 1} failed: {err}", file=sys.stderr)
+            time.sleep(0.5)
+
+    print(f"Screenshot failed to write: {outfile}", file=sys.stderr)
     return 1
-  fi
-}
 
-if [[ $# -lt 1 ]]; then
-  usage
-  exit 1
-fi
 
-case "${1:-}" in
-  -h|--help)
-    usage
-    exit 0
-    ;;
-esac
-
-if [[ "${1:-}" == -* || $# -lt 2 || $# -gt 3 ]]; then
-  usage
-  exit 1
-fi
-
-addr=$1
-route=$2
-res=${3:-2560x1440}
-
-route="/${route#/}"
-safe_route=$(echo "$route" | sed -e 's#^/##' -e 's#[/?&=#]\+#_#g' -e 's#_$##')
-if [[ -z "$safe_route" ]]; then
-  safe_route="home"
-fi
-
-if [[ "$SHOT_TIMESTAMP" == "1" ]]; then
-  stamp=$(date +%Y%m%d_%H%M%S)
-  outfile="$OUT_DIR/${safe_route}_${res}_${stamp}.png"
-else
-  outfile="$OUT_DIR/${safe_route}_${res}.png"
-fi
-
-target_url="http://$addr$route"
-take_shot "$target_url" "$outfile" "$res"
+if __name__ == "__main__":
+    raise SystemExit(main())

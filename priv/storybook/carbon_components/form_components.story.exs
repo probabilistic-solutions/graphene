@@ -3,12 +3,12 @@ Code.require_file(Path.expand("interactivity_helpers.exs", __DIR__))
 defmodule Storybook.CarbonComponents.FormComponents do
   use PhoenixStorybook.Story, :example
 
-  import Graphene.FormComponents
+  import Graphene.Internal.FormComponents
   import Graphene.CarbonComponents, only: [button: 1]
   import Storybook.CarbonComponents.InteractivityHelpers
   alias Phoenix.LiveView.JS
 
-  alias Graphene.CoreComponents
+  alias Graphene.Internal.CoreComponents
 
   def doc do
     "All form-aware components with a live form state preview."

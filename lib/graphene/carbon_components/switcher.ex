@@ -1,0 +1,56 @@
+defmodule Graphene.CarbonComponents.Switcher do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-switcher>` from `./src/components/ui-shell/switcher.ts`
+
+  Switcher
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def switcher(assigns) do
+    CoreComponents.switcher(assigns)
+  end
+
+  @doc """
+  Component `<cds-switcher-divider>` from `./src/components/ui-shell/switcher-divider.ts`
+
+  A divider in switcher.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def switcher_divider(assigns) do
+    CoreComponents.switcher_divider(assigns)
+  end
+
+  @doc """
+  Component `<cds-switcher-item>` from `./src/components/ui-shell/switcher-item.ts`
+
+  Switcher menu item.
+
+
+  """
+  attr :href, :string, doc: "Link `href`."
+  attr :selected, :boolean, doc: "Specify if this is a large variation of the side nav link"
+
+  attr :tab_index, :string,
+    doc: "Specify if this is a large variation of the side nav link",
+    default: "0"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def switcher_item(assigns) do
+    CoreComponents.switcher_item(assigns)
+  end
+end

@@ -1,4 +1,4 @@
-defmodule Graphene.CoreComponents do
+defmodule Graphene.Internal.CoreComponents do
   @moduledoc false
 
   use Phoenix.Component
@@ -38,6 +38,7 @@ defmodule Graphene.CoreComponents do
 
   def accordion(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-accordion
       alignment={assigns[:alignment]}
       disabled={assigns[:disabled]}
@@ -76,6 +77,7 @@ defmodule Graphene.CoreComponents do
 
   def accordion_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-accordion-item
       disabled={assigns[:disabled]}
       open={assigns[:open]}
@@ -109,6 +111,7 @@ defmodule Graphene.CoreComponents do
 
   def accordion_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-accordion-skeleton
       alignment={assigns[:alignment]}
       count={assigns[:count]}
@@ -178,6 +181,7 @@ defmodule Graphene.CoreComponents do
 
   def actionable_notification(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-actionable-notification
       action-button-label={assigns[:action_button_label]}
       caption={assigns[:caption]}
@@ -304,6 +308,7 @@ defmodule Graphene.CoreComponents do
 
   def actionable_notification_button(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-actionable-notification-button
       autofocus={assigns[:autofocus]}
       batch-action={assigns[:batch_action]}
@@ -412,6 +417,7 @@ defmodule Graphene.CoreComponents do
 
   def ai_label(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-ai-label
       ai-text={assigns[:ai_text]}
       ai-text-label={assigns[:ai_text_label]}
@@ -547,6 +553,7 @@ defmodule Graphene.CoreComponents do
 
   def ai_label_action_button(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-ai-label-action-button
       autofocus={assigns[:autofocus]}
       batch-action={assigns[:batch_action]}
@@ -594,6 +601,7 @@ defmodule Graphene.CoreComponents do
 
   def ai_skeleton_icon(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-ai-skeleton-icon
       custom-styles={assigns[:custom_styles]}
       {@rest}
@@ -617,6 +625,7 @@ defmodule Graphene.CoreComponents do
 
   def ai_skeleton_placeholder(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-ai-skeleton-placeholder {@rest}>
       {render_slot(@inner_block)}
     </cds-ai-skeleton-placeholder>
@@ -645,6 +654,7 @@ defmodule Graphene.CoreComponents do
 
   def ai_skeleton_text(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-ai-skeleton-text
       heading={assigns[:heading]}
       lineCount={assigns[:line_count]}
@@ -677,6 +687,7 @@ defmodule Graphene.CoreComponents do
 
   def badge_indicator(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-badge-indicator
       count={assigns[:count]}
       slot={assigns[:slot]}
@@ -711,6 +722,7 @@ defmodule Graphene.CoreComponents do
 
   def breadcrumb(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-breadcrumb
       no-trailing-slash={assigns[:no_trailing_slash]}
       size={assigns[:size]}
@@ -735,6 +747,7 @@ defmodule Graphene.CoreComponents do
 
   def breadcrumb_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-breadcrumb-item {@rest}>
       {render_slot(@inner_block)}
     </cds-breadcrumb-item>
@@ -772,6 +785,7 @@ defmodule Graphene.CoreComponents do
 
   def breadcrumb_link(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-breadcrumb-link
       disabled={assigns[:disabled]}
       download={assigns[:download]}
@@ -936,6 +950,7 @@ defmodule Graphene.CoreComponents do
 
   def breadcrumb_overflow_menu(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-breadcrumb-overflow-menu
       align={assigns[:align]}
       autoalign={assigns[:autoalign]}
@@ -998,6 +1013,7 @@ defmodule Graphene.CoreComponents do
 
   def breadcrumb_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-breadcrumb-skeleton
       items={assigns[:items]}
       no-trailing-slash={assigns[:no_trailing_slash]}
@@ -1108,6 +1124,7 @@ defmodule Graphene.CoreComponents do
 
   def button(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-button
       autofocus={assigns[:autofocus]}
       batch-action={assigns[:batch_action]}
@@ -1160,6 +1177,7 @@ defmodule Graphene.CoreComponents do
 
   def button_set(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-button-set
       stacked={assigns[:stacked]}
       {@rest}
@@ -1183,6 +1201,7 @@ defmodule Graphene.CoreComponents do
 
   def button_set_base(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-button-set-base {@rest}>
       {render_slot(@inner_block)}
     </cds-button-set-base>
@@ -1202,6 +1221,7 @@ defmodule Graphene.CoreComponents do
 
   def button_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-button-skeleton {@rest}>
       {render_slot(@inner_block)}
     </cds-button-skeleton>
@@ -1266,6 +1286,7 @@ defmodule Graphene.CoreComponents do
 
   def callout_notification(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-callout-notification
       action-button-label={assigns[:action_button_label]}
       caption={assigns[:caption]}
@@ -1326,6 +1347,7 @@ defmodule Graphene.CoreComponents do
 
   def chat_button(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-chat-button
       disabled={assigns[:disabled]}
       is-quick-action={assigns[:is_quick_action]}
@@ -1359,6 +1381,7 @@ defmodule Graphene.CoreComponents do
 
   def chat_button_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-chat-button-skeleton
       size={assigns[:size]}
       {@rest}
@@ -1441,6 +1464,7 @@ defmodule Graphene.CoreComponents do
 
   def checkbox(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-checkbox
       checked={assigns[:checked]}
       data-table={assigns[:data_table]}
@@ -1517,6 +1541,7 @@ defmodule Graphene.CoreComponents do
 
   def checkbox_group(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-checkbox-group
       disabled={assigns[:disabled]}
       helper-text={assigns[:helper_text]}
@@ -1548,6 +1573,7 @@ defmodule Graphene.CoreComponents do
 
   def checkbox_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-checkbox-skeleton {@rest}>
       {render_slot(@inner_block)}
     </cds-checkbox-skeleton>
@@ -1589,6 +1615,7 @@ defmodule Graphene.CoreComponents do
 
   def clickable_tile(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-clickable-tile
       ai-label={assigns[:ai_label]}
       color-scheme={assigns[:color_scheme]}
@@ -1681,6 +1708,7 @@ defmodule Graphene.CoreComponents do
 
   def code_snippet(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-code-snippet
       copy-text={assigns[:copy_text]}
       disabled={assigns[:disabled]}
@@ -1721,6 +1749,7 @@ defmodule Graphene.CoreComponents do
 
   def code_snippet_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-code-snippet-skeleton
       type={assigns[:type]}
       {@rest}
@@ -1753,6 +1782,7 @@ defmodule Graphene.CoreComponents do
 
   def column(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-column
       lg={assigns[:lg]}
       md={assigns[:md]}
@@ -1779,6 +1809,7 @@ defmodule Graphene.CoreComponents do
 
   def column_hang(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-column-hang {@rest}>
       {render_slot(@inner_block)}
     </cds-column-hang>
@@ -1902,6 +1933,7 @@ defmodule Graphene.CoreComponents do
 
   def combo_box(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-combo-box
       allow-custom-value={assigns[:allow_custom_value]}
       autoalign={assigns[:autoalign]}
@@ -1963,6 +1995,7 @@ defmodule Graphene.CoreComponents do
 
   def combo_box_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-combo-box-item
       disabled={assigns[:disabled]}
       size={assigns[:size]}
@@ -2041,6 +2074,7 @@ defmodule Graphene.CoreComponents do
 
   def combo_button(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-combo-button
       disabled={assigns[:disabled]}
       label={assigns[:label]}
@@ -2078,6 +2112,7 @@ defmodule Graphene.CoreComponents do
 
   def contained_list(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-contained-list
       is-inset={assigns[:is_inset]}
       kind={assigns[:kind]}
@@ -2109,6 +2144,7 @@ defmodule Graphene.CoreComponents do
 
   def contained_list_description(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-contained-list-description {@rest}>
       {render_slot(@inner_block)}
     </cds-contained-list-description>
@@ -2136,6 +2172,7 @@ defmodule Graphene.CoreComponents do
 
   def contained_list_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-contained-list-item
       clickable={assigns[:clickable]}
       disabled={assigns[:disabled]}
@@ -2189,6 +2226,7 @@ defmodule Graphene.CoreComponents do
 
   def content_switcher(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-content-switcher
       icon={assigns[:icon]}
       low-contrast={assigns[:low_contrast]}
@@ -2242,6 +2280,7 @@ defmodule Graphene.CoreComponents do
 
   def content_switcher_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-content-switcher-item
       align={assigns[:align]}
       close-on-activation={assigns[:close_on_activation]}
@@ -2394,6 +2433,7 @@ defmodule Graphene.CoreComponents do
 
   def copy(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-copy
       align={assigns[:align]}
       autoalign={assigns[:autoalign]}
@@ -2483,6 +2523,7 @@ defmodule Graphene.CoreComponents do
 
   def copy_button(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-copy-button
       align={assigns[:align]}
       autoAlign={assigns[:auto_align]}
@@ -2549,6 +2590,7 @@ defmodule Graphene.CoreComponents do
 
   def date_picker(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-date-picker
       allow-input={assigns[:allow_input]}
       close-on-select={assigns[:close_on_select]}
@@ -2629,6 +2671,7 @@ defmodule Graphene.CoreComponents do
 
   def date_picker_input(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-date-picker-input
       color-scheme={assigns[:color_scheme]}
       disabled={assigns[:disabled]}
@@ -2675,6 +2718,7 @@ defmodule Graphene.CoreComponents do
 
   def date_picker_input_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-date-picker-input-skeleton
       hide-label={assigns[:hide_label]}
       kind={assigns[:kind]}
@@ -2718,6 +2762,7 @@ defmodule Graphene.CoreComponents do
 
   def definition_tooltip(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-definition-tooltip
       align={assigns[:align]}
       autoalign={assigns[:autoalign]}
@@ -2801,6 +2846,7 @@ defmodule Graphene.CoreComponents do
 
   def dismissible_tag(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-dismissible-tag
       disabled={assigns[:disabled]}
       dismiss-tooltip-alignment={assigns[:dismiss_tooltip_alignment]}
@@ -2906,6 +2952,7 @@ defmodule Graphene.CoreComponents do
 
   def dropdown(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-dropdown
       autoalign={assigns[:autoalign]}
       direction={assigns[:direction]}
@@ -2967,6 +3014,7 @@ defmodule Graphene.CoreComponents do
 
   def dropdown_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-dropdown-item
       disabled={assigns[:disabled]}
       size={assigns[:size]}
@@ -2993,6 +3041,7 @@ defmodule Graphene.CoreComponents do
 
   def dropdown_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-dropdown-skeleton
       hide-label={assigns[:hide_label]}
       size={assigns[:size]}
@@ -3032,6 +3081,7 @@ defmodule Graphene.CoreComponents do
 
   def expandable_tile(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-expandable-tile
       color-scheme={assigns[:color_scheme]}
       expanded={assigns[:expanded]}
@@ -3069,6 +3119,7 @@ defmodule Graphene.CoreComponents do
 
   def feature_flags(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <feature-flags
       enable-v12-toggle-reduced-label-spacing={assigns[:enable_v12_toggle_reduced_label_spacing]}
       {@rest}
@@ -3099,6 +3150,7 @@ defmodule Graphene.CoreComponents do
 
   def file_uploader(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-file-uploader
       disabled={assigns[:disabled]}
       label-description={assigns[:label_description]}
@@ -3164,6 +3216,7 @@ defmodule Graphene.CoreComponents do
 
   def file_uploader_button(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-file-uploader-button
       accept={assigns[:accept]}
       button-kind={assigns[:button_kind]}
@@ -3215,6 +3268,7 @@ defmodule Graphene.CoreComponents do
 
   def file_uploader_drop_container(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-file-uploader-drop-container
       accept={assigns[:accept]}
       disabled={assigns[:disabled]}
@@ -3274,6 +3328,7 @@ defmodule Graphene.CoreComponents do
 
   def file_uploader_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-file-uploader-item
       error-body={assigns[:error_body]}
       error-subject={assigns[:error_subject]}
@@ -3312,6 +3367,7 @@ defmodule Graphene.CoreComponents do
 
   def file_uploader_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-file-uploader-skeleton {@rest}>
       {render_slot(@inner_block)}
     </cds-file-uploader-skeleton>
@@ -3468,6 +3524,7 @@ defmodule Graphene.CoreComponents do
 
   def fluid_number_input(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-fluid-number-input
       allow-empty={assigns[:allow_empty]}
       autocomplete={assigns[:autocomplete]}
@@ -3552,6 +3609,7 @@ defmodule Graphene.CoreComponents do
 
   def fluid_number_input_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-fluid-number-input-skeleton
       hide-label={assigns[:hide_label]}
       {@rest}
@@ -3610,6 +3668,7 @@ defmodule Graphene.CoreComponents do
 
   def fluid_search(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-fluid-search
       autocomplete={assigns[:autocomplete]}
       close-button-label-text={assigns[:close_button_label_text]}
@@ -3650,6 +3709,7 @@ defmodule Graphene.CoreComponents do
 
   def fluid_search_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-fluid-search-skeleton
       size={assigns[:size]}
       {@rest}
@@ -3730,6 +3790,7 @@ defmodule Graphene.CoreComponents do
 
   def fluid_select(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-fluid-select
       autofocus={assigns[:autofocus]}
       disabled={assigns[:disabled]}
@@ -3797,6 +3858,7 @@ defmodule Graphene.CoreComponents do
 
   def fluid_select_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-fluid-select-skeleton
       hide-label={assigns[:hide_label]}
       {@rest}
@@ -3925,6 +3987,7 @@ defmodule Graphene.CoreComponents do
 
   def fluid_text_input(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-fluid-text-input
       autocomplete={assigns[:autocomplete]}
       autofocus={assigns[:autofocus]}
@@ -3999,6 +4062,7 @@ defmodule Graphene.CoreComponents do
 
   def fluid_text_input_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-fluid-text-input-skeleton
       hide-label={assigns[:hide_label]}
       {@rest}
@@ -4137,6 +4201,7 @@ defmodule Graphene.CoreComponents do
 
   def fluid_textarea(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-fluid-textarea
       autocomplete={assigns[:autocomplete]}
       autofocus={assigns[:autofocus]}
@@ -4215,6 +4280,7 @@ defmodule Graphene.CoreComponents do
 
   def fluid_textarea_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-fluid-textarea-skeleton
       hide-label={assigns[:hide_label]}
       {@rest}
@@ -4238,6 +4304,7 @@ defmodule Graphene.CoreComponents do
 
   def form(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-form {@rest}>
       {render_slot(@inner_block)}
     </cds-form>
@@ -4277,6 +4344,7 @@ defmodule Graphene.CoreComponents do
 
   def form_group(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-form-group
       invalid={assigns[:invalid]}
       legend-id={assigns[:legend_id]}
@@ -4304,6 +4372,7 @@ defmodule Graphene.CoreComponents do
 
   def form_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-form-item {@rest}>
       {render_slot(@inner_block)}
     </cds-form-item>
@@ -4334,17 +4403,75 @@ defmodule Graphene.CoreComponents do
     doc:
       "Container hangs 16px into the gutter. Useful for\ntypographic alignment with and without containers."
 
+  attr :row_gap, :string,
+    default: nil,
+    values: [
+      nil,
+      "gutter",
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12",
+      "13"
+    ],
+    doc:
+      "Row gap spacing token suffix for grid rows (for example \"05\"). Defaults to \"07\" (wide), \"05\" (narrow), or \"gutter\" (condensed)."
+
   attr :rest, :global
 
   slot :inner_block
 
   def grid(assigns) do
+    assigns =
+      case assigns[:row_gap] do
+        nil ->
+          assigns
+
+        "gutter" ->
+          assign(assigns, :graphene_grid_row_gap, "var(--cds-grid-gutter)")
+
+        row_gap ->
+          assign(assigns, :graphene_grid_row_gap, "var(--cds-spacing-#{row_gap})")
+      end
+
+    assigns =
+      if assigns[:graphene_grid_row_gap] do
+        rest = Map.get(assigns, :rest, %{})
+
+        grid_id =
+          Map.get(rest, :"data-graphene-grid-id") ||
+            assigns[:id] ||
+            "graphene-grid-#{System.unique_integer([:positive])}"
+
+        rest = Map.put_new(rest, :"data-graphene-grid-id", grid_id)
+
+        assigns
+        |> assign(
+          :graphene_before,
+          "<style>cds-grid[data-graphene-grid-id='#{grid_id}']::part(grid){row-gap: #{assigns.graphene_grid_row_gap};}</style>"
+        )
+        |> assign(:row_gap, nil)
+        |> assign(:rest, rest)
+      else
+        assigns
+      end
+
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-grid
       align={assigns[:align]}
       condensed={assigns[:condensed]}
       full-width={assigns[:full_width]}
       narrow={assigns[:narrow]}
+      row-gap={assigns[:row_gap]}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -4365,7 +4492,10 @@ defmodule Graphene.CoreComponents do
   slot :inner_block
 
   def header(assigns) do
+    assigns = merge_rest_class(assigns, "cds--header")
+
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-header {@rest}>
       {render_slot(@inner_block)}
     </cds-header>
@@ -4485,6 +4615,7 @@ defmodule Graphene.CoreComponents do
 
   def header_global_action(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-header-global-action
       active={assigns[:active]}
       autofocus={assigns[:autofocus]}
@@ -4543,6 +4674,7 @@ defmodule Graphene.CoreComponents do
 
   def header_menu(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-header-menu
       expanded={assigns[:expanded]}
       is-active={assigns[:is_active]}
@@ -4595,6 +4727,7 @@ defmodule Graphene.CoreComponents do
 
   def header_menu_button(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-header-menu-button
       active={assigns[:active]}
       button-label-active={assigns[:button_label_active]}
@@ -4638,6 +4771,7 @@ defmodule Graphene.CoreComponents do
 
   def header_menu_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-header-menu-item
       href={assigns[:href]}
       is-active={assigns[:is_active]}
@@ -4668,6 +4802,7 @@ defmodule Graphene.CoreComponents do
 
   def header_name(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-header-name
       href={assigns[:href]}
       prefix={assigns[:prefix]}
@@ -4696,6 +4831,7 @@ defmodule Graphene.CoreComponents do
 
   def header_nav(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-header-nav
       menu-bar-label={assigns[:menu_bar_label]}
       {@rest}
@@ -4734,6 +4870,7 @@ defmodule Graphene.CoreComponents do
 
   def header_nav_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-header-nav-item
       href={assigns[:href]}
       is-active={assigns[:is_active]}
@@ -4763,6 +4900,7 @@ defmodule Graphene.CoreComponents do
 
   def header_panel(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-header-panel
       expanded={assigns[:expanded]}
       {@rest}
@@ -4791,6 +4929,7 @@ defmodule Graphene.CoreComponents do
 
   def header_side_nav_items(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-header-side-nav-items
       has-divider={assigns[:has_divider]}
       {@rest}
@@ -4814,6 +4953,7 @@ defmodule Graphene.CoreComponents do
 
   def heading(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-heading {@rest}>
       {render_slot(@inner_block)}
     </cds-heading>
@@ -4837,6 +4977,7 @@ defmodule Graphene.CoreComponents do
 
   def icon(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-icon
       class={assigns[:class]}
       icon={assigns[:icon]}
@@ -4972,6 +5113,7 @@ defmodule Graphene.CoreComponents do
 
   def icon_button(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-icon-button
       align={assigns[:align]}
       autoalign={assigns[:autoalign]}
@@ -5055,6 +5197,7 @@ defmodule Graphene.CoreComponents do
 
   def icon_indicator(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-icon-indicator
       kind={assigns[:kind]}
       label={assigns[:label]}
@@ -5099,6 +5242,7 @@ defmodule Graphene.CoreComponents do
 
   def inline_loading(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-inline-loading
       assistive-text={assigns[:assistive_text]}
       icon-description={assigns[:icon_description]}
@@ -5151,6 +5295,7 @@ defmodule Graphene.CoreComponents do
 
   def inline_notification(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-inline-notification
       hide-close-button={assigns[:hide_close_button]}
       kind={assigns[:kind]}
@@ -5196,6 +5341,7 @@ defmodule Graphene.CoreComponents do
 
   def layer(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-layer
       layers={assigns[:layers]}
       level={assigns[:level]}
@@ -5236,6 +5382,7 @@ defmodule Graphene.CoreComponents do
 
   def link(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-link
       disabled={assigns[:disabled]}
       download={assigns[:download]}
@@ -5271,6 +5418,7 @@ defmodule Graphene.CoreComponents do
 
   def list_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-list-item {@rest}>
       {render_slot(@inner_block)}
       <.dynamic_tag :for={s <- assigns[:nested]} tag_name={Map.get(s, :tag, "div")} slot="nested">
@@ -5312,6 +5460,7 @@ defmodule Graphene.CoreComponents do
 
   def loading(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-loading
       active={assigns[:active]}
       assistive-text={assigns[:assistive_text]}
@@ -5348,6 +5497,7 @@ defmodule Graphene.CoreComponents do
 
   def menu(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-menu
       open={assigns[:open]}
       size={assigns[:size]}
@@ -5422,6 +5572,7 @@ defmodule Graphene.CoreComponents do
 
   def menu_button(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-menu-button
       disabled={assigns[:disabled]}
       kind={assigns[:kind]}
@@ -5467,6 +5618,7 @@ defmodule Graphene.CoreComponents do
 
   def menu_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-menu-item
       boundaries={assigns[:boundaries]}
       disabled={assigns[:disabled]}
@@ -5499,6 +5651,7 @@ defmodule Graphene.CoreComponents do
 
   def menu_item_divider(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-menu-item-divider {@rest}>
       {render_slot(@inner_block)}
     </cds-menu-item-divider>
@@ -5520,6 +5673,7 @@ defmodule Graphene.CoreComponents do
 
   def menu_item_group(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-menu-item-group
       label={assigns[:label]}
       {@rest}
@@ -5547,6 +5701,7 @@ defmodule Graphene.CoreComponents do
 
   def menu_item_radio_group(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-menu-item-radio-group
       itemToString={assigns[:item_to_string]}
       items={assigns[:items]}
@@ -5577,6 +5732,7 @@ defmodule Graphene.CoreComponents do
 
   def menu_item_selectable(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-menu-item-selectable
       label={assigns[:label]}
       renderIcon={assigns[:render_icon]}
@@ -5655,6 +5811,7 @@ defmodule Graphene.CoreComponents do
 
   def modal(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-modal
       alert={assigns[:alert]}
       container-class={assigns[:container_class]}
@@ -5690,6 +5847,7 @@ defmodule Graphene.CoreComponents do
 
   def modal_body(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-modal-body {@rest}>
       {render_slot(@inner_block)}
     </cds-modal-body>
@@ -5710,6 +5868,7 @@ defmodule Graphene.CoreComponents do
 
   def modal_body_content(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-modal-body-content {@rest}>
       {render_slot(@inner_block)}
     </cds-modal-body-content>
@@ -5734,6 +5893,7 @@ defmodule Graphene.CoreComponents do
 
   def modal_close_button(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-modal-close-button
       close-button-label={assigns[:close_button_label]}
       {@rest}
@@ -5761,6 +5921,7 @@ defmodule Graphene.CoreComponents do
 
   def modal_footer(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-modal-footer
       has-three-buttons={assigns[:has_three_buttons]}
       {@rest}
@@ -5868,6 +6029,7 @@ defmodule Graphene.CoreComponents do
 
   def modal_footer_button(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-modal-footer-button
       autofocus={assigns[:autofocus]}
       batch-action={assigns[:batch_action]}
@@ -5913,6 +6075,7 @@ defmodule Graphene.CoreComponents do
 
   def modal_header(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-modal-header {@rest}>
       {render_slot(@inner_block)}
     </cds-modal-header>
@@ -5933,6 +6096,7 @@ defmodule Graphene.CoreComponents do
 
   def modal_heading(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-modal-heading {@rest}>
       {render_slot(@inner_block)}
     </cds-modal-heading>
@@ -5953,6 +6117,7 @@ defmodule Graphene.CoreComponents do
 
   def modal_label(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-modal-label {@rest}>
       {render_slot(@inner_block)}
     </cds-modal-label>
@@ -6080,6 +6245,7 @@ defmodule Graphene.CoreComponents do
 
   def multi_select(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-multi-select
       autoalign={assigns[:autoalign]}
       clear-selection-description={assigns[:clear_selection_description]}
@@ -6161,6 +6327,7 @@ defmodule Graphene.CoreComponents do
 
   def multi_select_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-multi-select-item
       disabled={assigns[:disabled]}
       filtered={assigns[:filtered]}
@@ -6327,6 +6494,7 @@ defmodule Graphene.CoreComponents do
 
   def number_input(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-number-input
       allow-empty={assigns[:allow_empty]}
       autocomplete={assigns[:autocomplete]}
@@ -6407,6 +6575,7 @@ defmodule Graphene.CoreComponents do
 
   def number_input_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-number-input-skeleton
       hide-label={assigns[:hide_label]}
       {@rest}
@@ -6457,6 +6626,7 @@ defmodule Graphene.CoreComponents do
 
   def operational_tag(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-operational-tag
       disabled={assigns[:disabled]}
       selected={assigns[:selected]}
@@ -6492,6 +6662,7 @@ defmodule Graphene.CoreComponents do
 
   def ordered_list(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-ordered-list
       is-expressive={assigns[:is_expressive]}
       native={assigns[:native]}
@@ -6651,6 +6822,7 @@ defmodule Graphene.CoreComponents do
 
   def overflow_menu(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-overflow-menu
       align={assigns[:align]}
       autoalign={assigns[:autoalign]}
@@ -6725,6 +6897,7 @@ defmodule Graphene.CoreComponents do
 
   def overflow_menu_body(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-overflow-menu-body
       direction={assigns[:direction]}
       flipped={assigns[:flipped]}
@@ -6767,6 +6940,7 @@ defmodule Graphene.CoreComponents do
 
   def overflow_menu_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-overflow-menu-item
       danger={assigns[:danger]}
       disabled={assigns[:disabled]}
@@ -6794,6 +6968,7 @@ defmodule Graphene.CoreComponents do
 
   def page_header(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-page-header {@rest}>
       {render_slot(@inner_block)}
     </cds-page-header>
@@ -6831,6 +7006,7 @@ defmodule Graphene.CoreComponents do
 
   def page_header_breadcrumb(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-page-header-breadcrumb
       border={assigns[:border]}
       content-actions-flush={assigns[:content_actions_flush]}
@@ -6883,6 +7059,7 @@ defmodule Graphene.CoreComponents do
 
   def page_header_content(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-page-header-content
       title={assigns[:title]}
       within-grid={assigns[:within_grid]}
@@ -6922,6 +7099,7 @@ defmodule Graphene.CoreComponents do
 
   def page_header_content_text(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-page-header-content-text
       subtitle={assigns[:subtitle]}
       {@rest}
@@ -6945,6 +7123,7 @@ defmodule Graphene.CoreComponents do
 
   def page_header_hero_image(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-page-header-hero-image {@rest}>
       {render_slot(@inner_block)}
     </cds-page-header-hero-image>
@@ -6966,6 +7145,7 @@ defmodule Graphene.CoreComponents do
 
   def page_header_tabs(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-page-header-tabs {@rest}>
       {render_slot(@inner_block)}
       <.dynamic_tag :for={s <- assigns[:tags]} tag_name={Map.get(s, :tag, "div")} slot="tags">
@@ -7046,6 +7226,7 @@ defmodule Graphene.CoreComponents do
 
   def pagination(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-pagination
       backward-text={assigns[:backward_text]}
       disabled={assigns[:disabled]}
@@ -7195,6 +7376,7 @@ defmodule Graphene.CoreComponents do
 
   def password_input(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-password-input
       autocomplete={assigns[:autocomplete]}
       autofocus={assigns[:autofocus]}
@@ -7269,6 +7451,7 @@ defmodule Graphene.CoreComponents do
 
   def password_input_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-password-input-skeleton
       hide-label={assigns[:hide_label]}
       {@rest}
@@ -7332,6 +7515,7 @@ defmodule Graphene.CoreComponents do
 
   def popover(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-popover
       align={assigns[:align]}
       alignment-axis-offset={assigns[:alignment_axis_offset]}
@@ -7399,6 +7583,7 @@ defmodule Graphene.CoreComponents do
 
   def popover_content(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-popover-content
       align={assigns[:align]}
       autoalign={assigns[:autoalign]}
@@ -7452,6 +7637,7 @@ defmodule Graphene.CoreComponents do
 
   def progress_bar(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-progress-bar
       helper-text={assigns[:helper_text]}
       hide-label={assigns[:hide_label]}
@@ -7499,6 +7685,7 @@ defmodule Graphene.CoreComponents do
 
   def progress_indicator(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-progress-indicator
       current-index={assigns[:current_index]}
       space-equally={assigns[:space_equally]}
@@ -7524,6 +7711,7 @@ defmodule Graphene.CoreComponents do
 
   def progress_indicator_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-progress-indicator-skeleton
       vertical={assigns[:vertical]}
       {@rest}
@@ -7567,6 +7755,7 @@ defmodule Graphene.CoreComponents do
 
   def progress_step(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-progress-step
       clickable={assigns[:clickable]}
       complete={assigns[:complete]}
@@ -7606,6 +7795,7 @@ defmodule Graphene.CoreComponents do
 
   def progress_step_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-progress-step-skeleton
       vertical={assigns[:vertical]}
       {@rest}
@@ -7685,6 +7875,7 @@ defmodule Graphene.CoreComponents do
 
   def radio_button(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-radio-button
       checked={assigns[:checked]}
       data-table={assigns[:data_table]}
@@ -7778,6 +7969,7 @@ defmodule Graphene.CoreComponents do
 
   def radio_button_group(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-radio-button-group
       defaultSelected={assigns[:default_selected]}
       disabled={assigns[:disabled]}
@@ -7813,6 +8005,7 @@ defmodule Graphene.CoreComponents do
 
   def radio_button_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-radio-button-skeleton {@rest}>
       {render_slot(@inner_block)}
     </cds-radio-button-skeleton>
@@ -7855,6 +8048,7 @@ defmodule Graphene.CoreComponents do
 
   def radio_tile(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-radio-tile
       checkmark-label={assigns[:checkmark_label]}
       color-scheme={assigns[:color_scheme]}
@@ -7920,6 +8114,7 @@ defmodule Graphene.CoreComponents do
 
   def search(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-search
       autocomplete={assigns[:autocomplete]}
       close-button-label-text={assigns[:close_button_label_text]}
@@ -8013,6 +8208,7 @@ defmodule Graphene.CoreComponents do
 
   def select(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-select
       autofocus={assigns[:autofocus]}
       disabled={assigns[:disabled]}
@@ -8085,6 +8281,7 @@ defmodule Graphene.CoreComponents do
 
   def select_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-select-item
       disabled={assigns[:disabled]}
       label={assigns[:label]}
@@ -8114,6 +8311,7 @@ defmodule Graphene.CoreComponents do
 
   def select_item_group(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-select-item-group
       disabled={assigns[:disabled]}
       label={assigns[:label]}
@@ -8138,6 +8336,7 @@ defmodule Graphene.CoreComponents do
 
   def select_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-select-skeleton
       hide-label={assigns[:hide_label]}
       {@rest}
@@ -8169,6 +8368,7 @@ defmodule Graphene.CoreComponents do
 
   def selectable_tag(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-selectable-tag
       disabled={assigns[:disabled]}
       selected={assigns[:selected]}
@@ -8216,6 +8416,7 @@ defmodule Graphene.CoreComponents do
 
   def selectable_tile(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-selectable-tile
       checkmark-label={assigns[:checkmark_label]}
       color-scheme={assigns[:color_scheme]}
@@ -8265,6 +8466,7 @@ defmodule Graphene.CoreComponents do
 
   def shape_indicator(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-shape-indicator
       kind={assigns[:kind]}
       label={assigns[:label]}
@@ -8308,7 +8510,13 @@ defmodule Graphene.CoreComponents do
   slot :inner_block
 
   def side_nav(assigns) do
+    assigns =
+      assigns
+      |> merge_rest_class("cds--side-nav")
+      |> merge_rest_class_if(assigns[:expanded], "cds--side-nav--expanded")
+
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-side-nav
       collapse-mode={assigns[:collapse_mode]}
       expanded={assigns[:expanded]}
@@ -8336,6 +8544,7 @@ defmodule Graphene.CoreComponents do
 
   def side_nav_divider(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-side-nav-divider {@rest}>
       {render_slot(@inner_block)}
     </cds-side-nav-divider>
@@ -8356,6 +8565,7 @@ defmodule Graphene.CoreComponents do
 
   def side_nav_items(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-side-nav-items {@rest}>
       {render_slot(@inner_block)}
     </cds-side-nav-items>
@@ -8388,6 +8598,7 @@ defmodule Graphene.CoreComponents do
 
   def side_nav_link(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-side-nav-link
       active={assigns[:active]}
       href={assigns[:href]}
@@ -8446,6 +8657,7 @@ defmodule Graphene.CoreComponents do
 
   def side_nav_menu(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-side-nav-menu
       active={assigns[:active]}
       expanded={assigns[:expanded]}
@@ -8484,6 +8696,7 @@ defmodule Graphene.CoreComponents do
 
   def side_nav_menu_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-side-nav-menu-item
       active={assigns[:active]}
       href={assigns[:href]}
@@ -8569,6 +8782,7 @@ defmodule Graphene.CoreComponents do
 
   def side_panel(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-side-panel
       animate-title={assigns[:animate_title]}
       close-icon-description={assigns[:close_icon_description]}
@@ -8606,6 +8820,7 @@ defmodule Graphene.CoreComponents do
 
   def skeleton_icon(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-skeleton-icon {@rest}>
       {render_slot(@inner_block)}
     </cds-skeleton-icon>
@@ -8630,6 +8845,7 @@ defmodule Graphene.CoreComponents do
 
   def skeleton_placeholder(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-skeleton-placeholder
       optional-classes={assigns[:optional_classes]}
       {@rest}
@@ -8670,6 +8886,7 @@ defmodule Graphene.CoreComponents do
 
   def skeleton_text(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-skeleton-text
       heading={assigns[:heading]}
       lineCount={assigns[:line_count]}
@@ -8704,6 +8921,7 @@ defmodule Graphene.CoreComponents do
 
   def skip_to_content(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-skip-to-content
       href={assigns[:href]}
       link-assistive-text={assigns[:link_assistive_text]}
@@ -8780,6 +8998,7 @@ defmodule Graphene.CoreComponents do
 
   def slider(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-slider
       disabled={assigns[:disabled]}
       hide-label={assigns[:hide_label]}
@@ -8865,6 +9084,7 @@ defmodule Graphene.CoreComponents do
 
   def slider_input(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-slider-input
       disabled={assigns[:disabled]}
       hideTextInput={assigns[:hide_text_input]}
@@ -8898,6 +9118,7 @@ defmodule Graphene.CoreComponents do
 
   def slider_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-slider-skeleton
       two-handles={assigns[:two_handles]}
       {@rest}
@@ -8984,6 +9205,7 @@ defmodule Graphene.CoreComponents do
 
   def slug(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-slug
       ai-text={assigns[:ai_text]}
       ai-text-label={assigns[:ai_text_label]}
@@ -9106,6 +9328,7 @@ defmodule Graphene.CoreComponents do
 
   def slug_action_button(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-slug-action-button
       autofocus={assigns[:autofocus]}
       batch-action={assigns[:batch_action]}
@@ -9175,6 +9398,7 @@ defmodule Graphene.CoreComponents do
 
   def stack(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-stack
       gap={assigns[:gap]}
       orientation={assigns[:orientation]}
@@ -9213,6 +9437,7 @@ defmodule Graphene.CoreComponents do
 
   def structured_list(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-structured-list
       condensed={assigns[:condensed]}
       flush={assigns[:flush]}
@@ -9238,6 +9463,7 @@ defmodule Graphene.CoreComponents do
 
   def structured_list_body(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-structured-list-body {@rest}>
       {render_slot(@inner_block)}
     </cds-structured-list-body>
@@ -9258,6 +9484,7 @@ defmodule Graphene.CoreComponents do
 
   def structured_list_cell(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-structured-list-cell {@rest}>
       {render_slot(@inner_block)}
     </cds-structured-list-cell>
@@ -9278,6 +9505,7 @@ defmodule Graphene.CoreComponents do
 
   def structured_list_head(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-structured-list-head {@rest}>
       {render_slot(@inner_block)}
     </cds-structured-list-head>
@@ -9298,6 +9526,7 @@ defmodule Graphene.CoreComponents do
 
   def structured_list_header_cell(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-structured-list-header-cell {@rest}>
       {render_slot(@inner_block)}
     </cds-structured-list-header-cell>
@@ -9317,6 +9546,7 @@ defmodule Graphene.CoreComponents do
 
   def structured_list_header_cell_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-structured-list-header-cell-skeleton {@rest}>
       {render_slot(@inner_block)}
     </cds-structured-list-header-cell-skeleton>
@@ -9342,6 +9572,7 @@ defmodule Graphene.CoreComponents do
 
   def structured_list_header_row(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-structured-list-header-row
       selection-name={assigns[:selection_name]}
       {@rest}
@@ -9382,6 +9613,7 @@ defmodule Graphene.CoreComponents do
 
   def structured_list_row(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-structured-list-row
       selected={assigns[:selected]}
       selection-icon-title={assigns[:selection_icon_title]}
@@ -9408,6 +9640,7 @@ defmodule Graphene.CoreComponents do
 
   def switcher(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-switcher {@rest}>
       {render_slot(@inner_block)}
     </cds-switcher>
@@ -9428,6 +9661,7 @@ defmodule Graphene.CoreComponents do
 
   def switcher_divider(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-switcher-divider {@rest}>
       {render_slot(@inner_block)}
     </cds-switcher-divider>
@@ -9458,6 +9692,7 @@ defmodule Graphene.CoreComponents do
 
   def switcher_item(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-switcher-item
       href={assigns[:href]}
       selected={assigns[:selected]}
@@ -9509,6 +9744,7 @@ defmodule Graphene.CoreComponents do
 
   def tab(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-tab
       align={assigns[:align]}
       close-on-activation={assigns[:close_on_activation]}
@@ -9539,6 +9775,7 @@ defmodule Graphene.CoreComponents do
 
   def tab_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-tab-skeleton {@rest}>
       {render_slot(@inner_block)}
     </cds-tab-skeleton>
@@ -9625,6 +9862,7 @@ defmodule Graphene.CoreComponents do
 
   def table(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-table
       batch-expansion={assigns[:batch_expansion]}
       expandable={assigns[:expandable]}
@@ -9695,6 +9933,7 @@ defmodule Graphene.CoreComponents do
 
   def table_batch_actions(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-table-batch-actions
       active={assigns[:active]}
       selected-rows-count={assigns[:selected_rows_count]}
@@ -9726,6 +9965,7 @@ defmodule Graphene.CoreComponents do
 
   def table_body(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-table-body
       use-zebra-styles={assigns[:use_zebra_styles]}
       {@rest}
@@ -9755,6 +9995,7 @@ defmodule Graphene.CoreComponents do
 
   def table_cell(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-table-cell
       overflow-menu-on-hover={assigns[:overflow_menu_on_hover]}
       size={assigns[:size]}
@@ -9779,6 +10020,7 @@ defmodule Graphene.CoreComponents do
 
   def table_cell_content(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-table-cell-content {@rest}>
       {render_slot(@inner_block)}
     </cds-table-cell-content>
@@ -9811,6 +10053,7 @@ defmodule Graphene.CoreComponents do
 
   def table_expanded_row(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-table-expanded-row
       colspan={assigns[:colspan]}
       expanded={assigns[:expanded]}
@@ -9838,6 +10081,7 @@ defmodule Graphene.CoreComponents do
 
   def table_head(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-table-head {@rest}>
       {render_slot(@inner_block)}
     </cds-table-head>
@@ -9891,6 +10135,7 @@ defmodule Graphene.CoreComponents do
 
   def table_header_cell(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-table-header-cell
       expandable={assigns[:expandable]}
       is-selectable={assigns[:is_selectable]}
@@ -9919,6 +10164,7 @@ defmodule Graphene.CoreComponents do
 
   def table_header_description(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-table-header-description {@rest}>
       {render_slot(@inner_block)}
     </cds-table-header-description>
@@ -9989,6 +10235,7 @@ defmodule Graphene.CoreComponents do
 
   def table_header_row(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-table-header-row
       batch-expansion={assigns[:batch_expansion]}
       disabled={assigns[:disabled]}
@@ -10021,6 +10268,7 @@ defmodule Graphene.CoreComponents do
 
   def table_header_title(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-table-header-title {@rest}>
       {render_slot(@inner_block)}
     </cds-table-header-title>
@@ -10093,6 +10341,7 @@ defmodule Graphene.CoreComponents do
 
   def table_row(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-table-row
       batch-expansion={assigns[:batch_expansion]}
       disabled={assigns[:disabled]}
@@ -10147,6 +10396,7 @@ defmodule Graphene.CoreComponents do
 
   def table_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-table-skeleton
       column-count={assigns[:column_count]}
       compact={assigns[:compact]}
@@ -10176,6 +10426,7 @@ defmodule Graphene.CoreComponents do
 
   def table_toolbar(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-table-toolbar
       size={assigns[:size]}
       {@rest}
@@ -10204,6 +10455,7 @@ defmodule Graphene.CoreComponents do
 
   def table_toolbar_content(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-table-toolbar-content
       has-batch-actions={assigns[:has_batch_actions]}
       size={assigns[:size]}
@@ -10264,6 +10516,7 @@ defmodule Graphene.CoreComponents do
 
   def table_toolbar_search(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-table-toolbar-search
       autocomplete={assigns[:autocomplete]}
       close-button-label-text={assigns[:close_button_label_text]}
@@ -10340,6 +10593,7 @@ defmodule Graphene.CoreComponents do
 
   def tabs(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-tabs
       icon={assigns[:icon]}
       low-contrast={assigns[:low_contrast]}
@@ -10374,6 +10628,7 @@ defmodule Graphene.CoreComponents do
 
   def tabs_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-tabs-skeleton
       contained={assigns[:contained]}
       {@rest}
@@ -10430,6 +10685,7 @@ defmodule Graphene.CoreComponents do
 
   def tag(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-tag
       disabled={assigns[:disabled]}
       filter={assigns[:filter]}
@@ -10465,6 +10721,7 @@ defmodule Graphene.CoreComponents do
 
   def tag_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-tag-skeleton
       size={assigns[:size]}
       {@rest}
@@ -10527,6 +10784,7 @@ defmodule Graphene.CoreComponents do
 
   def tearsheet(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-tearsheet
       close-icon-description={assigns[:close_icon_description]}
       has-close-icon={assigns[:has_close_icon]}
@@ -10662,6 +10920,7 @@ defmodule Graphene.CoreComponents do
 
   def text_input(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-text-input
       autocomplete={assigns[:autocomplete]}
       autofocus={assigns[:autofocus]}
@@ -10736,6 +10995,7 @@ defmodule Graphene.CoreComponents do
 
   def text_input_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-text-input-skeleton
       hide-label={assigns[:hide_label]}
       {@rest}
@@ -10874,6 +11134,7 @@ defmodule Graphene.CoreComponents do
 
   def textarea(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-textarea
       autocomplete={assigns[:autocomplete]}
       autofocus={assigns[:autofocus]}
@@ -10952,6 +11213,7 @@ defmodule Graphene.CoreComponents do
 
   def textarea_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-textarea-skeleton
       hide-label={assigns[:hide_label]}
       {@rest}
@@ -10983,6 +11245,7 @@ defmodule Graphene.CoreComponents do
 
   def tile(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-tile
       color-scheme={assigns[:color_scheme]}
       has-rounded-corners={assigns[:has_rounded_corners]}
@@ -11013,6 +11276,7 @@ defmodule Graphene.CoreComponents do
 
   def tile_above_the_fold_content(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-tile-above-the-fold-content {@rest}>
       {render_slot(@inner_block)}
     </cds-tile-above-the-fold-content>
@@ -11032,6 +11296,7 @@ defmodule Graphene.CoreComponents do
 
   def tile_below_the_fold_content(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-tile-below-the-fold-content {@rest}>
       {render_slot(@inner_block)}
     </cds-tile-below-the-fold-content>
@@ -11067,6 +11332,7 @@ defmodule Graphene.CoreComponents do
 
   def tile_group(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-tile-group
       currentRadioSelection={assigns[:current_radio_selection]}
       currentSelections={assigns[:current_selections]}
@@ -11149,6 +11415,7 @@ defmodule Graphene.CoreComponents do
 
   def time_picker(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-time-picker
       disabled={assigns[:disabled]}
       hide-label={assigns[:hide_label]}
@@ -11223,6 +11490,7 @@ defmodule Graphene.CoreComponents do
 
   def time_picker_select(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-time-picker-select
       default-value={assigns[:default_value]}
       disabled={assigns[:disabled]}
@@ -11278,6 +11546,7 @@ defmodule Graphene.CoreComponents do
 
   def toast_notification(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-toast-notification
       caption={assigns[:caption]}
       hide-close-button={assigns[:hide_close_button]}
@@ -11374,6 +11643,7 @@ defmodule Graphene.CoreComponents do
 
   def toggle(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-toggle
       checked={assigns[:checked]}
       data-table={assigns[:data_table]}
@@ -11439,6 +11709,7 @@ defmodule Graphene.CoreComponents do
 
   def toggle_skeleton(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-toggle-skeleton {@rest}>
       {render_slot(@inner_block)}
     </cds-toggle-skeleton>
@@ -11491,6 +11762,7 @@ defmodule Graphene.CoreComponents do
 
   def toggletip(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-toggletip
       alignment={assigns[:alignment]}
       alignment-axis-offset={assigns[:alignment_axis_offset]}
@@ -11601,6 +11873,7 @@ defmodule Graphene.CoreComponents do
 
   def tooltip(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-tooltip
       align={assigns[:align]}
       alignment-axis-offset={assigns[:alignment_axis_offset]}
@@ -11677,6 +11950,7 @@ defmodule Graphene.CoreComponents do
 
   def tooltip_content(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-tooltip-content
       align={assigns[:align]}
       autoalign={assigns[:autoalign]}
@@ -11733,6 +12007,7 @@ defmodule Graphene.CoreComponents do
 
   def tree_node(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-tree-node
       active={assigns[:active]}
       disabled={assigns[:disabled]}
@@ -11778,6 +12053,7 @@ defmodule Graphene.CoreComponents do
 
   def tree_view(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-tree-view
       hide-label={assigns[:hide_label]}
       label={assigns[:label]}
@@ -11807,6 +12083,7 @@ defmodule Graphene.CoreComponents do
 
   def unordered_list(assigns) do
     ~H"""
+    {Phoenix.HTML.raw(assigns[:graphene_before] || "")}
     <cds-unordered-list
       is-expressive={assigns[:is_expressive]}
       nested={assigns[:nested]}
@@ -11816,6 +12093,37 @@ defmodule Graphene.CoreComponents do
     </cds-unordered-list>
     """
   end
+
+  defp merge_rest_class(assigns, class_name) do
+    rest = Map.get(assigns, :rest, %{})
+    class_value = merge_class_value(Map.get(rest, :class), class_name)
+    rest = Map.put(rest, :class, class_value)
+    assign(assigns, :rest, rest)
+  end
+
+  defp merge_rest_class_if(assigns, condition, class_name) do
+    if condition, do: merge_rest_class(assigns, class_name), else: assigns
+  end
+
+  defp merge_class_value(nil, class_name), do: class_name
+  defp merge_class_value("", class_name), do: class_name
+
+  defp merge_class_value(class_value, class_name) when is_list(class_value) do
+    class_value
+    |> Enum.map(&to_string/1)
+    |> Enum.join(" ")
+    |> merge_class_value(class_name)
+  end
+
+  defp merge_class_value(class_value, class_name) when is_binary(class_value) do
+    if String.contains?(class_value, class_name) do
+      class_value
+    else
+      class_value <> " " <> class_name
+    end
+  end
+
+  defp merge_class_value(_class_value, class_name), do: class_name
 
   def available_components() do
     [

@@ -1,0 +1,149 @@
+defmodule Graphene.CarbonComponents.FluidNumberInput do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+  alias Graphene.Internal.FormComponents
+
+  @doc """
+  Component `<cds-fluid-number-input>` from `./src/components/fluid-number-input/fluid-number-input.ts`
+
+  Fluid number input.
+
+  ## Events
+
+  * `cds-number-input` - The name of the custom event fired after the value is changed upon a user gesture.
+  * `invalid` - Undocumented
+
+  """
+  attr :allow_empty, :boolean, doc: "`true` to allow empty string."
+  attr :autocomplete, :string, doc: "May be any of the standard HTML autocomplete options"
+
+  attr :autofocus, :boolean,
+    doc: "Sets the input to be focussed automatically on page load. Defaults to false"
+
+  attr :decrement_button_assistive_text, :string,
+    doc: "Aria text for the button that decrements the value",
+    default: "decrease number input"
+
+  attr :default_value, :string, doc: "Optional starting value for uncontrolled state"
+
+  attr :disable_wheel, :boolean,
+    doc: "Specify if the wheel functionality for the input should be disabled, or not"
+
+  attr :disabled, :boolean, doc: "Controls the disabled state of the input"
+  attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
+
+  attr :hide_label, :boolean,
+    doc: "Specify whether you want the underlying label to be visually hidden"
+
+  attr :hide_steppers, :boolean, doc: "Specify whether you want the steppers to be hidden"
+
+  attr :hide_password_label, :string,
+    doc: "\"Hide password\" tooltip text on password visibility toggle",
+    default: "Hide password"
+
+  attr :icon_description, :string,
+    doc: "Provide a description for up/down icons that can be read by screen readers"
+
+  attr :increment_button_assistive_text, :string,
+    doc: "Aria text for the button that increments the value",
+    default: "increase number input"
+
+  attr :inline, :boolean, doc: "true to use the inline version."
+  attr :invalid, :boolean, doc: "Specify if the currently value is invalid."
+  attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
+  attr :is_fluid, :boolean, doc: "Set to true to use the fluid variant."
+
+  attr :label, :string,
+    doc: "Generic label that will be used as the textual representation of what this field is for"
+
+  attr :max, :string, doc: "The maximum value allowed in the input", default: "Infty"
+
+  attr :max_count, :any,
+    doc:
+      "Max character count allowed for input. This is needed in order for enableCounter to display"
+
+  attr :min, :string, doc: "The minimum value allowed in the input", default: "-Infty"
+  attr :name, :string, doc: "Name for the input in the `FormData`"
+  attr :pattern, :string, doc: "Pattern to validate the input against for HTML validity checking"
+  attr :placeholder, :string, doc: "Value to display when the input has an empty `value`"
+  attr :readonly, :boolean, doc: "Specify if the component should be read-only"
+  attr :required, :boolean, doc: "Boolean property to set the required status"
+
+  attr :required_validity_message, :string,
+    doc: "The special validity message for `required`.",
+    default: "Please fill out this field."
+
+  attr :show_password_visibility_toggle, :boolean,
+    doc: "Boolean property to render password visibility toggle"
+
+  attr :show_password_label, :string,
+    doc: "\"Show password\" tooltip text on password visibility toggle",
+    default: "Show password"
+
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
+  attr :step, :string, doc: "The amount the value should increase or decrease by", default: "1"
+
+  attr :tooltip_alignment, :string,
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end.",
+    values: ["start", "center", "end"],
+    default: "center"
+
+  attr :tooltip_direction, :string,
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left.",
+    values: ["top", "right", "bottom", "left"],
+    default: "bottom"
+
+  attr :type, :string,
+    doc: "The type of the input. Can be one of the types listed in the INPUT_TYPE enum",
+    values: ["email", "password", "tel", "text", "url"],
+    default: "text"
+
+  attr :value, :string, doc: "The value of the input."
+  attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
+
+  attr :warn_text, :string,
+    doc: "Provide the text that is displayed when the control is in warning state"
+
+  attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
+  attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
+
+  attr :form_event, :string,
+    default: nil,
+    doc: "override the custom event used to sync form values"
+
+  attr :rest, :global
+  slot :helper_text, doc: "The helper text."
+  slot :label_text, doc: "The label text."
+
+  slot :validity_message,
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
+
+  slot :inner_block
+
+  def fluid_number_input(assigns) do
+    FormComponents.fluid_number_input(assigns)
+  end
+
+  @doc """
+  Component `<cds-fluid-number-input-skeleton>` from `./src/components/fluid-number-input/fluid-number-input-skeleton.ts`
+
+  Fluid number input.
+
+
+  """
+  attr :hide_label, :boolean,
+    doc: "`true` if the label should be hidden. Corresponds to the attribute with the same name."
+
+  attr :rest, :global
+  slot :inner_block
+
+  def fluid_number_input_skeleton(assigns) do
+    CoreComponents.fluid_number_input_skeleton(assigns)
+  end
+end

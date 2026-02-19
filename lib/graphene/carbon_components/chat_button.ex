@@ -1,0 +1,56 @@
+defmodule Graphene.CarbonComponents.ChatButton do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-chat-button>` from `./src/components/chat-button/chat-button.ts`
+
+  Chat Button
+
+
+  """
+  attr :disabled, :boolean, doc: "`true` if the button should be disabled."
+
+  attr :is_quick_action, :boolean,
+    doc: "Specify whether the `ChatButton` should be rendered as a quick action button"
+
+  attr :is_selected, :boolean,
+    doc:
+      "Specify whether the quick action `ChatButton` should be rendered as selected. This disables the input"
+
+  attr :kind, :string,
+    doc: "Specify whether the `ChatButton` should be disabled",
+    values: ["primary", "secondary", "tertiary", "ghost", "danger"],
+    default: "primary"
+
+  attr :size, :string, doc: "Chat button size.", values: ["sm", "md", "lg"], default: "lg"
+  attr :rest, :global
+  slot :inner_block
+
+  def chat_button(assigns) do
+    CoreComponents.chat_button(assigns)
+  end
+
+  @doc """
+  Component `<cds-chat-button-skeleton>` from `./src/components/chat-button/chat-button-skeleton.ts`
+
+  Chat button skeleton.
+
+
+  """
+  attr :size, :string,
+    doc:
+      "Specify the size of the `ChatButtonSkeleton`, from the following list of sizes: 'sm', 'md', 'lg'",
+    values: ["sm", "md", "lg"],
+    default: "lg"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def chat_button_skeleton(assigns) do
+    CoreComponents.chat_button_skeleton(assigns)
+  end
+end

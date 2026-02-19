@@ -1,0 +1,132 @@
+defmodule Graphene.CarbonComponents.FluidTextarea do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+  alias Graphene.Internal.FormComponents
+
+  @doc """
+  Component `<cds-fluid-textarea>` from `./src/components/fluid-textarea/fluid-textarea.ts`
+
+  Fluid text area input.
+
+  ## Events
+
+  * `input` - Undocumented
+  * `invalid` - Undocumented
+
+  """
+  attr :autocomplete, :string, doc: "May be any of the standard HTML autocomplete options"
+
+  attr :autofocus, :boolean,
+    doc: "Sets the input to be focussed automatically on page load. Defaults to false"
+
+  attr :cols, :any, doc: "The number of columns for the textarea to show by default"
+  attr :counter_mode, :any, doc: "Specify the method used for calculating the counter number"
+  attr :disabled, :boolean, doc: "Controls the disabled state of the input"
+  attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
+
+  attr :hide_label, :boolean,
+    doc: "Specify whether you want the underlying label to be visually hidden"
+
+  attr :hide_password_label, :string,
+    doc: "\"Hide password\" tooltip text on password visibility toggle",
+    default: "Hide password"
+
+  attr :id, :string, doc: "ID to link the `label` and `textarea`"
+  attr :inline, :boolean, doc: "true to use the inline version."
+  attr :invalid, :boolean, doc: "Specify if the currently value is invalid."
+  attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
+  attr :is_fluid, :boolean, doc: "Specify whether the textarea is fluid or not"
+
+  attr :label, :string,
+    doc: "Generic label that will be used as the textual representation of what this field is for"
+
+  attr :max_count, :any,
+    doc:
+      "Max character count allowed for input. This is needed in order for enableCounter to display"
+
+  attr :name, :string, doc: "Name for the input in the `FormData`"
+
+  attr :pattern, :string,
+    doc: "Pattern to validate the textarea against for HTML validity checking"
+
+  attr :placeholder, :string, doc: "Value to display when the input has an empty `value`"
+  attr :readonly, :boolean, doc: "Specify if the component should be read-only"
+  attr :required, :boolean, doc: "Boolean property to set the required status"
+
+  attr :required_validity_message, :string,
+    doc: "The special validity message for `required`.",
+    default: "Please fill out this field."
+
+  attr :rows, :string, doc: "The number of rows for the textarea to show by default", default: "4"
+
+  attr :show_password_visibility_toggle, :boolean,
+    doc: "Boolean property to render password visibility toggle"
+
+  attr :show_password_label, :string,
+    doc: "\"Show password\" tooltip text on password visibility toggle",
+    default: "Show password"
+
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
+
+  attr :tooltip_alignment, :string,
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end.",
+    values: ["start", "center", "end"],
+    default: "center"
+
+  attr :tooltip_direction, :string,
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left.",
+    values: ["top", "right", "bottom", "left"],
+    default: "bottom"
+
+  attr :type, :string,
+    doc: "The type of the input. Can be one of the types listed in the INPUT_TYPE enum",
+    values: ["email", "password", "tel", "text", "url"],
+    default: "text"
+
+  attr :value, :string, doc: "The value of the input."
+  attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
+
+  attr :warn_text, :string,
+    doc: "Provide the text that is displayed when the control is in warning state"
+
+  attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
+  attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
+
+  attr :form_event, :string,
+    default: nil,
+    doc: "override the custom event used to sync form values"
+
+  attr :rest, :global
+  slot :helper_text, doc: "The helper text."
+  slot :label_text, doc: "The label text."
+
+  slot :validity_message,
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
+
+  slot :inner_block
+
+  def fluid_textarea(assigns) do
+    FormComponents.fluid_textarea(assigns)
+  end
+
+  @doc """
+  Component `<cds-fluid-textarea-skeleton>` from `./src/components/fluid-textarea/fluid-textarea-skeleton.ts`
+
+  Fluid text area input.
+
+
+  """
+  attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
+  attr :rest, :global
+  slot :inner_block
+
+  def fluid_textarea_skeleton(assigns) do
+    CoreComponents.fluid_textarea_skeleton(assigns)
+  end
+end

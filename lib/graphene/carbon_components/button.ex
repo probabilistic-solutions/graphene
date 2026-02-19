@@ -1,0 +1,101 @@
+defmodule Graphene.CarbonComponents.Button do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-button>` from `./src/components/button/button.ts`
+
+  Button.
+
+
+  """
+  attr :autofocus, :boolean,
+    doc: "`true` if the button should have input focus when the page loads."
+
+  attr :batch_action, :boolean,
+    doc: "`true` if the button is being used within a data table batch action toolbar"
+
+  attr :button_class_name, :any, doc: "Specify an optional className to be added to your Button"
+
+  attr :danger_description, :any,
+    doc: "Specify the message read by screen readers for the danger button variant"
+
+  attr :disabled, :boolean, doc: "`true` if the button should be disabled."
+  attr :download, :string, doc: "The default file name, used if this button is rendered as `<a>`."
+  attr :has_main_content, :boolean, doc: "`true` if there is a non-icon content."
+  attr :href, :string, doc: "Link `href`. If present, this button is rendered as `<a>`."
+
+  attr :hreflang, :string,
+    doc: "The language of what `href` points to, if this button is rendered as `<a>`."
+
+  attr :is_expressive, :boolean, doc: "`true` if expressive theme enabled."
+
+  attr :is_selected, :boolean,
+    doc: "Specify whether the Button is currently selected.\nOnly applies to the Ghost variant."
+
+  attr :kind, :string,
+    doc: "Button kind.",
+    values: [
+      "primary",
+      "secondary",
+      "tertiary",
+      "danger",
+      "danger--tertiary",
+      "danger--ghost",
+      "ghost"
+    ],
+    default: "primary"
+
+  attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
+  attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
+  attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
+  attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
+  attr :size, :string, doc: "Button size.", default: "lg"
+  attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
+  attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
+
+  attr :tooltip_alignment, :string,
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end.",
+    values: ["left", "right", ""],
+    default: ""
+
+  attr :tooltip_position, :string,
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left.",
+    values: ["top", "bottom", "right", "left"],
+    default: "top"
+
+  attr :tooltip_text, :string,
+    doc:
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
+
+  attr :type, :string,
+    doc: "Button type.",
+    values: ["button", "reset", "submit"],
+    default: "button"
+
+  attr :rest, :global
+  slot :icon, doc: "Icon."
+  slot :inner_block
+
+  def button(assigns) do
+    CoreComponents.button(assigns)
+  end
+
+  @doc """
+  Component `<cds-button-skeleton>` from `./src/components/button/button-skeleton.ts`
+
+  Button skeleton.
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def button_skeleton(assigns) do
+    CoreComponents.button_skeleton(assigns)
+  end
+end

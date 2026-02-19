@@ -1,0 +1,164 @@
+defmodule Graphene.CarbonComponents.Copy do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-copy>` from `./src/components/copy/copy.ts`
+
+  Copy.
+
+
+  """
+  attr :align, :string,
+    doc: "Checks if a badge indicator is being used with incorrect properties",
+    default: "top"
+
+  attr :autoalign, :boolean, doc: "Specify whether a auto align functionality should be applied"
+
+  attr :autofocus, :boolean,
+    doc: "`true` if the button should have input focus when the page loads."
+
+  attr :batch_action, :boolean,
+    doc: "`true` if the button is being used within a data table batch action toolbar"
+
+  attr :button_class_name, :any, doc: "Specify an optional className to be added to your Button"
+
+  attr :close_on_activation, :boolean,
+    doc:
+      "Determines whether the tooltip should close when inner content is activated (click, Enter or Space)",
+    default: true
+
+  attr :danger_description, :any,
+    doc: "Specify the message read by screen readers for the danger button variant"
+
+  attr :default_open, :boolean,
+    doc: "Specify whether the tooltip should be open when it first renders"
+
+  attr :disabled, :boolean, doc: "`true` if the button should be disabled."
+  attr :download, :string, doc: "The default file name, used if this button is rendered as `<a>`."
+
+  attr :enter_delay_ms, :string,
+    doc: "Specify the duration in milliseconds to delay before displaying the tooltip",
+    default: "100"
+
+  attr :feedback, :string,
+    doc:
+      "Specify the string that is displayed when the button is clicked and the content is copi",
+    default: "Copied!"
+
+  attr :feedback_timeout, :string,
+    doc: "The number in milliseconds to determine how long the tooltip should remain.",
+    default: "2000"
+
+  attr :has_main_content, :boolean, doc: "`true` if there is a non-icon content."
+  attr :href, :string, doc: "Link `href`. If present, this button is rendered as `<a>`."
+
+  attr :hreflang, :string,
+    doc: "The language of what `href` points to, if this button is rendered as `<a>`."
+
+  attr :is_expressive, :boolean, doc: "`true` if expressive theme enabled."
+
+  attr :is_selected, :boolean,
+    doc: "Specify whether the Button is currently selected.\nOnly applies to the Ghost variant."
+
+  attr :kind, :string,
+    doc: "Button kind.",
+    values: [
+      "primary",
+      "secondary",
+      "tertiary",
+      "danger",
+      "danger--tertiary",
+      "danger--ghost",
+      "ghost"
+    ],
+    default: "primary"
+
+  attr :leave_delay_ms, :string,
+    doc: "Specify the duration in milliseconds to delay before hiding the tooltip",
+    default: "300"
+
+  attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
+  attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
+  attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
+  attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
+  attr :size, :string, doc: "Specify the size of the Button. Defaults to `md`.", default: "md"
+  attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
+  attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
+
+  attr :tooltip_alignment, :string,
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end.",
+    values: ["left", "right", ""],
+    default: ""
+
+  attr :tooltip_position, :string,
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left.",
+    values: ["top", "bottom", "right", "left"],
+    default: "top"
+
+  attr :tooltip_text, :string,
+    doc:
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
+
+  attr :type, :string,
+    doc: "Button type.",
+    values: ["button", "reset", "submit"],
+    default: "button"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def copy(assigns) do
+    CoreComponents.copy(assigns)
+  end
+
+  @doc """
+  Component `<cds-copy-button>` from `./src/components/copy-button/copy-button.ts`
+
+  Copy button.
+
+
+  """
+  attr :align, :string,
+    doc: "How the tooltip is aligned to the trigger button.",
+    values: [
+      "top",
+      "top-start",
+      "top-end",
+      "bottom",
+      "bottom-start",
+      "bottom-end",
+      "left",
+      "left-start",
+      "left-end",
+      "right",
+      "right-start",
+      "right-end"
+    ],
+    default: "bottom"
+
+  attr :auto_align, :boolean, doc: "Specify whether a auto align functionality should be applied"
+  attr :button_class_name, :any, doc: "Specify an optional className to be added to your Button"
+  attr :disabled, :boolean, doc: "`true` if the button should be disabled."
+
+  attr :feedback, :string,
+    doc:
+      "Specify the string that is displayed when the button is clicked and the content is copi",
+    default: "Copied!"
+
+  attr :feedback_timeout, :string,
+    doc: "The number in milliseconds to determine how long the tooltip should remain.",
+    default: "2000"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def copy_button(assigns) do
+    CoreComponents.copy_button(assigns)
+  end
+end

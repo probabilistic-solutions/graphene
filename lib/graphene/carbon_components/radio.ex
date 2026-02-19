@@ -1,0 +1,38 @@
+defmodule Graphene.CarbonComponents.Radio do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-radio-tile>` from `./src/components/tile/radio-tile.ts`
+
+  Radio tile.
+
+  ## Events
+
+  * `cds-radio-tile-selected` - The name of the custom event fired after this radio tile changes its selected state.
+  * `cds-selectable-tile-changed` - The custom event fired after this selectable tile changes its selected state.
+
+  """
+  attr :checkmark_label, :string,
+    doc: "The a11y text for the checkmark icon of the selected state."
+
+  attr :color_scheme, :string, doc: "The color scheme.", values: ["", "light"], default: ""
+  attr :disabled, :boolean, doc: "`true` if the seletable tile should be disabled."
+
+  attr :has_rounded_corners, :boolean,
+    doc:
+      "Specify if the `SeletableTile` component should be rendered with rounded corners.\nOnly valid when `ai-label` prop is present"
+
+  attr :name, :string
+  attr :selected, :boolean, doc: "`true` to show the selected state."
+  attr :value, :string
+  attr :rest, :global
+  slot :inner_block
+
+  def radio_tile(assigns) do
+    CoreComponents.radio_tile(assigns)
+  end
+end

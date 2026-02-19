@@ -1,0 +1,50 @@
+defmodule Graphene.CarbonComponents.UnorderedList do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-unordered-list>` from `./src/components/list/unordered-list.ts`
+
+  Unordered list.
+
+
+  """
+  attr :is_expressive, :boolean, doc: "`true` if expressive theme enabled."
+  attr :nested, :boolean, doc: "Specify whether the list is nested, or not"
+  attr :rest, :global
+
+  slot :item do
+    attr :attrs, :map
+  end
+
+  slot :inner_block
+
+  def unordered_list(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:is_expressive, fn -> false end)
+      |> assign_new(:nested, fn -> false end)
+
+    ~H"""
+    <CoreComponents.unordered_list
+      is_expressive={@is_expressive}
+      nested={@nested}
+      {@rest}
+    >
+      <%= for item <- @item do %>
+        <CoreComponents.list_item {item[:attrs] || %{}}>
+          {render_slot(item)}
+        </CoreComponents.list_item>
+      <% end %>
+      {render_slot(@inner_block)}
+    </CoreComponents.unordered_list>
+    """
+  end
+
+  def unordered_list(assigns) do
+    CoreComponents.unordered_list(assigns)
+  end
+end

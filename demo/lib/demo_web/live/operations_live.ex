@@ -60,73 +60,88 @@ defmodule DemoWeb.OperationsLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <CarbonComponents.page_header>
-      <:breadcrumb>
-        <CarbonComponents.breadcrumb>
-          <:item href={~p"/"} text="Cloud Admin" />
-          <:item text="Operations" />
-        </CarbonComponents.breadcrumb>
-      </:breadcrumb>
-      <:content title="Operations">
-        <CarbonComponents.tag type="green">On-call</CarbonComponents.tag>
-      </:content>
-      <:content_text subtitle="Incident triage, deployments, and runtime safeguards." />
-    </CarbonComponents.page_header>
+    <CarbonComponents.grid full_width>
+      <:column span="16">
+        <CarbonComponents.page_header>
+          <:breadcrumb>
+            <CarbonComponents.breadcrumb>
+              <:item href={~p"/demo"} text="Cloud Admin" />
+              <:item text="Operations" />
+            </CarbonComponents.breadcrumb>
+          </:breadcrumb>
+          <:content title="Operations">
+            <CarbonComponents.tag type="green">On-call</CarbonComponents.tag>
+          </:content>
+          <:content_text subtitle="Incident triage, deployments, and runtime safeguards." />
+        </CarbonComponents.page_header>
+      </:column>
 
-    <div class="demo-section demo-card demo-card--elevated">
-      <CarbonComponents.tabs type="container">
-        <:tab title="Incidents">
-          <CarbonComponents.data_table id="incident-table" rows={@incidents} size="sm">
-            <:col :let={incident} label="ID">{incident.id}</:col>
-            <:col :let={incident} label="Title">{incident.title}</:col>
-            <:col :let={incident} label="Severity">
-              <CarbonComponents.tag type={severity_kind(incident.severity)}>{incident.severity}</CarbonComponents.tag>
-            </:col>
-            <:col :let={incident} label="Status">
-              <CarbonComponents.tag type={status_kind(incident.status)}>{incident.status}</CarbonComponents.tag>
-            </:col>
-            <:col :let={incident} label="Owner">{incident.owner}</:col>
-            <:col :let={incident} label="Opened">{incident.opened_at}</:col>
-            <:action :let={incident}>
-              <CarbonComponents.stack orientation="horizontal" gap="2">
-                <CarbonComponents.button kind="ghost" size="sm" phx-click="open_incident" phx-value-id={incident.id}>
-                  Details
-                </CarbonComponents.button>
-                <CarbonComponents.button
-                  kind="ghost"
-                  size="sm"
-                  phx-click="resolve_incident"
-                  phx-value-id={incident.id}
-                >
-                  Resolve
-                </CarbonComponents.button>
-              </CarbonComponents.stack>
-            </:action>
-          </CarbonComponents.data_table>
-        </:tab>
-        <:tab title="Deployments">
-          <CarbonComponents.tile class="demo-card">
-            <h3>Deployment guardrails</h3>
-            <p class="demo-muted">Automatic rollbacks are enabled for production clusters.</p>
-            <CarbonComponents.progress_indicator current_index="2">
-              <:step label="Build" />
-              <:step label="Test" />
-              <:step label="Canary" />
-              <:step label="Rollout" />
-            </CarbonComponents.progress_indicator>
-          </CarbonComponents.tile>
-        </:tab>
-        <:tab title="Maintenance">
-          <CarbonComponents.tile class="demo-card">
-            <h3>Upcoming maintenance</h3>
-          <CarbonComponents.inline_notification kind="info" open>
-            <:title>Region upgrade</:title>
-            <:subtitle>eu-west-1 scheduled for kernel patching at 02:00 UTC.</:subtitle>
-          </CarbonComponents.inline_notification>
-          </CarbonComponents.tile>
-        </:tab>
-      </CarbonComponents.tabs>
-    </div>
+      <:column span="16">
+        <div class="demo-section demo-card demo-card--elevated">
+          <CarbonComponents.tabs type="container">
+            <:tab title="Incidents">
+              <CarbonComponents.data_table id="incident-table" rows={@incidents} size="sm">
+                <:col :let={incident} label="ID">{incident.id}</:col>
+                <:col :let={incident} label="Title">{incident.title}</:col>
+                <:col :let={incident} label="Severity">
+                  <CarbonComponents.tag type={severity_kind(incident.severity)}>
+                    {incident.severity}
+                  </CarbonComponents.tag>
+                </:col>
+                <:col :let={incident} label="Status">
+                  <CarbonComponents.tag type={status_kind(incident.status)}>
+                    {incident.status}
+                  </CarbonComponents.tag>
+                </:col>
+                <:col :let={incident} label="Owner">{incident.owner}</:col>
+                <:col :let={incident} label="Opened">{incident.opened_at}</:col>
+                <:action :let={incident}>
+                  <CarbonComponents.stack orientation="horizontal" gap="2">
+                    <CarbonComponents.button
+                      kind="ghost"
+                      size="sm"
+                      phx-click="open_incident"
+                      phx-value-id={incident.id}
+                    >
+                      Details
+                    </CarbonComponents.button>
+                    <CarbonComponents.button
+                      kind="ghost"
+                      size="sm"
+                      phx-click="resolve_incident"
+                      phx-value-id={incident.id}
+                    >
+                      Resolve
+                    </CarbonComponents.button>
+                  </CarbonComponents.stack>
+                </:action>
+              </CarbonComponents.data_table>
+            </:tab>
+            <:tab title="Deployments">
+              <CarbonComponents.tile class="demo-card">
+                <h3>Deployment guardrails</h3>
+                <p class="demo-muted">Automatic rollbacks are enabled for production clusters.</p>
+                <CarbonComponents.progress_indicator current_index="2">
+                  <:step label="Build" />
+                  <:step label="Test" />
+                  <:step label="Canary" />
+                  <:step label="Rollout" />
+                </CarbonComponents.progress_indicator>
+              </CarbonComponents.tile>
+            </:tab>
+            <:tab title="Maintenance">
+              <CarbonComponents.tile class="demo-card">
+                <h3>Upcoming maintenance</h3>
+                <CarbonComponents.inline_notification kind="info" open>
+                  <:title>Region upgrade</:title>
+                  <:subtitle>eu-west-1 scheduled for kernel patching at 02:00 UTC.</:subtitle>
+                </CarbonComponents.inline_notification>
+              </CarbonComponents.tile>
+            </:tab>
+          </CarbonComponents.tabs>
+        </div>
+      </:column>
+    </CarbonComponents.grid>
 
     <CarbonComponents.modal :if={@modal_incident} open>
       <:body>

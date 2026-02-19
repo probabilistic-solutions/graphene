@@ -91,3 +91,6 @@ flycheck_*.el
 # undo-tree
 *.~undo-tree~
 /carbon
+/tmp
+/carbon-website
+/carbon-website

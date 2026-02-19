@@ -16,14 +16,16 @@
   
   
   
-    <cds-tooltip-content backgroundToken="layer" dropShadow slot="content" id="tooltip-content">
+    
+<cds-tooltip-content backgroundToken="layer" dropShadow slot="content" id="tooltip-content">
   
       Tooltip content
     
 </cds-tooltip-content>
   
   
-  <cds-button kind="ghost" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" aria-labelledby="tooltip-content">
+  
+<cds-button kind="ghost" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" aria-labelledby="tooltip-content">
   Hover me
   
 </cds-button>
@@ -46,14 +48,16 @@
   
   
   
-    <cds-tooltip-content backgroundToken="layer" dropShadow slot="content" id="tooltip-top">
+    
+<cds-tooltip-content backgroundToken="layer" dropShadow slot="content" id="tooltip-top">
   
       Top content
     
 </cds-tooltip-content>
   
   
-  <cds-button kind="ghost" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" aria-labelledby="tooltip-top">
+  
+<cds-button kind="ghost" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" aria-labelledby="tooltip-top">
   Top tooltip
   
 </cds-button>
@@ -76,14 +80,16 @@
   
   
   
-    <cds-tooltip-content backgroundToken="layer" dropShadow slot="content" id="tooltip-right">
+    
+<cds-tooltip-content backgroundToken="layer" dropShadow slot="content" id="tooltip-right">
   
       Right content
     
 </cds-tooltip-content>
   
   
-  <cds-button kind="ghost" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" aria-labelledby="tooltip-right">
+  
+<cds-button kind="ghost" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" aria-labelledby="tooltip-right">
   Right tooltip
   
 </cds-button>

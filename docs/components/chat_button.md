@@ -35,7 +35,7 @@
 ### selected
 
 ```heex
-<.chat_button is_selected is_quick_action>
+<.chat_button is_quick_action is_selected>
   Selected
 </.chat_button>
 ```
@@ -68,11 +68,13 @@
   Chat button
 
 </cds-chat-button>
+
 <cds-chat-button kind="primary" size="md" id="chat-button-sizes-md">
   
   Chat button
 
 </cds-chat-button>
+
 <cds-chat-button kind="primary" size="lg" id="chat-button-sizes-lg">
   
   Chat button

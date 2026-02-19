@@ -1,0 +1,33 @@
+defmodule Graphene.CarbonComponents.Link do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-link>` from `./src/components/link/link.ts`
+
+  Link.
+
+
+  """
+  attr :disabled, :boolean, doc: "`true` if the link should be disabled."
+  attr :download, :string, doc: "The default file name."
+  attr :href, :string, doc: "Link `href`."
+  attr :hreflang, :string, doc: "The language of what `href` points to."
+  attr :inline, :boolean, doc: "`true` if the link should be inline."
+  attr :link_role, :string, doc: "The a11y role for `<a>`."
+  attr :ping, :string, doc: "URLs to ping."
+  attr :rel, :string, doc: "The link type."
+  attr :size, :string, doc: "Link size.", default: "MEDIUM"
+  attr :target, :string, doc: "The link target."
+  attr :type, :string, doc: "MIME type of the `target`."
+  attr :visited, :boolean, doc: "`true` if the link has been visited."
+  attr :rest, :global
+  slot :inner_block
+
+  def link(assigns) do
+    CoreComponents.link(assigns)
+  end
+end

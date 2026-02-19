@@ -18,18 +18,21 @@
 
 ```html
 <input type="hidden" id="basic-single-default-input" name="file_uploader_default" value="">
-<cds-file-uploader label-description="Max file size 500mb" label-title="Upload files" id="basic-single-default" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="basic-single-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+
+<cds-file-uploader label-description="Max file size 500mb" label-title="Upload files" id="basic-single-default" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="basic-single-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   
-    <cds-file-uploader-button slot="drop-container">
+    
+<cds-file-uploader-button slot="drop-container">
   
       Upload
     
 </cds-file-uploader-button>
   
   
-    <cds-file-uploader-item size="md" state="complete">
+    
+<cds-file-uploader-item size="md" state="complete">
   
       report.pdf
     
@@ -60,18 +63,21 @@
 
 ```html
 <input type="hidden" id="basic-single-multiple-input" name="file_uploader_multiple" value="">
-<cds-file-uploader label-description="PNG or SVG" label-title="Upload assets" id="basic-single-multiple" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="basic-single-multiple-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+
+<cds-file-uploader label-description="PNG or SVG" label-title="Upload assets" id="basic-single-multiple" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="basic-single-multiple-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   
-    <cds-file-uploader-button accept=".png .svg" multiple slot="drop-container">
+    
+<cds-file-uploader-button accept=".png .svg" multiple slot="drop-container">
   
       Add files
     
 </cds-file-uploader-button>
   
   
-    <cds-file-uploader-item size="md" state="uploading">
+    
+<cds-file-uploader-item size="md" state="uploading">
   
       logo.svg
     
@@ -79,7 +85,8 @@
   
 </cds-file-uploader-item>
   
-    <cds-file-uploader-item size="md" state="edit">
+    
+<cds-file-uploader-item size="md" state="edit">
   
       banner.png
     
@@ -109,11 +116,13 @@
 
 ```html
 <input type="hidden" id="basic-single-disabled-input" name="file_uploader_disabled" value="">
-<cds-file-uploader disabled label-description="Uploads disabled" label-title="Disabled" id="basic-single-disabled" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="basic-single-disabled-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+
+<cds-file-uploader disabled label-description="Uploads disabled" label-title="Disabled" id="basic-single-disabled" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="basic-single-disabled-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   
-    <cds-file-uploader-button disabled slot="drop-container">
+    
+<cds-file-uploader-button disabled slot="drop-container">
   
       Upload
     
@@ -193,11 +202,13 @@
 <div style="display: grid; gap: 1.5rem; max-width: 36rem; position: relative;">
     <div id="file-uploader-bridge" phx-hook="Storybook.CarbonComponents.FileUploader.Upload.CarbonFileUploaderBridge" data-accept=".pdf .png .txt">
       <input type="hidden" id="file-uploader-input" name="file_uploader_upload" value="">
-<cds-file-uploader label-description="PDF, PNG, or TXT (max 5 MB)" label-title="Upload evidence" id="file-uploader" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="file-uploader-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+
+<cds-file-uploader label-description="PDF, PNG, or TXT (max 5 MB)" label-title="Upload evidence" id="file-uploader" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="file-uploader-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
   
   
   
-    <cds-file-uploader-button slot="drop-container">
+    
+<cds-file-uploader-button slot="drop-container">
   
       Select files
     
@@ -217,13 +228,15 @@
     
 
     <div style="display: flex; gap: 0.75rem; margin-top: 0.75rem;">
-      <cds-button kind="secondary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="clear_uploads">
+      
+<cds-button kind="secondary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="clear_uploads">
   
         Clear
       
   
 </cds-button>
-      <cds-button disabled kind="primary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="upload_submit" data-testid="carbon-file-upload-submit">
+      
+<cds-button disabled kind="primary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" phx-click="upload_submit" data-testid="carbon-file-upload-submit">
   
         Upload & compute hash
       

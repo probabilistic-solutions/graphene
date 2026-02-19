@@ -1,0 +1,115 @@
+defmodule Graphene.CarbonComponents.Grid do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-grid>` from `./src/components/grid/grid.ts`
+
+  The grid component.
+
+
+  """
+  attr :align, :any, doc: "Specify grid alignment. Default is center"
+
+  attr :condensed, :boolean,
+    doc:
+      "Collapse the gutter to 1px. Useful for fluid layouts.\nRows have 1px of margin between them to match gutter."
+
+  attr :full_width, :boolean, doc: "Remove the default max width that the grid has set"
+
+  attr :narrow, :boolean,
+    doc:
+      "Container hangs 16px into the gutter. Useful for\ntypographic alignment with and without containers."
+
+  attr :row_gap, :string,
+    doc:
+      "Row gap spacing token suffix for grid rows (for example \"05\"). Defaults to \"07\" (wide), \"05\" (narrow), or \"gutter\" (condensed).",
+    values: [
+      nil,
+      "gutter",
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12",
+      "13"
+    ]
+
+  attr :rest, :global
+
+  slot :column do
+    attr :sm, :string
+    attr :md, :string
+    attr :lg, :string
+    attr :span, :string
+    attr :attrs, :map
+  end
+
+  slot :inner_block
+
+  def grid(%{column: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:align, fn -> nil end)
+      |> assign_new(:condensed, fn -> false end)
+      |> assign_new(:full_width, fn -> false end)
+      |> assign_new(:narrow, fn -> false end)
+      |> assign_new(:row_gap, fn -> nil end)
+
+    row_gap_given? =
+      assigns
+      |> Map.get(:__given__, %{})
+      |> Map.has_key?(:row_gap)
+
+    assigns =
+      if row_gap_given? do
+        assigns
+      else
+        gap =
+          cond do
+            assigns[:condensed] -> "gutter"
+            assigns[:narrow] -> "05"
+            true -> "07"
+          end
+
+        assign(assigns, :row_gap, gap)
+      end
+
+    ~H"""
+    <CoreComponents.grid
+      align={@align}
+      condensed={@condensed}
+      full_width={@full_width}
+      narrow={@narrow}
+      row_gap={@row_gap}
+      {@rest}
+    >
+      <%= for column <- @column do %>
+        <CoreComponents.column
+          sm={column[:sm]}
+          md={column[:md]}
+          lg={column[:lg]}
+          span={column[:span]}
+          {column[:attrs] || %{}}
+        >
+          {render_slot(column)}
+        </CoreComponents.column>
+      <% end %>
+    </CoreComponents.grid>
+    """
+  end
+
+  def grid(assigns) do
+    CoreComponents.grid(assigns)
+  end
+end

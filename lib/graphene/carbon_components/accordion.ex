@@ -1,0 +1,114 @@
+defmodule Graphene.CarbonComponents.Accordion do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-accordion>` from `./src/components/accordion/accordion.ts`
+
+  Accordion container.
+
+
+  """
+  attr :alignment, :string,
+    doc: "Specify the alignment of the accordion heading title and chevron",
+    values: [nil, "start", "end"]
+
+  attr :disabled, :boolean, doc: "Disable all accordion items inside this accordion."
+
+  attr :is_flush, :boolean,
+    doc:
+      "Specify whether Accordion text should be flush, default is false, does not work with align=\"start\""
+
+  attr :size, :string,
+    doc: "Accordion size should be sm, md, lg.",
+    values: ["sm", "md", "lg"],
+    default: "md"
+
+  attr :rest, :global
+
+  slot :item do
+    attr :title, :string
+    attr :open, :boolean
+    attr :disabled, :boolean
+  end
+
+  slot :inner_block
+
+  def accordion(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:alignment, fn -> nil end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:is_flush, fn -> false end)
+
+    ~H"""
+    <CoreComponents.accordion
+      alignment={@alignment}
+      disabled={@disabled}
+      is_flush={@is_flush}
+      size={@size}
+      {@rest}
+    >
+      <%= for item <- @item do %>
+        <CoreComponents.accordion_item
+          title={item[:title]}
+          open={item[:open]}
+          disabled={item[:disabled]}
+        >
+          {render_slot(item)}
+        </CoreComponents.accordion_item>
+      <% end %>
+    </CoreComponents.accordion>
+    """
+  end
+
+  def accordion(assigns) do
+    CoreComponents.accordion(assigns)
+  end
+
+  @doc """
+  Component `<cds-accordion-item>` from `./src/components/accordion/accordion-item.ts`
+
+  Accordion item.
+
+  ## Events
+
+  * `cds-accordion-item-beingtoggled` - The custom event fired before this accordion item is being toggled upon a user gesture.
+  Cancellation of this event stops the user-initiated action of toggling this accordion item.
+  * `cds-accordion-item-toggled` - The custom event fired after this accordion item is toggled upon a user gesture.
+
+  """
+  attr :disabled, :boolean, doc: "`true` if the accordion item should be disabled."
+  attr :open, :boolean, doc: "`true` if the accordion item should be open."
+  attr :title, :string, doc: "The title text."
+  attr :controlled, :boolean, doc: "Whether the item is controlled by the parent."
+  attr :rest, :global
+  slot :inner_block
+
+  def accordion_item(assigns) do
+    CoreComponents.accordion_item(assigns)
+  end
+
+  @doc """
+  Component `<cds-accordion-skeleton>` from `./src/components/accordion/accordion-skeleton.ts`
+
+  Accordion skeleton.
+
+  """
+  attr :alignment, :string,
+    doc: "Specify the alignment of the accordion heading title and chevron.",
+    values: [nil, "start", "end"]
+
+  attr :count, :string, doc: "Set number of items to render."
+  attr :is_flush, :boolean, doc: "Specify whether Accordion text should be flush."
+  attr :open, :boolean, doc: "`true` if the first accordion item should be open."
+  attr :rest, :global
+  slot :inner_block
+
+  def accordion_skeleton(assigns) do
+    CoreComponents.accordion_skeleton(assigns)
+  end
+end

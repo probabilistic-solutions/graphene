@@ -1,0 +1,193 @@
+defmodule Graphene.CarbonComponents.Dropdown do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+  alias Graphene.Internal.FormComponents
+
+  @doc """
+  Component `<cds-dropdown>` from `./src/components/dropdown/dropdown.ts`
+
+  Dropdown.
+
+  ## Events
+
+  * `cds-dropdown-beingselected` - The custom event fired before a dropdown item is selected upon a user gesture.
+  Cancellation of this event stops changing the user-initiated selection.
+  * `cds-dropdown-beingtoggled` - The custom event fired before the open state of this dropdown is toggled upon a user gesture.
+  Cancellation of this event stops the user-initiated toggling.
+  * `cds-dropdown-selected` - The custom event fired after a dropdown item is selected upon a user gesture.
+  * `cds-dropdown-toggled` - The custom event fired after the open state of this dropdown is toggled upon a user gesture.
+  * `input` - Undocumented
+  * `invalid` - Undocumented
+
+  """
+  attr :autoalign, :boolean, doc: "Specify whether auto align functionality should be applied"
+
+  attr :direction, :string,
+    doc: "Specify the direction of the dropdown. Can be either top or bottom.",
+    values: ["top", "bottom"],
+    default: "bottom"
+
+  attr :disabled, :boolean, doc: "`true` if this dropdown should be disabled."
+  attr :helper_text, :string, doc: "The helper text."
+  attr :hide_label, :boolean, doc: "Specify whether the title text should be hidden or not"
+  attr :invalid, :boolean, doc: "`true` to show the UI of the invalid state."
+  attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
+
+  attr :label, :string,
+    doc: "Generic label that will be used as the textual representation of what this field is for"
+
+  attr :name, :string, doc: "Name for the dropdown in the `FormData`"
+  attr :open, :boolean, doc: "`true` if this dropdown should be open."
+  attr :read_only, :boolean, doc: "Whether or not the Dropdown is readonly"
+  attr :required, :boolean, doc: "`true` if the value is required."
+
+  attr :required_validity_message, :string,
+    doc: "The special validity message for `required`.",
+    default: "Please fill out this field."
+
+  attr :size, :string, doc: "Dropdown size.", values: ["sm", "md", "lg"], default: "md"
+
+  attr :toggle_label_closed, :string,
+    doc: "The `aria-label` attribute for the UI indicating the closed state."
+
+  attr :toggle_label_open, :string,
+    doc: "The `aria-label` attribute for the UI indicating the open state."
+
+  attr :type, :string,
+    doc: "`true` if this dropdown should use the inline UI variant.",
+    values: ["", "inline"],
+    default: ""
+
+  attr :validity_message, :string, doc: "The validity message."
+  attr :value, :string, doc: "The value of the selected item."
+  attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
+
+  attr :warn_text, :string,
+    doc: "Provide the text that is displayed when the control is in warning state"
+
+  attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
+  attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
+
+  attr :form_event, :string,
+    default: nil,
+    doc: "override the custom event used to sync form values"
+
+  attr :rest, :global
+  slot :title_text, doc: "Title text content."
+
+  slot :item do
+    attr :label, :string
+    attr :value, :string
+    attr :disabled, :boolean
+  end
+
+  slot :inner_block
+
+  def dropdown(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:helper_text, fn -> nil end)
+      |> assign_new(:hide_label, fn -> false end)
+      |> assign_new(:invalid, fn -> false end)
+      |> assign_new(:invalid_text, fn -> nil end)
+      |> assign_new(:label, fn -> nil end)
+      |> assign_new(:name, fn -> nil end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:read_only, fn -> false end)
+      |> assign_new(:required, fn -> false end)
+      |> assign_new(:toggle_label_closed, fn -> nil end)
+      |> assign_new(:toggle_label_open, fn -> nil end)
+      |> assign_new(:validity_message, fn -> nil end)
+      |> assign_new(:value, fn -> nil end)
+      |> assign_new(:warn, fn -> false end)
+      |> assign_new(:warn_text, fn -> nil end)
+
+    ~H"""
+    <FormComponents.dropdown
+      autoalign={@autoalign}
+      direction={@direction}
+      disabled={@disabled}
+      helper_text={@helper_text}
+      hide_label={@hide_label}
+      invalid={@invalid}
+      invalid_text={@invalid_text}
+      label={@label}
+      name={@name}
+      open={@open}
+      read_only={@read_only}
+      required={@required}
+      required_validity_message={@required_validity_message}
+      size={@size}
+      toggle_label_closed={@toggle_label_closed}
+      toggle_label_open={@toggle_label_open}
+      type={@type}
+      validity_message={@validity_message}
+      value={@value}
+      warn={@warn}
+      warn_text={@warn_text}
+      {@rest}
+    >
+      <.dynamic_tag
+        :for={title <- @title_text}
+        tag_name={Map.get(title, :tag, "div")}
+        slot="title-text"
+      >
+        {render_slot(title)}
+      </.dynamic_tag>
+      <%= for item <- @item do %>
+        <CoreComponents.dropdown_item
+          value={item[:value] || item[:label]}
+          disabled={item[:disabled]}
+        >
+          {item[:label] || render_slot(item)}
+        </CoreComponents.dropdown_item>
+      <% end %>
+    </FormComponents.dropdown>
+    """
+  end
+
+  def dropdown(assigns) do
+    FormComponents.dropdown(assigns)
+  end
+
+  @doc """
+  Component `<cds-dropdown-item>` from `./src/components/dropdown/dropdown-item.ts`
+
+  Dropdown item.
+
+
+  """
+  attr :disabled, :boolean, doc: "`true` if this dropdown item should be disabled."
+  attr :size, :string, doc: "Dropdown size.", values: ["sm", "md", "lg"], default: "md"
+
+  attr :value, :string,
+    doc:
+      "The `value` attribute that is set to the parent `<cds-dropdown>` when this dropdown item is selected."
+
+  attr :rest, :global
+  slot :inner_block
+
+  def dropdown_item(assigns) do
+    CoreComponents.dropdown_item(assigns)
+  end
+
+  @doc """
+  Component `<cds-dropdown-skeleton>` from `./src/components/dropdown/dropdown-skeleton.ts`
+
+  Dropdown skeleton.
+
+  """
+  attr :hide_label, :boolean, doc: "Specify whether the label should be hidden."
+  attr :size, :string, doc: "Dropdown size.", values: [nil, "sm", "md", "lg"]
+  attr :rest, :global
+  slot :inner_block
+
+  def dropdown_skeleton(assigns) do
+    CoreComponents.dropdown_skeleton(assigns)
+  end
+end

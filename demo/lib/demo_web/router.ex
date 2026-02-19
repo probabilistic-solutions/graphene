@@ -33,9 +33,23 @@ defmodule DemoWeb.Router do
     storybook_assets("/storybook/assets")
   end
 
+  scope "/demo", DemoWeb do
+    pipe_through(:browser)
+
+    live("/", DashboardLive)
+    live("/infrastructure", InfrastructureLive)
+    live("/operations", OperationsLive)
+    live("/activity", ActivityLive)
+    live("/costs", CostsLive)
+    live("/security", SecurityLive)
+    live("/settings", SettingsLive)
+    live("/support", SupportLive)
+    live("/components", ComponentCatalogLive)
+  end
+
   scope "/", DemoWeb do
     pipe_through(:browser)
-    # serve nothing but storybook
+
     live_storybook("/", backend_module: DemoWeb.Storybook)
   end
 end

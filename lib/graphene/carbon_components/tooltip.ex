@@ -1,0 +1,178 @@
+defmodule Graphene.CarbonComponents.Tooltip do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-tooltip>` from `./src/components/tooltip/tooltip.ts`
+
+  Trigger button of tooltip.
+
+
+  """
+  attr :align, :string,
+    doc: "Specify how the trigger should align with the tooltip",
+    default: "top"
+
+  attr :alignment_axis_offset, :string,
+    doc:
+      "**Experimental:** Provide an offset value for alignment axis. Only takes effect when `autoalign` is enabled."
+
+  attr :autoalign, :boolean, doc: "Specify whether a auto align functionality should be applied"
+
+  attr :autoalign_boundary, :string,
+    doc:
+      "Specify a bounding element to be used for autoAlign calculations. The viewport is used by default.\nTakes one of the following: 'clippingAncestors', '#elementid', '#elementid_1, #elementid_2', 'rect(x, y, width, height)'\nThis prop is currently experimental and is subject to future changes."
+
+  attr :background_token, :string,
+    doc: "Specify the background token to use. Default is 'layer'.",
+    values: ["layer", "background"],
+    default: "layer"
+
+  attr :border, :boolean, doc: "Specify whether a border should be rendered on the popover"
+  attr :caret, :boolean, doc: "Specify whether a caret should be rendered", default: true
+
+  attr :close_on_activation, :boolean,
+    doc: "Specify whether the tooltip should be closed when clicked"
+
+  attr :data_table, :boolean, doc: "`true` if this tooltip is in a data table row"
+
+  attr :default_open, :boolean,
+    doc: "Specify whether the tooltip should be open when it first renders"
+
+  attr :drop_shadow, :boolean,
+    doc: "Specify whether a dropShadow should be rendered",
+    default: true
+
+  attr :enter_delay_ms, :string,
+    doc: "Specify the duration in milliseconds to delay before displaying the tooltip",
+    default: "100"
+
+  attr :high_contrast, :boolean, doc: "Render the component using the high-contrast variant"
+
+  attr :keyboard_only, :boolean,
+    doc:
+      "Only open tooltip on keyboard interactions, this is used for interactive tags\n(ie. operational-tag, selectable-tag)"
+
+  attr :leave_delay_ms, :string,
+    doc: "Specify the duration in milliseconds to delay before hiding the tooltip",
+    default: "300"
+
+  attr :open, :boolean, doc: "Specify whether the component is currently open or closed"
+  attr :size, :boolean, doc: "Specify the size of the tooltip"
+  attr :tab_tip, :boolean, doc: "Render the component using the tab tip variant"
+  attr :timeout_id, :string, doc: "Specify the timeout reference for the tooltip", default: "0"
+
+  attr :toolbar_action, :boolean,
+    doc: "Specify whether the tooltip should be open when it first renders"
+
+  attr :rest, :global
+  slot :trigger
+
+  slot :content do
+    attr :id, :string
+    attr :attrs, :map
+  end
+
+  slot :inner_block
+
+  def tooltip(%{content: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:alignment_axis_offset, fn -> nil end)
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:autoalign_boundary, fn -> nil end)
+      |> assign_new(:border, fn -> false end)
+      |> assign_new(:close_on_activation, fn -> false end)
+      |> assign_new(:data_table, fn -> false end)
+      |> assign_new(:default_open, fn -> false end)
+      |> assign_new(:high_contrast, fn -> false end)
+      |> assign_new(:keyboard_only, fn -> false end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:size, fn -> false end)
+      |> assign_new(:tab_tip, fn -> false end)
+      |> assign_new(:toolbar_action, fn -> false end)
+
+    ~H"""
+    <CoreComponents.tooltip
+      align={@align}
+      alignment_axis_offset={@alignment_axis_offset}
+      autoalign={@autoalign}
+      autoalign_boundary={@autoalign_boundary}
+      background_token={@background_token}
+      border={@border}
+      caret={@caret}
+      close_on_activation={@close_on_activation}
+      data_table={@data_table}
+      default_open={@default_open}
+      drop_shadow={@drop_shadow}
+      enter_delay_ms={@enter_delay_ms}
+      high_contrast={@high_contrast}
+      keyboard_only={@keyboard_only}
+      leave_delay_ms={@leave_delay_ms}
+      open={@open}
+      size={@size}
+      tab_tip={@tab_tip}
+      timeout_id={@timeout_id}
+      toolbar_action={@toolbar_action}
+      {@rest}
+    >
+      <%= for trigger <- @trigger do %>
+        {render_slot(trigger)}
+      <% end %>
+      <%= for content <- @content do %>
+        <CoreComponents.tooltip_content
+          id={content[:id]}
+          {content[:attrs] || %{}}
+        >
+          {render_slot(content)}
+        </CoreComponents.tooltip_content>
+      <% end %>
+      {render_slot(@inner_block)}
+    </CoreComponents.tooltip>
+    """
+  end
+
+  def tooltip(assigns) do
+    CoreComponents.tooltip(assigns)
+  end
+
+  @doc """
+  Component `<cds-tooltip-content>` from `./src/components/tooltip/tooltip-content.ts`
+
+  Tooltip content.
+
+
+  """
+  attr :align, :string, doc: "Specify the popover alignment"
+  attr :autoalign, :boolean, doc: "Specify whether a auto align functionality should be applied"
+
+  attr :background_token, :string,
+    doc: "Specify the background token to use. Default is 'layer'.",
+    values: ["layer", "background"],
+    default: "layer"
+
+  attr :border, :boolean, doc: "Specify whether a border should be rendered on the popover"
+  attr :caret, :any, doc: "Specify whether a caret should be rendered"
+
+  attr :drop_shadow, :boolean,
+    doc: "Specify whether a dropShadow should be rendered",
+    default: true
+
+  attr :high_contrast, :boolean, doc: "Render the component using the high-contrast variant"
+  attr :open, :boolean, doc: "Specify whether the component is currently open or closed"
+
+  attr :slot, :string,
+    doc: "The shadow slot this popover content should be in.",
+    default: "content"
+
+  attr :tab_tip, :boolean, doc: "Render the component using the tab tip variant"
+  attr :rest, :global
+  slot :inner_block
+
+  def tooltip_content(assigns) do
+    CoreComponents.tooltip_content(assigns)
+  end
+end

@@ -1,0 +1,392 @@
+defmodule Graphene.CarbonComponents.Modal do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-modal>` from `./src/components/modal/modal.ts`
+
+  Modal.
+
+  ## Events
+
+  * `cds-modal-beingclosed` - The custom event fired before this modal is being closed upon a user gesture.
+  Cancellation of this event stops the user-initiated action of closing this modal.
+  * `cds-modal-closed` - The custom event fired after this modal is closed upon a user gesture.
+
+  """
+  attr :alert, :boolean,
+    doc:
+      "Specify whether the Modal is displaying an alert, error or warning.\nShould go hand in hand with the danger prop."
+
+  attr :container_class, :string,
+    doc: "The additional CSS class names for the container <div> of the element."
+
+  attr :full_width, :boolean,
+    doc: "Specify whether or not the Modal content should have any inner padding."
+
+  attr :has_scrolling_content, :boolean,
+    doc: "Specify whether the modal contains scrolling content"
+
+  attr :loading_description, :string, doc: "Specify the description for the loading text"
+
+  attr :loading_icon_description, :string,
+    doc: "Specify the description for the loading icon",
+    default: "Loading"
+
+  attr :loading_status, :any, doc: "Specify the loading status"
+
+  attr :loading_success_delay, :string,
+    doc: "Provide a delay for the setTimeout for success",
+    default: "1500"
+
+  attr :open, :boolean, doc: "`true` if the modal should be open."
+
+  attr :prevent_close, :boolean,
+    doc: "Prevent the modal from closing after clicking the close button"
+
+  attr :prevent_close_on_click_outside, :boolean, doc: "Prevent closing on click outside of modal"
+
+  attr :should_submit_on_enter, :boolean,
+    doc:
+      "Specify if Enter key should be used as \"submit\" action that clicks the primary footer button"
+
+  attr :size, :string, doc: "Modal size.", values: ["xs", "sm", "md", "lg"], default: "md"
+  attr :rest, :global
+  slot :label
+  slot :heading
+  slot :body
+
+  slot :footer_button do
+    attr :label, :string
+    attr :kind, :string
+    attr :disabled, :boolean
+    attr :type, :string
+    attr :autofocus, :boolean
+    attr :attrs, :map
+  end
+
+  slot :inner_block
+
+  def modal(%{body: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:alert, fn -> false end)
+      |> assign_new(:container_class, fn -> nil end)
+      |> assign_new(:full_width, fn -> false end)
+      |> assign_new(:has_scrolling_content, fn -> false end)
+      |> assign_new(:loading_description, fn -> nil end)
+      |> assign_new(:loading_status, fn -> nil end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:prevent_close, fn -> false end)
+      |> assign_new(:prevent_close_on_click_outside, fn -> false end)
+      |> assign_new(:should_submit_on_enter, fn -> false end)
+
+    ~H"""
+    <CoreComponents.modal
+      alert={@alert}
+      container_class={@container_class}
+      full_width={@full_width}
+      has_scrolling_content={@has_scrolling_content}
+      loading_description={@loading_description}
+      loading_icon_description={@loading_icon_description}
+      loading_status={@loading_status}
+      loading_success_delay={@loading_success_delay}
+      open={@open}
+      prevent_close={@prevent_close}
+      prevent_close_on_click_outside={@prevent_close_on_click_outside}
+      should_submit_on_enter={@should_submit_on_enter}
+      size={@size}
+      {@rest}
+    >
+      <CoreComponents.modal_header>
+        <%= for label <- @label do %>
+          <CoreComponents.modal_label>{render_slot(label)}</CoreComponents.modal_label>
+        <% end %>
+        <%= for heading <- @heading do %>
+          <CoreComponents.modal_heading>{render_slot(heading)}</CoreComponents.modal_heading>
+        <% end %>
+      </CoreComponents.modal_header>
+      <CoreComponents.modal_body :if={@body != []}>
+        <CoreComponents.modal_body_content>
+          <%= for body <- @body do %>
+            {render_slot(body)}
+          <% end %>
+        </CoreComponents.modal_body_content>
+      </CoreComponents.modal_body>
+      <CoreComponents.modal_footer :if={@footer_button != []}>
+        <%= for button <- @footer_button do %>
+          <CoreComponents.modal_footer_button
+            kind={button[:kind]}
+            disabled={button[:disabled]}
+            type={button[:type]}
+            autofocus={button[:autofocus]}
+            {button[:attrs] || %{}}
+          >
+            {button[:label] || render_slot(button)}
+          </CoreComponents.modal_footer_button>
+        <% end %>
+      </CoreComponents.modal_footer>
+      {render_slot(@inner_block)}
+    </CoreComponents.modal>
+    """
+  end
+
+  def modal(%{footer_button: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:alert, fn -> false end)
+      |> assign_new(:container_class, fn -> nil end)
+      |> assign_new(:full_width, fn -> false end)
+      |> assign_new(:has_scrolling_content, fn -> false end)
+      |> assign_new(:loading_description, fn -> nil end)
+      |> assign_new(:loading_status, fn -> nil end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:prevent_close, fn -> false end)
+      |> assign_new(:prevent_close_on_click_outside, fn -> false end)
+      |> assign_new(:should_submit_on_enter, fn -> false end)
+
+    ~H"""
+    <CoreComponents.modal
+      alert={@alert}
+      container_class={@container_class}
+      full_width={@full_width}
+      has_scrolling_content={@has_scrolling_content}
+      loading_description={@loading_description}
+      loading_icon_description={@loading_icon_description}
+      loading_status={@loading_status}
+      loading_success_delay={@loading_success_delay}
+      open={@open}
+      prevent_close={@prevent_close}
+      prevent_close_on_click_outside={@prevent_close_on_click_outside}
+      should_submit_on_enter={@should_submit_on_enter}
+      size={@size}
+      {@rest}
+    >
+      <CoreComponents.modal_header>
+        <%= for label <- @label do %>
+          <CoreComponents.modal_label>{render_slot(label)}</CoreComponents.modal_label>
+        <% end %>
+        <%= for heading <- @heading do %>
+          <CoreComponents.modal_heading>{render_slot(heading)}</CoreComponents.modal_heading>
+        <% end %>
+      </CoreComponents.modal_header>
+      <CoreComponents.modal_body :if={@body != []}>
+        <CoreComponents.modal_body_content>
+          <%= for body <- @body do %>
+            {render_slot(body)}
+          <% end %>
+        </CoreComponents.modal_body_content>
+      </CoreComponents.modal_body>
+      <CoreComponents.modal_footer :if={@footer_button != []}>
+        <%= for button <- @footer_button do %>
+          <CoreComponents.modal_footer_button
+            kind={button[:kind]}
+            disabled={button[:disabled]}
+            type={button[:type]}
+            autofocus={button[:autofocus]}
+            {button[:attrs] || %{}}
+          >
+            {button[:label] || render_slot(button)}
+          </CoreComponents.modal_footer_button>
+        <% end %>
+      </CoreComponents.modal_footer>
+      {render_slot(@inner_block)}
+    </CoreComponents.modal>
+    """
+  end
+
+  def modal(%{label: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:alert, fn -> false end)
+      |> assign_new(:container_class, fn -> nil end)
+      |> assign_new(:full_width, fn -> false end)
+      |> assign_new(:has_scrolling_content, fn -> false end)
+      |> assign_new(:loading_description, fn -> nil end)
+      |> assign_new(:loading_status, fn -> nil end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:prevent_close, fn -> false end)
+      |> assign_new(:prevent_close_on_click_outside, fn -> false end)
+      |> assign_new(:should_submit_on_enter, fn -> false end)
+
+    ~H"""
+    <CoreComponents.modal
+      alert={@alert}
+      container_class={@container_class}
+      full_width={@full_width}
+      has_scrolling_content={@has_scrolling_content}
+      loading_description={@loading_description}
+      loading_icon_description={@loading_icon_description}
+      loading_status={@loading_status}
+      loading_success_delay={@loading_success_delay}
+      open={@open}
+      prevent_close={@prevent_close}
+      prevent_close_on_click_outside={@prevent_close_on_click_outside}
+      should_submit_on_enter={@should_submit_on_enter}
+      size={@size}
+      {@rest}
+    >
+      <CoreComponents.modal_header>
+        <%= for label <- @label do %>
+          <CoreComponents.modal_label>{render_slot(label)}</CoreComponents.modal_label>
+        <% end %>
+        <%= for heading <- @heading do %>
+          <CoreComponents.modal_heading>{render_slot(heading)}</CoreComponents.modal_heading>
+        <% end %>
+      </CoreComponents.modal_header>
+      <CoreComponents.modal_body :if={@body != []}>
+        <CoreComponents.modal_body_content>
+          <%= for body <- @body do %>
+            {render_slot(body)}
+          <% end %>
+        </CoreComponents.modal_body_content>
+      </CoreComponents.modal_body>
+      <CoreComponents.modal_footer :if={@footer_button != []}>
+        <%= for button <- @footer_button do %>
+          <CoreComponents.modal_footer_button
+            kind={button[:kind]}
+            disabled={button[:disabled]}
+            type={button[:type]}
+            autofocus={button[:autofocus]}
+            {button[:attrs] || %{}}
+          >
+            {button[:label] || render_slot(button)}
+          </CoreComponents.modal_footer_button>
+        <% end %>
+      </CoreComponents.modal_footer>
+      {render_slot(@inner_block)}
+    </CoreComponents.modal>
+    """
+  end
+
+  def modal(%{heading: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:alert, fn -> false end)
+      |> assign_new(:container_class, fn -> nil end)
+      |> assign_new(:full_width, fn -> false end)
+      |> assign_new(:has_scrolling_content, fn -> false end)
+      |> assign_new(:loading_description, fn -> nil end)
+      |> assign_new(:loading_status, fn -> nil end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:prevent_close, fn -> false end)
+      |> assign_new(:prevent_close_on_click_outside, fn -> false end)
+      |> assign_new(:should_submit_on_enter, fn -> false end)
+
+    ~H"""
+    <CoreComponents.modal
+      alert={@alert}
+      container_class={@container_class}
+      full_width={@full_width}
+      has_scrolling_content={@has_scrolling_content}
+      loading_description={@loading_description}
+      loading_icon_description={@loading_icon_description}
+      loading_status={@loading_status}
+      loading_success_delay={@loading_success_delay}
+      open={@open}
+      prevent_close={@prevent_close}
+      prevent_close_on_click_outside={@prevent_close_on_click_outside}
+      should_submit_on_enter={@should_submit_on_enter}
+      size={@size}
+      {@rest}
+    >
+      <CoreComponents.modal_header>
+        <%= for label <- @label do %>
+          <CoreComponents.modal_label>{render_slot(label)}</CoreComponents.modal_label>
+        <% end %>
+        <%= for heading <- @heading do %>
+          <CoreComponents.modal_heading>{render_slot(heading)}</CoreComponents.modal_heading>
+        <% end %>
+      </CoreComponents.modal_header>
+      <CoreComponents.modal_body :if={@body != []}>
+        <CoreComponents.modal_body_content>
+          <%= for body <- @body do %>
+            {render_slot(body)}
+          <% end %>
+        </CoreComponents.modal_body_content>
+      </CoreComponents.modal_body>
+      <CoreComponents.modal_footer :if={@footer_button != []}>
+        <%= for button <- @footer_button do %>
+          <CoreComponents.modal_footer_button
+            kind={button[:kind]}
+            disabled={button[:disabled]}
+            type={button[:type]}
+            autofocus={button[:autofocus]}
+            {button[:attrs] || %{}}
+          >
+            {button[:label] || render_slot(button)}
+          </CoreComponents.modal_footer_button>
+        <% end %>
+      </CoreComponents.modal_footer>
+      {render_slot(@inner_block)}
+    </CoreComponents.modal>
+    """
+  end
+
+  def modal(assigns) do
+    CoreComponents.modal(assigns)
+  end
+
+  @doc """
+  Component `<cds-modal-close-button>` from `./src/components/modal/modal-close-button.ts`
+
+  Modal close button.
+
+
+  """
+  attr :close_button_label, :string,
+    doc: "Specify a label for the close button of the modal; defaults to close",
+    default: "Close"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def modal_close_button(assigns) do
+    CoreComponents.modal_close_button(assigns)
+  end
+
+  @doc """
+  Component `<cds-modal-header>` from `./src/components/modal/modal-header.ts`
+
+  Modal header.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def modal_header(assigns) do
+    CoreComponents.modal_header(assigns)
+  end
+
+  @doc """
+  Component `<cds-modal-heading>` from `./src/components/modal/modal-heading.ts`
+
+  Modal heading.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def modal_heading(assigns) do
+    CoreComponents.modal_heading(assigns)
+  end
+
+  @doc """
+  Component `<cds-modal-label>` from `./src/components/modal/modal-label.ts`
+
+  Modal label.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def modal_label(assigns) do
+    CoreComponents.modal_label(assigns)
+  end
+end

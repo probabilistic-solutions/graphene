@@ -1,0 +1,80 @@
+defmodule Graphene.CarbonComponents.TableToolbar do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-table-toolbar>` from `./src/components/data-table/table-toolbar.ts`
+
+  Table toolbar.
+
+
+  """
+  attr :size, :any, doc: "Toolbar size"
+  attr :rest, :global
+  slot :inner_block
+
+  def table_toolbar(assigns) do
+    CoreComponents.table_toolbar(assigns)
+  end
+
+  @doc """
+  Component `<cds-table-toolbar-content>` from `./src/components/data-table/table-toolbar-content.ts`
+
+  Table toolbar content.
+
+
+  """
+  attr :has_batch_actions, :boolean, doc: "`true` if this batch actions bar is active."
+  attr :size, :any, doc: "Table toolbar contents size"
+  attr :rest, :global
+  slot :inner_block
+
+  def table_toolbar_content(assigns) do
+    CoreComponents.table_toolbar_content(assigns)
+  end
+
+  @doc """
+  Component `<cds-table-toolbar-search>` from `./src/components/data-table/table-toolbar-search.ts`
+
+  Table toolbar search.
+
+  ## Events
+
+  * `cds-search-input` - The custom event fired after the search content is changed upon a user gesture.
+
+  """
+  attr :autocomplete, :string,
+    doc:
+      "Specify an optional value for the autocomplete property on the underlying <input>,\ndefaults to \"off\"",
+    default: "off"
+
+  attr :close_button_label_text, :string,
+    doc: "Specify a label to be read by screen readers on the \"close\" button"
+
+  attr :disabled, :boolean, doc: "`true` if the search box should be disabled."
+  attr :expandable, :boolean, doc: "`true` if the search bar can be expandable"
+  attr :expanded, :boolean, doc: "`true` if the search box should be expanded."
+  attr :has_custom_icon, :boolean
+  attr :label_text, :string, doc: "The label text."
+  attr :name, :string, doc: "The form name in `FormData`."
+  attr :persistent, :boolean, doc: "`true` if the search box should be always be open."
+  attr :placeholder, :string, doc: "The placeholder text.", default: "Search"
+  attr :role, :string, doc: "Specify the role for the underlying <input>, defaults to searchbox"
+
+  attr :size, :string,
+    doc: "The search box size.",
+    values: ["sm", "md", "lg", "xl"],
+    default: "lg"
+
+  attr :type, :string, doc: "The `<input>` name."
+  attr :value, :string, doc: "The value."
+  attr :rest, :global
+  slot :inner_block
+
+  def table_toolbar_search(assigns) do
+    CoreComponents.table_toolbar_search(assigns)
+  end
+end

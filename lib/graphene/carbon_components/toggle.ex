@@ -1,0 +1,88 @@
+defmodule Graphene.CarbonComponents.Toggle do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+  alias Graphene.Internal.FormComponents
+
+  @doc """
+  Component `<cds-toggle>` from `./src/components/toggle/toggle.ts`
+
+  Basic toggle.
+
+  ## Events
+
+  * `cds-toggle-changed` - The custom event fired after this changebox changes its checked state.
+  * `cds-checkbox-changed` - The custom event fired after this changebox changes its checked state.
+
+  """
+  attr :checked, :boolean,
+    doc:
+      "\n**Deprecated:** Use `toggled` instead.\nThe `checked` attribute will be removed in the next major version."
+
+  attr :data_table, :boolean, doc: "Specify if checkbox is being used in a data table"
+
+  attr :default_checked, :any,
+    doc: "Specify whether the underlying input should be checked by default"
+
+  attr :disabled, :boolean, doc: "Specify whether the Checkbox should be disabled"
+  attr :helper_text, :any, doc: "Provide text for the form group for additional help"
+
+  attr :hide_checkbox, :boolean,
+    doc:
+      "Specify whether the checkbox should be present in the DOM,\nbut invisible and uninteractable. Used for data-table purposes."
+
+  attr :hide_label, :boolean, doc: "Hide label text."
+  attr :id, :string, doc: "Specify a custom id for the checkbox", default: "checkbox"
+  attr :indeterminate, :boolean, doc: "Specify whether the Checkbox is in an indeterminate state"
+  attr :invalid, :boolean, doc: "Specify whether the Checkbox is currently invalid"
+
+  attr :invalid_text, :any,
+    doc: "Provide the text that is displayed when the Checkbox is in an invalid state"
+
+  attr :label_a, :string, doc: "Specify the label for the \"on\" position", default: "On"
+  attr :label_b, :string, doc: "Specify the label for the \"off\" position", default: "Off"
+  attr :name, :string, doc: "The form name."
+  attr :read_only, :boolean, doc: "Read only boolean."
+  attr :readonly, :boolean, doc: "Specify whether the Checkbox is read-only"
+  attr :size, :string, doc: "Toggle size.", values: ["", "sm"], default: ""
+  attr :title, :string, doc: "Specify a title for the node for the Checkbox"
+  attr :toggled, :boolean, doc: "Specify whether the control is toggled"
+  attr :value, :string, doc: "The value."
+  attr :warn, :boolean, doc: "Specify whether the Checkbox is in a warn state"
+
+  attr :warn_text, :boolean,
+    doc: "Provide the text that is displayed when the Checkbox is in a warn state"
+
+  attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
+  attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
+
+  attr :form_event, :string,
+    default: nil,
+    doc: "override the custom event used to sync form values"
+
+  attr :rest, :global
+  slot :checked_text, doc: "The text for the checked state."
+  slot :label_text, doc: "The label text."
+  slot :unchecked_text, doc: "The text for the unchecked state."
+  slot :inner_block
+
+  def toggle(assigns) do
+    FormComponents.toggle(assigns)
+  end
+
+  @doc """
+  Component `<cds-toggle-skeleton>` from `./src/components/toggle/toggle-skeleton.ts`
+
+  Undocumented
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def toggle_skeleton(assigns) do
+    CoreComponents.toggle_skeleton(assigns)
+  end
+end

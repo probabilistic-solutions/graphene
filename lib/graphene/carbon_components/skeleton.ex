@@ -1,0 +1,60 @@
+defmodule Graphene.CarbonComponents.Skeleton do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-skeleton-icon>` from `./src/components/skeleton-icon/skeleton-icon.ts`
+
+  Skeleton icon.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def skeleton_icon(assigns) do
+    CoreComponents.skeleton_icon(assigns)
+  end
+
+  @doc """
+  Component `<cds-skeleton-placeholder>` from `./src/components/skeleton-placeholder/skeleton-placeholder.ts`
+
+  Skeleton placeholder.
+
+
+  """
+  attr :optional_classes, :any, doc: "Specify optional classes to be added to your SkeletonText"
+  attr :rest, :global
+  slot :inner_block
+
+  def skeleton_placeholder(assigns) do
+    CoreComponents.skeleton_placeholder(assigns)
+  end
+
+  @doc """
+  Component `<cds-skeleton-text>` from `./src/components/skeleton-text/skeleton-text.ts`
+
+  Skeleton text.
+
+
+  """
+  attr :heading, :boolean, doc: "Determines if the skeleton text should be rendered as a heading."
+  attr :line_count, :string, doc: "the number of lines in a paragraph", default: "3"
+  attr :optional_classes, :any, doc: "Specify optional classes to be added to your SkeletonText"
+  attr :paragraph, :boolean, doc: "will generate multiple lines of text"
+  attr :type, :string, doc: "The type of skeleton text.", values: ["", "heading"], default: ""
+
+  attr :width, :string,
+    doc: "width (in px or %) of single line of text or max-width of paragraph lines",
+    default: "100%"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def skeleton_text(assigns) do
+    CoreComponents.skeleton_text(assigns)
+  end
+end

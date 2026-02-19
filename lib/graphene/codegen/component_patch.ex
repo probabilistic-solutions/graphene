@@ -113,6 +113,15 @@ defmodule Graphene.CodeGen.ComponentPatches do
     set_attr_default(component, "step-multiplier", "4")
   end
 
+  defp do_patch(%{htmltag: "cds-grid"} = component) do
+    ensure_attr(component, %{
+      "name" => "row-gap",
+      "type" => "GRID_ROW_GAP",
+      "description" =>
+        "Row gap spacing token suffix for grid rows (for example \"05\"). Defaults to \"07\" (wide), \"05\" (narrow), or \"gutter\" (condensed)."
+    })
+  end
+
   defp do_patch(%{htmltag: "cds-button", slots: []} = component) do
     %{component | slots: [Slot.parse(%{"name" => "icon", "description" => "Icon."})]}
   end
@@ -750,7 +759,7 @@ defmodule Graphene.CodeGen.ComponentPatches do
             {@rest}
           >
             <CoreComponents.menu>
-              {render_menu_items(assigns)}
+              {Graphene.CarbonComponents.Helpers.render_menu_items(assigns)}
             </CoreComponents.menu>
           </CoreComponents.combo_button>
       """
@@ -1121,6 +1130,26 @@ defmodule Graphene.CodeGen.ComponentPatches do
       name: :grid,
       delegate: :core,
       patterns: ["%{column: [_ | _]}"],
+      prelude: ~S"""
+        row_gap_given? =
+          assigns
+          |> Map.get(:__given__, %{})
+          |> Map.has_key?(:row_gap)
+
+        assigns =
+          if row_gap_given? do
+            assigns
+          else
+            gap =
+              cond do
+                assigns[:condensed] -> "gutter"
+                assigns[:narrow] -> "05"
+                true -> "07"
+              end
+
+            assign(assigns, :row_gap, gap)
+          end
+      """,
       extra_slots: ~S"""
         slot :column do
           attr :sm, :string
@@ -1136,6 +1165,7 @@ defmodule Graphene.CodeGen.ComponentPatches do
             condensed={@condensed}
             full_width={@full_width}
             narrow={@narrow}
+            row_gap={@row_gap}
             {@rest}
           >
             <%= for column <- @column do %>
@@ -1162,6 +1192,7 @@ defmodule Graphene.CodeGen.ComponentPatches do
           attr :prefix, :string
           attr :attrs, :map
         end
+        slot :global
       """,
       body: ~S"""
           <CoreComponents.header {@rest}>
@@ -1175,7 +1206,85 @@ defmodule Graphene.CodeGen.ComponentPatches do
               </CoreComponents.header_name>
             <% end %>
             {render_slot(@inner_block)}
+            <%= if @global != [] do %>
+              <div class="cds--header__global">
+                <%= for global <- @global do %>
+                  {render_slot(global)}
+                <% end %>
+              </div>
+            <% end %>
           </CoreComponents.header>
+      """
+    },
+    %{
+      name: :header_global_action,
+      delegate: :core,
+      patterns: ["%{icon: [_ | _]}"],
+      extra_slots: ~S"""
+        slot :icon do
+          attr :name, :string
+          attr :size, :any
+          attr :attrs, :map
+        end
+      """,
+      body: ~S"""
+          <cds-header-global-action
+            active={assigns[:active]}
+            autofocus={assigns[:autofocus]}
+            batch-action={assigns[:batch_action]}
+            button-class-name={assigns[:button_class_name]}
+            button-label-active={assigns[:button_label_active]}
+            button-label-inactive={assigns[:button_label_inactive]}
+            danger-description={assigns[:danger_description]}
+            disabled={assigns[:disabled]}
+            download={assigns[:download]}
+            has-main-content={assigns[:has_main_content]}
+            href={assigns[:href]}
+            hreflang={assigns[:hreflang]}
+            isExpressive={assigns[:is_expressive]}
+            isSelected={assigns[:is_selected]}
+            kind={assigns[:kind]}
+            link-role={assigns[:link_role]}
+            openTooltip={assigns[:open_tooltip]}
+            panel-id={assigns[:panel_id]}
+            ping={assigns[:ping]}
+            rel={assigns[:rel]}
+            size={assigns[:size]}
+            tab-index={assigns[:tab_index]}
+            target={assigns[:target]}
+            tooltip-alignment={assigns[:tooltip_alignment]}
+            tooltip-position={assigns[:tooltip_position]}
+            tooltip-text={assigns[:tooltip_text]}
+            type={assigns[:type]}
+            {@rest}
+          >
+            <%= for icon <- @icon do %>
+              <% size_value =
+                case icon[:size] do
+                  size when is_integer(size) ->
+                    size
+
+                  size when is_binary(size) ->
+                    case Integer.parse(size) do
+                      {value, _} -> value
+                      _ -> 16
+                    end
+
+                  _ ->
+                    16
+                end %>
+              <% size_string = Integer.to_string(size_value) %>
+              <% icon_attrs = Map.put(icon[:attrs] || %{}, :slot, "icon") %>
+              <%= if icon[:name] do %>
+                <Graphene.Icons.icon name={icon[:name]} size={size_value} {icon_attrs} />
+              <% else %>
+                <CoreComponents.icon size={size_string} {icon_attrs}>
+                  {render_slot(icon)}
+                </CoreComponents.icon>
+              <% end %>
+            <% end %>
+            {render_slot(@inner_block)}
+          </cds-header-global-action>
       """
     },
     %{
@@ -1311,7 +1420,7 @@ defmodule Graphene.CodeGen.ComponentPatches do
             {@rest}
           >
             <CoreComponents.menu>
-              {render_menu_items(assigns)}
+              {Graphene.CarbonComponents.Helpers.render_menu_items(assigns)}
             </CoreComponents.menu>
           </CoreComponents.menu_button>
       """
@@ -1854,7 +1963,7 @@ defmodule Graphene.CodeGen.ComponentPatches do
             <CoreComponents.structured_list_head>
               <CoreComponents.structured_list_header_row selection_name={@selection_name}>
                 <CoreComponents.structured_list_header_cell :for={col <- @col}>
-                  {render_column_label(col[:label])}
+                  {Graphene.CarbonComponents.Helpers.render_column_label(col[:label])}
                 </CoreComponents.structured_list_header_cell>
               </CoreComponents.structured_list_header_row>
             </CoreComponents.structured_list_head>
@@ -1862,8 +1971,8 @@ defmodule Graphene.CodeGen.ComponentPatches do
               <%= for {row, index} <- Enum.with_index(@rows) do %>
                 <CoreComponents.structured_list_row
                   selection_name={@selection_name}
-                  selection_value={structured_list_row_id(@row_id, row, index)}
-                  selected={structured_list_selected?(@selected_set, @row_id, row, index)}
+                  selection_value={Graphene.CarbonComponents.Helpers.structured_list_row_id(@row_id, row, index)}
+                  selected={Graphene.CarbonComponents.Helpers.structured_list_selected?(@selected_set, @row_id, row, index)}
                 >
                   <CoreComponents.structured_list_cell :for={col <- @col}>
                     {render_slot(col, row)}

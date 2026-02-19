@@ -1,0 +1,207 @@
+defmodule Graphene.CarbonComponents.ComboBox do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+  alias Graphene.Internal.FormComponents
+
+  @doc """
+  Component `<cds-combo-box>` from `./src/components/combo-box/combo-box.ts`
+
+  Combo box.
+
+  ## Events
+
+  * `cds-combo-box-beingselected` - The custom event fired before a combo box item is selected upon a user gesture.
+  Cancellation of this event stops changing the user-initiated selection.
+  * `cds-combo-box-beingtoggled` - The custom event fired before the open state of this combo box is toggled upon a user gesture.
+  Cancellation of this event stops the user-initiated toggling.
+  * `cds-combo-box-selected` - The custom event fired after a combo box item is selected upon a user gesture.
+  * `cds-combo-box-toggled` - The custom event fired after the open state of this combo box is toggled upon a user gesture.
+  * `cds-dropdown-beingselected` - The custom event fired before a dropdown item is selected upon a user gesture.
+  Cancellation of this event stops changing the user-initiated selection.
+  * `cds-dropdown-beingtoggled` - The custom event fired before the open state of this dropdown is toggled upon a user gesture.
+  Cancellation of this event stops the user-initiated toggling.
+  * `cds-dropdown-selected` - The custom event fired after a dropdown item is selected upon a user gesture.
+  * `cds-dropdown-toggled` - The custom event fired after the open state of this dropdown is toggled upon a user gesture.
+  * `input` - Undocumented
+  * `invalid` - Undocumented
+
+  """
+  attr :allow_custom_value, :boolean,
+    doc: "`true` to allow custom values that do not match any item in the list."
+
+  attr :autoalign, :boolean, doc: "Specify whether auto align functionality should be applied"
+
+  attr :clear_selection_label, :string,
+    doc: "The `aria-label` attribute for the icon to clear selection.",
+    default: "Clear selection"
+
+  attr :direction, :string,
+    doc: "Specify the direction of the dropdown. Can be either top or bottom.",
+    values: ["top", "bottom"],
+    default: "bottom"
+
+  attr :disabled, :boolean, doc: "`true` if this dropdown should be disabled."
+  attr :helper_text, :string, doc: "The helper text."
+  attr :hide_label, :boolean, doc: "Specify whether the title text should be hidden or not"
+  attr :input_label, :string, doc: "The `aria-label` attribute for the `<input>` for filtering."
+  attr :invalid, :boolean, doc: "`true` to show the UI of the invalid state."
+  attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
+
+  attr :label, :string,
+    doc: "Generic label that will be used as the textual representation of what this field is for"
+
+  attr :name, :string, doc: "Name for the dropdown in the `FormData`"
+  attr :open, :boolean, doc: "`true` if this dropdown should be open."
+  attr :read_only, :boolean, doc: "Whether or not the Dropdown is readonly"
+  attr :required, :boolean, doc: "`true` if the value is required."
+
+  attr :required_validity_message, :string,
+    doc: "The special validity message for `required`.",
+    default: "Please fill out this field."
+
+  attr :should_filter_item, :any,
+    doc:
+      "Provide custom filtering behavior. This attribute will be ignored if\n`typeahead` is enabled and will default to `true`"
+
+  attr :size, :string, doc: "Dropdown size.", values: ["sm", "md", "lg"], default: "md"
+
+  attr :title_text, :string,
+    doc: "Provide the title text that will be read by a screen reader when visiting this control"
+
+  attr :toggle_label_closed, :string,
+    doc: "The `aria-label` attribute for the UI indicating the closed state."
+
+  attr :toggle_label_open, :string,
+    doc: "The `aria-label` attribute for the UI indicating the open state."
+
+  attr :type, :string,
+    doc: "`true` if this dropdown should use the inline UI variant.",
+    values: ["", "inline"],
+    default: ""
+
+  attr :typeahead, :boolean,
+    doc: "**Experimental**: will enable autocomplete and typeahead for the input field."
+
+  attr :validity_message, :string, doc: "The validity message."
+  attr :value, :string, doc: "The value of the selected item."
+  attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
+
+  attr :warn_text, :string,
+    doc: "Provide the text that is displayed when the control is in warning state"
+
+  attr :controlled, :boolean, doc: "Whether the combobox is controlled."
+  attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
+  attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
+
+  attr :form_event, :string,
+    default: nil,
+    doc: "override the custom event used to sync form values"
+
+  attr :rest, :global
+
+  slot :item do
+    attr :label, :string
+    attr :value, :string
+    attr :disabled, :boolean
+  end
+
+  slot :inner_block
+
+  def combo_box(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:allow_custom_value, fn -> false end)
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:helper_text, fn -> nil end)
+      |> assign_new(:hide_label, fn -> false end)
+      |> assign_new(:input_label, fn -> nil end)
+      |> assign_new(:invalid, fn -> false end)
+      |> assign_new(:invalid_text, fn -> nil end)
+      |> assign_new(:label, fn -> nil end)
+      |> assign_new(:name, fn -> nil end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:read_only, fn -> false end)
+      |> assign_new(:required, fn -> false end)
+      |> assign_new(:should_filter_item, fn -> nil end)
+      |> assign_new(:title_text, fn -> nil end)
+      |> assign_new(:toggle_label_closed, fn -> nil end)
+      |> assign_new(:toggle_label_open, fn -> nil end)
+      |> assign_new(:typeahead, fn -> false end)
+      |> assign_new(:validity_message, fn -> nil end)
+      |> assign_new(:value, fn -> nil end)
+      |> assign_new(:warn, fn -> false end)
+      |> assign_new(:warn_text, fn -> nil end)
+      |> assign_new(:controlled, fn -> nil end)
+
+    ~H"""
+    <FormComponents.combo_box
+      allow_custom_value={@allow_custom_value}
+      autoalign={@autoalign}
+      clear_selection_label={@clear_selection_label}
+      direction={@direction}
+      disabled={@disabled}
+      helper_text={@helper_text}
+      hide_label={@hide_label}
+      input_label={@input_label}
+      invalid={@invalid}
+      invalid_text={@invalid_text}
+      label={@label}
+      name={@name}
+      open={@open}
+      read_only={@read_only}
+      required={@required}
+      required_validity_message={@required_validity_message}
+      should_filter_item={@should_filter_item}
+      size={@size}
+      title_text={@title_text}
+      toggle_label_closed={@toggle_label_closed}
+      toggle_label_open={@toggle_label_open}
+      type={@type}
+      typeahead={@typeahead}
+      validity_message={@validity_message}
+      value={@value}
+      warn={@warn}
+      warn_text={@warn_text}
+      {@rest}
+    >
+      <%= for item <- @item do %>
+        <CoreComponents.combo_box_item
+          value={item[:value] || item[:label]}
+          disabled={item[:disabled]}
+        >
+          {item[:label] || render_slot(item)}
+        </CoreComponents.combo_box_item>
+      <% end %>
+    </FormComponents.combo_box>
+    """
+  end
+
+  def combo_box(assigns) do
+    FormComponents.combo_box(assigns)
+  end
+
+  @doc """
+  Component `<cds-combo-box-item>` from `./src/components/combo-box/combo-box-item.ts`
+
+  Combo box item.
+
+
+  """
+  attr :disabled, :boolean, doc: "`true` if this dropdown item should be disabled."
+  attr :size, :string, doc: "Dropdown size.", values: ["sm", "md", "lg"], default: "md"
+
+  attr :value, :string,
+    doc:
+      "The `value` attribute that is set to the parent `<cds-dropdown>` when this dropdown item is selected."
+
+  attr :rest, :global
+  slot :inner_block
+
+  def combo_box_item(assigns) do
+    CoreComponents.combo_box_item(assigns)
+  end
+end

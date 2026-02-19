@@ -21,7 +21,8 @@
   </div>
   
   
-    <cds-contained-list-item>
+    
+<cds-contained-list-item>
   
       First item
     
@@ -29,7 +30,8 @@
   
 </cds-contained-list-item>
   
-    <cds-contained-list-item>
+    
+<cds-contained-list-item>
   
       Second item
     
@@ -37,7 +39,8 @@
   
 </cds-contained-list-item>
   
-    <cds-contained-list-item>
+    
+<cds-contained-list-item>
   
       Third item
     
@@ -70,7 +73,8 @@
   </div>
   
   
-    <cds-contained-list-item clickable>
+    
+<cds-contained-list-item clickable>
   
       Clickable item
     
@@ -78,7 +82,8 @@
   
 </cds-contained-list-item>
   
-    <cds-contained-list-item clickable>
+    
+<cds-contained-list-item clickable>
   
       Another action
     
@@ -86,7 +91,8 @@
   
 </cds-contained-list-item>
   
-    <cds-contained-list-item disabled>
+    
+<cds-contained-list-item disabled>
   
       Disabled
     
@@ -128,7 +134,8 @@
   </div>
   
   
-    <cds-contained-list-item>
+    
+<cds-contained-list-item>
   
       Alpha
     
@@ -136,7 +143,8 @@
   
 </cds-contained-list-item>
   
-    <cds-contained-list-item>
+    
+<cds-contained-list-item>
   
       Beta
     
@@ -148,6 +156,7 @@
   
   
 </cds-contained-list>
+
 <cds-contained-list size="md" id="basic-sizes-md">
   
   <div slot="label">
@@ -155,7 +164,8 @@
   </div>
   
   
-    <cds-contained-list-item>
+    
+<cds-contained-list-item>
   
       Alpha
     
@@ -163,7 +173,8 @@
   
 </cds-contained-list-item>
   
-    <cds-contained-list-item>
+    
+<cds-contained-list-item>
   
       Beta
     
@@ -175,6 +186,7 @@
   
   
 </cds-contained-list>
+
 <cds-contained-list size="lg" id="basic-sizes-lg">
   
   <div slot="label">
@@ -182,7 +194,8 @@
   </div>
   
   
-    <cds-contained-list-item>
+    
+<cds-contained-list-item>
   
       Alpha
     
@@ -190,7 +203,8 @@
   
 </cds-contained-list-item>
   
-    <cds-contained-list-item>
+    
+<cds-contained-list-item>
   
       Beta
     

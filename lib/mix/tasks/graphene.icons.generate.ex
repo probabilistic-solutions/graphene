@@ -32,14 +32,14 @@ if Mix.env() == :dev do
       Mix.Generator.copy_template(
         templatesrc(),
         tmp_dst,
-        [icons: icons, version: version(), module: "Graphene.IconsRaw"],
+        [icons: icons, version: version(), module: "Graphene.Internal.IconsRaw"],
         force: true
       )
 
       Mix.Task.reenable("format")
       Mix.Task.run("format", [tmp_dst])
 
-      compile_generated!(tmp_dst, "Graphene.IconsRaw")
+      compile_generated!(tmp_dst, "Graphene.Internal.IconsRaw")
 
       File.mkdir_p!(Path.dirname(templatedst()))
       File.cp!(tmp_dst, templatedst())
@@ -51,7 +51,7 @@ if Mix.env() == :dev do
     end
 
     defp templatedst() do
-      Path.join(["lib", "graphene", "icons_raw.ex"])
+      Path.join(["lib", "graphene", "internal", "icons_raw.ex"])
     end
 
     defp svgsrc() do

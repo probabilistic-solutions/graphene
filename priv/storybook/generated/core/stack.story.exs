@@ -1,6 +1,6 @@
 defmodule Storybook.CodeGen.CoreComponents.Stack do
   use Graphene.CodeGen.Component.Story,
-    func: &Graphene.CoreComponents.stack/1,
-    component_module: Graphene.CoreComponents,
+    func: &Graphene.Internal.CoreComponents.stack/1,
+    component_module: Graphene.Internal.CoreComponents,
     component_name: :stack
 end

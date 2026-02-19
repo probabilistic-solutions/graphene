@@ -30,13 +30,15 @@
   </div>
   <div slot="actions">
     
-  <cds-link href="#" size="MEDIUM">
+  
+<cds-link href="#" size="MEDIUM">
   Link action
 </cds-link>
 
   </div><div slot="actions">
     
-  <cds-button kind="primary" link-role="button" size="sm" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button">
+  
+<cds-button kind="primary" link-role="button" size="sm" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button">
   Button
   
 </cds-button>
@@ -100,7 +102,8 @@
   </div>
   <div slot="actions">
     
-  <cds-button kind="primary" link-role="button" size="sm" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button">
+  
+<cds-button kind="primary" link-role="button" size="sm" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button">
   Got it
   
 </cds-button>

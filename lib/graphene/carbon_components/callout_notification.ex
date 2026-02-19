@@ -1,0 +1,60 @@
+defmodule Graphene.CarbonComponents.CalloutNotification do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-callout-notification>` from `./src/components/notification/callout-notification.ts`
+
+  Callout notification.
+
+  ## Events
+
+  * `cds-notification-beingclosed` - The custom event fired before this notification is being closed upon a user gesture.
+  Cancellation of this event stops the user-initiated action of closing this notification.
+  * `cds-notification-closed` - The custom event fired after this notification is closed upon a user gesture.
+
+  """
+  attr :action_button_label, :string,
+    doc:
+      "Pass in the action button label that will be rendered within the ActionableNotification."
+
+  attr :caption, :string, doc: "The caption."
+
+  attr :close_on_escape, :boolean,
+    doc: "Specify if pressing the escape key should close notifications",
+    default: true
+
+  attr :has_focus, :boolean,
+    doc:
+      "Specify if focus should be moved to the component when the notification contains actions",
+    default: true
+
+  attr :hide_close_button, :boolean, doc: "`true` to hide the close button."
+  attr :inline, :boolean, doc: "Inline notification type."
+
+  attr :kind, :string,
+    doc: "Specify the notification kind, Defaults to 'info'.",
+    values: ["success", "info", "info-square", "warning", "warning-alt", "error"],
+    default: "info"
+
+  attr :low_contrast, :boolean, doc: "Low contrast mode"
+  attr :open, :boolean, doc: "`true` if the notification should be open.", default: true
+
+  attr :status_icon_description, :string,
+    doc: "Provide a description for \"status\" icon that can be read by screen readers"
+
+  attr :timeout, :any, doc: "Specify an optional duration the notification should be closed in"
+  attr :title_id, :string, doc: "Specify the id for the title element."
+  attr :rest, :global
+  slot :action, doc: "The action button."
+  slot :subtitle, doc: "The subtitle."
+  slot :title, doc: "The title."
+  slot :inner_block
+
+  def callout_notification(assigns) do
+    CoreComponents.callout_notification(assigns)
+  end
+end

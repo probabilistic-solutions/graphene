@@ -1,0 +1,27 @@
+defmodule Graphene.CarbonComponents.SkipToContent do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-skip-to-content>` from `./src/components/skip-to-content/skip-to-content.ts`
+
+  Skip-to-content link.
+
+
+  """
+  attr :href, :string, doc: "The skip link href."
+
+  attr :link_assistive_text, :string,
+    doc: "The assistive text for the link,",
+    default: "Skip to main content"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def skip_to_content(assigns) do
+    CoreComponents.skip_to_content(assigns)
+  end
+end

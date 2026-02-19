@@ -1,0 +1,88 @@
+defmodule Graphene.CarbonComponents.SideNav do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-side-nav>` from `./src/components/ui-shell/side-nav.ts`
+
+  Side nav.
+
+  ## Events
+
+  * `cds-header-menu-button-toggled` - The name of the custom event fired after the header menu button in the document is toggled upon a user gesture.
+
+  """
+  attr :collapse_mode, :string,
+    doc: "Collapse mode of the side nav.",
+    values: ["fixed", "rail", "responsive"],
+    default: "responsive"
+
+  attr :expanded, :boolean, doc: "`true` to expand the side nav."
+
+  attr :is_not_child_of_header, :boolean,
+    doc: "If `true` will style the side nav to sit below the header"
+
+  attr :is_not_persistent, :boolean,
+    doc: "Specify if the side-nav will be persistent above the lg breakpoint"
+
+  attr :usage_mode, :string, doc: "Usage mode for the side nav."
+  attr :rest, :global
+  slot :inner_block
+
+  def side_nav(assigns) do
+    CoreComponents.side_nav(assigns)
+  end
+
+  @doc """
+  Component `<cds-side-nav-divider>` from `./src/components/ui-shell/side-nav-divider.ts`
+
+  A divider in side nav.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def side_nav_divider(assigns) do
+    CoreComponents.side_nav_divider(assigns)
+  end
+
+  @doc """
+  Component `<cds-side-nav-items>` from `./src/components/ui-shell/side-nav-items.ts`
+
+  Side nav items.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def side_nav_items(assigns) do
+    CoreComponents.side_nav_items(assigns)
+  end
+
+  @doc """
+  Component `<cds-side-nav-link>` from `./src/components/ui-shell/side-nav-link.ts`
+
+  Side nav menu item.
+
+
+  """
+  attr :active, :boolean, doc: "`true` if the menu item should be active."
+  attr :href, :string, doc: "Link `href`."
+  attr :large, :boolean, doc: "Specify if this is a large variation of the side nav link"
+  attr :rel, :string, doc: "The link type."
+  attr :target, :string, doc: "The link target."
+  attr :rest, :global
+  slot :link, doc: "The link."
+  slot :title, doc: "The title."
+  slot :title_icon_container, doc: "The title icon container."
+  slot :inner_block
+
+  def side_nav_link(assigns) do
+    CoreComponents.side_nav_link(assigns)
+  end
+end

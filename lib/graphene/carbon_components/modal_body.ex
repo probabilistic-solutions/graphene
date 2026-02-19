@@ -1,0 +1,35 @@
+defmodule Graphene.CarbonComponents.ModalBody do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-modal-body>` from `./src/components/modal/modal-body.ts`
+
+  Modal body.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def modal_body(assigns) do
+    CoreComponents.modal_body(assigns)
+  end
+
+  @doc """
+  Component `<cds-modal-body-content>` from `./src/components/modal/modal-body-content.ts`
+
+  Modal body content
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def modal_body_content(assigns) do
+    CoreComponents.modal_body_content(assigns)
+  end
+end

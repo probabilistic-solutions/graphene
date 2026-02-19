@@ -1,6 +1,6 @@
 /* _dynamic_loader_mapping.ts */
 
-/* generated from assets/node_modules/@carbon/web-components/custom-elements.json of carbon web-components v2.47.0 for Graphene.CoreComponents */
+/* generated from assets/node_modules/@carbon/web-components/custom-elements.json of carbon web-components v2.47.0 for Graphene.Internal.CoreComponents */
 
 type ComponentImports = { [componentName: string]: () => Promise<any> };
 

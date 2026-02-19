@@ -1,0 +1,54 @@
+defmodule Graphene.CarbonComponents.Tab do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-tab>` from `./src/components/tabs/tab.ts`
+
+  Basic tab.
+
+
+  """
+  attr :align, :string,
+    doc: "Specify how the trigger should align with the tooltip for icon-only\nswitcher item",
+    default: "top"
+
+  attr :close_on_activation, :boolean,
+    doc:
+      "Determines whether the tooltip should close when inner content is\nactivated (click, Enter or Space)",
+    default: true
+
+  attr :disabled, :boolean, doc: "`true` if this content switcher item should be disabled."
+  attr :icon, :boolean, doc: "`true` if the content switcher button should be icon-only."
+  attr :tab_title, :any, doc: "The tab text content."
+  attr :target, :string, doc: "The element ID of target panel."
+  attr :type, :string, doc: "Tab type.", values: ["", "container", "contained"], default: ""
+
+  attr :value, :string,
+    doc:
+      "The `value` attribute that is set to the parent `<cds-content-switcher>`\nwhen this content switcher item is selected."
+
+  attr :rest, :global
+  slot :inner_block
+
+  def tab(assigns) do
+    CoreComponents.tab(assigns)
+  end
+
+  @doc """
+  Component `<cds-tab-skeleton>` from `./src/components/tabs/tab-skeleton.ts`
+
+  Skeleton of tab.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def tab_skeleton(assigns) do
+    CoreComponents.tab_skeleton(assigns)
+  end
+end

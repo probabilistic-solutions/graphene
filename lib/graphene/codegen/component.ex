@@ -83,6 +83,8 @@ defmodule Graphene.CodeGen.Component do
   end
 
   def display(component, opts \\ []) do
+    prelude = rest_class_prelude(component)
+
     template = ~S'''
     @doc """
     <%= @component.docs %>
@@ -94,7 +96,9 @@ defmodule Graphene.CodeGen.Component do
     <%= Graphene.CodeGen.Component.Slot.display_def slot %><% end %>
     slot :inner_block
     def <%= @component.componentname %>(assigns) do
+    <%= @prelude %>
         ~H"""
+        <%%= Phoenix.HTML.raw(assigns[:graphene_before] || "") %>
         <<%= @component.htmltag %><%= for attr <- @component.attrs do %>
          <%= Graphene.CodeGen.Component.Attr.display_use attr, trim: true %><% end %>
          {@rest}>
@@ -107,8 +111,56 @@ defmodule Graphene.CodeGen.Component do
     end
     '''
 
-    EEx.eval_string(template, [assigns: [component: component]], opts)
+    EEx.eval_string(template, [assigns: [component: component, prelude: prelude]], opts)
   end
+
+  defp rest_class_prelude(%{htmltag: "cds-header"}) do
+    "    assigns = merge_rest_class(assigns, \"cds--header\")\n"
+  end
+
+  defp rest_class_prelude(%{htmltag: "cds-side-nav"}) do
+    "    assigns =\n" <>
+      "      assigns\n" <>
+      "      |> merge_rest_class(\"cds--side-nav\")\n" <>
+      "      |> merge_rest_class_if(assigns[:expanded], \"cds--side-nav--expanded\")\n"
+  end
+
+  defp rest_class_prelude(%{htmltag: "cds-grid"}) do
+    ~S"""
+        assigns =
+          case assigns[:row_gap] do
+            nil -> assigns
+            "gutter" ->
+              assign(assigns, :graphene_grid_row_gap, "var(--cds-grid-gutter)")
+            row_gap ->
+              assign(assigns, :graphene_grid_row_gap, "var(--cds-spacing-#{row_gap})")
+          end
+
+        assigns =
+          if assigns[:graphene_grid_row_gap] do
+            rest = Map.get(assigns, :rest, %{})
+
+            grid_id =
+              Map.get(rest, :"data-graphene-grid-id") ||
+                assigns[:id] ||
+                "graphene-grid-#{System.unique_integer([:positive])}"
+
+            rest = Map.put_new(rest, :"data-graphene-grid-id", grid_id)
+
+            assigns
+            |> assign(
+              :graphene_before,
+              "<style>cds-grid[data-graphene-grid-id='#{grid_id}']::part(grid){row-gap: #{assigns.graphene_grid_row_gap};}</style>"
+            )
+            |> assign(:row_gap, nil)
+            |> assign(:rest, rest)
+          else
+            assigns
+          end
+    """
+  end
+
+  defp rest_class_prelude(_component), do: ""
 
   defp index_js(source) do
     (source |> Path.dirname()) <> "/index.js"

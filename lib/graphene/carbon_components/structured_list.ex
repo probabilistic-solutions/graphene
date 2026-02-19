@@ -1,0 +1,154 @@
+defmodule Graphene.CarbonComponents.StructuredList do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-structured-list>` from `./src/components/structured-list/structured-list.ts`
+
+  Structured list wrapper.
+
+
+  """
+  attr :condensed, :boolean, doc: "Specify if structured list is condensed, default is false"
+  attr :flush, :boolean, doc: "Specify if structured list is flush, default is false"
+
+  attr :selection_name, :string,
+    doc:
+      "The `name` attribute for the `<input>` for selection.\nIf present, this structured list will be a selectable one."
+
+  attr :rows, :list, default: nil
+  attr :row_id, :any, default: nil
+  attr :selected_ids, :list, default: nil
+  attr :rest, :global
+
+  slot :col do
+    attr :label, :any
+  end
+
+  slot :inner_block
+
+  def structured_list(%{rows: rows, col: [_ | _]} = assigns) when is_list(rows) do
+    assigns =
+      assigns
+      |> assign_new(:condensed, fn -> false end)
+      |> assign_new(:flush, fn -> false end)
+      |> assign_new(:selection_name, fn -> nil end)
+
+    assigns =
+      assigns
+      |> assign(:selected_set, MapSet.new(Enum.map(assigns.selected_ids || [], &to_string/1)))
+
+    ~H"""
+    <CoreComponents.structured_list
+      condensed={@condensed}
+      flush={@flush}
+      selection_name={@selection_name}
+      {@rest}
+    >
+      <CoreComponents.structured_list_head>
+        <CoreComponents.structured_list_header_row selection_name={@selection_name}>
+          <CoreComponents.structured_list_header_cell :for={col <- @col}>
+            {Graphene.CarbonComponents.Helpers.render_column_label(col[:label])}
+          </CoreComponents.structured_list_header_cell>
+        </CoreComponents.structured_list_header_row>
+      </CoreComponents.structured_list_head>
+      <CoreComponents.structured_list_body>
+        <%= for {row, index} <- Enum.with_index(@rows) do %>
+          <CoreComponents.structured_list_row
+            selection_name={@selection_name}
+            selection_value={
+              Graphene.CarbonComponents.Helpers.structured_list_row_id(@row_id, row, index)
+            }
+            selected={
+              Graphene.CarbonComponents.Helpers.structured_list_selected?(
+                @selected_set,
+                @row_id,
+                row,
+                index
+              )
+            }
+          >
+            <CoreComponents.structured_list_cell :for={col <- @col}>
+              {render_slot(col, row)}
+            </CoreComponents.structured_list_cell>
+          </CoreComponents.structured_list_row>
+        <% end %>
+      </CoreComponents.structured_list_body>
+    </CoreComponents.structured_list>
+    """
+  end
+
+  def structured_list(assigns) do
+    CoreComponents.structured_list(assigns)
+  end
+
+  @doc """
+  Component `<cds-structured-list-body>` from `./src/components/structured-list/structured-list-body.ts`
+
+  Structured list body.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def structured_list_body(assigns) do
+    CoreComponents.structured_list_body(assigns)
+  end
+
+  @doc """
+  Component `<cds-structured-list-cell>` from `./src/components/structured-list/structured-list-cell.ts`
+
+  Structured list cell.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def structured_list_cell(assigns) do
+    CoreComponents.structured_list_cell(assigns)
+  end
+
+  @doc """
+  Component `<cds-structured-list-head>` from `./src/components/structured-list/structured-list-head.ts`
+
+  Structured list header.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def structured_list_head(assigns) do
+    CoreComponents.structured_list_head(assigns)
+  end
+
+  @doc """
+  Component `<cds-structured-list-row>` from `./src/components/structured-list/structured-list-row.ts`
+
+  Structured list row.
+
+
+  """
+  attr :selected, :boolean,
+    doc: "`true` if this structured list row should be selectable and selected."
+
+  attr :selection_icon_title, :string,
+    doc: "The content to put into the `<title>` attribute of the selection icon."
+
+  attr :selection_name, :string,
+    doc:
+      "The `name` attribute for the `<input>` for selection.\nIf present, this structured list row will be a selectable one."
+
+  attr :selection_value, :string, doc: "The `value` attribute for the `<input>` for selection."
+  attr :rest, :global
+  slot :inner_block
+
+  def structured_list_row(assigns) do
+    CoreComponents.structured_list_row(assigns)
+  end
+end

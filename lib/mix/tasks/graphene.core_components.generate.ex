@@ -9,7 +9,7 @@ if Mix.env() == :dev do
     end
 
     defp template_core_components(:dst) do
-      Path.join(["lib", "graphene", "core_components.ex"])
+      Path.join(["lib", "graphene", "internal", "core_components.ex"])
     end
 
     defp template_js_mapping(:src) do
@@ -21,7 +21,7 @@ if Mix.env() == :dev do
     end
 
     defp module() do
-      "Graphene.CoreComponents"
+      "Graphene.Internal.CoreComponents"
     end
 
     def get_version() do

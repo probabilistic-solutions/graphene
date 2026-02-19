@@ -1,0 +1,21 @@
+defmodule Graphene.CarbonComponents.Heading do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-heading>` from `./src/components/heading/heading.ts`
+
+  The heading component
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def heading(assigns) do
+    CoreComponents.heading(assigns)
+  end
+end

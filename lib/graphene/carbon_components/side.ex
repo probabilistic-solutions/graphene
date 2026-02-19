@@ -1,0 +1,72 @@
+defmodule Graphene.CarbonComponents.Side do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-side-panel>` from `./src/components/side-panel/side-panel.ts`
+
+  SidePanel.
+
+  ## Events
+
+  * `cds-side-panel-beingclosed` - The custom event fired before this side-panel is being closed upon a user gesture.
+  Cancellation of this event stops the user-initiated action of closing this side-panel.
+  * `cds-side-panel-closed` - The custom event fired after this side-panel is closed upon a user gesture.
+  * `cds-side-panel-navigate-back` - custom event fired when clicking navigate back (available when step > 0)
+
+  """
+  attr :animate_title, :boolean,
+    doc: "Determines if the title will animate on scroll",
+    default: true
+
+  attr :close_icon_description, :string,
+    doc: "Sets the close button icon description",
+    default: "Close"
+
+  attr :condensed_actions, :boolean,
+    doc:
+      "Determines whether the side panel should render the condensed version (affects action buttons primarily)"
+
+  attr :current_step, :any, doc: "Sets the current step of the side panel"
+
+  attr :include_overlay, :boolean,
+    doc: "Determines whether the side panel should render with an overlay"
+
+  attr :label_text, :any, doc: "Sets the label text which will display above the title text"
+
+  attr :navigation_back_icon_description, :string,
+    doc: "Sets the icon description for the navigation back icon button",
+    default: "Back"
+
+  attr :open, :boolean, doc: "`true` if the side-panel should be open."
+
+  attr :placement, :string,
+    doc: "SidePanel placement.",
+    values: ["right", "left"],
+    default: "right"
+
+  attr :prevent_close_on_click_outside, :boolean,
+    doc: "Prevent closing on click outside of side-panel"
+
+  attr :selector_initial_focus, :any, doc: "The initial location of focus in the side panel"
+
+  attr :selector_page_content, :string,
+    doc: "Selector for page content, used to push content to side except"
+
+  attr :size, :string,
+    doc: "SidePanel size.",
+    values: ["xs", "sm", "md", "lg", "2xl"],
+    default: "md"
+
+  attr :slide_in, :boolean, doc: "Determines if this panel slides in"
+  attr :title, :any, doc: "Sets the title text"
+  attr :rest, :global
+  slot :inner_block
+
+  def side_panel(assigns) do
+    CoreComponents.side_panel(assigns)
+  end
+end

@@ -1,0 +1,125 @@
+defmodule Graphene.CarbonComponents.CodeSnippet do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-code-snippet>` from `./src/components/code-snippet/code-snippet.ts`
+
+  Basic code snippet.
+
+
+  """
+  attr :copy_text, :string,
+    doc:
+      "Optional text to copy. If not specified, the `children` node's `innerText`\nwill be used as the copy value."
+
+  attr :disabled, :boolean, doc: "`true` if the button should be disabled."
+
+  attr :feedback, :string,
+    doc: "Specify the string displayed when the snippet is copied",
+    default: "Copied!"
+
+  attr :feedback_timeout, :string,
+    doc: "Specify the time it takes for the feedback message to timeout",
+    default: "2000"
+
+  attr :hide_copy_button, :boolean,
+    doc: "Specify whether or not a copy button should be used/rendered."
+
+  attr :max_collapsed_number_of_rows, :string,
+    doc: "Specify the maximum number of rows to be shown when in collapsed view",
+    default: "15"
+
+  attr :max_expanded_number_of_rows, :string,
+    doc: "Specify the maximum number of rows to be shown when in expanded view",
+    default: "0"
+
+  attr :min_collapsed_number_of_rows, :string,
+    doc: "Specify the minimum number of rows to be shown when in collapsed view",
+    default: "3"
+
+  attr :min_expanded_number_of_rows, :string,
+    doc: "Specify the minimum number of rows to be shown when in expanded view",
+    default: "16"
+
+  attr :show_less_text, :string,
+    doc:
+      "Specify a string that is displayed when the Code Snippet has been\ninteracted with to show less lines",
+    default: "Show less"
+
+  attr :show_more_text, :string,
+    doc: "Specify a string that is displayed when the Code Snippet text is more\nthan 15 lines",
+    default: "Show more"
+
+  attr :tooltip_content, :string,
+    doc: "Tooltip content for the copy button.",
+    default: "Copy to clipboard"
+
+  attr :type, :string,
+    doc: "The type of code snippet.",
+    values: ["single", "inline", "multi"],
+    default: "single"
+
+  attr :wrap_text, :boolean, doc: "`true` if the button should be disabled."
+  attr :rest, :global
+  slot :inner_block
+
+  def code_snippet(%{copy_text: nil} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:copy_text, fn -> nil end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:hide_copy_button, fn -> false end)
+      |> assign_new(:wrap_text, fn -> false end)
+
+    ~H"""
+    <% copy_text =
+      @copy_text ||
+        @inner_block
+        |> render_slot()
+        |> Phoenix.HTML.Safe.to_iodata()
+        |> IO.iodata_to_binary()
+        |> String.trim() %>
+    <CoreComponents.code_snippet
+      copy_text={copy_text}
+      disabled={@disabled}
+      feedback={@feedback}
+      feedback_timeout={@feedback_timeout}
+      hide_copy_button={@hide_copy_button}
+      max_collapsed_number_of_rows={@max_collapsed_number_of_rows}
+      max_expanded_number_of_rows={@max_expanded_number_of_rows}
+      min_collapsed_number_of_rows={@min_collapsed_number_of_rows}
+      min_expanded_number_of_rows={@min_expanded_number_of_rows}
+      show_less_text={@show_less_text}
+      show_more_text={@show_more_text}
+      tooltip_content={@tooltip_content}
+      type={@type}
+      wrap_text={@wrap_text}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </CoreComponents.code_snippet>
+    """
+  end
+
+  def code_snippet(assigns) do
+    CoreComponents.code_snippet(assigns)
+  end
+
+  @doc """
+  Component `<cds-code-snippet-skeleton>` from `./src/components/code-snippet/code-snippet-skeleton.ts`
+
+  Code snippet skeleton.
+
+  """
+  attr :type, :string, doc: "Code snippet type.", values: [nil, "single", "inline", "multi"]
+  attr :rest, :global
+  slot :inner_block
+
+  def code_snippet_skeleton(assigns) do
+    CoreComponents.code_snippet_skeleton(assigns)
+  end
+end

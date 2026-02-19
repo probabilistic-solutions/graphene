@@ -1,6 +1,6 @@
 defmodule Storybook.CodeGen.CoreComponents.Radiobuttonskeleton do
   use Graphene.CodeGen.Component.Story,
-    func: &Graphene.CoreComponents.radio_button_skeleton/1,
-    component_module: Graphene.CoreComponents,
+    func: &Graphene.Internal.CoreComponents.radio_button_skeleton/1,
+    component_module: Graphene.Internal.CoreComponents,
     component_name: :radio_button_skeleton
 end

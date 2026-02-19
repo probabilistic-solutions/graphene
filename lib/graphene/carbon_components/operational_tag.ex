@@ -1,0 +1,48 @@
+defmodule Graphene.CarbonComponents.OperationalTag do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-operational-tag>` from `./src/components/tag/operational-tag.ts`
+
+  Operational tag.
+
+  ## Events
+
+  * `cds-operational-tag-beforeselected` - The custom event fired as the element is being selected
+  * `cds-operational-tag-selected` - The custom event fired after the element has been selected
+
+  """
+  attr :disabled, :boolean, doc: "`true` if the tag should be disabled"
+  attr :selected, :boolean, doc: "Specify the state of the selectable tag."
+  attr :size, :string, doc: "The size of the tag.", values: ["lg", "md", "sm"], default: "md"
+  attr :text, :string, doc: "Provide text to be rendered inside of a the tag."
+
+  attr :type, :string,
+    doc: "The type of the tag.",
+    values: [
+      "red",
+      "magenta",
+      "purple",
+      "blue",
+      "cyan",
+      "teal",
+      "green",
+      "gray",
+      "COOL-GRAY",
+      "cool-gray",
+      "WARM-GRAY",
+      "warm-gray"
+    ],
+    default: "gray"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def operational_tag(assigns) do
+    CoreComponents.operational_tag(assigns)
+  end
+end

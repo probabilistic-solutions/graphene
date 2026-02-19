@@ -43,18 +43,21 @@
 
   
 </cds-button>
+
 <cds-button kind="tertiary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" id="basic-kinds-tertiary">
   
   Tertiary
 
   
 </cds-button>
+
 <cds-button kind="ghost" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" id="basic-kinds-ghost">
   
   Ghost
 
   
 </cds-button>
+
 <cds-button kind="danger" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" id="basic-kinds-danger">
   
   Danger
@@ -84,12 +87,14 @@
 
   
 </cds-button>
+
 <cds-button kind="primary" link-role="button" size="md" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" id="basic-sizes-md">
   
   Size md
 
   
 </cds-button>
+
 <cds-button kind="primary" link-role="button" size="lg" tab-index="0" tooltip-alignment="" tooltip-position="top" type="button" id="basic-sizes-lg">
   
   Size lg

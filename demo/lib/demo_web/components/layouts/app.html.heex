@@ -1,32 +1,163 @@
-<header class="px-4 sm:px-6 lg:px-8">
-  <div class="flex items-center justify-between border-b border-zinc-100 py-3 text-sm">
-    <div class="flex items-center gap-4">
-      <a href="/">
-        <img src={~p"/images/logo.svg"} width="36" />
-      </a>
-      <p class="bg-brand/5 text-brand rounded-full px-2 font-medium leading-6">
-        v<%= Application.spec(:phoenix, :vsn) %>
-      </p>
+<CarbonComponents.ui_shell
+  class="cds--ui-shell"
+  content_class="cds--content cds--content--with-side-nav demo-shell-content"
+>
+  <:skip_to_content>
+    <a class="demo-skip" href="#main-content">Skip to content</a>
+  </:skip_to_content>
+  <:header>
+    <CarbonComponents.header>
+      <:name href={~p"/demo"} prefix="IBM">Nimbus Cloud</:name>
+      <CarbonComponents.header_nav>
+        <CarbonComponents.header_nav_item href={~p"/demo"} is_active={@active_page == :overview}>
+          Overview
+        </CarbonComponents.header_nav_item>
+        <CarbonComponents.header_nav_item
+          href={~p"/demo/infrastructure"}
+          is_active={@active_page == :infrastructure}
+        >
+          Infrastructure
+        </CarbonComponents.header_nav_item>
+        <CarbonComponents.header_nav_item href={~p"/demo/operations"} is_active={@active_page == :operations}>
+          Operations
+        </CarbonComponents.header_nav_item>
+        <CarbonComponents.header_menu menu_label="Resources" trigger_content="Resources">
+          <CarbonComponents.header_menu_item href={~p"/demo/costs"} is_active={@active_page == :costs}>
+            Cost Management
+          </CarbonComponents.header_menu_item>
+          <CarbonComponents.header_menu_item href={~p"/demo/security"} is_active={@active_page == :security}>
+            Security
+          </CarbonComponents.header_menu_item>
+          <CarbonComponents.header_menu_item href={~p"/demo/settings"} is_active={@active_page == :settings}>
+            Settings
+          </CarbonComponents.header_menu_item>
+          <CarbonComponents.header_menu_item href={~p"/demo/support"} is_active={@active_page == :support}>
+            Support
+          </CarbonComponents.header_menu_item>
+          <CarbonComponents.header_menu_item href={~p"/demo/components"} is_active={@active_page == :components}>
+            Component Catalog
+          </CarbonComponents.header_menu_item>
+          <CarbonComponents.header_menu_item href={~p"/"}>
+            Storybook
+          </CarbonComponents.header_menu_item>
+        </CarbonComponents.header_menu>
+      </CarbonComponents.header_nav>
+      <:global>
+        <CarbonComponents.header_global_action
+          button_label_inactive="Search"
+          button_label_active="Search"
+        >
+          <:icon name="search" size={20} />
+        </CarbonComponents.header_global_action>
+        <CarbonComponents.header_global_action
+          button_label_inactive="Notifications"
+          button_label_active="Notifications"
+        >
+          <:icon name="notification" size={20} />
+        </CarbonComponents.header_global_action>
+        <CarbonComponents.header_global_action
+          button_label_inactive="Profile"
+          button_label_active="Profile"
+        >
+          <:icon name="user--avatar" size={20} />
+        </CarbonComponents.header_global_action>
+      </:global>
+    </CarbonComponents.header>
+  </:header>
+  <:side_nav>
+    <CarbonComponents.side_nav expanded={true}>
+      <CarbonComponents.side_nav_items>
+        <CarbonComponents.side_nav_link href={~p"/demo"} active={@active_page == :overview}>
+          <span class="demo-nav-link">
+            <Icons.icon name="dashboard" size={16} />
+            Overview
+          </span>
+        </CarbonComponents.side_nav_link>
+        <CarbonComponents.side_nav_link
+          href={~p"/demo/infrastructure"}
+          active={@active_page == :infrastructure}
+        >
+          <span class="demo-nav-link">
+            <Icons.icon name="cloud" size={16} />
+            Infrastructure
+          </span>
+        </CarbonComponents.side_nav_link>
+        <CarbonComponents.side_nav_menu
+          title="Operate"
+          expanded={true}
+          active={@active_page in [:operations, :activity]}
+        >
+          <:title_icon>
+            <Icons.icon name="cloud-services" size={16} />
+          </:title_icon>
+          <CarbonComponents.side_nav_menu_item
+            href={~p"/demo/operations"}
+            active={@active_page == :operations}
+          >
+            Operations
+          </CarbonComponents.side_nav_menu_item>
+          <CarbonComponents.side_nav_menu_item
+            href={~p"/demo/activity"}
+            active={@active_page == :activity}
+          >
+            Live Activity
+          </CarbonComponents.side_nav_menu_item>
+        </CarbonComponents.side_nav_menu>
+        <CarbonComponents.side_nav_menu
+          title="Govern"
+          expanded={true}
+          active={@active_page in [:costs, :security]}
+        >
+          <:title_icon>
+            <Icons.icon name="security" size={16} />
+          </:title_icon>
+          <CarbonComponents.side_nav_menu_item
+            href={~p"/demo/costs"}
+            active={@active_page == :costs}
+          >
+            Cost Management
+          </CarbonComponents.side_nav_menu_item>
+          <CarbonComponents.side_nav_menu_item
+            href={~p"/demo/security"}
+            active={@active_page == :security}
+          >
+            Security
+          </CarbonComponents.side_nav_menu_item>
+        </CarbonComponents.side_nav_menu>
+        <CarbonComponents.side_nav_menu
+          title="Support"
+          expanded={true}
+          active={@active_page in [:settings, :support]}
+        >
+          <:title_icon>
+            <Icons.icon name="tools" size={16} />
+          </:title_icon>
+          <CarbonComponents.side_nav_menu_item
+            href={~p"/demo/settings"}
+            active={@active_page == :settings}
+          >
+            Settings
+          </CarbonComponents.side_nav_menu_item>
+          <CarbonComponents.side_nav_menu_item
+            href={~p"/demo/support"}
+            active={@active_page == :support}
+          >
+            Support
+          </CarbonComponents.side_nav_menu_item>
+        </CarbonComponents.side_nav_menu>
+        <CarbonComponents.side_nav_link href={~p"/demo/components"} active={@active_page == :components}>
+          <span class="demo-nav-link">
+            <Icons.icon name="catalog" size={16} />
+            Component Catalog
+          </span>
+        </CarbonComponents.side_nav_link>
+      </CarbonComponents.side_nav_items>
+    </CarbonComponents.side_nav>
+  </:side_nav>
+  <:content>
+    <div id="main-content" class="demo-main">
+      <.flash_group flash={@flash} />
+      <%= @inner_content %>
     </div>
-    <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
-      <a href="https://twitter.com/elixirphoenix" class="hover:text-zinc-700">
-        @elixirphoenix
-      </a>
-      <a href="https://github.com/phoenixframework/phoenix" class="hover:text-zinc-700">
-        GitHub
-      </a>
-      <a
-        href="https://hexdocs.pm/phoenix/overview.html"
-        class="rounded-lg bg-zinc-100 px-2 py-1 hover:bg-zinc-200/80"
-      >
-        Get Started <span aria-hidden="true">&rarr;</span>
-      </a>
-    </div>
-  </div>
-</header>
-<main class="px-4 py-20 sm:px-6 lg:px-8">
-  <div class="mx-auto max-w-2xl">
-    <.flash_group flash={@flash} />
-    <%= @inner_content %>
-  </div>
-</main>
+  </:content>
+</CarbonComponents.ui_shell>

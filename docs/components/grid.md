@@ -11,22 +11,26 @@
 ```
 
 ```html
-<cds-grid id="grid-single-default">
+<style>cds-grid[data-graphene-grid-id='graphene-grid-125954']::part(grid){row-gap: var(--cds-spacing-07);}</style>
+<cds-grid id="grid-single-default" data-graphene-grid-id="graphene-grid-125954">
   
   
-    <cds-column sm="2">
+    
+<cds-column sm="2">
   
       Column 1
     
 </cds-column>
   
-    <cds-column sm="2">
+    
+<cds-column sm="2">
   
       Column 2
     
 </cds-column>
   
-    <cds-column sm="2">
+    
+<cds-column sm="2">
   
       Column 3
     
@@ -48,28 +52,33 @@
 ```
 
 ```html
-<cds-grid condensed id="grid-single-condensed">
+<style>cds-grid[data-graphene-grid-id='graphene-grid-126722']::part(grid){row-gap: var(--cds-grid-gutter);}</style>
+<cds-grid condensed id="grid-single-condensed" data-graphene-grid-id="graphene-grid-126722">
   
   
-    <cds-column sm="1">
+    
+<cds-column sm="1">
   
       One
     
 </cds-column>
   
-    <cds-column sm="1">
+    
+<cds-column sm="1">
   
       Two
     
 </cds-column>
   
-    <cds-column sm="1">
+    
+<cds-column sm="1">
   
       Three
     
 </cds-column>
   
-    <cds-column sm="1">
+    
+<cds-column sm="1">
   
       Four
     
@@ -90,22 +99,26 @@
 ```
 
 ```html
-<cds-grid full-width id="grid-single-full-width">
+<style>cds-grid[data-graphene-grid-id='graphene-grid-127490']::part(grid){row-gap: var(--cds-spacing-07);}</style>
+<cds-grid full-width id="grid-single-full-width" data-graphene-grid-id="graphene-grid-127490">
   
   
-    <cds-column sm="2">
+    
+<cds-column sm="2">
   
       Wide 1
     
 </cds-column>
   
-    <cds-column sm="2">
+    
+<cds-column sm="2">
   
       Wide 2
     
 </cds-column>
   
-    <cds-column sm="2">
+    
+<cds-column sm="2">
   
       Wide 3
     

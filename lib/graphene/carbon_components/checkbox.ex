@@ -1,0 +1,164 @@
+defmodule Graphene.CarbonComponents.Checkbox do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+  alias Graphene.Internal.FormComponents
+
+  @doc """
+  Component `<cds-checkbox>` from `./src/components/checkbox/checkbox.ts`
+
+  Check box.
+
+  ## Events
+
+  * `cds-checkbox-changed` - The custom event fired after this changebox changes its checked state.
+
+  """
+  attr :checked, :boolean, doc: "Specify whether the underlying input should be checked"
+  attr :data_table, :boolean, doc: "Specify if checkbox is being used in a data table"
+
+  attr :default_checked, :any,
+    doc: "Specify whether the underlying input should be checked by default"
+
+  attr :disabled, :boolean, doc: "Specify whether the Checkbox should be disabled"
+  attr :helper_text, :any, doc: "Provide text for the form group for additional help"
+
+  attr :hide_checkbox, :boolean,
+    doc:
+      "Specify whether the checkbox should be present in the DOM,\nbut invisible and uninteractable. Used for data-table purposes."
+
+  attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
+  attr :id, :string, doc: "Specify a custom id for the checkbox", default: "checkbox"
+  attr :indeterminate, :boolean, doc: "Specify whether the Checkbox is in an indeterminate state"
+  attr :invalid, :boolean, doc: "Specify whether the Checkbox is currently invalid"
+
+  attr :invalid_text, :any,
+    doc: "Provide the text that is displayed when the Checkbox is in an invalid state"
+
+  attr :label_text, :string,
+    doc:
+      "Provide a label to provide a description of the Checkbox input that you are\nexposing to the user"
+
+  attr :name, :string, doc: "The form name."
+  attr :readonly, :boolean, doc: "Specify whether the Checkbox is read-only"
+  attr :title, :string, doc: "Specify a title for the node for the Checkbox"
+  attr :value, :string, doc: "The value."
+  attr :warn, :boolean, doc: "Specify whether the Checkbox is in a warn state"
+
+  attr :warn_text, :boolean,
+    doc: "Provide the text that is displayed when the Checkbox is in a warn state"
+
+  attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
+  attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
+
+  attr :form_event, :string,
+    default: nil,
+    doc: "override the custom event used to sync form values"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def checkbox(assigns) do
+    FormComponents.checkbox(assigns)
+  end
+
+  @doc """
+  Component `<cds-checkbox-group>` from `./src/components/checkbox/checkbox-group.ts`
+
+  Check box.
+
+
+  """
+  attr :disabled, :any, doc: "Specify whether the form group is currently disabled"
+  attr :helper_text, :any, doc: "Provide text for the form group for additional help"
+  attr :invalid, :any, doc: "Specify whether the form group is currently invalid"
+
+  attr :invalid_text, :any,
+    doc: "Provide the text that is displayed when the form group is in an invalid state"
+
+  attr :legend_id, :any,
+    doc:
+      "Provide id for the fieldset <legend> which corresponds to the fieldset\n`aria-labelledby`"
+
+  attr :legend_text, :any, doc: "Provide the text to be rendered inside of the fieldset <legend>"
+
+  attr :orientation, :string,
+    doc: "Provide the orientation for how the checkbox should be displayed",
+    values: ["horizontal", "vertical"],
+    default: "vertical"
+
+  attr :readonly, :boolean, doc: "Whether the CheckboxGroup should be read-only"
+  attr :warn, :boolean, doc: "Specify whether the form group is currently in warning state"
+
+  attr :warn_text, :string,
+    doc: "Provide the text that is displayed when the form group is in warning state"
+
+  attr :rest, :global
+
+  slot :item do
+    attr :label, :string
+    attr :value, :string
+    attr :checked, :boolean
+    attr :disabled, :boolean
+  end
+
+  slot :inner_block
+
+  def checkbox_group(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:disabled, fn -> nil end)
+      |> assign_new(:helper_text, fn -> nil end)
+      |> assign_new(:invalid, fn -> nil end)
+      |> assign_new(:invalid_text, fn -> nil end)
+      |> assign_new(:legend_id, fn -> nil end)
+      |> assign_new(:legend_text, fn -> nil end)
+      |> assign_new(:readonly, fn -> false end)
+      |> assign_new(:warn, fn -> false end)
+      |> assign_new(:warn_text, fn -> nil end)
+
+    ~H"""
+    <CoreComponents.checkbox_group
+      disabled={@disabled}
+      helper_text={@helper_text}
+      invalid={@invalid}
+      invalid_text={@invalid_text}
+      legend_id={@legend_id}
+      legend_text={@legend_text}
+      orientation={@orientation}
+      readonly={@readonly}
+      warn={@warn}
+      warn_text={@warn_text}
+      {@rest}
+    >
+      <%= for item <- @item do %>
+        <CoreComponents.checkbox
+          label_text={item[:label]}
+          value={item[:value]}
+          checked={item[:checked]}
+          disabled={item[:disabled]}
+        />
+      <% end %>
+    </CoreComponents.checkbox_group>
+    """
+  end
+
+  def checkbox_group(assigns) do
+    CoreComponents.checkbox_group(assigns)
+  end
+
+  @doc """
+  Component `<cds-checkbox-skeleton>` from `./src/components/checkbox/checkbox-skeleton.ts`
+
+  Checkbox skeleton.
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def checkbox_skeleton(assigns) do
+    CoreComponents.checkbox_skeleton(assigns)
+  end
+end
