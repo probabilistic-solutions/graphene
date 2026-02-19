@@ -20,6 +20,7 @@ defmodule Demo.StorybookRenderingFeatureTest do
         session
         |> visit(path)
         |> assert_has(css(".psb-sandbox", count: :any))
+        |> assert_no_compile_errors()
       rescue
         error in Wallaby.JSError ->
           raise """
@@ -45,6 +46,14 @@ defmodule Demo.StorybookRenderingFeatureTest do
     storybook_root = Path.join(:code.priv_dir(:graphene), "storybook")
     relative = Path.relative_to(file, storybook_root)
     "/" <> String.replace_suffix(relative, ".story.exs", "")
+  end
+
+  defp assert_no_compile_errors(session) do
+    refute has?(session, css("body", text: "Compilation error"))
+    refute has?(session, css("body", text: "CompileError"))
+    refute has?(session, css("body", text: "Internal Server Error"))
+    refute has?(session, css("body", text: "Something went wrong"))
+    session
   end
 end
 
