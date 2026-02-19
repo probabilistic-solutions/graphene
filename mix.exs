@@ -66,12 +66,14 @@ defmodule Graphene.MixProject do
       ],
       "assets.clean": ["cmd rm -rf priv/static/assets"],
       "assets.build": [
+        "assets.setup",
         "assets.clean",
-        "esbuild graphene"
+        "cmd --cd assets node build.cjs --outdir ../priv/static/assets"
       ],
       "assets.deploy": [
+        "assets.setup",
         "assets.clean",
-        "esbuild graphene_prod"
+        "cmd --cd assets node build.cjs --deploy --outdir ../priv/static/assets"
       ]
     ]
   end

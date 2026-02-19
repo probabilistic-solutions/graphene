@@ -148,15 +148,23 @@ defmodule Graphene.CodeGen.ComponentPatches do
     })
   end
 
-  defp do_patch(%{htmltag: "cds-table", slots: []} = component) do
-    %{
+  defp do_patch(%{htmltag: "cds-table"} = component) do
+    component =
       component
-      | slots: [
-          Slot.parse(%{"name" => "title", "description" => "Title"}),
-          Slot.parse(%{"name" => "description", "description" => "Description"}),
-          Slot.parse(%{"name" => "toolbar", "description" => "Toolbar"})
-        ]
-    }
+      |> Map.put(:componentname, "table_element")
+
+    if component.slots == [] do
+      %{
+        component
+        | slots: [
+            Slot.parse(%{"name" => "title", "description" => "Title"}),
+            Slot.parse(%{"name" => "description", "description" => "Description"}),
+            Slot.parse(%{"name" => "toolbar", "description" => "Toolbar"})
+          ]
+      }
+    else
+      component
+    end
   end
 
   defp do_patch(%{htmltag: "cds-table-row"} = component) do
@@ -529,6 +537,11 @@ defmodule Graphene.CodeGen.ComponentPatches do
   end
 
   @carbon_component_recipes [
+    %{
+      name: :table_element,
+      delegate: :core,
+      delegate_to: :table
+    },
     %{
       name: :accordion,
       delegate: :core,

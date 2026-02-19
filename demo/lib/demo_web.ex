@@ -54,7 +54,7 @@ defmodule DemoWeb do
       use Phoenix.LiveView,
         layout: {DemoWeb.Layouts, :app}
 
-      unquote(html_helpers())
+      unquote(html_helpers(:live))
     end
   end
 
@@ -62,29 +62,39 @@ defmodule DemoWeb do
     quote do
       use Phoenix.LiveComponent
 
-      unquote(html_helpers())
+      unquote(html_helpers(:live))
     end
   end
 
   def html do
     quote do
-      use Phoenix.Component
-
       # Import convenience functions from controllers
       import Phoenix.Controller,
         only: [get_csrf_token: 0, view_module: 1, view_template: 1]
 
       # Include general helpers for rendering HTML
-      unquote(html_helpers())
+      unquote(html_helpers(:html))
     end
   end
 
-  defp html_helpers do
+  defp html_helpers(:html) do
     quote do
-      # HTML escaping functionality
-      import Phoenix.HTML
       # Core UI components and translation
-      import DemoWeb.CoreComponents
+      use Graphene, :html
+      use Gettext, backend: DemoWeb.Gettext
+
+      # Shortcut for generating JS commands
+      alias Phoenix.LiveView.JS
+
+      # Routes generation with the ~p sigil
+      unquote(verified_routes())
+    end
+  end
+
+  defp html_helpers(:live) do
+    quote do
+      # Core UI components and translation
+      use Graphene, [:html, :live]
       use Gettext, backend: DemoWeb.Gettext
 
       # Shortcut for generating JS commands

@@ -3,7 +3,7 @@ defmodule DemoWeb.OperationsLive do
 
   alias Demo.CloudData
   alias Demo.CloudEvents
-  alias Graphene.CarbonComponents, as: CarbonComponents
+
   import DemoWeb.CloudHelpers
 
   @impl true
@@ -60,97 +60,98 @@ defmodule DemoWeb.OperationsLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <CarbonComponents.grid full_width>
+    <.grid full_width>
       <:column span="16">
-        <CarbonComponents.page_header>
+        <.page_header>
           <:breadcrumb>
-            <CarbonComponents.breadcrumb>
+            <.breadcrumb>
               <:item href={~p"/demo"} text="Cloud Admin" />
               <:item text="Operations" />
-            </CarbonComponents.breadcrumb>
+            </.breadcrumb>
           </:breadcrumb>
           <:content title="Operations">
-            <CarbonComponents.tag type="green">On-call</CarbonComponents.tag>
+            <.tag type="green">On-call</.tag>
           </:content>
           <:content_text subtitle="Incident triage, deployments, and runtime safeguards." />
-        </CarbonComponents.page_header>
+        </.page_header>
       </:column>
 
       <:column span="16">
         <div class="demo-section demo-card demo-card--elevated">
-          <CarbonComponents.tabs type="container">
+          <.tabs type="container">
             <:tab title="Incidents">
-              <CarbonComponents.data_table id="incident-table" rows={@incidents} size="sm">
+              <.table_live id="incident-table" rows={@incidents} size="sm">
                 <:col :let={incident} label="ID">{incident.id}</:col>
                 <:col :let={incident} label="Title">{incident.title}</:col>
                 <:col :let={incident} label="Severity">
-                  <CarbonComponents.tag type={severity_kind(incident.severity)}>
+                  <.tag type={severity_kind(incident.severity)}>
                     {incident.severity}
-                  </CarbonComponents.tag>
+                  </.tag>
                 </:col>
                 <:col :let={incident} label="Status">
-                  <CarbonComponents.tag type={status_kind(incident.status)}>
+                  <.tag type={status_kind(incident.status)}>
                     {incident.status}
-                  </CarbonComponents.tag>
+                  </.tag>
                 </:col>
                 <:col :let={incident} label="Owner">{incident.owner}</:col>
                 <:col :let={incident} label="Opened">{incident.opened_at}</:col>
                 <:action :let={incident}>
-                  <CarbonComponents.stack orientation="horizontal" gap="2">
-                    <CarbonComponents.button
+                  <.stack orientation="horizontal" gap="2">
+                    <.button
                       kind="ghost"
                       size="sm"
                       phx-click="open_incident"
                       phx-value-id={incident.id}
                     >
                       Details
-                    </CarbonComponents.button>
-                    <CarbonComponents.button
+                    </.button>
+                    <.button
                       kind="ghost"
                       size="sm"
                       phx-click="resolve_incident"
                       phx-value-id={incident.id}
                     >
                       Resolve
-                    </CarbonComponents.button>
-                  </CarbonComponents.stack>
+                    </.button>
+                  </.stack>
                 </:action>
-              </CarbonComponents.data_table>
+              </.table_live>
             </:tab>
             <:tab title="Deployments">
-              <CarbonComponents.tile class="demo-card">
+              <.tile class="demo-card">
                 <h3>Deployment guardrails</h3>
                 <p class="demo-muted">Automatic rollbacks are enabled for production clusters.</p>
-                <CarbonComponents.progress_indicator current_index="2">
+                <.progress_indicator current_index="2">
                   <:step label="Build" />
                   <:step label="Test" />
                   <:step label="Canary" />
                   <:step label="Rollout" />
-                </CarbonComponents.progress_indicator>
-              </CarbonComponents.tile>
+                </.progress_indicator>
+              </.tile>
             </:tab>
             <:tab title="Maintenance">
-              <CarbonComponents.tile class="demo-card">
+              <.tile class="demo-card">
                 <h3>Upcoming maintenance</h3>
-                <CarbonComponents.inline_notification kind="info" open>
+                <.inline_notification kind="info" open>
                   <:title>Region upgrade</:title>
                   <:subtitle>eu-west-1 scheduled for kernel patching at 02:00 UTC.</:subtitle>
-                </CarbonComponents.inline_notification>
-              </CarbonComponents.tile>
+                </.inline_notification>
+              </.tile>
             </:tab>
-          </CarbonComponents.tabs>
+          </.tabs>
         </div>
       </:column>
-    </CarbonComponents.grid>
+    </.grid>
 
-    <CarbonComponents.modal :if={@modal_incident} open>
+    <.modal :if={@modal_incident} open>
       <:body>
-        <CarbonComponents.modal_header>
-          <CarbonComponents.modal_label>{@modal_incident.id}</CarbonComponents.modal_label>
-          <CarbonComponents.modal_heading>{@modal_incident.title}</CarbonComponents.modal_heading>
-        </CarbonComponents.modal_header>
+        <.modal_header>
+          <.modal_label>{@modal_incident.id}</.modal_label>
+          <.modal_heading>{@modal_incident.title}</.modal_heading>
+        </.modal_header>
         <p>
-          Severity: <strong>{@modal_incident.severity}</strong> · Owner: <strong>{@modal_incident.owner}</strong>
+          Severity: <strong>{@modal_incident.severity}</strong>
+          · Owner: <strong>{@modal_incident.owner}</strong>
         </p>
         <p class="demo-muted">Opened {@modal_incident.opened_at} — status {@modal_incident.status}</p>
       </:body>
@@ -158,12 +159,14 @@ defmodule DemoWeb.OperationsLive do
       <:footer_button
         label="Resolve"
         kind="primary"
-        attrs={%{
-          :"phx-click" => "resolve_incident",
-          :"phx-value-id" => @modal_incident.id
-        }}
+        attrs={
+          %{
+            :"phx-click" => "resolve_incident",
+            :"phx-value-id" => @modal_incident.id
+          }
+        }
       />
-    </CarbonComponents.modal>
+    </.modal>
     """
   end
 end

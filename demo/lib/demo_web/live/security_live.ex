@@ -3,7 +3,7 @@ defmodule DemoWeb.SecurityLive do
 
   alias Demo.CloudData
   alias Demo.CloudEvents
-  alias Graphene.CarbonComponents, as: CarbonComponents
+
   import DemoWeb.CloudHelpers
 
   @impl true
@@ -39,87 +39,87 @@ defmodule DemoWeb.SecurityLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <CarbonComponents.grid full_width>
+    <.grid full_width>
       <:column span="16">
-        <CarbonComponents.page_header>
+        <.page_header>
           <:breadcrumb>
-            <CarbonComponents.breadcrumb>
+            <.breadcrumb>
               <:item href={~p"/demo"} text="Cloud Admin" />
               <:item text="Security & Compliance" />
-            </CarbonComponents.breadcrumb>
+            </.breadcrumb>
           </:breadcrumb>
           <:content title="Security & Compliance">
-            <CarbonComponents.tag type="cool-gray">Policy Pack v3.2</CarbonComponents.tag>
+            <.tag type="cool-gray">Policy Pack v3.2</.tag>
           </:content>
           <:content_text subtitle="Continuous policy enforcement, identity hardening, and audit trails." />
-        </CarbonComponents.page_header>
+        </.page_header>
       </:column>
 
       <:column span="16">
-        <CarbonComponents.grid full_width class="demo-section">
+        <.grid full_width class="demo-section">
           <:column sm="4" md="4" lg="8">
-            <CarbonComponents.tile class="demo-card">
+            <.tile class="demo-card">
               <h3>Policy coverage</h3>
-              <CarbonComponents.structured_list rows={@policies} condensed>
+              <.structured_list rows={@policies} condensed>
                 <:col :let={policy} label="Policy">{policy.name}</:col>
                 <:col :let={policy} label="Coverage">{policy.coverage}%</:col>
                 <:col :let={policy} label="Status">
-                  <CarbonComponents.tag type={status_kind(policy.status)}>
+                  <.tag type={status_kind(policy.status)}>
                     {policy.status}
-                  </CarbonComponents.tag>
+                  </.tag>
                 </:col>
-              </CarbonComponents.structured_list>
-            </CarbonComponents.tile>
+              </.structured_list>
+            </.tile>
           </:column>
           <:column sm="4" md="4" lg="8">
-            <CarbonComponents.tile class="demo-card demo-card--elevated">
+            <.tile class="demo-card demo-card--elevated">
               <h3>Identity controls</h3>
               <div>
                 <div class="demo-kicker">Required for production</div>
-                <CarbonComponents.stack gap="3">
-                  <CarbonComponents.checkbox
+                <.stack gap="3">
+                  <.checkbox
                     id="security-mfa"
                     name="security-mfa"
                     label_text="MFA enforced"
                     checked
                   />
-                  <CarbonComponents.checkbox
+                  <.checkbox
                     id="security-review"
                     name="security-review"
                     label_text="Privileged access review"
                     checked
                   />
-                  <CarbonComponents.checkbox
+                  <.checkbox
                     id="security-keys"
                     name="security-keys"
                     label_text="Hardware security keys"
                   />
-                </CarbonComponents.stack>
+                </.stack>
               </div>
               <div class="demo-section">
-                <CarbonComponents.radio_button_group
+                <.radio_button_group
                   legend_text="Default access policy"
                   name="default-access-policy"
                 >
                   <:item label="Least privilege" value="least" checked />
                   <:item label="Balanced" value="balanced" />
                   <:item label="Open" value="open" />
-                </CarbonComponents.radio_button_group>
+                </.radio_button_group>
               </div>
               <div class="demo-section">
-                <CarbonComponents.button kind="primary" phx-click="rotate_keys">
+                <.button kind="primary" phx-click="rotate_keys">
                   Rotate API keys
-                </CarbonComponents.button>
+                </.button>
                 <p class="demo-muted">Last rotated {@last_rotated}</p>
               </div>
-            </CarbonComponents.tile>
+            </.tile>
           </:column>
-        </CarbonComponents.grid>
+        </.grid>
       </:column>
 
       <:column span="16">
         <div class="demo-section demo-card">
-          <CarbonComponents.accordion>
+          <.accordion>
             <:item title="Network perimeter" open>
               Edge ingress is protected by WAF ruleset 6.2 with managed threat detection.
               New rule proposals are staged in "Audit" mode for 24 hours.
@@ -130,10 +130,10 @@ defmodule DemoWeb.SecurityLive do
             <:item title="Incident response">
               On-call rotation schedules are synchronized with PagerDuty and Opsgenie.
             </:item>
-          </CarbonComponents.accordion>
+          </.accordion>
         </div>
       </:column>
-    </CarbonComponents.grid>
+    </.grid>
     """
   end
 end

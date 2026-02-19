@@ -3,7 +3,7 @@ defmodule DemoWeb.InfrastructureLive do
 
   alias Demo.CloudData
   alias Demo.CloudEvents
-  alias Graphene.CarbonComponents, as: CarbonComponents
+
   alias Graphene.Icons
   import DemoWeb.CloudHelpers
 
@@ -108,26 +108,26 @@ defmodule DemoWeb.InfrastructureLive do
     assigns = assign(assigns, :filtered_clusters, clusters)
 
     ~H"""
-    <CarbonComponents.grid full_width>
+    <.grid full_width>
       <:column span="16">
-        <CarbonComponents.page_header>
+        <.page_header>
           <:breadcrumb>
-            <CarbonComponents.breadcrumb>
+            <.breadcrumb>
               <:item href={~p"/demo"} text="Cloud Admin" />
               <:item text="Infrastructure" />
-            </CarbonComponents.breadcrumb>
+            </.breadcrumb>
           </:breadcrumb>
           <:content title="Infrastructure">
-            <CarbonComponents.tag type="blue">Kubernetes</CarbonComponents.tag>
+            <.tag type="blue">Kubernetes</.tag>
           </:content>
           <:content_text subtitle="Manage multi-region clusters, node pools, and workload scaling." />
-        </CarbonComponents.page_header>
+        </.page_header>
       </:column>
 
       <:column span="16">
         <div class="demo-section demo-card">
           <.form for={@filter_form} phx-change="filter">
-            <CarbonComponents.text_input field={@filter_form[:query]} label="Search clusters" />
+            <.text_input field={@filter_form[:query]} label="Search clusters" />
           </.form>
         </div>
       </:column>
@@ -137,14 +137,14 @@ defmodule DemoWeb.InfrastructureLive do
           <div class="demo-kicker">Grid</div>
           <h3>Implicit rows in practice</h3>
           <p class="demo-muted">Spans wrap automatically when they exceed the grid width.</p>
-          <CarbonComponents.grid class="demo-grid-example">
+          <.grid class="demo-grid-example">
             <:column span="6">
               <div class="demo-grid-widget">
                 <div class="demo-grid-widget__header">
                   <Icons.icon name="chip" size={16} />
                   <span class="demo-grid-widget__title">Compute pools</span>
                   <span class="demo-grid-widget__tag">
-                    <CarbonComponents.tag type="green">Stable</CarbonComponents.tag>
+                    <.tag type="green">Stable</.tag>
                   </span>
                 </div>
                 <div class="demo-grid-widget__value">42</div>
@@ -168,7 +168,7 @@ defmodule DemoWeb.InfrastructureLive do
                   <span class="demo-grid-widget__title">Patch compliance</span>
                 </div>
                 <div class="demo-grid-widget__value">92%</div>
-                <CarbonComponents.progress_bar value={92} />
+                <.progress_bar value={92} />
                 <div class="demo-grid-widget__meta">Next window in 6 days</div>
               </div>
             </:column>
@@ -178,11 +178,11 @@ defmodule DemoWeb.InfrastructureLive do
                   <Icons.icon name="network--3" size={16} />
                   <span class="demo-grid-widget__title">Ingress capacity</span>
                   <span class="demo-grid-widget__tag">
-                    <CarbonComponents.tag type="blue">Moderate</CarbonComponents.tag>
+                    <.tag type="blue">Moderate</.tag>
                   </span>
                 </div>
                 <div class="demo-grid-widget__value">68%</div>
-                <CarbonComponents.progress_bar value={68} />
+                <.progress_bar value={68} />
                 <div class="demo-grid-widget__meta">Route shift recommended in 2 regions</div>
               </div>
             </:column>
@@ -192,7 +192,7 @@ defmodule DemoWeb.InfrastructureLive do
                   <Icons.icon name="notification" size={16} />
                   <span class="demo-grid-widget__title">Snapshot backlog</span>
                   <span class="demo-grid-widget__tag">
-                    <CarbonComponents.tag type="red">Action</CarbonComponents.tag>
+                    <.tag type="red">Action</.tag>
                   </span>
                 </div>
                 <div class="demo-grid-widget__list">
@@ -207,47 +207,47 @@ defmodule DemoWeb.InfrastructureLive do
                 </div>
               </div>
             </:column>
-          </CarbonComponents.grid>
+          </.grid>
         </div>
       </:column>
 
       <:column span="16">
         <div class="demo-section demo-card demo-card--elevated">
-          <CarbonComponents.data_table id="cluster-table" rows={@filtered_clusters} size="md">
+          <.table_live id="cluster-table" rows={@filtered_clusters} size="md">
             <:col :let={cluster} label="Cluster">{cluster.name}</:col>
             <:col :let={cluster} label="Region">{cluster.region}</:col>
             <:col :let={cluster} label="Env">{String.capitalize(cluster.environment)}</:col>
             <:col :let={cluster} label="Nodes">{cluster.nodes}</:col>
             <:col :let={cluster} label="Version">{cluster.version}</:col>
             <:col :let={cluster} label="Status">
-              <CarbonComponents.tag type={status_kind(cluster.status)}>
+              <.tag type={status_kind(cluster.status)}>
                 {cluster.status}
-              </CarbonComponents.tag>
+              </.tag>
             </:col>
             <:action :let={cluster}>
-              <CarbonComponents.stack orientation="horizontal" gap="2">
-                <CarbonComponents.button
+              <.stack orientation="horizontal" gap="2">
+                <.button
                   kind="ghost"
                   size="sm"
                   phx-click="scale_cluster"
                   phx-value-id={cluster.id}
                 >
                   Scale +2
-                </CarbonComponents.button>
-                <CarbonComponents.button
+                </.button>
+                <.button
                   kind="ghost"
                   size="sm"
                   phx-click="restart_cluster"
                   phx-value-id={cluster.id}
                 >
                   Restart
-                </CarbonComponents.button>
-              </CarbonComponents.stack>
+                </.button>
+              </.stack>
             </:action>
-          </CarbonComponents.data_table>
+          </.table_live>
         </div>
       </:column>
-    </CarbonComponents.grid>
+    </.grid>
     """
   end
 end

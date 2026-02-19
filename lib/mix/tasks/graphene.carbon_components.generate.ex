@@ -246,6 +246,7 @@ if Mix.env() == :dev do
         end
 
       delegate = Map.get(recipe, :delegate, :core)
+      delegate_to = Map.get(recipe, :delegate_to, name)
 
       attrs =
         component.attrs
@@ -273,7 +274,7 @@ if Mix.env() == :dev do
         |> Enum.map(fn pattern -> render_recipe_clause(name, pattern, prelude, body) end)
         |> Enum.join("\n")
 
-      fallback = render_recipe_fallback(name, delegate)
+      fallback = render_recipe_fallback(name, delegate, delegate_to)
 
       doc_str <> attrs <> slots <> clauses <> fallback
     end
@@ -358,11 +359,11 @@ if Mix.env() == :dev do
         "  end\n"
     end
 
-    defp render_recipe_fallback(name, delegate) do
+    defp render_recipe_fallback(name, delegate, delegate_to) do
       call =
         case delegate do
-          :form -> "    FormComponents.#{name}(assigns)\n"
-          _ -> "    CoreComponents.#{name}(assigns)\n"
+          :form -> "    FormComponents.#{delegate_to}(assigns)\n"
+          _ -> "    CoreComponents.#{delegate_to}(assigns)\n"
         end
 
       "  def #{name}(assigns) do\n" <> call <> "  end\n\n"
@@ -416,7 +417,7 @@ if Mix.env() == :dev do
     end
 
     defp custom_component_exports do
-      [data_table: 1, file_uploader: 1, ui_shell: 1]
+      [table_live: 1, file_uploader: 1, ui_shell: 1]
     end
 
     defp prefix_counts(names) do
@@ -470,6 +471,14 @@ if Mix.env() == :dev do
       |> Enum.join("\n")
     end
 
+    defp group_custom_wrappers("table") do
+      Path.join(["assets", "eex", "graphene_carbon_components_table_custom.ex"])
+      |> File.read!()
+      |> ensure_trailing_newline()
+    end
+
+    defp group_custom_wrappers(_group), do: ""
+
     defp render_delegates(names, group_map) do
       names
       |> Enum.sort()
@@ -494,7 +503,10 @@ if Mix.env() == :dev do
     defp render_aliases(wrappers) do
       aliases =
         []
-        |> maybe_add_alias(String.contains?(wrappers, "CoreComponents."), "  alias Graphene.Internal.CoreComponents")
+        |> maybe_add_alias(
+          String.contains?(wrappers, "CoreComponents."),
+          "  alias Graphene.Internal.CoreComponents"
+        )
         |> maybe_add_alias(
           String.contains?(wrappers, "FormComponents."),
           "  alias Graphene.Internal.FormComponents"
@@ -510,6 +522,7 @@ if Mix.env() == :dev do
       manual =
         MapSet.new([
           Path.join(["lib", "graphene", "carbon_components", "data_table_component.ex"]),
+          Path.join(["lib", "graphene", "carbon_components", "table_live.ex"]),
           Path.join(["lib", "graphene", "carbon_components", "helpers.ex"])
         ])
 
@@ -553,7 +566,10 @@ if Mix.env() == :dev do
 
       delegates = render_delegates(render_names, group_map)
       imports = render_imports(group_names)
-      custom_imports = "      import Graphene.CarbonComponents, only: #{inspect(custom_component_exports())}"
+
+      custom_imports =
+        "      import Graphene.CarbonComponents, only: #{inspect(custom_component_exports())}"
+
       custom_components = File.read!(custom_template(:src))
 
       tmp_dir =
@@ -570,6 +586,13 @@ if Mix.env() == :dev do
       for {group, group_components} <- grouped do
         wrappers =
           render_wrappers(group_components, components_map, docs, recipes, form_delegates)
+
+        custom_wrappers = group_custom_wrappers(group)
+
+        wrappers =
+          [wrappers, custom_wrappers]
+          |> Enum.reject(&(&1 == ""))
+          |> Enum.join("\n")
 
         aliases = render_aliases(wrappers)
 

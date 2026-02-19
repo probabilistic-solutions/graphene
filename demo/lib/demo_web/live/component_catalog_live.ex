@@ -1,7 +1,6 @@
 defmodule DemoWeb.ComponentCatalogLive do
   use DemoWeb, :live_view
 
-  alias Graphene.CarbonComponents, as: CarbonComponents
   alias Graphene.Icons
 
   @impl true
@@ -48,20 +47,20 @@ defmodule DemoWeb.ComponentCatalogLive do
       |> assign(:selected_component, selected)
 
     ~H"""
-    <CarbonComponents.grid full_width>
+    <.grid full_width>
       <:column span="16">
-        <CarbonComponents.page_header>
+        <.page_header>
           <:breadcrumb>
-            <CarbonComponents.breadcrumb>
+            <.breadcrumb>
               <:item href={~p"/demo"} text="Cloud Admin" />
               <:item text="Component Catalog" />
-            </CarbonComponents.breadcrumb>
+            </.breadcrumb>
           </:breadcrumb>
           <:content title="Component Catalog">
-            <CarbonComponents.tag type="cool-gray">Carbon</CarbonComponents.tag>
+            <.tag type="cool-gray">Carbon</.tag>
           </:content>
           <:content_text subtitle="Rendered coverage for every Carbon wrapper in Graphene." />
-        </CarbonComponents.page_header>
+        </.page_header>
       </:column>
 
       <:column span="16">
@@ -72,7 +71,7 @@ defmodule DemoWeb.ComponentCatalogLive do
                 Showing {@component_count} components. Use the filter to narrow the list.
               </p>
               <.form for={@filter_form} phx-change="filter">
-                <CarbonComponents.search
+                <.search
                   field={@filter_form[:query]}
                   label_text="Filter components"
                   placeholder="Search by name"
@@ -80,7 +79,7 @@ defmodule DemoWeb.ComponentCatalogLive do
               </.form>
               <div class="demo-section demo-component-list">
                 <%= for component <- @filtered_components do %>
-                  <CarbonComponents.button
+                  <.button
                     kind={
                       if Atom.to_string(component.name) == @selected_name,
                         do: "primary",
@@ -92,14 +91,14 @@ defmodule DemoWeb.ComponentCatalogLive do
                     phx-value-name={component.name}
                   >
                     {component.label}
-                  </CarbonComponents.button>
+                  </.button>
                 <% end %>
               </div>
             </div>
             <div :if={@selected_component}>
               <div class="demo-component-header">
                 <h4>{@selected_component.label}</h4>
-                <CarbonComponents.tag type="cool-gray">:<%= @selected_component.name %></CarbonComponents.tag>
+                <.tag type="cool-gray">:<%= @selected_component.name %></.tag>
               </div>
               <div class="demo-component-preview">
                 <%= component_preview(@selected_component) %>
@@ -117,12 +116,12 @@ defmodule DemoWeb.ComponentCatalogLive do
           </span>
         </div>
       </:column>
-    </CarbonComponents.grid>
+    </.grid>
     """
   end
 
   defp build_component_list do
-    CarbonComponents.__components__()
+    Graphene.CarbonComponents.__components__()
     |> Enum.map(fn {name, meta} ->
       label = humanize(name)
 
@@ -155,7 +154,7 @@ defmodule DemoWeb.ComponentCatalogLive do
 
   defp component_preview(%{name: name, meta: meta}) do
     assigns = build_assigns(name, meta)
-    apply(CarbonComponents, name, [assigns])
+    apply(Graphene.CarbonComponents, name, [assigns])
   end
 
   defp build_assigns(:data_table, meta) do

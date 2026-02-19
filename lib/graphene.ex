@@ -4,7 +4,9 @@ defmodule Graphene do
 
   Usage:
 
-      use Graphene
+      use Graphene, :html
+      use Graphene, :live
+      use Graphene, [:html, :live]
 
   <!-- STORYBOOK_DOCS:START -->
 
@@ -3878,9 +3880,65 @@ defmodule Graphene do
   <!-- STORYBOOK_DOCS:END -->
   """
 
-  defmacro __using__(opts) do
+  defmacro __using__(opts \\ :html) do
+    opts =
+      case opts do
+        list when is_list(list) -> list
+        atom when is_atom(atom) -> [atom]
+        _ -> [opts]
+      end
+
+    include_html? = :html in opts
+    include_live? = :live in opts
+
+    basic_ast =
+      cond do
+        include_html? and include_live? ->
+          quote do
+            import Graphene.BasicComponents
+          end
+
+        include_html? ->
+          quote do
+            import Graphene.BasicComponents, except: [table_live: 1]
+          end
+
+        include_live? ->
+          quote do
+            import Graphene.BasicComponents, only: [table_live: 1]
+          end
+
+        true ->
+          nil
+      end
+
     quote do
-      use Graphene.Components, unquote(opts)
+      unquote(if include_html?, do: html_ast(), else: nil)
+      unquote(if include_live?, do: live_ast(), else: nil)
+      unquote(basic_ast)
+    end
+  end
+
+  defp html_ast do
+    quote do
+      use Phoenix.Component
+      import Phoenix.Component, except: [form: 1, form: 2, link: 1, link: 2]
+
+      import Graphene.CarbonComponents,
+        except: [
+          button: 1,
+          data_table: 1,
+          header: 1,
+          icon: 1,
+          modal: 1,
+          table: 1,
+          table_live: 1
+        ]
+    end
+  end
+
+  defp live_ast do
+    quote do
     end
   end
 end

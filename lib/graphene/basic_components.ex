@@ -11,8 +11,6 @@ defmodule Graphene.BasicComponents do
 
   alias Phoenix.LiveView.JS
   alias Graphene.CarbonComponents
-  alias Graphene.Internal.CoreComponents
-  alias Graphene.Internal.FormComponents
 
   @basic_icon_names Graphene.Icons.available_icons()
 
@@ -28,6 +26,7 @@ defmodule Graphene.BasicComponents do
   attr :flash, :map, default: %{}, doc: "the map of flash messages to display"
   attr :title, :string, default: nil
   attr :kind, :atom, values: [:info, :error], doc: "used for styling and flash lookup"
+  attr :open, :boolean, default: true
   attr :rest, :global, doc: "the arbitrary HTML attributes to add to the flash container"
 
   slot :inner_block, doc: "the optional inner block that renders the flash message"
@@ -37,17 +36,194 @@ defmodule Graphene.BasicComponents do
     assigns = assign(assigns, :carbon_kind, flash_kind(assigns.kind))
 
     ~H"""
-    <CoreComponents.toast_notification
+    <CarbonComponents.toast_notification
       :if={msg = render_slot(@inner_block) || Phoenix.Flash.get(@flash, @kind)}
       id={@id}
       kind={@carbon_kind}
-      open
+      open={@open}
       phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide("##{@id}")}
       {@rest}
     >
       <:title :if={@title}>{@title}</:title>
       <:subtitle>{msg}</:subtitle>
-    </CoreComponents.toast_notification>
+    </CarbonComponents.toast_notification>
+    """
+  end
+
+  @doc """
+  Shows the flash group with standard titles and content.
+
+  ## Examples
+
+      <.flash_group flash={@flash} />
+  """
+  attr :flash, :map, required: true, doc: "the map of flash messages"
+  attr :id, :string, default: "flash-group", doc: "the optional id of flash container"
+  attr :class, :any, default: nil
+
+  attr :show_system_messages, :boolean,
+    default: true,
+    doc: "show LiveView connection error toasts"
+
+  attr :rest, :global
+
+  def flash_group(assigns) do
+    ~H"""
+    <div
+      id={@id}
+      class={["graphene-flash-group", @class]}
+      style="position: fixed; top: var(--cds-spacing-05, 1rem); right: var(--cds-spacing-05, 1rem); left: auto; bottom: auto; z-index: 9000; display: flex; flex-direction: column; align-items: flex-end; gap: var(--cds-spacing-03, 0.75rem);"
+      phx-connected={JS.add_class("graphene-live-connected", to: "body")}
+      {@rest}
+    >
+      <.flash kind={:info} title="Success!" flash={@flash} />
+      <.flash kind={:error} title="Error!" flash={@flash} />
+      <.flash
+        :if={@show_system_messages}
+        id="client-error"
+        kind={:error}
+        title="We can't find the internet"
+        open={false}
+        phx-disconnected={open_component("body.graphene-live-connected .phx-client-error #client-error")}
+        phx-connected={close_component("#client-error")}
+        hidden
+      >
+        Attempting to reconnect
+      </.flash>
+
+      <.flash
+        :if={@show_system_messages}
+        id="server-error"
+        kind={:error}
+        title="Something went wrong!"
+        open={false}
+        phx-disconnected={open_component("body.graphene-live-connected .phx-server-error #server-error")}
+        phx-connected={close_component("#server-error")}
+        hidden
+      >
+        Hang in there while we get back on track
+      </.flash>
+    </div>
+    """
+  end
+
+  @doc """
+  Renders a modal.
+
+  ## Examples
+
+      <.modal id="confirm-modal" show>
+        This is a modal.
+      </.modal>
+  """
+  attr :id, :string, default: nil
+  attr :show, :boolean, default: false
+  attr :open, :boolean, default: false
+  attr :on_cancel, JS, default: %JS{}
+  attr :rest, :global
+
+  slot :label
+  slot :heading
+  slot :body
+  slot :inner_block
+
+  slot :footer_button do
+    attr :label, :string
+    attr :kind, :string
+    attr :disabled, :boolean
+    attr :type, :string
+    attr :autofocus, :boolean
+    attr :attrs, :map
+  end
+
+  slot :actions do
+    attr :label, :string
+    attr :kind, :string
+    attr :disabled, :boolean
+    attr :type, :string
+    attr :autofocus, :boolean
+    attr :attrs, :map
+  end
+
+  def modal(assigns) do
+    ~H"""
+    <CarbonComponents.modal
+      id={@id}
+      open={@open || @show}
+      phx-window-keydown={@on_cancel}
+      phx-key="escape"
+      {@rest}
+    >
+      <:label :for={label <- @label}>{render_slot(label)}</:label>
+      <:heading :for={heading <- @heading}>{render_slot(heading)}</:heading>
+      <:body :if={@body != []}>
+        <%= for body <- @body do %>
+          {render_slot(body)}
+        <% end %>
+      </:body>
+      <:body :if={@body == [] and @inner_block != []}>
+        {render_slot(@inner_block)}
+      </:body>
+      <:footer_button
+        :for={action <- @actions}
+        label={action[:label]}
+        kind={action[:kind]}
+        disabled={action[:disabled]}
+        type={action[:type]}
+        autofocus={action[:autofocus]}
+        attrs={action[:attrs]}
+      >
+        {render_slot(action)}
+      </:footer_button>
+      <:footer_button
+        :for={button <- @footer_button}
+        label={button[:label]}
+        kind={button[:kind]}
+        disabled={button[:disabled]}
+        type={button[:type]}
+        autofocus={button[:autofocus]}
+        attrs={button[:attrs]}
+      >
+        {render_slot(button)}
+      </:footer_button>
+    </CarbonComponents.modal>
+    """
+  end
+
+  @doc """
+  Renders a simple form.
+
+  ## Examples
+
+      <.simple_form for={@form} phx-change="validate" phx-submit="save">
+        <.input field={@form[:email]} label="Email"/>
+        <:actions>
+          <.button>Save</.button>
+        </:actions>
+      </.simple_form>
+  """
+  attr :for, :any, required: true, doc: "the datastructure for the form"
+  attr :as, :any, default: nil, doc: "the server side parameter to collect all input under"
+
+  attr :rest, :global,
+    include: ~w(autocomplete name rel action enctype method novalidate target multipart),
+    doc: "the arbitrary HTML attributes to apply to the form tag"
+
+  slot :inner_block, required: true
+  slot :actions, doc: "the slot for form actions, such as a submit button"
+
+  def simple_form(assigns) do
+    ~H"""
+    <CarbonComponents.form :let={f} for={@for} as={@as} {@rest}>
+      <CarbonComponents.stack gap="5">
+        {render_slot(@inner_block, f)}
+        <CarbonComponents.stack :if={@actions != []} orientation="horizontal" gap="3">
+          <%= for action <- @actions do %>
+            {render_slot(action, f)}
+          <% end %>
+        </CarbonComponents.stack>
+      </CarbonComponents.stack>
+    </CarbonComponents.form>
     """
   end
 
@@ -64,6 +240,7 @@ defmodule Graphene.BasicComponents do
   attr :class, :any, default: nil
   attr :variant, :string, default: nil, values: [nil, "primary"]
   attr :kind, :string, default: nil, doc: "Carbon button kind override."
+  attr :size, :string, default: nil
   slot :inner_block, required: true
 
   def button(assigns) do
@@ -92,9 +269,15 @@ defmodule Graphene.BasicComponents do
       |> assign(:carbon_kind, kind)
 
     ~H"""
-    <CoreComponents.button kind={@carbon_kind} class={@class} phx-click={@phx_click} {@rest}>
+    <CarbonComponents.button
+      kind={@carbon_kind}
+      size={@size}
+      class={@class}
+      phx-click={@phx_click}
+      {@rest}
+    >
       {render_slot(@inner_block)}
-    </CoreComponents.button>
+    </CarbonComponents.button>
     """
   end
 
@@ -164,7 +347,7 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CarbonComponents.form_item>
-      <FormComponents.checkbox
+      <CarbonComponents.checkbox
         id={@id}
         name={@name}
         checked={@checked}
@@ -199,7 +382,7 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CarbonComponents.form_item>
-      <FormComponents.select
+      <CarbonComponents.select
         id={@id}
         name={@name}
         value={select_value(@value, @multiple)}
@@ -218,7 +401,7 @@ defmodule Graphene.BasicComponents do
         >
           {item.label}
         </:item>
-      </FormComponents.select>
+      </CarbonComponents.select>
     </CarbonComponents.form_item>
     """
   end
@@ -233,7 +416,7 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CarbonComponents.form_item>
-      <FormComponents.textarea
+      <CarbonComponents.textarea
         id={@id}
         name={@name}
         value={Phoenix.HTML.Form.normalize_value("textarea", @value)}
@@ -243,7 +426,7 @@ defmodule Graphene.BasicComponents do
         {@rest}
       >
         <:label_text :if={@label}>{@label}</:label_text>
-      </FormComponents.textarea>
+      </CarbonComponents.textarea>
     </CarbonComponents.form_item>
     """
   end
@@ -257,7 +440,7 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CarbonComponents.form_item>
-      <FormComponents.search
+      <CarbonComponents.search
         name={@name}
         label_text={@label}
         value={Phoenix.HTML.Form.normalize_value("search", @value)}
@@ -290,7 +473,7 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CarbonComponents.form_item>
-      <FormComponents.number_input
+      <CarbonComponents.number_input
         id={@id}
         name={@name}
         value={Phoenix.HTML.Form.normalize_value("number", @value)}
@@ -302,7 +485,7 @@ defmodule Graphene.BasicComponents do
         {@rest}
       >
         <:label_text :if={@label}>{@label}</:label_text>
-      </FormComponents.number_input>
+      </CarbonComponents.number_input>
     </CarbonComponents.form_item>
     """
   end
@@ -317,7 +500,7 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CarbonComponents.form_item>
-      <FormComponents.file_uploader
+      <CarbonComponents.file_uploader
         id={@id}
         name={@name}
         label_title={@label}
@@ -333,7 +516,7 @@ defmodule Graphene.BasicComponents do
         >
           {if @label, do: @label, else: "Upload"}
         </:button>
-      </FormComponents.file_uploader>
+      </CarbonComponents.file_uploader>
       <.error :for={msg <- @errors}>{msg}</.error>
     </CarbonComponents.form_item>
     """
@@ -349,7 +532,7 @@ defmodule Graphene.BasicComponents do
 
     ~H"""
     <CarbonComponents.form_item>
-      <FormComponents.text_input
+      <CarbonComponents.text_input
         id={@id}
         name={@name}
         type={@type}
@@ -360,7 +543,7 @@ defmodule Graphene.BasicComponents do
         {@rest}
       >
         <:label_text :if={@label}>{@label}</:label_text>
-      </FormComponents.text_input>
+      </CarbonComponents.text_input>
     </CarbonComponents.form_item>
     """
   end
@@ -396,26 +579,25 @@ defmodule Graphene.BasicComponents do
   end
 
   @doc """
-  Renders a header with title.
+  Renders a Carbon header.
   """
-  slot :inner_block, required: true
-  slot :subtitle
-  slot :actions
+  attr :rest, :global
+
+  slot :name do
+    attr :href, :string
+    attr :prefix, :string
+    attr :attrs, :map
+  end
+
+  slot :global
+  slot :inner_block
 
   def header(assigns) do
-    ~H"""
-    <CoreComponents.stack orientation="horizontal" gap="3">
-      <CoreComponents.stack gap="1">
-        <CarbonComponents.heading>{render_slot(@inner_block)}</CarbonComponents.heading>
-        <p :if={@subtitle != []}>{render_slot(@subtitle)}</p>
-      </CoreComponents.stack>
-      <div :if={@actions != []}>{render_slot(@actions)}</div>
-    </CoreComponents.stack>
-    """
+    Graphene.CarbonComponents.header(assigns)
   end
 
   @doc """
-  Renders a table with generic styling.
+  Renders a static table with Carbon styling.
 
   ## Examples
 
@@ -424,71 +606,19 @@ defmodule Graphene.BasicComponents do
         <:col :let={user} label="username">{user.username}</:col>
       </.table>
   """
-  attr :id, :string, required: true
-  attr :rows, :list, required: true
-  attr :row_id, :any, default: nil, doc: "the function for generating the row id"
-  attr :row_click, :any, default: nil, doc: "the function for handling phx-click on each row"
+  defdelegate table(assigns), to: Graphene.CarbonComponents.Table
 
-  attr :row_item, :any,
-    default: &Function.identity/1,
-    doc: "the function for mapping each row before calling the :col and :action slots"
+  @doc """
+  Renders a LiveView-aware data table.
 
-  attr :selectable, :boolean, default: false, doc: "enable row selection"
-  attr :sortable, :boolean, default: false, doc: "enable sorting UI on header cells"
+  ## Examples
 
-  attr :selected_ids, :list,
-    default: nil,
-    doc:
-      "selected row ids. When nil, the table keeps its internal selection state. Pass an explicit list to control selection."
-
-  attr :selection_name, :string, default: nil, doc: "name attribute for row selection inputs"
-  attr :selection_label, :string, default: "Select row", doc: "aria label for row selection"
-  attr :radio, :boolean, default: false, doc: "use radio selection instead of checkboxes"
-  attr :size, :string, default: "lg", values: ["xs", "sm", "md", "lg", "xl"], doc: "table size"
-  attr :expandable, :boolean, default: false, doc: "enable expandable rows"
-  attr :batch_expansion, :boolean, default: false, doc: "enable batch expansion control"
-
-  attr :overflow_menu_on_hover, :boolean,
-    default: false,
-    doc: "show overflow menu only on hover"
-
-  attr :use_zebra_styles, :boolean, default: true, doc: "enable zebra striping"
-  attr :use_static_width, :boolean, default: false, doc: "use static table width"
-  attr :with_row_ai_labels, :boolean, default: false, doc: "enable AI labels in rows"
-  attr :with_row_slugs, :boolean, default: false, doc: "enable slugs in rows"
-  attr :locale, :string, default: nil, doc: "table locale"
-  attr :filter_rows, :any, default: nil, doc: "custom filter rows function"
-
-  attr :phx_update, :any,
-    default: "ignore",
-    doc:
-      "phx-update behavior for the table root. Defaults to \"ignore\" so LiveView does not patch the table subtree after client-side sorting/filtering. Set to nil or false to allow normal patching."
-
-  attr :on_row_selected, :any, default: nil, doc: "callback for row selection events"
-  attr :on_row_all_selected, :any, default: nil, doc: "callback for select-all events"
-  attr :on_sorted, :any, default: nil, doc: "callback for sort events"
-  attr :on_filtered, :any, default: nil, doc: "callback for filter events"
-  attr :on_search, :any, default: nil, doc: "callback for search events"
-  attr :on_batch_cancel, :any, default: nil, doc: "callback for batch cancel events"
-
-  slot :col, required: true do
-    attr :label, :any
-  end
-
-  slot :action, doc: "the slot for showing user actions in the last table column"
-  slot :title, doc: "table title"
-  slot :description, doc: "table description"
-  slot :toolbar, doc: "table toolbar contents"
-
-  slot :row_decorator, doc: "content injected before row cells" do
-    attr :class, :string
-  end
-
-  slot :expanded_row, doc: "content rendered as expanded rows"
-
-  def table(assigns) do
-    CarbonComponents.data_table(assigns)
-  end
+      <.table_live id="users" rows={@users}>
+        <:col :let={user} label="id">{user.id}</:col>
+        <:col :let={user} label="username">{user.username}</:col>
+      </.table_live>
+  """
+  defdelegate table_live(assigns), to: Graphene.CarbonComponents.TableLive
 
   @doc """
   Renders a data list.
@@ -514,6 +644,27 @@ defmodule Graphene.BasicComponents do
         </div>
       </CarbonComponents.list_item>
     </CarbonComponents.unordered_list>
+    """
+  end
+
+  @doc """
+  Renders a back navigation link.
+
+  ## Examples
+
+      <.back navigate={~p"/"}>Back to home</.back>
+  """
+  attr :navigate, :any, required: true
+  attr :class, :any, default: nil
+  slot :inner_block, required: true
+
+  def back(assigns) do
+    ~H"""
+    <div class="cds--breadcrumb">
+      <CarbonComponents.link href={@navigate} class={@class}>
+        {render_slot(@inner_block)}
+      </CarbonComponents.link>
+    </div>
     """
   end
 
@@ -548,6 +699,12 @@ defmodule Graphene.BasicComponents do
     )
   end
 
+  def open_component(js \\ %JS{}, selector) do
+    js
+    |> JS.remove_attribute("hidden", to: selector)
+    |> JS.set_attribute({"open", ""}, to: selector)
+  end
+
   def hide(js \\ %JS{}, selector) do
     JS.hide(js,
       to: selector,
@@ -556,6 +713,20 @@ defmodule Graphene.BasicComponents do
         {"transition-all ease-in duration-200", "opacity-100 translate-y-0 sm:scale-100",
          "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"}
     )
+  end
+
+  def close_component(js \\ %JS{}, selector) do
+    js
+    |> JS.remove_attribute("open", to: selector)
+    |> JS.set_attribute({"hidden", ""}, to: selector)
+  end
+
+  def show_modal(js \\ %JS{}, id) when is_binary(id) do
+    JS.set_attribute(js, {"open", ""}, to: "##{id}")
+  end
+
+  def hide_modal(js \\ %JS{}, id) when is_binary(id) do
+    JS.remove_attribute(js, "open", to: "##{id}")
   end
 
   @doc """

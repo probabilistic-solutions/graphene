@@ -1,1 +1,0 @@
-var n=(r,o,t)=>Array.prototype.filter.call(r,o,t);var a=(r,o,t)=>Array.prototype.find.call(r,o,t),c=(r,o,t)=>Array.prototype.forEach.call(r,o,t),e=(r,o)=>Array.prototype.indexOf.call(r,o);export{n as a,a as b,c,e as d};

@@ -12,7 +12,6 @@ defmodule <%= assigns[:module] %> do
 
   use Phoenix.Component
 
-  alias Graphene.CarbonComponents.DataTableComponent
   alias Graphene.Internal.FormComponents
 
   defmacro __using__(_opts) do

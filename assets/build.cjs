@@ -1,6 +1,7 @@
 const esbuild = require("esbuild");
 const fs = require("fs/promises");
 const path = require("path");
+const sass = require("sass");
 
 const args = process.argv.slice(2);
 const getArgValue = (key, defaultValue) => {
@@ -13,7 +14,7 @@ const outDir = getArgValue('--outdir', 'dist');
 const outDirPath = path.resolve(__dirname, outDir);
 const entryPoints = [
   path.join(__dirname, "src", "index.ts"),
-  path.join(__dirname, "src", "graphene.css"),
+  path.join(__dirname, "src", "graphene.scss"),
 ];
 
 
@@ -23,6 +24,23 @@ const loader = {
 };
 
 const plugins = [
+  {
+    name: "sass",
+    setup(build) {
+      build.onLoad({ filter: /\.scss$/ }, async (args) => {
+        const result = sass.compile(args.path, {
+          loadPaths: [path.join(__dirname, "node_modules")],
+          style: "expanded",
+        });
+
+        return {
+          contents: result.css,
+          loader: "css",
+          resolveDir: path.dirname(args.path),
+        };
+      });
+    },
+  },
   {
     name: "carbon-number-input-step-fix",
     setup(build) {

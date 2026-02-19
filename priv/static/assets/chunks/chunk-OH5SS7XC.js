@@ -1,0 +1,23 @@
+// node_modules/@carbon/icons/es/chevron--left/16.js
+var _16 = {
+  "elem": "svg",
+  "attrs": {
+    "xmlns": "http://www.w3.org/2000/svg",
+    "viewBox": "0 0 16 16",
+    "fill": "currentColor",
+    "width": 16,
+    "height": 16
+  },
+  "content": [{
+    "elem": "path",
+    "attrs": {
+      "d": "M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+    }
+  }],
+  "name": "chevron--left",
+  "size": 16
+};
+
+export {
+  _16
+};

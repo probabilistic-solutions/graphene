@@ -2,7 +2,7 @@ defmodule DemoWeb.CostsLive do
   use DemoWeb, :live_view
 
   alias Demo.CloudData
-  alias Graphene.CarbonComponents, as: CarbonComponents
+
   import DemoWeb.CloudHelpers
 
   @impl true
@@ -43,65 +43,65 @@ defmodule DemoWeb.CostsLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <CarbonComponents.grid full_width>
+    <.grid full_width>
       <:column span="16">
-        <CarbonComponents.page_header>
+        <.page_header>
           <:breadcrumb>
-            <CarbonComponents.breadcrumb>
+            <.breadcrumb>
               <:item href={~p"/demo"} text="Cloud Admin" />
               <:item text="Cost Management" />
-            </CarbonComponents.breadcrumb>
+            </.breadcrumb>
           </:breadcrumb>
           <:content title="Cost Management">
-            <CarbonComponents.tag type="warm-gray">FinOps</CarbonComponents.tag>
+            <.tag type="warm-gray">FinOps</.tag>
           </:content>
           <:content_text subtitle="Track spend, forecast demand, and allocate budgets across teams." />
-        </CarbonComponents.page_header>
+        </.page_header>
       </:column>
 
       <:column span="16">
-        <CarbonComponents.grid full_width class="demo-section">
+        <.grid full_width class="demo-section">
           <:column sm="4" md="4" lg="8">
-            <CarbonComponents.tile class="demo-card">
+            <.tile class="demo-card">
               <h3>Budget health</h3>
               <p class="demo-muted">Current month spend</p>
               <h2>{format_money(@spend)}</h2>
-              <CarbonComponents.progress_bar value={@spend / @budget * 100} />
+              <.progress_bar value={@spend / @budget * 100} />
               <p class="demo-muted">Budget {format_money(@budget)}</p>
-            </CarbonComponents.tile>
+            </.tile>
           </:column>
           <:column sm="4" md="4" lg="8">
-            <CarbonComponents.tile class="demo-card demo-card--elevated">
+            <.tile class="demo-card demo-card--elevated">
               <h3>Adjust budget</h3>
               <.form for={@budget_form} phx-change="update_budget">
-                <CarbonComponents.number_input
+                <.number_input
                   field={@budget_form[:budget]}
                   label="Monthly budget"
                   min="0"
                 />
               </.form>
               <p class="demo-muted">Changes apply immediately to forecasts and alerts.</p>
-            </CarbonComponents.tile>
+            </.tile>
           </:column>
-        </CarbonComponents.grid>
+        </.grid>
       </:column>
 
       <:column span="16">
         <div class="demo-section demo-card demo-card--elevated">
           <h3>Cost centers</h3>
-          <CarbonComponents.data_table id="cost-centers" rows={@cost_centers} size="sm">
+          <.table_live id="cost-centers" rows={@cost_centers} size="sm">
             <:col :let={center} label="Team">{center.name}</:col>
             <:col :let={center} label="Month">{center.month}</:col>
             <:col :let={center} label="Spend">{format_money(center.spend)}</:col>
             <:col :let={center} label="Delta">
-              <CarbonComponents.tag type={if(center.change >= 0, do: "purple", else: "cool-gray")}>
+              <.tag type={if(center.change >= 0, do: "purple", else: "cool-gray")}>
                 {delta_label(center.change)}
-              </CarbonComponents.tag>
+              </.tag>
             </:col>
-          </CarbonComponents.data_table>
+          </.table_live>
         </div>
       </:column>
-    </CarbonComponents.grid>
+    </.grid>
     """
   end
 end

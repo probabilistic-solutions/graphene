@@ -1,1 +1,0 @@
-var c=(e,n)=>{try{customElements.define(e,n)}catch(t){console.warn(`Attempting to re-define ${e}`)}return n},m=(e,n)=>{let{kind:t,elements:o}=n;return{kind:t,elements:o,finisher(r){try{customElements.define(e,r)}catch(s){console.warn(`Attempting to re-define ${e}`)}}}},i=e=>n=>typeof n=="function"?c(e,n):m(e,n);export{i as a};

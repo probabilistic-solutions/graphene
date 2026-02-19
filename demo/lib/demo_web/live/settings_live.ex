@@ -2,7 +2,7 @@ defmodule DemoWeb.SettingsLive do
   use DemoWeb, :live_view
 
   alias Demo.CloudData
-  alias Graphene.CarbonComponents, as: CarbonComponents
+
 
   @impl true
   def mount(_params, _session, socket) do
@@ -42,47 +42,47 @@ defmodule DemoWeb.SettingsLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <CarbonComponents.grid full_width>
+    <.grid full_width>
       <:column span="16">
-        <CarbonComponents.page_header>
+        <.page_header>
           <:breadcrumb>
-            <CarbonComponents.breadcrumb>
+            <.breadcrumb>
               <:item href={~p"/demo"} text="Cloud Admin" />
               <:item text="Settings" />
-            </CarbonComponents.breadcrumb>
+            </.breadcrumb>
           </:breadcrumb>
           <:content title="Settings">
-            <CarbonComponents.tag type="cool-gray">Organization</CarbonComponents.tag>
+            <.tag type="cool-gray">Organization</.tag>
           </:content>
           <:content_text subtitle="Configure organization defaults, budgets, and notification policies." />
-        </CarbonComponents.page_header>
+        </.page_header>
       </:column>
 
       <:column span="16">
         <div class="demo-section demo-card demo-card--elevated">
           <.form for={@form} phx-change="validate" phx-submit="save">
-            <CarbonComponents.grid full_width>
+            <.grid full_width>
               <:column sm="4" md="4" lg="8">
-                <CarbonComponents.text_input field={@form["org_name"]} label="Organization name" />
+                <.text_input field={@form["org_name"]} label="Organization name" />
               </:column>
               <:column sm="4" md="4" lg="8">
-                <CarbonComponents.select field={@form["region"]} id="settings-region" name="region">
+                <.select field={@form["region"]} id="settings-region" name="region">
                   <:label_text>Primary region</:label_text>
                   <:item :for={region <- @regions} value={region.id} label={region.label} />
-                </CarbonComponents.select>
+                </.select>
               </:column>
               <:column sm="4" md="4" lg="8">
-                <CarbonComponents.text_input field={@form["timezone"]} label="Timezone" />
+                <.text_input field={@form["timezone"]} label="Timezone" />
               </:column>
               <:column sm="4" md="4" lg="8">
-                <CarbonComponents.number_input
+                <.number_input
                   field={@form["budget_guardrail"]}
                   label="Monthly guardrail"
                   min="0"
                 />
               </:column>
               <:column sm="4" md="4" lg="8">
-                <CarbonComponents.radio_button_group
+                <.radio_button_group
                   field={@form["notifications"]}
                   legend_text="Notification sensitivity"
                   name="notification-sensitivity"
@@ -90,32 +90,32 @@ defmodule DemoWeb.SettingsLive do
                   <:item label="Balanced" value="balanced" />
                   <:item label="Strict" value="strict" />
                   <:item label="Relaxed" value="relaxed" />
-                </CarbonComponents.radio_button_group>
+                </.radio_button_group>
               </:column>
               <:column sm="4" md="4" lg="8">
-                <CarbonComponents.radio_button_group
+                <.radio_button_group
                   field={@form["support_plan"]}
                   legend_text="Support plan"
                   name="support-plan"
                 >
                   <:item :for={plan <- @support_plans} label={plan.label} value={plan.id} />
-                </CarbonComponents.radio_button_group>
+                </.radio_button_group>
               </:column>
               <:column sm="4" md="4" lg="8">
-                <CarbonComponents.toggle field={@form["alerts"]}>
+                <.toggle field={@form["alerts"]}>
                   <:label_text>Enable proactive alerts</:label_text>
-                </CarbonComponents.toggle>
+                </.toggle>
               </:column>
-            </CarbonComponents.grid>
+            </.grid>
             <div class="demo-section">
-              <CarbonComponents.button kind="primary" type="submit">
+              <.button kind="primary" type="submit">
                 Save settings
-              </CarbonComponents.button>
+              </.button>
             </div>
           </.form>
         </div>
       </:column>
-    </CarbonComponents.grid>
+    </.grid>
     """
   end
 end

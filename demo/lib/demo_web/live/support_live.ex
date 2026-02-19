@@ -1,7 +1,7 @@
 defmodule DemoWeb.SupportLive do
   use DemoWeb, :live_view
 
-  alias Graphene.CarbonComponents, as: CarbonComponents
+
 
   @impl true
   def mount(_params, _session, socket) do
@@ -24,66 +24,66 @@ defmodule DemoWeb.SupportLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <CarbonComponents.grid full_width>
+    <.grid full_width>
       <:column span="16">
-        <CarbonComponents.page_header>
+        <.page_header>
           <:breadcrumb>
-            <CarbonComponents.breadcrumb>
+            <.breadcrumb>
               <:item href={~p"/demo"} text="Cloud Admin" />
               <:item text="Support" />
-            </CarbonComponents.breadcrumb>
+            </.breadcrumb>
           </:breadcrumb>
           <:content title="Support">
-            <CarbonComponents.tag type="purple">24/7 coverage</CarbonComponents.tag>
+            <.tag type="purple">24/7 coverage</.tag>
           </:content>
           <:content_text subtitle="Runbooks, documentation, and live support channels." />
-        </CarbonComponents.page_header>
+        </.page_header>
       </:column>
 
       <:column span="16">
         <div class="demo-section demo-card demo-card--elevated">
-          <CarbonComponents.tabs type="contained">
+          <.tabs type="contained">
             <:tab title="Runbooks">
-              <CarbonComponents.accordion>
+              <.accordion>
                 <:item title="Database failover" open>
                   <p class="demo-muted">Estimated runtime: 12 minutes</p>
-                  <CarbonComponents.code_snippet type="multi">
+                  <.code_snippet type="multi">
                     <code>nimbus ctl failover --cluster aurora --region us-east-1</code>
-                  </CarbonComponents.code_snippet>
+                  </.code_snippet>
                 </:item>
                 <:item title="Region evacuation">
-                  <CarbonComponents.code_snippet type="multi">
+                  <.code_snippet type="multi">
                     <code>nimbus ctl evacuate --region eu-west-1 --approve</code>
-                  </CarbonComponents.code_snippet>
+                  </.code_snippet>
                 </:item>
-              </CarbonComponents.accordion>
+              </.accordion>
             </:tab>
             <:tab title="Documentation">
-              <CarbonComponents.tile class="demo-card">
+              <.tile class="demo-card">
                 <h3>Quickstart</h3>
                 <p class="demo-muted">Deploy your first managed cluster in under 10 minutes.</p>
-                <CarbonComponents.link href="https://www.ibm.com/docs/en" target="_blank">
+                <.link href="https://www.ibm.com/docs/en" target="_blank">
                   Open docs
-                </CarbonComponents.link>
-              </CarbonComponents.tile>
+                </.link>
+              </.tile>
             </:tab>
             <:tab title="Support">
-              <CarbonComponents.inline_notification kind="info" open>
+              <.inline_notification kind="info" open>
                 <:title>Dedicated support</:title>
                 <:subtitle>
                   Enterprise plans include 15-minute response time and live chat.
                 </:subtitle>
-              </CarbonComponents.inline_notification>
+              </.inline_notification>
               <div class="demo-section">
-                <CarbonComponents.button kind="primary" phx-click="open_ticket">
+                <.button kind="primary" phx-click="open_ticket">
                   Open support ticket
-                </CarbonComponents.button>
+                </.button>
               </div>
             </:tab>
-          </CarbonComponents.tabs>
+          </.tabs>
         </div>
       </:column>
-    </CarbonComponents.grid>
+    </.grid>
     """
   end
 end
