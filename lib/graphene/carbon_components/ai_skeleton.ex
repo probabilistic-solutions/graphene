@@ -1,0 +1,58 @@
+defmodule Graphene.CarbonComponents.AiSkeleton do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-ai-skeleton-icon>` from `./src/components/ai-skeleton/ai-skeleton-icon.ts`
+
+  AI skeleton icon.
+
+
+  """
+  attr :custom_styles, :string, doc: "Custom styles to apply to skeleton icon"
+  attr :rest, :global
+  slot :inner_block
+
+  def ai_skeleton_icon(assigns) do
+    CoreComponents.ai_skeleton_icon(assigns)
+  end
+
+  @doc """
+  Component `<cds-ai-skeleton-placeholder>` from `./src/components/ai-skeleton/ai-skeleton-placeholder.ts`
+
+  AI skeleton placeholder.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def ai_skeleton_placeholder(assigns) do
+    CoreComponents.ai_skeleton_placeholder(assigns)
+  end
+
+  @doc """
+  Component `<cds-ai-skeleton-text>` from `./src/components/ai-skeleton/ai-skeleton-text.ts`
+
+  AI skeleton text.
+
+
+  """
+  attr :heading, :boolean, doc: "Generates skeleton text at a larger size."
+  attr :line_count, :string, doc: "the number of lines in a paragraph", default: "3"
+  attr :paragraph, :boolean, doc: "will generate multiple lines of text"
+
+  attr :width, :string,
+    doc: "width (in px or %) of single line of text or max-width of paragraph lines",
+    default: "100%"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def ai_skeleton_text(assigns) do
+    CoreComponents.ai_skeleton_text(assigns)
+  end
+end

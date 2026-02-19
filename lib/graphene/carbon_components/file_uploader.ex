@@ -1,0 +1,137 @@
+defmodule Graphene.CarbonComponents.FileUploader do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-file-uploader-button>` from `./src/components/file-uploader/file-uploader-button.ts`
+
+  File uploader button .
+
+  ## Events
+
+  * `cds-file-uploader-button-changed` - The custom event fired when there is a user gesture to select files to upload.
+
+  """
+  attr :accept, :string, doc: "The file types the file input should accept, separated by space."
+
+  attr :button_kind, :string,
+    doc: "Button kind.",
+    values: [
+      "primary",
+      "secondary",
+      "tertiary",
+      "danger",
+      "danger--tertiary",
+      "danger--ghost",
+      "ghost"
+    ],
+    default: "primary"
+
+  attr :disabled, :boolean, doc: "`true` if this drop container should be disabled."
+
+  attr :multiple, :boolean,
+    doc:
+      "`true` if this drop container should accept more than one files at once.\nNote that even with `false` set here, user _can_ select multiple files one by one."
+
+  attr :name, :string, doc: "The name of the input."
+  attr :size, :string, doc: "Button size.", values: ["sm", "md", "lg", "xl", "2xl"], default: "md"
+
+  attr :slot, :string,
+    doc: "The shadow DOM slot to put this drop container in.",
+    default: "drop-container"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def file_uploader_button(assigns) do
+    CoreComponents.file_uploader_button(assigns)
+  end
+
+  @doc """
+  Component `<cds-file-uploader-drop-container>` from `./src/components/file-uploader/file-uploader-drop-container.ts`
+
+  File uploader drop container.
+
+  ## Events
+
+  * `cds-file-uploader-drop-container-changed` - The custom event fired when there is a user gesture to select files to upload.
+
+  """
+  attr :accept, :string, doc: "The file types the file input should accept, separated by space."
+  attr :disabled, :boolean, doc: "`true` if this drop container should be disabled."
+
+  attr :multiple, :boolean,
+    doc:
+      "`true` if this drop container should accept more than one files at once.\nNote that even with `false` set here, user _can_ select multiple files one by one."
+
+  attr :name, :string, doc: "The name of the input."
+
+  attr :slot, :string,
+    doc: "The shadow DOM slot to put this drop container in.",
+    default: "drop-container"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def file_uploader_drop_container(assigns) do
+    CoreComponents.file_uploader_drop_container(assigns)
+  end
+
+  @doc """
+  Component `<cds-file-uploader-item>` from `./src/components/file-uploader/file-uploader-item.ts`
+
+  File uploader item.
+
+  ## Events
+
+  * `cds-file-uploader-item-beingdeleted` - The custom event fired before this file uploader item is being deleted upon a user gesture.
+  Cancellation of this event stops the user-initiated action of deleting this file uploader item.
+  * `cds-file-uploader-item-deleted` - The custom event fired after this file uploader item is deleted upon a user gesture.
+
+  """
+  attr :error_body, :string, doc: "The error body text"
+  attr :error_subject, :string, doc: "The error subject text."
+
+  attr :icon_description, :string,
+    doc: "The `aria-label` attribute for the icon to delete this file uploader item.",
+    default: "Delete this file"
+
+  attr :invalid, :boolean,
+    doc: "Controls the invalid state and visibility of the `validityMessage`."
+
+  attr :size, :string,
+    doc: "The size of this file uploader item.",
+    values: ["sm", "md", "lg"],
+    default: "md"
+
+  attr :state, :string,
+    doc: "The state of this file uploader item.",
+    values: ["uploading", "complete", "edit"],
+    default: "uploading"
+
+  attr :rest, :global
+  slot :validity, doc: "message The validity message."
+  slot :validity_message, doc: "supplement The supplemental validity message."
+  slot :inner_block
+
+  def file_uploader_item(assigns) do
+    CoreComponents.file_uploader_item(assigns)
+  end
+
+  @doc """
+  Component `<cds-file-uploader-skeleton>` from `./src/components/file-uploader/file-uploader-skeleton.ts`
+
+  The File uploader skeleton.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def file_uploader_skeleton(assigns) do
+    CoreComponents.file_uploader_skeleton(assigns)
+  end
+end

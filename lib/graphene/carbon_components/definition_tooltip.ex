@@ -1,0 +1,36 @@
+defmodule Graphene.CarbonComponents.DefinitionTooltip do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-definition-tooltip>` from `./src/components/tooltip/definition-tooltip.ts`
+
+  Definition tooltip.
+
+
+  """
+  attr :align, :string,
+    doc: "Specify how the trigger should align with the tooltip",
+    default: "bottom"
+
+  attr :autoalign, :boolean,
+    doc:
+      "Will auto-align Definition Tooltip. This prop is currently experimental and is subject to future changes."
+
+  attr :default_open, :boolean,
+    doc: "Specify whether the tooltip should be open when it first renders"
+
+  attr :open_on_hover, :boolean,
+    doc: "Specifies whether the `DefinitionTooltip` should open on hover or not"
+
+  attr :rest, :global
+  slot :definition, doc: "Definition content."
+  slot :inner_block
+
+  def definition_tooltip(assigns) do
+    CoreComponents.definition_tooltip(assigns)
+  end
+end

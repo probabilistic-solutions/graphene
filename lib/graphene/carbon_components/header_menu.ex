@@ -1,0 +1,94 @@
+defmodule Graphene.CarbonComponents.HeaderMenu do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-header-menu>` from `./src/components/ui-shell/header-menu.ts`
+
+  Header menu.
+
+
+  """
+  attr :expanded, :boolean, doc: "`true` if the menu should be expanded."
+
+  attr :is_active, :boolean,
+    doc:
+      "Applies selected styles to the item if a user sets this to true and `aria-current !== 'page'`."
+
+  attr :menu_label, :string, doc: "The `aria-label` attribute for the menu UI."
+  attr :trigger_content, :string, doc: "The content of the trigger button."
+  attr :rest, :global
+  slot :inner_block
+
+  def header_menu(assigns) do
+    CoreComponents.header_menu(assigns)
+  end
+
+  @doc """
+  Component `<cds-header-menu-button>` from `./src/components/ui-shell/header-menu-button.ts`
+
+  The trigger button for side nav in header nav.
+
+  ## Events
+
+  * `cds-header-menu-button-toggled` - The custom event fired after this header menu button is toggled upon a user gesture.
+
+  """
+  attr :active, :boolean, doc: "`true` if the button should represent its active state."
+
+  attr :button_label_active, :string,
+    doc: "The `aria-label` attribute for the button in its active state.",
+    default: "Close navigation menu"
+
+  attr :button_label_inactive, :string,
+    doc: "The `aria-label` attribute for the button in its inactive state.",
+    default: "Open navigation menu"
+
+  attr :collapse_mode, :string,
+    doc: "Collapse mode of the side nav.",
+    values: ["fixed", "rail", "responsive"],
+    default: "responsive"
+
+  attr :disabled, :boolean, doc: "`true` if the button should be disabled."
+
+  attr :is_not_child_of_header, :boolean,
+    doc: "If `true` will style the side nav to sit below the header"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def header_menu_button(assigns) do
+    CoreComponents.header_menu_button(assigns)
+  end
+
+  @doc """
+  Component `<cds-header-menu-item>` from `./src/components/ui-shell/header-menu-item.ts`
+
+  Header submenu item.
+
+
+  """
+  attr :href, :string, doc: "Link `href`."
+
+  attr :is_active, :boolean,
+    doc:
+      "Applies selected styles to the item if a user sets this to true and `aria-current !== 'page'`."
+
+  attr :rel, :string, doc: "The link type."
+
+  attr :role, :string,
+    doc: "As child of <ul>, this element must have role of listitem",
+    default: "listitem"
+
+  attr :target, :string, doc: "The link target."
+  attr :title, :string, doc: "The title."
+  attr :rest, :global
+  slot :inner_block
+
+  def header_menu_item(assigns) do
+    CoreComponents.header_menu_item(assigns)
+  end
+end

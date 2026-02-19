@@ -8,7 +8,7 @@ if Mix.env() == :dev do
     end
 
     defp template(:dst) do
-      Path.join(["lib", "graphene", "form_components.ex"])
+      Path.join(["lib", "graphene", "internal", "form_components.ex"])
     end
 
     defp helpers_template(:src) do
@@ -16,15 +16,15 @@ if Mix.env() == :dev do
     end
 
     defp module_name do
-      "Graphene.FormComponents"
+      "Graphene.Internal.FormComponents"
     end
 
     defp components do
-      Graphene.CoreComponents.__components__()
+      Graphene.Internal.CoreComponents.__components__()
     end
 
     defp docs_map do
-      case Code.fetch_docs(Graphene.CoreComponents) do
+      case Code.fetch_docs(Graphene.Internal.CoreComponents) do
         {:docs_v1, _, _, _, _, _, docs} ->
           for {{:function, name, 1}, _, _, doc, _} <- docs, into: %{} do
             doc_text =
@@ -349,7 +349,7 @@ if Mix.env() == :dev do
       if is_binary(doc) do
         "  @doc \"\"\"\n" <> indent_doc(doc) <> "\n\n  Form-aware wrapper.\n  \"\"\"\n"
       else
-        "  @doc \"\"\"\n  Form-aware wrapper for Graphene.CoreComponents.#{name}/1.\n  \"\"\"\n"
+        "  @doc \"\"\"\n  Form-aware wrapper for Graphene.Internal.CoreComponents.#{name}/1.\n  \"\"\"\n"
       end
     end
 
@@ -380,7 +380,7 @@ if Mix.env() == :dev do
             body =
               "  def #{name}(assigns) do\n" <>
                 "    assigns = form_input_assigns(assigns, #{opts})\n" <>
-                "    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])\n" <>
+                "    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])\n" <>
                 "    assigns = assign(assigns, :component_assigns, component_assigns)\n" <>
                 "    ~H\"\"\"\n" <>
                 "    <input type=\"hidden\" id={@input_id} name={@name} value={@input_value} form={@form} />\n" <>

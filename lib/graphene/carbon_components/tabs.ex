@@ -1,0 +1,115 @@
+defmodule Graphene.CarbonComponents.Tabs do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-tabs>` from `./src/components/tabs/tabs.ts`
+
+  Tabs.
+
+  ## Events
+
+  * `cds-tabs-beingselected` - The custom event fired before a tab is selected upon a user gesture.
+  Cancellation of this event stops changing the user-initiated selection.
+  * `cds-tabs-selected` - The custom event fired after a a tab is selected upon a user gesture.
+  * `cds-content-switcher-beingselected` - The custom event fired before a content switcher item is selected upon a user gesture.
+  Cancellation of this event stops changing the user-initiated selection.
+  * `cds-content-switcher-selected` - The custom event fired after a a content switcher item is selected upon a user gesture.
+
+  """
+  attr :icon, :boolean, doc: "Icon only."
+  attr :low_contrast, :boolean, doc: "`true` to use the low contrast version."
+
+  attr :selected_index, :string,
+    doc: "Specify a selected index for the initially selected content",
+    default: "0"
+
+  attr :selected_item_assistive_text, :string,
+    doc: "An assistive text for screen reader to announce, telling that an item is selected.",
+    default: "Selected an item."
+
+  attr :selecting_items_assistive_text, :string,
+    doc: "An assistive text for screen reader to announce, telling the open state.",
+    default: "Selecting items. Use up and down arrow keys to navigate."
+
+  attr :selection_mode, :string,
+    doc:
+      "Choose whether or not to automatically change selection on focus when left/right arrow pressed. Defaults to 'automatic'",
+    default: "automatic"
+
+  attr :size, :string, doc: "Content switcher size.", values: [nil, "sm", "md", "lg", "xl"]
+  attr :trigger_content, :string, doc: "The content of the trigger button for narrow mode."
+  attr :type, :string, doc: "Tabs type.", values: ["", "container", "contained"], default: ""
+  attr :value, :string, doc: "The value of the selected item."
+  attr :disabled, :boolean, doc: "Whether the tabs are disabled."
+  attr :rest, :global
+
+  slot :tab do
+    attr :title, :string
+    attr :target, :string
+    attr :disabled, :boolean
+    attr :value, :string
+  end
+
+  slot :inner_block
+
+  def tabs(%{tab: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:icon, fn -> false end)
+      |> assign_new(:low_contrast, fn -> false end)
+      |> assign_new(:size, fn -> nil end)
+      |> assign_new(:trigger_content, fn -> nil end)
+      |> assign_new(:value, fn -> nil end)
+      |> assign_new(:disabled, fn -> nil end)
+
+    ~H"""
+    <CoreComponents.tabs
+      icon={@icon}
+      low_contrast={@low_contrast}
+      selected_index={@selected_index}
+      selected_item_assistive_text={@selected_item_assistive_text}
+      selecting_items_assistive_text={@selecting_items_assistive_text}
+      selection_mode={@selection_mode}
+      size={@size}
+      trigger_content={@trigger_content}
+      type={@type}
+      value={@value}
+      {@rest}
+    >
+      <%= for tab <- @tab do %>
+        <CoreComponents.tab
+          tab_title={tab[:title]}
+          target={tab[:target]}
+          disabled={tab[:disabled]}
+          value={tab[:value]}
+        >
+          {render_slot(tab)}
+        </CoreComponents.tab>
+      <% end %>
+    </CoreComponents.tabs>
+    """
+  end
+
+  def tabs(assigns) do
+    CoreComponents.tabs(assigns)
+  end
+
+  @doc """
+  Component `<cds-tabs-skeleton>` from `./src/components/tabs/tabs-skeleton.ts`
+
+  Skeleton of tabs.
+
+
+  """
+  attr :contained, :boolean, doc: "Provide the type of Tab"
+  attr :rest, :global
+  slot :inner_block
+
+  def tabs_skeleton(assigns) do
+    CoreComponents.tabs_skeleton(assigns)
+  end
+end

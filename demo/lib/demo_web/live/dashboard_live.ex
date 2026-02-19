@@ -4,6 +4,7 @@ defmodule DemoWeb.DashboardLive do
   alias Demo.CloudData
   alias Demo.CloudEvents
   alias Graphene.CarbonComponents, as: CarbonComponents
+  alias Graphene.Icons
   import DemoWeb.CloudHelpers
 
   @impl true
@@ -14,12 +15,12 @@ defmodule DemoWeb.DashboardLive do
      assign(socket,
        active_page: :overview,
        page_title: "Overview · Nimbus Cloud",
-        metrics: metrics,
-        services: CloudData.services(),
-        audits: CloudData.audit_events(),
-        time_range: "24h",
-        risk_acknowledged: false,
-        range_form: to_form(%{"range" => "24h"}, as: :range)
+       metrics: metrics,
+       services: CloudData.services(),
+       audits: CloudData.audit_events(),
+       time_range: "24h",
+       risk_acknowledged: false,
+       range_form: to_form(%{"range" => "24h"}, as: :range)
      )}
   end
 
@@ -68,90 +69,211 @@ defmodule DemoWeb.DashboardLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <CarbonComponents.page_header>
-      <:breadcrumb>
-        <CarbonComponents.breadcrumb>
-          <:item href={~p"/"} text="Cloud Admin" />
-          <:item text="Overview" />
-        </CarbonComponents.breadcrumb>
-      </:breadcrumb>
-      <:content title="Overview">
-        <CarbonComponents.tag type="green">Production</CarbonComponents.tag>
-      </:content>
-      <:content_text subtitle="Real-time health, spend, and security posture across Nimbus Cloud." />
-    </CarbonComponents.page_header>
+    <CarbonComponents.grid full_width>
+      <:column span="16">
+        <CarbonComponents.page_header>
+          <:breadcrumb>
+            <CarbonComponents.breadcrumb>
+              <:item href={~p"/demo"} text="Cloud Admin" />
+              <:item text="Overview" />
+            </CarbonComponents.breadcrumb>
+          </:breadcrumb>
+          <:content title="Overview">
+            <CarbonComponents.tag type="green">Production</CarbonComponents.tag>
+          </:content>
+          <:content_text subtitle="Real-time health, spend, and security posture across Nimbus Cloud." />
+        </CarbonComponents.page_header>
+      </:column>
 
-    <div class="demo-section demo-card">
-      <.form for={@range_form} phx-change="switch_range">
-        <CarbonComponents.radio_button_group field={@range_form[:range]} legend_text="Metrics window">
-          <:item label="Last 24h" value="24h" />
-          <:item label="7 days" value="7d" />
-          <:item label="30 days" value="30d" />
-        </CarbonComponents.radio_button_group>
-      </.form>
-    </div>
+      <:column span="16">
+        <div class="demo-section demo-card">
+          <.form for={@range_form} phx-change="switch_range">
+            <CarbonComponents.radio_button_group
+              field={@range_form[:range]}
+              legend_text="Metrics window"
+              name="metrics-window"
+            >
+              <:item label="Last 24h" value="24h" />
+              <:item label="7 days" value="7d" />
+              <:item label="30 days" value="30d" />
+            </CarbonComponents.radio_button_group>
+          </.form>
+        </div>
+      </:column>
 
-    <CarbonComponents.grid full_width class="demo-section">
-      <:column sm="4" md="2" lg="4">
-        <CarbonComponents.tile class="demo-card demo-metric">
-          <div class="demo-kicker">Active clusters</div>
-          <h3>{@metrics.clusters}</h3>
-          <p class="demo-muted">+2 provisioned this quarter</p>
-        </CarbonComponents.tile>
+      <:column span="16">
+        <CarbonComponents.grid full_width class="demo-section">
+          <:column sm="4" md="2" lg="4">
+            <CarbonComponents.tile class="demo-card demo-metric">
+              <div class="demo-kicker">Active clusters</div>
+              <h3>{@metrics.clusters}</h3>
+              <p class="demo-muted">+2 provisioned this quarter</p>
+            </CarbonComponents.tile>
+          </:column>
+          <:column sm="4" md="2" lg="4">
+            <CarbonComponents.tile class="demo-card demo-metric">
+              <div class="demo-kicker">Monthly spend</div>
+              <h3>{format_money(@metrics.monthly_spend)}</h3>
+              <CarbonComponents.progress_bar
+                value={@metrics.monthly_spend / @metrics.budget * 100}
+              />
+              <p class="demo-muted">Budget {format_money(@metrics.budget)}</p>
+            </CarbonComponents.tile>
+          </:column>
+          <:column sm="4" md="2" lg="4">
+            <CarbonComponents.tile class="demo-card demo-metric">
+              <div class="demo-kicker">Security posture</div>
+              <h3>{@metrics.risk_score}%</h3>
+              <p class="demo-muted">Aligned with CIS controls</p>
+              <CarbonComponents.button kind="ghost" size="sm" phx-click="acknowledge_risk">
+                {if @risk_acknowledged, do: "Acknowledged", else: "Acknowledge"}
+              </CarbonComponents.button>
+            </CarbonComponents.tile>
+          </:column>
+          <:column sm="4" md="2" lg="4">
+            <CarbonComponents.tile class="demo-card demo-metric">
+              <div class="demo-kicker">SLA uptime</div>
+              <h3>{format_percent(@metrics.uptime)}</h3>
+              <p class="demo-muted">All regions within target</p>
+              <CarbonComponents.button kind="ghost" size="sm" phx-click="create_snapshot">
+                Create snapshot
+              </CarbonComponents.button>
+            </CarbonComponents.tile>
+          </:column>
+        </CarbonComponents.grid>
       </:column>
-      <:column sm="4" md="2" lg="4">
-        <CarbonComponents.tile class="demo-card demo-metric">
-          <div class="demo-kicker">Monthly spend</div>
-          <h3>{format_money(@metrics.monthly_spend)}</h3>
-          <CarbonComponents.progress_bar value={@metrics.monthly_spend / @metrics.budget * 100} />
-          <p class="demo-muted">Budget {format_money(@metrics.budget)}</p>
-        </CarbonComponents.tile>
-      </:column>
-      <:column sm="4" md="2" lg="4">
-        <CarbonComponents.tile class="demo-card demo-metric">
-          <div class="demo-kicker">Security posture</div>
-          <h3>{@metrics.risk_score}%</h3>
-          <p class="demo-muted">Aligned with CIS controls</p>
-          <CarbonComponents.button kind="ghost" size="sm" phx-click="acknowledge_risk">
-            {if @risk_acknowledged, do: "Acknowledged", else: "Acknowledge"}
-          </CarbonComponents.button>
-        </CarbonComponents.tile>
-      </:column>
-      <:column sm="4" md="2" lg="4">
-        <CarbonComponents.tile class="demo-card demo-metric">
-          <div class="demo-kicker">SLA uptime</div>
-          <h3>{format_percent(@metrics.uptime)}</h3>
-          <p class="demo-muted">All regions within target</p>
-          <CarbonComponents.button kind="ghost" size="sm" phx-click="create_snapshot">
-            Create snapshot
-          </CarbonComponents.button>
-        </CarbonComponents.tile>
-      </:column>
-    </CarbonComponents.grid>
 
-    <CarbonComponents.grid full_width class="demo-section">
-      <:column sm="4" md="4" lg="8">
-        <CarbonComponents.tile class="demo-card demo-card--elevated">
-          <h3>Service health</h3>
-          <CarbonComponents.data_table id="service-health" rows={@services} size="sm">
-            <:col :let={service} label="Service">{service.name}</:col>
-            <:col :let={service} label="Status">
-              <CarbonComponents.tag type={status_kind(service.status)}>{service.status}</CarbonComponents.tag>
-            </:col>
-            <:col :let={service} label="Latency">{service.latency_ms} ms</:col>
-            <:col :let={service} label="SLA">{format_percent(service.sla)}</:col>
-          </CarbonComponents.data_table>
-        </CarbonComponents.tile>
+      <:column span="16">
+        <div class="demo-section demo-card">
+          <div class="demo-kicker">Layout</div>
+          <h3>Implicit grid rows</h3>
+          <p class="demo-muted">Columns wrap when the total span exceeds 16.</p>
+          <CarbonComponents.grid class="demo-grid-example">
+            <:column span="4">
+              <div class="demo-grid-widget">
+                <div class="demo-grid-widget__header">
+                  <Icons.icon name="cloud" size={16} />
+                  <span class="demo-grid-widget__title">Regions online</span>
+                </div>
+                <div class="demo-grid-widget__value">12</div>
+                <div class="demo-grid-widget__meta">3 failover ready</div>
+              </div>
+            </:column>
+            <:column span="4">
+              <div class="demo-grid-widget">
+                <div class="demo-grid-widget__header">
+                  <Icons.icon name="cloud-services" size={16} />
+                  <span class="demo-grid-widget__title">Edge PoPs</span>
+                </div>
+                <div class="demo-grid-widget__value">214</div>
+                <div class="demo-grid-widget__meta">+12 this quarter</div>
+              </div>
+            </:column>
+            <:column span="4">
+              <div class="demo-grid-widget">
+                <div class="demo-grid-widget__header">
+                  <Icons.icon name="dashboard" size={16} />
+                  <span class="demo-grid-widget__title">Latency p95</span>
+                </div>
+                <div class="demo-grid-widget__value">28 ms</div>
+                <div class="demo-grid-widget__meta">SLO target 50 ms</div>
+              </div>
+            </:column>
+            <:column span="4">
+              <div class="demo-grid-widget">
+                <div class="demo-grid-widget__header">
+                  <Icons.icon name="security" size={16} />
+                  <span class="demo-grid-widget__title">Security posture</span>
+                </div>
+                <div class="demo-grid-widget__value">96%</div>
+                <div class="demo-grid-widget__meta">CIS aligned</div>
+              </div>
+            </:column>
+            <:column span="8">
+              <div class="demo-grid-widget demo-grid-widget--wide">
+                <div class="demo-grid-widget__header">
+                  <Icons.icon name="cloud-services" size={16} />
+                  <span class="demo-grid-widget__title">Storage IOPS</span>
+                  <span class="demo-grid-widget__tag">
+                    <CarbonComponents.tag type="green">Stable</CarbonComponents.tag>
+                  </span>
+                </div>
+                <div class="demo-grid-widget__value">84k</div>
+                <CarbonComponents.progress_bar value={72} />
+                <div class="demo-grid-widget__meta">72% of provisioned capacity</div>
+              </div>
+            </:column>
+            <:column span="8">
+              <div class="demo-grid-widget demo-grid-widget--wide">
+                <div class="demo-grid-widget__header">
+                  <Icons.icon name="dashboard" size={16} />
+                  <span class="demo-grid-widget__title">Outbound traffic</span>
+                  <span class="demo-grid-widget__tag">
+                    <CarbonComponents.tag type="blue">Trending up</CarbonComponents.tag>
+                  </span>
+                </div>
+                <div class="demo-grid-widget__value">3.2 Tbps</div>
+                <CarbonComponents.progress_bar value={64} />
+                <div class="demo-grid-widget__meta">Peaked 20 minutes ago</div>
+              </div>
+            </:column>
+            <:column span="16">
+              <div class="demo-grid-widget demo-grid-widget--wide">
+                <div class="demo-grid-widget__header">
+                  <Icons.icon name="notification" size={16} />
+                  <span class="demo-grid-widget__title">Runbook queue</span>
+                  <span class="demo-grid-widget__tag">
+                    <CarbonComponents.tag type="blue">3 active</CarbonComponents.tag>
+                  </span>
+                </div>
+                <div class="demo-grid-widget__list">
+                  <div class="demo-grid-widget__list-row">
+                    <span>Failover rehearsal · us-east-1</span>
+                    <span class="demo-grid-widget__meta">ETA 12m</span>
+                  </div>
+                  <div class="demo-grid-widget__list-row">
+                    <span>Edge cache warmup · LON</span>
+                    <span class="demo-grid-widget__meta">ETA 18m</span>
+                  </div>
+                  <div class="demo-grid-widget__list-row">
+                    <span>Snapshot verify · Aurora</span>
+                    <span class="demo-grid-widget__meta">ETA 22m</span>
+                  </div>
+                </div>
+              </div>
+            </:column>
+          </CarbonComponents.grid>
+        </div>
       </:column>
-      <:column sm="4" md="4" lg="8">
-        <CarbonComponents.tile class="demo-card demo-card--elevated">
-          <h3>Recent audit activity</h3>
-          <CarbonComponents.data_table id="recent-audits" rows={@audits} size="sm">
-            <:col :let={audit} label="Time">{audit.time}</:col>
-            <:col :let={audit} label="Actor">{audit.actor}</:col>
-            <:col :let={audit} label="Action">{audit.action}</:col>
-          </CarbonComponents.data_table>
-        </CarbonComponents.tile>
+
+      <:column span="16">
+        <CarbonComponents.grid full_width class="demo-section">
+          <:column sm="4" md="4" lg="8">
+            <CarbonComponents.tile class="demo-card demo-card--elevated">
+              <h3>Service health</h3>
+              <CarbonComponents.data_table id="service-health" rows={@services} size="sm">
+                <:col :let={service} label="Service">{service.name}</:col>
+                <:col :let={service} label="Status">
+                  <CarbonComponents.tag type={status_kind(service.status)}>
+                    {service.status}
+                  </CarbonComponents.tag>
+                </:col>
+                <:col :let={service} label="Latency">{service.latency_ms} ms</:col>
+                <:col :let={service} label="SLA">{format_percent(service.sla)}</:col>
+              </CarbonComponents.data_table>
+            </CarbonComponents.tile>
+          </:column>
+          <:column sm="4" md="4" lg="8">
+            <CarbonComponents.tile class="demo-card demo-card--elevated">
+              <h3>Recent audit activity</h3>
+              <CarbonComponents.data_table id="recent-audits" rows={@audits} size="sm">
+                <:col :let={audit} label="Time">{audit.time}</:col>
+                <:col :let={audit} label="Actor">{audit.actor}</:col>
+                <:col :let={audit} label="Action">{audit.action}</:col>
+              </CarbonComponents.data_table>
+            </CarbonComponents.tile>
+          </:column>
+        </CarbonComponents.grid>
       </:column>
     </CarbonComponents.grid>
     """

@@ -3,7 +3,7 @@ defmodule <%= assigns[:module] %> do
 
   use Phoenix.Component
 
-  alias Graphene.CoreComponents
+  alias Graphene.Internal.CoreComponents
 
   <%= assigns[:helpers] %>
 

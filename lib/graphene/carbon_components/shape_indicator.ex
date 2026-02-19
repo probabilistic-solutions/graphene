@@ -1,0 +1,40 @@
+defmodule Graphene.CarbonComponents.ShapeIndicator do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-shape-indicator>` from `./src/components/shape-indicator/shape-indicator.ts`
+
+  Shape Indicator.
+
+
+  """
+  attr :kind, :string,
+    doc: "Shape Indicator kind",
+    values: [
+      nil,
+      "failed",
+      "critical",
+      "high",
+      "medium",
+      "low",
+      "cautious",
+      "undefined",
+      "stable",
+      "informative",
+      "incomplete",
+      "draft"
+    ]
+
+  attr :label, :string, doc: "Label next to the shape."
+  attr :text_size, :string, doc: "Shape indicator size (12 or 14)", default: "12"
+  attr :rest, :global
+  slot :inner_block
+
+  def shape_indicator(assigns) do
+    CoreComponents.shape_indicator(assigns)
+  end
+end

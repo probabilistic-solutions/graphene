@@ -1,6 +1,6 @@
 defmodule Storybook.Examples.CoreComponents do
   use PhoenixStorybook.Story, :example
-  import Graphene.CoreComponents
+  import Graphene.Internal.CoreComponents
 
   def doc do
     "An example of what you can achieve with Phoenix core components."

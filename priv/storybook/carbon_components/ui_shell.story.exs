@@ -4,7 +4,12 @@ defmodule Storybook.CarbonComponents.UIShell do
   import Graphene.CarbonComponents
 
   def doc do
-    "UI shell layout."
+    """
+    UI shell layout.
+
+    For full page layouts, wrap your main content inside a top-level `<.grid full_width>`
+    so sections align to the Carbon grid and spacing is controlled via `row_gap`.
+    """
   end
 
   @impl true

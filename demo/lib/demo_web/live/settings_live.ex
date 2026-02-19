@@ -7,13 +7,13 @@ defmodule DemoWeb.SettingsLive do
   @impl true
   def mount(_params, _session, socket) do
     settings = %{
-      org_name: "Nimbus Labs",
-      region: "us-east-1",
-      timezone: "UTC",
-      alerts: true,
-      notifications: "balanced",
-      support_plan: "enterprise",
-      budget_guardrail: "200000"
+      "org_name" => "Nimbus Labs",
+      "region" => "us-east-1",
+      "timezone" => "UTC",
+      "alerts" => true,
+      "notifications" => "balanced",
+      "support_plan" => "enterprise",
+      "budget_guardrail" => "200000"
     }
 
     {:ok,
@@ -42,60 +42,80 @@ defmodule DemoWeb.SettingsLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <CarbonComponents.page_header>
-      <:breadcrumb>
-        <CarbonComponents.breadcrumb>
-          <:item href={~p"/"} text="Cloud Admin" />
-          <:item text="Settings" />
-        </CarbonComponents.breadcrumb>
-      </:breadcrumb>
-      <:content title="Settings">
-        <CarbonComponents.tag type="cool-gray">Organization</CarbonComponents.tag>
-      </:content>
-      <:content_text subtitle="Configure organization defaults, budgets, and notification policies." />
-    </CarbonComponents.page_header>
+    <CarbonComponents.grid full_width>
+      <:column span="16">
+        <CarbonComponents.page_header>
+          <:breadcrumb>
+            <CarbonComponents.breadcrumb>
+              <:item href={~p"/demo"} text="Cloud Admin" />
+              <:item text="Settings" />
+            </CarbonComponents.breadcrumb>
+          </:breadcrumb>
+          <:content title="Settings">
+            <CarbonComponents.tag type="cool-gray">Organization</CarbonComponents.tag>
+          </:content>
+          <:content_text subtitle="Configure organization defaults, budgets, and notification policies." />
+        </CarbonComponents.page_header>
+      </:column>
 
-    <div class="demo-section demo-card demo-card--elevated">
-      <.form for={@form} phx-change="validate" phx-submit="save">
-        <CarbonComponents.grid full_width>
-          <:column sm="4" md="4" lg="8">
-            <CarbonComponents.text_input field={@form[:org_name]} label="Organization name" />
-          </:column>
-          <:column sm="4" md="4" lg="8">
-            <CarbonComponents.select field={@form[:region]}>
-              <:label_text>Primary region</:label_text>
-              <:item :for={region <- @regions} value={region.id} label={region.label} />
-            </CarbonComponents.select>
-          </:column>
-          <:column sm="4" md="4" lg="8">
-            <CarbonComponents.text_input field={@form[:timezone]} label="Timezone" />
-          </:column>
-          <:column sm="4" md="4" lg="8">
-            <CarbonComponents.number_input field={@form[:budget_guardrail]} label="Monthly guardrail" min="0" />
-          </:column>
-          <:column sm="4" md="4" lg="8">
-            <CarbonComponents.radio_button_group field={@form[:notifications]} legend_text="Notification sensitivity">
-              <:item label="Balanced" value="balanced" />
-              <:item label="Strict" value="strict" />
-              <:item label="Relaxed" value="relaxed" />
-            </CarbonComponents.radio_button_group>
-          </:column>
-          <:column sm="4" md="4" lg="8">
-            <CarbonComponents.radio_button_group field={@form[:support_plan]} legend_text="Support plan">
-              <:item :for={plan <- @support_plans} label={plan.label} value={plan.id} />
-            </CarbonComponents.radio_button_group>
-          </:column>
-          <:column sm="4" md="4" lg="8">
-            <CarbonComponents.toggle field={@form[:alerts]}>
-              <:label_text>Enable proactive alerts</:label_text>
-            </CarbonComponents.toggle>
-          </:column>
-        </CarbonComponents.grid>
-        <div class="demo-section">
-          <CarbonComponents.button kind="primary" type="submit">Save settings</CarbonComponents.button>
+      <:column span="16">
+        <div class="demo-section demo-card demo-card--elevated">
+          <.form for={@form} phx-change="validate" phx-submit="save">
+            <CarbonComponents.grid full_width>
+              <:column sm="4" md="4" lg="8">
+                <CarbonComponents.text_input field={@form["org_name"]} label="Organization name" />
+              </:column>
+              <:column sm="4" md="4" lg="8">
+                <CarbonComponents.select field={@form["region"]} id="settings-region" name="region">
+                  <:label_text>Primary region</:label_text>
+                  <:item :for={region <- @regions} value={region.id} label={region.label} />
+                </CarbonComponents.select>
+              </:column>
+              <:column sm="4" md="4" lg="8">
+                <CarbonComponents.text_input field={@form["timezone"]} label="Timezone" />
+              </:column>
+              <:column sm="4" md="4" lg="8">
+                <CarbonComponents.number_input
+                  field={@form["budget_guardrail"]}
+                  label="Monthly guardrail"
+                  min="0"
+                />
+              </:column>
+              <:column sm="4" md="4" lg="8">
+                <CarbonComponents.radio_button_group
+                  field={@form["notifications"]}
+                  legend_text="Notification sensitivity"
+                  name="notification-sensitivity"
+                >
+                  <:item label="Balanced" value="balanced" />
+                  <:item label="Strict" value="strict" />
+                  <:item label="Relaxed" value="relaxed" />
+                </CarbonComponents.radio_button_group>
+              </:column>
+              <:column sm="4" md="4" lg="8">
+                <CarbonComponents.radio_button_group
+                  field={@form["support_plan"]}
+                  legend_text="Support plan"
+                  name="support-plan"
+                >
+                  <:item :for={plan <- @support_plans} label={plan.label} value={plan.id} />
+                </CarbonComponents.radio_button_group>
+              </:column>
+              <:column sm="4" md="4" lg="8">
+                <CarbonComponents.toggle field={@form["alerts"]}>
+                  <:label_text>Enable proactive alerts</:label_text>
+                </CarbonComponents.toggle>
+              </:column>
+            </CarbonComponents.grid>
+            <div class="demo-section">
+              <CarbonComponents.button kind="primary" type="submit">
+                Save settings
+              </CarbonComponents.button>
+            </div>
+          </.form>
         </div>
-      </.form>
-    </div>
+      </:column>
+    </CarbonComponents.grid>
     """
   end
 end

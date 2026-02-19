@@ -1,6 +1,6 @@
 defmodule Storybook.CodeGen.CoreComponents.Grid do
   use Graphene.CodeGen.Component.Story,
-    func: &Graphene.CoreComponents.grid/1,
-    component_module: Graphene.CoreComponents,
+    func: &Graphene.Internal.CoreComponents.grid/1,
+    component_module: Graphene.Internal.CoreComponents,
     component_name: :grid
 end

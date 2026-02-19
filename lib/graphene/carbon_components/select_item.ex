@@ -1,0 +1,45 @@
+defmodule Graphene.CarbonComponents.SelectItem do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-select-item>` from `./src/components/select/select-item.ts`
+
+  An option in select box.
+
+
+  """
+  attr :disabled, :boolean, doc: "`true` to disable this option."
+
+  attr :label, :string,
+    doc: "The label. If this is not specified, the child text content is used."
+
+  attr :selected, :boolean, doc: "`true` to select this option."
+  attr :value, :string, doc: "The value."
+  attr :text, :string, doc: "Text for the select item."
+  attr :rest, :global
+  slot :inner_block
+
+  def select_item(assigns) do
+    CoreComponents.select_item(assigns)
+  end
+
+  @doc """
+  Component `<cds-select-item-group>` from `./src/components/select/select-item-group.ts`
+
+  An option group in select box.
+
+
+  """
+  attr :disabled, :boolean, doc: "`true` to disable this option."
+  attr :label, :string, doc: "The label."
+  attr :rest, :global
+  slot :inner_block
+
+  def select_item_group(assigns) do
+    CoreComponents.select_item_group(assigns)
+  end
+end

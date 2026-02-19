@@ -1,0 +1,97 @@
+defmodule Graphene.CarbonComponents.MenuItem do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-menu-item>` from `./src/components/menu/menu-item.ts`
+
+  Menu Item.
+
+  ## Events
+
+  * `icon-detect` - Undocumented
+
+  """
+  attr :boundaries, :any, doc: "Menu boundaries."
+  attr :disabled, :any, doc: "Disabled property for the menu item."
+  attr :kind, :string, values: ["default", "danger"], default: "default"
+  attr :label, :any, doc: "Label for the menu item."
+  attr :shortcut, :any, doc: "Shortcut for the menu item."
+  attr :submenu_open, :boolean, doc: "Whether the menu submen for an item is open or not."
+  attr :selected, :boolean, doc: "Whether the menu item is selected."
+  attr :rest, :global
+  slot :submenu, doc: "Submenu content."
+  slot :inner_block
+
+  def menu_item(assigns) do
+    CoreComponents.menu_item(assigns)
+  end
+
+  @doc """
+  Component `<cds-menu-item-divider>` from `./src/components/menu/menu-item-divider.ts`
+
+  Menu Item.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def menu_item_divider(assigns) do
+    CoreComponents.menu_item_divider(assigns)
+  end
+
+  @doc """
+  Component `<cds-menu-item-group>` from `./src/components/menu/menu-item-group.ts`
+
+  Menu Item.
+
+
+  """
+  attr :label, :any, doc: "Label for the menu item."
+  attr :rest, :global
+  slot :inner_block
+
+  def menu_item_group(assigns) do
+    CoreComponents.menu_item_group(assigns)
+  end
+
+  @doc """
+  Component `<cds-menu-item-radio-group>` from `./src/components/menu/menu-item-radio-group.ts`
+
+  Menu Item.
+
+
+  """
+  attr :item_to_string, :any, doc: "List of items in the radio group."
+  attr :items, :any, doc: "List of items in the radio group."
+  attr :label, :any, doc: "Label for the menu item radio group."
+  attr :selected_item, :any, doc: "Selected item in the radio group."
+  attr :rest, :global
+  slot :inner_block
+
+  def menu_item_radio_group(assigns) do
+    CoreComponents.menu_item_radio_group(assigns)
+  end
+
+  @doc """
+  Component `<cds-menu-item-selectable>` from `./src/components/menu/menu-item-selectable.ts`
+
+  Menu Item.
+
+
+  """
+  attr :label, :any, doc: "Label for the menu item selectable."
+  attr :render_icon, :any, doc: "Sets the menu item's icon."
+  attr :selected, :boolean, doc: "Whether the menu item is selected or not."
+  attr :shortcut, :any
+  attr :rest, :global
+  slot :inner_block
+
+  def menu_item_selectable(assigns) do
+    CoreComponents.menu_item_selectable(assigns)
+  end
+end

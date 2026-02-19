@@ -1,0 +1,25 @@
+defmodule Graphene.CarbonComponents.StructuredListHeader do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-structured-list-header-row>` from `./src/components/structured-list/structured-list-header-row.ts`
+
+  Structured list header row.
+
+
+  """
+  attr :selection_name, :string,
+    doc:
+      "The `name` attribute for the `<input>` for selection.\nIf present, this structured list header row will show its selectable version of the UI."
+
+  attr :rest, :global
+  slot :inner_block
+
+  def structured_list_header_row(assigns) do
+    CoreComponents.structured_list_header_row(assigns)
+  end
+end

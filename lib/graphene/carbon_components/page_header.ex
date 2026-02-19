@@ -1,0 +1,182 @@
+defmodule Graphene.CarbonComponents.PageHeader do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-page-header>` from `./src/components/page-header/page-header.ts`
+
+  Page header.
+
+
+  """
+  attr :rest, :global
+
+  slot :breadcrumb do
+    attr :border, :boolean
+    attr :content_actions_flush, :boolean
+    attr :page_actions_flush, :boolean
+    attr :within_grid, :boolean
+  end
+
+  slot :breadcrumb_slot do
+    attr :border, :boolean
+    attr :content_actions_flush, :boolean
+    attr :page_actions_flush, :boolean
+    attr :within_grid, :boolean
+  end
+
+  slot :content do
+    attr :title, :string
+    attr :within_grid, :boolean
+  end
+
+  slot :content_text do
+    attr :subtitle, :string
+  end
+
+  slot :inner_block
+
+  def page_header(%{breadcrumb_slot: [_ | _]} = assigns) do
+    ~H"""
+    <CoreComponents.page_header {@rest}>
+      <% breadcrumbs = if @breadcrumb_slot != [], do: @breadcrumb_slot, else: @breadcrumb %>
+      <%= for breadcrumb <- breadcrumbs do %>
+        <CoreComponents.page_header_breadcrumb
+          border={Map.get(breadcrumb, :border, true)}
+          content_actions_flush={breadcrumb[:content_actions_flush]}
+          page_actions_flush={breadcrumb[:page_actions_flush]}
+          within_grid={breadcrumb[:within_grid]}
+        >
+          <%= if breadcrumb.inner_block do %>
+            {render_slot(breadcrumb)}
+          <% end %>
+        </CoreComponents.page_header_breadcrumb>
+      <% end %>
+      <%= for content <- @content do %>
+        <CoreComponents.page_header_content
+          title={content[:title]}
+          within_grid={content[:within_grid]}
+        >
+          <%= if @content_text != [] do %>
+            <%= for text <- @content_text do %>
+              <CoreComponents.page_header_content_text subtitle={text[:subtitle]}>
+                <%= if text.inner_block do %>
+                  {render_slot(text)}
+                <% end %>
+              </CoreComponents.page_header_content_text>
+            <% end %>
+          <% end %>
+          <%= if content.inner_block do %>
+            {render_slot(content)}
+          <% end %>
+        </CoreComponents.page_header_content>
+      <% end %>
+      {render_slot(@inner_block)}
+    </CoreComponents.page_header>
+    """
+  end
+
+  def page_header(%{breadcrumb: [_ | _]} = assigns) do
+    ~H"""
+    <CoreComponents.page_header {@rest}>
+      <% breadcrumbs = if @breadcrumb_slot != [], do: @breadcrumb_slot, else: @breadcrumb %>
+      <%= for breadcrumb <- breadcrumbs do %>
+        <CoreComponents.page_header_breadcrumb
+          border={Map.get(breadcrumb, :border, true)}
+          content_actions_flush={breadcrumb[:content_actions_flush]}
+          page_actions_flush={breadcrumb[:page_actions_flush]}
+          within_grid={breadcrumb[:within_grid]}
+        >
+          <%= if breadcrumb.inner_block do %>
+            {render_slot(breadcrumb)}
+          <% end %>
+        </CoreComponents.page_header_breadcrumb>
+      <% end %>
+      <%= for content <- @content do %>
+        <CoreComponents.page_header_content
+          title={content[:title]}
+          within_grid={content[:within_grid]}
+        >
+          <%= if @content_text != [] do %>
+            <%= for text <- @content_text do %>
+              <CoreComponents.page_header_content_text subtitle={text[:subtitle]}>
+                <%= if text.inner_block do %>
+                  {render_slot(text)}
+                <% end %>
+              </CoreComponents.page_header_content_text>
+            <% end %>
+          <% end %>
+          <%= if content.inner_block do %>
+            {render_slot(content)}
+          <% end %>
+        </CoreComponents.page_header_content>
+      <% end %>
+      {render_slot(@inner_block)}
+    </CoreComponents.page_header>
+    """
+  end
+
+  def page_header(assigns) do
+    CoreComponents.page_header(assigns)
+  end
+
+  @doc """
+  Component `<cds-page-header-breadcrumb>` from `./src/components/page-header/page-header-breadcrumb.ts`
+
+  Page header Breadcrumb Bar.
+
+
+  """
+  attr :border, :boolean, doc: "Specify if breadcrumb bar has bottom border.", default: true
+
+  attr :content_actions_flush, :boolean,
+    doc: "Set to `true` if content actions should be flush (no padding)"
+
+  attr :page_actions_flush, :boolean,
+    doc: "Set to `true` if page actions should be flush (no padding)"
+
+  attr :within_grid, :boolean,
+    doc:
+      "Set to `true` if the breadcrumb bar is sitting within a grid\n(ie. when used in tandem with page-header-hero-image)"
+
+  attr :rest, :global
+  slot :content_actions, doc: "Content actions for the breadcrumb."
+  slot :page_actions, doc: "Page actions for the breadcrumb."
+  slot :inner_block
+
+  def page_header_breadcrumb(assigns) do
+    CoreComponents.page_header_breadcrumb(assigns)
+  end
+
+  @doc """
+  Component `<cds-page-header-hero-image>` from `./src/components/page-header/page-header-hero-image.ts`
+
+  Page header Hero Image.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def page_header_hero_image(assigns) do
+    CoreComponents.page_header_hero_image(assigns)
+  end
+
+  @doc """
+  Component `<cds-page-header-tabs>` from `./src/components/page-header/page-header-tabs.ts`
+
+  Page header Tabs Bar.
+
+
+  """
+  attr :rest, :global
+  slot :tags, doc: "Tags for the page header."
+  slot :inner_block
+
+  def page_header_tabs(assigns) do
+    CoreComponents.page_header_tabs(assigns)
+  end
+end

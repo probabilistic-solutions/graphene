@@ -114,6 +114,10 @@ defmodule Graphene.CodeGen.Component.AttrType do
           # @carbon/web-components/es/components/text-input/defs.d.ts
           %{kind: :string, values: ~w(top right bottom left)}
 
+        "GRID_ROW_GAP" ->
+          # Carbon spacing token suffixes used for row gaps
+          %{kind: :string, values: ~w(gutter 01 02 03 04 05 06 07 08 09 10 11 12 13)}
+
         "LOADING_TYPE" ->
           # @carbon/web-components/es/components/loading/defs.d.ts
           %{kind: :string, values: ~w(regular small)}

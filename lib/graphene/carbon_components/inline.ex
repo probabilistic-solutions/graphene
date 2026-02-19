@@ -1,0 +1,75 @@
+defmodule Graphene.CarbonComponents.Inline do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-inline-loading>` from `./src/components/inline-loading/inline-loading.ts`
+
+  Lnline loading spinner.
+
+  ## Events
+
+  * `cds-inline-loading-onsuccess` - The custom event fired when inline-loading has finished status
+
+  """
+  attr :assistive_text, :string
+
+  attr :icon_description, :string,
+    doc: "The assistive text for the spinner icon.",
+    default: "Loading"
+
+  attr :status, :string,
+    doc: "The loading status.",
+    values: ["inactive", "active", "finished", "error"],
+    default: "active"
+
+  attr :success_delay, :string,
+    doc: "Provide a delay for the setTimeout for success",
+    default: "1500"
+
+  attr :controlled, :boolean, doc: "Whether the loading state is controlled."
+  attr :rest, :global
+  slot :inner_block
+
+  def inline_loading(assigns) do
+    CoreComponents.inline_loading(assigns)
+  end
+
+  @doc """
+  Component `<cds-inline-notification>` from `./src/components/notification/inline-notification.ts`
+
+  Inline notification.
+
+  ## Events
+
+  * `cds-notification-beingclosed` - The custom event fired before this notification is being closed upon a user gesture.
+  Cancellation of this event stops the user-initiated action of closing this notification.
+  * `cds-notification-closed` - The custom event fired after this notification is closed upon a user gesture.
+
+  """
+  attr :hide_close_button, :boolean, doc: "`true` to hide the close button."
+
+  attr :kind, :string,
+    doc: "Notification kind.",
+    values: ["success", "info", "info-square", "warning", "warning-alt", "error"],
+    default: "success"
+
+  attr :low_contrast, :boolean, doc: "Low contrast mode"
+  attr :open, :boolean, doc: "`true` if the notification should be open.", default: true
+
+  attr :status_icon_description, :string,
+    doc: "Provide a description for \"status\" icon that can be read by screen readers"
+
+  attr :timeout, :any, doc: "Specify an optional duration the notification should be closed in"
+  attr :rest, :global
+  slot :subtitle, doc: "The subtitle."
+  slot :title, doc: "The title."
+  slot :inner_block
+
+  def inline_notification(assigns) do
+    CoreComponents.inline_notification(assigns)
+  end
+end

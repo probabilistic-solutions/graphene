@@ -1,0 +1,74 @@
+defmodule Graphene.CarbonComponents.Tag do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-tag>` from `./src/components/tag/tag.ts`
+
+  Tag.
+
+  ## Events
+
+  * `cds-tag-beingclosed` - The custom event fired as the element is being closed
+  * `cds-tag-closed` - The custom event fired after the element has been closed
+
+  """
+  attr :disabled, :boolean, doc: "`true` if the tag should be disabled"
+  attr :filter, :boolean, doc: "Determine if is a filter/chip"
+  attr :has_custom_icon, :boolean, doc: "`true` if there is a custom icon."
+  attr :open, :boolean, doc: "`true` if the tag should be open.", default: true
+  attr :size, :string, doc: "The size of the tag.", values: ["lg", "md", "sm"], default: "md"
+
+  attr :title, :string,
+    doc:
+      "Text to show on filter tag \"clear\" buttons. Corresponds to the attribute with the same name",
+    default: "Clear filter"
+
+  attr :type, :string,
+    doc: "The type of the tag.",
+    values: [
+      "red",
+      "magenta",
+      "purple",
+      "blue",
+      "cyan",
+      "teal",
+      "green",
+      "gray",
+      "COOL-GRAY",
+      "cool-gray",
+      "WARM-GRAY",
+      "warm-gray"
+    ],
+    default: "gray"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def tag(assigns) do
+    CoreComponents.tag(assigns)
+  end
+
+  @doc """
+  Component `<cds-tag-skeleton>` from `./src/components/tag/tag-skeleton.ts`
+
+  Skeleton of tag.
+
+
+  """
+  attr :size, :string,
+    doc:
+      "Specify the size of the Tag. Currently supports either `sm`,\n`md` (default) or `lg` sizes.",
+    values: ["lg", "md", "sm"],
+    default: "sm"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def tag_skeleton(assigns) do
+    CoreComponents.tag_skeleton(assigns)
+  end
+end

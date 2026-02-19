@@ -1,0 +1,238 @@
+defmodule Graphene.CarbonComponents.Breadcrumb do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-breadcrumb>` from `./src/components/breadcrumb/breadcrumb.ts`
+
+  Breadcrumb.
+
+
+  """
+  attr :no_trailing_slash, :boolean,
+    doc: "Optional prop to omit the trailing slash for the breadcrumbs"
+
+  attr :size, :string,
+    doc:
+      "Specify the size of the Breadcrumb. Currently\nsupports the following: `sm` & `md` (default: 'md')",
+    values: ["sm", "md"],
+    default: "md"
+
+  attr :rest, :global
+
+  slot :item do
+    attr :href, :string
+    attr :disabled, :boolean
+    attr :current, :boolean
+    attr :text, :string
+  end
+
+  slot :inner_block
+
+  def breadcrumb(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:no_trailing_slash, fn -> false end)
+
+    ~H"""
+    <CoreComponents.breadcrumb no_trailing_slash={@no_trailing_slash} size={@size} {@rest}>
+      <%= for item <- @item do %>
+        <CoreComponents.breadcrumb_item>
+          <%= if item[:href] do %>
+            <CoreComponents.breadcrumb_link
+              href={item[:href]}
+              disabled={item[:disabled]}
+              is_currentpage={item[:current]}
+            >
+              {item[:text] || render_slot(item)}
+            </CoreComponents.breadcrumb_link>
+          <% else %>
+            {item[:text] || render_slot(item)}
+          <% end %>
+        </CoreComponents.breadcrumb_item>
+      <% end %>
+    </CoreComponents.breadcrumb>
+    """
+  end
+
+  def breadcrumb(assigns) do
+    CoreComponents.breadcrumb(assigns)
+  end
+
+  @doc """
+  Component `<cds-breadcrumb-item>` from `./src/components/breadcrumb/breadcrumb-item.ts`
+
+  Breadcrumb item.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def breadcrumb_item(assigns) do
+    CoreComponents.breadcrumb_item(assigns)
+  end
+
+  @doc """
+  Component `<cds-breadcrumb-link>` from `./src/components/breadcrumb/breadcrumb-link.ts`
+
+  Link in breadcrumb.
+
+
+  """
+  attr :disabled, :boolean, doc: "`true` if the link should be disabled."
+  attr :download, :string, doc: "The default file name."
+  attr :href, :string, doc: "Link `href`."
+  attr :hreflang, :string, doc: "The language of what `href` points to."
+  attr :inline, :boolean, doc: "`true` if the link should be inline."
+
+  attr :is_currentpage, :boolean,
+    doc: "Provide if this breadcrumb item represents the current page"
+
+  attr :link_role, :string, doc: "The a11y role for `<a>`."
+  attr :ping, :string, doc: "URLs to ping."
+  attr :rel, :string, doc: "The link type."
+  attr :size, :string, doc: "Link size.", default: "MEDIUM"
+  attr :target, :string, doc: "The link target."
+  attr :type, :string, doc: "MIME type of the `target`."
+  attr :visited, :boolean, doc: "`true` if the link has been visited."
+  attr :rest, :global
+  slot :inner_block
+
+  def breadcrumb_link(assigns) do
+    CoreComponents.breadcrumb_link(assigns)
+  end
+
+  @doc """
+  Component `<cds-breadcrumb-overflow-menu>` from `./src/components/breadcrumb/breadcrumb-overflow-menu.ts`
+
+  Overflow menu in breadcrumb.
+
+
+  """
+  attr :align, :string,
+    doc: "Checks if a badge indicator is being used with incorrect properties",
+    default: "top"
+
+  attr :autoalign, :boolean, doc: "Specify whether a auto align functionality should be applied"
+
+  attr :autofocus, :boolean,
+    doc: "`true` if the button should have input focus when the page loads."
+
+  attr :batch_action, :boolean,
+    doc: "`true` if the button is being used within a data table batch action toolbar"
+
+  attr :breadcrumb, :boolean, doc: "`true` if this overflow menu use inside breadcrumb."
+  attr :button_class_name, :any, doc: "Specify an optional className to be added to your Button"
+
+  attr :close_on_activation, :boolean,
+    doc:
+      "Determines whether the tooltip should close when inner content is activated (click, Enter or Space)",
+    default: true
+
+  attr :danger_description, :any,
+    doc: "Specify the message read by screen readers for the danger button variant"
+
+  attr :data_table, :boolean, doc: "`true` if this tooltip is in a data table row"
+
+  attr :default_open, :boolean,
+    doc: "Specify whether the tooltip should be open when it first renders"
+
+  attr :disabled, :boolean, doc: "`true` if this overflow menu should be disabled."
+  attr :download, :string, doc: "The default file name, used if this button is rendered as `<a>`."
+
+  attr :enter_delay_ms, :string,
+    doc: "Specify the duration in milliseconds to delay before displaying the tooltip",
+    default: "100"
+
+  attr :flipped, :boolean, doc: "`true` if this overflow menu body should be flipped."
+  attr :has_main_content, :boolean, doc: "`true` if there is a non-icon content."
+  attr :href, :string, doc: "Link `href`. If present, this button is rendered as `<a>`."
+
+  attr :hreflang, :string,
+    doc: "The language of what `href` points to, if this button is rendered as `<a>`."
+
+  attr :index, :string,
+    doc: "Index (starting at 1) of overflow menu item to focus on open.",
+    default: "1"
+
+  attr :is_expressive, :boolean, doc: "`true` if expressive theme enabled."
+
+  attr :is_selected, :boolean,
+    doc: "Specify whether the Button is currently selected.\nOnly applies to the Ghost variant."
+
+  attr :kind, :string,
+    doc: "Button kind.",
+    values: [
+      "primary",
+      "secondary",
+      "tertiary",
+      "danger",
+      "danger--tertiary",
+      "danger--ghost",
+      "ghost"
+    ],
+    default: "primary"
+
+  attr :leave_delay_ms, :string,
+    doc: "Specify the duration in milliseconds to delay before hiding the tooltip",
+    default: "300"
+
+  attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
+  attr :open, :boolean, doc: "`true` if the dropdown should be open."
+  attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
+  attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
+  attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
+  attr :size, :string, doc: "Overflow menu size.", values: ["sm", "md", "lg"], default: "md"
+  attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
+  attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
+  attr :toolbar_action, :boolean, doc: "`true` if this menu is a toolbar action"
+
+  attr :tooltip_alignment, :string,
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end.",
+    values: ["left", "right", ""],
+    default: ""
+
+  attr :tooltip_position, :string,
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left.",
+    values: ["top", "bottom", "right", "left"],
+    default: "top"
+
+  attr :tooltip_text, :string,
+    doc:
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
+
+  attr :type, :string,
+    doc: "Button type.",
+    values: ["button", "reset", "submit"],
+    default: "button"
+
+  attr :rest, :global
+  slot :icon, doc: "The icon for the trigger button."
+  slot :inner_block
+
+  def breadcrumb_overflow_menu(assigns) do
+    CoreComponents.breadcrumb_overflow_menu(assigns)
+  end
+
+  @doc """
+  Component `<cds-breadcrumb-skeleton>` from `./src/components/breadcrumb/breadcrumb-skeleton.ts`
+
+  Breadcrumb skeleton.
+
+  """
+  attr :items, :string, doc: "Number of items to render."
+  attr :no_trailing_slash, :boolean, doc: "`true` to omit the trailing slash."
+  attr :size, :string, doc: "Breadcrumb size."
+  attr :rest, :global
+  slot :inner_block
+
+  def breadcrumb_skeleton(assigns) do
+    CoreComponents.breadcrumb_skeleton(assigns)
+  end
+end

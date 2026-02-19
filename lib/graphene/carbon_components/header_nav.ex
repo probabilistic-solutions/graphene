@@ -1,0 +1,50 @@
+defmodule Graphene.CarbonComponents.HeaderNav do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-header-nav>` from `./src/components/ui-shell/header-nav.ts`
+
+  Header.
+
+
+  """
+  attr :menu_bar_label, :string, doc: "The `aria-label` attribute for the menu bar UI."
+  attr :rest, :global
+  slot :inner_block
+
+  def header_nav(assigns) do
+    CoreComponents.header_nav(assigns)
+  end
+
+  @doc """
+  Component `<cds-header-nav-item>` from `./src/components/ui-shell/header-nav-item.ts`
+
+  Header nav item.
+
+
+  """
+  attr :href, :string, doc: "Link `href`."
+
+  attr :is_active, :boolean,
+    doc:
+      "Applies selected styles to the item if a user sets this to true and `aria-current !== 'page'`."
+
+  attr :rel, :string, doc: "The link type."
+
+  attr :role, :string,
+    doc: "As child of <ul>, this element must have role of listitem",
+    default: "listitem"
+
+  attr :target, :string, doc: "The link target."
+  attr :title, :string, doc: "The title."
+  attr :rest, :global
+  slot :inner_block
+
+  def header_nav_item(assigns) do
+    CoreComponents.header_nav_item(assigns)
+  end
+end

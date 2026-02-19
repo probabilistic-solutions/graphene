@@ -1,0 +1,44 @@
+defmodule Graphene.CarbonComponents.PageHeaderContent do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-page-header-content>` from `./src/components/page-header/page-header-content.ts`
+
+  Page header content.
+
+
+  """
+  attr :title, :string, doc: "Title text of the page-header-content"
+
+  attr :within_grid, :boolean,
+    doc:
+      "Set to `true` if the breadcrumb bar is sitting within a grid\n(ie. when used in tandem with page-header-hero-image)"
+
+  attr :rest, :global
+  slot :contextual_actions, doc: "Contextual actions for the page header."
+  slot :page_actions, doc: "Page actions for the page header."
+  slot :inner_block
+
+  def page_header_content(assigns) do
+    CoreComponents.page_header_content(assigns)
+  end
+
+  @doc """
+  Component `<cds-page-header-content-text>` from `./src/components/page-header/page-header-content-text.ts`
+
+  Page header Content Text.
+
+
+  """
+  attr :subtitle, :string, doc: "Subtitle text of the page-header-content"
+  attr :rest, :global
+  slot :inner_block
+
+  def page_header_content_text(assigns) do
+    CoreComponents.page_header_content_text(assigns)
+  end
+end

@@ -1,0 +1,34 @@
+defmodule Graphene.CarbonComponents.StructuredListHeaderCell do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-structured-list-header-cell>` from `./src/components/structured-list/structured-list-header-cell.ts`
+
+  Structured list header cell.
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def structured_list_header_cell(assigns) do
+    CoreComponents.structured_list_header_cell(assigns)
+  end
+
+  @doc """
+  Component `<cds-structured-list-header-cell-skeleton>` from `./src/components/structured-list/structured-list-header-cell-skeleton.ts`
+
+  Structured list header cell skeleton.
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def structured_list_header_cell_skeleton(assigns) do
+    CoreComponents.structured_list_header_cell_skeleton(assigns)
+  end
+end

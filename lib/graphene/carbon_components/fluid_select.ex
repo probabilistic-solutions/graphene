@@ -1,0 +1,170 @@
+defmodule Graphene.CarbonComponents.FluidSelect do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+  alias Graphene.Internal.FormComponents
+
+  @doc """
+  Component `<cds-fluid-select>` from `./src/components/fluid-select/fluid-select.ts`
+
+  Fluid text select.
+
+  ## Events
+
+  * `cds-select-selected` - The name of the custom event fired after an item is selected.
+
+  """
+  attr :autofocus, :boolean,
+    doc: "Sets the select to be focussed automatically on page load. Defaults to false"
+
+  attr :disabled, :boolean, doc: "Controls the disabled state of the select"
+  attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
+  attr :id, :string, doc: "ID to link the `label` and `select`"
+  attr :inline, :boolean, doc: "Specify whether you want the inline version of this control"
+  attr :invalid, :boolean, doc: "Specify if the currently value is invalid."
+  attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
+  attr :is_fluid, :boolean, doc: "Specify whether the textarea is fluid or not"
+  attr :multiple, :boolean, doc: "`true` to enable multiple selection."
+  attr :name, :string, doc: "Name for the select in the `FormData`"
+  attr :pattern, :string, doc: "Pattern to validate the select against for HTML validity checking"
+  attr :placeholder, :string, doc: "Value to display when the select has an empty `value`"
+  attr :readonly, :boolean, doc: "Controls the readonly state of the select"
+  attr :required, :boolean, doc: "Boolean property to set the required status"
+
+  attr :required_validity_message, :string,
+    doc: "The special validity message for `required`.",
+    default: "Please fill out this field."
+
+  attr :selected_index, :string, doc: "The selected index."
+  attr :size, :string, doc: "The input box size.", values: ["sm", "md", "lg", "xl"], default: "md"
+  attr :value, :string, doc: "The value of the text area."
+  attr :warn, :boolean, doc: "Specify if the currently value is warn."
+  attr :warn_text, :string, doc: "Message which is displayed if the value is warn."
+  attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
+  attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
+
+  attr :form_event, :string,
+    default: nil,
+    doc: "override the custom event used to sync form values"
+
+  attr :rest, :global
+  slot :helper_text, doc: "The helper text."
+  slot :label_text, doc: "The label text."
+
+  slot :validity_message,
+    doc:
+      "The validity message. If present and non-empty, this input shows the UI of its invalid state."
+
+  slot :item do
+    attr :label, :string
+    attr :value, :string
+    attr :selected, :boolean
+    attr :disabled, :boolean
+  end
+
+  slot :inner_block
+
+  def fluid_select(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:autofocus, fn -> false end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:hide_label, fn -> false end)
+      |> assign_new(:id, fn -> nil end)
+      |> assign_new(:inline, fn -> false end)
+      |> assign_new(:invalid, fn -> false end)
+      |> assign_new(:invalid_text, fn -> nil end)
+      |> assign_new(:is_fluid, fn -> false end)
+      |> assign_new(:multiple, fn -> nil end)
+      |> assign_new(:name, fn -> nil end)
+      |> assign_new(:pattern, fn -> nil end)
+      |> assign_new(:placeholder, fn -> nil end)
+      |> assign_new(:readonly, fn -> false end)
+      |> assign_new(:required, fn -> false end)
+      |> assign_new(:selected_index, fn -> nil end)
+      |> assign_new(:value, fn -> nil end)
+      |> assign_new(:warn, fn -> false end)
+      |> assign_new(:warn_text, fn -> nil end)
+
+    ~H"""
+    <FormComponents.fluid_select
+      autofocus={@autofocus}
+      disabled={@disabled}
+      hide_label={@hide_label}
+      id={@id}
+      inline={@inline}
+      invalid={@invalid}
+      invalid_text={@invalid_text}
+      is_fluid={@is_fluid}
+      multiple={@multiple}
+      name={@name}
+      pattern={@pattern}
+      placeholder={@placeholder}
+      readonly={@readonly}
+      required={@required}
+      required_validity_message={@required_validity_message}
+      selected_index={@selected_index}
+      size={@size}
+      value={@value}
+      warn={@warn}
+      warn_text={@warn_text}
+      {@rest}
+    >
+      <.dynamic_tag
+        :for={label <- @label_text}
+        tag_name={Map.get(label, :tag, "div")}
+        slot="label-text"
+      >
+        {render_slot(label)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={helper <- @helper_text}
+        tag_name={Map.get(helper, :tag, "div")}
+        slot="helper-text"
+      >
+        {render_slot(helper)}
+      </.dynamic_tag>
+      <.dynamic_tag
+        :for={message <- @validity_message}
+        tag_name={Map.get(message, :tag, "div")}
+        slot="validity-message"
+      >
+        {render_slot(message)}
+      </.dynamic_tag>
+      <%= for item <- @item do %>
+        <CoreComponents.select_item
+          label={item[:label]}
+          value={item[:value] || item[:label]}
+          selected={item[:selected]}
+          disabled={item[:disabled]}
+        >
+          {item[:label] || render_slot(item)}
+        </CoreComponents.select_item>
+      <% end %>
+    </FormComponents.fluid_select>
+    """
+  end
+
+  def fluid_select(assigns) do
+    FormComponents.fluid_select(assigns)
+  end
+
+  @doc """
+  Component `<cds-fluid-select-skeleton>` from `./src/components/fluid-select/fluid-select-skeleton.ts`
+
+  Fluid text area input.
+
+
+  """
+  attr :hide_label, :boolean,
+    doc: "`true` if the label should be hidden. Corresponds to the attribute with the same name."
+
+  attr :rest, :global
+  slot :inner_block
+
+  def fluid_select_skeleton(assigns) do
+    CoreComponents.fluid_select_skeleton(assigns)
+  end
+end

@@ -3,7 +3,7 @@ defmodule Graphene.CarbonComponents.DataTableComponent do
 
   use Phoenix.LiveComponent
 
-  alias Graphene.CoreComponents
+  alias Graphene.Internal.CoreComponents
 
   @impl true
   def update(assigns, socket) do

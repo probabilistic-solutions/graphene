@@ -1,0 +1,70 @@
+defmodule Graphene.CarbonComponents.DatePickerInput do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-date-picker-input>` from `./src/components/date-picker/date-picker-input.ts`
+
+  The input box for date picker.
+
+
+  """
+  attr :color_scheme, :string, doc: "The color scheme.", values: ["", "light"], default: ""
+  attr :disabled, :boolean, doc: "`true` if the check box should be disabled."
+  attr :hide_label, :boolean, doc: "`true` if the label should be hidden."
+
+  attr :invalid, :boolean,
+    doc: "Controls the invalid state and visibility of the `validityMessage`."
+
+  attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
+
+  attr :kind, :string,
+    doc: "Date picker input kind.",
+    values: ["simple", "single", "from", "to"],
+    default: "simple"
+
+  attr :label_text, :string, doc: "The label text."
+  attr :pattern, :string, doc: "The `pattern` attribute for the `<input>` in the shadow DOM."
+  attr :placeholder, :string, doc: "The placeholder text."
+  attr :readonly, :boolean, doc: "Specify if the component should be read-only"
+  attr :required, :boolean, doc: "`true` if the value is required."
+  attr :short, :boolean, doc: "true to use the short version."
+
+  attr :size, :string,
+    doc: "Vertical size of this date picker input.",
+    values: ["sm", "md", "lg", "xl"],
+    default: "md"
+
+  attr :type, :string, doc: "The `type` attribute for the `<input>` in the shadow DOM."
+  attr :value, :string, doc: "The value."
+  attr :warn, :boolean, doc: "Specify whether the control is currently in warning state"
+
+  attr :warn_text, :string,
+    doc: "Provide the text that is displayed when the control is in warning state"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def date_picker_input(assigns) do
+    CoreComponents.date_picker_input(assigns)
+  end
+
+  @doc """
+  Component `<cds-date-picker-input-skeleton>` from `./src/components/date-picker/date-picker-input-skeleton.ts`
+
+  Date picker input skeleton.
+
+  """
+  attr :hide_label, :boolean, doc: "Specify whether the label should be hidden."
+  attr :kind, :string, doc: "Date picker kind.", values: [nil, "simple", "single", "from", "to"]
+  attr :range, :boolean, doc: "`true` if the input is a range."
+  attr :rest, :global
+  slot :inner_block
+
+  def date_picker_input_skeleton(assigns) do
+    CoreComponents.date_picker_input_skeleton(assigns)
+  end
+end

@@ -1184,7 +1184,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="combo-box-default-input" name="combo-box-default" value="">
-  <cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="Combo box" name="combo-box-default" required-validity-message="Please fill out this field." size="md" title-text="Choose an option" type="" id="basic-single-default" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="combo-box-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="Combo box" name="combo-box-default" required-validity-message="Please fill out this field." size="md" title-text="Choose an option" type="" id="basic-single-default" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="combo-box-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -1224,7 +1224,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="combo-box-inline-input" name="combo-box-inline" value="">
-  <cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="Inline" name="combo-box-inline" required-validity-message="Please fill out this field." size="md" title-text="Inline combo" type="inline" id="basic-single-inline" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="combo-box-inline-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="Inline" name="combo-box-inline" required-validity-message="Please fill out this field." size="md" title-text="Inline combo" type="inline" id="basic-single-inline" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="combo-box-inline-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -1271,7 +1271,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="combo-box-sm-input" name="combo-box-sm" value="">
-  <cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="SM" name="combo-box-sm" required-validity-message="Please fill out this field." size="sm" title-text="Size sm" type="" id="basic-sizes-sm" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="combo-box-sm-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="SM" name="combo-box-sm" required-validity-message="Please fill out this field." size="sm" title-text="Size sm" type="" id="basic-sizes-sm" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="combo-box-sm-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -1293,7 +1293,7 @@ defmodule Graphene do
   </cds-combo-box>
 
   <input type="hidden" id="combo-box-md-input" name="combo-box-md" value="">
-  <cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="MD" name="combo-box-md" required-validity-message="Please fill out this field." size="md" title-text="Size md" type="" id="basic-sizes-md" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="combo-box-md-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="MD" name="combo-box-md" required-validity-message="Please fill out this field." size="md" title-text="Size md" type="" id="basic-sizes-md" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="combo-box-md-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -1315,7 +1315,7 @@ defmodule Graphene do
   </cds-combo-box>
 
   <input type="hidden" id="combo-box-lg-input" name="combo-box-lg" value="">
-  <cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="LG" name="combo-box-lg" required-validity-message="Please fill out this field." size="lg" title-text="Size lg" type="" id="basic-sizes-lg" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="combo-box-lg-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="LG" name="combo-box-lg" required-validity-message="Please fill out this field." size="lg" title-text="Size lg" type="" id="basic-sizes-lg" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="combo-box-lg-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -21488,7 +21488,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="date-picker-single-input" name="date-picker-single" value="">
-  <cds-date-picker allow-input close-on-select date-format="d/m/Y" name="date-picker-single" id="basic-single-single" data-form-detail="checked" data-form-event="cds-date-picker-changed" data-form-input="date-picker-single-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-date-picker allow-input close-on-select date-format="d/m/Y" name="date-picker-single" id="basic-single-single" data-form-detail="checked" data-form-event="cds-date-picker-changed" data-form-input="date-picker-single-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
       <cds-date-picker-input color-scheme="" label-text="Start date" placeholder="dd/mm/yyyy" size="md">
@@ -21510,7 +21510,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="date-picker-range-input" name="date-picker-range" value="2024-01-10/2024-01-14">
-  <cds-date-picker allow-input close-on-select date-format="d/m/Y" name="date-picker-range" value="2024-01-10/2024-01-14" id="basic-single-range" data-form-detail="checked" data-form-event="cds-date-picker-changed" data-form-input="date-picker-range-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-date-picker allow-input close-on-select date-format="d/m/Y" name="date-picker-range" value="2024-01-10/2024-01-14" id="basic-single-range" data-form-detail="checked" data-form-event="cds-date-picker-changed" data-form-input="date-picker-range-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
       <cds-date-picker-input color-scheme="" label-text="Start" placeholder="dd/mm/yyyy" size="md">
@@ -21535,7 +21535,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="date-picker-disabled-input" name="date-picker-disabled" value="">
-  <cds-date-picker allow-input close-on-select date-format="d/m/Y" disabled name="date-picker-disabled" id="basic-single-disabled" data-form-detail="checked" data-form-event="cds-date-picker-changed" data-form-input="date-picker-disabled-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-date-picker allow-input close-on-select date-format="d/m/Y" disabled name="date-picker-disabled" id="basic-single-disabled" data-form-detail="checked" data-form-event="cds-date-picker-changed" data-form-input="date-picker-disabled-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
       <cds-date-picker-input color-scheme="" disabled label-text="Disabled" placeholder="dd/mm/yyyy" size="md">
@@ -21620,7 +21620,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="dropdown-default-input" name="dropdown-default" value="all">
-  <cds-dropdown direction="bottom" name="dropdown-default" required-validity-message="Please fill out this field." size="md" type="" value="all" id="basic-single-default" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-dropdown direction="bottom" name="dropdown-default" required-validity-message="Please fill out this field." size="md" type="" value="all" id="basic-single-default" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="title-text">
@@ -21666,7 +21666,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="dropdown-inline-input" name="dropdown-inline" value="alpha">
-  <cds-dropdown direction="bottom" name="dropdown-inline" required-validity-message="Please fill out this field." size="md" type="inline" value="alpha" id="basic-single-inline" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-inline-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-dropdown direction="bottom" name="dropdown-inline" required-validity-message="Please fill out this field." size="md" type="inline" value="alpha" id="basic-single-inline" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-inline-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="title-text">
@@ -21721,7 +21721,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="dropdown-sm-input" name="dropdown-sm" value="one">
-  <cds-dropdown direction="bottom" name="dropdown-sm" required-validity-message="Please fill out this field." size="sm" type="" value="one" id="basic-sizes-sm" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-sm-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-dropdown direction="bottom" name="dropdown-sm" required-validity-message="Please fill out this field." size="sm" type="" value="one" id="basic-sizes-sm" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-sm-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="title-text">
@@ -21748,7 +21748,7 @@ defmodule Graphene do
   </cds-dropdown>
 
   <input type="hidden" id="dropdown-md-input" name="dropdown-md" value="one">
-  <cds-dropdown direction="bottom" name="dropdown-md" required-validity-message="Please fill out this field." size="md" type="" value="one" id="basic-sizes-md" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-md-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-dropdown direction="bottom" name="dropdown-md" required-validity-message="Please fill out this field." size="md" type="" value="one" id="basic-sizes-md" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-md-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="title-text">
@@ -21775,7 +21775,7 @@ defmodule Graphene do
   </cds-dropdown>
 
   <input type="hidden" id="dropdown-lg-input" name="dropdown-lg" value="one">
-  <cds-dropdown direction="bottom" name="dropdown-lg" required-validity-message="Please fill out this field." size="lg" type="" value="one" id="basic-sizes-lg" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-lg-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-dropdown direction="bottom" name="dropdown-lg" required-validity-message="Please fill out this field." size="lg" type="" value="one" id="basic-sizes-lg" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="dropdown-lg-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="title-text">
@@ -21821,7 +21821,7 @@ defmodule Graphene do
   <feature-flags id="feature-flag-single-single">
     
     <input type="hidden" id="checkbox-input" name="feature-flag-single" value="true">
-  <cds-toggle checked id="checkbox" label-a="On" label-b="Off" name="feature-flag-single" size="" toggled id="checkbox" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="checkbox-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-toggle checked id="checkbox" label-a="On" label-b="Off" name="feature-flag-single" size="" toggled id="checkbox" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="checkbox-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -21852,7 +21852,7 @@ defmodule Graphene do
   <feature-flags id="feature-flag-single-multiple">
     
     <input type="hidden" id="checkbox-input" name="feature-flag-a" value="true">
-  <cds-toggle checked id="checkbox" label-a="On" label-b="Off" name="feature-flag-a" size="" toggled id="checkbox" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="checkbox-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-toggle checked id="checkbox" label-a="On" label-b="Off" name="feature-flag-a" size="" toggled id="checkbox" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="checkbox-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -21863,7 +21863,7 @@ defmodule Graphene do
   </cds-toggle>
 
   <input type="hidden" id="checkbox-input" name="feature-flag-b" value="false">
-  <cds-toggle id="checkbox" label-a="On" label-b="Off" name="feature-flag-b" size="" id="checkbox" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="checkbox-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-toggle id="checkbox" label-a="On" label-b="Off" name="feature-flag-b" size="" id="checkbox" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="checkbox-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -21891,7 +21891,7 @@ defmodule Graphene do
   <feature-flags id="feature-flag-single-disabled">
     
     <input type="hidden" id="checkbox-input" name="feature-flag-disabled" value="false">
-  <cds-toggle disabled id="checkbox" label-a="On" label-b="Off" name="feature-flag-disabled" size="" id="checkbox" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="checkbox-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-toggle disabled id="checkbox" label-a="On" label-b="Off" name="feature-flag-disabled" size="" id="checkbox" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="checkbox-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -21926,7 +21926,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-default-input" name="file_uploader_default" value="">
-  <cds-file-uploader label-description="Max file size 500mb" label-title="Upload files" id="basic-single-default" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="basic-single-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-file-uploader label-description="Max file size 500mb" label-title="Upload files" id="basic-single-default" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="basic-single-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -21968,7 +21968,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-multiple-input" name="file_uploader_multiple" value="">
-  <cds-file-uploader label-description="PNG or SVG" label-title="Upload assets" id="basic-single-multiple" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="basic-single-multiple-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-file-uploader label-description="PNG or SVG" label-title="Upload assets" id="basic-single-multiple" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="basic-single-multiple-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -22017,7 +22017,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-disabled-input" name="file_uploader_disabled" value="">
-  <cds-file-uploader disabled label-description="Uploads disabled" label-title="Disabled" id="basic-single-disabled" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="basic-single-disabled-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-file-uploader disabled label-description="Uploads disabled" label-title="Disabled" id="basic-single-disabled" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="basic-single-disabled-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -22101,7 +22101,7 @@ defmodule Graphene do
   <div style="display: grid; gap: 1.5rem; max-width: 36rem; position: relative;">
       <div id="file-uploader-bridge" phx-hook="Storybook.CarbonComponents.FileUploader.Upload.CarbonFileUploaderBridge" data-accept=".pdf .png .txt">
         <input type="hidden" id="file-uploader-input" name="file_uploader_upload" value="">
-  <cds-file-uploader label-description="PDF, PNG, or TXT (max 5 MB)" label-title="Upload evidence" id="file-uploader" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="file-uploader-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-file-uploader label-description="PDF, PNG, or TXT (max 5 MB)" label-title="Upload evidence" id="file-uploader" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="file-uploader-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -22157,7 +22157,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="fluid-number-default-input" name="fluid-number-default" value="10">
-  <cds-fluid-number-input decrement-button-assistive-text="decrease number input" default-value="10" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infty" min="-Infty" name="fluid-number-default" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-default" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="fluid-number-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-number-input decrement-button-assistive-text="decrease number input" default-value="10" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infty" min="-Infty" name="fluid-number-default" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-default" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="fluid-number-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -22179,7 +22179,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="fluid-number-helper-input" name="fluid-number-helper" value="2">
-  <cds-fluid-number-input decrement-button-assistive-text="decrease number input" default-value="2" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infty" min="-Infty" name="fluid-number-helper" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-helper-text" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="fluid-number-helper-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-number-input decrement-button-assistive-text="decrease number input" default-value="2" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infty" min="-Infty" name="fluid-number-helper" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-helper-text" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="fluid-number-helper-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="helper-text">
@@ -22203,7 +22203,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="fluid-number-invalid-input" name="fluid-number-invalid" value="0">
-  <cds-fluid-number-input decrement-button-assistive-text="decrease number input" default-value="0" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infty" min="-Infty" name="fluid-number-invalid" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-invalid" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="fluid-number-invalid-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-number-input decrement-button-assistive-text="decrease number input" default-value="0" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infty" min="-Infty" name="fluid-number-invalid" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-invalid" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="fluid-number-invalid-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -22229,7 +22229,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="fluid-search-default-input" name="fluid-search-default" value="">
-  <cds-fluid-search autocomplete="off" label-text="Search" name="fluid-search-default" placeholder="Search" size="md" id="basic-single-default" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="fluid-search-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-search autocomplete="off" label-text="Search" name="fluid-search-default" placeholder="Search" size="md" id="basic-single-default" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="fluid-search-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-fluid-search>
   ```
@@ -22242,7 +22242,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="fluid-search-expandable-input" name="fluid-search-expandable" value="">
-  <cds-fluid-search autocomplete="off" expandable expanded label-text="Search" name="fluid-search-expandable" placeholder="Search" size="md" id="basic-single-expandable" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="fluid-search-expandable-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-search autocomplete="off" expandable expanded label-text="Search" name="fluid-search-expandable" placeholder="Search" size="md" id="basic-single-expandable" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="fluid-search-expandable-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-fluid-search>
   ```
@@ -22255,7 +22255,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="fluid-search-disabled-input" name="fluid-search-disabled" value="">
-  <cds-fluid-search autocomplete="off" disabled label-text="Search" name="fluid-search-disabled" placeholder="Search" size="md" id="basic-single-disabled" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="fluid-search-disabled-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-search autocomplete="off" disabled label-text="Search" name="fluid-search-disabled" placeholder="Search" size="md" id="basic-single-disabled" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="fluid-search-disabled-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-fluid-search>
   ```
@@ -22270,17 +22270,17 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="fluid-search-sm-input" name="fluid-search-sm" value="">
-  <cds-fluid-search autocomplete="off" label-text="Size sm" name="fluid-search-sm" placeholder="Search" size="sm" id="basic-sizes-sm" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="fluid-search-sm-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-search autocomplete="off" label-text="Size sm" name="fluid-search-sm" placeholder="Search" size="sm" id="basic-sizes-sm" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="fluid-search-sm-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-fluid-search>
 
   <input type="hidden" id="fluid-search-md-input" name="fluid-search-md" value="">
-  <cds-fluid-search autocomplete="off" label-text="Size md" name="fluid-search-md" placeholder="Search" size="md" id="basic-sizes-md" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="fluid-search-md-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-search autocomplete="off" label-text="Size md" name="fluid-search-md" placeholder="Search" size="md" id="basic-sizes-md" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="fluid-search-md-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-fluid-search>
 
   <input type="hidden" id="fluid-search-lg-input" name="fluid-search-lg" value="">
-  <cds-fluid-search autocomplete="off" label-text="Size lg" name="fluid-search-lg" placeholder="Search" size="lg" id="basic-sizes-lg" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="fluid-search-lg-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-search autocomplete="off" label-text="Size lg" name="fluid-search-lg" placeholder="Search" size="lg" id="basic-sizes-lg" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="fluid-search-lg-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-fluid-search>
   ```
@@ -22304,7 +22304,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-default-input" name="fluid-select-default" value="">
-  <cds-fluid-select name="fluid-select-default" required-validity-message="Please fill out this field." size="md" id="basic-single-default" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="basic-single-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-select name="fluid-select-default" required-validity-message="Please fill out this field." size="md" id="basic-single-default" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="basic-single-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="label-text">
@@ -22361,7 +22361,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-inline-input" name="fluid-select-inline" value="">
-  <cds-fluid-select inline name="fluid-select-inline" required-validity-message="Please fill out this field." size="md" id="basic-single-inline" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="basic-single-inline-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-select inline name="fluid-select-inline" required-validity-message="Please fill out this field." size="md" id="basic-single-inline" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="basic-single-inline-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="label-text">
@@ -22411,7 +22411,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-invalid-input" name="fluid-select-invalid" value="">
-  <cds-fluid-select invalid invalid-text="Pick a value" name="fluid-select-invalid" required-validity-message="Please fill out this field." size="md" id="basic-single-invalid" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="basic-single-invalid-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-select invalid invalid-text="Pick a value" name="fluid-select-invalid" required-validity-message="Please fill out this field." size="md" id="basic-single-invalid" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="basic-single-invalid-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="label-text">
@@ -22459,7 +22459,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="fluid-text-input-default-input" name="fluid-text-input-default" value="">
-  <cds-fluid-text-input hidePasswordLabel="Hide password" name="fluid-text-input-default" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="" id="basic-single-default" data-form-detail="checked" data-form-event="input" data-form-input="fluid-text-input-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-text-input hidePasswordLabel="Hide password" name="fluid-text-input-default" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="" id="basic-single-default" data-form-detail="checked" data-form-event="input" data-form-input="fluid-text-input-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -22481,7 +22481,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="fluid-text-input-helper-input" name="fluid-text-input-helper" value="Ada">
-  <cds-fluid-text-input hidePasswordLabel="Hide password" name="fluid-text-input-helper" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Ada" id="basic-single-helper-text" data-form-detail="checked" data-form-event="input" data-form-input="fluid-text-input-helper-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-text-input hidePasswordLabel="Hide password" name="fluid-text-input-helper" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Ada" id="basic-single-helper-text" data-form-detail="checked" data-form-event="input" data-form-input="fluid-text-input-helper-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="helper-text">
@@ -22505,7 +22505,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="fluid-text-input-invalid-input" name="fluid-text-input-invalid" value="">
-  <cds-fluid-text-input hidePasswordLabel="Hide password" name="fluid-text-input-invalid" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="" id="basic-single-invalid" data-form-detail="checked" data-form-event="input" data-form-input="fluid-text-input-invalid-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-text-input hidePasswordLabel="Hide password" name="fluid-text-input-invalid" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="" id="basic-single-invalid" data-form-detail="checked" data-form-event="input" data-form-input="fluid-text-input-invalid-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -22533,7 +22533,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-default-input" name="fluid-textarea-default" value="">
-  <cds-fluid-textarea hidePasswordLabel="Hide password" name="fluid-textarea-default" required-validity-message="Please fill out this field." rows="3" showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-default" data-form-detail="checked" data-form-event="input" data-form-input="basic-single-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-textarea hidePasswordLabel="Hide password" name="fluid-textarea-default" required-validity-message="Please fill out this field." rows="3" showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-default" data-form-detail="checked" data-form-event="input" data-form-input="basic-single-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -22555,7 +22555,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-helper-text-input" name="fluid-textarea-helper" value="">
-  <cds-fluid-textarea hidePasswordLabel="Hide password" name="fluid-textarea-helper" required-validity-message="Please fill out this field." rows="4" showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-helper-text" data-form-detail="checked" data-form-event="input" data-form-input="basic-single-helper-text-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-textarea hidePasswordLabel="Hide password" name="fluid-textarea-helper" required-validity-message="Please fill out this field." rows="4" showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-helper-text" data-form-detail="checked" data-form-event="input" data-form-input="basic-single-helper-text-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="helper-text">
@@ -22579,7 +22579,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-invalid-input" name="fluid-textarea-invalid" value="">
-  <cds-fluid-textarea hidePasswordLabel="Hide password" name="fluid-textarea-invalid" required-validity-message="Please fill out this field." rows="3" showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-invalid" data-form-detail="checked" data-form-event="input" data-form-input="basic-single-invalid-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-textarea hidePasswordLabel="Hide password" name="fluid-textarea-invalid" required-validity-message="Please fill out this field." rows="3" showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-invalid" data-form-detail="checked" data-form-event="input" data-form-input="basic-single-invalid-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -22631,7 +22631,7 @@ defmodule Graphene do
     
       
       <input type="hidden" id="name-input" name="name" value="Ada Lovelace">
-  <cds-text-input hidePasswordLabel="Hide password" name="name" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Ada Lovelace" id="form-name" data-form-detail="checked" data-form-event="input" data-form-input="name-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-text-input hidePasswordLabel="Hide password" name="name" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Ada Lovelace" id="form-name" data-form-detail="checked" data-form-event="input" data-form-input="name-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
         
     
@@ -22642,7 +22642,7 @@ defmodule Graphene do
   </cds-text-input>
 
       <input type="hidden" id="role-input" name="role" value="Engineer">
-  <cds-text-input hidePasswordLabel="Hide password" name="role" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Engineer" id="form-role" data-form-detail="checked" data-form-event="input" data-form-input="role-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-text-input hidePasswordLabel="Hide password" name="role" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Engineer" id="form-role" data-form-detail="checked" data-form-event="input" data-form-input="role-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
         
     
@@ -22670,7 +22670,7 @@ defmodule Graphene do
     
       
       <input type="hidden" id="email-input" name="email" value="ada@graphene.dev">
-  <cds-text-input hidePasswordLabel="Hide password" name="email" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="email" value="ada@graphene.dev" id="form-email" data-form-detail="checked" data-form-event="input" data-form-input="email-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-text-input hidePasswordLabel="Hide password" name="email" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="email" value="ada@graphene.dev" id="form-email" data-form-detail="checked" data-form-event="input" data-form-input="email-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
         
     
@@ -22681,7 +22681,7 @@ defmodule Graphene do
   </cds-text-input>
 
       <input type="hidden" id="password-input" name="password" value="password">
-  <cds-password-input hide-password-label="Hide password" name="password" required-validity-message="Please fill out this field." show-password-label="Show password" size="md" tooltip-alignment="center" tooltip-position="bottom" type="password" value="password" id="form-password" data-form-detail="checked" data-form-event="input" data-form-input="password-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-password-input hide-password-label="Hide password" name="password" required-validity-message="Please fill out this field." show-password-label="Show password" size="md" tooltip-alignment="center" tooltip-position="bottom" type="password" value="password" id="form-password" data-form-detail="checked" data-form-event="input" data-form-input="password-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
         
     
@@ -22856,12 +22856,12 @@ defmodule Graphene do
           <div style="display: grid; gap: 0.75rem;">
             <h3>Boolean inputs</h3>
             <input type="hidden" id="form_subscribe-input" name="form[subscribe]" value="true">
-  <cds-checkbox checked id="checkbox" label-text="Receive updates" name="form[subscribe]" value id="form_subscribe" data-form-detail="checked" data-form-event="cds-checkbox-changed" data-form-input="form_subscribe-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-checkbox checked id="checkbox" label-text="Receive updates" name="form[subscribe]" value id="form_subscribe" data-form-detail="checked" data-form-event="cds-checkbox-changed" data-form-input="form_subscribe-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-checkbox>
 
             <input type="hidden" id="form_feature-input" name="form[feature]" value="false">
-  <cds-toggle id="checkbox" label-a="On" label-b="Off" name="form[feature]" size="" id="form_feature" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="form_feature-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-toggle id="checkbox" label-a="On" label-b="Off" name="form[feature]" size="" id="form_feature" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="form_feature-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
               
     
@@ -22876,7 +22876,7 @@ defmodule Graphene do
           <div style="display: grid; gap: 0.75rem;">
             <h3>Radio group</h3>
             <input type="hidden" id="form_plan-input" name="form[plan]" value="starter">
-  <cds-radio-button-group label-position="right" legend-text="Choose a plan" name="form[plan]" orientation="horizontal" value="starter" id="form_plan" data-form-detail="checked" data-form-event="cds-radio-button-group-changed" data-form-input="form_plan-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-radio-button-group label-position="right" legend-text="Choose a plan" name="form[plan]" orientation="horizontal" value="starter" id="form_plan" data-form-detail="checked" data-form-event="cds-radio-button-group-changed" data-form-input="form_plan-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
               <cds-radio-button label-position="right" label-text="Starter" orientation="horizontal" value="starter">
     
@@ -22898,7 +22898,7 @@ defmodule Graphene do
           <div style="display: grid; gap: 0.75rem;">
             <h3>Numbers</h3>
             <input type="hidden" id="form_quantity-input" name="form[quantity]" value="2">
-  <cds-number-input decrement-button-assistive-text="decrease number input" default-value="2" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infinity" min="0" name="form[quantity]" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="form_quantity" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="form_quantity-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-number-input decrement-button-assistive-text="decrease number input" default-value="2" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infinity" min="0" name="form[quantity]" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="form_quantity" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="form_quantity-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
               
     
@@ -22909,7 +22909,7 @@ defmodule Graphene do
   </cds-number-input>
 
             <input type="hidden" id="form_fluid_quantity-input" name="form[fluid_quantity]" value="4">
-  <cds-fluid-number-input decrement-button-assistive-text="decrease number input" default-value="4" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infinity" min="0" name="form[fluid_quantity]" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="form_fluid_quantity" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="form_fluid_quantity-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-number-input decrement-button-assistive-text="decrease number input" default-value="4" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infinity" min="0" name="form[fluid_quantity]" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="form_fluid_quantity" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="form_fluid_quantity-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
               
     
@@ -22920,7 +22920,7 @@ defmodule Graphene do
   </cds-fluid-number-input>
 
             <input type="hidden" id="form_slo-input" name="form[slo]" value="65">
-  <cds-slider max="100" min="0" name="form[slo]" step="5" step-multiplier="4" value="65" id="form_slo" data-form-detail="checked" data-form-event="cds-slider-changed" data-form-input="form_slo-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-slider max="100" min="0" name="form[slo]" step="5" step-multiplier="4" value="65" id="form_slo" data-form-detail="checked" data-form-event="cds-slider-changed" data-form-input="form_slo-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
               
     <div slot="label-text">
@@ -22936,7 +22936,7 @@ defmodule Graphene do
           <div style="display: grid; gap: 0.75rem;">
             <h3>Text</h3>
             <input type="hidden" id="form_name-input" name="form[name]" value="Ada Lovelace">
-  <cds-text-input hidePasswordLabel="Hide password" label="Name" name="form[name]" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Ada Lovelace" id="form_name" data-form-detail="checked" data-form-event="input" data-form-input="form_name-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-text-input hidePasswordLabel="Hide password" label="Name" name="form[name]" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Ada Lovelace" id="form_name" data-form-detail="checked" data-form-event="input" data-form-input="form_name-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -22944,7 +22944,7 @@ defmodule Graphene do
   </cds-text-input>
 
             <input type="hidden" id="form_title-input" name="form[title]" value="Engineer">
-  <cds-fluid-text-input hidePasswordLabel="Hide password" label="Title" name="form[title]" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Engineer" id="form_title" data-form-detail="checked" data-form-event="input" data-form-input="form_title-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-text-input hidePasswordLabel="Hide password" label="Title" name="form[title]" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Engineer" id="form_title" data-form-detail="checked" data-form-event="input" data-form-input="form_title-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -22952,7 +22952,7 @@ defmodule Graphene do
   </cds-fluid-text-input>
 
             <input type="hidden" id="form_password-input" name="form[password]" value="password">
-  <cds-password-input hide-password-label="Hide password" label="Password" name="form[password]" required-validity-message="Please fill out this field." show-password-label="Show password" size="md" tooltip-alignment="center" tooltip-position="bottom" type="password" value="password" id="form_password" data-form-detail="checked" data-form-event="input" data-form-input="form_password-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-password-input hide-password-label="Hide password" label="Password" name="form[password]" required-validity-message="Please fill out this field." show-password-label="Show password" size="md" tooltip-alignment="center" tooltip-position="bottom" type="password" value="password" id="form_password" data-form-detail="checked" data-form-event="input" data-form-input="form_password-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -22960,7 +22960,7 @@ defmodule Graphene do
   </cds-password-input>
 
             <input type="hidden" id="form_bio-input" name="form[bio]" value="Inventor of the first algorithm.">
-  <cds-textarea hidePasswordLabel="Hide password" label="Bio" name="form[bio]" required-validity-message="Please fill out this field." rows="4" showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Inventor of the first algorithm." id="form_bio" data-form-detail="checked" data-form-event="input" data-form-input="form_bio-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-textarea hidePasswordLabel="Hide password" label="Bio" name="form[bio]" required-validity-message="Please fill out this field." rows="4" showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Inventor of the first algorithm." id="form_bio" data-form-detail="checked" data-form-event="input" data-form-input="form_bio-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -22968,7 +22968,7 @@ defmodule Graphene do
   </cds-textarea>
 
             <input type="hidden" id="form_notes-input" name="form[notes]" value="Prefers a concise summary.">
-  <cds-fluid-textarea hidePasswordLabel="Hide password" label="Notes" name="form[notes]" required-validity-message="Please fill out this field." rows="4" showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Prefers a concise summary." id="form_notes" data-form-detail="checked" data-form-event="input" data-form-input="form_notes-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-textarea hidePasswordLabel="Hide password" label="Notes" name="form[notes]" required-validity-message="Please fill out this field." rows="4" showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Prefers a concise summary." id="form_notes" data-form-detail="checked" data-form-event="input" data-form-input="form_notes-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -22980,12 +22980,12 @@ defmodule Graphene do
           <div style="display: grid; gap: 0.75rem;">
             <h3>Search</h3>
             <input type="hidden" id="form_search-input" name="form[search]" value="Ada">
-  <cds-search autocomplete="off" label-text="Search" name="form[search]" placeholder="Search" size="md" value="Ada" id="form_search" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="form_search-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-search autocomplete="off" label-text="Search" name="form[search]" placeholder="Search" size="md" value="Ada" id="form_search" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="form_search-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-search>
 
             <input type="hidden" id="form_fluid_search-input" name="form[fluid_search]" value="">
-  <cds-fluid-search autocomplete="off" label-text="Fluid search" name="form[fluid_search]" placeholder="Search" size="md" value="" id="form_fluid_search" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="form_fluid_search-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-search autocomplete="off" label-text="Fluid search" name="form[fluid_search]" placeholder="Search" size="md" value="" id="form_fluid_search" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="form_fluid_search-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-fluid-search>
 
@@ -22994,7 +22994,7 @@ defmodule Graphene do
           <div style="display: grid; gap: 0.75rem;">
             <h3>Selects</h3>
             <input type="hidden" id="form_select-input" name="form[select]" value="option-1">
-  <cds-select name="form[select]" required-validity-message="Please fill out this field." size="md" value="option-1" id="form_select" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="form_select-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-select name="form[select]" required-validity-message="Please fill out this field." size="md" value="option-1" id="form_select" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="form_select-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
               
@@ -23029,7 +23029,7 @@ defmodule Graphene do
   </cds-select>
 
             <input type="hidden" id="form_fluid_select-input" name="form[fluid_select]" value="option-2">
-  <cds-fluid-select name="form[fluid_select]" required-validity-message="Please fill out this field." size="md" value="option-2" id="form_fluid_select" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="form_fluid_select-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-fluid-select name="form[fluid_select]" required-validity-message="Please fill out this field." size="md" value="option-2" id="form_fluid_select" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="form_fluid_select-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
               
@@ -23064,7 +23064,7 @@ defmodule Graphene do
   </cds-fluid-select>
 
             <input type="hidden" id="form_dropdown-input" name="form[dropdown]" value="option-1">
-  <cds-dropdown direction="bottom" label="Dropdown" name="form[dropdown]" required-validity-message="Please fill out this field." size="md" type="" value="option-1" id="form_dropdown" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="form_dropdown-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-dropdown direction="bottom" label="Dropdown" name="form[dropdown]" required-validity-message="Please fill out this field." size="md" type="" value="option-1" id="form_dropdown" data-form-detail="checked" data-form-event="cds-dropdown-selected" data-form-input="form_dropdown-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
               
@@ -23093,7 +23093,7 @@ defmodule Graphene do
   </cds-dropdown>
 
             <input type="hidden" id="form_combo-input" name="form[combo]" value="option-2">
-  <cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="Combo box" name="form[combo]" required-validity-message="Please fill out this field." size="md" type="" value="option-2" id="form_combo" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="form_combo-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-combo-box clear-selection-label="Clear selection" direction="bottom" label="Combo box" name="form[combo]" required-validity-message="Please fill out this field." size="md" type="" value="option-2" id="form_combo" data-form-detail="checked" data-form-event="cds-combo-box-selected" data-form-input="form_combo-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
               
@@ -23120,7 +23120,7 @@ defmodule Graphene do
   </cds-combo-box>
 
             <input type="hidden" id="form_multi-input" name="form[multi]" value="option-1">
-  <cds-multi-select clear-selection-description="Total items selected: " clear-selection-text="To clear selection, press Delete or Backspace." direction="bottom" label="Multi select" locale="en" name="form[multi]" required-validity-message="Please fill out this field." selection-feedback="top-after-reopen" size="md" type="" value="option-1" id="form_multi" data-form-detail="checked" data-form-event="cds-multi-select-selected" data-form-input="form_multi-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-multi-select clear-selection-description="Total items selected: " clear-selection-text="To clear selection, press Delete or Backspace." direction="bottom" label="Multi select" locale="en" name="form[multi]" required-validity-message="Please fill out this field." selection-feedback="top-after-reopen" size="md" type="" value="option-1" id="form_multi" data-form-detail="checked" data-form-event="cds-multi-select-selected" data-form-input="form_multi-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
               
@@ -23153,7 +23153,7 @@ defmodule Graphene do
           <div style="display: grid; gap: 0.75rem;">
             <h3>Date & time</h3>
             <input type="hidden" id="form_date-input" name="form[date]" value="2024-01-10">
-  <cds-date-picker allow-input close-on-select name="form[date]" value="2024-01-10" id="form_date" data-form-detail="checked" data-form-event="cds-date-picker-changed" data-form-input="form_date-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-date-picker allow-input close-on-select name="form[date]" value="2024-01-10" id="form_date" data-form-detail="checked" data-form-event="cds-date-picker-changed" data-form-input="form_date-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
               <cds-date-picker-input color-scheme="" kind="single" label-text="Start date" placeholder="mm/dd/yyyy" size="md">
     
@@ -23162,7 +23162,7 @@ defmodule Graphene do
   </cds-date-picker>
 
             <input type="hidden" id="form_time-input" name="form[time]" value="09:30">
-  <cds-time-picker invalid-text="Invalid time format." max-length="5" name="form[time]" pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?" placeholder="hh:mm" required-validity-message="Please fill out this field." size="md" type="text" value="09:30" warning-text="Warning message." id="form_time" data-form-detail="checked" data-form-event="change" data-form-input="form_time-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-time-picker invalid-text="Invalid time format." max-length="5" name="form[time]" pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?" placeholder="hh:mm" required-validity-message="Please fill out this field." size="md" type="text" value="09:30" warning-text="Warning message." id="form_time" data-form-detail="checked" data-form-event="change" data-form-input="form_time-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
               
     <div slot="label-text">
@@ -23177,7 +23177,7 @@ defmodule Graphene do
           <div style="display: grid; gap: 0.75rem;">
             <h3>File upload</h3>
             <input type="hidden" id="form_attachments-input" name="form[attachments]" value="">
-  <cds-file-uploader label-title="Upload evidence" id="form_attachments" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="form_attachments-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-file-uploader label-title="Upload evidence" id="form_attachments" data-form-detail="checked" data-form-event="cds-file-uploader-button-changed" data-form-input="form_attachments-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -23246,12 +23246,12 @@ defmodule Graphene do
   <cds-form-group legend-text="Notification settings" id="form-group-single-default">
     
     <input type="hidden" id="form-group-email-input" value="false">
-  <cds-checkbox id="checkbox" label-text="Email" id="form-group-email" data-form-detail="checked" data-form-event="cds-checkbox-changed" data-form-input="form-group-email-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-checkbox id="checkbox" label-text="Email" id="form-group-email" data-form-detail="checked" data-form-event="cds-checkbox-changed" data-form-input="form-group-email-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-checkbox>
 
   <input type="hidden" id="form-group-sms-input" value="false">
-  <cds-checkbox id="checkbox" label-text="SMS" id="form-group-sms" data-form-detail="checked" data-form-event="cds-checkbox-changed" data-form-input="form-group-sms-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-checkbox id="checkbox" label-text="SMS" id="form-group-sms" data-form-detail="checked" data-form-event="cds-checkbox-changed" data-form-input="form-group-sms-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-checkbox>
 
@@ -23272,12 +23272,12 @@ defmodule Graphene do
   <cds-form-group legend-text="Alerts" message message-text="Pick at least one" id="form-group-single-with-message">
     
     <input type="hidden" id="form-group-product-input" value="false">
-  <cds-checkbox id="checkbox" label-text="Product updates" id="form-group-product" data-form-detail="checked" data-form-event="cds-checkbox-changed" data-form-input="form-group-product-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-checkbox id="checkbox" label-text="Product updates" id="form-group-product" data-form-detail="checked" data-form-event="cds-checkbox-changed" data-form-input="form-group-product-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-checkbox>
 
   <input type="hidden" id="form-group-security-input" value="false">
-  <cds-checkbox id="checkbox" label-text="Security" id="form-group-security" data-form-detail="checked" data-form-event="cds-checkbox-changed" data-form-input="form-group-security-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-checkbox id="checkbox" label-text="Security" id="form-group-security" data-form-detail="checked" data-form-event="cds-checkbox-changed" data-form-input="form-group-security-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-checkbox>
 
@@ -23298,12 +23298,12 @@ defmodule Graphene do
   <cds-form-group invalid legend-text="Required" message message-text="Select one option" id="form-group-single-invalid">
     
     <input type="hidden" id="form-group-a-input" value="false">
-  <cds-checkbox id="checkbox" label-text="Option A" id="form-group-a" data-form-detail="checked" data-form-event="cds-checkbox-changed" data-form-input="form-group-a-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-checkbox id="checkbox" label-text="Option A" id="form-group-a" data-form-detail="checked" data-form-event="cds-checkbox-changed" data-form-input="form-group-a-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-checkbox>
 
   <input type="hidden" id="form-group-b-input" value="false">
-  <cds-checkbox id="checkbox" label-text="Option B" id="form-group-b" data-form-detail="checked" data-form-event="cds-checkbox-changed" data-form-input="form-group-b-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-checkbox id="checkbox" label-text="Option B" id="form-group-b" data-form-detail="checked" data-form-event="cds-checkbox-changed" data-form-input="form-group-b-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-checkbox>
 
@@ -24545,7 +24545,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="multi-select-default-input" name="multi-select-default" value="">
-  <cds-multi-select clear-selection-description="Total items selected: " clear-selection-text="To clear selection, press Delete or Backspace." direction="bottom" locale="en" name="multi-select-default" required-validity-message="Please fill out this field." selection-feedback="top-after-reopen" size="md" type="" id="basic-single-default" style="min-width: 20rem;" data-form-detail="checked" data-form-event="cds-multi-select-selected" data-form-input="multi-select-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-multi-select clear-selection-description="Total items selected: " clear-selection-text="To clear selection, press Delete or Backspace." direction="bottom" locale="en" name="multi-select-default" required-validity-message="Please fill out this field." selection-feedback="top-after-reopen" size="md" type="" id="basic-single-default" style="min-width: 20rem;" data-form-detail="checked" data-form-event="cds-multi-select-selected" data-form-input="multi-select-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="title-text">
@@ -24590,7 +24590,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="multi-select-inline-input" name="multi-select-inline" value="">
-  <cds-multi-select clear-selection-description="Total items selected: " clear-selection-text="To clear selection, press Delete or Backspace." direction="bottom" locale="en" name="multi-select-inline" required-validity-message="Please fill out this field." selection-feedback="top-after-reopen" size="md" type="inline" id="basic-single-inline" style="min-width: 20rem;" data-form-detail="checked" data-form-event="cds-multi-select-selected" data-form-input="multi-select-inline-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-multi-select clear-selection-description="Total items selected: " clear-selection-text="To clear selection, press Delete or Backspace." direction="bottom" locale="en" name="multi-select-inline" required-validity-message="Please fill out this field." selection-feedback="top-after-reopen" size="md" type="inline" id="basic-single-inline" style="min-width: 20rem;" data-form-detail="checked" data-form-event="cds-multi-select-selected" data-form-input="multi-select-inline-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="title-text">
@@ -24629,7 +24629,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="multi-select-disabled-input" name="multi-select-disabled" value="">
-  <cds-multi-select clear-selection-description="Total items selected: " clear-selection-text="To clear selection, press Delete or Backspace." direction="bottom" disabled locale="en" name="multi-select-disabled" required-validity-message="Please fill out this field." selection-feedback="top-after-reopen" size="md" type="" id="basic-single-disabled" style="min-width: 20rem;" data-form-detail="checked" data-form-event="cds-multi-select-selected" data-form-input="multi-select-disabled-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-multi-select clear-selection-description="Total items selected: " clear-selection-text="To clear selection, press Delete or Backspace." direction="bottom" disabled locale="en" name="multi-select-disabled" required-validity-message="Please fill out this field." selection-feedback="top-after-reopen" size="md" type="" id="basic-single-disabled" style="min-width: 20rem;" data-form-detail="checked" data-form-event="cds-multi-select-selected" data-form-input="multi-select-disabled-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="title-text">
@@ -24671,7 +24671,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="number-input-default-input" name="number-input-default" value="10">
-  <cds-number-input decrement-button-assistive-text="decrease number input" default-value="10" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infty" min="-Infty" name="number-input-default" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-default" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="number-input-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-number-input decrement-button-assistive-text="decrease number input" default-value="10" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infty" min="-Infty" name="number-input-default" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-default" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="number-input-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -24693,7 +24693,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="number-input-helper-input" name="number-input-helper" value="2">
-  <cds-number-input decrement-button-assistive-text="decrease number input" default-value="2" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infty" min="-Infty" name="number-input-helper" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-helper-text" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="number-input-helper-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-number-input decrement-button-assistive-text="decrease number input" default-value="2" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" max="Infty" min="-Infty" name="number-input-helper" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-helper-text" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="number-input-helper-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="helper-text">
@@ -24716,7 +24716,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="number-input-invalid-input" name="number-input-invalid" value="0">
-  <cds-number-input decrement-button-assistive-text="decrease number input" default-value="0" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" invalid invalid-text="Minimum is 1" max="Infty" min="-Infty" name="number-input-invalid" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-invalid" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="number-input-invalid-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-number-input decrement-button-assistive-text="decrease number input" default-value="0" hidePasswordLabel="Hide password" increment-button-assistive-text="increase number input" invalid invalid-text="Minimum is 1" max="Infty" min="-Infty" name="number-input-invalid" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" step="1" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-invalid" data-form-detail="checked" data-form-event="cds-number-input" data-form-input="number-input-invalid-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -25342,7 +25342,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="password-input-default-input" name="password-input-default" value="">
-  <cds-password-input hide-password-label="Hide password" name="password-input-default" required-validity-message="Please fill out this field." show-password-label="Show password" size="md" tooltip-alignment="center" tooltip-position="bottom" type="password" id="basic-single-default" data-form-detail="checked" data-form-event="input" data-form-input="password-input-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-password-input hide-password-label="Hide password" name="password-input-default" required-validity-message="Please fill out this field." show-password-label="Show password" size="md" tooltip-alignment="center" tooltip-position="bottom" type="password" id="basic-single-default" data-form-detail="checked" data-form-event="input" data-form-input="password-input-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -25364,7 +25364,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="password-input-helper-input" name="password-input-helper" value="">
-  <cds-password-input hide-password-label="Hide password" name="password-input-helper" required-validity-message="Please fill out this field." show-password-label="Show password" size="md" tooltip-alignment="center" tooltip-position="bottom" type="password" id="basic-single-helper-text" data-form-detail="checked" data-form-event="input" data-form-input="password-input-helper-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-password-input hide-password-label="Hide password" name="password-input-helper" required-validity-message="Please fill out this field." show-password-label="Show password" size="md" tooltip-alignment="center" tooltip-position="bottom" type="password" id="basic-single-helper-text" data-form-detail="checked" data-form-event="input" data-form-input="password-input-helper-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="helper-text">
@@ -25387,7 +25387,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="password-input-invalid-input" name="password-input-invalid" value="">
-  <cds-password-input hide-password-label="Hide password" invalid invalid-text="Required" name="password-input-invalid" required-validity-message="Please fill out this field." show-password-label="Show password" size="md" tooltip-alignment="center" tooltip-position="bottom" type="password" id="basic-single-invalid" data-form-detail="checked" data-form-event="input" data-form-input="password-input-invalid-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-password-input hide-password-label="Hide password" invalid invalid-text="Required" name="password-input-invalid" required-validity-message="Please fill out this field." show-password-label="Show password" size="md" tooltip-alignment="center" tooltip-position="bottom" type="password" id="basic-single-invalid" data-form-detail="checked" data-form-event="input" data-form-input="password-input-invalid-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -25825,7 +25825,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="choices-input" name="choices" value="">
-  <cds-radio-button-group label-position="right" legend-text="Choose one" name="choices" orientation="horizontal" id="basic-single-default" data-form-detail="checked" data-form-event="cds-radio-button-group-changed" data-form-input="choices-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-radio-button-group label-position="right" legend-text="Choose one" name="choices" orientation="horizontal" id="basic-single-default" data-form-detail="checked" data-form-event="cds-radio-button-group-changed" data-form-input="choices-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
       <cds-radio-button label-position="right" label-text="Option A" orientation="horizontal" value="a">
@@ -25853,7 +25853,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="choices-disabled-input" name="choices-disabled" value="">
-  <cds-radio-button-group disabled label-position="right" legend-text="Disabled" name="choices-disabled" orientation="horizontal" id="basic-single-disabled" data-form-detail="checked" data-form-event="cds-radio-button-group-changed" data-form-input="choices-disabled-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-radio-button-group disabled label-position="right" legend-text="Disabled" name="choices-disabled" orientation="horizontal" id="basic-single-disabled" data-form-detail="checked" data-form-event="cds-radio-button-group-changed" data-form-input="choices-disabled-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
       <cds-radio-button label-position="right" label-text="Option A" orientation="horizontal" value="a">
@@ -25881,7 +25881,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="choices-help-input" name="choices-help" value="">
-  <cds-radio-button-group helper-text="Pick a single option" label-position="right" legend-text="Select one" name="choices-help" orientation="horizontal" id="basic-single-with-helper" data-form-detail="checked" data-form-event="cds-radio-button-group-changed" data-form-input="choices-help-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-radio-button-group helper-text="Pick a single option" label-position="right" legend-text="Select one" name="choices-help" orientation="horizontal" id="basic-single-with-helper" data-form-detail="checked" data-form-event="cds-radio-button-group-changed" data-form-input="choices-help-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
       <cds-radio-button label-position="right" label-text="Alpha" orientation="horizontal" value="a">
@@ -25911,7 +25911,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="search-default-input" name="search-default" value="">
-  <cds-search autocomplete="off" label-text="Search" name="search-default" placeholder="Search" size="md" id="basic-single-default" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="search-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-search autocomplete="off" label-text="Search" name="search-default" placeholder="Search" size="md" id="basic-single-default" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="search-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-search>
   ```
@@ -25924,7 +25924,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="search-expandable-input" name="search-expandable" value="">
-  <cds-search autocomplete="off" expandable expanded label-text="Search" name="search-expandable" placeholder="Search" size="md" id="basic-single-expandable" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="search-expandable-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-search autocomplete="off" expandable expanded label-text="Search" name="search-expandable" placeholder="Search" size="md" id="basic-single-expandable" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="search-expandable-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-search>
   ```
@@ -25939,17 +25939,17 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="search-sm-input" name="search-sm" value="">
-  <cds-search autocomplete="off" label-text="Size sm" name="search-sm" placeholder="Search" size="sm" id="basic-sizes-sm" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="search-sm-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-search autocomplete="off" label-text="Size sm" name="search-sm" placeholder="Search" size="sm" id="basic-sizes-sm" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="search-sm-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-search>
 
   <input type="hidden" id="search-md-input" name="search-md" value="">
-  <cds-search autocomplete="off" label-text="Size md" name="search-md" placeholder="Search" size="md" id="basic-sizes-md" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="search-md-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-search autocomplete="off" label-text="Size md" name="search-md" placeholder="Search" size="md" id="basic-sizes-md" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="search-md-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-search>
 
   <input type="hidden" id="search-lg-input" name="search-lg" value="">
-  <cds-search autocomplete="off" label-text="Size lg" name="search-lg" placeholder="Search" size="lg" id="basic-sizes-lg" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="search-lg-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-search autocomplete="off" label-text="Size lg" name="search-lg" placeholder="Search" size="lg" id="basic-sizes-lg" data-form-detail="checked" data-form-event="cds-search-input" data-form-input="search-lg-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
   </cds-search>
   ```
@@ -25973,7 +25973,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-default-input" name="select-default" value="">
-  <cds-select name="select-default" required-validity-message="Please fill out this field." size="md" id="basic-single-default" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="basic-single-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-select name="select-default" required-validity-message="Please fill out this field." size="md" id="basic-single-default" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="basic-single-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="label-text">
@@ -26030,7 +26030,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-inline-input" name="select-inline" value="">
-  <cds-select inline name="select-inline" required-validity-message="Please fill out this field." size="md" id="basic-single-inline" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="basic-single-inline-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-select inline name="select-inline" required-validity-message="Please fill out this field." size="md" id="basic-single-inline" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="basic-single-inline-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="label-text">
@@ -26080,7 +26080,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-invalid-input" name="select-invalid" value="">
-  <cds-select invalid invalid-text="Pick a value" name="select-invalid" required-validity-message="Please fill out this field." size="md" id="basic-single-invalid" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="basic-single-invalid-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-select invalid invalid-text="Pick a value" name="select-invalid" required-validity-message="Please fill out this field." size="md" id="basic-single-invalid" data-form-detail="checked" data-form-event="cds-select-selected" data-form-input="basic-single-invalid-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="label-text">
@@ -26290,7 +26290,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="slider-default-input" name="slider-default" value="50">
-  <cds-slider max="100" min="0" name="slider-default" step-multiplier="4" value="50" id="basic-single-default" data-form-detail="checked" data-form-event="cds-slider-changed" data-form-input="slider-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-slider max="100" min="0" name="slider-default" step-multiplier="4" value="50" id="basic-single-default" data-form-detail="checked" data-form-event="cds-slider-changed" data-form-input="slider-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="label-text">
@@ -26312,7 +26312,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="slider-stepped-input" name="slider-stepped" value="3">
-  <cds-slider max="10" min="0" name="slider-stepped" step="1" step-multiplier="4" value="3" id="basic-single-stepped" data-form-detail="checked" data-form-event="cds-slider-changed" data-form-input="slider-stepped-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-slider max="10" min="0" name="slider-stepped" step="1" step-multiplier="4" value="3" id="basic-single-stepped" data-form-detail="checked" data-form-event="cds-slider-changed" data-form-input="slider-stepped-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="label-text">
@@ -26334,7 +26334,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="slider-disabled-input" name="slider-disabled" value="40">
-  <cds-slider disabled max="100" min="0" name="slider-disabled" step-multiplier="4" value="40" id="basic-single-disabled" data-form-detail="checked" data-form-event="cds-slider-changed" data-form-input="slider-disabled-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-slider disabled max="100" min="0" name="slider-disabled" step-multiplier="4" value="40" id="basic-single-disabled" data-form-detail="checked" data-form-event="cds-slider-changed" data-form-input="slider-disabled-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="label-text">
@@ -26979,7 +26979,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="text-input-default-input" name="text-input-default" value="Ada">
-  <cds-text-input hidePasswordLabel="Hide password" name="text-input-default" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Ada" id="basic-single-default" data-form-detail="checked" data-form-event="input" data-form-input="text-input-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-text-input hidePasswordLabel="Hide password" name="text-input-default" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Ada" id="basic-single-default" data-form-detail="checked" data-form-event="input" data-form-input="text-input-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -27001,7 +27001,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="text-input-helper-input" name="text-input-helper" value="Lovelace">
-  <cds-text-input hidePasswordLabel="Hide password" name="text-input-helper" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Lovelace" id="basic-single-helper-text" data-form-detail="checked" data-form-event="input" data-form-input="text-input-helper-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-text-input hidePasswordLabel="Hide password" name="text-input-helper" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="Lovelace" id="basic-single-helper-text" data-form-detail="checked" data-form-event="input" data-form-input="text-input-helper-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="helper-text">
@@ -27024,7 +27024,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="text-input-invalid-input" name="text-input-invalid" value="">
-  <cds-text-input hidePasswordLabel="Hide password" invalid invalid-text="Required" name="text-input-invalid" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="" id="basic-single-invalid" data-form-detail="checked" data-form-event="input" data-form-input="text-input-invalid-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-text-input hidePasswordLabel="Hide password" invalid invalid-text="Required" name="text-input-invalid" required-validity-message="Please fill out this field." showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" value="" id="basic-single-invalid" data-form-detail="checked" data-form-event="input" data-form-input="text-input-invalid-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -27050,7 +27050,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-default-input" name="textarea-default" value="">
-  <cds-textarea hidePasswordLabel="Hide password" name="textarea-default" required-validity-message="Please fill out this field." rows="3" showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-default" data-form-detail="checked" data-form-event="input" data-form-input="basic-single-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-textarea hidePasswordLabel="Hide password" name="textarea-default" required-validity-message="Please fill out this field." rows="3" showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-default" data-form-detail="checked" data-form-event="input" data-form-input="basic-single-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -27072,7 +27072,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-helper-text-input" name="textarea-helper" value="">
-  <cds-textarea hidePasswordLabel="Hide password" name="textarea-helper" required-validity-message="Please fill out this field." rows="4" showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-helper-text" data-form-detail="checked" data-form-event="input" data-form-input="basic-single-helper-text-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-textarea hidePasswordLabel="Hide password" name="textarea-helper" required-validity-message="Please fill out this field." rows="4" showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-helper-text" data-form-detail="checked" data-form-event="input" data-form-input="basic-single-helper-text-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     <div slot="helper-text">
@@ -27101,7 +27101,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-invalid-input" name="textarea-invalid" value="">
-  <cds-textarea hidePasswordLabel="Hide password" invalid invalid-text="Required" name="textarea-invalid" required-validity-message="Please fill out this field." rows="3" showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-invalid" data-form-detail="checked" data-form-event="input" data-form-input="basic-single-invalid-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-textarea hidePasswordLabel="Hide password" invalid invalid-text="Required" name="textarea-invalid" required-validity-message="Please fill out this field." rows="3" showPasswordLabel="Show password" size="md" tooltipAlignment="center" tooltipDirection="bottom" type="text" id="basic-single-invalid" data-form-detail="checked" data-form-event="input" data-form-input="basic-single-invalid-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -27183,7 +27183,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="time-picker-default-input" name="time-picker-default" value="12:00">
-  <cds-time-picker invalid-text="Invalid time format." max-length="5" name="time-picker-default" pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?" placeholder="hh:mm" required-validity-message="Please fill out this field." size="md" type="text" value="12:00" warning-text="Warning message." id="basic-single-default" data-form-detail="checked" data-form-event="change" data-form-input="time-picker-default-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-time-picker invalid-text="Invalid time format." max-length="5" name="time-picker-default" pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?" placeholder="hh:mm" required-validity-message="Please fill out this field." size="md" type="text" value="12:00" warning-text="Warning message." id="basic-single-default" data-form-detail="checked" data-form-event="change" data-form-input="time-picker-default-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     <div slot="label-text">
       Start time
@@ -27225,7 +27225,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="time-picker-timezone-input" name="time-picker-timezone" value="09:30">
-  <cds-time-picker invalid-text="Invalid time format." max-length="5" name="time-picker-timezone" pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?" placeholder="hh:mm" required-validity-message="Please fill out this field." size="md" type="text" value="09:30" warning-text="Warning message." id="basic-single-with-timezone" data-form-detail="checked" data-form-event="change" data-form-input="time-picker-timezone-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-time-picker invalid-text="Invalid time format." max-length="5" name="time-picker-timezone" pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?" placeholder="hh:mm" required-validity-message="Please fill out this field." size="md" type="text" value="09:30" warning-text="Warning message." id="basic-single-with-timezone" data-form-detail="checked" data-form-event="change" data-form-input="time-picker-timezone-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     <div slot="label-text">
       Meeting time
@@ -27266,7 +27266,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="time-picker-invalid-input" name="time-picker-invalid" value="">
-  <cds-time-picker invalid invalid-text="Enter a time" max-length="5" name="time-picker-invalid" pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?" placeholder="hh:mm" required-validity-message="Please fill out this field." size="md" type="text" value="" warning-text="Warning message." id="basic-single-invalid" data-form-detail="checked" data-form-event="change" data-form-input="time-picker-invalid-input" data-form-mode="value" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-time-picker invalid invalid-text="Enter a time" max-length="5" name="time-picker-invalid" pattern="(1[012]|[1-9]):[0-5][0-9](\\s)?" placeholder="hh:mm" required-validity-message="Please fill out this field." size="md" type="text" value="" warning-text="Warning message." id="basic-single-invalid" data-form-detail="checked" data-form-event="change" data-form-input="time-picker-invalid-input" data-form-mode="value" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     <div slot="label-text">
       Start time
@@ -27376,7 +27376,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-on-input" name="toggle-on" value="true">
-  <cds-toggle checked id="checkbox" label-a="On" label-b="Off" name="toggle-on" size="" toggled id="basic-single-on" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="basic-single-on-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-toggle checked id="checkbox" label-a="On" label-b="Off" name="toggle-on" size="" toggled id="basic-single-on" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="basic-single-on-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -27397,7 +27397,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-off-input" name="toggle-off" value="false">
-  <cds-toggle id="checkbox" label-a="On" label-b="Off" name="toggle-off" size="" id="basic-single-off" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="basic-single-off-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-toggle id="checkbox" label-a="On" label-b="Off" name="toggle-off" size="" id="basic-single-off" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="basic-single-off-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     
@@ -27424,7 +27424,7 @@ defmodule Graphene do
 
   ```html
   <input type="hidden" id="basic-single-disabled-input" name="toggle-disabled" value="false">
-  <cds-toggle disabled id="checkbox" label-a="On" label-b="Off" name="toggle-disabled" size="" id="basic-single-disabled" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="basic-single-disabled-input" data-form-mode="boolean" phx-hook="Graphene.FormComponents.GrapheneFormBridge">
+  <cds-toggle disabled id="checkbox" label-a="On" label-b="Off" name="toggle-disabled" size="" id="basic-single-disabled" data-form-detail="toggled" data-form-event="cds-toggle-changed" data-form-input="basic-single-disabled-input" data-form-mode="boolean" phx-hook="Graphene.Internal.FormComponents.GrapheneFormBridge">
     
     
     

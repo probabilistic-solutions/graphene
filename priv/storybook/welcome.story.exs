@@ -27,6 +27,11 @@ defmodule Storybook.MyPage do
       </p>
 
       <p>
+        Explore the live demo console here:
+        <a href="/demo">Nimbus Cloud demo</a>
+      </p>
+
+      <p>
         Here are a few docs you might be interested in:
       </p>
 

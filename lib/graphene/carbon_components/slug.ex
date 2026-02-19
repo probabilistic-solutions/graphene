@@ -1,0 +1,158 @@
+defmodule Graphene.CarbonComponents.Slug do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-slug>` from `./src/components/slug/slug.ts`
+
+  Basic slug.
+
+
+  """
+  attr :ai_text, :string, doc: "Specify the correct translation of the AI text", default: "AI"
+
+  attr :ai_text_label, :string,
+    doc: "Specify additional text to be rendered next to the AI label in the inline variant"
+
+  attr :alignment, :string,
+    doc: "How the tooltip is aligned to the trigger button.",
+    values: [
+      "top",
+      "top-start",
+      "top-end",
+      "bottom",
+      "bottom-start",
+      "bottom-end",
+      "left",
+      "left-start",
+      "left-end",
+      "right",
+      "right-start",
+      "right-end"
+    ],
+    default: "top"
+
+  attr :alignment_axis_offset, :string,
+    doc:
+      "**Experimental:** Provide an offset value for alignment axis. Only takes effect when `autoalign` is enabled.",
+    default: "0"
+
+  attr :autoalign, :boolean, doc: "Specify whether a auto align functionality should be applied"
+  attr :button_label, :string, doc: "The label for the toggle button", default: "Show information"
+  attr :default_open, :boolean, doc: "Set whether toggletip is open by default."
+
+  attr :kind, :string,
+    doc: "Specify the type of Slug, from the following list of types: (default, inline)",
+    values: ["", "inline"],
+    default: ""
+
+  attr :open, :boolean, doc: "Set whether toggletip is open"
+  attr :previous_value, :any
+  attr :revert_active, :boolean, doc: "Specify whether the revert button should be visible"
+
+  attr :revert_label, :string,
+    doc: "Specify whether the revert button should be visible",
+    default: "Revert to AI input"
+
+  attr :size, :string,
+    doc: "Slug size should be mini, 2xs, xs, sm, md, lg, xl.",
+    values: ["mini", "2xs", "xs", "sm", "md", "lg", "xl"],
+    default: "xs"
+
+  attr :slot, :string, default: "slug"
+
+  attr :slug_label, :string,
+    doc: "Specify the text that will be provided to the aria-label of the `Slug` button",
+    default: "Show information"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def slug(assigns) do
+    CoreComponents.slug(assigns)
+  end
+
+  @doc """
+  Component `<cds-slug-action-button>` from `./src/components/slug/slug-action-button.ts`
+
+  Slug action button.
+
+
+  """
+  attr :autofocus, :boolean,
+    doc: "`true` if the button should have input focus when the page loads."
+
+  attr :batch_action, :boolean,
+    doc: "`true` if the button is being used within a data table batch action toolbar"
+
+  attr :button_class_name, :any, doc: "Specify an optional className to be added to your Button"
+
+  attr :danger_description, :any,
+    doc: "Specify the message read by screen readers for the danger button variant"
+
+  attr :disabled, :boolean, doc: "`true` if the button should be disabled."
+  attr :download, :string, doc: "The default file name, used if this button is rendered as `<a>`."
+  attr :has_main_content, :boolean, doc: "`true` if there is a non-icon content."
+  attr :href, :string, doc: "Link `href`. If present, this button is rendered as `<a>`."
+
+  attr :hreflang, :string,
+    doc: "The language of what `href` points to, if this button is rendered as `<a>`."
+
+  attr :is_expressive, :boolean, doc: "`true` if expressive theme enabled."
+
+  attr :is_selected, :boolean,
+    doc: "Specify whether the Button is currently selected.\nOnly applies to the Ghost variant."
+
+  attr :kind, :string,
+    doc: "Button kind.",
+    values: [
+      "primary",
+      "secondary",
+      "tertiary",
+      "danger",
+      "danger--tertiary",
+      "danger--ghost",
+      "ghost"
+    ],
+    default: "primary"
+
+  attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
+  attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
+  attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
+  attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
+  attr :size, :string, doc: "Button size.", default: "lg"
+  attr :slot, :string, doc: "The shadow slot this slug-action should be in.", default: "actions"
+  attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
+  attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
+
+  attr :tooltip_alignment, :string,
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end.",
+    values: ["left", "right", ""],
+    default: ""
+
+  attr :tooltip_position, :string,
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left.",
+    values: ["top", "bottom", "right", "left"],
+    default: "top"
+
+  attr :tooltip_text, :string,
+    doc:
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
+
+  attr :type, :string,
+    doc: "Button type.",
+    values: ["button", "reset", "submit"],
+    default: "button"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def slug_action_button(assigns) do
+    CoreComponents.slug_action_button(assigns)
+  end
+end

@@ -1,0 +1,139 @@
+defmodule Graphene.CarbonComponents.ActionableNotification do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-actionable-notification>` from `./src/components/notification/actionable-notification.ts`
+
+  Actionable notification.
+
+  ## Events
+
+  * `cds-notification-beingclosed` - The custom event fired before this notification is being closed upon a user gesture.
+  Cancellation of this event stops the user-initiated action of closing this notification.
+  * `cds-notification-closed` - The custom event fired after this notification is closed upon a user gesture.
+
+  """
+  attr :action_button_label, :string,
+    doc:
+      "Pass in the action button label that will be rendered within the ActionableNotification."
+
+  attr :caption, :string, doc: "The caption."
+
+  attr :close_on_escape, :boolean,
+    doc: "Specify if pressing the escape key should close notifications",
+    default: true
+
+  attr :has_focus, :boolean,
+    doc:
+      "Specify if focus should be moved to the component when the notification contains actions",
+    default: true
+
+  attr :hide_close_button, :boolean, doc: "`true` to hide the close button."
+  attr :inline, :boolean, doc: "Inline notification type."
+
+  attr :kind, :string,
+    doc: "Notification kind.",
+    values: ["success", "info", "info-square", "warning", "warning-alt", "error"],
+    default: "success"
+
+  attr :low_contrast, :boolean, doc: "Low contrast mode"
+  attr :open, :boolean, doc: "`true` if the notification should be open.", default: true
+
+  attr :status_icon_description, :string,
+    doc: "Provide a description for \"status\" icon that can be read by screen readers"
+
+  attr :timeout, :any, doc: "Specify an optional duration the notification should be closed in"
+  attr :rest, :global
+  slot :subtitle, doc: "The subtitle."
+  slot :title, doc: "The title."
+  slot :action, doc: "Action content for the notification."
+  slot :inner_block
+
+  def actionable_notification(assigns) do
+    CoreComponents.actionable_notification(assigns)
+  end
+
+  @doc """
+  Component `<cds-actionable-notification-button>` from `./src/components/notification/actionable-notification-button.ts`
+
+  Actionable notification action button.
+
+
+  """
+  attr :autofocus, :boolean,
+    doc: "`true` if the button should have input focus when the page loads."
+
+  attr :batch_action, :boolean,
+    doc: "`true` if the button is being used within a data table batch action toolbar"
+
+  attr :button_class_name, :any, doc: "Specify an optional className to be added to your Button"
+
+  attr :danger_description, :any,
+    doc: "Specify the message read by screen readers for the danger button variant"
+
+  attr :disabled, :boolean, doc: "`true` if the button should be disabled."
+  attr :download, :string, doc: "The default file name, used if this button is rendered as `<a>`."
+  attr :has_main_content, :boolean, doc: "`true` if there is a non-icon content."
+  attr :href, :string, doc: "Link `href`. If present, this button is rendered as `<a>`."
+
+  attr :hreflang, :string,
+    doc: "The language of what `href` points to, if this button is rendered as `<a>`."
+
+  attr :is_expressive, :boolean, doc: "`true` if expressive theme enabled."
+
+  attr :is_selected, :boolean,
+    doc: "Specify whether the Button is currently selected.\nOnly applies to the Ghost variant."
+
+  attr :kind, :string,
+    doc: "Button kind.",
+    values: [
+      "primary",
+      "secondary",
+      "tertiary",
+      "danger",
+      "danger--tertiary",
+      "danger--ghost",
+      "ghost"
+    ],
+    default: "primary"
+
+  attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
+  attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
+  attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
+  attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
+  attr :size, :string, doc: "Button size.", default: "lg"
+  attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
+  attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
+
+  attr :tooltip_alignment, :string,
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end.",
+    values: ["left", "right", ""],
+    default: ""
+
+  attr :tooltip_position, :string,
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left.",
+    values: ["top", "bottom", "right", "left"],
+    default: "top"
+
+  attr :tooltip_text, :string,
+    doc:
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
+
+  attr :type, :string,
+    doc: "Button type.",
+    values: ["button", "reset", "submit"],
+    default: "button"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def actionable_notification_button(assigns) do
+    CoreComponents.actionable_notification_button(assigns)
+  end
+end

@@ -11,6 +11,14 @@ if Mix.env() == :dev do
       Path.join(["lib", "graphene", "carbon_components.ex"])
     end
 
+    defp template(:group_src) do
+      Path.join(["assets", "eex", "graphene_carbon_components_group.ex"])
+    end
+
+    defp template(:group_dst, group) do
+      Path.join(["lib", "graphene", "carbon_components", "#{group}.ex"])
+    end
+
     defp custom_template(:src) do
       Path.join(["assets", "eex", "graphene_carbon_components_custom.ex"])
     end
@@ -19,9 +27,12 @@ if Mix.env() == :dev do
       "Graphene.CarbonComponents"
     end
 
-    defp components do
+    defp components_list do
       Graphene.CodeGen.Metadata.components()
-      |> Map.new(fn component ->
+    end
+
+    defp components_map(components) do
+      Map.new(components, fn component ->
         {String.to_atom(component.componentname), component}
       end)
     end
@@ -35,10 +46,14 @@ if Mix.env() == :dev do
     end
 
     defp form_delegate_names do
-      if Code.ensure_loaded?(Graphene.FormComponents) do
-        core_names = components() |> Map.keys() |> MapSet.new()
+      if Code.ensure_loaded?(Graphene.Internal.FormComponents) do
+        core_names =
+          components_list()
+          |> components_map()
+          |> Map.keys()
+          |> MapSet.new()
 
-        Graphene.FormComponents.__info__(:functions)
+        Graphene.Internal.FormComponents.__info__(:functions)
         |> Enum.filter(fn {_name, arity} -> arity == 1 end)
         |> Enum.map(&elem(&1, 0))
         |> MapSet.new()
@@ -49,8 +64,8 @@ if Mix.env() == :dev do
     end
 
     defp docs_map(components) do
-      for {name, component} <- components, into: %{} do
-        {name, component.docs}
+      for component <- components, into: %{} do
+        {String.to_atom(component.componentname), component.docs}
       end
     end
 
@@ -192,7 +207,7 @@ if Mix.env() == :dev do
         if is_binary(doc) do
           "  @doc \"\"\"\n" <> indent_doc(doc) <> "\n  \"\"\"\n"
         else
-          "  @doc \"See Graphene.CoreComponents.#{name}/1.\"\n"
+          "  @doc \"See base component.\"\n"
         end
 
       attrs =
@@ -227,7 +242,7 @@ if Mix.env() == :dev do
         if is_binary(doc) do
           "  @doc \"\"\"\n" <> indent_doc(doc) <> "\n  \"\"\"\n"
         else
-          "  @doc \"See Graphene.CoreComponents.#{name}/1.\"\n"
+          "  @doc \"See base component.\"\n"
         end
 
       delegate = Map.get(recipe, :delegate, :core)
@@ -304,7 +319,8 @@ if Mix.env() == :dev do
     defp inner_block_slot(slots, extra_slots \\ "") do
       has_inner_block =
         Enum.any?(slots, fn slot ->
-          slot.atomname == ":inner_block" or slot.htmlname == "inner-block" or slot.name == "inner_block"
+          slot.atomname == ":inner_block" or slot.htmlname == "inner-block" or
+            slot.name == "inner_block"
         end) or String.contains?(extra_slots, "slot :inner_block")
 
       if has_inner_block do
@@ -399,17 +415,52 @@ if Mix.env() == :dev do
       if String.ends_with?(content, "\n"), do: content, else: content <> "\n"
     end
 
-    defp render_wrappers do
-      components = components()
-      docs = docs_map(components)
-      recipes = carbon_component_recipes() |> Map.new(&{&1.name, &1})
-      overrides = carbon_component_overrides()
-      form_delegates = form_delegate_names()
+    defp custom_component_exports do
+      [data_table: 1, file_uploader: 1, ui_shell: 1]
+    end
 
-      components
-      |> Map.keys()
+    defp prefix_counts(names) do
+      Enum.reduce(names, %{}, fn name, acc ->
+        tokens = Atom.to_string(name) |> String.split("_")
+
+        tokens
+        |> Enum.with_index(1)
+        |> Enum.reduce(acc, fn {_token, idx}, acc ->
+          prefix = tokens |> Enum.take(idx) |> Enum.join("_")
+          Map.update(acc, prefix, 1, &(&1 + 1))
+        end)
+      end)
+    end
+
+    defp group_prefix(name, counts) do
+      tokens = Atom.to_string(name) |> String.split("_")
+
+      prefixes =
+        tokens
+        |> Enum.with_index(1)
+        |> Enum.map(fn {_token, idx} -> tokens |> Enum.take(idx) |> Enum.join("_") end)
+
+      case Enum.filter(prefixes, fn prefix -> Map.get(counts, prefix, 0) >= 2 end) do
+        [] -> Atom.to_string(name)
+        matches -> List.last(matches)
+      end
+    end
+
+    defp group_prefix_map(names) do
+      counts = prefix_counts(names)
+
+      Enum.reduce(names, %{}, fn name, acc ->
+        Map.put(acc, name, group_prefix(name, counts))
+      end)
+    end
+
+    defp group_module_name(prefix) do
+      "Graphene.CarbonComponents." <> Macro.camelize(prefix)
+    end
+
+    defp render_wrappers(names, components, docs, recipes, form_delegates) do
+      names
       |> Enum.sort()
-      |> Enum.reject(&MapSet.member?(overrides, &1))
       |> Enum.map(fn name ->
         component = Map.fetch!(components, name)
         doc = Map.get(docs, name)
@@ -419,21 +470,137 @@ if Mix.env() == :dev do
       |> Enum.join("\n")
     end
 
+    defp render_delegates(names, group_map) do
+      names
+      |> Enum.sort()
+      |> Enum.map(fn name ->
+        module = group_module_name(Map.fetch!(group_map, name))
+
+        "  @doc false\n" <>
+          "  defdelegate #{name}(assigns), to: #{module}\n"
+      end)
+      |> Enum.join("\n")
+    end
+
+    defp render_imports(groups) do
+      groups
+      |> Enum.sort()
+      |> Enum.map(fn group ->
+        "      import #{group_module_name(group)}"
+      end)
+      |> Enum.join("\n")
+    end
+
+    defp render_aliases(wrappers) do
+      aliases =
+        []
+        |> maybe_add_alias(String.contains?(wrappers, "CoreComponents."), "  alias Graphene.Internal.CoreComponents")
+        |> maybe_add_alias(
+          String.contains?(wrappers, "FormComponents."),
+          "  alias Graphene.Internal.FormComponents"
+        )
+
+      Enum.join(aliases, "\n")
+    end
+
+    defp maybe_add_alias(list, true, alias_line), do: list ++ [alias_line]
+    defp maybe_add_alias(list, false, _alias_line), do: list
+
+    defp cleanup_generated_groups!(group_paths) do
+      manual =
+        MapSet.new([
+          Path.join(["lib", "graphene", "carbon_components", "data_table_component.ex"]),
+          Path.join(["lib", "graphene", "carbon_components", "helpers.ex"])
+        ])
+
+      keep = MapSet.union(MapSet.new(group_paths), manual)
+
+      Path.join(["lib", "graphene", "carbon_components", "*.ex"])
+      |> Path.wildcard()
+      |> Enum.each(fn path ->
+        if not MapSet.member?(keep, path) do
+          File.rm!(path)
+        end
+      end)
+    end
+
     @impl true
     def run(_args \\ []) do
       Logger.debug("Running #{__MODULE__}")
 
-      wrappers = render_wrappers()
-      custom_components = File.read!(custom_template(:src))
+      components = components_list()
+      components_map = components_map(components)
+      docs = docs_map(components)
+      recipes = carbon_component_recipes() |> Map.new(&{&1.name, &1})
+      overrides = carbon_component_overrides()
+      form_delegates = form_delegate_names()
 
-      assigns = [module: module_name(), wrappers: wrappers, custom_components: custom_components]
+      names =
+        components
+        |> Enum.map(&String.to_atom(&1.componentname))
+
+      group_map = group_prefix_map(names)
+
+      render_names =
+        names
+        |> Enum.reject(&MapSet.member?(overrides, &1))
+
+      grouped =
+        render_names
+        |> Enum.group_by(&Map.fetch!(group_map, &1))
+
+      group_names = Map.keys(grouped)
+
+      delegates = render_delegates(render_names, group_map)
+      imports = render_imports(group_names)
+      custom_imports = "      import Graphene.CarbonComponents, only: #{inspect(custom_component_exports())}"
+      custom_components = File.read!(custom_template(:src))
 
       tmp_dir =
         Path.join(System.tmp_dir!(), "graphene-carbon-#{System.unique_integer([:positive])}")
 
       File.mkdir_p!(tmp_dir)
-      tmp_out = Path.join(tmp_dir, "carbon_components.ex")
 
+      group_paths =
+        group_names
+        |> Enum.map(&template(:group_dst, &1))
+
+      cleanup_generated_groups!(group_paths)
+
+      for {group, group_components} <- grouped do
+        wrappers =
+          render_wrappers(group_components, components_map, docs, recipes, form_delegates)
+
+        aliases = render_aliases(wrappers)
+
+        assigns = [
+          module: group_module_name(group),
+          wrappers: wrappers,
+          aliases: aliases
+        ]
+
+        tmp_out = Path.join(tmp_dir, "#{group}.ex")
+        File.write!(tmp_out, render_template(template(:group_src), assigns))
+
+        Mix.Task.reenable("format")
+        Mix.Task.run("format", [tmp_out])
+
+        compile_generated!(tmp_out, group_module_name(group))
+
+        dst = template(:group_dst, group)
+        File.mkdir_p!(Path.dirname(dst))
+        File.cp!(tmp_out, dst)
+      end
+
+      assigns = [
+        module: module_name(),
+        delegates: delegates,
+        custom_imports: custom_imports,
+        imports: imports,
+        custom_components: custom_components
+      ]
+
+      tmp_out = Path.join(tmp_dir, "carbon_components.ex")
       File.write!(tmp_out, render_template(template(:src), assigns))
 
       Mix.Task.reenable("format")
@@ -444,7 +611,7 @@ if Mix.env() == :dev do
       File.mkdir_p!(Path.dirname(template(:dst)))
       File.cp!(tmp_out, template(:dst))
 
-      Logger.debug("Added #{map_size(components())} components")
+      Logger.debug("Added #{length(components)} components")
     end
   end
 end

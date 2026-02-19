@@ -1,0 +1,114 @@
+defmodule Graphene.CarbonComponents.Slider do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+  alias Graphene.Internal.FormComponents
+
+  @doc """
+  Component `<cds-slider>` from `./src/components/slider/slider.ts`
+
+  Slider.
+
+  ## Events
+
+  * `cds-slider-input-changed` - The name of the custom event fired after the value is changed in `<cds-slider-input>` by user gesture.
+  * `cds-slider-changed` - The custom event fired after the value is changed by user gesture.
+
+  """
+  attr :disabled, :boolean, doc: "`true` if the check box should be disabled."
+
+  attr :hide_label, :boolean,
+    doc: "Specify whether you want the underlying label to be visually hidden"
+
+  attr :hide_text_input, :boolean, doc: "Checks whether the input field is hidden or not"
+  attr :invalid, :boolean, doc: "true to specify if the control is invalid."
+  attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
+  attr :is_valid, :any, doc: "is slide input valid"
+  attr :max, :string, doc: "The maximum value."
+  attr :max_label, :string, doc: "The label associated with the maximum value."
+  attr :min, :string, doc: "The minimum value."
+  attr :min_label, :string, doc: "The label associated with the minimum value."
+  attr :name, :string, doc: "The form name."
+  attr :readonly, :boolean, doc: "Whether the slider should be read-only"
+  attr :required, :boolean, doc: "true to specify if the control is required."
+  attr :step, :string, doc: "The snapping step of the value."
+
+  attr :step_multiplier, :string,
+    doc:
+      "A value determining how much the value should increase/decrease by Shift+arrow keys,\nwhich will be `(max - min) / stepMultiplier`.",
+    default: "4"
+
+  attr :value, :any, doc: "The value."
+  attr :value_upper, :any, doc: "The upper bound when there are two handles.."
+  attr :warn, :boolean, doc: "true to specify if the control should display warn icon and text."
+
+  attr :warn_text, :string,
+    doc: "Provide the text that is displayed when the control is in warning state"
+
+  attr :controlled, :boolean, doc: "Whether the slider is controlled."
+  attr :format_label, :any, doc: "Formatter for the slider label."
+  attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
+  attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
+
+  attr :form_event, :string,
+    default: nil,
+    doc: "override the custom event used to sync form values"
+
+  attr :rest, :global
+  slot :label_text, doc: "The label text."
+  slot :max_text, doc: "The text for maximum value."
+  slot :min_text, doc: "The text for minimum value."
+  slot :lower_input, doc: "Lower input content."
+  slot :inner_block
+
+  def slider(assigns) do
+    FormComponents.slider(assigns)
+  end
+
+  @doc """
+  Component `<cds-slider-input>` from `./src/components/slider/slider-input.ts`
+
+  The `<input>` box for slider.
+
+  ## Events
+
+  * `cds-slider-input-changed` - The custom event fired after the value is changed by user gesture.
+
+  """
+  attr :disabled, :boolean, doc: "`true` if the input should be disabled."
+
+  attr :hide_text_input, :boolean,
+    doc: "true to specify if the control should display warn icon and text."
+
+  attr :invalid, :boolean, doc: "true to specify if the control is invalid."
+  attr :max, :string, doc: "The maximum value."
+  attr :min, :string, doc: "The minimum value."
+  attr :readonly, :boolean, doc: "true` if the input should be readonly."
+  attr :step, :string, doc: "The snapping step of the value."
+  attr :type, :string, doc: "The type of the `<input>`.", default: "number"
+  attr :value, :any, doc: "The value."
+  attr :warn, :boolean, doc: "true to specify if the control should display warn icon and text."
+  attr :required, :boolean, doc: "Whether the input is required."
+  attr :rest, :global
+  slot :inner_block
+
+  def slider_input(assigns) do
+    CoreComponents.slider_input(assigns)
+  end
+
+  @doc """
+  Component `<cds-slider-skeleton>` from `./src/components/slider/slider-skeleton.ts`
+
+  Slider skeleton.
+
+  """
+  attr :two_handles, :boolean, doc: "`true` to show two handles."
+  attr :rest, :global
+  slot :inner_block
+
+  def slider_skeleton(assigns) do
+    CoreComponents.slider_skeleton(assigns)
+  end
+end

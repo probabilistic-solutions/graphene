@@ -1,0 +1,27 @@
+defmodule Graphene.CarbonComponents.BadgeIndicator do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-badge-indicator>` from `./src/components/badge-indicator/badge-indicator.ts`
+
+  Badge Indicator.
+
+
+  """
+  attr :count, :any, doc: "Count of badge indicator"
+
+  attr :slot, :string,
+    doc: "The shadow slot the badge-indicator should be in.",
+    default: "badge-indicator"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def badge_indicator(assigns) do
+    CoreComponents.badge_indicator(assigns)
+  end
+end

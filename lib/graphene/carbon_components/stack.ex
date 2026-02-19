@@ -1,0 +1,42 @@
+defmodule Graphene.CarbonComponents.Stack do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-stack>` from `./src/components/stack/stack.ts`
+
+  The Stack component is a useful layout utility in a component-based model.
+  This allows components to not use margin and instead delegate the
+  responsibility of positioning and layout to parent components.
+
+  In the case of the Stack component, it uses the spacing scale from the
+  Design Language in order to determine how much space there should be between
+  items rendered by the Stack component. It also supports a custom `gap` prop
+  which will allow a user to provide a custom value for the gap of the layout.
+
+  This component supports both horizontal and vertical orientations.
+
+
+  """
+  attr :gap, :any,
+    doc:
+      "Provide either a custom value or a step from the spacing scale to be used\nas the gap in the layout"
+
+  attr :orientation, :string,
+    doc: "Specify the orientation of them items in the Stack",
+    values: ["vertical", "horizontal"],
+    default: "vertical"
+
+  attr :use_custom_gap_value, :boolean,
+    doc: "Turn on when passing in custom value to 'gap' attribute (ie. gap=\"2rem\")"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def stack(assigns) do
+    CoreComponents.stack(assigns)
+  end
+end

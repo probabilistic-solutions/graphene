@@ -1,0 +1,126 @@
+defmodule Graphene.CarbonComponents.TableHeader do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-table-header-cell>` from `./src/components/data-table/table-header-cell.ts`
+
+  Data table header cell.
+
+  ## Events
+
+  * `cds-table-header-cell-sort` - The custom event fired before a new sort direction is set upon a user gesture.
+  Cancellation of this event stops the user-initiated change in sort direction.
+
+  """
+  attr :expandable, :boolean, doc: "`true` if the table has expandable rows"
+  attr :is_selectable, :boolean, doc: "`true` if this table has selectable rows"
+  attr :is_sortable, :boolean, doc: "`true` if this table header column should be sortable"
+
+  attr :sort_active, :boolean,
+    doc: "`true` if this table header cell is of a primary sorting column."
+
+  attr :sort_cycle, :string,
+    doc: "The table sort cycle in use.",
+    values: [
+      nil,
+      nil,
+      "bi-states-from-ascending",
+      "bi-states-from-descending",
+      "tri-states-from-ascending",
+      "tri-states-from-descending"
+    ]
+
+  attr :sort_direction, :string,
+    doc:
+      "The table sort direction.\nIf present, this table header cell will have a sorting UI. Choose between `ascending` or `descending`.",
+    values: [nil, nil, "xs", "sm", "md", "lg", "xl"]
+
+  attr :rest, :global
+  slot :inner_block
+
+  def table_header_cell(assigns) do
+    CoreComponents.table_header_cell(assigns)
+  end
+
+  @doc """
+  Component `<cds-table-header-description>` from `./src/components/data-table/table-header-description.ts`
+
+  Data table header description
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def table_header_description(assigns) do
+    CoreComponents.table_header_description(assigns)
+  end
+
+  @doc """
+  Component `<cds-table-header-row>` from `./src/components/data-table/table-header-row.ts`
+
+  Data table header row.
+
+  ## Events
+
+  * `cds-table-change-selection-all` - The name of the custom event fired before this row is selected/unselected upon a user gesture.
+  Cancellation of this event stops the user-initiated change in selection.
+  * `cds-table-row-change-selection` - The custom event fired before this row is selected/unselected upon a user gesture.
+  Cancellation of this event stops the user-initiated change in selection.
+  * `cds-radio-button-changed` - The name of the custom event fired after this radio button changes its checked state.
+  * `cds-checkbox-changed` - The name of the custom event fired after this checkbox changes its checked state.
+  * `cds-table-row-expando-beingtoggled` - The name of the custom event fired before the expanded state of this row is being toggled upon a user gesture.
+  Cancellation of this event stops the user-initiated action of toggling the expanded state.
+  * `cds-table-row-expando-toggled` - The name of the custom event fired after the expanded state of this row is toggled upon a user gesture.
+
+  """
+  attr :batch_expansion, :boolean, doc: "`true` if this table should support batch expansion"
+  attr :disabled, :boolean, doc: "`true` if this table row should be disabled."
+  attr :filtered, :boolean, doc: "`true` if this table row should be filtered out."
+
+  attr :hide_checkbox, :boolean,
+    doc:
+      "Specify whether the checkbox should be present in the DOM,\nbut invisible and uninteractable."
+
+  attr :highlighted, :boolean, doc: "`true` if the table row should be highlighted."
+
+  attr :overflow_menu_on_hover, :boolean,
+    doc:
+      "Specify whether the overflow menu (if it exists) should be shown always, or only on hover"
+
+  attr :selected, :boolean, doc: "`true` if this table row should be selected."
+
+  attr :selection_label, :string,
+    doc: "The `aria-label` attribute for the `<label>` for selection.",
+    default: "Select row"
+
+  attr :selection_name, :string,
+    doc:
+      "The `name` attribute for the `<input>` for selection.\nIf present, this table row will be a selectable one."
+
+  attr :selection_value, :string, doc: "The `value` attribute for the `<input>` for selection."
+  attr :rest, :global
+  slot :inner_block
+
+  def table_header_row(assigns) do
+    CoreComponents.table_header_row(assigns)
+  end
+
+  @doc """
+  Component `<cds-table-header-title>` from `./src/components/data-table/table-header-title.ts`
+
+  Data table header title
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def table_header_title(assigns) do
+    CoreComponents.table_header_title(assigns)
+  end
+end

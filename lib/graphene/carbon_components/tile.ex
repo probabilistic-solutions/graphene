@@ -1,0 +1,82 @@
+defmodule Graphene.CarbonComponents.Tile do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-tile>` from `./src/components/tile/tile.ts`
+
+  Basic tile.
+
+
+  """
+  attr :color_scheme, :string, doc: "The color scheme.", values: ["", "light"], default: ""
+
+  attr :has_rounded_corners, :boolean,
+    doc:
+      "Specify if the `Tile` component should be rendered with rounded corners.\nOnly valid when `ai-label` prop is present"
+
+  attr :rest, :global
+  slot :decorator, doc: "Decorator content."
+  slot :inner_block
+
+  def tile(assigns) do
+    CoreComponents.tile(assigns)
+  end
+
+  @doc """
+  Component `<cds-tile-above-the-fold-content>` from `./src/components/tile/tile.ts`
+
+  Tile above-the-fold content.
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def tile_above_the_fold_content(assigns) do
+    CoreComponents.tile_above_the_fold_content(assigns)
+  end
+
+  @doc """
+  Component `<cds-tile-below-the-fold-content>` from `./src/components/tile/tile.ts`
+
+  Tile below-the-fold content.
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def tile_below_the_fold_content(assigns) do
+    CoreComponents.tile_below_the_fold_content(assigns)
+  end
+
+  @doc """
+  Component `<cds-tile-group>` from `./src/components/tile/tile-group.ts`
+
+  Tile group.
+
+  ## Events
+
+  * `cds-current-radio-tile-selection` - The name of the custom event fired after a radio tile changes its selected state.
+  * `cds-current-selectable-tile-selections` - The name of the custom event fired after a selectable tile changes its selected state.
+
+  """
+  attr :current_radio_selection, :any
+  attr :current_selections, :any
+  attr :disabled, :any, doc: "Specify whether the group is disabled"
+
+  attr :fieldset_class_name, :any,
+    doc: "Provide an optional className to be applied to the component"
+
+  attr :radio_tiles, :any
+  attr :selectable_tiles, :any
+  attr :rest, :global
+  slot :legend, doc: "Legend content."
+  slot :inner_block
+
+  def tile_group(assigns) do
+    CoreComponents.tile_group(assigns)
+  end
+end

@@ -1,0 +1,111 @@
+defmodule Graphene.CarbonComponents.Tree do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-tree-node>` from `./src/components/tree-view/tree-node.ts`
+
+  Tree node.
+
+  ## Events
+
+  * `eventSelected` - The name of the custom event fired when node is selected.
+  * `eventToggled` - The name of the custom event fired when a node is toggled.
+
+  """
+  attr :active, :boolean, doc: "sets if tree node is active"
+  attr :disabled, :boolean, doc: "disabled property"
+  attr :href, :any, doc: "Optional: The URL the TreeNode is linking to"
+
+  attr :id, :string,
+    doc:
+      "Specify the TreeNode's ID. Must be unique in the DOM and is used for props.active, props.selected and aria-owns",
+    default: "Math.random().toString(16).slice(2)"
+
+  attr :is_expanded, :boolean,
+    doc: "Specify if the TreeNode is expanded (only applicable to parent nodes)"
+
+  attr :label, :string, doc: "Rendered label for the TreeNode"
+  attr :on_click, :any, doc: "when adding an href to control the click functionality"
+  attr :selected, :boolean, doc: "sets if tree node is selected"
+  attr :rest, :global
+  slot :inner_block
+
+  def tree_node(assigns) do
+    CoreComponents.tree_node(assigns)
+  end
+
+  @doc """
+  Component `<cds-tree-view>` from `./src/components/tree-view/tree-view.ts`
+
+  Tree view.
+
+
+  """
+  attr :hide_label, :boolean, doc: "Specify whether or not the label should be hidden"
+  attr :label, :string, doc: "Provide the label text that will be read by a screen reader"
+
+  attr :size, :string,
+    doc: "Specify the size of the tree from a list of available sizes.",
+    values: ["sm", "xs"],
+    default: "sm"
+
+  attr :controlled, :boolean, doc: "Whether the tree view is controlled."
+  attr :links, :boolean, doc: "Whether the tree view renders links."
+  attr :rest, :global
+
+  slot :node do
+    attr :label, :string
+    attr :active, :boolean
+    attr :disabled, :boolean
+    attr :href, :string
+    attr :id, :string
+    attr :is_expanded, :boolean
+    attr :selected, :boolean
+    attr :on_click, :any
+  end
+
+  slot :inner_block
+
+  def tree_view(%{node: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:hide_label, fn -> false end)
+      |> assign_new(:label, fn -> nil end)
+      |> assign_new(:controlled, fn -> nil end)
+      |> assign_new(:links, fn -> nil end)
+
+    ~H"""
+    <CoreComponents.tree_view
+      hide_label={@hide_label}
+      label={@label}
+      size={@size}
+      {@rest}
+    >
+      <%= for node <- @node do %>
+        <CoreComponents.tree_node
+          label={node[:label]}
+          active={node[:active]}
+          disabled={node[:disabled]}
+          href={node[:href]}
+          id={node[:id]}
+          is_expanded={node[:is_expanded]}
+          selected={node[:selected]}
+          on_click={node[:on_click]}
+        >
+          <%= if node.inner_block do %>
+            {render_slot(node)}
+          <% end %>
+        </CoreComponents.tree_node>
+      <% end %>
+    </CoreComponents.tree_view>
+    """
+  end
+
+  def tree_view(assigns) do
+    CoreComponents.tree_view(assigns)
+  end
+end

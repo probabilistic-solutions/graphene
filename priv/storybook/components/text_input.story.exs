@@ -1,7 +1,7 @@
 defmodule Storybook.CoreComponents.TextInput do
   use PhoenixStorybook.Story, :component
 
-  def function, do: &Graphene.CoreComponents.text_input/1
+  def function, do: &Graphene.Internal.CoreComponents.text_input/1
 
   def variations do
     [

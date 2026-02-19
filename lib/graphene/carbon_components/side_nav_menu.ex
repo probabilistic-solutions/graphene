@@ -1,0 +1,53 @@
+defmodule Graphene.CarbonComponents.SideNavMenu do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-side-nav-menu>` from `./src/components/ui-shell/side-nav-menu.ts`
+
+  Side nav menu.
+
+  ## Events
+
+  * `cds-side-nav-menu-beingtoggled` - The name of the custom event fired before this side nav menu is being toggled upon a user gesture.
+  Cancellation of this event stops the user-initiated action of toggling this side nav menu.
+  * `cds-side-nav-menu-toggled` - The name of the custom event fired after this side nav menu is toggled upon a user gesture.
+
+  """
+  attr :active, :boolean, doc: "`true` if the menu has active menu item."
+  attr :expanded, :boolean, doc: "`true` if the menu should be open."
+
+  attr :force_collapsed, :boolean,
+    doc: "`true` if the menu should be forced collapsed upon side nav's expanded state."
+
+  attr :large, :boolean, doc: "Specify if this is a large variation of the side nav menu"
+  attr :title, :string, doc: "The title text."
+  attr :rest, :global
+  slot :title_icon, doc: "The icon."
+  slot :inner_block
+
+  def side_nav_menu(assigns) do
+    CoreComponents.side_nav_menu(assigns)
+  end
+
+  @doc """
+  Component `<cds-side-nav-menu-item>` from `./src/components/ui-shell/side-nav-menu-item.ts`
+
+  Side nav menu item.
+
+
+  """
+  attr :active, :boolean, doc: "`true` if the menu item should be active."
+  attr :href, :string, doc: "Link `href`."
+  attr :target, :string, doc: "Link `target`."
+  attr :title, :string, doc: "The title."
+  attr :rest, :global
+  slot :inner_block
+
+  def side_nav_menu_item(assigns) do
+    CoreComponents.side_nav_menu_item(assigns)
+  end
+end

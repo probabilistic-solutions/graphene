@@ -11,8 +11,8 @@ defmodule Graphene.BasicComponents do
 
   alias Phoenix.LiveView.JS
   alias Graphene.CarbonComponents
-  alias Graphene.CoreComponents
-  alias Graphene.FormComponents
+  alias Graphene.Internal.CoreComponents
+  alias Graphene.Internal.FormComponents
 
   @basic_icon_names Graphene.Icons.available_icons()
 

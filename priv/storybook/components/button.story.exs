@@ -1,7 +1,7 @@
 defmodule Storybook.CoreComponents.Button do
   use PhoenixStorybook.Story, :component
 
-  def function, do: &Graphene.CoreComponents.button/1
+  def function, do: &Graphene.Internal.CoreComponents.button/1
 
   def variations do
     [

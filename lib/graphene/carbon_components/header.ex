@@ -1,0 +1,283 @@
+defmodule Graphene.CarbonComponents.Header do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-header>` from `./src/components/ui-shell/header.ts`
+
+  Header.
+
+
+  """
+  attr :rest, :global
+
+  slot :name do
+    attr :href, :string
+    attr :prefix, :string
+    attr :attrs, :map
+  end
+
+  slot :global
+  slot :inner_block
+
+  def header(%{name: [_ | _]} = assigns) do
+    ~H"""
+    <CoreComponents.header {@rest}>
+      <%= for name <- @name do %>
+        <CoreComponents.header_name
+          href={name[:href]}
+          prefix={name[:prefix]}
+          {name[:attrs] || %{}}
+        >
+          {render_slot(name)}
+        </CoreComponents.header_name>
+      <% end %>
+      {render_slot(@inner_block)}
+      <%= if @global != [] do %>
+        <div class="cds--header__global">
+          <%= for global <- @global do %>
+            {render_slot(global)}
+          <% end %>
+        </div>
+      <% end %>
+    </CoreComponents.header>
+    """
+  end
+
+  def header(assigns) do
+    CoreComponents.header(assigns)
+  end
+
+  @doc """
+  Component `<cds-header-global-action>` from `./src/components/ui-shell/header-global-action.ts`
+
+  Header global action button
+
+
+  """
+  attr :active, :any, doc: "Specify whether the action is currently active"
+
+  attr :autofocus, :boolean,
+    doc: "`true` if the button should have input focus when the page loads."
+
+  attr :batch_action, :boolean,
+    doc: "`true` if the button is being used within a data table batch action toolbar"
+
+  attr :button_class_name, :any, doc: "Specify an optional className to be added to your Button"
+
+  attr :button_label_active, :any,
+    doc: "The `aria-label` attribute for the button in its active state."
+
+  attr :button_label_inactive, :any,
+    doc: "The `aria-label` attribute for the button in its inactive state."
+
+  attr :danger_description, :any,
+    doc: "Specify the message read by screen readers for the danger button variant"
+
+  attr :disabled, :boolean, doc: "`true` if the button should be disabled."
+  attr :download, :string, doc: "The default file name, used if this button is rendered as `<a>`."
+  attr :has_main_content, :boolean, doc: "`true` if there is a non-icon content."
+  attr :href, :string, doc: "Link `href`. If present, this button is rendered as `<a>`."
+
+  attr :hreflang, :string,
+    doc: "The language of what `href` points to, if this button is rendered as `<a>`."
+
+  attr :is_expressive, :boolean, doc: "`true` if expressive theme enabled."
+
+  attr :is_selected, :boolean,
+    doc: "Specify whether the Button is currently selected.\nOnly applies to the Ghost variant."
+
+  attr :kind, :string,
+    doc: "Button kind.",
+    values: [
+      "primary",
+      "secondary",
+      "tertiary",
+      "danger",
+      "danger--tertiary",
+      "danger--ghost",
+      "ghost"
+    ],
+    default: "primary"
+
+  attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
+  attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
+  attr :panel_id, :any, doc: "Specify which header panel the button is associated with."
+  attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
+  attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
+  attr :size, :string, doc: "Button size.", default: "lg"
+  attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
+  attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
+
+  attr :tooltip_alignment, :string,
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end.",
+    values: ["left", "right", ""],
+    default: ""
+
+  attr :tooltip_position, :string,
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left.",
+    values: ["top", "bottom", "right", "left"],
+    default: "top"
+
+  attr :tooltip_text, :string,
+    doc:
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
+
+  attr :type, :string,
+    doc: "Button type.",
+    values: ["button", "reset", "submit"],
+    default: "button"
+
+  attr :rest, :global
+
+  slot :icon do
+    attr :name, :string
+    attr :size, :any
+    attr :attrs, :map
+  end
+
+  slot :inner_block
+
+  def header_global_action(%{icon: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:active, fn -> nil end)
+      |> assign_new(:autofocus, fn -> false end)
+      |> assign_new(:batch_action, fn -> false end)
+      |> assign_new(:button_class_name, fn -> nil end)
+      |> assign_new(:button_label_active, fn -> nil end)
+      |> assign_new(:button_label_inactive, fn -> nil end)
+      |> assign_new(:danger_description, fn -> nil end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:download, fn -> nil end)
+      |> assign_new(:has_main_content, fn -> false end)
+      |> assign_new(:href, fn -> nil end)
+      |> assign_new(:hreflang, fn -> nil end)
+      |> assign_new(:is_expressive, fn -> false end)
+      |> assign_new(:is_selected, fn -> false end)
+      |> assign_new(:open_tooltip, fn -> false end)
+      |> assign_new(:panel_id, fn -> nil end)
+      |> assign_new(:ping, fn -> nil end)
+      |> assign_new(:rel, fn -> nil end)
+      |> assign_new(:target, fn -> nil end)
+      |> assign_new(:tooltip_text, fn -> nil end)
+
+    ~H"""
+    <cds-header-global-action
+      active={assigns[:active]}
+      autofocus={assigns[:autofocus]}
+      batch-action={assigns[:batch_action]}
+      button-class-name={assigns[:button_class_name]}
+      button-label-active={assigns[:button_label_active]}
+      button-label-inactive={assigns[:button_label_inactive]}
+      danger-description={assigns[:danger_description]}
+      disabled={assigns[:disabled]}
+      download={assigns[:download]}
+      has-main-content={assigns[:has_main_content]}
+      href={assigns[:href]}
+      hreflang={assigns[:hreflang]}
+      isExpressive={assigns[:is_expressive]}
+      isSelected={assigns[:is_selected]}
+      kind={assigns[:kind]}
+      link-role={assigns[:link_role]}
+      openTooltip={assigns[:open_tooltip]}
+      panel-id={assigns[:panel_id]}
+      ping={assigns[:ping]}
+      rel={assigns[:rel]}
+      size={assigns[:size]}
+      tab-index={assigns[:tab_index]}
+      target={assigns[:target]}
+      tooltip-alignment={assigns[:tooltip_alignment]}
+      tooltip-position={assigns[:tooltip_position]}
+      tooltip-text={assigns[:tooltip_text]}
+      type={assigns[:type]}
+      {@rest}
+    >
+      <%= for icon <- @icon do %>
+        <% size_value =
+          case icon[:size] do
+            size when is_integer(size) ->
+              size
+
+            size when is_binary(size) ->
+              case Integer.parse(size) do
+                {value, _} -> value
+                _ -> 16
+              end
+
+            _ ->
+              16
+          end %>
+        <% size_string = Integer.to_string(size_value) %>
+        <% icon_attrs = Map.put(icon[:attrs] || %{}, :slot, "icon") %>
+        <%= if icon[:name] do %>
+          <Graphene.Icons.icon name={icon[:name]} size={size_value} {icon_attrs} />
+        <% else %>
+          <CoreComponents.icon size={size_string} {icon_attrs}>
+            {render_slot(icon)}
+          </CoreComponents.icon>
+        <% end %>
+      <% end %>
+      {render_slot(@inner_block)}
+    </cds-header-global-action>
+    """
+  end
+
+  def header_global_action(assigns) do
+    CoreComponents.header_global_action(assigns)
+  end
+
+  @doc """
+  Component `<cds-header-name>` from `./src/components/ui-shell/header-name.ts`
+
+  The product name UI in header nav.
+
+
+  """
+  attr :href, :string, doc: "Link `href`."
+  attr :prefix, :string, doc: "The product name prefix."
+  attr :rest, :global
+  slot :inner_block
+
+  def header_name(assigns) do
+    CoreComponents.header_name(assigns)
+  end
+
+  @doc """
+  Component `<cds-header-panel>` from `./src/components/ui-shell/header-panel.ts`
+
+  Header panel
+
+
+  """
+  attr :expanded, :any, doc: "Specify whether the panel is expanded"
+  attr :rest, :global
+  slot :inner_block
+
+  def header_panel(assigns) do
+    CoreComponents.header_panel(assigns)
+  end
+
+  @doc """
+  Component `<cds-header-side-nav-items>` from `./src/components/ui-shell/header-side-nav-items.ts`
+
+  Header Side Nav Items section
+
+
+  """
+  attr :has_divider, :boolean,
+    doc:
+      "Optionally specify if container will have a bottom divider to differentiate\nbetween original sidenav items and header menu items. False by default."
+
+  attr :rest, :global
+  slot :inner_block
+
+  def header_side_nav_items(assigns) do
+    CoreComponents.header_side_nav_items(assigns)
+  end
+end

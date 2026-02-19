@@ -1,0 +1,43 @@
+defmodule Graphene.CarbonComponents.ToastNotification do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-toast-notification>` from `./src/components/notification/toast-notification.ts`
+
+  Toast notification.
+
+  ## Events
+
+  * `cds-notification-beingclosed` - The custom event fired before this notification is being closed upon a user gesture.
+  Cancellation of this event stops the user-initiated action of closing this notification.
+  * `cds-notification-closed` - The custom event fired after this notification is closed upon a user gesture.
+
+  """
+  attr :caption, :string, doc: "Specify the caption"
+  attr :hide_close_button, :boolean, doc: "`true` to hide the close button."
+
+  attr :kind, :string,
+    doc: "Notification kind.",
+    values: ["success", "info", "info-square", "warning", "warning-alt", "error"],
+    default: "success"
+
+  attr :low_contrast, :boolean, doc: "Low contrast mode"
+  attr :open, :boolean, doc: "`true` if the notification should be open.", default: true
+
+  attr :status_icon_description, :string,
+    doc: "Provide a description for \"status\" icon that can be read by screen readers"
+
+  attr :timeout, :any, doc: "Specify an optional duration the notification should be closed in"
+  attr :rest, :global
+  slot :subtitle, doc: "The subtitle."
+  slot :title, doc: "The title."
+  slot :inner_block
+
+  def toast_notification(assigns) do
+    CoreComponents.toast_notification(assigns)
+  end
+end

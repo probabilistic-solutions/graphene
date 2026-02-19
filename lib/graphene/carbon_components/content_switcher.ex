@@ -1,0 +1,113 @@
+defmodule Graphene.CarbonComponents.ContentSwitcher do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-content-switcher>` from `./src/components/content-switcher/content-switcher.ts`
+
+  Content switcher.
+
+  ## Events
+
+  * `cds-content-switcher-beingselected` - The custom event fired before a content switcher item is selected upon a user gesture.
+  Cancellation of this event stops changing the user-initiated selection.
+  * `cds-content-switcher-selected` - The custom event fired after a a content switcher item is selected upon a user gesture.
+
+  """
+  attr :icon, :boolean, doc: "Icon only."
+  attr :low_contrast, :boolean, doc: "`true` to use the low contrast version."
+
+  attr :selected_index, :string,
+    doc: "Specify a selected index for the initially selected content",
+    default: "0"
+
+  attr :selection_mode, :string,
+    doc:
+      "Choose whether or not to automatically change selection on focus when left/right arrow pressed. Defaults to 'automatic'",
+    default: "automatic"
+
+  attr :size, :string, doc: "Content switcher size.", values: [nil, "sm", "md", "lg", "xl"]
+  attr :value, :string, doc: "The value of the selected item."
+  attr :rest, :global
+
+  slot :item do
+    attr :label, :string
+    attr :value, :string
+    attr :disabled, :boolean
+    attr :icon, :boolean
+    attr :target, :string
+  end
+
+  slot :inner_block
+
+  def content_switcher(%{item: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:icon, fn -> false end)
+      |> assign_new(:low_contrast, fn -> false end)
+      |> assign_new(:size, fn -> nil end)
+      |> assign_new(:value, fn -> nil end)
+
+    ~H"""
+    <CoreComponents.content_switcher
+      icon={@icon}
+      low_contrast={@low_contrast}
+      selected_index={@selected_index}
+      selection_mode={@selection_mode}
+      size={@size}
+      value={@value}
+      {@rest}
+    >
+      <%= for item <- @item do %>
+        <CoreComponents.content_switcher_item
+          value={item[:value]}
+          disabled={item[:disabled]}
+          icon={item[:icon]}
+          target={item[:target]}
+        >
+          {item[:label] || render_slot(item)}
+        </CoreComponents.content_switcher_item>
+      <% end %>
+    </CoreComponents.content_switcher>
+    """
+  end
+
+  def content_switcher(assigns) do
+    CoreComponents.content_switcher(assigns)
+  end
+
+  @doc """
+  Component `<cds-content-switcher-item>` from `./src/components/content-switcher/content-switcher-item.ts`
+
+  Content switcher button.
+
+
+  """
+  attr :align, :string,
+    doc: "Specify how the trigger should align with the tooltip for icon-only\nswitcher item",
+    default: "top"
+
+  attr :close_on_activation, :boolean,
+    doc:
+      "Determines whether the tooltip should close when inner content is\nactivated (click, Enter or Space)",
+    default: true
+
+  attr :disabled, :boolean, doc: "`true` if this content switcher item should be disabled."
+  attr :icon, :boolean, doc: "`true` if the content switcher button should be icon-only."
+  attr :target, :string, doc: "The element ID of target panel."
+
+  attr :value, :string,
+    doc:
+      "The `value` attribute that is set to the parent `<cds-content-switcher>`\nwhen this content switcher item is selected."
+
+  attr :rest, :global
+  slot :tooltip_content, doc: "Tooltip content for the item."
+  slot :inner_block
+
+  def content_switcher_item(assigns) do
+    CoreComponents.content_switcher_item(assigns)
+  end
+end

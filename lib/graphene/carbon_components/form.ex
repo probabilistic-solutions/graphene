@@ -1,0 +1,89 @@
+defmodule Graphene.CarbonComponents.Form do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-form>` from `./src/components/form/form.ts`
+
+  Presentational element for form
+
+
+  """
+  attr :for, :any, default: nil, doc: "form data passed to Phoenix.Component.form/1"
+  attr :as, :any, default: nil, doc: "form name passed to Phoenix.Component.form/1"
+  attr :action, :string, default: nil, doc: "form action"
+  attr :method, :string, default: nil, doc: "form method"
+  attr :multipart, :boolean, default: false, doc: "multipart form"
+  attr :csrf_token, :any, default: nil, doc: "CSRF token"
+  attr :errors, :list, default: nil, doc: "form errors"
+  attr :rest, :global
+  slot :inner_block
+
+  def form(%{} = assigns) do
+    ~H"""
+    <Phoenix.Component.form
+      :let={f}
+      for={@for}
+      as={@as}
+      action={@action}
+      method={@method}
+      multipart={@multipart}
+      csrf_token={@csrf_token}
+      errors={@errors}
+      {@rest}
+    >
+      <CoreComponents.form>
+        {render_slot(@inner_block, f)}
+      </CoreComponents.form>
+    </Phoenix.Component.form>
+    """
+  end
+
+  def form(assigns) do
+    CoreComponents.form(assigns)
+  end
+
+  @doc """
+  Component `<cds-form-group>` from `./src/components/form-group/form-group.ts`
+
+  The shell UI for file uploader.
+
+
+  """
+  attr :invalid, :boolean, doc: "Specify whether the Form Group is invalid"
+
+  attr :legend_id, :any,
+    doc:
+      "Provide id for the fieldset <legend> which corresponds to the fieldset\n`aria-labelledby`"
+
+  attr :legend_text, :string,
+    doc: "Provide the text to be rendered inside of the fieldset <legend>"
+
+  attr :message, :boolean,
+    doc: "Specify whether the message should be displayed in the Form Group"
+
+  attr :message_text, :any, doc: "Provide the text for the message in the Form Group"
+  attr :rest, :global
+  slot :inner_block
+
+  def form_group(assigns) do
+    CoreComponents.form_group(assigns)
+  end
+
+  @doc """
+  Component `<cds-form-item>` from `./src/components/form/form-item.ts`
+
+  Presentational element for form items
+
+
+  """
+  attr :rest, :global
+  slot :inner_block
+
+  def form_item(assigns) do
+    CoreComponents.form_item(assigns)
+  end
+end

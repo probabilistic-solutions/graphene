@@ -1,4 +1,4 @@
-defmodule Graphene.IconsRaw do
+defmodule Graphene.Internal.IconsRaw do
   @moduledoc """
   This module provides pattern matching to retrieve icons sources.
 

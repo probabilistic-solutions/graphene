@@ -1,0 +1,22 @@
+defmodule Graphene.CarbonComponents.ListItem do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-list-item>` from `./src/components/list/list-item.ts`
+
+  List item.
+
+
+  """
+  attr :rest, :global
+  slot :nested, doc: "The nested child list."
+  slot :inner_block
+
+  def list_item(assigns) do
+    CoreComponents.list_item(assigns)
+  end
+end

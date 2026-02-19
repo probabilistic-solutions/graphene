@@ -1,0 +1,35 @@
+defmodule Graphene.CarbonComponents.ExpandableTile do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-expandable-tile>` from `./src/components/tile/expandable-tile.ts`
+
+  Expandable tile.
+
+  ## Events
+
+  * `cds-expandable-tile-beingtoggled` - The custom event fired before the expanded state is changed upon a user gesture.
+  Cancellation of this event stops changing the user-initiated change in expanded state.
+  * `cds-expandable-tile-toggled` - The custom event fired after a the expanded state is changed upon a user gesture.
+
+  """
+  attr :color_scheme, :string, doc: "The color scheme.", values: ["", "light"], default: ""
+  attr :expanded, :boolean, doc: "`true` to expand this expandable tile."
+
+  attr :has_rounded_corners, :boolean,
+    doc:
+      "Specify if the `ExpandableTile` component should be rendered with rounded corners.\nOnly valid when `ai-label` prop is present"
+
+  attr :with_interactive, :boolean, doc: "`true` to expand this expandable tile."
+  attr :rest, :global
+  slot :above_the_fold_content, doc: "Above-the-fold content."
+  slot :inner_block
+
+  def expandable_tile(assigns) do
+    CoreComponents.expandable_tile(assigns)
+  end
+end

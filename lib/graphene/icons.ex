@@ -28,7 +28,7 @@ defmodule Graphene.Icons do
   use Phoenix.Component
   alias Graphene.SVG
 
-  @icons_raw_source Path.join(__DIR__, "icons_raw.ex")
+  @icons_raw_source Path.join([__DIR__, "internal", "icons_raw.ex"])
   @external_resource @icons_raw_source
 
   @available_icons (case File.read(@icons_raw_source) do
@@ -50,8 +50,8 @@ defmodule Graphene.Icons do
                     end)
 
   def available_icons do
-    if Code.ensure_loaded?(Graphene.IconsRaw) do
-      Graphene.IconsRaw.available_icons()
+    if Code.ensure_loaded?(Graphene.Internal.IconsRaw) do
+      Graphene.Internal.IconsRaw.available_icons()
     else
       @available_icons
     end
@@ -102,7 +102,9 @@ defmodule Graphene.Icons do
   attr :rest, :global, doc: "Arbitrary HTML attributes for the svg container."
 
   def icon(assigns) do
-    assigns = assign(assigns, Graphene.IconsRaw.icon_raw(assigns.name, assigns.size)) |> autosize
+    assigns =
+      assign(assigns, Graphene.Internal.IconsRaw.icon_raw(assigns.name, assigns.size))
+      |> autosize
 
     ~H"""
     <SVG.svg width={@width} height={@height} viewBox={@viewBox} {@rest}>

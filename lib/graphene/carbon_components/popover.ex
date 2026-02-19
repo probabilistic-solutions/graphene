@@ -1,0 +1,127 @@
+defmodule Graphene.CarbonComponents.Popover do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-popover>` from `./src/components/popover/popover.ts`
+
+  Popover.
+
+
+  """
+  attr :align, :string, doc: "Specify direction of alignment"
+
+  attr :alignment_axis_offset, :string,
+    doc:
+      "**Experimental:** Provide an offset value for alignment axis. Only takes effect when `autoalign` is enabled."
+
+  attr :autoalign, :boolean, doc: "Specify whether a auto align functionality should be applied"
+
+  attr :autoalign_boundary, :string,
+    doc:
+      "Specify a bounding element to be used for autoAlign calculations. The viewport is used by default.\nTakes one of the following: 'clippingAncestors', '#elementid', '#elementid_1, #elementid_2', 'rect(x, y, width, height)'\nThis prop is currently experimental and is subject to future changes."
+
+  attr :background_token, :string,
+    doc: "Specify the background token to use. Default is 'layer'.",
+    values: ["layer", "background"],
+    default: "layer"
+
+  attr :border, :boolean, doc: "Specify whether a border should be rendered on the popover"
+  attr :caret, :boolean, doc: "Specify whether a caret should be rendered", default: true
+
+  attr :drop_shadow, :boolean,
+    doc: "Specify whether a dropShadow should be rendered",
+    default: true
+
+  attr :high_contrast, :boolean, doc: "Render the component using the high-contrast variant"
+  attr :open, :boolean, doc: "Specify whether the component is currently open or closed"
+  attr :tab_tip, :boolean, doc: "Render the component using the tab tip variant"
+  attr :rest, :global
+  slot :trigger
+  slot :content
+  slot :inner_block
+
+  def popover(%{content: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:align, fn -> nil end)
+      |> assign_new(:alignment_axis_offset, fn -> nil end)
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:autoalign_boundary, fn -> nil end)
+      |> assign_new(:border, fn -> false end)
+      |> assign_new(:high_contrast, fn -> false end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:tab_tip, fn -> false end)
+
+    ~H"""
+    <CoreComponents.popover
+      align={@align}
+      alignment_axis_offset={@alignment_axis_offset}
+      autoalign={@autoalign}
+      autoalign_boundary={@autoalign_boundary}
+      background_token={@background_token}
+      border={@border}
+      caret={@caret}
+      drop_shadow={@drop_shadow}
+      high_contrast={@high_contrast}
+      open={@open}
+      tab_tip={@tab_tip}
+      {@rest}
+    >
+      <%= for trigger <- @trigger do %>
+        {render_slot(trigger)}
+      <% end %>
+      <%= for content <- @content do %>
+        <CoreComponents.popover_content>
+          {render_slot(content)}
+        </CoreComponents.popover_content>
+      <% end %>
+      {render_slot(@inner_block)}
+    </CoreComponents.popover>
+    """
+  end
+
+  def popover(assigns) do
+    CoreComponents.popover(assigns)
+  end
+
+  @doc """
+  Component `<cds-popover-content>` from `./src/components/popover/popover-content.ts`
+
+  Popover.
+
+
+  """
+  attr :align, :string, doc: "Specify the popover alignment"
+  attr :autoalign, :boolean, doc: "Specify whether a auto align functionality should be applied"
+
+  attr :background_token, :string,
+    doc: "Specify the background token to use. Default is 'layer'.",
+    values: ["layer", "background"],
+    default: "layer"
+
+  attr :border, :boolean, doc: "Specify whether a border should be rendered on the popover"
+  attr :caret, :any, doc: "Specify whether a caret should be rendered"
+
+  attr :drop_shadow, :boolean,
+    doc: "Specify whether a dropShadow should be rendered",
+    default: true
+
+  attr :high_contrast, :boolean, doc: "Render the component using the high-contrast variant"
+  attr :open, :boolean, doc: "Specify whether the component is currently open or closed"
+
+  attr :slot, :string,
+    doc: "The shadow slot this popover content should be in.",
+    default: "content"
+
+  attr :tab_tip, :boolean, doc: "Render the component using the tab tip variant"
+  attr :rest, :global
+  slot :inner_block
+
+  def popover_content(assigns) do
+    CoreComponents.popover_content(assigns)
+  end
+end

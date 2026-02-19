@@ -1,0 +1,114 @@
+defmodule Graphene.CarbonComponents.DatePicker do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+  alias Graphene.Internal.FormComponents
+
+  @doc """
+  Component `<cds-date-picker>` from `./src/components/date-picker/date-picker.ts`
+
+  Date picker.
+
+  ## Events
+
+  * `cds-date-picker-changed` - The custom event fired on this element when Flatpickr updates its value.
+  * `cds-date-picker-flatpickr-error` - The name of the custom event when Flatpickr throws an error.
+
+  """
+  attr :allow_input, :boolean,
+    doc:
+      "flatpickr prop passthrough. Allows the user to enter a date directly into the input field",
+    default: true
+
+  attr :close_on_select, :boolean,
+    doc:
+      "flatpickr prop passthrough. Controls whether the calendar dropdown closes upon selection.",
+    default: true
+
+  attr :date_format, :string, doc: "The date format to let Flatpickr use."
+  attr :disabled, :boolean, doc: "Controls the disabled state of the input"
+  attr :enabled_range, :string, doc: "The date range that a user can pick in calendar dropdown."
+  attr :max_date, :string, doc: "The maximum date that a user can start picking from."
+  attr :min_date, :string, doc: "The minimum date that a user can start picking from."
+  attr :name, :string, doc: "Name for the input in the `FormData`"
+  attr :open, :boolean, doc: "`true` if the date picker should be open."
+  attr :readonly, :boolean, doc: "Specify if the component should be read-only"
+
+  attr :value, :string,
+    doc:
+      "The date(s) in ISO8601 format (date portion only), for range mode, '/' is used for separate start/end dates."
+
+  attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
+  attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
+
+  attr :form_event, :string,
+    default: nil,
+    doc: "override the custom event used to sync form values"
+
+  attr :rest, :global
+
+  slot :input do
+    attr :label, :string
+    attr :placeholder, :string
+    attr :value, :string
+    attr :kind, :string
+    attr :disabled, :boolean
+    attr :invalid, :boolean
+    attr :invalid_text, :string
+    attr :readonly, :boolean
+    attr :attrs, :map
+  end
+
+  slot :inner_block
+
+  def date_picker(%{input: [_ | _]} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:date_format, fn -> nil end)
+      |> assign_new(:disabled, fn -> false end)
+      |> assign_new(:enabled_range, fn -> nil end)
+      |> assign_new(:max_date, fn -> nil end)
+      |> assign_new(:min_date, fn -> nil end)
+      |> assign_new(:name, fn -> nil end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:readonly, fn -> false end)
+      |> assign_new(:value, fn -> nil end)
+
+    ~H"""
+    <FormComponents.date_picker
+      allow_input={@allow_input}
+      close_on_select={@close_on_select}
+      date_format={@date_format}
+      disabled={@disabled}
+      enabled_range={@enabled_range}
+      max_date={@max_date}
+      min_date={@min_date}
+      name={@name}
+      open={@open}
+      readonly={@readonly}
+      value={@value}
+      {@rest}
+    >
+      <%= for input <- @input do %>
+        <CoreComponents.date_picker_input
+          label_text={input[:label]}
+          placeholder={input[:placeholder]}
+          value={input[:value]}
+          kind={input[:kind]}
+          disabled={input[:disabled]}
+          invalid={input[:invalid]}
+          invalid_text={input[:invalid_text]}
+          readonly={input[:readonly]}
+          {input[:attrs] || %{}}
+        />
+      <% end %>
+    </FormComponents.date_picker>
+    """
+  end
+
+  def date_picker(assigns) do
+    FormComponents.date_picker(assigns)
+  end
+end

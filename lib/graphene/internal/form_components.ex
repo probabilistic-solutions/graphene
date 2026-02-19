@@ -1,9 +1,9 @@
-defmodule Graphene.FormComponents do
+defmodule Graphene.Internal.FormComponents do
   @moduledoc false
 
   use Phoenix.Component
 
-  alias Graphene.CoreComponents
+  alias Graphene.Internal.CoreComponents
 
   defp form_bridge_hook(assigns) do
     ~H"""
@@ -478,11 +478,11 @@ defmodule Graphene.FormComponents do
       form_input_assigns(assigns,
         name: :checkbox,
         mode: :boolean,
-        event: "cds-checkbox-changed",
-        checked_attr: :checked
+        checked_attr: :checked,
+        event: "cds-checkbox-changed"
       )
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
@@ -618,12 +618,12 @@ defmodule Graphene.FormComponents do
       form_input_assigns(assigns,
         name: :toggle,
         mode: :boolean,
-        event: "cds-toggle-changed",
         checked_attr: :toggled,
+        event: "cds-toggle-changed",
         detail_key: "toggled"
       )
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
@@ -716,7 +716,7 @@ defmodule Graphene.FormComponents do
         event: "cds-radio-button-group-changed"
       )
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
@@ -928,7 +928,7 @@ defmodule Graphene.FormComponents do
         value_attr: :value
       )
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
@@ -1140,7 +1140,7 @@ defmodule Graphene.FormComponents do
         value_attr: :value
       )
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
@@ -1311,7 +1311,7 @@ defmodule Graphene.FormComponents do
 
   def text_input(assigns) do
     assigns = form_input_assigns(assigns, name: :text_input, mode: :value, event: "input")
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
@@ -1482,7 +1482,7 @@ defmodule Graphene.FormComponents do
 
   def fluid_text_input(assigns) do
     assigns = form_input_assigns(assigns, name: :fluid_text_input, mode: :value, event: "input")
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
@@ -1653,7 +1653,7 @@ defmodule Graphene.FormComponents do
 
   def password_input(assigns) do
     assigns = form_input_assigns(assigns, name: :password_input, mode: :value, event: "input")
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
@@ -1836,7 +1836,7 @@ defmodule Graphene.FormComponents do
 
   def textarea(assigns) do
     assigns = form_input_assigns(assigns, name: :textarea, mode: :value, event: "input")
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
@@ -2019,7 +2019,7 @@ defmodule Graphene.FormComponents do
 
   def fluid_textarea(assigns) do
     assigns = form_input_assigns(assigns, name: :fluid_textarea, mode: :value, event: "input")
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
@@ -2106,7 +2106,7 @@ defmodule Graphene.FormComponents do
 
   def search(assigns) do
     assigns = form_input_assigns(assigns, name: :search, mode: :value, event: "cds-search-input")
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
@@ -2193,7 +2193,7 @@ defmodule Graphene.FormComponents do
     assigns =
       form_input_assigns(assigns, name: :fluid_search, mode: :value, event: "cds-search-input")
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
@@ -3160,7 +3160,7 @@ defmodule Graphene.FormComponents do
         event: "cds-date-picker-changed"
       )
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
@@ -3277,7 +3277,7 @@ defmodule Graphene.FormComponents do
 
   def time_picker(assigns) do
     assigns = form_input_assigns(assigns, name: :time_picker, mode: :value, event: "change")
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
@@ -3409,7 +3409,7 @@ defmodule Graphene.FormComponents do
     assigns =
       form_input_assigns(assigns, name: :slider, mode: :value, event: "cds-slider-changed")
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id])
+    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""

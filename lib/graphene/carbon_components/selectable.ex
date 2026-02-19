@@ -1,0 +1,59 @@
+defmodule Graphene.CarbonComponents.Selectable do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-selectable-tag>` from `./src/components/tag/selectable-tag.ts`
+
+  Selectable tag.
+
+  ## Events
+
+  * `cds-selectable-tag-beforeselected` - The custom event fired as the element is being selected
+  * `cds-selectable-tag-selected` - The custom event fired after the element has been selected
+
+  """
+  attr :disabled, :boolean, doc: "`true` if the tag should be disabled"
+  attr :selected, :boolean, doc: "Specify the state of the selectable tag."
+  attr :size, :string, doc: "The size of the tag.", values: ["lg", "md", "sm"], default: "md"
+  attr :text, :string, doc: "Provide text to be rendered inside of a the tag."
+  attr :rest, :global
+  slot :inner_block
+
+  def selectable_tag(assigns) do
+    CoreComponents.selectable_tag(assigns)
+  end
+
+  @doc """
+  Component `<cds-selectable-tile>` from `./src/components/tile/selectable-tile.ts`
+
+  Multi-selectable tile.
+
+  ## Events
+
+  * `cds-selectable-tile-changed` - The custom event fired after this selectable tile changes its selected state.
+
+  """
+  attr :checkmark_label, :string,
+    doc: "The a11y text for the checkmark icon of the selected state."
+
+  attr :color_scheme, :string, doc: "The color scheme.", values: ["", "light"], default: ""
+  attr :disabled, :boolean, doc: "`true` if the seletable tile should be disabled."
+
+  attr :has_rounded_corners, :boolean,
+    doc:
+      "Specify if the `SeletableTile` component should be rendered with rounded corners.\nOnly valid when `ai-label` prop is present"
+
+  attr :name, :string
+  attr :selected, :boolean, doc: "`true` to show the selected state."
+  attr :value, :string
+  attr :rest, :global
+  slot :inner_block
+
+  def selectable_tile(assigns) do
+    CoreComponents.selectable_tile(assigns)
+  end
+end

@@ -14,7 +14,7 @@
 ## Public API facade (Carbon-first)
 - [x] Add `Graphene.Components` module with `__using__/1` to import/alias CarbonComponents in one line.
 - [ ] Ensure `Graphene.Components` is the only public entry point in README/docs/examples.
-- [x] Mark `Graphene.CoreComponents` and `Graphene.FormComponents` as internal (`@moduledoc false`, hidden from ExDoc).
+- [x] Mark `Graphene.Internal.CoreComponents` and `Graphene.Internal.FormComponents` as internal (`@moduledoc false`, hidden from ExDoc).
 - [x] Add a minimal `Graphene` facade (optional) that delegates to `Graphene.Components`.
 
 ## Docs and discoverability

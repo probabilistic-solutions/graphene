@@ -1,0 +1,212 @@
+defmodule Graphene.CarbonComponents.AiLabel do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-ai-label>` from `./src/components/ai-label/ai-label.ts`
+
+  Basic AI Label.
+
+
+  """
+  attr :ai_text, :string, doc: "Specify the correct translation of the AI text", default: "AI"
+
+  attr :ai_text_label, :string,
+    doc: "Specify additional text to be rendered next to the AI label in the inline variant"
+
+  attr :alignment, :string,
+    doc: "How the tooltip is aligned to the trigger button.",
+    values: [
+      "top",
+      "top-start",
+      "top-end",
+      "bottom",
+      "bottom-start",
+      "bottom-end",
+      "left",
+      "left-start",
+      "left-end",
+      "right",
+      "right-start",
+      "right-end"
+    ],
+    default: "top"
+
+  attr :alignment_axis_offset, :string,
+    doc:
+      "**Experimental:** Provide an offset value for alignment axis. Only takes effect when `autoalign` is enabled.",
+    default: "0"
+
+  attr :autoalign, :boolean, doc: "Specify whether a auto align functionality should be applied"
+
+  attr :button_label, :string,
+    doc: "Specify the text that will be provided to the aria-label of the `AI Label` button",
+    default: "Show information"
+
+  attr :default_open, :boolean, doc: "Set whether toggletip is open by default."
+
+  attr :kind, :string,
+    doc: "Specify the type of AI Label, from the following list of types: (default, inline)",
+    values: ["", "inline"],
+    default: ""
+
+  attr :open, :boolean, doc: "Set whether toggletip is open"
+  attr :previous_value, :any
+  attr :revert_active, :boolean, doc: "Specify whether the revert button should be visible"
+
+  attr :revert_label, :string,
+    doc: "Specify whether the revert button should be visible",
+    default: "Revert to AI input"
+
+  attr :size, :string,
+    doc: "AI Label size should be mini, 2xs, xs, sm, md, lg, xl.",
+    values: ["mini", "2xs", "xs", "sm", "md", "lg", "xl"],
+    default: "xs"
+
+  attr :slot, :string, default: "ai-label"
+  attr :rest, :global
+  slot :body_text, doc: "Content for the AI label body."
+  slot :actions, doc: "Action buttons for the AI label."
+
+  slot :action_button do
+    attr :attrs, :map
+  end
+
+  slot :inner_block
+
+  def ai_label(%{} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:ai_text_label, fn -> nil end)
+      |> assign_new(:autoalign, fn -> false end)
+      |> assign_new(:default_open, fn -> false end)
+      |> assign_new(:open, fn -> false end)
+      |> assign_new(:previous_value, fn -> nil end)
+      |> assign_new(:revert_active, fn -> false end)
+
+    ~H"""
+    <CoreComponents.ai_label
+      ai_text={assigns[:ai_text]}
+      ai_text_label={assigns[:ai_text_label]}
+      alignment={assigns[:alignment]}
+      alignment_axis_offset={assigns[:alignment_axis_offset]}
+      autoalign={assigns[:autoalign]}
+      button_label={assigns[:button_label]}
+      default_open={assigns[:default_open]}
+      kind={assigns[:kind]}
+      open={assigns[:open]}
+      previous_value={assigns[:previous_value]}
+      revert_active={assigns[:revert_active]}
+      revert_label={assigns[:revert_label]}
+      size={assigns[:size]}
+      slot={assigns[:slot]}
+      {@rest}
+    >
+      <.dynamic_tag :for={body <- @body_text} tag_name={Map.get(body, :tag, "div")} slot="body-text">
+        {render_slot(body)}
+      </.dynamic_tag>
+      <.dynamic_tag :for={action <- @actions} tag_name={Map.get(action, :tag, "div")} slot="actions">
+        {render_slot(action)}
+      </.dynamic_tag>
+      <%= for action_button <- @action_button do %>
+        <CoreComponents.ai_label_action_button {action_button[:attrs] || %{}}>
+          {render_slot(action_button)}
+        </CoreComponents.ai_label_action_button>
+      <% end %>
+      {render_slot(@inner_block)}
+    </CoreComponents.ai_label>
+    """
+  end
+
+  def ai_label(assigns) do
+    CoreComponents.ai_label(assigns)
+  end
+
+  @doc """
+  Component `<cds-ai-label-action-button>` from `./src/components/ai-label/ai-label-action-button.ts`
+
+  AI Label action button.
+
+
+  """
+  attr :autofocus, :boolean,
+    doc: "`true` if the button should have input focus when the page loads."
+
+  attr :batch_action, :boolean,
+    doc: "`true` if the button is being used within a data table batch action toolbar"
+
+  attr :button_class_name, :any, doc: "Specify an optional className to be added to your Button"
+
+  attr :danger_description, :any,
+    doc: "Specify the message read by screen readers for the danger button variant"
+
+  attr :disabled, :boolean, doc: "`true` if the button should be disabled."
+  attr :download, :string, doc: "The default file name, used if this button is rendered as `<a>`."
+  attr :has_main_content, :boolean, doc: "`true` if there is a non-icon content."
+  attr :href, :string, doc: "Link `href`. If present, this button is rendered as `<a>`."
+
+  attr :hreflang, :string,
+    doc: "The language of what `href` points to, if this button is rendered as `<a>`."
+
+  attr :is_expressive, :boolean, doc: "`true` if expressive theme enabled."
+
+  attr :is_selected, :boolean,
+    doc: "Specify whether the Button is currently selected.\nOnly applies to the Ghost variant."
+
+  attr :kind, :string,
+    doc: "Button kind.",
+    values: [
+      "primary",
+      "secondary",
+      "tertiary",
+      "danger",
+      "danger--tertiary",
+      "danger--ghost",
+      "ghost"
+    ],
+    default: "primary"
+
+  attr :link_role, :string, doc: "The a11y role for `<a>`.", default: "button"
+  attr :open_tooltip, :boolean, doc: "Boolean to determine if tooltip is open."
+  attr :ping, :string, doc: "URLs to ping, if this button is rendered as `<a>`."
+  attr :rel, :string, doc: "The link type, if this button is rendered as `<a>`."
+  attr :size, :string, doc: "Button size.", default: "lg"
+
+  attr :slot, :string,
+    doc: "The shadow slot this ai-label-action should be in.",
+    default: "actions"
+
+  attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
+  attr :target, :string, doc: "The link target, if this button is rendered as `<a>`."
+
+  attr :tooltip_alignment, :string,
+    doc:
+      "Specify the alignment of the tooltip to the icon-only button.\nCan be one of: start, center, or end.",
+    values: ["left", "right", ""],
+    default: ""
+
+  attr :tooltip_position, :string,
+    doc:
+      "Specify the direction of the tooltip for icon-only buttons.\nCan be either top, right, bottom, or left.",
+    values: ["top", "bottom", "right", "left"],
+    default: "top"
+
+  attr :tooltip_text, :string,
+    doc:
+      "Specify the text to be rendered in the tooltip. If using\n\"cds-badge-indicator\" with no count prop then the text\nshould include describing there is a new notification."
+
+  attr :type, :string,
+    doc: "Button type.",
+    values: ["button", "reset", "submit"],
+    default: "button"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def ai_label_action_button(assigns) do
+    CoreComponents.ai_label_action_button(assigns)
+  end
+end

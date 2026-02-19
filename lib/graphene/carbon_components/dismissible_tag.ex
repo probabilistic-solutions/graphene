@@ -1,0 +1,66 @@
+defmodule Graphene.CarbonComponents.DismissibleTag do
+  @moduledoc false
+
+  use Phoenix.Component
+
+  alias Graphene.Internal.CoreComponents
+
+  @doc """
+  Component `<cds-dismissible-tag>` from `./src/components/tag/dismissible-tag.ts`
+
+  Dismissible Tag.
+
+  ## Events
+
+  * `cds-dismissible-tag-beingclosed` - The custom event fired as the element is being closed
+  * `cds-dismissible-tag-closed` - The custom event fired after the element has been closed
+  * `cds-tag-beingclosed` - The custom event fired as the element is being closed
+  * `cds-tag-closed` - The custom event fired after the element has been closed
+
+  """
+  attr :disabled, :boolean, doc: "`true` if the tag should be disabled"
+
+  attr :dismiss_tooltip_alignment, :string,
+    doc: "Specify the tooltip alignment for the dismiss button",
+    default: "bottom"
+
+  attr :dismiss_tooltip_label, :string,
+    doc: "Provide a custom tooltip label for the dismiss button"
+
+  attr :filter, :boolean, doc: "Determine if is a filter/chip"
+  attr :has_custom_icon, :boolean, doc: "`true` if there is a custom icon."
+  attr :open, :boolean, doc: "`true` if the tag should be open.", default: true
+  attr :size, :string, doc: "The size of the tag.", values: ["lg", "md", "sm"], default: "md"
+  attr :tag_title, :string, doc: "Provide a custom `title` to be inserted in the tag."
+  attr :text, :string, doc: "Provide text to be rendered inside of a the tag."
+
+  attr :title, :string,
+    doc:
+      "Text to show on filter tag \"clear\" buttons. Corresponds to the attribute with the same name",
+    default: "Clear filter"
+
+  attr :type, :string,
+    doc: "The type of the tag.",
+    values: [
+      "red",
+      "magenta",
+      "purple",
+      "blue",
+      "cyan",
+      "teal",
+      "green",
+      "gray",
+      "COOL-GRAY",
+      "cool-gray",
+      "WARM-GRAY",
+      "warm-gray"
+    ],
+    default: "gray"
+
+  attr :rest, :global
+  slot :inner_block
+
+  def dismissible_tag(assigns) do
+    CoreComponents.dismissible_tag(assigns)
+  end
+end
