@@ -16,12 +16,6 @@
     var(--cds-background);
 }
 
-.demo-main {
-  padding: 2rem;
-  max-width: 1440px;
-  margin: 0 auto;
-}
-
 .demo-section {
   margin-top: 2rem;
 }
@@ -227,10 +221,6 @@
 }
 
 @media (max-width: 768px) {
-  .demo-main {
-    padding: 1.25rem;
-  }
-
   .demo-page-grid,
   .demo-component-grid {
     grid-template-columns: 1fr;

@@ -108,22 +108,19 @@ defmodule DemoWeb.InfrastructureLive do
     assigns = assign(assigns, :filtered_clusters, clusters)
 
     ~H"""
-    <.grid full_width>
-      <:column span="16">
-        <.page_header>
-          <:breadcrumb>
-            <.breadcrumb>
-              <:item href={~p"/demo"} text="Cloud Admin" />
-              <:item text="Infrastructure" />
-            </.breadcrumb>
-          </:breadcrumb>
-          <:content title="Infrastructure">
-            <.tag type="blue">Kubernetes</.tag>
-          </:content>
-          <:content_text subtitle="Manage multi-region clusters, node pools, and workload scaling." />
-        </.page_header>
-      </:column>
+    <.page_header>
+      <:breadcrumb>
+        <.breadcrumb size="sm">
+          <:item href={~p"/demo"} text="Cloud Admin" />
+        </.breadcrumb>
+      </:breadcrumb>
+      <:content title="Infrastructure">
+        <.tag type="blue">Kubernetes</.tag>
+      </:content>
+      <:content_text subtitle="Manage multi-region clusters, node pools, and workload scaling." />
+    </.page_header>
 
+    <.grid>
       <:column span="16">
         <div class="demo-section demo-card">
           <.form for={@filter_form} phx-change="filter">

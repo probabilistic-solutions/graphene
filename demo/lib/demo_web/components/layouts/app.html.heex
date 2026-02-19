@@ -7,9 +7,14 @@
     <a class="demo-skip" href="#main-content">Skip to content</a>
   </:skip_to_content>
   <:header>
-    <.header>
-      <:name href={~p"/demo"} prefix="IBM">Nimbus Cloud</:name>
-      <.header_nav>
+    <.header aria-label="IBM Nimbus Cloud">
+      <.header_menu_button
+        button_label_active="Close menu"
+        button_label_inactive="Open menu"
+        collapse_mode="responsive"
+      />
+      <.header_name href={~p"/demo"} prefix="IBM">Nimbus Cloud</.header_name>
+      <.header_nav menu_bar_label="IBM Nimbus Cloud">
         <.header_nav_item href={~p"/demo"} is_active={@active_page == :overview}>
           Overview
         </.header_nav_item>
@@ -38,12 +43,10 @@
           <.header_menu_item href={~p"/demo/components"} is_active={@active_page == :components}>
             Component Catalog
           </.header_menu_item>
-          <.header_menu_item href={~p"/"}>
-            Storybook
-          </.header_menu_item>
+          <.header_menu_item href={~p"/"}>Storybook</.header_menu_item>
         </.header_menu>
       </.header_nav>
-      <:global>
+      <div class="cds--header__global">
         <.header_global_action
           button_label_inactive="Search"
           button_label_active="Search"
@@ -62,25 +65,66 @@
         >
           <:icon name="user--avatar" size={20} />
         </.header_global_action>
-      </:global>
+      </div>
     </.header>
   </:header>
   <:side_nav>
-    <.side_nav expanded={true}>
+    <.side_nav aria-label="Side navigation" collapse_mode="responsive">
       <.side_nav_items>
-        <.side_nav_link href={~p"/demo"} active={@active_page == :overview}>
-          <span class="demo-nav-link">
-            <.icon name="dashboard" size={16} /> Overview
-          </span>
-        </.side_nav_link>
-        <.side_nav_link
-          href={~p"/demo/infrastructure"}
-          active={@active_page == :infrastructure}
-        >
-          <span class="demo-nav-link">
-            <.icon name="cloud" size={16} /> Infrastructure
-          </span>
-        </.side_nav_link>
+        <.header_side_nav_items has_divider>
+          <.side_nav_link href={~p"/demo"} active={@active_page == :overview}>
+            Overview
+          </.side_nav_link>
+          <.side_nav_link
+            href={~p"/demo/infrastructure"}
+            active={@active_page == :infrastructure}
+          >
+            Infrastructure
+          </.side_nav_link>
+          <.side_nav_link
+            href={~p"/demo/operations"}
+            active={@active_page == :operations}
+          >
+            Operations
+          </.side_nav_link>
+          <.side_nav_menu
+            title="Resources"
+            expanded={@active_page in [:costs, :security, :settings, :support, :components]}
+            active={@active_page in [:costs, :security, :settings, :support, :components]}
+          >
+            <.side_nav_menu_item
+              href={~p"/demo/costs"}
+              active={@active_page == :costs}
+            >
+              Cost Management
+            </.side_nav_menu_item>
+            <.side_nav_menu_item
+              href={~p"/demo/security"}
+              active={@active_page == :security}
+            >
+              Security
+            </.side_nav_menu_item>
+            <.side_nav_menu_item
+              href={~p"/demo/settings"}
+              active={@active_page == :settings}
+            >
+              Settings
+            </.side_nav_menu_item>
+            <.side_nav_menu_item
+              href={~p"/demo/support"}
+              active={@active_page == :support}
+            >
+              Support
+            </.side_nav_menu_item>
+            <.side_nav_menu_item
+              href={~p"/demo/components"}
+              active={@active_page == :components}
+            >
+              Component Catalog
+            </.side_nav_menu_item>
+            <.side_nav_menu_item href={~p"/"}>Storybook</.side_nav_menu_item>
+          </.side_nav_menu>
+        </.header_side_nav_items>
         <.side_nav_menu
           title="Operate"
           expanded={true}
@@ -153,7 +197,7 @@
     </.side_nav>
   </:side_nav>
   <:content>
-    <div id="main-content" class="demo-main">
+    <div id="main-content" class="demo-shell-main">
       {@inner_content}
     </div>
   </:content>

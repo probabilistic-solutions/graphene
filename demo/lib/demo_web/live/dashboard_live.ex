@@ -69,22 +69,19 @@ defmodule DemoWeb.DashboardLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <.grid full_width>
-      <:column span="16">
-        <.page_header>
-          <:breadcrumb>
-            <.breadcrumb>
-              <:item href={~p"/demo"} text="Cloud Admin" />
-              <:item text="Overview" />
-            </.breadcrumb>
-          </:breadcrumb>
-          <:content title="Overview">
-            <.tag type="green">Production</.tag>
-          </:content>
-          <:content_text subtitle="Real-time health, spend, and security posture across Nimbus Cloud." />
-        </.page_header>
-      </:column>
+    <.page_header>
+      <:breadcrumb>
+        <.breadcrumb size="sm">
+          <:item href={~p"/demo"} text="Cloud Admin" />
+        </.breadcrumb>
+      </:breadcrumb>
+      <:content title="Overview">
+        <.tag type="green">Production</.tag>
+      </:content>
+      <:content_text subtitle="Real-time health, spend, and security posture across Nimbus Cloud." />
+    </.page_header>
 
+    <.grid>
       <:column span="16">
         <div class="demo-section demo-card">
           <.form for={@range_form} phx-change="switch_range">

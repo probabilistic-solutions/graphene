@@ -39,22 +39,19 @@ defmodule DemoWeb.SecurityLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <.grid full_width>
-      <:column span="16">
-        <.page_header>
-          <:breadcrumb>
-            <.breadcrumb>
-              <:item href={~p"/demo"} text="Cloud Admin" />
-              <:item text="Security & Compliance" />
-            </.breadcrumb>
-          </:breadcrumb>
-          <:content title="Security & Compliance">
-            <.tag type="cool-gray">Policy Pack v3.2</.tag>
-          </:content>
-          <:content_text subtitle="Continuous policy enforcement, identity hardening, and audit trails." />
-        </.page_header>
-      </:column>
+    <.page_header>
+      <:breadcrumb>
+        <.breadcrumb size="sm">
+          <:item href={~p"/demo"} text="Cloud Admin" />
+        </.breadcrumb>
+      </:breadcrumb>
+      <:content title="Security & Compliance">
+        <.tag type="cool-gray">Policy Pack v3.2</.tag>
+      </:content>
+      <:content_text subtitle="Continuous policy enforcement, identity hardening, and audit trails." />
+    </.page_header>
 
+    <.grid>
       <:column span="16">
         <.grid full_width class="demo-section">
           <:column sm="4" md="4" lg="8">

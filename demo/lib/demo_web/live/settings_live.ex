@@ -3,7 +3,6 @@ defmodule DemoWeb.SettingsLive do
 
   alias Demo.CloudData
 
-
   @impl true
   def mount(_params, _session, socket) do
     settings = %{
@@ -42,22 +41,19 @@ defmodule DemoWeb.SettingsLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <.grid full_width>
-      <:column span="16">
-        <.page_header>
-          <:breadcrumb>
-            <.breadcrumb>
-              <:item href={~p"/demo"} text="Cloud Admin" />
-              <:item text="Settings" />
-            </.breadcrumb>
-          </:breadcrumb>
-          <:content title="Settings">
-            <.tag type="cool-gray">Organization</.tag>
-          </:content>
-          <:content_text subtitle="Configure organization defaults, budgets, and notification policies." />
-        </.page_header>
-      </:column>
+    <.page_header>
+      <:breadcrumb>
+        <.breadcrumb size="sm">
+          <:item href={~p"/demo"} text="Cloud Admin" />
+        </.breadcrumb>
+      </:breadcrumb>
+      <:content title="Settings">
+        <.tag type="cool-gray">Organization</.tag>
+      </:content>
+      <:content_text subtitle="Configure organization defaults, budgets, and notification policies." />
+    </.page_header>
 
+    <.grid>
       <:column span="16">
         <div class="demo-section demo-card demo-card--elevated">
           <.form for={@form} phx-change="validate" phx-submit="save">

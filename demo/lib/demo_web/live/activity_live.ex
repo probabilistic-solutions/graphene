@@ -44,22 +44,19 @@ defmodule DemoWeb.ActivityLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <.grid full_width>
-      <:column span="16">
-        <.page_header>
-          <:breadcrumb>
-            <.breadcrumb>
-              <:item href={~p"/demo"} text="Cloud Admin" />
-              <:item text="Live Activity" />
-            </.breadcrumb>
-          </:breadcrumb>
-          <:content title="Live Activity">
-            <.tag type="blue">PubSub</.tag>
-          </:content>
-          <:content_text subtitle="Streaming operational events in real-time across the control plane." />
-        </.page_header>
-      </:column>
+    <.page_header>
+      <:breadcrumb>
+        <.breadcrumb size="sm">
+          <:item href={~p"/demo"} text="Cloud Admin" />
+        </.breadcrumb>
+      </:breadcrumb>
+      <:content title="Live Activity">
+        <.tag type="blue">PubSub</.tag>
+      </:content>
+      <:content_text subtitle="Streaming operational events in real-time across the control plane." />
+    </.page_header>
 
+    <.grid>
       <:column span="16">
         <div class="demo-section demo-card">
           <.button kind="primary" phx-click="emit_event">

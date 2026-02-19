@@ -1,8 +1,6 @@
 defmodule DemoWeb.SupportLive do
   use DemoWeb, :live_view
 
-
-
   @impl true
   def mount(_params, _session, socket) do
     {:ok,
@@ -24,22 +22,19 @@ defmodule DemoWeb.SupportLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <.grid full_width>
-      <:column span="16">
-        <.page_header>
-          <:breadcrumb>
-            <.breadcrumb>
-              <:item href={~p"/demo"} text="Cloud Admin" />
-              <:item text="Support" />
-            </.breadcrumb>
-          </:breadcrumb>
-          <:content title="Support">
-            <.tag type="purple">24/7 coverage</.tag>
-          </:content>
-          <:content_text subtitle="Runbooks, documentation, and live support channels." />
-        </.page_header>
-      </:column>
+    <.page_header>
+      <:breadcrumb>
+        <.breadcrumb size="sm">
+          <:item href={~p"/demo"} text="Cloud Admin" />
+        </.breadcrumb>
+      </:breadcrumb>
+      <:content title="Support">
+        <.tag type="purple">24/7 coverage</.tag>
+      </:content>
+      <:content_text subtitle="Runbooks, documentation, and live support channels." />
+    </.page_header>
 
+    <.grid>
       <:column span="16">
         <div class="demo-section demo-card demo-card--elevated">
           <.tabs type="contained">

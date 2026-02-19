@@ -60,22 +60,19 @@ defmodule DemoWeb.OperationsLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <.grid full_width>
-      <:column span="16">
-        <.page_header>
-          <:breadcrumb>
-            <.breadcrumb>
-              <:item href={~p"/demo"} text="Cloud Admin" />
-              <:item text="Operations" />
-            </.breadcrumb>
-          </:breadcrumb>
-          <:content title="Operations">
-            <.tag type="green">On-call</.tag>
-          </:content>
-          <:content_text subtitle="Incident triage, deployments, and runtime safeguards." />
-        </.page_header>
-      </:column>
+    <.page_header>
+      <:breadcrumb>
+        <.breadcrumb size="sm">
+          <:item href={~p"/demo"} text="Cloud Admin" />
+        </.breadcrumb>
+      </:breadcrumb>
+      <:content title="Operations">
+        <.tag type="green">On-call</.tag>
+      </:content>
+      <:content_text subtitle="Incident triage, deployments, and runtime safeguards." />
+    </.page_header>
 
+    <.grid>
       <:column span="16">
         <div class="demo-section demo-card demo-card--elevated">
           <.tabs type="container">

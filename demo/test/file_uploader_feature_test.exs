@@ -74,7 +74,10 @@ defmodule Demo.FileUploaderFeatureTest do
   defp wait_for_submit_enabled(session, attempts \\ 20)
 
   defp wait_for_submit_enabled(session, 0) do
-    assert_has(session, css("[data-testid='carbon-file-upload-submit']:not([disabled])", count: 1))
+    assert_has(
+      session,
+      css("[data-testid='carbon-file-upload-submit']:not([disabled])", count: 1)
+    )
   end
 
   defp wait_for_submit_enabled(session, attempts) do
@@ -95,7 +98,10 @@ defmodule Demo.FileUploaderFeatureTest do
   defp wait_for_hash(session, expected_hash, attempts \\ 20)
 
   defp wait_for_hash(session, expected_hash, 0) do
-    assert_has(session, css("[data-testid='carbon-file-upload-hash']", text: expected_hash, count: 1))
+    assert_has(
+      session,
+      css("[data-testid='carbon-file-upload-hash']", text: expected_hash, count: 1)
+    )
   end
 
   defp wait_for_hash(session, expected_hash, attempts) do

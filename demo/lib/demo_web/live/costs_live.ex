@@ -43,22 +43,19 @@ defmodule DemoWeb.CostsLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <.grid full_width>
-      <:column span="16">
-        <.page_header>
-          <:breadcrumb>
-            <.breadcrumb>
-              <:item href={~p"/demo"} text="Cloud Admin" />
-              <:item text="Cost Management" />
-            </.breadcrumb>
-          </:breadcrumb>
-          <:content title="Cost Management">
-            <.tag type="warm-gray">FinOps</.tag>
-          </:content>
-          <:content_text subtitle="Track spend, forecast demand, and allocate budgets across teams." />
-        </.page_header>
-      </:column>
+    <.page_header>
+      <:breadcrumb>
+        <.breadcrumb size="sm">
+          <:item href={~p"/demo"} text="Cloud Admin" />
+        </.breadcrumb>
+      </:breadcrumb>
+      <:content title="Cost Management">
+        <.tag type="warm-gray">FinOps</.tag>
+      </:content>
+      <:content_text subtitle="Track spend, forecast demand, and allocate budgets across teams." />
+    </.page_header>
 
+    <.grid>
       <:column span="16">
         <.grid full_width class="demo-section">
           <:column sm="4" md="4" lg="8">

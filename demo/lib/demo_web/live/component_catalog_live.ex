@@ -3,20 +3,31 @@ defmodule DemoWeb.ComponentCatalogLive do
 
   alias Graphene.Icons
 
+  @graphene_asset_files ["graphene.css", "index.js"]
+
   @impl true
   def mount(_params, _session, socket) do
     components = build_component_list()
     default_component = default_component(components)
 
-    {:ok,
-     assign(socket,
-       active_page: :components,
-       page_title: "Component Catalog · Nimbus Cloud",
-       components: components,
+    socket =
+      socket
+      |> assign(
+        active_page: :components,
+        page_title: "Component Catalog · Nimbus Cloud",
+        components: components,
         selected_name: Atom.to_string(default_component.name),
         query: "",
-        filter_form: to_form(%{"query" => ""}, as: :filter)
-     )}
+        filter_form: to_form(%{"query" => ""}, as: :filter),
+        graphene_version: graphene_version(),
+        graphene_assets: graphene_assets()
+      )
+
+    if connected?(socket) do
+      :timer.send_interval(2_000, self(), :refresh_graphene_assets)
+    end
+
+    {:ok, socket}
   end
 
   @impl true
@@ -33,8 +44,17 @@ defmodule DemoWeb.ComponentCatalogLive do
   end
 
   @impl true
+  def handle_info(:refresh_graphene_assets, socket) do
+    {:noreply,
+     socket
+     |> assign(:graphene_assets, graphene_assets())
+     |> assign(:graphene_version, graphene_version())}
+  end
+
+  @impl true
   def render(assigns) do
     filtered = filter_components(assigns.components, assigns.query)
+
     selected =
       Enum.find(filtered, fn component ->
         Atom.to_string(component.name) == assigns.selected_name
@@ -47,22 +67,34 @@ defmodule DemoWeb.ComponentCatalogLive do
       |> assign(:selected_component, selected)
 
     ~H"""
-    <.grid full_width>
-      <:column span="16">
-        <.page_header>
-          <:breadcrumb>
-            <.breadcrumb>
-              <:item href={~p"/demo"} text="Cloud Admin" />
-              <:item text="Component Catalog" />
-            </.breadcrumb>
-          </:breadcrumb>
-          <:content title="Component Catalog">
-            <.tag type="cool-gray">Carbon</.tag>
-          </:content>
-          <:content_text subtitle="Rendered coverage for every Carbon wrapper in Graphene." />
-        </.page_header>
-      </:column>
+    <.page_header>
+      <:breadcrumb>
+        <.breadcrumb size="sm">
+          <:item href={~p"/demo"} text="Cloud Admin" />
+        </.breadcrumb>
+      </:breadcrumb>
+      <:content title="Component Catalog">
+        <.tag type="cool-gray">Carbon</.tag>
+      </:content>
+      <:content_text subtitle="Rendered coverage for every Carbon wrapper in Graphene." />
+    </.page_header>
 
+    <.grid>
+      <:column span="16">
+        <div class="demo-section demo-card">
+          <div class="demo-kicker">Graphene monitor</div>
+          <h3>Assets & version</h3>
+          <p class="demo-muted">
+            This panel refreshes every 2 seconds to surface regenerated assets.
+          </p>
+          <.structured_list rows={@graphene_assets} condensed>
+            <:col :let={asset} label="Asset">{asset.name}</:col>
+            <:col :let={asset} label="Size">{asset.size || "Missing"}</:col>
+            <:col :let={asset} label="Updated">{asset.updated_at || "Missing"}</:col>
+          </.structured_list>
+          <p class="demo-muted">Graphene v{@graphene_version}</p>
+        </div>
+      </:column>
       <:column span="16">
         <div class="demo-section demo-card">
           <div class="demo-page-grid">
@@ -98,10 +130,10 @@ defmodule DemoWeb.ComponentCatalogLive do
             <div :if={@selected_component}>
               <div class="demo-component-header">
                 <h4>{@selected_component.label}</h4>
-                <.tag type="cool-gray">:<%= @selected_component.name %></.tag>
+                <.tag type="cool-gray">:{@selected_component.name}</.tag>
               </div>
               <div class="demo-component-preview">
-                <%= component_preview(@selected_component) %>
+                {component_preview(@selected_component)}
               </div>
             </div>
           </div>
@@ -208,6 +240,55 @@ defmodule DemoWeb.ComponentCatalogLive do
     Enum.reduce(meta.slots, base, fn slot, acc ->
       Map.put(acc, slot.name, slot_entries(slot, name))
     end)
+  end
+
+  defp graphene_assets do
+    Enum.map(@graphene_asset_files, fn name ->
+      case graphene_asset_stat(name) do
+        {:ok, stat} ->
+          %{
+            name: name,
+            size: format_bytes(stat.size),
+            updated_at: format_mtime(stat.mtime)
+          }
+
+        {:error, _} ->
+          %{name: name, size: nil, updated_at: nil}
+      end
+    end)
+  end
+
+  defp graphene_asset_stat(name) do
+    with priv_dir when is_list(priv_dir) <- :code.priv_dir(:graphene),
+         path <- Path.join([to_string(priv_dir), "static", "assets", name]),
+         {:ok, stat} <- File.stat(path) do
+      {:ok, stat}
+    else
+      _ -> {:error, :missing}
+    end
+  end
+
+  defp graphene_version do
+    Application.spec(:graphene, :vsn) |> to_string()
+  end
+
+  defp format_mtime(mtime) do
+    mtime
+    |> NaiveDateTime.from_erl!()
+    |> Calendar.strftime("%Y-%m-%d %H:%M:%S")
+  end
+
+  defp format_bytes(size) when is_integer(size) do
+    cond do
+      size >= 1_048_576 ->
+        "#{Float.round(size / 1_048_576, 1)} MB"
+
+      size >= 1024 ->
+        "#{Float.round(size / 1024, 1)} KB"
+
+      true ->
+        "#{size} B"
+    end
   end
 
   defp maybe_put_named_attr(assigns, attr_name, meta, component_name) do
