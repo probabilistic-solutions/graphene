@@ -74,6 +74,7 @@ defmodule Graphene.CarbonComponents.DatePicker do
       |> assign_new(:max_date, fn -> nil end)
       |> assign_new(:min_date, fn -> nil end)
       |> assign_new(:name, fn -> nil end)
+      |> assign_new(:field, fn -> nil end)
       |> assign_new(:open, fn -> false end)
       |> assign_new(:readonly, fn -> false end)
       |> assign_new(:value, fn -> nil end)
@@ -91,6 +92,9 @@ defmodule Graphene.CarbonComponents.DatePicker do
       open={@open}
       readonly={@readonly}
       value={@value}
+      field={@field}
+      form={@form}
+      form_event={@form_event}
       {@rest}
     >
       <%= for input <- @input do %>

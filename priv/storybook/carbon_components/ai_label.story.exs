@@ -1,7 +1,22 @@
 defmodule Storybook.CarbonComponents.AILabel do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.ai_label/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+The AI label marks AI-generated or AI-assisted content and provides a consistent
+entry point for explainability. Use it whenever an interface includes AI output,
+not as decoration or as a trigger for AI actions.
+
+Pair .ai_label with .popover or .toggletip to explain the model or data sources,
+and keep it adjacent to the content it annotates.
+""")
+  end
+
+  
 
   def variations do
     [
@@ -31,6 +46,8 @@ defmodule Storybook.CarbonComponents.AILabel do
       },
       %VariationGroup{
         id: :sizes,
+        description: "Scale variants",
+        note: "Match the label size to surrounding content and keep a single size per surface.",
         variations:
           for size <- ~w(sm md lg) do
             %Variation{

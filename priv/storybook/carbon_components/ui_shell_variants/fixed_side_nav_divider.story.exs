@@ -9,7 +9,13 @@ defmodule Storybook.CarbonComponents.UIShell.Variants.FixedSideNavDivider do
 
   def render(assigns) do
     ~H"""
-    <Graphene.CarbonComponents.side_nav is_not_child_of_header aria-label="Side navigation" collapse_mode="fixed" expanded>
+    <Graphene.CarbonComponents.side_nav
+      is_not_child_of_header
+      usage_mode="regular"
+      aria-label="Side navigation"
+      collapse_mode="fixed"
+      expanded
+    >
       <Graphene.CarbonComponents.side_nav_items>
         <Graphene.CarbonComponents.side_nav_menu title="L0 menu">
           <Graphene.CarbonComponents.side_nav_menu_item href="#">L0 menu item</Graphene.CarbonComponents.side_nav_menu_item>
@@ -26,7 +32,6 @@ defmodule Storybook.CarbonComponents.UIShell.Variants.FixedSideNavDivider do
           <Graphene.CarbonComponents.side_nav_menu_item href="#">L0 menu item</Graphene.CarbonComponents.side_nav_menu_item>
           <Graphene.CarbonComponents.side_nav_menu_item href="#">L0 menu item</Graphene.CarbonComponents.side_nav_menu_item>
         </Graphene.CarbonComponents.side_nav_menu>
-        <Graphene.CarbonComponents.side_nav_divider />
         <Graphene.CarbonComponents.side_nav_link href="#">L0 link</Graphene.CarbonComponents.side_nav_link>
         <Graphene.CarbonComponents.side_nav_link href="#">L0 link</Graphene.CarbonComponents.side_nav_link>
       </Graphene.CarbonComponents.side_nav_items>

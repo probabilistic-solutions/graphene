@@ -103,7 +103,7 @@ defmodule Graphene.CodeGen.ComponentTest do
                  %Graphene.CodeGen.Component.Slot{
                    name: "icon",
                    htmlname: "icon",
-                   atomname: ":\"s-icon\"",
+                   atomname: ":icon",
                    opts: [doc: "The icon for the trigger button."],
                    deprecated: false
                  }
@@ -137,9 +137,10 @@ defmodule Graphene.CodeGen.ComponentTest do
              attr :toolbar_action, :boolean, default: false, doc: "`true` if this menu is a toolbar action"
              attr :rest, :global
 
-             slot :"s-icon", doc: "The icon for the trigger button.", do: attr(:tag, :string)
+             slot :icon, doc: "The icon for the trigger button.", do: attr(:tag, :string)
              slot :inner_block
              def breadcrumb_overflow_menu(assigns) do
+            
                  ~H"""
                  <cds-breadcrumb-overflow-menu
                   data-table={assigns[:data_table]}
@@ -147,7 +148,7 @@ defmodule Graphene.CodeGen.ComponentTest do
                   toolbar-action={assigns[:toolbar_action]}
                   {@rest}>
                   <%= render_slot(@inner_block) %>
-                  <.dynamic_tag :for={s <- assigns[:"s-icon"]} tag_name={Map.get(s, :tag, "div")} slot="icon"><%= render_slot(s) %></.dynamic_tag>
+                  <.dynamic_tag :for={s <- assigns[:icon]} tag_name={Map.get(s, :tag, "div")} slot="icon"><%= render_slot(s) %></.dynamic_tag>
                  </cds-breadcrumb-overflow-menu>
                  """
              end

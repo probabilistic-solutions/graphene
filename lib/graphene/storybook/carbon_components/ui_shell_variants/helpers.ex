@@ -67,10 +67,10 @@ defmodule Storybook.CarbonComponents.UIShell.Variants.Helpers do
                 <cds-modal-footer-button kind="secondary" data-modal-close>
                   Cancel
                 </cds-modal-footer-button>
-                <cds-modal-footer-button>Add</cds-modal-footer-button>
+                <cds-modal-footer-button kind="primary">Add</cds-modal-footer-button>
               </cds-modal-footer>
             </cds-modal>
-            <cds-button>Launch modal</cds-button>
+            <cds-button kind="primary">Launch modal</cds-button>
           </div>
         </div>
       </div>

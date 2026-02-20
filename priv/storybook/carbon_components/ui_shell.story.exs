@@ -1,15 +1,18 @@
 defmodule Storybook.CarbonComponents.UIShell do
   use PhoenixStorybook.Story, :example
 
+  import Graphene.CarbonComponents
   def doc do
     """
-    UI shell layout.
+The UI shell is the persistent frame for product navigation, including header
+and side nav. Use it to provide consistent navigation and branding.
 
-    For full page layouts, wrap your main content inside a top-level `<Graphene.CarbonComponents.grid full_width>`
-    so sections align to the Carbon grid and spacing is controlled via `row_gap`. When a
-    side nav is present, the shell offsets content based on the nav expansion state so
-    the layout matches Carbon UI shell guidance.
-    """
+For full page layouts, pair .ui_shell with a top-level
+`<Graphene.CarbonComponents.grid full_width>` in the content area so sections
+align to the Carbon grid and spacing is controlled via `row_gap`. When a side
+nav is present, the shell offsets content based on the nav expansion state so
+the layout matches Carbon UI shell guidance.
+"""
   end
 
   @impl true
@@ -91,15 +94,15 @@ defmodule Storybook.CarbonComponents.UIShell do
               <Graphene.CarbonComponents.side_nav_menu_item href="#">Link</Graphene.CarbonComponents.side_nav_menu_item>
             </Graphene.CarbonComponents.side_nav_menu>
             <Graphene.CarbonComponents.side_nav_link href="#">
-              <:title_icon>
+              <:title_icon_container>
                 <Graphene.CarbonComponents.icon name="catalog" size={16} />
-              </:title_icon>
+              </:title_icon_container>
               Link
             </Graphene.CarbonComponents.side_nav_link>
             <Graphene.CarbonComponents.side_nav_link href="#">
-              <:title_icon>
+              <:title_icon_container>
                 <Graphene.CarbonComponents.icon name="settings" size={16} />
-              </:title_icon>
+              </:title_icon_container>
               Link
             </Graphene.CarbonComponents.side_nav_link>
           </Graphene.CarbonComponents.side_nav_items>

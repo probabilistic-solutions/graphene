@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.StructuredList do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.structured_list/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Structured lists present key-value or comparison content in aligned columns.
+Use them for summaries, definitions, or selectable lists.
+
+Pair .structured_list with .checkbox or .radio_button when selection is needed,
+and keep rows concise.
+""")
+  end
+
+  
 
   def variations do
     [

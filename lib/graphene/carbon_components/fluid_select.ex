@@ -81,6 +81,7 @@ defmodule Graphene.CarbonComponents.FluidSelect do
       |> assign_new(:is_fluid, fn -> false end)
       |> assign_new(:multiple, fn -> nil end)
       |> assign_new(:name, fn -> nil end)
+      |> assign_new(:field, fn -> nil end)
       |> assign_new(:pattern, fn -> nil end)
       |> assign_new(:placeholder, fn -> nil end)
       |> assign_new(:readonly, fn -> false end)
@@ -112,6 +113,9 @@ defmodule Graphene.CarbonComponents.FluidSelect do
       value={@value}
       warn={@warn}
       warn_text={@warn_text}
+      field={@field}
+      form={@form}
+      form_event={@form_event}
       {@rest}
     >
       <.dynamic_tag

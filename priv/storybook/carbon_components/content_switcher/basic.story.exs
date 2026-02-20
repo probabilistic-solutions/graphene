@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.ContentSwitcher.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.content_switcher/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Content switchers toggle between two or more views in the same space. Use them
+for small sets of mutually exclusive views, such as list versus grid.
+
+Pair .content_switcher with .data_table or .tile layouts, and use .tabs when
+you need navigation across distinct sections.
+""")
+  end
+
+  
 
   def variations do
     [
@@ -24,6 +38,8 @@ defmodule Storybook.CarbonComponents.ContentSwitcher.Basic do
       },
       %VariationGroup{
         id: :sizes,
+        description: "Size variants",
+        note: "Match the switcher size to surrounding controls and layout density.",
         variations:
           for size <- ~w(sm md lg xl) do
             %Variation{

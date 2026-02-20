@@ -2,7 +2,21 @@ Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.Selection do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.data_table/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Row selection enables multi-row actions and comparison. Use checkbox selection
+when multiple rows can be chosen at once.
+
+Pair selection with .table_batch_actions and provide clear selected counts in
+the toolbar.
+""")
+  end
+
+  
 
   def variations do
     [

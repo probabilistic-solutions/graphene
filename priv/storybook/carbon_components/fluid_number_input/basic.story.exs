@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.FluidNumberInput.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.fluid_number_input/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Fluid number inputs stretch to the container width for fluid layouts. Use them
+in full-width forms or side panels where alignment is edge-to-edge.
+
+Pair .fluid_number_input with .form and .grid, and fall back to .number_input
+for compact, dense layouts.
+""")
+  end
+
+  
 
   def variations do
     [

@@ -66,6 +66,15 @@ defmodule Graphene.CarbonComponents.Slider do
   slot :inner_block
 
   def slider(assigns) do
+    # Carbon's slider uses number-typed reactive properties; when attributes are absent,
+    # Lit can set those properties to `null`, causing crashes (e.g. `null.toString()`).
+    # Provide safe defaults that match Carbon's constructor defaults.
+    assigns =
+      assigns
+      |> assign(:min, if(is_nil(assigns[:min]) || assigns[:min] == "", do: "0", else: assigns[:min]))
+      |> assign(:max, if(is_nil(assigns[:max]) || assigns[:max] == "", do: "100", else: assigns[:max]))
+      |> assign(:step, if(is_nil(assigns[:step]) || assigns[:step] == "", do: "1", else: assigns[:step]))
+
     FormComponents.slider(assigns)
   end
 
@@ -97,6 +106,12 @@ defmodule Graphene.CarbonComponents.Slider do
   slot :inner_block
 
   def slider_input(assigns) do
+    assigns =
+      assigns
+      |> assign(:min, if(is_nil(assigns[:min]) || assigns[:min] == "", do: "0", else: assigns[:min]))
+      |> assign(:max, if(is_nil(assigns[:max]) || assigns[:max] == "", do: "100", else: assigns[:max]))
+      |> assign(:step, if(is_nil(assigns[:step]) || assigns[:step] == "", do: "1", else: assigns[:step]))
+
     CoreComponents.slider_input(assigns)
   end
 

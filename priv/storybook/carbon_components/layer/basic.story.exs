@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.Layer.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.layer/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Layers adjust background and elevation for nested surfaces. Use them when
+stacking panels, cards, or modals so contrast remains consistent.
+
+Combine .layer with .tile or .contained_list and keep layer levels consistent
+across the page.
+""")
+  end
+
+  
 
   def variations do
     [

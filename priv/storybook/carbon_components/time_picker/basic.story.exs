@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.TimePicker.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.time_picker/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Time pickers help users select a time value. Use them for scheduling or time
+settings.
+
+Pair .time_picker with .date_picker for date-time workflows and keep it within a
+.form for validation.
+""")
+  end
+
+  
 
   def variations do
     [

@@ -1,7 +1,20 @@
 defmodule Storybook.CarbonComponents.Tabs.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.tabs/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Tabs let users switch between related views in the same context. Use them to
+reduce cognitive load and keep content organized.
+
+Pair .tabs with .page_header for context and keep tab labels short and clear.
+""")
+  end
+
+  
 
   def variations do
     [
@@ -23,6 +36,8 @@ defmodule Storybook.CarbonComponents.Tabs.Basic do
       },
       %VariationGroup{
         id: :sizes,
+        description: "Size variants",
+        note: "Match tab size to layout density; md is the default.",
         variations:
           for size <- ~w(sm md lg xl) do
             %Variation{

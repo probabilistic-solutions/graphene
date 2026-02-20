@@ -1,8 +1,14 @@
 defmodule Storybook.CarbonComponents.Modal.Basic do
   use PhoenixStorybook.Story, :example
-
+  import Graphene.CarbonComponents
   def doc do
-    "Modal sizes with controlled open state."
+    """
+Modals focus the user on a single task or decision. Keep content concise and
+avoid nesting modals.
+
+Pair .modal with clear primary and secondary .button actions, and use inline
+validation for form content inside the modal.
+"""
   end
 
   @impl true

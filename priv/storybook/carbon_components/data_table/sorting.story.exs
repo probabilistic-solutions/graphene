@@ -2,7 +2,21 @@ Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.Sorting do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.data_table/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Sorting lets users reorder rows by column. Use it for datasets that benefit from
+comparison or ranking.
+
+Pair sortable headers with .table_toolbar_search to help users narrow and sort
+results together.
+""")
+  end
+
+  
 
   def variations do
     [

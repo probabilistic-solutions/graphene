@@ -68,11 +68,11 @@ defmodule Storybook.CarbonComponents.UIShell.Variants.HeaderBaseNavigationAction
             <Graphene.CarbonComponents.side_nav_menu_item href="#">Link</Graphene.CarbonComponents.side_nav_menu_item>
           </Graphene.CarbonComponents.side_nav_menu>
           <Graphene.CarbonComponents.side_nav_link href="#">
-            <:title_icon><Graphene.CarbonComponents.icon name="analytics" size={16} /></:title_icon>
+            <:title_icon_container><Graphene.CarbonComponents.icon name="analytics" size={16} /></:title_icon_container>
             Link
           </Graphene.CarbonComponents.side_nav_link>
           <Graphene.CarbonComponents.side_nav_link href="#">
-            <:title_icon><Graphene.CarbonComponents.icon name="analytics" size={16} /></:title_icon>
+            <:title_icon_container><Graphene.CarbonComponents.icon name="analytics" size={16} /></:title_icon_container>
             Link
           </Graphene.CarbonComponents.side_nav_link>
         </Graphene.CarbonComponents.side_nav_items>

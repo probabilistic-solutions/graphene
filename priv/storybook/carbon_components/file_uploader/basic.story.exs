@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.FileUploader.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.file_uploader/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+File uploaders let users select one or more files to upload. Use them for
+attachments and data imports, and support drag-and-drop when appropriate.
+
+Combine .file_uploader with .inline_notification feedback and clear size or type
+constraints in the label text.
+""")
+  end
+
+  
 
   def variations do
     [

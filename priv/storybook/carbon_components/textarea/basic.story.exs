@@ -1,7 +1,20 @@
 defmodule Storybook.CarbonComponents.Textarea.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.textarea/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Textareas are for multi-line input like comments or descriptions. Use them for
+longer text where multiple lines are expected.
+
+Combine .textarea with .form and optional character guidance for clarity.
+""")
+  end
+
+  
 
   def variations do
     [

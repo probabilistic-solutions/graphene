@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.Toggletip do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.toggletip/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Toggletips reveal brief, interactive help on click. Use them when users may need
+extra context or a small action without leaving the page.
+
+Include .link or small .button actions inside the toggletip and keep the content
+short.
+""")
+  end
+
+  
 
   def variations do
     [

@@ -2,7 +2,21 @@ Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.AILabel do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.data_table/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Data tables present structured datasets with columns and rows. This story shows
+AI labels applied to table content to indicate AI-generated fields.
+
+Combine .data_table with .ai_label in headers or cells and add a .tooltip or
+.toggletip to explain AI provenance.
+""")
+  end
+
+  
 
   def variations do
     [

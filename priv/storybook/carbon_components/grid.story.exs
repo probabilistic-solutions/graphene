@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.Grid do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.grid/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+The Carbon grid provides a 2x spacing-based layout system. Use .grid and
+:column slots to align content to the 16-column grid.
+
+Combine .grid with .ui_shell content and use row_gap to control vertical rhythm
+between sections.
+""")
+  end
+
+  
 
   def variations do
     [

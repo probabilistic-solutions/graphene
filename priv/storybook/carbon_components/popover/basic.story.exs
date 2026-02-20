@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.Popover.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.popover/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Popovers are layered containers for rich, contextual content. Use them for
+detail previews or lightweight controls.
+
+Combine .popover with .link or .button triggers and avoid critical tasks that
+should live in a full modal.
+""")
+  end
+
+  
 
   def variations do
     [

@@ -1,38 +1,94 @@
-defmodule Storybook.MyPage do
-  # See https://hexdocs.pm/phoenix_storybook/PhoenixStorybook.Story.html for full story
-  # documentation.
+defmodule Storybook.Welcome do
   use PhoenixStorybook.Story, :page
   use Graphene, [:html, :live]
 
-  def doc, do: "Your very first steps into using Phoenix Storybook"
-
-  # Declare an optional tab-based navigation in your page:
-  def navigation do
-    [
-      {:welcome, "Welcome", {:fa, "hand-wave", :thin}},
-      {:components, "Components", {:fa, "toolbox", :thin}},
-      {:sandboxing, "Sandboxing", {:fa, "box-check", :thin}},
-      {:icons, "Icons", {:fa, "icons", :thin}}
-    ]
+  def doc do
+    "Start here: how to read Graphene Storybook and build Carbon-first UIs professionally."
   end
 
-  # This is a dummy fonction that you should replace with your own HEEx content.
-  def render(assigns = %{tab: :welcome}) do
+  def render(assigns) do
+    component_example =
+      ~S"""
+      <.button kind="primary">Save</.button>
+      <.data_table rows={[]} />
+      """
+      |> String.trim()
+
+    e2e_commands =
+      ~S"""
+      cd demo && mix test test/route_rendering_feature_test.exs
+      cd demo && mix test test/storybook_rendering_test.exs
+      """
+      |> String.trim()
+
+    assigns =
+      assign(assigns,
+        component_example: component_example,
+        e2e_commands: e2e_commands
+      )
+
     ~H"""
-    <div>
+    <div class="psb-doc">
+      <h1>Welcome to Graphene</h1>
       <p>
-        We generated your storybook with an example of a page and a component.
-        Explore the generated <code>*.story.exs</code>
-        files in your <code>/storybook</code>
-        directory. When you're ready to add your own, just drop your new story & index files into the same directory and refresh your storybook.
+        Graphene is a Carbon-first component facade for Phoenix LiveView. It wraps Carbon Web
+        Components and gives you a consistent component API (slots, defaults, and patterns) so teams
+        can ship complex, operational UIs without UI drift.
       </p>
 
+      <h2>How to navigate this Storybook</h2>
+      <ul>
+        <li>
+          <strong>Foundations</strong> explains the “why” behind sentiment, typography, grid, and
+          density. Read this first if you’re composing real pages, not just rendering components.
+        </li>
+        <li>
+          <strong>Carbon Components</strong> is the “how” for each building block. Each story includes
+          a short usage note and variations that represent real states to validate.
+        </li>
+        <li>
+          <strong>Examples</strong> shows realistic compositions you can adapt when building screens.
+        </li>
+        <li>
+          The <a href="/demo">Nimbus Cloud demo</a> is a working application that exercises layout,
+          density, and composition.
+        </li>
+      </ul>
+
+      <h2>Component syntax (the “dot” style)</h2>
       <p>
-        Explore the live demo console here:
-        <a href="/demo">Nimbus Cloud demo</a>
+        In your app, bring Graphene into scope with <code>use Graphene.Components</code> (typically in
+        your <code>MyAppWeb.Components</code> module), then use the concise HEEx form:
       </p>
 
-      <section class="psb-doc">
+      <pre class="psb highlight psb:p-2 psb:md:p-3 psb:border psb:border-slate-800 psb:text-xs psb:md:text-sm psb:rounded-md psb:bg-slate-800! psb:whitespace-pre-wrap psb:break-normal">
+        <code class="language-heex"><%= @component_example %></code>
+      </pre>
+
+      <p>
+        In the docs, we refer to components using this <code>&lt;.component&gt;</code> style for
+        brevity (for example, <code>.page_header</code>, <code>.grid</code>, <code>.modal</code>).
+      </p>
+
+      <h2>Read this first</h2>
+      <ul>
+        <li><a href="/foundations/sentiment">Sentiment</a></li>
+        <li><a href="/foundations/style">Style</a></li>
+        <li><a href="/foundations/layout">Layout</a></li>
+        <li><a href="/foundations/feel">Feel</a></li>
+        <li><a href="/foundations/calligraphy">Calligraphy (Typography)</a></li>
+        <li><a href="/foundations/grid_usage">Effective Grid Usage</a></li>
+        <li><a href="/foundations/application_outline">Application Page Outline</a></li>
+        <li><a href="/foundations/aesthetics">Aesthetics</a></li>
+        <li><a href="/foundations/content_density">Content Density</a></li>
+      </ul>
+
+      <h2>Get started</h2>
+      <p>
+        If you’re integrating Graphene into a Phoenix app, these steps are the minimal foundation:
+      </p>
+
+      <div class="psb-doc">
         <!-- GRAPHENE_INSTALL:START -->
         <%= Phoenix.HTML.raw(~S'''
         <h2>
@@ -115,70 +171,25 @@ defmodule Storybook.MyPage do
         </span><span class="p" data-group-id="6755798831-8">&lt;%</span><span class="w"> </span><span class="k" data-group-id="6755798831-ex-4">end</span><span class="w"> </span><span class="p" data-group-id="6755798831-8">%&gt;</span></code></pre>
         ''') %>
         <!-- GRAPHENE_INSTALL:END -->
-      </section>
-
-      <p>
-        Here are a few docs you might be interested in:
-      </p>
-
-      <.description_list items={[
-        {"Create a new Story", doc_link("Story")},
-        {"Display components using Variations", doc_link("Stories.Variation")},
-        {"Group components using VariationGroups", doc_link("Stories.VariationGroup")},
-        {"Organize the sidebar with Index files", doc_link("Index")}
-      ]} />
-
-      <p>
-        This should be enough to get you started, but you can use the tabs in the upper-right corner of this page to <strong>check out advanced usage guides</strong>.
-      </p>
-    </div>
-    """
-  end
-
-  def render(assigns = %{tab: guide}) when guide in ~w(components sandboxing icons)a do
-    assigns =
-      assign(assigns,
-        guide: guide,
-        guide_content: PhoenixStorybook.Guides.markup("#{guide}.md")
-      )
-
-    ~H"""
-    <p>
-      <a href={"https://hexdocs.pm/phoenix_storybook/#{@guide}.html"} target="_blank">
-        This and other guides are also available on HexDocs.
-      </a>
-    </p>
-    <div>
-      <%= Phoenix.HTML.raw(@guide_content) %>
-    </div>
-    """
-  end
-
-  defp description_list(assigns) do
-    ~H"""
-    <div>
-      <div>
-        <dl>
-          <%= for {dt, link} <- @items do %>
-            <div>
-              <dt>
-                <%= dt %>
-              </dt>
-              <dd>
-                <a href={link} target="_blank">
-                  <%= link %>
-                </a>
-              </dd>
-            </div>
-          <% end %>
-        </dl>
       </div>
+
+      <h2>Always run the E2E checks</h2>
+      <p>
+        When you change stories, examples, or wrappers, validate that every route and every story
+        still renders (and that no compile errors leak into the UI):
+      </p>
+
+      <pre class="psb highlight psb:p-2 psb:md:p-3 psb:border psb:border-slate-800 psb:text-xs psb:md:text-sm psb:rounded-md psb:bg-slate-800! psb:whitespace-pre-wrap psb:break-normal">
+        <code class="language-bash"><%= @e2e_commands %></code>
+      </pre>
+
+      <h2>Generated code</h2>
+      <p>
+        Most Graphene wrappers and many Storybook stories are generated. If you need to change how a
+        wrapper works or how stories are structured, prefer updating codegen templates/patches and
+        re-running generators over editing generated modules directly.
+      </p>
     </div>
     """
   end
-
-  defp doc_link(page) do
-    "https://hexdocs.pm/phoenix_storybook/PhoenixStorybook.#{page}.html"
-  end
-
 end

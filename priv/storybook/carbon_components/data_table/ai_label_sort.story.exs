@@ -2,7 +2,21 @@ Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.AILabelSort do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.data_table/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Sortable data tables help users compare datasets by column. This story adds AI
+labels to sortable headers to flag AI-enhanced fields.
+
+Combine sortable headers with .tooltip for AI explanations and keep sorting
+consistent across related columns.
+""")
+  end
+
+  
 
   def variations do
     [

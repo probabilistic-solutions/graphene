@@ -24,7 +24,7 @@ defmodule Storybook.CarbonComponents.UIShell.Variants.SideNavLargeItems do
           <Graphene.CarbonComponents.side_nav_menu_item href="#">Menu 3</Graphene.CarbonComponents.side_nav_menu_item>
         </Graphene.CarbonComponents.side_nav_menu>
         <Graphene.CarbonComponents.side_nav_link large href="#">
-          <:title_icon><Graphene.CarbonComponents.icon name="analytics" size={16} /></:title_icon>
+          <:title_icon_container><Graphene.CarbonComponents.icon name="analytics" size={16} /></:title_icon_container>
           Large link w/icon
         </Graphene.CarbonComponents.side_nav_link>
       </Graphene.CarbonComponents.side_nav_items>

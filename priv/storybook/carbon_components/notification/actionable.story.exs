@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.Notification.Actionable do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.actionable_notification/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Actionable notifications include buttons for immediate follow-up actions. Use
+them when a status message requires user input.
+
+Pair .actionable_notification with relevant .button actions and keep the message
+short to avoid overwhelming the page.
+""")
+  end
+
+  
 
   def variations do
     [

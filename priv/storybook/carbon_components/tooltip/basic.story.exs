@@ -1,7 +1,20 @@
 defmodule Storybook.CarbonComponents.Tooltip.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.tooltip/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Tooltips provide short, non-essential hints on hover or focus. Use them for
+icon-only controls or terse labels.
+
+Pair .tooltip with .icon_button and avoid placing critical instructions inside.
+""")
+  end
+
+  
 
   def variations do
     [

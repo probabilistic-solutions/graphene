@@ -1,7 +1,20 @@
 defmodule Storybook.CarbonComponents.Notification.Toast do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.toast_notification/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Toast notifications are brief, time-based messages that appear outside the flow.
+Use them for global feedback like success or background completion.
+
+Pair .toast_notification with succinct copy and avoid stacking too many at once.
+""")
+  end
+
+  
 
   def variations do
     [

@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.IconButton do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.icon_button/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Icon buttons trigger actions with an icon-only control. Provide a tooltip label
+for accessibility and clarity.
+
+Pair .icon_button with .tooltip or .toggletip and use ghost styles for secondary
+toolbar actions.
+""")
+  end
+
+  
 
   def variations do
     [

@@ -2,7 +2,21 @@ Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.AILabelExpansion do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.data_table/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Expandable rows let users access secondary details without leaving the table.
+This story combines expansion with AI labels for AI-generated row details.
+
+Pair .data_table expansion with .ai_label and .structured_list content in the
+expanded area to keep the detail view scannable.
+""")
+  end
+
+  
 
   def variations do
     [

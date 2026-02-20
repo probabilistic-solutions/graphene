@@ -82,6 +82,7 @@ defmodule Graphene.CarbonComponents.TimePicker do
       |> assign_new(:hide_label, fn -> false end)
       |> assign_new(:invalid, fn -> false end)
       |> assign_new(:name, fn -> nil end)
+      |> assign_new(:field, fn -> nil end)
       |> assign_new(:read_only, fn -> false end)
       |> assign_new(:required, fn -> false end)
       |> assign_new(:value, fn -> nil end)
@@ -105,6 +106,9 @@ defmodule Graphene.CarbonComponents.TimePicker do
       value={@value}
       warning={@warning}
       warning_text={@warning_text}
+      field={@field}
+      form={@form}
+      form_event={@form_event}
       {@rest}
     >
       <.dynamic_tag

@@ -2,7 +2,20 @@ Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.SelectionRadio do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.data_table/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Radio selection supports single-row selection in a table. Use it when only one
+row should be active at a time.
+
+Combine with detail panels or forms that reflect the single selected row.
+""")
+  end
+
+  
 
   def variations do
     [

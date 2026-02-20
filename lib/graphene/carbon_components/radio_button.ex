@@ -124,6 +124,7 @@ defmodule Graphene.CarbonComponents.RadioButton do
       |> assign_new(:invalid_text, fn -> nil end)
       |> assign_new(:legend_text, fn -> nil end)
       |> assign_new(:name, fn -> nil end)
+      |> assign_new(:field, fn -> nil end)
       |> assign_new(:read_only, fn -> false end)
       |> assign_new(:required, fn -> false end)
       |> assign_new(:value, fn -> nil end)
@@ -146,6 +147,9 @@ defmodule Graphene.CarbonComponents.RadioButton do
       value={@value}
       warn={@warn}
       warn_text={@warn_text}
+      field={@field}
+      form={@form}
+      form_event={@form_event}
       {@rest}
     >
       <%= for item <- @item do %>

@@ -1,7 +1,22 @@
 defmodule Storybook.CarbonComponents.Checkbox.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.checkbox_group/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Checkbox groups support multiple selections where options are independent. Use
+them for filters, preferences, or consent, and use .radio_button when only one
+option is allowed.
+
+Combine .checkbox_group with .form_group and validation text, and use within
+.data_table for batch selection scenarios.
+""")
+  end
+
+  
 
   def variations do
     [

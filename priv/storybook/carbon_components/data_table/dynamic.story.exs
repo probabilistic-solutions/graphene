@@ -1,9 +1,15 @@
 Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.Dynamic do
   use PhoenixStorybook.Story, :example
-
+  import Graphene.CarbonComponents
   def doc do
-    "Data table with rows added dynamically."
+    """
+Dynamic tables update row data over time without a full reload. Use them for
+live status, monitoring, or streaming datasets.
+
+Pair .data_table with .inline_loading or subtle indicators to explain updates,
+and avoid disruptive re-ordering while users are scanning.
+"""
   end
 
   @impl true

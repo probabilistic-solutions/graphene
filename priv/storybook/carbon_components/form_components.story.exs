@@ -4,9 +4,15 @@ defmodule Storybook.CarbonComponents.FormComponents do
   use PhoenixStorybook.Story, :example
   import Storybook.CarbonComponents.InteractivityHelpers
   alias Phoenix.LiveView.JS
-
+  alias Graphene.Internal.CoreComponents
   def doc do
-    "All form-aware components with a live form state preview."
+    """
+This page demonstrates form-aware components sharing a single form state. Use
+it as a reference for how fields, selects, and pickers work together.
+
+Combine inputs with .form_group and .button actions, and surface validation with
+.inline_notification or per-field error text.
+"""
   end
 
   @impl true
@@ -175,13 +181,13 @@ defmodule Storybook.CarbonComponents.FormComponents do
       </div>
 
       <div style="display: grid; gap: 1.5rem;">
-        <Graphene.CarbonComponents.event_panel
+        <.event_panel
           title="Form params (phx-change)"
           state={@form_state}
           last_event={@change_event}
           pretty={true}
         />
-        <Graphene.CarbonComponents.event_panel
+        <.event_panel
           title="Submitted params (phx-submit)"
           state={@submitted_state}
           last_event={@submit_event}

@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.DatePicker.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.date_picker/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Date pickers help users choose a single date or date range. Use them when
+precise scheduling or reporting dates are required.
+
+Pair .date_picker with .time_picker for scheduling workflows and keep them in a
+.form with validation hints.
+""")
+  end
+
+  
 
   def variations do
     [

@@ -11,7 +11,13 @@ defmodule Graphene.CodeGen.Component.SlotTest do
 
       res = Slot.parse(data)
 
-      assert %Slot{name: "title-icon", atomname: ":\"s-title-icon\"", opts: [{:doc, "The icon."}]} =
+      assert %Slot{
+               name: "title-icon",
+               htmlname: "title-icon",
+               atomname: ":title_icon",
+               opts: [doc: "The icon."],
+               deprecated: false
+             } =
                res
     end
 
@@ -21,7 +27,13 @@ defmodule Graphene.CodeGen.Component.SlotTest do
       }
 
       res = Slot.parse(data)
-      assert %Slot{name: "title-icon", atomname: ":\"s-title-icon\"", opts: []} = res
+      assert %Slot{
+               name: "title-icon",
+               htmlname: "title-icon",
+               atomname: ":title_icon",
+               opts: [],
+               deprecated: false
+             } = res
     end
   end
 
@@ -31,7 +43,7 @@ defmodule Graphene.CodeGen.Component.SlotTest do
         slot: %Slot{
           name: "title-icon",
           htmlname: "title-icon",
-          atomname: ":\"title-icon\"",
+          atomname: ":title_icon",
           opts: [doc: "Info"]
         }
       ]
@@ -39,14 +51,14 @@ defmodule Graphene.CodeGen.Component.SlotTest do
 
     test "display def", %{slot: slot} do
       res = Slot.display_def(slot)
-      assert res == ~S|slot :"title-icon", doc: "Info", do: attr(:tag, :string)|
+      assert res == ~S|slot :title_icon, doc: "Info", do: attr(:tag, :string)|
     end
 
     test "display use", %{slot: slot} do
       res = Slot.display_use(slot)
 
       assert res ==
-               ~S|<.dynamic_tag :for={s <- assigns[:"title-icon"]} tag_name={Map.get(s, :tag, "div")} slot="title-icon"><%= render_slot(s) %></.dynamic_tag>|
+               ~S|<.dynamic_tag :for={s <- assigns[:title_icon]} tag_name={Map.get(s, :tag, "div")} slot="title-icon"><%= render_slot(s) %></.dynamic_tag>|
     end
   end
 end

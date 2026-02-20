@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.TextInput.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.text_input/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Text inputs collect free-form text. Use them when the value cannot be predicted
+or selected from a list.
+
+Pair .text_input with .form validation and helper text, and use .textarea for
+multi-line input.
+""")
+  end
+
+  
 
   def variations do
     [

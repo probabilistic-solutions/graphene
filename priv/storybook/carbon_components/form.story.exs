@@ -1,8 +1,14 @@
 defmodule Storybook.CarbonComponents.Form do
   use PhoenixStorybook.Story, :example
-
+  import Graphene.CarbonComponents
   def doc do
-    "Form."
+    """
+Forms collect and submit related inputs. Keep fields grouped by intent and use
+clear labels to reduce friction.
+
+Combine .form with .form_group, .button, and validation helpers like
+.inline_notification or field-level error text.
+"""
   end
 
   @impl true

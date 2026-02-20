@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.Popover.AutoAlign do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.popover/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Auto-aligned popovers position themselves to stay on-screen. Use them for
+interactive content when placement constraints exist.
+
+Pair .popover with .button or .icon_button triggers and keep the content short
+and task-focused.
+""")
+  end
+
+  
 
   def variations do
     [

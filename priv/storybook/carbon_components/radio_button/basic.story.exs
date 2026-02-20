@@ -1,7 +1,20 @@
 defmodule Storybook.CarbonComponents.RadioButton.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.radio_button_group/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Radio groups support single selection from a set of options. Use them when
+options are few and mutually exclusive.
+
+Pair .radio_button_group with .form_group and use .select when the list is long.
+""")
+  end
+
+  
 
   def variations do
     [

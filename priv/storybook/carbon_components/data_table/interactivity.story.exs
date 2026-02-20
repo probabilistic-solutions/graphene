@@ -4,9 +4,14 @@ defmodule Storybook.CarbonComponents.DataTable.Interactivity do
   use PhoenixStorybook.Story, :example
 
   alias Phoenix.LiveView.JS
-
   def doc do
-    "CarbonComponents data table wired with callbacks and simulator events."
+    """
+Interactive tables demonstrate callbacks for selection, sorting, and search
+events. Use them when the table needs to drive downstream UI updates.
+
+Pair .data_table events with .inline_notification feedback or side panels that
+reflect the selected rows.
+"""
   end
 
   @impl true
@@ -26,7 +31,7 @@ defmodule Storybook.CarbonComponents.DataTable.Interactivity do
     <Graphene.CarbonComponents.data_table
       id="carbon-events-table"
       rows={@rows}
-      row_id={&Graphene.CarbonComponents.DataTable.Shared.row_id/1}
+      row_id={&Storybook.CarbonComponents.DataTable.Shared.row_id/1}
       selectable={true}
       sortable={true}
       expandable={true}

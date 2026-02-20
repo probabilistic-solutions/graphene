@@ -2,8 +2,6 @@ defmodule Demo.StorybookRenderingFeatureTest do
   use ExUnit.Case, async: false
   use Wallaby.Feature
 
-  import Wallaby.Query, only: [css: 2]
-
   @moduletag :wallaby
 
   setup do
@@ -12,23 +10,45 @@ defmodule Demo.StorybookRenderingFeatureTest do
     {:ok, session: session}
   end
 
-  @tag timeout: 180_000
+  @tag timeout: 600_000
   feature "renders all storybook stories", %{session: session} do
     story_paths()
     |> Enum.reduce(session, fn path, session ->
       try do
+        session = visit(session, path)
+        # Let LiveView connect and hooks settle so JS errors surface before the next navigation.
+        Process.sleep(50)
+
         session
-        |> visit(path)
-        |> assert_has(css(".psb-sandbox", count: :any))
-        |> assert_no_compile_errors()
+        |> assert_story_renders(path)
       rescue
         error in Wallaby.JSError ->
           raise """
           Storybook JS error on #{path}:
           #{Exception.message(error)}
           """
+        error in Wallaby.ExpectationNotMetError ->
+          raise """
+          Storybook failed to render sandbox on #{path}:
+          #{Exception.message(error)}
+          """
       end
     end)
+  end
+
+  defp assert_story_renders(session, path) do
+    html = Wallaby.Browser.page_source(session)
+
+    # All stories render inside a sandbox container. If it's missing, we likely hit a 500 or LV crash.
+    unless html =~ "psb-sandbox" do
+      raise """
+      Storybook failed to render sandbox on #{path}:
+      Missing .psb-sandbox in page source.
+      """
+    end
+
+    assert_no_compile_errors_in_source(html, path)
+    session
   end
 
   defp story_paths do
@@ -48,12 +68,21 @@ defmodule Demo.StorybookRenderingFeatureTest do
     "/" <> String.replace_suffix(relative, ".story.exs", "")
   end
 
-  defp assert_no_compile_errors(session) do
-    refute has?(session, css("body", text: "Compilation error"))
-    refute has?(session, css("body", text: "CompileError"))
-    refute has?(session, css("body", text: "Internal Server Error"))
-    refute has?(session, css("body", text: "Something went wrong"))
-    session
+  defp assert_no_compile_errors_in_source(html, path) do
+    # These are the common error pages surfaced by Phoenix/Phoenix LiveView when a story crashes.
+    error_markers = [
+      "Compilation error",
+      "CompileError",
+      "Internal Server Error",
+      # Avoid false-positives from story content by matching the Phoenix error heading.
+      "<h1>Something went wrong</h1>"
+    ]
+
+    Enum.each(error_markers, fn marker ->
+      if String.contains?(html, marker) do
+        raise "Storybook error on #{path}: #{marker}"
+      end
+    end)
   end
 end
 

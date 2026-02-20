@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.MultiSelect.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.multi_select/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Multi-select lets users choose multiple options from a list. Use it for large
+option sets; for small sets, prefer checkboxes.
+
+Combine .multi_select with .form and show selected items clearly, especially in
+dense filter panels.
+""")
+  end
+
+  
 
   def variations do
     [

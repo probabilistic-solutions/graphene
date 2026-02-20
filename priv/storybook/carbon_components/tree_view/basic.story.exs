@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.TreeView.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.tree_view/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Tree views provide hierarchical navigation with expandable nodes. Use them for
+nested structures like folders or settings.
+
+Combine .tree_view with .search or filter controls when the tree is large, and
+use icons to reinforce hierarchy.
+""")
+  end
+
+  
 
   def variations do
     [

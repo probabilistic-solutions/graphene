@@ -1,7 +1,21 @@
 defmodule Storybook.CarbonComponents.ProgressIndicator.Basic do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.progress_indicator/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Progress indicators show a user's position in a multi-step flow. Use them for
+wizards, onboarding, or long forms.
+
+Pair .progress_indicator with step content and .button actions for Next and Back
+navigation.
+""")
+  end
+
+  
 
   def variations do
     [

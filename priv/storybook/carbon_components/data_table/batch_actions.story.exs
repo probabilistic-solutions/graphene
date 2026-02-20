@@ -2,7 +2,21 @@ Code.require_file(Path.join(__DIR__, "shared.exs"))
 defmodule Storybook.CarbonComponents.DataTable.BatchActions do
   use PhoenixStorybook.Story, :component
 
+  defoverridable doc: 0
+
   def function, do: &Graphene.CarbonComponents.data_table/1
+
+  def doc do
+    Storybook.Doc.markdown("""
+Batch actions allow users to select multiple rows and act on them in a single
+step. Use them for bulk operations like delete, export, or status changes.
+
+Combine .table_batch_actions with .table_toolbar_search and .overflow_menu to
+keep actions contextual and discoverable.
+""")
+  end
+
+  
 
   def variations do
     [
