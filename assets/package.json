@@ -25,6 +25,7 @@
         "prepare": "npm run build:dist"
     },
     "dependencies": {
+        "@carbon/ibm-products-styles": "^2.80.0",
         "@carbon/ibm-products-web-components": "^0.33.0",
         "@carbon/styles": "^1.100.0",
         "@carbon/web-components": "2.48.0",
