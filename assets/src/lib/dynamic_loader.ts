@@ -1,5 +1,6 @@
 /* dynamic_loader.ts */
-import { componentImports } from "./_dynamic_loader_mapping";
+import { componentImports as carbonComponentImports } from "./_dynamic_loader_mapping";
+import { productComponentImports } from "./_dynamic_loader_mapping_products";
 
 type ComponentImporter = () => Promise<unknown>;
 
@@ -10,6 +11,10 @@ export interface WebComponentManagerOptions {
   root?: ParentNode | null;
 }
 
+const componentImports = {
+  ...carbonComponentImports,
+  ...productComponentImports
+};
 const componentNames = Object.keys(componentImports);
 const componentSelector = componentNames.join(",");
 const componentSet = new Set(componentNames);

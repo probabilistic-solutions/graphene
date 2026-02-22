@@ -42,10 +42,10 @@ defmodule Graphene.CodeGen.Component do
     |> Enum.sort(fn a, b -> a.name < b.name end)
   end
 
-  defp extract_attrs(meta) do
+  defp extract_attrs(meta, opts) do
     attributes =
       Map.get(meta, "attributes", [])
-      |> Enum.map(&Attr.parse/1)
+      |> Enum.map(&Attr.parse(&1, opts))
 
     known = Enum.map(attributes, & &1.htmlname)
 
@@ -53,7 +53,7 @@ defmodule Graphene.CodeGen.Component do
       Map.get(meta, "properties", [])
       |> Stream.filter(&Map.has_key?(&1, "attribute"))
       |> Stream.reject(&Enum.member?(known, &1["attribute"]))
-      |> Enum.map(&Attr.parse/1)
+      |> Enum.map(&Attr.parse(&1, opts))
 
     (attributes ++ properties)
     |> Stream.reject(&String.starts_with?(&1.atomname, ":aria_"))
@@ -70,14 +70,14 @@ defmodule Graphene.CodeGen.Component do
     |> String.downcase()
   end
 
-  def parse(meta, prefix \\ "") do
+  def parse(meta, prefix \\ "", opts \\ []) do
     struct(
       __MODULE__,
       source: extract_source(meta),
       htmltag: extract_tag(meta),
       componentname: extract_component_name(meta, prefix),
       docs: extract_docs(meta),
-      attrs: extract_attrs(meta),
+      attrs: extract_attrs(meta, opts),
       slots: extract_slots(meta)
     )
   end
@@ -166,11 +166,12 @@ defmodule Graphene.CodeGen.Component do
   end
 
   def display_js_map_entry(component, opts \\ []) do
+    import_base = Keyword.get(opts, :import_base, "@carbon/web-components/es")
     template = ~S|'<%= @tag %>': () => import("<%= @import %>"),|
 
     import =
       (component.import || index_js(component.source))
-      |> String.replace("./src", "@carbon/web-components/es")
+      |> String.replace("./src", import_base)
 
     EEx.eval_string(template, [assigns: [tag: component.htmltag, import: import]], opts)
   end

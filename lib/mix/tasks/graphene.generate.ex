@@ -10,6 +10,7 @@ if Mix.env() == :dev do
       for task <- [
             "graphene.components.generate",
             "graphene.stories.generate",
+            "graphene.product_stories.generate",
             "graphene.docs.generate"
           ] do
         Mix.Task.reenable(task)

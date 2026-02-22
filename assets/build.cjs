@@ -31,6 +31,7 @@ const plugins = [
         const result = sass.compile(args.path, {
           loadPaths: [path.join(__dirname, "node_modules")],
           style: "expanded",
+          quietDeps: true,
         });
 
         return {
@@ -39,6 +40,23 @@ const plugins = [
           resolveDir: path.dirname(args.path),
         };
       });
+    },
+  },
+  {
+    name: "carbon-web-components-extension",
+    setup(build) {
+      build.onResolve(
+        { filter: /^@carbon\/web-components\/(es|lib)\// },
+        (args) => {
+          if (args.path.endsWith(".scss")) {
+            return;
+          }
+          const normalized = args.path.endsWith(".js")
+            ? args.path
+            : `${args.path}.js`;
+          return { path: path.join(__dirname, "node_modules", normalized) };
+        }
+      );
     },
   },
   {
