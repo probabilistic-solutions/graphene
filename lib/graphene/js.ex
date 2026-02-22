@@ -138,9 +138,9 @@ defmodule Graphene.JS do
 
   ### 9) Dynamic payloads
 
-  * `payload: :detail` - sends `event.detail`.
+  * `payload: :detail` - sends `%{detail: event.detail}`.
   * `payload: :target` - sends `%{value, checked, toggled}` from the event target.
-  * `payload: :all` - merges `detail` + `target`.
+  * `payload: :all` - sends `%{detail: event.detail, value, checked, toggled}`.
 
       {Graphene.JS.events(
         on: %{"cds-combo-box-selected" => [
@@ -165,7 +165,7 @@ defmodule Graphene.JS do
       />
 
       # Example payload pushed
-      %{item: %{id: "Prod", text: "Prod", value: "Prod"}}
+      %{detail: %{item: %{id: "Prod", text: "Prod", value: "Prod"}}}
 
   *Use `:target` for form-like controls (checked/toggled/value):*
 
@@ -181,7 +181,7 @@ defmodule Graphene.JS do
       />
 
       # Example payload pushed
-      %{checked: true, value: "on"}
+      %{checked: true, toggled: nil, value: "on"}
 
   *Use `:all` when you want both:*
 
@@ -198,8 +198,9 @@ defmodule Graphene.JS do
 
       # Example payload pushed
       %{
-        item: %{id: "notify", text: "Notify team"},
+        detail: %{item: %{id: "notify", text: "Notify team"}},
         checked: true,
+        toggled: nil,
         value: "notify"
       }
 
@@ -221,8 +222,9 @@ defmodule Graphene.JS do
 
       # Example payload pushed (detail + target merged)
       %{
-        item: %{id: "notify", text: "Notify team"},
+        detail: %{item: %{id: "notify", text: "Notify team"}},
         checked: true,
+        toggled: nil,
         value: "notify"
       }
 
@@ -353,10 +355,8 @@ defmodule Graphene.JS do
 
   defp encode_js(nil), do: nil
 
-  defp encode_js(%LVJS{} = js) do
-    js
-    |> Phoenix.HTML.Safe.to_iodata()
-    |> IO.iodata_to_binary()
+  defp encode_js(%LVJS{ops: ops}) do
+    Phoenix.json_library().encode!(ops)
   end
 
   defp encode_js(js) when is_binary(js), do: js
