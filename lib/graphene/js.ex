@@ -2,20 +2,16 @@ defmodule Graphene.JS do
   @moduledoc """
   Helpers for wiring custom DOM events to LiveView hooks and Phoenix.JS commands.
 
-  This module returns attribute maps that you can splat into components:
+  `Graphene.JS.events/1` returns a map of attributes you can splat into any
+  component or HTML tag. The attributes attach a single hook,
+  `GrapheneCustomEvents`, which:
 
-      <Product.tearsheet
-        id="ts-1"
-        {Graphene.JS.events(
-          on: %{
-            "c4p-tearsheet-closed" => [
-              push: "tearsheet:closed",
-              payload: :detail,
-              js: JS.remove_attribute("open", to: "#ts-1")
-            ]
-          }
-        )}
-      />
+  * listens to custom DOM events on a target element (web component),
+  * optionally runs a `Phoenix.LiveView.JS` pipeline client-side, and
+  * optionally pushes a (static or dynamic) payload to the server.
+
+  The helper is intentionally generic so you can use it with Carbon, IBM
+  Products, or your own custom elements.
   """
 
   alias Phoenix.LiveView.JS, as: LVJS
@@ -32,17 +28,234 @@ defmodule Graphene.JS do
   @doc """
   Builds attributes for the `GrapheneCustomEvents` hook.
 
+  ## Requirements
+
+  * Any element with a `phx-hook` **must have an `id`**. You can either:
+    * set `id` directly on the element, or
+    * pass `id:` to `events/1` (which will inject it).
+
   ## Options
 
     * `:id` - Optional DOM id. Required by LiveView when `phx-hook` is present.
       If you already set `id` on the element, you can omit it here.
     * `:target` - CSS selector for the elements emitting events. Defaults to the hooked element.
-    * `:on` - A list of event names or a map of event name => options.
+      Use `:self` (or omit) to attach directly to the element.
+    * `:on` (or `:events`) - A list of event names or a map of event name => options.
       When a list is given, top-level `:push`, `:payload`, and `:js` apply to all events.
-    * `:push` - Event name to push to the server.
+    * `:push` - Event name to push to the server (can differ from the DOM event name).
     * `:payload` - Dynamic payload strategy (`:detail`, `:target`, `:all`, or `{:merge, [...]}`).
     * `:js` - `Phoenix.LiveView.JS` pipeline to run client-side before push.
     * `:push_target` / `:phx_target` - Optional target for `pushEventTo`.
+
+  ## Doctest
+
+      iex> attrs = Graphene.JS.events(
+      ...>   id: "ts-1",
+      ...>   on: ["c4p-tearsheet-closed"],
+      ...>   push: "tearsheet:closed"
+      ...> )
+      iex> attrs["phx-hook"]
+      "GrapheneCustomEvents"
+      iex> attrs["id"]
+      "ts-1"
+      iex> events = Jason.decode!(attrs["data-events"])
+      iex> Enum.at(events, 0) |> Map.take(["name", "push"])
+      %{"name" => "c4p-tearsheet-closed", "push" => "tearsheet:closed"}
+
+  ## Exhaustive usage patterns
+
+  ### 1) Attach directly to the element (default target)
+
+      <Product.tearsheet
+        id="ts-1"
+        open
+        {Graphene.JS.events(
+          on: %{"c4p-tearsheet-closed" => [push: "tearsheet:closed"]}
+        )}
+      />
+
+  ### 2) Attach to a wrapper and target a selector
+
+      <div {Graphene.JS.events(
+        id: "panel-events",
+        target: "c4p-side-panel",
+        on: %{"c4p-side-panel-closed" => [push: "panel:closed"]}
+      )}>
+        <Product.side_panel open ... />
+      </div>
+
+  If the selector matches multiple elements, the hook attaches listeners to all
+  of them. Each matching element will independently trigger the configured JS
+  and/or push when it emits the event. Use an id selector (e.g. `#panel-1`) or
+  attach the hook directly to the element when you want a single target.
+
+  ### 3) Single event, server push only
+
+      {Graphene.JS.events(
+        on: %{"c4p-interstitial-closed" => [push: "interstitial:closed"]}
+      )}
+
+  ### 4) Single event, JS only (no server push)
+
+      {Graphene.JS.events(
+        on: %{"c4p-tearsheet-closed" => [
+          js: JS.remove_attribute("open", to: "#ts-1")
+        ]}
+      )}
+
+  ### 5) Single event, JS + server push (JS runs first)
+
+      {Graphene.JS.events(
+        on: %{"c4p-tearsheet-closed" => [
+          js: JS.remove_attribute("open", to: "#ts-1"),
+          push: "tearsheet:closed"
+        ]}
+      )}
+
+  ### 6) Multiple events, same behavior (list form)
+
+      {Graphene.JS.events(
+        on: ["c4p-side-panel-closed", "c4p-side-panel-beingclosed"],
+        push: "panel:event",
+        payload: :detail
+      )}
+
+  ### 7) Multiple events, different behavior (map form)
+
+      {Graphene.JS.events(
+        on: %{
+          "c4p-side-panel-closed" => [push: "panel:closed"],
+          "c4p-side-panel-beingclosed" => [js: JS.add_class("closing", to: "#panel")],
+          "c4p-side-panel-navigate-back" => [push: "panel:back"]
+        }
+      )}
+
+  ### 8) Rename events on the server (push name differs)
+
+      {Graphene.JS.events(
+        on: %{"c4p-tearsheet-closed" => [push: "tearsheet:closed"]}
+      )}
+
+  ### 9) Dynamic payloads
+
+  * `payload: :detail` - sends `event.detail`.
+  * `payload: :target` - sends `%{value, checked, toggled}` from the event target.
+  * `payload: :all` - merges `detail` + `target`.
+
+      {Graphene.JS.events(
+        on: %{"cds-combo-box-selected" => [
+          push: "combo:selected",
+          payload: :detail
+        ]}
+      )}
+
+  #### Real component examples
+
+  *Use `:detail` when the component emits rich detail (e.g. selection data):*
+
+      <.combo_box
+        id="env-combo"
+        items={["Prod", "Stage", "Dev"]}
+        {Graphene.JS.events(
+          on: %{"cds-combo-box-selected" => [
+            push: "env:selected",
+            payload: :detail
+          ]}
+        )}
+      />
+
+      # Example payload pushed
+      %{item: %{id: "Prod", text: "Prod", value: "Prod"}}
+
+  *Use `:target` for form-like controls (checked/toggled/value):*
+
+      <.toggle
+        id="alerts-toggle"
+        label_text="Enable alerts"
+        {Graphene.JS.events(
+          on: %{"cds-toggle-changed" => [
+            push: "alerts:toggle",
+            payload: :target
+          ]}
+        )}
+      />
+
+      # Example payload pushed
+      %{checked: true, value: "on"}
+
+  *Use `:all` when you want both:*
+
+      <.checkbox
+        id="notify-checkbox"
+        label_text="Notify team"
+        {Graphene.JS.events(
+          on: %{"cds-checkbox-changed" => [
+            push: "notify:changed",
+            payload: :all
+          ]}
+        )}
+      />
+
+      # Example payload pushed
+      %{
+        item: %{id: "notify", text: "Notify team"},
+        checked: true,
+        value: "notify"
+      }
+
+  ### 10) Merge payloads (list or `{:merge, ...}`)
+
+      {Graphene.JS.events(
+        on: %{"cds-toggle-changed" => [
+          push: "toggle:changed",
+          payload: [:detail, :target]
+        ]}
+      )}
+
+      {Graphene.JS.events(
+        on: %{"cds-toggle-changed" => [
+          push: "toggle:changed",
+          payload: {:merge, [:detail, :target]}
+        ]}
+      )}
+
+      # Example payload pushed (detail + target merged)
+      %{
+        item: %{id: "notify", text: "Notify team"},
+        checked: true,
+        value: "notify"
+      }
+
+      # If keys collide, the later payload wins.
+
+  ### 11) Add static payload fields
+
+      {Graphene.JS.events(
+        on: %{"c4p-tearsheet-closed" => [
+          push: "tearsheet:closed",
+          payload: %{reason: "user"}
+        ]}
+      )}
+
+      {Graphene.JS.events(
+        on: %{"c4p-tearsheet-closed" => [
+          push: "tearsheet:closed",
+          payload: %{merge: [:detail, :target], static: %{source: "storybook"}}
+        ]}
+      )}
+
+  ### 12) Push to a specific LiveComponent (`push_target` / `phx_target`)
+
+      {Graphene.JS.events(
+        on: %{"c4p-tearsheet-closed" => [
+          push: "tearsheet:closed",
+          push_target: @myself
+        ]}
+      )}
+
+  ### 13) Use `:events` alias for `:on`
+
+      {Graphene.JS.events(events: ["c4p-tearsheet-closed"], push: "tearsheet:closed")}
   """
   @spec events(map() | keyword()) :: map()
   def events(opts) when is_list(opts) or is_map(opts) do
@@ -139,11 +352,13 @@ defmodule Graphene.JS do
   defp normalize_push_target(target), do: to_string(target)
 
   defp encode_js(nil), do: nil
+
   defp encode_js(%LVJS{} = js) do
     js
     |> Phoenix.HTML.Safe.to_iodata()
     |> IO.iodata_to_binary()
   end
+
   defp encode_js(js) when is_binary(js), do: js
   defp encode_js(js) when is_list(js), do: Jason.encode!(js)
   defp encode_js(js), do: Phoenix.HTML.safe_to_string(js)
