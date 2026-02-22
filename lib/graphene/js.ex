@@ -120,6 +120,15 @@ defmodule Graphene.JS do
         payload: :detail
       )}
 
+  *If you need duplicates, use a list of `{event, opts}` tuples:*
+
+      {Graphene.JS.events(
+        on: [
+          {"c4p-side-panel-closed", [push: "panel:closed"]},
+          {"c4p-side-panel-closed", [js: JS.add_class("closing", to: "#panel")]}
+        ]
+      )}
+
   ### 7) Multiple events, different behavior (map form)
 
       {Graphene.JS.events(
@@ -295,10 +304,15 @@ defmodule Graphene.JS do
   end
 
   defp normalize_on(on, defaults) when is_list(on) and on != [] do
-    if Keyword.keyword?(on) do
-      Enum.map(on, fn {event, event_opts} -> build_event(event, event_opts, defaults) end)
-    else
-      Enum.map(on, fn event -> build_event(event, %{}, defaults) end)
+    cond do
+      Keyword.keyword?(on) ->
+        Enum.map(on, fn {event, event_opts} -> build_event(event, event_opts, defaults) end)
+
+      tuple_event_list?(on) ->
+        Enum.map(on, fn {event, event_opts} -> build_event(event, event_opts, defaults) end)
+
+      true ->
+        Enum.map(on, fn event -> build_event(event, %{}, defaults) end)
     end
   end
 
@@ -307,6 +321,17 @@ defmodule Graphene.JS do
   end
 
   defp normalize_on(_on, _defaults), do: []
+
+  defp tuple_event_list?(list) do
+    Enum.all?(list, fn
+      {event, event_opts} ->
+        not is_nil(event) and
+          (is_list(event_opts) or is_map(event_opts) or is_nil(event_opts))
+
+      _ ->
+        false
+    end)
+  end
 
   defp build_event(event, event_opts, defaults) do
     event_opts = normalize_event_opts(event_opts)
