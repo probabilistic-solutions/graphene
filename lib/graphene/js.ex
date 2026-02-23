@@ -89,6 +89,54 @@ defmodule Graphene.JS do
   and/or push when it emits the event. Use an id selector (e.g. `#panel-1`) or
   attach the hook directly to the element when you want a single target.
 
+  ### 2b) Custom hook + events (one hook per element)
+
+  LiveView allows **one `phx-hook` per element**. `events/1` sets
+  `phx-hook="GrapheneCustomEvents"`, so a custom hook on the same element will
+  conflict. Pick one of these patterns instead:
+
+  **A) Wrapper + target selector (recommended)**
+
+      <div {Graphene.JS.events(
+        id: "panel-events",
+        target: "#panel-1",
+        on: %{"c4p-side-panel-closed" => [push: "panel:closed"]}
+      )}>
+        <.component id="panel-1" phx-hook="MyHook" />
+      </div>
+
+  **B) Compose hooks in JS (single hook name)**
+
+  Create your own hook that calls `GrapheneCustomEvents` and then runs custom
+  logic. You then set `phx-hook` to your hook name and pass `data-events`.
+
+      // assets/src/lib/hooks/my_hook.ts
+      import { GrapheneCustomEvents } from "./custom_events";
+
+      export const MyHook = {
+        mounted() {
+          GrapheneCustomEvents.mounted.call(this);
+          // custom logic here...
+        },
+        destroyed() {
+          GrapheneCustomEvents.destroyed.call(this);
+        }
+      };
+
+      <% events =
+        Graphene.JS.events(
+          id: "ts-1",
+          on: %{"c4p-tearsheet-closed" => [push: "tearsheet:closed"]}
+        )
+        |> Map.put("phx-hook", "MyHook")
+      %>
+      <.component id="ts-1" {events} />
+
+  **C) Use `events/1` only**
+
+  If your custom hook is only doing DOM changes or server pushes, use `:js`
+  and/or `:push` in `events/1` instead of a dedicated hook.
+
   ### 3) Single event, server push only
 
       {Graphene.JS.events(
