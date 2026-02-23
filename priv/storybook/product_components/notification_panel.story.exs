@@ -63,8 +63,9 @@ defmodule Storybook.ProductComponents.NotificationPanel do
       </div>
 
       <Product.notification_panel
+        :if={@active_panel == "default"}
         id="notification-panel-default"
-        open={@active_panel == "default"}
+        open
         title_text="Notifications"
         today_text="Today"
         previous_text="Earlier"
@@ -74,24 +75,24 @@ defmodule Storybook.ProductComponents.NotificationPanel do
         events={panel_events("default")}
       >
         <:today>
-      <Product.notification
-        id="notification-build"
-        type="informational"
-        timestamp={@notification_timestamps.build}
-        events={notification_events("Build completed")}
-      >
-        <:title>Build completed</:title>
-        <:description>The nightly data ingest finished successfully.</:description>
-      </Product.notification>
-      <Product.notification
-        id="notification-storage"
-        type="warning"
-        timestamp={@notification_timestamps.storage}
-        events={notification_events("Storage nearing limit")}
-      >
-        <:title>Storage nearing limit</:title>
-        <:description>Increase your storage quota or archive old runs.</:description>
-      </Product.notification>
+          <Product.notification
+            id="notification-build"
+            type="informational"
+            timestamp={@notification_timestamps.build}
+            events={notification_events("Build completed")}
+          >
+            <:title>Build completed</:title>
+            <:description>The nightly data ingest finished successfully.</:description>
+          </Product.notification>
+          <Product.notification
+            id="notification-storage"
+            type="warning"
+            timestamp={@notification_timestamps.storage}
+            events={notification_events("Storage nearing limit")}
+          >
+            <:title>Storage nearing limit</:title>
+            <:description>Increase your storage quota or archive old runs.</:description>
+          </Product.notification>
         </:today>
         <:previous>
           <Product.notification
@@ -117,8 +118,9 @@ defmodule Storybook.ProductComponents.NotificationPanel do
       </Product.notification_panel>
 
       <Product.notification_panel
+        :if={@active_panel == "empty_state"}
         id="notification-panel-empty"
-        open={@active_panel == "empty_state"}
+        open
         title_text="Notifications"
         empty_state_label="You are all caught up"
       >

@@ -89,10 +89,10 @@ defmodule Storybook.ProductComponents.GuideBanner.Interactivity do
 
   defp guide_banner_events do
     [
-      {"c4p-guide-banner-toggle",
-       [push: "guide_banner:event", payload: event_payload("c4p-guide-banner-toggle")]},
-      {"c4p-guide-banner-close",
-       [push: "guide_banner:event", payload: event_payload("c4p-guide-banner-close")]}
+      {"c4p-guidebanner-toggle",
+       [push: "guide_banner:event", payload: event_payload("c4p-guidebanner-toggle")]},
+      {"c4p-guidebanner-close",
+       [push: "guide_banner:event", payload: event_payload("c4p-guidebanner-close")]}
     ]
   end
 

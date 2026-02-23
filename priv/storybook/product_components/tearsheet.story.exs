@@ -4,12 +4,11 @@ defmodule Storybook.ProductComponents.Tearsheet do
   alias Graphene.CarbonComponents, as: Carbon
   alias Graphene.ProductComponents, as: Product
 
-
   def doc do
     """
-Tearsheets present complex flows without leaving the page.
-Use header navigation, influencer content, and footer actions to guide users.
-"""
+    Tearsheets present complex flows without leaving the page.
+    Use header navigation, influencer content, and footer actions to guide users.
+    """
   end
 
   @impl true
@@ -61,7 +60,12 @@ Use header navigation, influencer content, and footer actions to guide users.
         <Carbon.button kind="ghost" phx-click="close_tearsheet">Close</Carbon.button>
       </div>
 
-      <Product.tearsheet open={@active_tearsheet == "default"} width="wide">
+      <Product.tearsheet
+        :if={@active_tearsheet == "default"}
+        open
+        width="wide"
+        events={tearsheet_events()}
+      >
         <:label>Step flow</:label>
         <:title>Connect a data source</:title>
         <:description>Step 1 of 3 — choose a source to ingest.</:description>
@@ -69,7 +73,12 @@ Use header navigation, influencer content, and footer actions to guide users.
         <:actions><.tearsheet_actions /></:actions>
       </Product.tearsheet>
 
-      <Product.tearsheet open={@active_tearsheet == "with_navigation"} width="wide">
+      <Product.tearsheet
+        :if={@active_tearsheet == "with_navigation"}
+        open
+        width="wide"
+        events={tearsheet_events()}
+      >
         <:header_navigation><.tearsheet_navigation /></:header_navigation>
         <:label>Step flow</:label>
         <:title>Connect a data source</:title>
@@ -79,10 +88,12 @@ Use header navigation, influencer content, and footer actions to guide users.
       </Product.tearsheet>
 
       <Product.tearsheet
-        open={@active_tearsheet == "with_influencer"}
+        :if={@active_tearsheet == "with_influencer"}
+        open
         width="wide"
         influencer_width="wide"
         influencer_placement="left"
+        events={tearsheet_events()}
       >
         <:influencer><.tearsheet_influencer /></:influencer>
         <:label>Step flow</:label>
@@ -93,10 +104,12 @@ Use header navigation, influencer content, and footer actions to guide users.
       </Product.tearsheet>
 
       <Product.tearsheet
-        open={@active_tearsheet == "with_all_header_items_and_influencer"}
+        :if={@active_tearsheet == "with_all_header_items_and_influencer"}
+        open
         width="wide"
         influencer_width="wide"
         influencer_placement="left"
+        events={tearsheet_events()}
       >
         <:header_actions><.tearsheet_header_actions /></:header_actions>
         <:slug><.tearsheet_slug /></:slug>
@@ -110,7 +123,12 @@ Use header navigation, influencer content, and footer actions to guide users.
         <:actions><.tearsheet_actions /></:actions>
       </Product.tearsheet>
 
-      <Product.tearsheet open={@active_tearsheet == "narrow"} width="narrow">
+      <Product.tearsheet
+        :if={@active_tearsheet == "narrow"}
+        open
+        width="narrow"
+        events={tearsheet_events()}
+      >
         <:label>Step flow</:label>
         <:title>Connect a data source</:title>
         <:description>Step 1 of 3 — choose a source to ingest.</:description>
@@ -118,7 +136,12 @@ Use header navigation, influencer content, and footer actions to guide users.
         <:actions><.tearsheet_actions /></:actions>
       </Product.tearsheet>
 
-      <Product.tearsheet open={@active_tearsheet == "narrow_with_all_header_items"} width="narrow">
+      <Product.tearsheet
+        :if={@active_tearsheet == "narrow_with_all_header_items"}
+        open
+        width="narrow"
+        events={tearsheet_events()}
+      >
         <:header_actions><.tearsheet_header_actions /></:header_actions>
         <:slug><.tearsheet_slug /></:slug>
         <:decorator><.tearsheet_decorator /></:decorator>
@@ -131,6 +154,10 @@ Use header navigation, influencer content, and footer actions to guide users.
       </Product.tearsheet>
     </div>
     """
+  end
+
+  defp tearsheet_events do
+    [{"c4p-tearsheet-closed", [push: "close_tearsheet"]}]
   end
 
   defp tearsheet_form(assigns) do

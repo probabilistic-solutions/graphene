@@ -67,7 +67,7 @@ defmodule Storybook.ProductComponents.InterstitialScreen do
         <Carbon.button kind="ghost" phx-click="close_screen">Close</Carbon.button>
       </div>
 
-      <Product.interstitial_screen open={@active_screen == "modal"}>
+      <Product.interstitial_screen :if={@active_screen == "modal"} open>
         <:header>
           <Product.interstitial_screen_header
             header_title="Use case-specific title"
@@ -86,7 +86,7 @@ defmodule Storybook.ProductComponents.InterstitialScreen do
         </:footer>
       </Product.interstitial_screen>
 
-      <Product.interstitial_screen open={@active_screen == "modal_multi_step"}>
+      <Product.interstitial_screen :if={@active_screen == "modal_multi_step"} open>
         <:header>
           <Product.interstitial_screen_header
             header_title="Use case-specific title"
@@ -111,7 +111,7 @@ defmodule Storybook.ProductComponents.InterstitialScreen do
         </:footer>
       </Product.interstitial_screen>
 
-      <Product.interstitial_screen open={@active_screen == "modal_async_action"}>
+      <Product.interstitial_screen :if={@active_screen == "modal_async_action"} open>
         <:header>
           <Product.interstitial_screen_header
             header_title="Use case-specific title"
@@ -133,7 +133,7 @@ defmodule Storybook.ProductComponents.InterstitialScreen do
         </:footer>
       </Product.interstitial_screen>
 
-      <Product.interstitial_screen open={@active_screen == "custom_actions"}>
+      <Product.interstitial_screen :if={@active_screen == "custom_actions"} open>
         <:header>
           <Product.interstitial_screen_header
             header_title="Use case-specific title"
@@ -164,7 +164,7 @@ defmodule Storybook.ProductComponents.InterstitialScreen do
         </:footer>
       </Product.interstitial_screen>
 
-      <Product.interstitial_screen open={@active_screen == "full_screen"} fullscreen>
+      <Product.interstitial_screen :if={@active_screen == "full_screen"} open fullscreen>
         <:header>
           <Product.interstitial_screen_header
             header_title="Use case-specific title"
@@ -184,8 +184,9 @@ defmodule Storybook.ProductComponents.InterstitialScreen do
       </Product.interstitial_screen>
 
       <Product.interstitial_screen
+        :if={@active_screen == "full_screen_multi_step"}
         id="interstitial-full-screen"
-        open={@active_screen == "full_screen_multi_step"}
+        open
         fullscreen
         events={interstitial_events("full_screen_multi_step")}
       >

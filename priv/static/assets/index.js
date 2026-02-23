@@ -1203,31 +1203,6 @@ function normalizeNumberInputStep(el) {
     customElements.whenDefined(tagName).then(applyStep);
   }
 }
-function applyGrapheneOpen(el) {
-  const value = el.getAttribute("data-graphene-open");
-  if (value === null) {
-    return;
-  }
-  const normalized = value === "false" ? false : value === "true" ? true : null;
-  if (normalized === null) {
-    return;
-  }
-  const tagName = el.tagName.toLowerCase();
-  const apply = () => {
-    try {
-      el.open = normalized;
-      if (!normalized) {
-        el.removeAttribute("open");
-      }
-    } catch (_error) {
-    }
-  };
-  if (customElements.get(tagName)) {
-    apply();
-  } else {
-    customElements.whenDefined(tagName).then(apply);
-  }
-}
 function applyNumberInputDescriptor(proto) {
   var _a, _b;
   const descriptor = Object.getOwnPropertyDescriptor(proto, "step");
@@ -1312,7 +1287,6 @@ function scanAndLoad(root) {
   if (root instanceof Element && isComponentTag(root.tagName)) {
     normalizeNotificationTimestamp(root);
     normalizeNumberInputStep(root);
-    applyGrapheneOpen(root);
     ensureNumberInputPatched(root.tagName.toLowerCase());
     loadComponentByTag(root.tagName);
   }
@@ -1322,7 +1296,6 @@ function scanAndLoad(root) {
   root.querySelectorAll(componentSelector).forEach((el) => {
     normalizeNotificationTimestamp(el);
     normalizeNumberInputStep(el);
-    applyGrapheneOpen(el);
     ensureNumberInputPatched(el.tagName.toLowerCase());
     loadComponentByTag(el.tagName);
   });

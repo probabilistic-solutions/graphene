@@ -28,7 +28,16 @@ defmodule Storybook.ProductComponents.SidePanel do
 
   @impl true
   def handle_event("side_panel:event", payload, socket) do
-    {:noreply, log_event(socket, payload)}
+    socket = log_event(socket, payload)
+
+    socket =
+      if payload["event"] == "c4p-side-panel-closed" do
+        assign(socket, active_panel: nil)
+      else
+        socket
+      end
+
+    {:noreply, socket}
   end
 
   @impl true
@@ -68,8 +77,9 @@ defmodule Storybook.ProductComponents.SidePanel do
       </div>
 
       <Product.side_panel
+        :if={@active_panel == "slide_over"}
         id="side-panel-slide-over"
-        open={@active_panel == "slide_over"}
+        open
         title="Configure access"
         label_text="Step flow"
         current_step="2"
@@ -83,7 +93,8 @@ defmodule Storybook.ProductComponents.SidePanel do
       </Product.side_panel>
 
       <Product.side_panel
-        open={@active_panel == "slide_in"}
+        :if={@active_panel == "slide_in"}
+        open
         slide_in
         title="Configure access"
         label_text="Step flow"
@@ -96,7 +107,8 @@ defmodule Storybook.ProductComponents.SidePanel do
       </Product.side_panel>
 
       <Product.side_panel
-        open={@active_panel == "with_action_toolbar"}
+        :if={@active_panel == "with_action_toolbar"}
+        open
         title="Configure access"
         label_text="Step flow"
         size="md"
@@ -110,7 +122,8 @@ defmodule Storybook.ProductComponents.SidePanel do
       </Product.side_panel>
 
       <Product.side_panel
-        open={@active_panel == "focus_selector"}
+        :if={@active_panel == "focus_selector"}
+        open
         title="Configure access"
         label_text="Step flow"
         selector_initial_focus="#side-panel-focus-input"
@@ -122,7 +135,8 @@ defmodule Storybook.ProductComponents.SidePanel do
       </Product.side_panel>
 
       <Product.side_panel
-        open={@active_panel == "with_static_title"}
+        :if={@active_panel == "with_static_title"}
+        open
         title="Configure access"
         label_text="Step flow"
         animate_title={false}
@@ -134,7 +148,8 @@ defmodule Storybook.ProductComponents.SidePanel do
       </Product.side_panel>
 
       <Product.side_panel
-        open={@active_panel == "with_static_title_and_action_toolbar"}
+        :if={@active_panel == "with_static_title_and_action_toolbar"}
+        open
         title="Configure access"
         label_text="Step flow"
         animate_title={false}
@@ -149,7 +164,8 @@ defmodule Storybook.ProductComponents.SidePanel do
       </Product.side_panel>
 
       <Product.side_panel
-        open={@active_panel == "without_title"}
+        :if={@active_panel == "without_title"}
+        open
         title=""
         label_text="Step flow"
         size="md"
@@ -160,7 +176,8 @@ defmodule Storybook.ProductComponents.SidePanel do
       </Product.side_panel>
 
       <Product.side_panel
-        open={@active_panel == "custom_header"}
+        :if={@active_panel == "custom_header"}
+        open
         title="Configure access"
         label_text="Step flow"
         size="md"

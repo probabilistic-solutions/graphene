@@ -4,12 +4,11 @@ defmodule Storybook.ProductComponents.AboutModal do
   alias Graphene.CarbonComponents, as: Carbon
   alias Graphene.ProductComponents, as: Product
 
-
   def doc do
     """
-About modal summarizes product details, versions, and legal information.
-Use it for product attribution, licensing notices, and quick version checks.
-"""
+    About modal summarizes product details, versions, and legal information.
+    Use it for product attribution, licensing notices, and quick version checks.
+    """
   end
 
   @impl true
@@ -41,25 +40,35 @@ Use it for product attribution, licensing notices, and quick version checks.
         <Carbon.button kind="ghost" phx-click="close_modal">Close</Carbon.button>
       </div>
 
-      <Product.about_modal
-        open={@open_modal == "default"}
-        close_icon_description="Close"
-        title="Graphene Analytics"
-        version="Version 0.0.0"
-        content="Cloud-native analytics and workflows for modern teams."
-        copyright_text="Copyright © IBM Corp. 2020, 2026"
-      />
+      <%= if @open_modal == "default" do %>
+        <Product.about_modal
+          open
+          close_icon_description="Close"
+          title="Graphene Analytics"
+          version="Version 0.0.0"
+          content="Cloud-native analytics and workflows for modern teams."
+          copyright_text="Copyright © IBM Corp. 2020, 2026"
+          events={about_modal_events()}
+        />
+      <% end %>
 
-      <Product.about_modal
-        open={@open_modal == "all_props"}
-        close_icon_description="Close"
-        title="Graphene Enterprise Suite"
-        version="Version 1.2.3"
-        content="Enterprise-grade observability with advanced routing and policy tooling."
-        additional_info="Powered by Carbon and IBM Products Web Components"
-        logo="Graphene"
-      />
+      <%= if @open_modal == "all_props" do %>
+        <Product.about_modal
+          open
+          close_icon_description="Close"
+          title="Graphene Enterprise Suite"
+          version="Version 1.2.3"
+          content="Enterprise-grade observability with advanced routing and policy tooling."
+          additional_info="Powered by Carbon and IBM Products Web Components"
+          logo="Graphene"
+          events={about_modal_events()}
+        />
+      <% end %>
     </div>
     """
+  end
+
+  defp about_modal_events do
+    [{"c4p-about-modal-closed", [push: "close_modal"]}]
   end
 end

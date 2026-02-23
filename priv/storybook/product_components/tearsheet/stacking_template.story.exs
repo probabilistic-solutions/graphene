@@ -6,14 +6,14 @@ defmodule Storybook.ProductComponents.Tearsheet.StackingTemplate do
 
   def doc do
     """
-Stacked tearsheets can be opened sequentially to guide multi-step flows.
-Use this pattern when each panel depends on the previous step.
-"""
+    Stacked tearsheets can be opened sequentially to guide multi-step flows.
+    Use this pattern when each panel depends on the previous step.
+    """
   end
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, open_one: true, open_two: false, open_three: false)}
+    {:ok, assign(socket, open_one: false, open_two: false, open_three: false)}
   end
 
   @impl true
@@ -37,7 +37,7 @@ Use this pattern when each panel depends on the previous step.
         <Carbon.button phx-click="toggle" phx-value-id="three">Toggle tearsheet three</Carbon.button>
       </div>
 
-      <Product.tearsheet open={@open_one} width="wide" has_close_icon>
+      <Product.tearsheet :if={@open_one} open width="wide" has_close_icon>
         <:label>Step 1</:label>
         <:title>Connect a data source</:title>
         <:description>Choose a source to ingest.</:description>
@@ -55,7 +55,7 @@ Use this pattern when each panel depends on the previous step.
         </:actions>
       </Product.tearsheet>
 
-      <Product.tearsheet open={@open_two} width="wide" has_close_icon>
+      <Product.tearsheet :if={@open_two} open width="wide" has_close_icon>
         <:label>Step 2</:label>
         <:title>Configure access</:title>
         <:description>Assign permissions for collaborators.</:description>
@@ -72,7 +72,7 @@ Use this pattern when each panel depends on the previous step.
         </:actions>
       </Product.tearsheet>
 
-      <Product.tearsheet open={@open_three} width="wide" has_close_icon>
+      <Product.tearsheet :if={@open_three} open width="wide" has_close_icon>
         <:label>Step 3</:label>
         <:title>Review & launch</:title>
         <:description>Confirm settings and start monitoring.</:description>
@@ -80,7 +80,9 @@ Use this pattern when each panel depends on the previous step.
           <p>You're ready to launch the workflow.</p>
         </div>
         <:actions>
-          <Carbon.button kind="secondary" phx-click="toggle" phx-value-id="three">Close</Carbon.button>
+          <Carbon.button kind="secondary" phx-click="toggle" phx-value-id="three">
+            Close
+          </Carbon.button>
           <Carbon.button kind="primary">Finish</Carbon.button>
         </:actions>
       </Product.tearsheet>

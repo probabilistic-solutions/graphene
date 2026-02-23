@@ -14,8 +14,8 @@ defmodule Graphene.ProductComponents.GuideBanner do
 
   ## Events
 
-  * `c4p-guide-banner-toggle` - Custom event fired when banner is opened
-  * `c4p-guide-banner-close` - Custom event fired when banner is closed
+  * `c4p-guidebanner-toggle` - Custom event fired when banner is opened
+  * `c4p-guidebanner-close` - Custom event fired when banner is closed
 
   """
   attr :collapse_text, :string

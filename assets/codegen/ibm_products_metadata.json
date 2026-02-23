@@ -1573,11 +1573,11 @@
       "events": [
         {
           "description": "Custom event fired when banner is opened",
-          "name": "c4p-guide-banner-toggle"
+          "name": "c4p-guidebanner-toggle"
         },
         {
           "description": "Custom event fired when banner is closed",
-          "name": "c4p-guide-banner-close"
+          "name": "c4p-guidebanner-close"
         }
       ],
       "name": "c4p-guide-banner",

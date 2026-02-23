@@ -28,7 +28,16 @@ defmodule Storybook.ProductComponents.Coachmark do
 
   @impl true
   def handle_event("coachmark:event", payload, socket) do
-    {:noreply, log_event(socket, payload)}
+    socket = log_event(socket, payload)
+
+    socket =
+      if payload["event"] == "cds-popover-closed" do
+        assign(socket, active_coachmark: nil)
+      else
+        socket
+      end
+
+    {:noreply, socket}
   end
 
   @impl true
@@ -46,8 +55,9 @@ defmodule Storybook.ProductComponents.Coachmark do
       </div>
 
       <Product.coachmark
+        :if={@active_coachmark == "tooltip"}
         id="coachmark-tooltip"
-        open={@active_coachmark == "tooltip"}
+        open
         align="bottom"
         high_contrast
         events={[
@@ -55,6 +65,11 @@ defmodule Storybook.ProductComponents.Coachmark do
            [
              push: "coachmark:event",
              payload: event_payload("c4p-coachmark-opened", %{variant: "tooltip"})
+           ]},
+          {"cds-popover-closed",
+           [
+             push: "coachmark:event",
+             payload: event_payload("cds-popover-closed", %{variant: "tooltip"})
            ]}
         ]}
       >
@@ -81,8 +96,9 @@ defmodule Storybook.ProductComponents.Coachmark do
       </Product.coachmark>
 
       <Product.coachmark
+        :if={@active_coachmark == "floating"}
         id="coachmark-floating"
-        open={@active_coachmark == "floating"}
+        open
         align="bottom"
         high_contrast
         floating
@@ -91,11 +107,19 @@ defmodule Storybook.ProductComponents.Coachmark do
            [
              push: "coachmark:event",
              payload: event_payload("c4p-coachmark-opened", %{variant: "floating"})
+           ]},
+          {"cds-popover-closed",
+           [
+             push: "coachmark:event",
+             payload: event_payload("cds-popover-closed", %{variant: "floating"})
            ]}
         ]}
       >
         <:trigger>
-          <Carbon.button kind="tertiary">Show information</Carbon.button>
+          <span
+            id="coachmark-floating-anchor"
+            style="display: inline-block; width: 1px; height: 1px;"
+          />
         </:trigger>
         <Product.coachmark_header close_icon_description="Close" drag_icon_description="Drag" />
         <Product.coachmark_body>

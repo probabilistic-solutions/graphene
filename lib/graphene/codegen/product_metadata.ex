@@ -135,6 +135,33 @@ defmodule Graphene.CodeGen.ProductMetadata do
     |> File.read!()
     |> Jason.decode!()
     |> Map.fetch!("tags")
+    |> patch_custom_elements_tags()
+  end
+
+  defp patch_custom_elements_tags(tags) do
+    Enum.map(tags, fn tag ->
+      case tag do
+        %{"name" => "c4p-guide-banner", "events" => events} when is_list(events) ->
+          patched =
+            Enum.map(events, fn event ->
+              case event do
+                %{"name" => "c4p-guide-banner-toggle"} ->
+                  Map.put(event, "name", "c4p-guidebanner-toggle")
+
+                %{"name" => "c4p-guide-banner-close"} ->
+                  Map.put(event, "name", "c4p-guidebanner-close")
+
+                _ ->
+                  event
+              end
+            end)
+
+          Map.put(tag, "events", patched)
+
+        _ ->
+          tag
+      end
+    end)
   end
 
   defp read_version do

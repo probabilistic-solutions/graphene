@@ -34,20 +34,12 @@ defmodule Graphene.BasicComponents do
   def flash(assigns) do
     assigns = assign_new(assigns, :id, fn -> "flash-#{assigns.kind}" end)
     assigns = assign(assigns, :carbon_kind, flash_kind(assigns.kind))
-    assigns =
-      assign(
-        assigns,
-        :graphene_open,
-        if(assigns.open, do: nil, else: "false")
-      )
-
     ~H"""
     <CarbonComponents.toast_notification
       :if={msg = render_slot(@inner_block) || Phoenix.Flash.get(@flash, @kind)}
       id={@id}
       kind={@carbon_kind}
       open={@open}
-      data-graphene-open={@graphene_open}
       phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide("##{@id}")}
       {@rest}
     >

@@ -117,36 +117,6 @@ function normalizeNumberInputStep(el: Element): void {
   }
 }
 
-function applyGrapheneOpen(el: Element): void {
-  const value = el.getAttribute("data-graphene-open");
-  if (value === null) {
-    return;
-  }
-
-  const normalized = value === "false" ? false : value === "true" ? true : null;
-  if (normalized === null) {
-    return;
-  }
-
-  const tagName = el.tagName.toLowerCase();
-  const apply = () => {
-    try {
-      (el as any).open = normalized;
-      if (!normalized) {
-        el.removeAttribute("open");
-      }
-    } catch (_error) {
-      // Ignore if the component rejects the property assignment.
-    }
-  };
-
-  if (customElements.get(tagName)) {
-    apply();
-  } else {
-    customElements.whenDefined(tagName).then(apply);
-  }
-}
-
 function applyNumberInputDescriptor(proto: any): void {
   const descriptor = Object.getOwnPropertyDescriptor(proto, "step");
   if (!descriptor) {
@@ -245,7 +215,6 @@ function scanAndLoad(root: ParentNode | null): void {
   if (root instanceof Element && isComponentTag(root.tagName)) {
     normalizeNotificationTimestamp(root);
     normalizeNumberInputStep(root);
-    applyGrapheneOpen(root);
     ensureNumberInputPatched(root.tagName.toLowerCase());
     loadComponentByTag(root.tagName);
   }
@@ -259,7 +228,6 @@ function scanAndLoad(root: ParentNode | null): void {
     .forEach((el) => {
       normalizeNotificationTimestamp(el);
       normalizeNumberInputStep(el);
-      applyGrapheneOpen(el);
       ensureNumberInputPatched(el.tagName.toLowerCase());
       loadComponentByTag(el.tagName);
     });
