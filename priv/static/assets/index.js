@@ -3,6 +3,81 @@ import {
   __spreadValues
 } from "./chunks/chunk-G6EI4S4W.js";
 
+// src/polyfills/crypto_random_uuid.ts
+(() => {
+  const makeRandomUUID = () => {
+    const cryptoSource = globalThis.crypto;
+    if (cryptoSource && typeof cryptoSource.getRandomValues === "function") {
+      const bytes = new Uint8Array(16);
+      cryptoSource.getRandomValues(bytes);
+      bytes[6] = bytes[6] & 15 | 64;
+      bytes[8] = bytes[8] & 63 | 128;
+      const hex = Array.from(bytes, (b) => b.toString(16).padStart(2, "0"));
+      return `${hex[0]}${hex[1]}${hex[2]}${hex[3]}-${hex[4]}${hex[5]}-${hex[6]}${hex[7]}-${hex[8]}${hex[9]}-${hex[10]}${hex[11]}${hex[12]}${hex[13]}${hex[14]}${hex[15]}`;
+    }
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (char) => {
+      const rand = Math.random() * 16;
+      const value = char === "x" ? rand : rand % 4 + 8;
+      return Math.floor(value).toString(16);
+    });
+  };
+  const ensureRandomUUID = () => {
+    const cryptoObj = globalThis.crypto;
+    if (cryptoObj && typeof cryptoObj.randomUUID === "function") {
+      return;
+    }
+    const randomUUID = makeRandomUUID;
+    const attach = (target) => {
+      if (!target || typeof target.randomUUID === "function") {
+        return typeof (target == null ? void 0 : target.randomUUID) === "function";
+      }
+      try {
+        Object.defineProperty(target, "randomUUID", {
+          value: randomUUID,
+          configurable: true
+        });
+      } catch (_error) {
+        try {
+          target.randomUUID = randomUUID;
+        } catch (_inner) {
+        }
+      }
+      return typeof target.randomUUID === "function";
+    };
+    if (attach(cryptoObj)) {
+      return;
+    }
+    if (cryptoObj) {
+      try {
+        if (attach(Object.getPrototypeOf(cryptoObj))) {
+          return;
+        }
+      } catch (_error) {
+      }
+    }
+    const CryptoClass = globalThis.Crypto;
+    if ((CryptoClass == null ? void 0 : CryptoClass.prototype) && attach(CryptoClass.prototype)) {
+      return;
+    }
+    if (!cryptoObj) {
+      const fallbackCrypto = { randomUUID };
+      try {
+        Object.defineProperty(globalThis, "crypto", {
+          value: fallbackCrypto,
+          configurable: true,
+          writable: true
+        });
+      } catch (_error) {
+        try {
+          globalThis.crypto = fallbackCrypto;
+        } catch (_inner) {
+        }
+      }
+    }
+  };
+  ensureRandomUUID();
+})();
+
 // src/lib/hooks/index.ts
 var hooks_exports = {};
 __export(hooks_exports, {

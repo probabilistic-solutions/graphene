@@ -110,6 +110,64 @@ defmodule Graphene.CodeGen.ProductComponentPatches do
 
   @product_component_recipes [
     %{
+      name: :interstitial_screen,
+      delegate: :product,
+      patterns: ["%{}"],
+      prelude: ~S"""
+        assigns =
+          assigns
+          |> assign_new(:events, fn -> nil end)
+          |> assign_new(:rest, fn -> %{} end)
+
+        events =
+          case assigns[:events] do
+            nil ->
+              []
+
+            events when is_map(events) ->
+              Map.to_list(events)
+
+            events when is_list(events) ->
+              if Enum.all?(events, &match?({_, _}, &1)) do
+                events
+              else
+                Enum.map(events, &{&1, []})
+              end
+
+            event ->
+              [{event, []}]
+          end
+
+        assigns =
+          if events == [] do
+            assigns
+          else
+            rest = Map.get(assigns, :rest, %{})
+            id = Map.get(rest, :id)
+            event_attrs = Graphene.JS.events(events: events, id: id)
+            assign(assigns, :rest, Map.merge(rest, event_attrs))
+          end
+      """,
+      body: ~S"""
+          <c4p-interstitial-screen
+            fullscreen={@fullscreen}
+            open={@open}
+            {@rest}
+          >
+            {render_slot(@inner_block)}
+            <%= for header <- @header do %>
+              {render_slot(header)}
+            <% end %>
+            <%= for body <- @body do %>
+              {render_slot(body)}
+            <% end %>
+            <%= for footer <- @footer do %>
+              {render_slot(footer)}
+            <% end %>
+          </c4p-interstitial-screen>
+      """
+    },
+    %{
       name: :checklist_group,
       delegate: :product,
       patterns: ["%{item: [_ | _]}"],

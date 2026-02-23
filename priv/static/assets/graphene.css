@@ -51839,6 +51839,36 @@ html .c4p--filter-panel-accordion-item .cds--accordion__content {
   color: var(--cds-text-disabled, rgba(22, 22, 22, 0.25));
   cursor: default;
 }
+.c4p--interstitial-screen-view-module {
+  margin-block: 2rem;
+}
+.c4p--interstitial-screen-view-module--heading {
+  font-size: var(--cds-heading-05-font-size, 2rem);
+  font-weight: var(--cds-heading-05-font-weight, 400);
+  line-height: var(--cds-heading-05-line-height, 1.25);
+  letter-spacing: var(--cds-heading-05-letter-spacing, 0);
+  margin-block-end: 2rem;
+}
+.c4p--interstitial-screen-view-module--body {
+  font-size: var(--cds-body-01-font-size, 0.875rem);
+  font-weight: var(--cds-body-01-font-weight, 400);
+  line-height: var(--cds-body-01-line-height, 1.42857);
+  letter-spacing: var(--cds-body-01-letter-spacing, 0.16px);
+}
+.c4p--interstitial-screen-view-module--enableTag {
+  margin-block-start: 2rem;
+}
+c4p-interstitial-screen:not([fullscreen]) .c4p--interstitial-screen-view-module {
+  margin: 5rem 2rem;
+}
+c4p-interstitial-screen[fullscreen] .c4p--interstitial-screen-view-module {
+  margin: 6rem 2.5rem;
+}
+@media (max-width: 81.98rem) {
+  c4p-interstitial-screen[fullscreen] .c4p--interstitial-screen-view-module {
+    margin: 6rem 2rem;
+  }
+}
 html,
 body,
 div,

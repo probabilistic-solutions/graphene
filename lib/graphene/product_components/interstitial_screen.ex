@@ -34,6 +34,66 @@ defmodule Graphene.ProductComponents.InterstitialScreen do
   slot :footer, doc: "Interstitial screen footer content."
   slot :inner_block
 
+  def interstitial_screen(%{} = assigns) do
+    assigns =
+      assigns
+      |> assign_new(:fullscreen, fn -> false end)
+      |> assign_new(:open, fn -> false end)
+
+    assigns =
+      assigns
+      |> assign_new(:events, fn -> nil end)
+      |> assign_new(:rest, fn -> %{} end)
+
+    events =
+      case assigns[:events] do
+        nil ->
+          []
+
+        events when is_map(events) ->
+          Map.to_list(events)
+
+        events when is_list(events) ->
+          if Enum.all?(events, &match?({_, _}, &1)) do
+            events
+          else
+            Enum.map(events, &{&1, []})
+          end
+
+        event ->
+          [{event, []}]
+      end
+
+    assigns =
+      if events == [] do
+        assigns
+      else
+        rest = Map.get(assigns, :rest, %{})
+        id = Map.get(rest, :id)
+        event_attrs = Graphene.JS.events(events: events, id: id)
+        assign(assigns, :rest, Map.merge(rest, event_attrs))
+      end
+
+    ~H"""
+    <c4p-interstitial-screen
+      fullscreen={@fullscreen}
+      open={@open}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+      <%= for header <- @header do %>
+        {render_slot(header)}
+      <% end %>
+      <%= for body <- @body do %>
+        {render_slot(body)}
+      <% end %>
+      <%= for footer <- @footer do %>
+        {render_slot(footer)}
+      <% end %>
+    </c4p-interstitial-screen>
+    """
+  end
+
   def interstitial_screen(assigns) do
     ProductCoreComponents.interstitial_screen(assigns)
   end
