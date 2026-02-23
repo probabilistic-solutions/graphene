@@ -47,6 +47,7 @@ defmodule Graphene.CarbonComponents.Tabs do
   attr :type, :string, doc: "Tabs type.", values: ["", "container", "contained"], default: ""
   attr :value, :string, doc: "The value of the selected item."
   attr :disabled, :boolean, doc: "Whether the tabs are disabled."
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
 
   slot :tab do
@@ -108,6 +109,7 @@ defmodule Graphene.CarbonComponents.Tabs do
 
   """
   attr :contained, :boolean, doc: "Provide the type of Tab"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

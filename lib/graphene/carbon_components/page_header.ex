@@ -14,6 +14,7 @@ defmodule Graphene.CarbonComponents.PageHeader do
 
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
 
   slot :breadcrumb do
@@ -144,6 +145,7 @@ defmodule Graphene.CarbonComponents.PageHeader do
     doc:
       "Set to `true` if the breadcrumb bar is sitting within a grid\n(ie. when used in tandem with page-header-hero-image)"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :content_actions, doc: "Content actions for the breadcrumb."
   slot :page_actions, doc: "Page actions for the breadcrumb."
@@ -160,6 +162,7 @@ defmodule Graphene.CarbonComponents.PageHeader do
 
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -174,6 +177,7 @@ defmodule Graphene.CarbonComponents.PageHeader do
 
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :tags, doc: "Tags for the page header."
   slot :inner_block

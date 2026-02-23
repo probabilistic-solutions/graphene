@@ -42,6 +42,7 @@ defmodule Graphene.CarbonComponents.DatePicker do
     doc:
       "The date(s) in ISO8601 format (date portion only), for range mode, '/' is used for separate start/end dates."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
   attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
 
@@ -74,7 +75,6 @@ defmodule Graphene.CarbonComponents.DatePicker do
       |> assign_new(:max_date, fn -> nil end)
       |> assign_new(:min_date, fn -> nil end)
       |> assign_new(:name, fn -> nil end)
-      |> assign_new(:field, fn -> nil end)
       |> assign_new(:open, fn -> false end)
       |> assign_new(:readonly, fn -> false end)
       |> assign_new(:value, fn -> nil end)
@@ -92,9 +92,6 @@ defmodule Graphene.CarbonComponents.DatePicker do
       open={@open}
       readonly={@readonly}
       value={@value}
-      field={@field}
-      form={@form}
-      form_event={@form_event}
       {@rest}
     >
       <%= for input <- @input do %>

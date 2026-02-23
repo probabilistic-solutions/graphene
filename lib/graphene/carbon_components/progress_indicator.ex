@@ -29,6 +29,7 @@ defmodule Graphene.CarbonComponents.ProgressIndicator do
   attr :vertical, :boolean,
     doc: "Determines whether or not the progress indicator should be rendered\nvertically."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
 
   slot :step do
@@ -91,6 +92,7 @@ defmodule Graphene.CarbonComponents.ProgressIndicator do
 
   """
   attr :vertical, :boolean, doc: "`true` to render the vertical variant."
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

@@ -50,6 +50,7 @@ defmodule Graphene.CarbonComponents.RadioButton do
   attr :warn_text, :string,
     doc: "Provide the text that is displayed when the control is in warning state"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :ai_label, doc: "AI label content."
   slot :inner_block
@@ -96,6 +97,7 @@ defmodule Graphene.CarbonComponents.RadioButton do
   attr :warn_text, :string,
     doc: "Provide the text that is displayed when the control is in warning state"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
   attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
 
@@ -124,7 +126,6 @@ defmodule Graphene.CarbonComponents.RadioButton do
       |> assign_new(:invalid_text, fn -> nil end)
       |> assign_new(:legend_text, fn -> nil end)
       |> assign_new(:name, fn -> nil end)
-      |> assign_new(:field, fn -> nil end)
       |> assign_new(:read_only, fn -> false end)
       |> assign_new(:required, fn -> false end)
       |> assign_new(:value, fn -> nil end)
@@ -147,9 +148,6 @@ defmodule Graphene.CarbonComponents.RadioButton do
       value={@value}
       warn={@warn}
       warn_text={@warn_text}
-      field={@field}
-      form={@form}
-      form_event={@form_event}
       {@rest}
     >
       <%= for item <- @item do %>
@@ -174,6 +172,7 @@ defmodule Graphene.CarbonComponents.RadioButton do
   Radio button skeleton.
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

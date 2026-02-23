@@ -95,6 +95,7 @@ defmodule Graphene.CarbonComponents.ComboBox do
     doc: "Provide the text that is displayed when the control is in warning state"
 
   attr :controlled, :boolean, doc: "Whether the combobox is controlled."
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
   attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
 
@@ -125,7 +126,6 @@ defmodule Graphene.CarbonComponents.ComboBox do
       |> assign_new(:invalid_text, fn -> nil end)
       |> assign_new(:label, fn -> nil end)
       |> assign_new(:name, fn -> nil end)
-      |> assign_new(:field, fn -> nil end)
       |> assign_new(:open, fn -> false end)
       |> assign_new(:read_only, fn -> false end)
       |> assign_new(:required, fn -> false end)
@@ -169,9 +169,6 @@ defmodule Graphene.CarbonComponents.ComboBox do
       value={@value}
       warn={@warn}
       warn_text={@warn_text}
-      field={@field}
-      form={@form}
-      form_event={@form_event}
       {@rest}
     >
       <%= for item <- @item do %>
@@ -204,6 +201,7 @@ defmodule Graphene.CarbonComponents.ComboBox do
     doc:
       "The `value` attribute that is set to the parent `<cds-dropdown>` when this dropdown item is selected."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

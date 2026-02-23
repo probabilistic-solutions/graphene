@@ -66,6 +66,7 @@ defmodule Graphene.CarbonComponents.CodeSnippet do
     default: "single"
 
   attr :wrap_text, :boolean, doc: "`true` if the button should be disabled."
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -118,6 +119,7 @@ defmodule Graphene.CarbonComponents.CodeSnippet do
 
   """
   attr :type, :string, doc: "Code snippet type.", values: [nil, "single", "inline", "multi"]
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

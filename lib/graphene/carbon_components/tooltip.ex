@@ -70,6 +70,7 @@ defmodule Graphene.CarbonComponents.Tooltip do
   attr :toolbar_action, :boolean,
     doc: "Specify whether the tooltip should be open when it first renders"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :trigger
 
@@ -171,6 +172,7 @@ defmodule Graphene.CarbonComponents.Tooltip do
     default: "content"
 
   attr :tab_tip, :boolean, doc: "Render the component using the tab tip variant"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

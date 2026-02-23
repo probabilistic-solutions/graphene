@@ -61,6 +61,7 @@ defmodule Graphene.CarbonComponents.Combo do
     doc: "Provide the tooltip content for the icon button.",
     default: "Additional actions"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
 
   slot :item do

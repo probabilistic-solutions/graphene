@@ -47,6 +47,7 @@ defmodule Graphene.CarbonComponents.Grid do
       "13"
     ]
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
 
   slot :column do

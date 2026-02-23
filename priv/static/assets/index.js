@@ -445,6 +445,15 @@ var BasicComponentsTable = {
 };
 
 // src/lib/hooks/form.ts
+var resolveTarget = (el) => {
+  const selector = el.dataset.formTargetSelector;
+  if (selector) {
+    const target = document.querySelector(selector);
+    if (target)
+      return target;
+  }
+  return el;
+};
 var whenDefined = (tagName, cb) => {
   if (!tagName || !customElements || !customElements.whenDefined) {
     cb();
@@ -503,6 +512,7 @@ var parseChecked = (detail, target, detailKey) => {
 };
 var GrapheneFormBridge = {
   mounted() {
+    const bridgeTarget = resolveTarget(this.el);
     const handler = (event) => {
       const inputId = this.el.dataset.formInput;
       if (!inputId)
@@ -513,7 +523,7 @@ var GrapheneFormBridge = {
       const mode = this.el.dataset.formMode || "value";
       const detailKey = this.el.dataset.formDetail || null;
       const detail = event && event.detail ? event.detail : null;
-      const target = event && event.target ? event.target : this.el;
+      const target = event && event.target ? event.target : bridgeTarget;
       if (mode === "boolean") {
         const checked = Boolean(parseChecked(detail, target, detailKey));
         input.value = checked ? "true" : "false";
@@ -535,7 +545,7 @@ var GrapheneFormBridge = {
     this._formBridgeEvent = eventName;
     const isNativeEvent = eventName === "input" || eventName === "change";
     const attachNativeListener = () => {
-      const shadowTarget = this.el.shadowRoot && this.el.shadowRoot.querySelector("input, textarea, select");
+      const shadowTarget = bridgeTarget.shadowRoot && bridgeTarget.shadowRoot.querySelector("input, textarea, select");
       if (shadowTarget) {
         this._formBridgeTarget = shadowTarget;
         this._formBridgeTarget.addEventListener(eventName, handler);
@@ -543,7 +553,7 @@ var GrapheneFormBridge = {
       }
       return false;
     };
-    const tagName = (this.el.tagName || "").toLowerCase();
+    const tagName = (bridgeTarget.tagName || "").toLowerCase();
     whenDefined(tagName, () => {
       if (isNativeEvent) {
         if (!attachNativeListener()) {
@@ -559,7 +569,7 @@ var GrapheneFormBridge = {
           this._formBridgeTimer = requestAnimationFrame(retry);
         }
       } else {
-        this._formBridgeTarget = this.el;
+        this._formBridgeTarget = bridgeTarget;
         this._formBridgeTarget.addEventListener(eventName, handler);
       }
     });

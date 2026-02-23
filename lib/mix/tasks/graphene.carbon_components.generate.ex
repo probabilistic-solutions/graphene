@@ -214,6 +214,7 @@ if Mix.env() == :dev do
         component.attrs
         |> Enum.map(&build_attr/1)
         |> Enum.join("")
+        |> Kernel.<>(events_attr(component))
         |> Kernel.<>(form_delegate_attrs(component, delegate))
         |> Kernel.<>(rest_attr())
 
@@ -252,6 +253,7 @@ if Mix.env() == :dev do
         component.attrs
         |> Enum.map(&build_attr/1)
         |> Enum.join("")
+        |> Kernel.<>(events_attr(component))
         |> Kernel.<>(form_delegate_attrs(component, delegate))
         |> Kernel.<>(Map.get(recipe, :extra_attrs, ""))
         |> Kernel.<>(rest_attr(Map.get(recipe, :extra_attrs, "")))
@@ -336,6 +338,19 @@ if Mix.env() == :dev do
         ""
       else
         "  attr :rest, :global\n"
+      end
+    end
+
+    defp events_attr(component) do
+      existing = MapSet.new(Enum.map(component.attrs, & &1.name))
+
+      if MapSet.member?(existing, :events) or MapSet.member?(existing, "events") do
+        ""
+      else
+        build_manual_attr(:events, :any,
+          default: nil,
+          doc: "custom events passed to Graphene.JS.events/1"
+        )
       end
     end
 

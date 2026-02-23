@@ -14,6 +14,7 @@ defmodule Graphene.CarbonComponents.Header do
 
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
 
   slot :name do
@@ -159,6 +160,7 @@ defmodule Graphene.CarbonComponents.Header do
     values: ["button", "reset", "submit"],
     default: "button"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
 
   slot :icon do
@@ -267,6 +269,7 @@ defmodule Graphene.CarbonComponents.Header do
   """
   attr :href, :string, doc: "Link `href`."
   attr :prefix, :string, doc: "The product name prefix."
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -282,6 +285,7 @@ defmodule Graphene.CarbonComponents.Header do
 
   """
   attr :expanded, :any, doc: "Specify whether the panel is expanded"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -300,6 +304,7 @@ defmodule Graphene.CarbonComponents.Header do
     doc:
       "Optionally specify if container will have a bottom divider to differentiate\nbetween original sidenav items and header menu items. False by default."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

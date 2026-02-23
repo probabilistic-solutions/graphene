@@ -69,6 +69,7 @@ defmodule Graphene.CarbonComponents.AiLabel do
     default: "xs"
 
   attr :slot, :string, default: "ai-label"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :body_text, doc: "Content for the AI label body."
   slot :actions, doc: "Action buttons for the AI label."
@@ -205,6 +206,7 @@ defmodule Graphene.CarbonComponents.AiLabel do
     values: ["button", "reset", "submit"],
     default: "button"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

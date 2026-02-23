@@ -17,6 +17,7 @@ defmodule Graphene.CarbonComponents.Icon do
   attr :class, :string, doc: "Custom CSS classes"
   attr :icon, :any, doc: "The imported icon"
   attr :size, :string, doc: "The size of the icon (16, 20, 24, 32)", default: "16"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :name, :string, doc: "Carbon icon name"
   attr :rest, :global
   slot :inner_block
@@ -147,6 +148,7 @@ defmodule Graphene.CarbonComponents.Icon do
     values: ["button", "reset", "submit"],
     default: "button"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :tooltip_content, doc: "Tooltip content."
 
@@ -277,6 +279,7 @@ defmodule Graphene.CarbonComponents.Icon do
 
   attr :label, :string, doc: "Label next to the icon."
   attr :size, :string, doc: "Icon indicator should be size 16 or 20", default: "16"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

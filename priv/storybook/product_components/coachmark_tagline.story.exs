@@ -36,11 +36,16 @@ Use it only within guided onboarding experiences.
         <Carbon.button kind="ghost" phx-click="close_tagline">Close</Carbon.button>
       </div>
 
-      <Product.coachmark_tagline
-        open={@open_tagline}
-        title="This is a tagline"
-        close_icon_description="Close"
-      />
+      <%= if @open_tagline do %>
+        <Product.coachmark_tagline
+          id="coachmark-tagline"
+          title="This is a tagline"
+          close_icon_description="Close"
+          events={[
+            {"c4p-coachmark-tagline-close", [push: "close_tagline"]}
+          ]}
+        />
+      <% end %>
     </div>
     """
   end

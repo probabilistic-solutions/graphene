@@ -7,10 +7,6 @@ defmodule Graphene.Internal.FormComponents do
 
   alias Graphene.Internal.CoreComponents
 
-  defp form_bridge_hook(assigns) do
-    ~H""
-  end
-
   defp form_input_assigns(assigns, opts) do
     mode = Keyword.fetch!(opts, :mode)
     checked_attr = Keyword.get(opts, :checked_attr, :checked)
@@ -70,16 +66,20 @@ defmodule Graphene.Internal.FormComponents do
     rest =
       (assigns[:rest] || %{})
       |> Map.put_new(:id, id)
-      |> Map.merge(%{
+
+    form_bridge_attrs =
+      %{
         :"phx-hook" => hook_name,
         :"data-form-input" => input_id,
         :"data-form-event" => assigns[:form_event] || default_event,
         :"data-form-mode" => to_string(mode),
-        :"data-form-detail" => detail_key
-      })
+        :"data-form-detail" => detail_key,
+        :"data-form-target-selector" => "##{id}"
+      }
 
     assigns
     |> assign(:rest, rest)
+    |> assign(:form_bridge_attrs, form_bridge_attrs)
     |> assign(:input_id, input_id)
     |> assign(:input_value, input_value)
   end
@@ -206,7 +206,14 @@ defmodule Graphene.Internal.FormComponents do
       )
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     <CoreComponents.file_uploader
       disabled={@disabled}
       label_description={@label_description}
@@ -249,7 +256,6 @@ defmodule Graphene.Internal.FormComponents do
       <% end %>
       {render_slot(@inner_block)}
     </CoreComponents.file_uploader>
-    <.form_bridge_hook />
     """
   end
 
@@ -289,6 +295,7 @@ defmodule Graphene.Internal.FormComponents do
   * `value` (`:string`) - The value. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the Checkbox is in a warn state. Defaults to `false`.
   * `warn_text` (`:boolean`) - Provide the text that is displayed when the Checkbox is in a warn state. Defaults to `false`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -314,6 +321,7 @@ defmodule Graphene.Internal.FormComponents do
     doc: "Specify whether the underlying input should be checked by default"
 
   attr :disabled, :boolean, doc: "Specify whether the Checkbox should be disabled"
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
   attr :helper_text, :any, doc: "Provide text for the form group for additional help"
 
   attr :hide_checkbox, :boolean,
@@ -353,13 +361,21 @@ defmodule Graphene.Internal.FormComponents do
         event: "cds-checkbox-changed"
       )
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :form_bridge_attrs, :component_assigns])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     {CoreComponents.checkbox(@component_assigns)}
-    <.form_bridge_hook />
     """
   end
 
@@ -404,6 +420,7 @@ defmodule Graphene.Internal.FormComponents do
   * `value` (`:string`) - The value. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the Checkbox is in a warn state. Defaults to `false`.
   * `warn_text` (`:boolean`) - Provide the text that is displayed when the Checkbox is in a warn state. Defaults to `false`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -441,6 +458,7 @@ defmodule Graphene.Internal.FormComponents do
     doc: "Specify whether the underlying input should be checked by default"
 
   attr :disabled, :boolean, doc: "Specify whether the Checkbox should be disabled"
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
   attr :helper_text, :any, doc: "Provide text for the form group for additional help"
 
   attr :hide_checkbox, :boolean,
@@ -490,17 +508,25 @@ defmodule Graphene.Internal.FormComponents do
         name: :toggle,
         mode: :boolean,
         checked_attr: :toggled,
-        event: "cds-toggle-changed",
-        detail_key: "toggled"
+        detail_key: "toggled",
+        event: "cds-toggle-changed"
       )
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :form_bridge_attrs, :component_assigns])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     {CoreComponents.toggle(@component_assigns)}
-    <.form_bridge_hook />
     """
   end
 
@@ -531,6 +557,7 @@ defmodule Graphene.Internal.FormComponents do
   * `value` (`:string`) - The `value` attribute for the `<input>` for selection. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -551,6 +578,7 @@ defmodule Graphene.Internal.FormComponents do
 
   attr :default_selected, :string, doc: "The `value` attribute for the `<input>` for selection."
   attr :disabled, :boolean, doc: "`true` if the radio button group should be disabled."
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
   attr :helper_text, :any, doc: "The helper text."
   attr :invalid, :boolean, doc: "Specify if the currently value is invalid."
   attr :invalid_text, :string, doc: "Message which is displayed if the value is invalid."
@@ -587,13 +615,21 @@ defmodule Graphene.Internal.FormComponents do
         event: "cds-radio-button-group-changed"
       )
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :form_bridge_attrs, :component_assigns])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     {CoreComponents.radio_button_group(@component_assigns)}
-    <.form_bridge_hook />
     """
   end
 
@@ -653,6 +689,7 @@ defmodule Graphene.Internal.FormComponents do
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -697,6 +734,7 @@ defmodule Graphene.Internal.FormComponents do
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -799,13 +837,21 @@ defmodule Graphene.Internal.FormComponents do
         event: "cds-number-input"
       )
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :form_bridge_attrs, :component_assigns])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     {CoreComponents.number_input(@component_assigns)}
-    <.form_bridge_hook />
     """
   end
 
@@ -865,6 +911,7 @@ defmodule Graphene.Internal.FormComponents do
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -909,6 +956,7 @@ defmodule Graphene.Internal.FormComponents do
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -1011,13 +1059,21 @@ defmodule Graphene.Internal.FormComponents do
         event: "cds-number-input"
       )
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :form_bridge_attrs, :component_assigns])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     {CoreComponents.fluid_number_input(@component_assigns)}
-    <.form_bridge_hook />
     """
   end
 
@@ -1066,6 +1122,7 @@ defmodule Graphene.Internal.FormComponents do
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -1100,6 +1157,7 @@ defmodule Graphene.Internal.FormComponents do
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -1182,13 +1240,22 @@ defmodule Graphene.Internal.FormComponents do
 
   def text_input(assigns) do
     assigns = form_input_assigns(assigns, name: :text_input, mode: :value, event: "input")
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
+
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :form_bridge_attrs, :component_assigns])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     {CoreComponents.text_input(@component_assigns)}
-    <.form_bridge_hook />
     """
   end
 
@@ -1237,6 +1304,7 @@ defmodule Graphene.Internal.FormComponents do
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -1271,6 +1339,7 @@ defmodule Graphene.Internal.FormComponents do
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -1353,13 +1422,22 @@ defmodule Graphene.Internal.FormComponents do
 
   def fluid_text_input(assigns) do
     assigns = form_input_assigns(assigns, name: :fluid_text_input, mode: :value, event: "input")
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
+
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :form_bridge_attrs, :component_assigns])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     {CoreComponents.fluid_text_input(@component_assigns)}
-    <.form_bridge_hook />
     """
   end
 
@@ -1408,6 +1486,7 @@ defmodule Graphene.Internal.FormComponents do
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -1442,6 +1521,7 @@ defmodule Graphene.Internal.FormComponents do
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -1524,13 +1604,22 @@ defmodule Graphene.Internal.FormComponents do
 
   def password_input(assigns) do
     assigns = form_input_assigns(assigns, name: :password_input, mode: :value, event: "input")
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
+
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :form_bridge_attrs, :component_assigns])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     {CoreComponents.password_input(@component_assigns)}
-    <.form_bridge_hook />
     """
   end
 
@@ -1550,7 +1639,7 @@ defmodule Graphene.Internal.FormComponents do
   * `autocomplete` (`:string`) - May be any of the standard HTML autocomplete options. Defaults to `nil`.
   * `autofocus` (`:boolean`) - Sets the input to be focussed automatically on page load. Defaults to false. Defaults to `false`.
   * `cols` (`:any`) - The number of columns for the textarea to show by default. Defaults to `nil`.
-  * `counter_mode` (`:any`) - Specify the method used for calculating the counter number. Defaults to `nil`.
+  * `counter_mode` (`:string`) - Specify the method used for calculating the counter number. Defaults to `"character"`. Must be one of `"character"`, or `"word"`.
   * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
   * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
   * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
@@ -1584,6 +1673,7 @@ defmodule Graphene.Internal.FormComponents do
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -1617,9 +1707,15 @@ defmodule Graphene.Internal.FormComponents do
     doc: "Sets the input to be focussed automatically on page load. Defaults to false"
 
   attr :cols, :any, doc: "The number of columns for the textarea to show by default"
-  attr :counter_mode, :any, doc: "Specify the method used for calculating the counter number"
+
+  attr :counter_mode, :string,
+    doc: "Specify the method used for calculating the counter number",
+    values: ["character", "word"],
+    default: "character"
+
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -1707,13 +1803,22 @@ defmodule Graphene.Internal.FormComponents do
 
   def textarea(assigns) do
     assigns = form_input_assigns(assigns, name: :textarea, mode: :value, event: "input")
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
+
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :form_bridge_attrs, :component_assigns])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     {CoreComponents.textarea(@component_assigns)}
-    <.form_bridge_hook />
     """
   end
 
@@ -1733,7 +1838,7 @@ defmodule Graphene.Internal.FormComponents do
   * `autocomplete` (`:string`) - May be any of the standard HTML autocomplete options. Defaults to `nil`.
   * `autofocus` (`:boolean`) - Sets the input to be focussed automatically on page load. Defaults to false. Defaults to `false`.
   * `cols` (`:any`) - The number of columns for the textarea to show by default. Defaults to `nil`.
-  * `counter_mode` (`:any`) - Specify the method used for calculating the counter number. Defaults to `nil`.
+  * `counter_mode` (`:string`) - Specify the method used for calculating the counter number. Defaults to `"character"`. Must be one of `"character"`, or `"word"`.
   * `disabled` (`:boolean`) - Controls the disabled state of the input. Defaults to `false`.
   * `enable_counter` (`:boolean`) - Specify whether to display the character counter. Defaults to `false`.
   * `hide_label` (`:boolean`) - Specify whether you want the underlying label to be visually hidden. Defaults to `false`.
@@ -1767,6 +1872,7 @@ defmodule Graphene.Internal.FormComponents do
   * `value` (`:string`) - The value of the input. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -1800,9 +1906,15 @@ defmodule Graphene.Internal.FormComponents do
     doc: "Sets the input to be focussed automatically on page load. Defaults to false"
 
   attr :cols, :any, doc: "The number of columns for the textarea to show by default"
-  attr :counter_mode, :any, doc: "Specify the method used for calculating the counter number"
+
+  attr :counter_mode, :string,
+    doc: "Specify the method used for calculating the counter number",
+    values: ["character", "word"],
+    default: "character"
+
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enable_counter, :boolean, doc: "Specify whether to display the character counter"
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
 
   attr :hide_label, :boolean,
     doc: "Specify whether you want the underlying label to be visually hidden"
@@ -1890,13 +2002,22 @@ defmodule Graphene.Internal.FormComponents do
 
   def fluid_textarea(assigns) do
     assigns = form_input_assigns(assigns, name: :fluid_textarea, mode: :value, event: "input")
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
+
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :form_bridge_attrs, :component_assigns])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     {CoreComponents.fluid_textarea(@component_assigns)}
-    <.form_bridge_hook />
     """
   end
 
@@ -1929,6 +2050,7 @@ defmodule Graphene.Internal.FormComponents do
   * `type` (`:string`) - The `<input>` name. Defaults to `nil`.
   * `value` (`:string`) - The value. Defaults to `nil`.
   * `color_scheme` (`:string`) - Color scheme for the search. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -1957,6 +2079,7 @@ defmodule Graphene.Internal.FormComponents do
 
   attr :color_scheme, :string, doc: "Color scheme for the search."
   attr :disabled, :boolean, doc: "`true` if the search box should be disabled."
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
   attr :expandable, :boolean, doc: "`true` if the search bar can be expandable"
   attr :expanded, :boolean, doc: "`true` if the expandable search has been expanded"
   attr :has_custom_icon, :boolean
@@ -1977,13 +2100,22 @@ defmodule Graphene.Internal.FormComponents do
 
   def search(assigns) do
     assigns = form_input_assigns(assigns, name: :search, mode: :value, event: "cds-search-input")
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
+
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :form_bridge_attrs, :component_assigns])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     {CoreComponents.search(@component_assigns)}
-    <.form_bridge_hook />
     """
   end
 
@@ -2015,6 +2147,7 @@ defmodule Graphene.Internal.FormComponents do
   * `size` (`:string`) - The search box size. Defaults to `"md"`. Must be one of `"sm"`, `"md"`, `"lg"`, or `"xl"`.
   * `type` (`:string`) - The `<input>` name. Defaults to `nil`.
   * `value` (`:string`) - The value. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -2042,6 +2175,7 @@ defmodule Graphene.Internal.FormComponents do
     doc: "Specify a label to be read by screen readers on the \"close\" button"
 
   attr :disabled, :boolean, doc: "`true` if the search box should be disabled."
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
   attr :expandable, :boolean, doc: "`true` if the search bar can be expandable"
   attr :expanded, :boolean, doc: "`true` if the expandable search has been expanded"
   attr :has_custom_icon, :boolean
@@ -2064,13 +2198,21 @@ defmodule Graphene.Internal.FormComponents do
     assigns =
       form_input_assigns(assigns, name: :fluid_search, mode: :value, event: "cds-search-input")
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :form_bridge_attrs, :component_assigns])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     {CoreComponents.fluid_search(@component_assigns)}
-    <.form_bridge_hook />
     """
   end
 
@@ -2106,6 +2248,7 @@ defmodule Graphene.Internal.FormComponents do
   * `value` (`:string`) - The value of the text area. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify if the currently value is warn. Defaults to `false`.
   * `warn_text` (`:string`) - Message which is displayed if the value is warn. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -2137,6 +2280,7 @@ defmodule Graphene.Internal.FormComponents do
     doc: "Sets the select to be focussed automatically on page load. Defaults to false"
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the select"
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
   attr :id, :string, doc: "ID to link the `label` and `select`"
   attr :inline, :boolean, doc: "Specify whether you want the inline version of this control"
@@ -2192,6 +2336,7 @@ defmodule Graphene.Internal.FormComponents do
       Map.drop(assigns, [
         :input_id,
         :input_value,
+        :form_bridge_attrs,
         :component_assigns,
         :id,
         :item,
@@ -2204,7 +2349,14 @@ defmodule Graphene.Internal.FormComponents do
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     <CoreComponents.select {@component_assigns}>
       {render_slot(@inner_block)}
       <.dynamic_tag
@@ -2239,7 +2391,6 @@ defmodule Graphene.Internal.FormComponents do
         </CoreComponents.select_item>
       <% end %>
     </CoreComponents.select>
-    <.form_bridge_hook />
     """
   end
 
@@ -2275,6 +2426,7 @@ defmodule Graphene.Internal.FormComponents do
   * `value` (`:string`) - The value of the text area. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify if the currently value is warn. Defaults to `false`.
   * `warn_text` (`:string`) - Message which is displayed if the value is warn. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -2306,6 +2458,7 @@ defmodule Graphene.Internal.FormComponents do
     doc: "Sets the select to be focussed automatically on page load. Defaults to false"
 
   attr :disabled, :boolean, doc: "Controls the disabled state of the select"
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden, or not"
   attr :id, :string, doc: "ID to link the `label` and `select`"
   attr :inline, :boolean, doc: "Specify whether you want the inline version of this control"
@@ -2361,6 +2514,7 @@ defmodule Graphene.Internal.FormComponents do
       Map.drop(assigns, [
         :input_id,
         :input_value,
+        :form_bridge_attrs,
         :component_assigns,
         :id,
         :item,
@@ -2373,7 +2527,14 @@ defmodule Graphene.Internal.FormComponents do
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     <CoreComponents.fluid_select {@component_assigns}>
       {render_slot(@inner_block)}
       <.dynamic_tag
@@ -2408,7 +2569,6 @@ defmodule Graphene.Internal.FormComponents do
         </CoreComponents.select_item>
       <% end %>
     </CoreComponents.fluid_select>
-    <.form_bridge_hook />
     """
   end
 
@@ -2452,6 +2612,7 @@ defmodule Graphene.Internal.FormComponents do
   * `value` (`:string`) - The value of the selected item. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -2481,6 +2642,7 @@ defmodule Graphene.Internal.FormComponents do
     default: "bottom"
 
   attr :disabled, :boolean, doc: "`true` if this dropdown should be disabled."
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
   attr :helper_text, :string, doc: "The helper text."
   attr :hide_label, :boolean, doc: "Specify whether the title text should be hidden or not"
   attr :invalid, :boolean, doc: "`true` to show the UI of the invalid state."
@@ -2539,6 +2701,7 @@ defmodule Graphene.Internal.FormComponents do
       Map.drop(assigns, [
         :input_id,
         :input_value,
+        :form_bridge_attrs,
         :component_assigns,
         :id,
         :item,
@@ -2549,7 +2712,14 @@ defmodule Graphene.Internal.FormComponents do
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     <CoreComponents.dropdown {@component_assigns}>
       {render_slot(@inner_block)}
       <.dynamic_tag
@@ -2568,7 +2738,6 @@ defmodule Graphene.Internal.FormComponents do
         </CoreComponents.dropdown_item>
       <% end %>
     </CoreComponents.dropdown>
-    <.form_bridge_hook />
     """
   end
 
@@ -2628,6 +2797,7 @@ defmodule Graphene.Internal.FormComponents do
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
   * `controlled` (`:boolean`) - Whether the combobox is controlled. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -2663,6 +2833,7 @@ defmodule Graphene.Internal.FormComponents do
     default: "bottom"
 
   attr :disabled, :boolean, doc: "`true` if this dropdown should be disabled."
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
   attr :helper_text, :string, doc: "The helper text."
   attr :hide_label, :boolean, doc: "Specify whether the title text should be hidden or not"
   attr :input_label, :string, doc: "The `aria-label` attribute for the `<input>` for filtering."
@@ -2726,12 +2897,27 @@ defmodule Graphene.Internal.FormComponents do
       form_input_assigns(assigns, name: :combo_box, mode: :value, event: "cds-combo-box-selected")
 
     component_assigns =
-      Map.drop(assigns, [:input_id, :input_value, :component_assigns, :id, :item, :inner_block])
+      Map.drop(assigns, [
+        :input_id,
+        :input_value,
+        :form_bridge_attrs,
+        :component_assigns,
+        :id,
+        :item,
+        :inner_block
+      ])
 
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     <CoreComponents.combo_box {@component_assigns}>
       {render_slot(@inner_block)}
       <%= for item <- @item do %>
@@ -2743,7 +2929,6 @@ defmodule Graphene.Internal.FormComponents do
         </CoreComponents.combo_box_item>
       <% end %>
     </CoreComponents.combo_box>
-    <.form_bridge_hook />
     """
   end
 
@@ -2805,6 +2990,7 @@ defmodule Graphene.Internal.FormComponents do
   * `value` (`:string`) - The value of the selected item. Defaults to `nil`.
   * `warn` (`:boolean`) - Specify whether the control is currently in warning state. Defaults to `false`.
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -2846,6 +3032,7 @@ defmodule Graphene.Internal.FormComponents do
     default: "bottom"
 
   attr :disabled, :boolean, doc: "`true` if this dropdown should be disabled."
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
   attr :filterable, :any
   attr :helper_text, :string, doc: "The helper text."
   attr :hide_label, :boolean, doc: "Specify whether the title text should be hidden or not"
@@ -2922,6 +3109,7 @@ defmodule Graphene.Internal.FormComponents do
       Map.drop(assigns, [
         :input_id,
         :input_value,
+        :form_bridge_attrs,
         :component_assigns,
         :id,
         :item,
@@ -2932,7 +3120,14 @@ defmodule Graphene.Internal.FormComponents do
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     <CoreComponents.multi_select {@component_assigns}>
       {render_slot(@inner_block)}
       <.dynamic_tag
@@ -2951,7 +3146,6 @@ defmodule Graphene.Internal.FormComponents do
         </CoreComponents.multi_select_item>
       <% end %>
     </CoreComponents.multi_select>
-    <.form_bridge_hook />
     """
   end
 
@@ -2979,6 +3173,7 @@ defmodule Graphene.Internal.FormComponents do
   * `open` (`:boolean`) - `true` if the date picker should be open. Defaults to `false`.
   * `readonly` (`:boolean`) - Specify if the component should be read-only. Defaults to `false`.
   * `value` (`:string`) - The date(s) in ISO8601 format (date portion only), for range mode, '/' is used for separate start/end dates. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -3010,6 +3205,7 @@ defmodule Graphene.Internal.FormComponents do
   attr :date_format, :string, doc: "The date format to let Flatpickr use."
   attr :disabled, :boolean, doc: "Controls the disabled state of the input"
   attr :enabled_range, :string, doc: "The date range that a user can pick in calendar dropdown."
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
   attr :max_date, :string, doc: "The maximum date that a user can start picking from."
   attr :min_date, :string, doc: "The minimum date that a user can start picking from."
   attr :name, :string, doc: "Name for the input in the `FormData`"
@@ -3031,13 +3227,21 @@ defmodule Graphene.Internal.FormComponents do
         event: "cds-date-picker-changed"
       )
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :form_bridge_attrs, :component_assigns])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     {CoreComponents.date_picker(@component_assigns)}
-    <.form_bridge_hook />
     """
   end
 
@@ -3070,6 +3274,7 @@ defmodule Graphene.Internal.FormComponents do
   * `value` (`:string`) - Value of the input. Defaults to `nil`.
   * `warning` (`:boolean`) - Specify whether the control is in warning state. Defaults to `false`.
   * `warning_text` (`:string`) - Provide the text that is displayed when the control is in a warning state. Defaults to `"Warning message."`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -3098,6 +3303,7 @@ defmodule Graphene.Internal.FormComponents do
     doc: "override the custom event used to sync form values"
 
   attr :disabled, :boolean, doc: "Specify whether the control is disabled"
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
   attr :hide_label, :boolean, doc: "Specify whether the label should be hidden"
   attr :invalid, :boolean, doc: "Specify whether the control is currently invalid"
 
@@ -3148,13 +3354,22 @@ defmodule Graphene.Internal.FormComponents do
 
   def time_picker(assigns) do
     assigns = form_input_assigns(assigns, name: :time_picker, mode: :value, event: "change")
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
+
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :form_bridge_attrs, :component_assigns])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     {CoreComponents.time_picker(@component_assigns)}
-    <.form_bridge_hook />
     """
   end
 
@@ -3195,6 +3410,7 @@ defmodule Graphene.Internal.FormComponents do
   * `warn_text` (`:string`) - Provide the text that is displayed when the control is in warning state. Defaults to `nil`.
   * `controlled` (`:boolean`) - Whether the slider is controlled. Defaults to `nil`.
   * `format_label` (`:any`) - Formatter for the slider label. Defaults to `nil`.
+  * `events` (`:any`) - custom events passed to Graphene.JS.events/1. Defaults to `nil`.
   * Global attributes are accepted.
   ## Slots
 
@@ -3227,6 +3443,7 @@ defmodule Graphene.Internal.FormComponents do
 
   attr :controlled, :boolean, doc: "Whether the slider is controlled."
   attr :disabled, :boolean, doc: "`true` if the check box should be disabled."
+  attr :events, :any, doc: "custom events passed to Graphene.JS.events/1"
   attr :format_label, :any, doc: "Formatter for the slider label."
 
   attr :hide_label, :boolean,
@@ -3280,13 +3497,21 @@ defmodule Graphene.Internal.FormComponents do
     assigns =
       form_input_assigns(assigns, name: :slider, mode: :value, event: "cds-slider-changed")
 
-    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])
+    component_assigns =
+      Map.drop(assigns, [:input_id, :input_value, :form_bridge_attrs, :component_assigns])
+
     assigns = assign(assigns, :component_assigns, component_assigns)
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     {CoreComponents.slider(@component_assigns)}
-    <.form_bridge_hook />
     """
   end
 end

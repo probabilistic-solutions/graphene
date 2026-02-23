@@ -1,7 +1,3 @@
-  defp form_bridge_hook(assigns) do
-    ~H""
-  end
-
   defp form_input_assigns(assigns, opts) do
     mode = Keyword.fetch!(opts, :mode)
     checked_attr = Keyword.get(opts, :checked_attr, :checked)
@@ -60,16 +56,20 @@
     rest =
       (assigns[:rest] || %{})
       |> Map.put_new(:id, id)
-      |> Map.merge(%{
+
+    form_bridge_attrs =
+      %{
         :"phx-hook" => hook_name,
         :"data-form-input" => input_id,
         :"data-form-event" => assigns[:form_event] || default_event,
         :"data-form-mode" => to_string(mode),
-        :"data-form-detail" => detail_key
-      })
+        :"data-form-detail" => detail_key,
+        :"data-form-target-selector" => "##{id}"
+      }
 
     assigns
     |> assign(:rest, rest)
+    |> assign(:form_bridge_attrs, form_bridge_attrs)
     |> assign(:input_id, input_id)
     |> assign(:input_value, input_value)
   end
@@ -191,7 +191,14 @@
       |> form_input_assigns(name: :file_uploader, mode: :value, event: "cds-file-uploader-button-changed")
 
     ~H"""
-    <input type="hidden" id={@input_id} name={@name} value={@input_value} form={@form} />
+    <input
+      type="hidden"
+      id={@input_id}
+      name={@name}
+      value={@input_value}
+      form={@form}
+      {@form_bridge_attrs}
+    />
     <CoreComponents.file_uploader
       disabled={@disabled}
       label_description={@label_description}
@@ -234,6 +241,5 @@
       <% end %>
       {render_slot(@inner_block)}
     </CoreComponents.file_uploader>
-    <.form_bridge_hook />
     """
   end

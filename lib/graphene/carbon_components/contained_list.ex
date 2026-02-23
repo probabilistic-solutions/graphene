@@ -18,7 +18,12 @@ defmodule Graphene.CarbonComponents.ContainedList do
     doc: "Specify whether the dividing lines in between list items should be inset."
 
   attr :kind, :any, doc: "The kind of ContainedList you want to display"
-  attr :size, :any, doc: "Specify the size of the contained list."
+
+  attr :size, :string,
+    doc: "Specify the size of the contained list.",
+    values: [nil, nil, "lg", "md", "sm", "xl"]
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :action, doc: "The action slot for interactive elements in header"
   slot :label, doc: "The label text"
@@ -73,6 +78,7 @@ defmodule Graphene.CarbonComponents.ContainedList do
 
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -92,6 +98,7 @@ defmodule Graphene.CarbonComponents.ContainedList do
   """
   attr :clickable, :boolean, doc: "Whether this item is clickable"
   attr :disabled, :boolean, doc: "Whether this item is disabled."
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :action, doc: "The action slot for interactive elements"
   slot :icon, doc: "The icon slot for rendering an icon"

@@ -57,6 +57,7 @@ defmodule Graphene.CarbonComponents.Toggle do
   attr :warn_text, :boolean,
     doc: "Provide the text that is displayed when the Checkbox is in a warn state"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
   attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
 
@@ -81,6 +82,7 @@ defmodule Graphene.CarbonComponents.Toggle do
 
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

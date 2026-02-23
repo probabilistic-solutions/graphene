@@ -41,6 +41,7 @@ defmodule Graphene.CarbonComponents.Popover do
   attr :high_contrast, :boolean, doc: "Render the component using the high-contrast variant"
   attr :open, :boolean, doc: "Specify whether the component is currently open or closed"
   attr :tab_tip, :boolean, doc: "Render the component using the tab tip variant"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :trigger
   slot :content
@@ -120,6 +121,7 @@ defmodule Graphene.CarbonComponents.Popover do
     default: "content"
 
   attr :tab_tip, :boolean, doc: "Render the component using the tab tip variant"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

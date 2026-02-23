@@ -51,6 +51,7 @@ defmodule Graphene.CarbonComponents.TimePicker do
     doc: "Provide the text that is displayed when the control is in a warning state",
     default: "Warning message."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
   attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
 
@@ -82,7 +83,6 @@ defmodule Graphene.CarbonComponents.TimePicker do
       |> assign_new(:hide_label, fn -> false end)
       |> assign_new(:invalid, fn -> false end)
       |> assign_new(:name, fn -> nil end)
-      |> assign_new(:field, fn -> nil end)
       |> assign_new(:read_only, fn -> false end)
       |> assign_new(:required, fn -> false end)
       |> assign_new(:value, fn -> nil end)
@@ -106,9 +106,6 @@ defmodule Graphene.CarbonComponents.TimePicker do
       value={@value}
       warning={@warning}
       warning_text={@warning_text}
-      field={@field}
-      form={@form}
-      form_event={@form_event}
       {@rest}
     >
       <.dynamic_tag
@@ -164,6 +161,7 @@ defmodule Graphene.CarbonComponents.TimePicker do
     default: "md"
 
   attr :value, :string, doc: "The value of the select."
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

@@ -21,6 +21,7 @@ defmodule Graphene.CarbonComponents.Menu do
   attr :menu_alignment, :string, doc: "Alignment of the menu."
   attr :x, :string, doc: "Horizontal position of the menu."
   attr :y, :string, doc: "Vertical position of the menu."
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -75,6 +76,7 @@ defmodule Graphene.CarbonComponents.Menu do
     default: "lg"
 
   attr :tab_index, :string, doc: "Specify the tabIndex of the button.", default: "0"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
 
   slot :item do

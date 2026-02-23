@@ -113,6 +113,7 @@ defmodule Graphene.CarbonComponents.OverflowMenu do
     values: ["button", "reset", "submit"],
     default: "button"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :icon, doc: "The icon for the trigger button."
   slot :tooltip_content, doc: "Tooltip content for the overflow menu trigger."
@@ -230,6 +231,7 @@ defmodule Graphene.CarbonComponents.OverflowMenu do
 
   attr :flipped, :boolean, doc: "How the menu is aligned to the trigger button."
   attr :size, :string, doc: "The overflow menu size.", values: ["sm", "md", "lg"], default: "md"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -257,6 +259,7 @@ defmodule Graphene.CarbonComponents.OverflowMenu do
     values: ["sm", "md", "lg"],
     default: "md"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

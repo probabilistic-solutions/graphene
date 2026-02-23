@@ -33,6 +33,7 @@ defmodule Graphene.CarbonComponents.ContentSwitcher do
 
   attr :size, :string, doc: "Content switcher size.", values: [nil, "sm", "md", "lg", "xl"]
   attr :value, :string, doc: "The value of the selected item."
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
 
   slot :item do
@@ -105,6 +106,7 @@ defmodule Graphene.CarbonComponents.ContentSwitcher do
     doc:
       "The `value` attribute that is set to the parent `<cds-content-switcher>`\nwhen this content switcher item is selected."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :tooltip_content, doc: "Tooltip content for the item."
   slot :inner_block

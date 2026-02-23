@@ -84,6 +84,7 @@ defmodule Graphene.CodeGen.Component do
 
   def display(component, opts \\ []) do
     prelude = rest_class_prelude(component)
+    prelude = prelude <> "    assigns = apply_events(assigns)\n"
 
     template = ~S'''
     @doc """
@@ -91,6 +92,9 @@ defmodule Graphene.CodeGen.Component do
     """
     <%= for attr <- @component.attrs do %>
     <%= Graphene.CodeGen.Component.Attr.display_def attr %><% end %>
+    <%= unless Enum.any?(@component.attrs, &(&1.name == "events")) do %>
+    attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+    <% end %>
     attr :rest, :global
     <%= for slot <- @component.slots do %>
     <%= Graphene.CodeGen.Component.Slot.display_def slot %><% end %>

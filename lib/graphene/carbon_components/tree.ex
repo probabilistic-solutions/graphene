@@ -33,6 +33,7 @@ defmodule Graphene.CarbonComponents.Tree do
   attr :label, :string, doc: "Rendered label for the TreeNode"
   attr :on_click, :any, doc: "when adding an href to control the click functionality"
   attr :selected, :boolean, doc: "sets if tree node is selected"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -57,6 +58,7 @@ defmodule Graphene.CarbonComponents.Tree do
 
   attr :controlled, :boolean, doc: "Whether the tree view is controlled."
   attr :links, :boolean, doc: "Whether the tree view renders links."
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
 
   slot :node do

@@ -32,6 +32,7 @@ defmodule Graphene.CarbonComponents.Table do
       "Numeric representation of the total number of items in a table.\nThis number is used in the select all button text\nThis property controls the rendering of the Select all button",
     default: "0"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -50,6 +51,7 @@ defmodule Graphene.CarbonComponents.Table do
     doc:
       "TODO: Uncomment when Carbon fully implements sticky header\nSpecify whether the header should be sticky.\nStill experimental: may not work with every combination of table props"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -110,6 +112,7 @@ defmodule Graphene.CarbonComponents.Table do
   attr :with_header, :any
   attr :with_row_ai_labels, :boolean, doc: "true if AI Labels are added in the rows"
   attr :with_row_slugs, :boolean, doc: "true if slugs are added in the rows"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :title, doc: "Title"
   slot :description, doc: "Description"
@@ -132,6 +135,7 @@ defmodule Graphene.CarbonComponents.Table do
   attr :filtered, :boolean, doc: "`true` if the table row should be filtered."
   attr :highlighted, :boolean, doc: "`true` if the table row should be highlighted."
   attr :selected, :boolean, doc: "`true` if the previous table row has been selected"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -146,6 +150,7 @@ defmodule Graphene.CarbonComponents.Table do
 
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -198,6 +203,7 @@ defmodule Graphene.CarbonComponents.Table do
   attr :radio, :boolean,
     doc: "Specify whether the control should be a radio button or inline checkbox."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -232,6 +238,7 @@ defmodule Graphene.CarbonComponents.Table do
     default: true
 
   attr :zebra, :boolean, doc: "true to add useZebraStyles striping."
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -310,9 +317,7 @@ defmodule Graphene.CarbonComponents.Table do
       |> assign_new(:use_static_width, fn -> false end)
       |> assign_new(:with_row_ai_labels, fn -> false end)
       |> assign_new(:with_row_slugs, fn -> false end)
-      # Carbon's <cds-table> blows up if `locale` ends up as null.
-      # Treat nil/empty locale as "en", matching DataTableComponent behavior.
-      |> assign(:locale, if(is_nil(assigns[:locale]) || assigns[:locale] == "", do: "en", else: assigns[:locale]))
+      |> assign_new(:locale, fn -> "en" end)
       |> assign(:selected_set, selected_set(assigns.selected_ids))
       |> assign(:effective_selectable, effective_selectable?(assigns))
       |> assign(:effective_sortable, effective_sortable?(assigns))

@@ -166,7 +166,10 @@ if Mix.env() == :dev do
       item_component = config.item_component
       slot_uses = render_slot_uses(component)
       slot_keys = component.slots |> Enum.map(& &1.name)
-      drop_keys = [:input_id, :input_value, :component_assigns, :id, :item] ++ slot_keys
+
+      drop_keys =
+        [:input_id, :input_value, :form_bridge_attrs, :component_assigns, :id, :item] ++ slot_keys
+
       drop_keys = drop_keys |> Enum.uniq()
       drop_keys_literal = inspect(drop_keys)
 
@@ -175,7 +178,7 @@ if Mix.env() == :dev do
         "    component_assigns = Map.drop(assigns, #{drop_keys_literal})\n" <>
         "    assigns = assign(assigns, :component_assigns, component_assigns)\n" <>
         "    ~H\"\"\"\n" <>
-        "    <input type=\"hidden\" id={@input_id} name={@name} value={@input_value} form={@form} />\n" <>
+        "    <input type=\"hidden\" id={@input_id} name={@name} value={@input_value} form={@form} {@form_bridge_attrs} />\n" <>
         "    <CoreComponents.#{name} {@component_assigns}>\n" <>
         "      {render_slot(@inner_block)}\n" <>
         slot_uses <>
@@ -187,7 +190,6 @@ if Mix.env() == :dev do
         "        </CoreComponents.#{item_component}>\n" <>
         "      <% end %>\n" <>
         "    </CoreComponents.#{name}>\n" <>
-        "    <.form_bridge_hook />\n" <>
         "    \"\"\"\n" <>
         "  end\n\n"
     end
@@ -321,14 +323,26 @@ if Mix.env() == :dev do
             ]
         end
 
-      if MapSet.member?(names, :form_event) do
+      extras =
+        if MapSet.member?(names, :form_event) do
+          extras
+        else
+          extras ++
+            [
+              "  attr :form_event, :string,\n" <>
+                "    default: nil,\n" <>
+                "    doc: \"override the custom event used to sync form values\"\n"
+            ]
+        end
+
+      if MapSet.member?(names, :events) do
         extras
       else
         extras ++
           [
-            "  attr :form_event, :string,\n" <>
+            "  attr :events, :any,\n" <>
               "    default: nil,\n" <>
-              "    doc: \"override the custom event used to sync form values\"\n"
+              "    doc: \"custom events passed to Graphene.JS.events/1\"\n"
           ]
       end
     end
@@ -380,12 +394,11 @@ if Mix.env() == :dev do
             body =
               "  def #{name}(assigns) do\n" <>
                 "    assigns = form_input_assigns(assigns, #{opts})\n" <>
-                "    component_assigns = Map.drop(assigns, [:input_id, :input_value, :component_assigns])\n" <>
+                "    component_assigns = Map.drop(assigns, [:input_id, :input_value, :form_bridge_attrs, :component_assigns])\n" <>
                 "    assigns = assign(assigns, :component_assigns, component_assigns)\n" <>
                 "    ~H\"\"\"\n" <>
-                "    <input type=\"hidden\" id={@input_id} name={@name} value={@input_value} form={@form} />\n" <>
+                "    <input type=\"hidden\" id={@input_id} name={@name} value={@input_value} form={@form} {@form_bridge_attrs} />\n" <>
                 "    <%= CoreComponents.#{name}(@component_assigns) %>\n" <>
-                "    <.form_bridge_hook />\n" <>
                 "    \"\"\"\n" <>
                 "  end\n\n"
 

@@ -7,6 +7,36 @@ defmodule Graphene.Internal.ProductCoreComponents do
 
   def version(), do: ~S|0.33.0|
 
+  defp normalize_events(nil), do: []
+
+  defp normalize_events(events) when is_map(events) do
+    Map.to_list(events)
+  end
+
+  defp normalize_events(events) when is_list(events) do
+    if Enum.all?(events, &match?({_, _}, &1)) do
+      events
+    else
+      Enum.map(events, &{&1, []})
+    end
+  end
+
+  defp normalize_events(event), do: [{event, []}]
+
+  defp apply_events(assigns) do
+    assigns = assign_new(assigns, :events, fn -> nil end)
+    events = normalize_events(assigns[:events])
+
+    if events == [] do
+      assigns
+    else
+      rest = Map.get(assigns, :rest, %{})
+      id = Map.get(assigns, :id) || Map.get(rest, :id)
+      event_attrs = Graphene.JS.events(events: events, id: id)
+      assign(assigns, :rest, Map.merge(rest, event_attrs))
+    end
+  end
+
   @doc """
   Component `<c4p-about-modal>` from `./src/components/about-modal/about-modal.ts`
 
@@ -53,11 +83,15 @@ defmodule Graphene.Internal.ProductCoreComponents do
     default: nil,
     doc: "Text that provides information on the version number of your product."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def about_modal(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-about-modal
       additionalInfo={assigns[:additional_info]}
@@ -93,6 +127,9 @@ defmodule Graphene.Internal.ProductCoreComponents do
   attr :trending, :boolean, default: false
   attr :truncate, :boolean, default: true
   attr :value, :string, default: nil
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :icon_button, doc: "Displays an icon button next to `value`.", do: attr(:tag, :string)
@@ -110,6 +147,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
   slot :inner_block
 
   def big_number(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-big-number
       fraction-digits={assigns[:fraction_digits]}
@@ -154,11 +193,16 @@ defmodule Graphene.Internal.ProductCoreComponents do
   """
 
   attr :size, :string, default: "default", values: [nil, "default", "lg", "xl"]
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def big_number_skeleton(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-big-number-skeleton
       size={assigns[:size]}
@@ -208,6 +252,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
     default: nil,
     doc: "If defined, will show and enable the \"View all (#)\" button in the checklist footer."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :checklist_footer,
@@ -231,6 +277,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
   slot :inner_block
 
   def checklist(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-checklist
       chart-label={assigns[:chart_label]}
@@ -296,11 +344,15 @@ defmodule Graphene.Internal.ProductCoreComponents do
     default: "0",
     doc: "A number between 0 and 1 which indicates the progress of checklist"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def checklist_chart(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-checklist-chart
       value={assigns[:value]}
@@ -320,11 +372,16 @@ defmodule Graphene.Internal.ProductCoreComponents do
   """
 
   attr :title, :any, default: nil, doc: "Title text of the c4p-checklist-group"
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def checklist_group(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-checklist-group
       title={assigns[:title]}
@@ -348,11 +405,15 @@ defmodule Graphene.Internal.ProductCoreComponents do
     doc:
       "The icon to be displayed.\nValues can be 'unchecked', 'indeterminate', 'checked', 'error', 'disabled'"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def checklist_icon(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-checklist-icon
       kind={assigns[:kind]}
@@ -385,6 +446,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
     doc:
       "status of the c4p-checklist-item\nValues can be 'not started', 'in progress', 'completed', 'error', 'disabled'"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :content, doc: "checklist item title/description", do: attr(:tag, :string)
@@ -392,6 +455,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
   slot :inner_block
 
   def checklist_item(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-checklist-item
       clickable={assigns[:clickable]}
@@ -440,12 +505,17 @@ defmodule Graphene.Internal.ProductCoreComponents do
 
   attr :open, :boolean, default: false, doc: "Specifies whether the component is currently open."
   attr :position, :any, default: nil, doc: "Fine tune the position of the target in pixels."
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :trigger, doc: "Trigger element for the coachmark.", do: attr(:tag, :string)
   slot :inner_block
 
   def coachmark(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-coachmark
       align={assigns[:align]}
@@ -485,12 +555,17 @@ defmodule Graphene.Internal.ProductCoreComponents do
       "What style of beacon.\nBEACON_KIND is an enum from the Coachmark and can be used for this value."
 
   attr :label, :string, default: "Show information", doc: "The aria label."
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :icon, doc: "Custom icon for the beacon.", do: attr(:tag, :string)
   slot :inner_block
 
   def coachmark_beacon(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-coachmark-beacon
       expanded={assigns[:expanded]}
@@ -515,11 +590,15 @@ defmodule Graphene.Internal.ProductCoreComponents do
 
   """
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def coachmark_body(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-coachmark-body {@rest}>
       {render_slot(@inner_block)}
@@ -543,12 +622,16 @@ defmodule Graphene.Internal.ProductCoreComponents do
     default: nil,
     doc: "Tooltip text and aria label for the Drag button icon."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :header, doc: "Coachmark header content.", do: attr(:tag, :string)
   slot :inner_block
 
   def coachmark_header(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-coachmark-header
       closeIconDescription={assigns[:close_icon_description]}
@@ -584,11 +667,16 @@ defmodule Graphene.Internal.ProductCoreComponents do
 
   attr :open, :boolean, default: false, doc: "Whether the tagline is open."
   attr :title, :string, default: nil, doc: "The title of the tagline."
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def coachmark_tagline(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-coachmark-tagline
       close-icon-description={assigns[:close_icon_description]}
@@ -613,11 +701,16 @@ defmodule Graphene.Internal.ProductCoreComponents do
   attr :kind, :any, default: nil, doc: "Sets what kind of error it is. '404' | '403' | 'custom'"
   attr :label, :string, default: "Error Label", doc: "Sets the label text"
   attr :title, :string, default: "Title", doc: "Sets the title text"
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def full_page_error(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-full-page-error
       description={assigns[:description]}
@@ -647,6 +740,9 @@ defmodule Graphene.Internal.ProductCoreComponents do
   attr :expand_text, :string, default: nil
   attr :open, :boolean, default: false
   attr :title_text, :string, default: nil
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :icon, doc: "Guide banner icon.", do: attr(:tag, :string)
@@ -656,6 +752,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
   slot :inner_block
 
   def guide_banner(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-guide-banner
       collapseText={assigns[:collapse_text]}
@@ -689,6 +787,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
 
   """
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :title, doc: "Guide banner element title.", do: attr(:tag, :string)
@@ -696,6 +796,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
   slot :inner_block
 
   def guide_banner_element(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-guide-banner-element {@rest}>
       {render_slot(@inner_block)}
@@ -735,6 +837,9 @@ defmodule Graphene.Internal.ProductCoreComponents do
       "Specifies whether the component is shown as a full-screen\nexperience, else it is shown as a modal by default."
 
   attr :open, :boolean, default: false, doc: "Specifies whether the component is currently open."
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :header, doc: "Interstitial screen header content.", do: attr(:tag, :string)
@@ -743,6 +848,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
   slot :inner_block
 
   def interstitial_screen(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-interstitial-screen
       fullscreen={assigns[:fullscreen]}
@@ -776,11 +883,16 @@ defmodule Graphene.Internal.ProductCoreComponents do
   """
 
   attr :slot, :string, default: "body"
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def interstitial_screen_body(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-interstitial-screen-body
       slot={assigns[:slot]}
@@ -800,11 +912,16 @@ defmodule Graphene.Internal.ProductCoreComponents do
   """
 
   attr :step_title, :string, default: nil, doc: "This will serve the labels for each step"
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def interstitial_screen_body_item(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-interstitial-screen-body-item
       stepTitle={assigns[:step_title]}
@@ -843,11 +960,15 @@ defmodule Graphene.Internal.ProductCoreComponents do
     default: "Get Started",
     doc: "The label for the start button."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def interstitial_screen_footer(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-interstitial-screen-footer
       async-action={assigns[:async_action]}
@@ -888,11 +1009,16 @@ defmodule Graphene.Internal.ProductCoreComponents do
     doc: "Optional parameter to hide the progress indicator when multiple steps are used."
 
   attr :slot, :string, default: "header"
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def interstitial_screen_header(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-interstitial-screen-header
       closeIconDescription={assigns[:close_icon_description]}
@@ -929,6 +1055,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
     doc:
       "Sets the type of notification to display: 'error', 'warning', 'success', or 'informational'"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :description, doc: "The description for the notification.", do: attr(:tag, :string)
@@ -936,6 +1064,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
   slot :inner_block
 
   def notification(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-notification
       timestamp={assigns[:timestamp]}
@@ -970,11 +1100,16 @@ defmodule Graphene.Internal.ProductCoreComponents do
   """
 
   attr :view_all_label, :string, default: "View All", doc: "Label for View All Text"
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def notification_footer(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-notification-footer
       view-all-label={assigns[:view_all_label]}
@@ -1026,6 +1161,9 @@ defmodule Graphene.Internal.ProductCoreComponents do
   attr :title_text, :any, default: nil, doc: "Sets the Title for the Notification panel"
   attr :today_text, :any, default: nil, doc: "Sets the Today text for the Notification panel"
   attr :trigger_button_ref, :any, default: nil, doc: "Reference to the trigger button"
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :footer, doc: "Footer for the Panel.", do: attr(:tag, :string)
@@ -1035,6 +1173,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
   slot :inner_block
 
   def notification_panel(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-notification-panel
       date-time-locale={assigns[:date_time_locale]}
@@ -1090,6 +1230,9 @@ defmodule Graphene.Internal.ProductCoreComponents do
 
   attr :title_id, :string, default: nil, doc: "ID for the title"
   attr :title_text, :string, default: nil, doc: "Text for the title"
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :summary, doc: "Summary content for the options tile.", do: attr(:tag, :string)
@@ -1098,6 +1241,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
   slot :inner_block
 
   def options_tile(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-options-tile
       defaultOpen={assigns[:default_open]}
@@ -1128,11 +1273,15 @@ defmodule Graphene.Internal.ProductCoreComponents do
 
   """
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def page_header(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-page-header {@rest}>
       {render_slot(@inner_block)}
@@ -1163,6 +1312,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
     doc:
       "Set to `true` if the breadcrumb bar is sitting within a grid\n(ie. when used in tandem with page-header-hero-image)"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :icon, doc: "Breadcrumb icon slot.", do: attr(:tag, :string)
@@ -1171,6 +1322,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
   slot :inner_block
 
   def page_header_breadcrumb(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-page-header-breadcrumb
       border={assigns[:border]}
@@ -1216,6 +1369,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
     doc:
       "Set to `true` if the breadcrumb bar is sitting within a grid\n(ie. when used in tandem with page-header-hero-image)"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :icon, doc: "Content icon slot.", do: attr(:tag, :string)
@@ -1224,6 +1379,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
   slot :inner_block
 
   def page_header_content(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-page-header-content
       title={assigns[:title]}
@@ -1261,11 +1418,16 @@ defmodule Graphene.Internal.ProductCoreComponents do
   """
 
   attr :subtitle, :string, default: nil, doc: "Subtitle text of the page-header-content"
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def page_header_content_text(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-page-header-content-text
       subtitle={assigns[:subtitle]}
@@ -1284,11 +1446,15 @@ defmodule Graphene.Internal.ProductCoreComponents do
 
   """
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def page_header_hero_image(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-page-header-hero-image {@rest}>
       {render_slot(@inner_block)}
@@ -1338,12 +1504,17 @@ defmodule Graphene.Internal.ProductCoreComponents do
     doc: "Specify the duration in milliseconds to delay before hiding the tooltip"
 
   attr :size, :string, default: "md", doc: "Specify the size of the Button. Defaults to `md`."
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :tooltip_content, doc: "Tooltip content slot.", do: attr(:tag, :string)
   slot :inner_block
 
   def page_header_scroller(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-page-header-scroller
       align={assigns[:align]}
@@ -1377,6 +1548,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
 
   """
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :tags, doc: "Tags slot for the tab bar.", do: attr(:tag, :string)
@@ -1384,6 +1557,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
   slot :inner_block
 
   def page_header_tabs(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-page-header-tabs {@rest}>
       {render_slot(@inner_block)}
@@ -1405,11 +1580,15 @@ defmodule Graphene.Internal.ProductCoreComponents do
 
   """
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def page_header_title_breadcrumb(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-page-header-title-breadcrumb {@rest}>
       {render_slot(@inner_block)}
@@ -1489,6 +1668,9 @@ defmodule Graphene.Internal.ProductCoreComponents do
 
   attr :slide_in, :boolean, default: false, doc: "Determines if this panel slides in"
   attr :title, :any, default: nil, doc: "Sets the title text"
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :above_title, doc: "Content above the title.", do: attr(:tag, :string)
@@ -1500,6 +1682,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
   slot :inner_block
 
   def side_panel(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-side-panel
       animate-title={assigns[:animate_title]}
@@ -1603,6 +1787,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
     values: ["narrow", "wide"],
     doc: "The width of the influencer section, 'narrow' or 'wide'."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :label, doc: "Tearsheet label slot.", do: attr(:tag, :string)
@@ -1617,6 +1803,8 @@ defmodule Graphene.Internal.ProductCoreComponents do
   slot :inner_block
 
   def tearsheet(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-tearsheet
       close-icon-description={assigns[:close_icon_description]}
@@ -1712,11 +1900,16 @@ defmodule Graphene.Internal.ProductCoreComponents do
       "The method to display the full text when truncated. Options are \"tooltip\" or \"expand\". if not passed, the text would just be truncated with ellipsis."
 
   attr :value, :string, default: nil, doc: "The string value to be truncated."
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :inner_block
 
   def truncated_text(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-truncated-text
       align={assigns[:align]}
@@ -1768,12 +1961,17 @@ defmodule Graphene.Internal.ProductCoreComponents do
     doc: "Specify the alignment of the tooltip."
 
   attr :tooltip_text, :any, default: nil, doc: "Specify the text of the tooltip.\nCan be string"
+
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
+
   attr :rest, :global
 
   slot :rendericon, doc: "Custom icon slot for the avatar.", do: attr(:tag, :string)
   slot :inner_block
 
   def user_avatar(assigns) do
+    assigns = apply_events(assigns)
+
     ~H"""
     <c4p-user-avatar
       background-color={assigns[:background_color]}

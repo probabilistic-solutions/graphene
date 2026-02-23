@@ -21,6 +21,7 @@ defmodule Graphene.CarbonComponents.StructuredList do
     doc:
       "The `name` attribute for the `<input>` for selection.\nIf present, this structured list will be a selectable one."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rows, :list, default: nil
   attr :row_id, :any, default: nil
   attr :selected_ids, :list, default: nil
@@ -94,6 +95,7 @@ defmodule Graphene.CarbonComponents.StructuredList do
 
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -108,6 +110,7 @@ defmodule Graphene.CarbonComponents.StructuredList do
 
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -122,6 +125,7 @@ defmodule Graphene.CarbonComponents.StructuredList do
 
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -147,6 +151,7 @@ defmodule Graphene.CarbonComponents.StructuredList do
       "The `name` attribute for the `<input>` for selection.\nIf present, this structured list row will be a selectable one."
 
   attr :selection_value, :string, doc: "The `value` attribute for the `<input>` for selection."
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

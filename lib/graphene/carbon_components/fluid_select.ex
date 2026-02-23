@@ -44,6 +44,7 @@ defmodule Graphene.CarbonComponents.FluidSelect do
   attr :value, :string, doc: "The value of the text area."
   attr :warn, :boolean, doc: "Specify if the currently value is warn."
   attr :warn_text, :string, doc: "Message which is displayed if the value is warn."
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
   attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
 
@@ -81,7 +82,6 @@ defmodule Graphene.CarbonComponents.FluidSelect do
       |> assign_new(:is_fluid, fn -> false end)
       |> assign_new(:multiple, fn -> nil end)
       |> assign_new(:name, fn -> nil end)
-      |> assign_new(:field, fn -> nil end)
       |> assign_new(:pattern, fn -> nil end)
       |> assign_new(:placeholder, fn -> nil end)
       |> assign_new(:readonly, fn -> false end)
@@ -113,9 +113,6 @@ defmodule Graphene.CarbonComponents.FluidSelect do
       value={@value}
       warn={@warn}
       warn_text={@warn_text}
-      field={@field}
-      form={@form}
-      form_event={@form_event}
       {@rest}
     >
       <.dynamic_tag
@@ -167,6 +164,7 @@ defmodule Graphene.CarbonComponents.FluidSelect do
   attr :hide_label, :boolean,
     doc: "`true` if the label should be hidden. Corresponds to the attribute with the same name."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
