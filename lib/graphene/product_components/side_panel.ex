@@ -70,6 +70,7 @@ defmodule Graphene.ProductComponents.SidePanel do
 
   attr :slide_in, :boolean, doc: "Determines if this panel slides in"
   attr :title, :any, doc: "Sets the title text"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :above_title, doc: "Content above the title."
   slot :below_title, doc: "Content below the title."

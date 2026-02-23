@@ -20,7 +20,7 @@ Pair .slider with .number_input for precise entry and show min and max labels.
     [
       %Variation{
         id: :default,
-        attributes: %{name: "slider-default", min: "0", max: "100", value: "50"},
+        attributes: %{name: "slider-default", min: "0", max: "100", step: "1", value: "50"},
         slots: [~S|<:label_text>Slider</:label_text>|]
       },
       %Variation{
@@ -30,7 +30,7 @@ Pair .slider with .number_input for precise entry and show min and max labels.
       },
       %Variation{
         id: :disabled,
-        attributes: %{name: "slider-disabled", min: "0", max: "100", value: "40", disabled: true},
+        attributes: %{name: "slider-disabled", min: "0", max: "100", step: "1", value: "40", disabled: true},
         slots: [~S|<:label_text>Disabled</:label_text>|]
       }
     ]

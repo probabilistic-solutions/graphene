@@ -70,6 +70,11 @@ defmodule Graphene.MixProject do
         "assets.clean",
         "cmd --cd assets node build.cjs --outdir ../priv/static/assets"
       ],
+      "assets.build.dev": [
+        "assets.setup",
+        "assets.clean",
+        "cmd --cd assets env GRAPHENE_NO_CHUNKS=1 GRAPHENE_ALLOW_UNCHUNKED_ASSETS=1 node build.cjs --outdir ../priv/static/assets"
+      ],
       "assets.deploy": [
         "assets.setup",
         "assets.clean",

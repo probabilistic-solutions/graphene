@@ -47,6 +47,7 @@ defmodule Graphene.ProductComponents.AboutModal do
   attr :version, :any,
     doc: "Text that provides information on the version number of your product."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

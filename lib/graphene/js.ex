@@ -3,8 +3,7 @@ defmodule Graphene.JS do
   Helpers for wiring custom DOM events to LiveView hooks and Phoenix.JS commands.
 
   `Graphene.JS.events/1` returns a map of attributes you can splat into any
-  component or HTML tag. The attributes attach a single hook,
-  `GrapheneCustomEvents`, which:
+  component or HTML tag. A global `EventManager` scans those attributes and:
 
   * listens to custom DOM events on a target element (web component),
   * optionally runs a `Phoenix.LiveView.JS` pipeline client-side, and
@@ -26,20 +25,26 @@ defmodule Graphene.JS do
           | list()
 
   @doc """
-  Builds attributes for the `GrapheneCustomEvents` hook.
+  Builds attributes for the `EventManager` global bridge.
 
   ## Requirements
 
-  * Any element with a `phx-hook` **must have an `id`**. You can either:
-    * set `id` directly on the element, or
-    * pass `id:` to `events/1` (which will inject it).
+  * Connect the event manager once in your app entrypoint:
+
+        import { EventManager } from "graphene"
+
+        const eventManager = new EventManager()
+        eventManager.connect()
+
+  `events/1` stores its configuration in `data-gf-events`. The event manager
+  reads those attributes and attaches listeners.
 
   ## Options
 
-    * `:id` - Optional DOM id. Required by LiveView when `phx-hook` is present.
-      If you already set `id` on the element, you can omit it here.
-    * `:target` - CSS selector for the elements emitting events. Defaults to the hooked element.
-      Use `:self` (or omit) to attach directly to the element.
+    * `:id` - Optional DOM id for the element receiving the attributes.
+    * `:target` - CSS selector for the elements emitting events. Defaults to the element itself.
+      Use `:self` (or omit) to attach directly to the element. You can also pass
+      `target:` inside per-event options to override this for a specific event.
     * `:on` (or `:events`) - A list of event names or a map of event name => options.
       When a list is given, top-level `:push`, `:payload`, and `:js` apply to all events.
     * `:push` - Event name to push to the server (can differ from the DOM event name).
@@ -54,11 +59,9 @@ defmodule Graphene.JS do
       ...>   on: ["c4p-tearsheet-closed"],
       ...>   push: "tearsheet:closed"
       ...> )
-      iex> attrs["phx-hook"]
-      "GrapheneCustomEvents"
       iex> attrs["id"]
       "ts-1"
-      iex> events = Jason.decode!(attrs["data-events"])
+      iex> events = Jason.decode!(attrs["data-gf-events"])
       iex> Enum.at(events, 0) |> Map.take(["name", "push"])
       %{"name" => "c4p-tearsheet-closed", "push" => "tearsheet:closed"}
 
@@ -84,58 +87,25 @@ defmodule Graphene.JS do
         <Product.side_panel open ... />
       </div>
 
-  If the selector matches multiple elements, the hook attaches listeners to all
+  If the selector matches multiple elements, the event manager attaches listeners to all
   of them. Each matching element will independently trigger the configured JS
   and/or push when it emits the event. Use an id selector (e.g. `#panel-1`) or
-  attach the hook directly to the element when you want a single target.
+  attach the events directly to the element when you want a single target.
 
-  ### 2b) Custom hook + events (one hook per element)
+  ### 2b) Custom hook + events
 
-  LiveView allows **one `phx-hook` per element**. `events/1` sets
-  `phx-hook="GrapheneCustomEvents"`, so a custom hook on the same element will
-  conflict. Pick one of these patterns instead:
+  `events/1` only adds data attributes, so you can safely attach your own
+  `phx-hook` on the same element:
 
-  **A) Wrapper + target selector (recommended)**
+      <.component
+        id="panel-1"
+        phx-hook="MyHook"
+        {Graphene.JS.events(
+          on: %{"c4p-side-panel-closed" => [push: "panel:closed"]}
+        )}
+      />
 
-      <div {Graphene.JS.events(
-        id: "panel-events",
-        target: "#panel-1",
-        on: %{"c4p-side-panel-closed" => [push: "panel:closed"]}
-      )}>
-        <.component id="panel-1" phx-hook="MyHook" />
-      </div>
-
-  **B) Compose hooks in JS (single hook name)**
-
-  Create your own hook that calls `GrapheneCustomEvents` and then runs custom
-  logic. You then set `phx-hook` to your hook name and pass `data-events`.
-
-      // assets/src/lib/hooks/my_hook.ts
-      import { GrapheneCustomEvents } from "./custom_events";
-
-      export const MyHook = {
-        mounted() {
-          GrapheneCustomEvents.mounted.call(this);
-          // custom logic here...
-        },
-        destroyed() {
-          GrapheneCustomEvents.destroyed.call(this);
-        }
-      };
-
-      <% events =
-        Graphene.JS.events(
-          id: "ts-1",
-          on: %{"c4p-tearsheet-closed" => [push: "tearsheet:closed"]}
-        )
-        |> Map.put("phx-hook", "MyHook")
-      %>
-      <.component id="ts-1" {events} />
-
-  **C) Use `events/1` only**
-
-  If your custom hook is only doing DOM changes or server pushes, use `:js`
-  and/or `:push` in `events/1` instead of a dedicated hook.
+  If you need to listen on a child element, use `:target` to point at it.
 
   ### 3) Single event, server push only
 
@@ -325,7 +295,8 @@ defmodule Graphene.JS do
       push: fetch_opt(opts, :push),
       payload: fetch_opt(opts, :payload),
       js: fetch_opt(opts, :js),
-      push_target: fetch_opt(opts, :push_target) || fetch_opt(opts, :phx_target)
+      push_target: fetch_opt(opts, :push_target) || fetch_opt(opts, :phx_target),
+      target: fetch_opt(opts, :target)
     }
 
     events =
@@ -334,12 +305,9 @@ defmodule Graphene.JS do
       |> Jason.encode!()
 
     attrs =
-      %{
-        "phx-hook" => "GrapheneCustomEvents",
-        "data-events" => events
-      }
+      %{"data-gf-events" => events}
       |> maybe_put("id", fetch_opt(opts, :id))
-      |> maybe_put("data-target-selector", normalize_dom_target(fetch_opt(opts, :target)))
+      |> maybe_put("data-gf-target-selector", normalize_dom_target(fetch_opt(opts, :target)))
 
     attrs
   end
@@ -391,6 +359,7 @@ defmodule Graphene.JS do
     |> maybe_put("payload", normalize_payload(fetch_opt(merged, :payload)))
     |> maybe_put("js", encode_js(fetch_opt(merged, :js)))
     |> maybe_put("push_target", normalize_push_target(fetch_opt(merged, :push_target)))
+    |> maybe_put("target", normalize_dom_target(fetch_opt(merged, :target)))
   end
 
   defp normalize_event_opts(nil), do: %{}

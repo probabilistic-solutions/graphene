@@ -8,6 +8,7 @@ var hooks_exports = {};
 __export(hooks_exports, {
   BasicComponentsTable: () => BasicComponentsTable,
   GrapheneCustomEvents: () => GrapheneCustomEvents,
+  GrapheneEventsRoot: () => GrapheneEventsRoot,
   GrapheneFormBridge: () => GrapheneFormBridge
 });
 
@@ -587,7 +588,7 @@ var GrapheneFormBridge = {
   }
 };
 
-// src/lib/hooks/custom_events.ts
+// src/lib/event_helpers.ts
 var parseEvents = (raw) => {
   if (!raw)
     return [];
@@ -598,9 +599,14 @@ var parseEvents = (raw) => {
     return [];
   }
 };
-var resolveTargets = (el) => {
-  const selector = el.dataset.targetSelector;
+var readEvents = (el) => {
+  return parseEvents(el.dataset.gfEvents);
+};
+var resolveTargets = (el, config) => {
+  const selector = (config == null ? void 0 : config.target) || el.dataset.gfTargetSelector;
   if (!selector)
+    return [el];
+  if (selector === ":self")
     return [el];
   return Array.from(el.querySelectorAll(selector));
 };
@@ -674,29 +680,106 @@ var buildPayload2 = (spec, event, fallbackTarget) => {
   }
   return {};
 };
-var execJS = (hook, encodedJS, eventType) => {
-  var _a;
+var execJS = (liveSocket, sourceEl, encodedJS, eventType) => {
   if (!encodedJS)
     return;
-  const view = (_a = hook.__view) == null ? void 0 : _a.call(hook);
-  if (!view || !view.liveSocket)
+  if (!liveSocket || typeof liveSocket.execJS !== "function")
     return;
-  view.liveSocket.execJS(hook.el, encodedJS, eventType || "hook");
+  liveSocket.execJS(sourceEl, encodedJS, eventType || "hook");
+};
+var isDomElement = (value) => typeof Element !== "undefined" && value instanceof Element;
+var isDomNode = (value) => typeof Node !== "undefined" && value instanceof Node;
+var isDomEvent = (value) => typeof Event !== "undefined" && value instanceof Event;
+var isDomWindow = (value) => typeof Window !== "undefined" && value instanceof Window;
+var isDomDocument = (value) => typeof Document !== "undefined" && value instanceof Document;
+var summarizeElement = (el) => {
+  var _a, _b, _c;
+  const anyEl = el;
+  const summary = {
+    tagName: (_c = (_b = (_a = el.tagName) == null ? void 0 : _a.toLowerCase) == null ? void 0 : _b.call(_a)) != null ? _c : null
+  };
+  if ("id" in anyEl && anyEl.id)
+    summary.id = anyEl.id;
+  if ("className" in anyEl && anyEl.className)
+    summary.className = anyEl.className;
+  if ("name" in anyEl && anyEl.name)
+    summary.name = anyEl.name;
+  if ("value" in anyEl && typeof anyEl.value !== "undefined")
+    summary.value = anyEl.value;
+  if ("role" in anyEl && anyEl.getAttribute) {
+    const role = anyEl.getAttribute("role");
+    if (role)
+      summary.role = role;
+  }
+  return summary;
+};
+var summarizeNode = (node) => ({
+  nodeName: node.nodeName,
+  nodeType: node.nodeType
+});
+var summarizeEvent = (event) => ({
+  type: event.type,
+  detail: event.detail
+});
+var sanitizePayload = (value) => {
+  const seen = /* @__PURE__ */ new WeakSet();
+  const replacer = (_key, val) => {
+    if (typeof val === "bigint")
+      return val.toString();
+    if (typeof val === "function" || typeof val === "symbol")
+      return void 0;
+    if (val === void 0)
+      return void 0;
+    if (isDomElement(val))
+      return summarizeElement(val);
+    if (isDomEvent(val))
+      return summarizeEvent(val);
+    if (isDomWindow(val))
+      return { type: "window" };
+    if (isDomDocument(val))
+      return { type: "document" };
+    if (val instanceof Map)
+      return Array.from(val.entries());
+    if (val instanceof Set)
+      return Array.from(val.values());
+    if (isDomNode(val))
+      return summarizeNode(val);
+    if (val && typeof val === "object") {
+      if (seen.has(val))
+        return "[Circular]";
+      seen.add(val);
+    }
+    return val;
+  };
+  try {
+    const json = JSON.stringify(value != null ? value : {}, replacer);
+    if (!json)
+      return {};
+    return JSON.parse(json);
+  } catch (_error) {
+    return {};
+  }
+};
+
+// src/lib/hooks/custom_events.ts
+var execViewJS = (hook, sourceEl, encodedJS, eventType) => {
+  var _a;
+  const view = (_a = hook.__view) == null ? void 0 : _a.call(hook);
+  execJS(view == null ? void 0 : view.liveSocket, sourceEl, encodedJS, eventType);
 };
 var GrapheneCustomEvents = {
   mounted() {
-    const configs = parseEvents(this.el.dataset.events);
-    const targets = resolveTargets(this.el);
+    const configs = readEvents(this.el);
     this._handlers = [];
     const handlers = this._handlers;
     configs.forEach((config) => {
       const name = config.name;
       if (!name)
         return;
-      targets.forEach((target) => {
+      resolveTargets(this.el, config).forEach((target) => {
         const handler = (event) => {
           if (config.js) {
-            execJS(this, config.js, event.type);
+            execViewJS(this, this.el, config.js, event.type);
           }
           if (config.push) {
             const payload = buildPayload2(config.payload, event, target);
@@ -717,6 +800,61 @@ var GrapheneCustomEvents = {
       target.removeEventListener(name, handler);
     });
     this._handlers = [];
+  }
+};
+var GrapheneEventsRoot = {
+  mounted() {
+    var _a;
+    this._handlers = [];
+    (_a = this.attachAll) == null ? void 0 : _a.call(this);
+  },
+  updated() {
+    var _a;
+    (_a = this.attachAll) == null ? void 0 : _a.call(this);
+  },
+  destroyed() {
+    (this._handlers || []).forEach(([target, name, handler]) => {
+      target.removeEventListener(name, handler);
+    });
+    this._handlers = [];
+  },
+  attachAll() {
+    (this._handlers || []).forEach(([target, name, handler]) => {
+      target.removeEventListener(name, handler);
+    });
+    this._handlers = [];
+    const elements = Array.from(
+      this.el.querySelectorAll("[data-gf-events]")
+    );
+    if (this.el.dataset.gfEvents) {
+      elements.unshift(this.el);
+    }
+    elements.forEach((element) => {
+      const configs = readEvents(element);
+      configs.forEach((config) => {
+        const name = config.name;
+        if (!name)
+          return;
+        resolveTargets(element, config).forEach((target) => {
+          var _a;
+          const handler = (event) => {
+            if (config.js) {
+              execViewJS(this, element, config.js, event.type);
+            }
+            if (config.push) {
+              const payload = buildPayload2(config.payload, event, target);
+              if (config.push_target) {
+                this.pushEventTo(config.push_target, config.push, payload);
+              } else {
+                this.pushEvent(config.push, payload);
+              }
+            }
+          };
+          target.addEventListener(name, handler);
+          (_a = this._handlers) == null ? void 0 : _a.push([target, name, handler]);
+        });
+      });
+    });
   }
 };
 
@@ -989,6 +1127,7 @@ var componentSelector = componentNames.join(",");
 var componentSet = new Set(componentNames);
 var loadedComponents = {};
 var numberInputTags = /* @__PURE__ */ new Set(["cds-number-input", "cds-fluid-number-input"]);
+var notificationTags = /* @__PURE__ */ new Set(["c4p-notification"]);
 var patchedNumberInputs = /* @__PURE__ */ new Set();
 var definePatchFlag = "__graphenePatchedDefine";
 var originalDefine = customElements.define.bind(customElements);
@@ -1013,6 +1152,38 @@ function loadComponentByTag(tagName) {
     });
   }
   return loadedComponents[componentName];
+}
+function readNotificationTimestamp(el) {
+  if (!el.hasAttribute("timestamp")) {
+    return null;
+  }
+  const raw = el.getAttribute("timestamp");
+  if (!raw || raw === "null" || raw === "undefined") {
+    return null;
+  }
+  const parsed = Date.parse(raw);
+  if (Number.isNaN(parsed)) {
+    return null;
+  }
+  return new Date(parsed);
+}
+function normalizeNotificationTimestamp(el) {
+  const tagName = el.tagName.toLowerCase();
+  if (!notificationTags.has(tagName)) {
+    return;
+  }
+  const apply = () => {
+    const value = readNotificationTimestamp(el);
+    try {
+      el.timestamp = value != null ? value : void 0;
+    } catch (_error) {
+    }
+  };
+  if (customElements.get(tagName)) {
+    apply();
+  } else {
+    customElements.whenDefined(tagName).then(apply);
+  }
 }
 function normalizeNumberInputStep(el) {
   const tagName = el.tagName.toLowerCase();
@@ -1139,6 +1310,7 @@ function scanAndLoad(root) {
     return;
   }
   if (root instanceof Element && isComponentTag(root.tagName)) {
+    normalizeNotificationTimestamp(root);
     normalizeNumberInputStep(root);
     applyGrapheneOpen(root);
     ensureNumberInputPatched(root.tagName.toLowerCase());
@@ -1148,6 +1320,7 @@ function scanAndLoad(root) {
     return;
   }
   root.querySelectorAll(componentSelector).forEach((el) => {
+    normalizeNotificationTimestamp(el);
     normalizeNumberInputStep(el);
     applyGrapheneOpen(el);
     ensureNumberInputPatched(el.tagName.toLowerCase());
@@ -1232,17 +1405,26 @@ var WebComponentManager = class {
     var _a;
     const observerCallback = (mutationsList) => {
       for (const mutation of mutationsList) {
-        if (mutation.type !== "childList") {
-          continue;
-        }
-        mutation.addedNodes.forEach((node) => {
-          if (node instanceof Element || node instanceof DocumentFragment) {
-            scanAndLoad(node);
+        if (mutation.type === "childList") {
+          mutation.addedNodes.forEach((node) => {
+            if (node instanceof Element || node instanceof DocumentFragment) {
+              scanAndLoad(node);
+            }
+          });
+        } else if (mutation.type === "attributes") {
+          const target = mutation.target;
+          if (target instanceof Element && mutation.attributeName === "timestamp") {
+            normalizeNotificationTimestamp(target);
           }
-        });
+        }
       }
     };
-    const observerOptions = { childList: true, subtree: true };
+    const observerOptions = {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["timestamp"]
+    };
     const root = (_a = document.body) != null ? _a : document.documentElement;
     if (!root) {
       return;
@@ -1265,6 +1447,159 @@ ensureDefinePatched();
 ensureNumberInputPatched("cds-number-input");
 ensureNumberInputPatched("cds-fluid-number-input");
 
+// src/lib/event_manager.ts
+var getLiveSocket = () => window.liveSocket;
+var EventManager = class {
+  constructor(options = {}) {
+    this.observer = null;
+    this.registry = /* @__PURE__ */ new Map();
+    this.options = options;
+  }
+  connect() {
+    const doConnect = () => {
+      var _a, _b;
+      const root = (_b = (_a = this.options.root) != null ? _a : document.body) != null ? _b : document.documentElement;
+      if (!root)
+        return;
+      this.attachTree(root);
+      this.observe(root);
+    };
+    if (["complete", "interactive"].includes(document.readyState)) {
+      doConnect();
+    } else {
+      document.addEventListener("DOMContentLoaded", doConnect, { once: true });
+    }
+  }
+  disconnect() {
+    var _a;
+    (_a = this.observer) == null ? void 0 : _a.disconnect();
+    this.observer = null;
+    this.registry.forEach((entry, el) => this.detachElement(el, entry));
+    this.registry.clear();
+  }
+  observe(root) {
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === "childList") {
+          mutation.addedNodes.forEach((node) => this.attachNode(node));
+          mutation.removedNodes.forEach((node) => this.detachNode(node));
+        } else if (mutation.type === "attributes") {
+          const target = mutation.target;
+          if (target instanceof HTMLElement) {
+            this.attachElement(target);
+          }
+        }
+      }
+    });
+    observer.observe(root, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["data-gf-events", "data-gf-target-selector"]
+    });
+    this.observer = observer;
+  }
+  attachNode(node) {
+    if (!(node instanceof HTMLElement))
+      return;
+    this.attachTree(node);
+  }
+  detachNode(node) {
+    if (!(node instanceof HTMLElement))
+      return;
+    if (this.registry.has(node)) {
+      this.detachElement(node);
+    }
+    node.querySelectorAll("[data-gf-events]").forEach((el) => {
+      this.detachElement(el);
+    });
+  }
+  attachTree(root) {
+    var _a;
+    if (root instanceof HTMLElement && root.dataset.gfEvents) {
+      this.attachElement(root);
+    }
+    if ("querySelectorAll" in root) {
+      (_a = root.querySelectorAll) == null ? void 0 : _a.call(root, "[data-gf-events]").forEach((el) => {
+        this.attachElement(el);
+      });
+    }
+  }
+  attachElement(el) {
+    const raw = el.dataset.gfEvents;
+    if (!raw) {
+      this.detachElement(el);
+      return;
+    }
+    const targetSelector = el.dataset.gfTargetSelector || null;
+    const existing = this.registry.get(el);
+    if (existing && existing.raw === raw && existing.targetSelector === targetSelector) {
+      return;
+    }
+    if (existing) {
+      this.detachElement(el, existing);
+    }
+    const configs = readEvents(el);
+    const handlers = [];
+    configs.forEach((config) => {
+      const name = config.name;
+      if (!name)
+        return;
+      resolveTargets(el, config).forEach((target) => {
+        const handler = (event) => {
+          const liveSocket = getLiveSocket();
+          if (config.js) {
+            execJS(liveSocket, el, config.js, event.type);
+          }
+          if (config.push) {
+            this.pushEvent(liveSocket, el, config, event, target);
+          }
+        };
+        target.addEventListener(name, handler);
+        handlers.push([target, name, handler]);
+      });
+    });
+    this.registry.set(el, { raw, targetSelector, handlers });
+  }
+  detachElement(el, entry) {
+    const current = entry != null ? entry : this.registry.get(el);
+    if (!current)
+      return;
+    current.handlers.forEach(([target, name, handler]) => {
+      target.removeEventListener(name, handler);
+    });
+    this.registry.delete(el);
+  }
+  pushEvent(liveSocket, sourceEl, config, event, fallbackTarget) {
+    if (!liveSocket || typeof liveSocket.isConnected !== "function")
+      return;
+    if (!liveSocket.isConnected())
+      return;
+    if (typeof liveSocket.owner !== "function")
+      return;
+    const payload = sanitizePayload(buildPayload2(config.payload, event, fallbackTarget));
+    const pushTarget = config.push_target;
+    const pushEventName = config.push;
+    liveSocket.owner(sourceEl, (view) => {
+      if (!view)
+        return;
+      if (pushTarget && typeof view.withinTargets === "function") {
+        view.withinTargets(pushTarget, (targetView, targetCtx) => {
+          if (targetView && typeof targetView.pushHookEvent === "function") {
+            targetView.pushHookEvent(sourceEl, targetCtx, pushEventName, payload);
+          }
+        });
+        return;
+      }
+      if (typeof view.pushHookEvent === "function") {
+        view.pushHookEvent(sourceEl, null, pushEventName, payload);
+      } else if (typeof view.pushEvent === "function") {
+        view.pushEvent(pushEventName, payload);
+      }
+    });
+  }
+};
+
 // src/lib/socket_utils.ts
 function mergeWebComponentsAttrs(from, to) {
   if (from.tagName.startsWith("cds-")) {
@@ -1283,6 +1618,7 @@ function mergeWebComponentsAttrs(from, to) {
   }
 }
 export {
+  EventManager,
   hooks_exports as Hooks,
   WebComponentManager,
   mergeWebComponentsAttrs

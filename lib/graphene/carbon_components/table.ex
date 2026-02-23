@@ -283,7 +283,7 @@ defmodule Graphene.CarbonComponents.Table do
   attr :use_static_width, :boolean, default: false, doc: "use static table width"
   attr :with_row_ai_labels, :boolean, default: false, doc: "enable AI labels in rows"
   attr :with_row_slugs, :boolean, default: false, doc: "enable slugs in rows"
-  attr :locale, :string, default: nil, doc: "table locale"
+  attr :locale, :string, default: "en", doc: "table locale"
   attr :filter_rows, :any, default: nil, doc: "custom filter rows function"
 
   slot :col, required: true do

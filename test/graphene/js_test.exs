@@ -12,7 +12,7 @@ defmodule Graphene.JSTest do
         ]
       )
 
-    events = Jason.decode!(attrs["data-events"])
+    events = Jason.decode!(attrs["data-gf-events"])
 
     assert Enum.map(events, & &1["name"]) == [
              "c4p-side-panel-closed",

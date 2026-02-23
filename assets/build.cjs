@@ -10,8 +10,28 @@ const getArgValue = (key, defaultValue) => {
 };
 const watch = args.includes('--watch');
 const deploy = args.includes('--deploy');
+const envFlag = (value) =>
+  ["1", "true", "yes", "on"].includes(String(value || "").toLowerCase());
+const envFalse = (value) =>
+  ["0", "false", "no", "off"].includes(String(value || "").toLowerCase());
+const noChunks =
+  envFlag(process.env.GRAPHENE_NO_CHUNKS) ||
+  envFlag(process.env.GRAPHENE_NO_CHUNKING) ||
+  envFlag(process.env.GRAPHENE_DISABLE_CHUNKS) ||
+  envFalse(process.env.GRAPHENE_CHUNKS);
+const allowUnchunkedAssets = envFlag(process.env.GRAPHENE_ALLOW_UNCHUNKED_ASSETS);
 const outDir = getArgValue('--outdir', 'dist');
 const outDirPath = path.resolve(__dirname, outDir);
+const defaultOutDirPath = path.resolve(__dirname, "..", "priv", "static", "assets");
+const isDefaultOutDir = outDirPath === defaultOutDirPath;
+
+let enableChunks = deploy ? true : !noChunks;
+if (noChunks && isDefaultOutDir && !allowUnchunkedAssets && !watch && !deploy) {
+  console.warn(
+    "[graphene] GRAPHENE_NO_CHUNKS ignored for priv/static/assets. Set GRAPHENE_ALLOW_UNCHUNKED_ASSETS=1 to override."
+  );
+  enableChunks = true;
+}
 const entryPoints = [
   path.join(__dirname, "src", "index.ts"),
   path.join(__dirname, "src", "graphene.scss"),
@@ -88,8 +108,8 @@ let opts = {
     platform: "browser",
     target: "es2017",
     format: "esm",
-    splitting: true,
-    chunkNames: "chunks/[name]-[hash]",
+    splitting: enableChunks,
+    chunkNames: enableChunks ? "chunks/[name]-[hash]" : undefined,
     outdir: outDirPath,
     loader: loader,
     plugins: plugins,

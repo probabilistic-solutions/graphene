@@ -49,6 +49,7 @@ defmodule Graphene.ProductComponents.Tearsheet do
     values: ["narrow", "wide"],
     default: "narrow"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :label, doc: "Tearsheet label slot."
   slot :title, doc: "Tearsheet title slot."

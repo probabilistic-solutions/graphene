@@ -26,6 +26,7 @@ defmodule Graphene.ProductComponents.Notification do
       "Sets the type of notification to display: 'error', 'warning', 'success', or 'informational'",
     values: [nil, nil, "error", "warning", "success", "informational"]
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :description, doc: "The description for the notification."
   slot :title, doc: "The Title for the notification."
@@ -47,6 +48,7 @@ defmodule Graphene.ProductComponents.Notification do
 
   """
   attr :view_all_label, :string, doc: "Label for View All Text", default: "View All"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -84,6 +86,7 @@ defmodule Graphene.ProductComponents.Notification do
   attr :title_text, :any, doc: "Sets the Title for the Notification panel"
   attr :today_text, :any, doc: "Sets the Today text for the Notification panel"
   attr :trigger_button_ref, :any, doc: "Reference to the trigger button"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :footer, doc: "Footer for the Panel."
   slot :previous, doc: "Previous Section."

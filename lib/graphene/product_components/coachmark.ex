@@ -32,6 +32,7 @@ defmodule Graphene.ProductComponents.Coachmark do
 
   attr :open, :boolean, doc: "Specifies whether the component is currently open."
   attr :position, :any, doc: "Fine tune the position of the target in pixels."
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :trigger, doc: "Trigger element for the coachmark."
   slot :inner_block
@@ -60,6 +61,7 @@ defmodule Graphene.ProductComponents.Coachmark do
     default: "default"
 
   attr :label, :string, doc: "The aria label.", default: "Show information"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :icon, doc: "Custom icon for the beacon."
   slot :inner_block
@@ -75,6 +77,7 @@ defmodule Graphene.ProductComponents.Coachmark do
 
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -95,6 +98,7 @@ defmodule Graphene.ProductComponents.Coachmark do
   attr :drag_icon_description, :string,
     doc: "Tooltip text and aria label for the Drag button icon."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :header, doc: "Coachmark header content."
   slot :inner_block
@@ -123,6 +127,7 @@ defmodule Graphene.ProductComponents.Coachmark do
 
   attr :open, :boolean, doc: "Whether the tagline is open."
   attr :title, :string, doc: "The title of the tagline."
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

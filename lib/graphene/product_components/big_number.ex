@@ -23,6 +23,7 @@ defmodule Graphene.ProductComponents.BigNumber do
   attr :trending, :boolean
   attr :truncate, :boolean, default: true
   attr :value, :string
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :icon_button, doc: "Displays an icon button next to `value`."
 
@@ -48,6 +49,7 @@ defmodule Graphene.ProductComponents.BigNumber do
 
   """
   attr :size, :string, values: [nil, "default", "lg", "xl"], default: "default"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

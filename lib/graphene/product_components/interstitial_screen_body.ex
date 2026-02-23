@@ -19,6 +19,7 @@ defmodule Graphene.ProductComponents.InterstitialScreenBody do
 
   """
   attr :slot, :string, default: "body"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -34,6 +35,7 @@ defmodule Graphene.ProductComponents.InterstitialScreenBody do
 
   """
   attr :step_title, :string, doc: "This will serve the labels for each step"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

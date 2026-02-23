@@ -173,6 +173,7 @@ if Mix.env() == :dev do
         component.attrs
         |> Enum.map(&build_attr/1)
         |> Enum.join("")
+        |> Kernel.<>(events_attr(component))
         |> Kernel.<>(rest_attr())
 
       slots =
@@ -207,6 +208,7 @@ if Mix.env() == :dev do
         |> Enum.map(&build_attr/1)
         |> Enum.join("")
         |> Kernel.<>(Map.get(recipe, :extra_attrs, ""))
+        |> Kernel.<>(events_attr(component, Map.get(recipe, :extra_attrs, "")))
         |> Kernel.<>(rest_attr(Map.get(recipe, :extra_attrs, "")))
 
       extra_slots = Map.get(recipe, :extra_slots, "")
@@ -289,6 +291,18 @@ if Mix.env() == :dev do
         ""
       else
         "  attr :rest, :global\n"
+      end
+    end
+
+    defp events_attr(component, extra_attrs \\ "") do
+      has_events_attr =
+        Enum.any?(component.attrs, fn attr -> attr.atomname == :events end) or
+          String.contains?(extra_attrs, "attr :events")
+
+      if has_events_attr do
+        ""
+      else
+        "  attr :events, :any, default: nil, doc: \"custom events passed to Graphene.JS.events/1\"\n"
       end
     end
 

@@ -27,6 +27,7 @@ defmodule Graphene.ProductComponents.OptionsTile do
 
   attr :title_id, :string, doc: "ID for the title"
   attr :title_text, :string, doc: "Text for the title"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :summary, doc: "Summary content for the options tile."
   slot :body, doc: "Body content for the options tile."

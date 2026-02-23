@@ -37,6 +37,7 @@ defmodule Graphene.ProductComponents.UserAvatar do
     default: "bottom"
 
   attr :tooltip_text, :any, doc: "Specify the text of the tooltip.\nCan be string"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :rendericon, doc: "Custom icon slot for the avatar."
   slot :inner_block

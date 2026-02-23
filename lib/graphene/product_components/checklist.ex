@@ -33,6 +33,7 @@ defmodule Graphene.ProductComponents.Checklist do
   attr :view_all_label, :any,
     doc: "If defined, will show and enable the \"View all (#)\" button in the checklist footer."
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
 
   slot :checklist_footer,
@@ -59,6 +60,7 @@ defmodule Graphene.ProductComponents.Checklist do
     doc: "A number between 0 and 1 which indicates the progress of checklist",
     default: "0"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -74,6 +76,7 @@ defmodule Graphene.ProductComponents.Checklist do
 
   """
   attr :title, :any, doc: "Title text of the c4p-checklist-group"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
 
   slot :item do
@@ -124,6 +127,7 @@ defmodule Graphene.ProductComponents.Checklist do
     doc:
       "The icon to be displayed.\nValues can be 'unchecked', 'indeterminate', 'checked', 'error', 'disabled'"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -148,6 +152,7 @@ defmodule Graphene.ProductComponents.Checklist do
     doc:
       "status of the c4p-checklist-item\nValues can be 'not started', 'in progress', 'completed', 'error', 'disabled'"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :content, doc: "checklist item title/description"
   slot :icon, doc: "checklist item icon, usually a status indicator icon"

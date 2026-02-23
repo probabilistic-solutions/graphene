@@ -22,6 +22,7 @@ defmodule Graphene.ProductComponents.GuideBanner do
   attr :expand_text, :string
   attr :open, :boolean
   attr :title_text, :string
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :icon, doc: "Guide banner icon."
   slot :header, doc: "Guide banner header content."
@@ -40,6 +41,7 @@ defmodule Graphene.ProductComponents.GuideBanner do
 
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :title, doc: "Guide banner element title."
   slot :description, doc: "Guide banner element description."

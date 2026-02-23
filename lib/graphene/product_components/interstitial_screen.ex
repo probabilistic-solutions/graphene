@@ -27,6 +27,7 @@ defmodule Graphene.ProductComponents.InterstitialScreen do
       "Specifies whether the component is shown as a full-screen\nexperience, else it is shown as a modal by default."
 
   attr :open, :boolean, doc: "Specifies whether the component is currently open."
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :header, doc: "Interstitial screen header content."
   slot :body, doc: "Interstitial screen body content."
@@ -63,6 +64,7 @@ defmodule Graphene.ProductComponents.InterstitialScreen do
     doc: "The label for the start button.",
     default: "Get Started"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -88,6 +90,7 @@ defmodule Graphene.ProductComponents.InterstitialScreen do
     doc: "Optional parameter to hide the progress indicator when multiple steps are used."
 
   attr :slot, :string, default: "header"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

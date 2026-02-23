@@ -18,6 +18,7 @@ defmodule Graphene.ProductComponents.FullPageError do
   attr :kind, :any, doc: "Sets what kind of error it is. '404' | '403' | 'custom'"
   attr :label, :string, doc: "Sets the label text", default: "Error Label"
   attr :title, :string, doc: "Sets the title text", default: "Title"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

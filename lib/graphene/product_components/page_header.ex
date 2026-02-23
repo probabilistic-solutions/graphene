@@ -14,6 +14,7 @@ defmodule Graphene.ProductComponents.PageHeader do
 
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -40,6 +41,7 @@ defmodule Graphene.ProductComponents.PageHeader do
     doc:
       "Set to `true` if the breadcrumb bar is sitting within a grid\n(ie. when used in tandem with page-header-hero-image)"
 
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :icon, doc: "Breadcrumb icon slot."
   slot :content_actions, doc: "Content actions slot."
@@ -57,6 +59,7 @@ defmodule Graphene.ProductComponents.PageHeader do
 
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 
@@ -104,6 +107,7 @@ defmodule Graphene.ProductComponents.PageHeader do
     default: "300"
 
   attr :size, :string, doc: "Specify the size of the Button. Defaults to `md`.", default: "md"
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :tooltip_content, doc: "Tooltip content slot."
   slot :inner_block
@@ -119,6 +123,7 @@ defmodule Graphene.ProductComponents.PageHeader do
 
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :tags, doc: "Tags slot for the tab bar."
   slot :scroller, doc: "Scroller slot for the tab bar."
@@ -135,6 +140,7 @@ defmodule Graphene.ProductComponents.PageHeader do
 
 
   """
+  attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :rest, :global
   slot :inner_block
 

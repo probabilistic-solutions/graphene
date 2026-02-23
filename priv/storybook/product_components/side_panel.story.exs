@@ -4,17 +4,16 @@ defmodule Storybook.ProductComponents.SidePanel do
   alias Graphene.CarbonComponents, as: Carbon
   alias Graphene.ProductComponents, as: Product
 
-
   def doc do
     """
-Side panels slide in to capture focused tasks without leaving the page.
-Use action toolbars and footer actions for primary and secondary flows.
-"""
+    Side panels slide in to capture focused tasks without leaving the page.
+    Use action toolbars and footer actions for primary and secondary flows.
+    """
   end
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, active_panel: nil)}
+    {:ok, assign(socket, active_panel: nil, event_log: [])}
   end
 
   @impl true
@@ -25,6 +24,11 @@ Use action toolbars and footer actions for primary and secondary flows.
   @impl true
   def handle_event("close_panel", _params, socket) do
     {:noreply, assign(socket, active_panel: nil)}
+  end
+
+  @impl true
+  def handle_event("side_panel:event", payload, socket) do
+    {:noreply, log_event(socket, payload)}
   end
 
   @impl true
@@ -64,11 +68,14 @@ Use action toolbars and footer actions for primary and secondary flows.
       </div>
 
       <Product.side_panel
+        id="side-panel-slide-over"
         open={@active_panel == "slide_over"}
         title="Configure access"
         label_text="Step flow"
+        current_step="2"
         size="md"
         placement="right"
+        events={side_panel_events("slide_over")}
       >
         <:subtitle><.panel_subtitle /></:subtitle>
         <.panel_form />
@@ -171,6 +178,53 @@ Use action toolbars and footer actions for primary and secondary flows.
         <.panel_form />
         <:actions><.panel_actions /></:actions>
       </Product.side_panel>
+
+      <.event_log logs={@event_log} />
+    </div>
+    """
+  end
+
+  defp side_panel_events(variant) do
+    [
+      {"c4p-side-panel-beingclosed",
+       [
+         push: "side_panel:event",
+         payload: event_payload("c4p-side-panel-beingclosed", %{variant: variant})
+       ]},
+      {"c4p-side-panel-closed",
+       [
+         push: "side_panel:event",
+         payload: event_payload("c4p-side-panel-closed", %{variant: variant})
+       ]},
+      {"c4p-side-panel-navigate-back",
+       [
+         push: "side_panel:event",
+         payload: event_payload("c4p-side-panel-navigate-back", %{variant: variant})
+       ]}
+    ]
+  end
+
+  defp event_payload(event, extra \\ %{}) do
+    %{merge: [:detail, :target], static: Map.merge(%{event: event}, extra)}
+  end
+
+  defp log_event(socket, payload) do
+    update(socket, :event_log, fn logs ->
+      [%{event: payload["event"] || "event", payload: payload} | Enum.take(logs, 19)]
+    end)
+  end
+
+  attr :logs, :list, default: []
+
+  defp event_log(assigns) do
+    ~H"""
+    <div>
+      <h4>Event payloads</h4>
+      <pre>
+    <%= for log <- Enum.reverse(@logs) do %>
+    [<%= log.event %>] <%= Jason.encode!(log.payload) %>
+    <% end %>
+      </pre>
     </div>
     """
   end

@@ -20,6 +20,7 @@ const componentSelector = componentNames.join(",");
 const componentSet = new Set(componentNames);
 const loadedComponents: Record<string, Promise<unknown>> = {};
 const numberInputTags = new Set(["cds-number-input", "cds-fluid-number-input"]);
+const notificationTags = new Set(["c4p-notification"]);
 const patchedNumberInputs = new Set<string>();
 const definePatchFlag = "__graphenePatchedDefine";
 const originalDefine = customElements.define.bind(customElements);
@@ -52,6 +53,43 @@ function loadComponentByTag(tagName: string): Promise<unknown> | undefined {
   }
 
   return loadedComponents[componentName];
+}
+
+function readNotificationTimestamp(el: Element): Date | null {
+  if (!el.hasAttribute("timestamp")) {
+    return null;
+  }
+  const raw = el.getAttribute("timestamp");
+  if (!raw || raw === "null" || raw === "undefined") {
+    return null;
+  }
+  const parsed = Date.parse(raw);
+  if (Number.isNaN(parsed)) {
+    return null;
+  }
+  return new Date(parsed);
+}
+
+function normalizeNotificationTimestamp(el: Element): void {
+  const tagName = el.tagName.toLowerCase();
+  if (!notificationTags.has(tagName)) {
+    return;
+  }
+
+  const apply = () => {
+    const value = readNotificationTimestamp(el);
+    try {
+      (el as any).timestamp = value ?? undefined;
+    } catch (_error) {
+      // Ignore if the component rejects the property assignment.
+    }
+  };
+
+  if (customElements.get(tagName)) {
+    apply();
+  } else {
+    customElements.whenDefined(tagName).then(apply);
+  }
 }
 
 function normalizeNumberInputStep(el: Element): void {
@@ -205,6 +243,7 @@ function scanAndLoad(root: ParentNode | null): void {
   }
 
   if (root instanceof Element && isComponentTag(root.tagName)) {
+    normalizeNotificationTimestamp(root);
     normalizeNumberInputStep(root);
     applyGrapheneOpen(root);
     ensureNumberInputPatched(root.tagName.toLowerCase());
@@ -218,6 +257,7 @@ function scanAndLoad(root: ParentNode | null): void {
   root
     .querySelectorAll(componentSelector)
     .forEach((el) => {
+      normalizeNotificationTimestamp(el);
       normalizeNumberInputStep(el);
       applyGrapheneOpen(el);
       ensureNumberInputPatched(el.tagName.toLowerCase());
@@ -319,19 +359,30 @@ export class WebComponentManager {
   private observeDOM(): void {
     const observerCallback: MutationCallback = (mutationsList) => {
       for (const mutation of mutationsList) {
-        if (mutation.type !== "childList") {
-          continue;
-        }
-
-        mutation.addedNodes.forEach((node) => {
-          if (node instanceof Element || node instanceof DocumentFragment) {
-            scanAndLoad(node);
+        if (mutation.type === "childList") {
+          mutation.addedNodes.forEach((node) => {
+            if (node instanceof Element || node instanceof DocumentFragment) {
+              scanAndLoad(node);
+            }
+          });
+        } else if (mutation.type === "attributes") {
+          const target = mutation.target;
+          if (
+            target instanceof Element &&
+            mutation.attributeName === "timestamp"
+          ) {
+            normalizeNotificationTimestamp(target);
           }
-        });
+        }
       }
     };
 
-    const observerOptions: MutationObserverInit = { childList: true, subtree: true };
+    const observerOptions: MutationObserverInit = {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["timestamp"]
+    };
     const root = document.body ?? document.documentElement;
     if (!root) {
       return;
