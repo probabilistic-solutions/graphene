@@ -113,7 +113,7 @@ var CDSTag = class CDSTag2 extends HostListenerMixin(FocusMixin(i2)) {
       hasContent[0].setAttribute("size", "sm");
       hasContent[0].setAttribute("kind", "inline");
     }
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   /**
    * Handles `slotchange` event.
@@ -121,7 +121,7 @@ var CDSTag = class CDSTag2 extends HostListenerMixin(FocusMixin(i2)) {
   _handleIconSlotChange({ target }) {
     const hasIcon = target.assignedNodes();
     this.hasCustomIcon = Boolean(hasIcon.length > 0);
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   updated() {
     var _a;
@@ -288,7 +288,7 @@ var CDSDismissibleTag = class CDSDismissibleTag2 extends HostListenerMixin(Focus
       hasContent[0].setAttribute("size", "sm");
       hasContent[0].setAttribute("kind", "inline");
     }
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   render() {
     const { disabled, _handleAILabelSlotChange: handleAILabelSlotChange, _handleIconSlotChange: handleIconSlotChange, _hasEllipsisApplied: hasEllipsisApplied, size, tagTitle, text, dismissTooltipLabel, dismissTooltipAlignment } = this;

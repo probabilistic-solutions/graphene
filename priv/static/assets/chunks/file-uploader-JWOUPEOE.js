@@ -322,7 +322,7 @@ var CDSFileUploaderDropContainer = class CDSFileUploaderDropContainer2 extends H
     if (type === "drop") {
       this._handleChange(event);
     }
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   /**
    * @param event The event.

@@ -15,7 +15,7 @@ var s2 = class {
   constructor(t2, s4, i2, h) {
     var _a;
     if (this.subscribe = false, this.provided = false, this.value = void 0, this.t = (t3, s5) => {
-      this.unsubscribe && (this.unsubscribe !== s5 && (this.provided = false, this.unsubscribe()), this.subscribe || this.unsubscribe()), this.value = t3, this.host.requestUpdate(), this.provided && !this.subscribe || (this.provided = true, this.callback && this.callback(t3, s5)), this.unsubscribe = s5;
+      this.unsubscribe && (this.unsubscribe !== s5 && (this.provided = false, this.unsubscribe()), this.subscribe || this.unsubscribe()), this.value = t3, this.host.requestUpdate?.(), this.provided && !this.subscribe || (this.provided = true, this.callback && this.callback(t3, s5)), this.unsubscribe = s5;
     }, this.host = t2, void 0 !== s4.context) {
       const t3 = s4;
       this.context = t3.context, this.callback = t3.callback, this.subscribe = (_a = t3.subscribe) != null ? _a : false;

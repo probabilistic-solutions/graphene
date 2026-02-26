@@ -71,7 +71,7 @@ var CDSFluidSelect = class CDSFluidSelect2 extends CDSSelect$1 {
   updated(changedProperties) {
     super.updated(changedProperties);
     if (changedProperties.has("invalid") || changedProperties.has("disabled") || changedProperties.has("readonly") || changedProperties.has("warn")) {
-      this.requestUpdate();
+      this.requestUpdate?.();
     }
   }
   render() {

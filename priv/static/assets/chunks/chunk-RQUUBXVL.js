@@ -83,7 +83,7 @@ var CDSTimePicker = class CDSTimePicker2 extends ValidityMixin(FormMixin(i2)) {
    * to propagate properties to child elements
    */
   _handleSlotChange() {
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   _handleFormdata(event) {
     const { formData } = event;

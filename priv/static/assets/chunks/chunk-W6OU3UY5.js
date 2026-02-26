@@ -111,7 +111,7 @@ var CDSTooltip = class CDSTooltip2 extends HostListenerMixin(CDSPopover$1) {
       component[0].addEventListener("mouseover", this._handleHover);
       component[0].addEventListener("mouseleave", this._handleHoverOut);
     }
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   connectedCallback() {
     if (!this.hasAttribute("highContrast")) {

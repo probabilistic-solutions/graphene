@@ -583,7 +583,7 @@ var CDSModalFooter = class CDSModalFooter2 extends i2 {
   _handleSlotChange(event) {
     const { selectorButtons } = this.constructor;
     this.hasThreeButtons = event.target.assignedNodes().filter((node) => node.nodeType === Node.ELEMENT_NODE && node.matches(selectorButtons)).length > 2;
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   render() {
     return b` <slot @slotchange="${this._handleSlotChange}"></slot> `;
@@ -628,7 +628,7 @@ var CDSModalHeader = class CDSModalHeader2 extends i2 {
       this._hasAILabel = Boolean(hasContent);
       hasContent[0].setAttribute("size", "sm");
     }
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   updated() {
     var _a, _b;

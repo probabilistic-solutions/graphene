@@ -142,7 +142,7 @@ var CDSAILabel = class CDSAILabel2 extends CDSToggleTip {
     var _a;
     super.attributeChangedCallback(name, old, newValue);
     if (name === "revert-active") {
-      (_a = this.parentElement) === null || _a === void 0 ? void 0 : _a.requestUpdate();
+      (_a = this.parentElement) === null || _a === void 0 ? void 0 : _a.requestUpdate?.();
     }
   }
 };

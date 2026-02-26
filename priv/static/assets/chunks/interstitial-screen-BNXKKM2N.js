@@ -243,7 +243,7 @@ var CDSInterstitialScreen = class CDSInterstitialScreen2 extends e4(HostListener
     (_b = this._trapFocusAPI) === null || _b === void 0 ? void 0 : _b.cleanup();
   }
   firstUpdated() {
-    this.requestUpdate();
+    this.requestUpdate?.();
     resetInterstitialDetailsSignal();
     updateInterstitialDetailsSignal({
       name: "isFullScreen",

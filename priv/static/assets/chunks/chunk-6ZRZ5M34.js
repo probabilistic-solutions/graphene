@@ -44,7 +44,7 @@ var CDSPopover = CDSPopover_1 = class CDSPopover2 extends HostListenerMixin(i) {
       const component = target.assignedNodes().filter((node) => node.nodeType === Node.ELEMENT_NODE && node.tagName === "BUTTON");
       (_a = component[0]) === null || _a === void 0 ? void 0 : _a.classList.add(`${prefix}--popover--tab-tip__button`);
     }
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   _handleMouseDown(event) {
     const path = event.composedPath();

@@ -193,7 +193,7 @@ var CDSNumberInput = class CDSNumberInput2 extends CDSTextInput$1 {
    * The minimum value allowed in the input
    */
   get min() {
-    return this._min.toString();
+    return (this._min ?? "").toString();
   }
   set min(value) {
     const oldValue = this.min;
@@ -204,7 +204,7 @@ var CDSNumberInput = class CDSNumberInput2 extends CDSTextInput$1 {
    * The maximum value allowed in the input
    */
   get max() {
-    return this._max.toString();
+    return (this._max ?? "").toString();
   }
   set max(value) {
     const oldValue = this.max;
@@ -215,7 +215,7 @@ var CDSNumberInput = class CDSNumberInput2 extends CDSTextInput$1 {
    * The amount the value should increase or decrease by
    */
   get step() {
-    return this._step.toString();
+    return (this._step ?? "1").toString();
   }
   set step(value) {
     const oldValue = this.step;

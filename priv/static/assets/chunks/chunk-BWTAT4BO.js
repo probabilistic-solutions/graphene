@@ -209,7 +209,7 @@ var CDSRadioButton = class CDSRadioButton2 extends HostListenerMixin(FocusMixin(
     this._hasAILabel = Boolean(hasContent);
     const type = hasContent[0].getAttribute("kind");
     hasContent[0].setAttribute("size", type === "inline" ? "md" : "mini");
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   disconnectedCallback() {
     if (this._manager) {
@@ -433,7 +433,7 @@ var CDSRadioButtonGroup = class CDSRadioButtonGroup2 extends FormMixin(HostListe
     elem.matches(this.constructor.slugItem) : false);
     this._hasAILabel = Boolean(hasContent);
     hasContent[0].setAttribute("size", "mini");
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   updated(changedProperties) {
     const { selectorRadioButton } = this.constructor;

@@ -154,7 +154,7 @@ var CDSAccordionItem = class CDSAccordionItem2 extends FocusMixin(i2) {
       const { width } = records[records.length - 1].contentRect;
       const { _sizesBreakpoints: sizesBreakpoints } = this.constructor;
       this._currentBreakpoint = Object.keys(sizesBreakpoints).sort((lhs, rhs) => sizesBreakpoints[rhs] - sizesBreakpoints[lhs]).find((size) => width >= sizesBreakpoints[size]);
-      this.requestUpdate();
+      this.requestUpdate?.();
     });
     this.disabled = false;
     this.open = false;

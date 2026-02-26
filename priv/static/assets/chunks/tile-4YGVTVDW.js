@@ -195,7 +195,7 @@ var CDSExpandableTile = class CDSExpandableTile2 extends HostListenerMixin(Focus
       this._hasAILabel = Boolean(hasContent);
       hasContent[0].setAttribute("size", "xs");
     }
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   /**
    * Handles `slotchange` event on the below-the-fold content.
@@ -214,7 +214,7 @@ var CDSExpandableTile = class CDSExpandableTile2 extends HostListenerMixin(Focus
       );
       this._belowTheContentHeight = parseInt(element.height, 10);
     }
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   _handleExpand() {
     const expanded = !this.expanded;
@@ -409,7 +409,7 @@ var CDSSelectableTile = class CDSSelectableTile2 extends HostListenerMixin(Focus
       this._hasAILabel = Boolean(hasContent);
       hasContent[0].setAttribute("size", "xs");
     }
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   /**
    * Handles `change` event on the `<input>` in the shadow DOM.
@@ -618,7 +618,7 @@ var CDSTile = class CDSTile2 extends i2 {
       this._hasAILabel = Boolean(hasContent);
       hasContent[0].setAttribute("size", "xs");
     }
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   updated() {
     if (this._hasAILabel) {

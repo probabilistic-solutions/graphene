@@ -66,7 +66,7 @@ var CDSChatButton = class CDSChatButton2 extends i2 {
       (node) => node.nodeType !== Node.TEXT_NODE || node.textContent.trim()
       // eslint-disable-line @typescript-eslint/no-non-null-assertion -- https://github.com/carbon-design-system/carbon/issues/20452
     );
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   connectedCallback() {
     super.connectedCallback();

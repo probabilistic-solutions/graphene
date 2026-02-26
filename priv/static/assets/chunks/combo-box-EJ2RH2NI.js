@@ -122,7 +122,7 @@ var CDSComboBox = class CDSComboBox2 extends CDSDropdown$1 {
           this._filterInputNode.setSelectionRange(rawQueryText.length, suggestionText.length);
           this._filterInputValue = suggestionText;
           this.open = true;
-          this.requestUpdate();
+          this.requestUpdate?.();
           return;
         }
       }
@@ -143,7 +143,7 @@ var CDSComboBox = class CDSComboBox2 extends CDSDropdown$1 {
       }
     }
     this.open = true;
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   // removes the autocomplete suggestion
   _removeAutoCompleteSuggestion() {
@@ -238,7 +238,7 @@ var CDSComboBox = class CDSComboBox2 extends CDSDropdown$1 {
     }
     this._resetFilteredItems();
     this.removeAttribute("isClosable");
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   _handleInputKeydown(event) {
     if (this.typeahead && (event.key === "ArrowDown" || event.key === "ArrowUp")) {
@@ -288,13 +288,13 @@ var CDSComboBox = class CDSComboBox2 extends CDSDropdown$1 {
       this._filterInputNode.focus();
     }
     this._handleUserInitiatedSelectItem();
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   _handleUserInitiatedSelectItem(item) {
     if (item && !this._selectionShouldChange(item)) {
       this._filterInputValue = item.textContent || "";
       this.open = false;
-      this.requestUpdate();
+      this.requestUpdate?.();
     }
     super._handleUserInitiatedSelectItem(item);
   }
@@ -414,7 +414,7 @@ var CDSComboBox = class CDSComboBox2 extends CDSDropdown$1 {
     }
     this._resetFilteredItems();
     this.removeAttribute("isClosable");
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   updated(changedProperties) {
     super.updated(changedProperties);

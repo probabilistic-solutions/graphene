@@ -114,7 +114,7 @@ var CDSTreeNode = class CDSTreeNode2 extends i2 {
     this._hasChildren = items.length > 0;
     if (this._hasChildren)
       this.setAttribute("parent", "");
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   /**
    * Handles icon's `slotchange` event.
@@ -123,7 +123,7 @@ var CDSTreeNode = class CDSTreeNode2 extends i2 {
     this._hasIcon = target.assignedNodes().length > 0;
     if (this._hasIcon)
       this.setAttribute("has-icon", "");
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   connectedCallback() {
     super.connectedCallback();

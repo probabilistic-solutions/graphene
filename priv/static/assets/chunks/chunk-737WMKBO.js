@@ -166,7 +166,7 @@ var CDSTextInput = class CDSTextInput2 extends ValidityMixin(FormMixin(i2)) {
     elem.matches(this.constructor.slugItem) : false);
     this._hasAILabel = Boolean(hasContent);
     hasContent[0].setAttribute("size", "mini");
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   /**
    * Handles `oninput` event on the `input`.

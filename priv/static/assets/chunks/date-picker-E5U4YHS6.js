@@ -2597,7 +2597,7 @@ var CDSDatePickerInput = class CDSDatePickerInput2 extends FocusMixin(i2) {
     elem.matches(this.constructor.slugItem) : false);
     this._hasAILabel = Boolean(hasContent);
     hasContent[0].setAttribute("size", "mini");
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   /**
    * Handles `click` event on the calendar icon.

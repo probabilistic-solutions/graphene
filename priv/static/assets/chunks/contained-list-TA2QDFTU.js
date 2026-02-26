@@ -90,7 +90,7 @@ var CDSContainedListItem = class CDSContainedListItem2 extends i2 {
     const slot = target;
     const hasIcon = slot.assignedElements().length > 0;
     this._hasIcon = hasIcon;
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   /**
    * Handles click event

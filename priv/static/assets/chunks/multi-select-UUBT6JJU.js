@@ -377,7 +377,7 @@ var CDSMultiSelect = class CDSMultiSelect2 extends CDSDropdown$1 {
         item.removeAttribute("filtered");
       }
     });
-    this.requestUpdate();
+    this.requestUpdate?.();
     if (this.selectAll) {
       const selectAllItem = this.querySelector(`${prefix}-multi-select-item[is-select-all]`);
       if (selectAllItem) {

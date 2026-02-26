@@ -131,7 +131,7 @@ var CDSPageHeaderContent = class CDSPageHeaderContent2 extends i2 {
     } else {
       this.removeAttribute("contextual-actions");
     }
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   updated() {
     var _a;

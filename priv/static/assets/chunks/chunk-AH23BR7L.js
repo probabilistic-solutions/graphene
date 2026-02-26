@@ -52,7 +52,7 @@ var CDSLink = class CDSLink2 extends FocusMixin(i2) {
       (node) => node.nodeType !== Node.TEXT_NODE || node.textContent.trim()
     );
     this[name === "icon" ? "_hasIcon" : ""] = hasContent;
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   /**
    * The CSS class list for the link node.

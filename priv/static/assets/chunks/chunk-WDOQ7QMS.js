@@ -58,7 +58,7 @@ var CDSSelect = class CDSSelect2 extends FormMixin(i2) {
     this._placeholderItemValue = `__${prefix}-select-placeholder_${Math.random().toString(36).slice(2)}`;
     this.isFluid = false;
     this._handleMutation = () => {
-      this.requestUpdate();
+      this.requestUpdate?.();
     };
     this.autofocus = false;
     this.disabled = false;
@@ -147,7 +147,7 @@ var CDSSelect = class CDSSelect2 extends FormMixin(i2) {
     this._hasAILabel = Boolean(hasContent);
     this.setAttribute("slug", `${this._hasAILabel}`);
     hasContent[0].setAttribute("size", "mini");
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   /**
    * The count of child `<option>`s.

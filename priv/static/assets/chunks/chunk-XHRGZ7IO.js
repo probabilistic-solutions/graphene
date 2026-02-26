@@ -450,13 +450,13 @@ var CDSDropdown = class CDSDropdown2 extends ValidityMixin(HostListenerMixin(For
    * Handles `slotchange` event for the `<slot>` for helper text.
    */
   _handleSlotchangeHelperText() {
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   /**
    * Handles `slotchange` event for the `<slot>` for label text.
    */
   _handleSlotchangeLabelText() {
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   /**
    * Handles `slotchange` event.
@@ -469,7 +469,7 @@ var CDSDropdown = class CDSDropdown2 extends ValidityMixin(HostListenerMixin(For
     this._updateAIDecoratorListeners(decoratorElements);
     this._hasAILabel = Boolean(decoratorElements.length);
     (_a = decoratorElements[0]) === null || _a === void 0 ? void 0 : _a.setAttribute("size", "mini");
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   disconnectedCallback() {
     super.disconnectedCallback();
@@ -576,7 +576,7 @@ var CDSDropdown = class CDSDropdown2 extends ValidityMixin(HostListenerMixin(For
         if (!this.open) {
           this._clearHighlight();
         }
-        this.requestUpdate();
+        this.requestUpdate?.();
         this.dispatchEvent(new CustomEvent(eventToggle, init));
       }
     }

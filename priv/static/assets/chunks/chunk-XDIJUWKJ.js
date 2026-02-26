@@ -183,7 +183,7 @@ var CDSContentSwitcher = class CDSContentSwitcher2 extends i2 {
     const nextItem = this._getNextItem(this.querySelector(selectorItemFocused), direction);
     if (nextItem) {
       this._handleUserInitiatedSelectItem(nextItem, "keyboard");
-      this.requestUpdate();
+      this.requestUpdate?.();
     }
   }
   /**

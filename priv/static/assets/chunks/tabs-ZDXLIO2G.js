@@ -128,7 +128,7 @@ var CDSTabs = class CDSTabs2 extends HostListenerMixin(CDSContentSwitcher$1) {
       this._assistiveStatusText = nextItemText;
     }
     this._currentIndex += direction;
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   _handleClick(event) {
     super._handleClick(event);
@@ -154,7 +154,7 @@ var CDSTabs = class CDSTabs2 extends HostListenerMixin(CDSContentSwitcher$1) {
             inline: "nearest"
           });
           this._handleUserInitiatedSelectItem(firstEnabledTab);
-          this.requestUpdate();
+          this.requestUpdate?.();
         }
         break;
       case TABS_KEYBOARD_ACTION.END:
@@ -165,7 +165,7 @@ var CDSTabs = class CDSTabs2 extends HostListenerMixin(CDSContentSwitcher$1) {
             inline: "nearest"
           });
           this._handleUserInitiatedSelectItem(lastEnabledTab);
-          this.requestUpdate();
+          this.requestUpdate?.();
         }
         break;
       case TABS_KEYBOARD_ACTION.NAVIGATING:
@@ -181,7 +181,7 @@ var CDSTabs = class CDSTabs2 extends HostListenerMixin(CDSContentSwitcher$1) {
           const focusedTab = this.querySelector(`${prefix}-tab[highlighted]`);
           if (focusedTab) {
             this._selectionDidChange(focusedTab);
-            this.requestUpdate();
+            this.requestUpdate?.();
           }
         }
         break;

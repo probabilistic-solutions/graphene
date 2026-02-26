@@ -100,7 +100,7 @@ var CDSCodeSnippet = class CDSCodeSnippet2 extends FocusMixin(i2) {
       if (codeContentRef && type === CODE_SNIPPET_TYPE.MULTI || codeContainerRef && type === CODE_SNIPPET_TYPE.SINGLE) {
         handleScroll();
       }
-      this.requestUpdate();
+      this.requestUpdate?.();
     });
     this.copyText = "";
     this.disabled = false;
@@ -161,7 +161,7 @@ var CDSCodeSnippet = class CDSCodeSnippet2 extends FocusMixin(i2) {
       const { horizontalOverflow, codeClientWidth, codeScrollWidth, codeScrollLeft } = this.type === CODE_SNIPPET_TYPE.SINGLE ? this._getCodeRefDimensions(codeContainerRef) : this._getCodeRefDimensions(codeContentRef);
       this._hasLeftOverflow = horizontalOverflow && !!codeScrollLeft;
       this._hasRightOverflow = horizontalOverflow && codeScrollLeft + codeClientWidth !== codeScrollWidth;
-      this.requestUpdate();
+      this.requestUpdate?.();
     }
   }
   /**
@@ -169,7 +169,7 @@ var CDSCodeSnippet = class CDSCodeSnippet2 extends FocusMixin(i2) {
    */
   _handleClickExpanded() {
     this._expandedCode = !this._expandedCode;
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   connectedCallback() {
     super.connectedCallback();

@@ -99,7 +99,7 @@ var CDSCheckbox = class CDSCheckbox2 extends FocusMixin(FormMixin(i2)) {
     this._hasAILabel = Boolean(hasContent);
     const type = hasContent[0].getAttribute("kind");
     hasContent[0].setAttribute("size", type === "inline" ? "md" : "mini");
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   updated() {
     const { _hasAILabel: hasAILabel } = this;

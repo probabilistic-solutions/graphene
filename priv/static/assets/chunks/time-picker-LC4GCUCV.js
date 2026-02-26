@@ -60,7 +60,7 @@ var CDSTimePickerSelect = class CDSTimePickerSelect2 extends FormMixin(i) {
     this.value = "";
     this.size = TIME_PICKER_SIZE.MEDIUM;
     this._handleMutation = () => {
-      this.requestUpdate();
+      this.requestUpdate?.();
     };
   }
   /**

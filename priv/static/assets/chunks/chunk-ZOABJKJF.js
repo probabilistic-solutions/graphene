@@ -567,7 +567,7 @@ function e2(e3) {
       });
       const i3 = this._$Su = new Signal.subtle.Watcher(function() {
         const t3 = h.get(this);
-        void 0 !== t3 && (false === t3._$Si && t3.requestUpdate(), this.watch());
+        void 0 !== t3 && (false === t3._$Si && t3.requestUpdate?.(), this.watch());
       });
       h.set(i3, this), s.register(this, { watcher: i3, signal: this._$Sv }), i3.watch(this._$Sv);
     }
@@ -588,7 +588,7 @@ function e2(e3) {
       this._$So = true, super.requestUpdate(t3, i3, s3);
     }
     connectedCallback() {
-      super.connectedCallback(), this.requestUpdate();
+      super.connectedCallback(), this.requestUpdate?.();
     }
     disconnectedCallback() {
       super.disconnectedCallback(), queueMicrotask(() => {
@@ -598,7 +598,7 @@ function e2(e3) {
     _(t3) {
       this._$Sh.add(t3);
       const i3 = this._$So;
-      this.requestUpdate(), this._$So = i3;
+      this.requestUpdate?.(), this._$So = i3;
     }
     m(t3) {
       this._$Sh.delete(t3);

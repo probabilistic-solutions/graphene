@@ -38,13 +38,13 @@ var CDSCopy = class CDSCopy2 extends CDSIconButton$1 {
         buttonClasses === null || buttonClasses === void 0 ? void 0 : buttonClasses.add(`${prefix}--copy-btn--animating`);
         this._animation = "fade-in";
         buttonClasses === null || buttonClasses === void 0 ? void 0 : buttonClasses.add(`${prefix}--copy-btn--${this._animation}`);
-        this.requestUpdate();
+        this.requestUpdate?.();
         timeoutId = setTimeout(() => {
           this._showFeedback = false;
           this._animation = "fade-out";
           buttonClasses === null || buttonClasses === void 0 ? void 0 : buttonClasses.remove(`${prefix}--copy-btn--fade-in`);
           buttonClasses === null || buttonClasses === void 0 ? void 0 : buttonClasses.add(`${prefix}--copy-btn--${this._animation}`);
-          this.requestUpdate();
+          this.requestUpdate?.();
         }, timeout);
       };
     };

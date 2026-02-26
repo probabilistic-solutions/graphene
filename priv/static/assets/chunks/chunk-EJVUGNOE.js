@@ -53,7 +53,7 @@ var CDSCheckboxGroup = class CDSCheckboxGroup2 extends i {
     elem.matches(this.constructor.slugItem) : false);
     this._hasAILabel = Boolean(hasContent);
     hasContent[0].setAttribute("size", "mini");
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   updated(changedProperties) {
     const { selectorCheckbox } = this.constructor;

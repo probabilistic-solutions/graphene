@@ -1402,7 +1402,7 @@ var CDSTableHeaderCell = class CDSTableHeaderCell2 extends FocusMixin(i2) {
    *
    */
   _handleSlotChange() {
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   /**
    * Handles `slotchange` event.
@@ -1413,7 +1413,7 @@ var CDSTableHeaderCell = class CDSTableHeaderCell2 extends FocusMixin(i2) {
       this._hasAILabel = Boolean(hasContent);
       hasContent[0].setAttribute("size", "mini");
     }
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   /**
    * @returns The next sort direction.
@@ -1693,7 +1693,7 @@ var CDSTableRow = class CDSTableRow2 extends HostListenerMixin(FocusMixin(i2)) {
       this._hasAILabel = Boolean(hasContent);
       hasContent[0].setAttribute("size", "mini");
     }
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   /**
    * @returns The first set of table cells.

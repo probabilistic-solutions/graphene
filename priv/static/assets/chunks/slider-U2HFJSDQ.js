@@ -657,7 +657,7 @@ var CDSSlider = class CDSSlider2 extends HostListenerMixin(FormMixin(FocusMixin(
    * The maximum value.
    */
   get max() {
-    return this._max.toString();
+    return (this._max ?? "").toString();
   }
   set max(value) {
     const { max: oldMax } = this;
@@ -668,7 +668,7 @@ var CDSSlider = class CDSSlider2 extends HostListenerMixin(FormMixin(FocusMixin(
    * The minimum value.
    */
   get min() {
-    return this._min.toString();
+    return (this._min ?? "").toString();
   }
   set min(value) {
     const { min: oldMin } = this;
@@ -679,7 +679,7 @@ var CDSSlider = class CDSSlider2 extends HostListenerMixin(FormMixin(FocusMixin(
    * The snapping step of the value.
    */
   get step() {
-    return this._step.toString();
+    return (this._step ?? "1").toString();
   }
   set step(value) {
     const { step: oldStep } = this;
@@ -1226,7 +1226,7 @@ var CDSSliderInput = class CDSSliderInput2 extends FocusMixin(i2) {
    * The maximum value.
    */
   get max() {
-    return this._max.toString();
+    return (this._max ?? "").toString();
   }
   set max(value) {
     const { max: oldMax } = this;
@@ -1237,7 +1237,7 @@ var CDSSliderInput = class CDSSliderInput2 extends FocusMixin(i2) {
    * The minimum value.
    */
   get min() {
-    return this._min.toString();
+    return (this._min ?? "").toString();
   }
   set min(value) {
     const { min: oldMin } = this;
@@ -1248,7 +1248,7 @@ var CDSSliderInput = class CDSSliderInput2 extends FocusMixin(i2) {
    * The snapping step of the value.
    */
   get step() {
-    return this._step.toString();
+    return (this._step ?? "1").toString();
   }
   set step(value) {
     const { step: oldStep } = this;

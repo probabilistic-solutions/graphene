@@ -460,7 +460,7 @@ var y2 = class extends HTMLElement {
   }
   _$Ev() {
     var _a6;
-    this._$ES = new Promise((t3) => this.enableUpdating = t3), this._$AL = /* @__PURE__ */ new Map(), this._$E_(), this.requestUpdate(), (_a6 = this.constructor.l) == null ? void 0 : _a6.forEach((t3) => t3(this));
+    this._$ES = new Promise((t3) => this.enableUpdating = t3), this._$AL = /* @__PURE__ */ new Map(), this._$E_(), this.requestUpdate?.(), (_a6 = this.constructor.l) == null ? void 0 : _a6.forEach((t3) => t3(this));
   }
   addController(t3) {
     var _a6, _b2;

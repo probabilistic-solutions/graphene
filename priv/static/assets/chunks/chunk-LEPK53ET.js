@@ -115,7 +115,7 @@ var CDSButton = class CDSButton2 extends HostListenerMixin(FocusMixin(i2)) {
       (node) => node.nodeType !== Node.TEXT_NODE || node.textContent.trim()
     );
     this[name === "icon" ? "_hasIcon" : "hasMainContent"] = hasContent;
-    this.requestUpdate();
+    this.requestUpdate?.();
   }
   _handleDisabledClick(event) {
     const { disabled } = this;
@@ -136,7 +136,8 @@ var CDSButton = class CDSButton2 extends HostListenerMixin(FocusMixin(i2)) {
   }
   render() {
     var _a, _b, _c;
-    const { autofocus, buttonClassName, dangerDescription, disabled, download, href, hreflang, kind, isExpressive, isSelected, linkRole, openTooltip, ping, rel, size, tabIndex, target, tooltipAlignment, tooltipPosition, tooltipText, type, _hasIcon: hasIcon, hasMainContent, _handleSlotChange: handleSlotChange } = this;
+    const { autofocus, buttonClassName, dangerDescription, disabled, download, href, hreflang, kind: kindValue, isExpressive, isSelected, linkRole, openTooltip, ping, rel, size, tabIndex, target, tooltipAlignment, tooltipPosition, tooltipText, type, _hasIcon: hasIcon, hasMainContent, _handleSlotChange: handleSlotChange } = this;
+        const kind = kindValue ?? BUTTON_KIND.PRIMARY;
     let defaultClasses = {
       [`${prefix}--btn`]: true,
       [`${prefix}--btn--${kind}`]: kind,
