@@ -53,13 +53,17 @@ defmodule Graphene.CarbonComponents.ProgressIndicator do
       |> assign_new(:space_equally, fn -> false end)
       |> assign_new(:vertical, fn -> false end)
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [
+        :current_index,
+        :space_equally,
+        :vertical
+      ])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <CoreComponents.progress_indicator
-      current_index={@current_index}
-      space_equally={@space_equally}
-      vertical={@vertical}
-      {@rest}
-    >
+    <CoreComponents.progress_indicator {@component_attrs} {@rest}>
       <%= for step <- @step do %>
         <CoreComponents.progress_step
           label={step[:label]}

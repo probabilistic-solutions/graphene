@@ -44,11 +44,11 @@ defmodule Graphene.CarbonComponents.DatePicker do
 
   attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
-  attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
+  attr :form, :string, default: nil, doc: "the form attribute for the form-associated element"
 
   attr :form_event, :string,
     default: nil,
-    doc: "override the custom event used to sync form values"
+    doc: "override the custom event used to sync form values (passed as `form-event`)"
 
   attr :rest, :global
 
@@ -79,21 +79,28 @@ defmodule Graphene.CarbonComponents.DatePicker do
       |> assign_new(:readonly, fn -> false end)
       |> assign_new(:value, fn -> nil end)
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [
+        :allow_input,
+        :close_on_select,
+        :date_format,
+        :disabled,
+        :enabled_range,
+        :max_date,
+        :min_date,
+        :name,
+        :open,
+        :readonly,
+        :value,
+        :field,
+        :form,
+        :form_event
+      ])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <FormComponents.date_picker
-      allow_input={@allow_input}
-      close_on_select={@close_on_select}
-      date_format={@date_format}
-      disabled={@disabled}
-      enabled_range={@enabled_range}
-      max_date={@max_date}
-      min_date={@min_date}
-      name={@name}
-      open={@open}
-      readonly={@readonly}
-      value={@value}
-      {@rest}
-    >
+    <FormComponents.date_picker {@component_attrs} {@rest}>
       <%= for input <- @input do %>
         <CoreComponents.date_picker_input
           label_text={input[:label]}

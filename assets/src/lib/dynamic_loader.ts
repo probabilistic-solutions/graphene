@@ -1,6 +1,7 @@
 /* dynamic_loader.ts */
 import { componentImports as carbonComponentImports } from "./_dynamic_loader_mapping";
 import { productComponentImports } from "./_dynamic_loader_mapping_products";
+import { ensureFormAssociatedTag } from "./form_associated";
 
 type ComponentImporter = () => Promise<unknown>;
 
@@ -15,7 +16,9 @@ const componentImports = {
   ...carbonComponentImports,
   ...productComponentImports
 };
-const componentNames = Object.keys(componentImports);
+const baseComponentNames = Object.keys(componentImports);
+const formComponentNames = baseComponentNames.map((name) => `${name}-form`);
+const componentNames = [...baseComponentNames, ...formComponentNames];
 const componentSelector = componentNames.join(",");
 const componentSet = new Set(componentNames);
 const loadedComponents: Record<string, Promise<unknown>> = {};
@@ -25,34 +28,49 @@ const patchedNumberInputs = new Set<string>();
 const definePatchFlag = "__graphenePatchedDefine";
 const originalDefine = customElements.define.bind(customElements);
 
+function normalizeTagName(tagName: string): { tag: string; base: string; isForm: boolean } {
+  const lower = tagName.toLowerCase();
+  if (lower.endsWith("-form")) {
+    return { tag: lower, base: lower.slice(0, -5), isForm: true };
+  }
+  return { tag: lower, base: lower, isForm: false };
+}
+
 function isComponentTag(tagName: string): boolean {
   return componentSet.has(tagName.toLowerCase());
 }
 
 function importerForTag(tagName: string): ComponentImporter | undefined {
-  return componentImports[tagName.toLowerCase()];
+  const { base } = normalizeTagName(tagName);
+  return componentImports[base];
 }
 
 function loadComponentByTag(tagName: string): Promise<unknown> | undefined {
-  const componentName = tagName.toLowerCase();
+  const { tag, base, isForm } = normalizeTagName(tagName);
 
-  if (!loadedComponents[componentName]) {
-    const importer = importerForTag(componentName);
+  if (!loadedComponents[base]) {
+    const importer = importerForTag(base);
     if (!importer) {
-      console.warn(`No importer found for component: ${componentName}`);
+      console.warn(`No importer found for component: ${base}`);
       return undefined;
     }
 
-    loadedComponents[componentName] = importer()
+    loadedComponents[base] = importer()
       .then((module) => module)
       .catch((err) => {
-        console.error(`Error loading ${componentName}:`, err);
-        delete loadedComponents[componentName];
+        console.error(`Error loading ${base}:`, err);
+        delete loadedComponents[base];
         throw err;
       });
   }
 
-  return loadedComponents[componentName];
+  const loadPromise = loadedComponents[base];
+
+  if (isForm) {
+    loadPromise.then(() => ensureFormAssociatedTag(tag));
+  }
+
+  return loadPromise;
 }
 
 function readNotificationTimestamp(el: Element): Date | null {
@@ -94,7 +112,8 @@ function normalizeNotificationTimestamp(el: Element): void {
 
 function normalizeNumberInputStep(el: Element): void {
   const tagName = el.tagName.toLowerCase();
-  if (!numberInputTags.has(tagName)) {
+  const { base } = normalizeTagName(tagName);
+  if (!numberInputTags.has(base)) {
     return;
   }
 
@@ -215,7 +234,8 @@ function scanAndLoad(root: ParentNode | null): void {
   if (root instanceof Element && isComponentTag(root.tagName)) {
     normalizeNotificationTimestamp(root);
     normalizeNumberInputStep(root);
-    ensureNumberInputPatched(root.tagName.toLowerCase());
+    const { base } = normalizeTagName(root.tagName);
+    ensureNumberInputPatched(base);
     loadComponentByTag(root.tagName);
   }
 
@@ -228,7 +248,8 @@ function scanAndLoad(root: ParentNode | null): void {
     .forEach((el) => {
       normalizeNotificationTimestamp(el);
       normalizeNumberInputStep(el);
-      ensureNumberInputPatched(el.tagName.toLowerCase());
+      const { base } = normalizeTagName(el.tagName);
+      ensureNumberInputPatched(base);
       loadComponentByTag(el.tagName);
     });
 }

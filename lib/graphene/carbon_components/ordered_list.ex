@@ -37,13 +37,17 @@ defmodule Graphene.CarbonComponents.OrderedList do
       |> assign_new(:native, fn -> false end)
       |> assign_new(:nested, fn -> false end)
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [
+        :is_expressive,
+        :native,
+        :nested
+      ])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <CoreComponents.ordered_list
-      is_expressive={@is_expressive}
-      native={@native}
-      nested={@nested}
-      {@rest}
-    >
+    <CoreComponents.ordered_list {@component_attrs} {@rest}>
       <%= for item <- @item do %>
         <CoreComponents.list_item {item[:attrs] || %{}}>
           {render_slot(item)}

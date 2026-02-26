@@ -43,8 +43,13 @@ defmodule Graphene.CarbonComponents.PageHeader do
   slot :inner_block
 
   def page_header(%{breadcrumb_slot: [_ | _]} = assigns) do
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <CoreComponents.page_header {@rest}>
+    <CoreComponents.page_header {@component_attrs} {@rest}>
       <% breadcrumbs = if @breadcrumb_slot != [], do: @breadcrumb_slot, else: @breadcrumb %>
       <%= for breadcrumb <- breadcrumbs do %>
         <CoreComponents.page_header_breadcrumb
@@ -83,8 +88,13 @@ defmodule Graphene.CarbonComponents.PageHeader do
   end
 
   def page_header(%{breadcrumb: [_ | _]} = assigns) do
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <CoreComponents.page_header {@rest}>
+    <CoreComponents.page_header {@component_attrs} {@rest}>
       <% breadcrumbs = if @breadcrumb_slot != [], do: @breadcrumb_slot, else: @breadcrumb %>
       <%= for breadcrumb <- breadcrumbs do %>
         <CoreComponents.page_header_breadcrumb

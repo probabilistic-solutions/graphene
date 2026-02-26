@@ -92,11 +92,13 @@ defmodule Graphene.ProductComponents.Checklist do
       assigns
       |> assign_new(:title, fn -> nil end)
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [:title])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <ProductCoreComponents.checklist_group
-      title={@title}
-      {@rest}
-    >
+    <ProductCoreComponents.checklist_group {@component_attrs} {@rest}>
       <%= for item <- @item do %>
         <ProductCoreComponents.checklist_item
           label={item[:label]}

@@ -54,16 +54,20 @@ defmodule Graphene.CarbonComponents.ContentSwitcher do
       |> assign_new(:size, fn -> nil end)
       |> assign_new(:value, fn -> nil end)
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [
+        :icon,
+        :low_contrast,
+        :selected_index,
+        :selection_mode,
+        :size,
+        :value
+      ])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <CoreComponents.content_switcher
-      icon={@icon}
-      low_contrast={@low_contrast}
-      selected_index={@selected_index}
-      selection_mode={@selection_mode}
-      size={@size}
-      value={@value}
-      {@rest}
-    >
+    <CoreComponents.content_switcher {@component_attrs} {@rest}>
       <%= for item <- @item do %>
         <CoreComponents.content_switcher_item
           value={item[:value]}

@@ -72,11 +72,11 @@ defmodule Graphene.CarbonComponents.Dropdown do
 
   attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
-  attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
+  attr :form, :string, default: nil, doc: "the form attribute for the form-associated element"
 
   attr :form_event, :string,
     default: nil,
-    doc: "override the custom event used to sync form values"
+    doc: "override the custom event used to sync form values (passed as `form-event`)"
 
   attr :rest, :global
   slot :title_text, doc: "Title text content."
@@ -110,31 +110,38 @@ defmodule Graphene.CarbonComponents.Dropdown do
       |> assign_new(:warn, fn -> false end)
       |> assign_new(:warn_text, fn -> nil end)
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [
+        :autoalign,
+        :direction,
+        :disabled,
+        :helper_text,
+        :hide_label,
+        :invalid,
+        :invalid_text,
+        :label,
+        :name,
+        :open,
+        :read_only,
+        :required,
+        :required_validity_message,
+        :size,
+        :toggle_label_closed,
+        :toggle_label_open,
+        :type,
+        :validity_message,
+        :value,
+        :warn,
+        :warn_text,
+        :field,
+        :form,
+        :form_event
+      ])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <FormComponents.dropdown
-      autoalign={@autoalign}
-      direction={@direction}
-      disabled={@disabled}
-      helper_text={@helper_text}
-      hide_label={@hide_label}
-      invalid={@invalid}
-      invalid_text={@invalid_text}
-      label={@label}
-      name={@name}
-      open={@open}
-      read_only={@read_only}
-      required={@required}
-      required_validity_message={@required_validity_message}
-      size={@size}
-      toggle_label_closed={@toggle_label_closed}
-      toggle_label_open={@toggle_label_open}
-      type={@type}
-      validity_message={@validity_message}
-      value={@value}
-      warn={@warn}
-      warn_text={@warn_text}
-      {@rest}
-    >
+    <FormComponents.dropdown {@component_attrs} {@rest}>
       <.dynamic_tag
         :for={title <- @title_text}
         tag_name={Map.get(title, :tag, "div")}

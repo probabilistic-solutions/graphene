@@ -53,11 +53,11 @@ defmodule Graphene.CarbonComponents.TimePicker do
 
   attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
-  attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
+  attr :form, :string, default: nil, doc: "the form attribute for the form-associated element"
 
   attr :form_event, :string,
     default: nil,
-    doc: "override the custom event used to sync form values"
+    doc: "override the custom event used to sync form values (passed as `form-event`)"
 
   attr :rest, :global
   slot :label_text, doc: "The label text."
@@ -88,26 +88,33 @@ defmodule Graphene.CarbonComponents.TimePicker do
       |> assign_new(:value, fn -> nil end)
       |> assign_new(:warning, fn -> false end)
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [
+        :disabled,
+        :hide_label,
+        :invalid,
+        :invalid_text,
+        :max_length,
+        :name,
+        :pattern,
+        :placeholder,
+        :read_only,
+        :required,
+        :required_validity_message,
+        :size,
+        :type,
+        :value,
+        :warning,
+        :warning_text,
+        :field,
+        :form,
+        :form_event
+      ])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <FormComponents.time_picker
-      disabled={@disabled}
-      hide_label={@hide_label}
-      invalid={@invalid}
-      invalid_text={@invalid_text}
-      max_length={@max_length}
-      name={@name}
-      pattern={@pattern}
-      placeholder={@placeholder}
-      read_only={@read_only}
-      required={@required}
-      required_validity_message={@required_validity_message}
-      size={@size}
-      type={@type}
-      value={@value}
-      warning={@warning}
-      warning_text={@warning_text}
-      {@rest}
-    >
+    <FormComponents.time_picker {@component_attrs} {@rest}>
       <.dynamic_tag
         :for={label <- @label_text}
         tag_name={Map.get(label, :tag, "div")}

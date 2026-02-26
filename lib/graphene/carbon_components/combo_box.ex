@@ -97,11 +97,11 @@ defmodule Graphene.CarbonComponents.ComboBox do
   attr :controlled, :boolean, doc: "Whether the combobox is controlled."
   attr :events, :any, default: nil, doc: "custom events passed to Graphene.JS.events/1"
   attr :field, Phoenix.HTML.FormField, doc: "a form field struct, for example: @form[:email]"
-  attr :form, :string, default: nil, doc: "the form attribute for the hidden input"
+  attr :form, :string, default: nil, doc: "the form attribute for the form-associated element"
 
   attr :form_event, :string,
     default: nil,
-    doc: "override the custom event used to sync form values"
+    doc: "override the custom event used to sync form values (passed as `form-event`)"
 
   attr :rest, :global
 
@@ -140,37 +140,45 @@ defmodule Graphene.CarbonComponents.ComboBox do
       |> assign_new(:warn_text, fn -> nil end)
       |> assign_new(:controlled, fn -> nil end)
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [
+        :allow_custom_value,
+        :autoalign,
+        :clear_selection_label,
+        :direction,
+        :disabled,
+        :helper_text,
+        :hide_label,
+        :input_label,
+        :invalid,
+        :invalid_text,
+        :label,
+        :name,
+        :open,
+        :read_only,
+        :required,
+        :required_validity_message,
+        :should_filter_item,
+        :size,
+        :title_text,
+        :toggle_label_closed,
+        :toggle_label_open,
+        :type,
+        :typeahead,
+        :validity_message,
+        :value,
+        :warn,
+        :warn_text,
+        :controlled,
+        :field,
+        :form,
+        :form_event
+      ])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <FormComponents.combo_box
-      allow_custom_value={@allow_custom_value}
-      autoalign={@autoalign}
-      clear_selection_label={@clear_selection_label}
-      direction={@direction}
-      disabled={@disabled}
-      helper_text={@helper_text}
-      hide_label={@hide_label}
-      input_label={@input_label}
-      invalid={@invalid}
-      invalid_text={@invalid_text}
-      label={@label}
-      name={@name}
-      open={@open}
-      read_only={@read_only}
-      required={@required}
-      required_validity_message={@required_validity_message}
-      should_filter_item={@should_filter_item}
-      size={@size}
-      title_text={@title_text}
-      toggle_label_closed={@toggle_label_closed}
-      toggle_label_open={@toggle_label_open}
-      type={@type}
-      typeahead={@typeahead}
-      validity_message={@validity_message}
-      value={@value}
-      warn={@warn}
-      warn_text={@warn_text}
-      {@rest}
-    >
+    <FormComponents.combo_box {@component_attrs} {@rest}>
       <%= for item <- @item do %>
         <CoreComponents.combo_box_item
           value={item[:value] || item[:label]}

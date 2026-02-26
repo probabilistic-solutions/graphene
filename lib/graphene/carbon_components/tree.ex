@@ -82,13 +82,19 @@ defmodule Graphene.CarbonComponents.Tree do
       |> assign_new(:controlled, fn -> nil end)
       |> assign_new(:links, fn -> nil end)
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [
+        :hide_label,
+        :label,
+        :size,
+        :controlled,
+        :links
+      ])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <CoreComponents.tree_view
-      hide_label={@hide_label}
-      label={@label}
-      size={@size}
-      {@rest}
-    >
+    <CoreComponents.tree_view {@component_attrs} {@rest}>
       <%= for node <- @node do %>
         <CoreComponents.tree_node
           label={node[:label]}

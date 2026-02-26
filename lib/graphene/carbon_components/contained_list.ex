@@ -42,13 +42,13 @@ defmodule Graphene.CarbonComponents.ContainedList do
       |> assign_new(:kind, fn -> nil end)
       |> assign_new(:size, fn -> nil end)
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [:is_inset, :kind, :size])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <CoreComponents.contained_list
-      is_inset={@is_inset}
-      kind={@kind}
-      size={@size}
-      {@rest}
-    >
+    <CoreComponents.contained_list {@component_attrs} {@rest}>
       <.dynamic_tag :for={label <- @label} tag_name={Map.get(label, :tag, "div")} slot="label">
         {render_slot(label)}
       </.dynamic_tag>

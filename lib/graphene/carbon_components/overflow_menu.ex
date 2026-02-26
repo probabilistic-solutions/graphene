@@ -153,45 +153,49 @@ defmodule Graphene.CarbonComponents.OverflowMenu do
       |> assign_new(:toolbar_action, fn -> false end)
       |> assign_new(:tooltip_text, fn -> nil end)
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [
+        :align,
+        :autoalign,
+        :autofocus,
+        :batch_action,
+        :breadcrumb,
+        :button_class_name,
+        :close_on_activation,
+        :danger_description,
+        :data_table,
+        :default_open,
+        :disabled,
+        :download,
+        :enter_delay_ms,
+        :flipped,
+        :has_main_content,
+        :href,
+        :hreflang,
+        :index,
+        :is_expressive,
+        :is_selected,
+        :kind,
+        :leave_delay_ms,
+        :link_role,
+        :open,
+        :open_tooltip,
+        :ping,
+        :rel,
+        :size,
+        :tab_index,
+        :target,
+        :toolbar_action,
+        :tooltip_alignment,
+        :tooltip_position,
+        :tooltip_text,
+        :type
+      ])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <CoreComponents.overflow_menu
-      align={assigns[:align]}
-      autoalign={assigns[:autoalign]}
-      autofocus={assigns[:autofocus]}
-      batch_action={assigns[:batch_action]}
-      breadcrumb={assigns[:breadcrumb]}
-      button_class_name={assigns[:button_class_name]}
-      close_on_activation={assigns[:close_on_activation]}
-      danger_description={assigns[:danger_description]}
-      data_table={assigns[:data_table]}
-      default_open={assigns[:default_open]}
-      disabled={assigns[:disabled]}
-      download={assigns[:download]}
-      enter_delay_ms={assigns[:enter_delay_ms]}
-      flipped={assigns[:flipped]}
-      has_main_content={assigns[:has_main_content]}
-      href={assigns[:href]}
-      hreflang={assigns[:hreflang]}
-      index={assigns[:index]}
-      is_expressive={assigns[:is_expressive]}
-      is_selected={assigns[:is_selected]}
-      kind={assigns[:kind]}
-      leave_delay_ms={assigns[:leave_delay_ms]}
-      link_role={assigns[:link_role]}
-      open={assigns[:open]}
-      open_tooltip={assigns[:open_tooltip]}
-      ping={assigns[:ping]}
-      rel={assigns[:rel]}
-      size={assigns[:size]}
-      tab_index={assigns[:tab_index]}
-      target={assigns[:target]}
-      toolbar_action={assigns[:toolbar_action]}
-      tooltip_alignment={assigns[:tooltip_alignment]}
-      tooltip_position={assigns[:tooltip_position]}
-      tooltip_text={assigns[:tooltip_text]}
-      type={assigns[:type]}
-      {@rest}
-    >
+    <CoreComponents.overflow_menu {@component_attrs} {@rest}>
       <.dynamic_tag :for={icon <- @icon} tag_name={Map.get(icon, :tag, "span")} slot="icon">
         {render_slot(icon)}
       </.dynamic_tag>

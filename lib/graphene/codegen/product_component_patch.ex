@@ -113,6 +113,7 @@ defmodule Graphene.CodeGen.ProductComponentPatches do
       name: :interstitial_screen,
       delegate: :product,
       patterns: ["%{}"],
+      auto_attrs: :html,
       prelude: ~S"""
         assigns =
           assigns
@@ -149,11 +150,7 @@ defmodule Graphene.CodeGen.ProductComponentPatches do
           end
       """,
       body: ~S"""
-          <c4p-interstitial-screen
-            fullscreen={@fullscreen}
-            open={@open}
-            {@rest}
-          >
+          <c4p-interstitial-screen {@component_attrs} {@rest}>
             {render_slot(@inner_block)}
             <%= for header <- @header do %>
               {render_slot(header)}
@@ -171,6 +168,7 @@ defmodule Graphene.CodeGen.ProductComponentPatches do
       name: :checklist_group,
       delegate: :product,
       patterns: ["%{item: [_ | _]}"],
+      auto_attrs: :component,
       extra_slots: ~S"""
         slot :item do
           attr :label, :string
@@ -179,10 +177,7 @@ defmodule Graphene.CodeGen.ProductComponentPatches do
         end
       """,
       body: ~S"""
-          <ProductCoreComponents.checklist_group
-            title={@title}
-            {@rest}
-          >
+          <ProductCoreComponents.checklist_group {@component_attrs} {@rest}>
             <%= for item <- @item do %>
               <ProductCoreComponents.checklist_item
                 label={item[:label]}

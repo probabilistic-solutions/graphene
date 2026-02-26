@@ -607,7 +607,7 @@ defmodule Graphene.BasicComponents do
         <:col :let={user} label="username">{user.username}</:col>
       </.table>
   """
-  defdelegate table(assigns), to: Graphene.CarbonComponents.Table
+  defdelegate table(assigns), to: Graphene.CarbonComponents
 
   @doc """
   Renders a LiveView-aware data table.

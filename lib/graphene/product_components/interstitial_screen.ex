@@ -74,12 +74,16 @@ defmodule Graphene.ProductComponents.InterstitialScreen do
         assign(assigns, :rest, Map.merge(rest, event_attrs))
       end
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_html_attrs(assigns, [
+        {"fullscreen", :fullscreen},
+        {"open", :open}
+      ])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <c4p-interstitial-screen
-      fullscreen={@fullscreen}
-      open={@open}
-      {@rest}
-    >
+    <c4p-interstitial-screen {@component_attrs} {@rest}>
       {render_slot(@inner_block)}
       <%= for header <- @header do %>
         {render_slot(header)}

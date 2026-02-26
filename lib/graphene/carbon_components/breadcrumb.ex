@@ -40,8 +40,13 @@ defmodule Graphene.CarbonComponents.Breadcrumb do
       assigns
       |> assign_new(:no_trailing_slash, fn -> false end)
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [:no_trailing_slash, :size])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <CoreComponents.breadcrumb no_trailing_slash={@no_trailing_slash} size={@size} {@rest}>
+    <CoreComponents.breadcrumb {@component_attrs} {@rest}>
       <%= for item <- @item do %>
         <CoreComponents.breadcrumb_item>
           <%= if item[:href] do %>

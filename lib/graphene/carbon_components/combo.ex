@@ -91,17 +91,21 @@ defmodule Graphene.CarbonComponents.Combo do
       |> assign_new(:label, fn -> nil end)
       |> assign_new(:on_click, fn -> nil end)
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [
+        :disabled,
+        :label,
+        :menu_alignment,
+        :on_click,
+        :size,
+        :tooltip_alignment,
+        :tooltip_content
+      ])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <CoreComponents.combo_button
-      disabled={assigns[:disabled]}
-      label={assigns[:label]}
-      menu_alignment={assigns[:menu_alignment]}
-      on_click={assigns[:on_click]}
-      size={assigns[:size]}
-      tooltip_alignment={assigns[:tooltip_alignment]}
-      tooltip_content={assigns[:tooltip_content]}
-      {@rest}
-    >
+    <CoreComponents.combo_button {@component_attrs} {@rest}>
       <CoreComponents.menu>
         {Graphene.CarbonComponents.Helpers.render_menu_items(assigns)}
       </CoreComponents.menu>

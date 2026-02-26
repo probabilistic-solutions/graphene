@@ -59,16 +59,20 @@ defmodule Graphene.CarbonComponents.Toggletip do
       |> assign_new(:default_open, fn -> false end)
       |> assign_new(:open, fn -> false end)
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [
+        :alignment,
+        :alignment_axis_offset,
+        :autoalign,
+        :button_label,
+        :default_open,
+        :open
+      ])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <CoreComponents.toggletip
-      alignment={@alignment}
-      alignment_axis_offset={@alignment_axis_offset}
-      autoalign={@autoalign}
-      button_label={@button_label}
-      default_open={@default_open}
-      open={@open}
-      {@rest}
-    >
+    <CoreComponents.toggletip {@component_attrs} {@rest}>
       {render_slot(@inner_block)}
       <.dynamic_tag
         :for={s <- @body_text}
@@ -95,16 +99,20 @@ defmodule Graphene.CarbonComponents.Toggletip do
       |> assign_new(:default_open, fn -> false end)
       |> assign_new(:open, fn -> false end)
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [
+        :alignment,
+        :alignment_axis_offset,
+        :autoalign,
+        :button_label,
+        :default_open,
+        :open
+      ])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <CoreComponents.toggletip
-      alignment={@alignment}
-      alignment_axis_offset={@alignment_axis_offset}
-      autoalign={@autoalign}
-      button_label={@button_label}
-      default_open={@default_open}
-      open={@open}
-      {@rest}
-    >
+    <CoreComponents.toggletip {@component_attrs} {@rest}>
       {render_slot(@inner_block)}
       <.dynamic_tag
         :for={s <- @body_text}

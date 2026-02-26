@@ -1,5 +1,6 @@
 import {
   __export,
+  __spreadProps,
   __spreadValues
 } from "./chunks/chunk-G6EI4S4W.js";
 
@@ -975,269 +976,680 @@ var TabsInit = {
 
 // src/lib/_dynamic_loader_mapping.ts
 var componentImports = {
-  "cds-accordion": () => import("./chunks/accordion-YJISFGRC.js"),
-  "cds-accordion-item": () => import("./chunks/accordion-YJISFGRC.js"),
-  "cds-accordion-skeleton": () => import("./chunks/accordion-YJISFGRC.js"),
-  "cds-actionable-notification": () => import("./chunks/notification-G6OZM5GQ.js"),
-  "cds-actionable-notification-button": () => import("./chunks/notification-G6OZM5GQ.js"),
-  "cds-ai-label": () => import("./chunks/ai-label-7Q5CCW7Y.js"),
-  "cds-ai-label-action-button": () => import("./chunks/ai-label-7Q5CCW7Y.js"),
-  "cds-ai-skeleton-icon": () => import("./chunks/ai-skeleton-GZIRGLEF.js"),
-  "cds-ai-skeleton-placeholder": () => import("./chunks/ai-skeleton-GZIRGLEF.js"),
-  "cds-ai-skeleton-text": () => import("./chunks/ai-skeleton-GZIRGLEF.js"),
-  "cds-badge-indicator": () => import("./chunks/badge-indicator-GAUTJUL6.js"),
-  "cds-breadcrumb": () => import("./chunks/breadcrumb-K3UM6PM7.js"),
-  "cds-breadcrumb-item": () => import("./chunks/breadcrumb-K3UM6PM7.js"),
-  "cds-breadcrumb-link": () => import("./chunks/breadcrumb-K3UM6PM7.js"),
-  "cds-breadcrumb-overflow-menu": () => import("./chunks/breadcrumb-K3UM6PM7.js"),
-  "cds-breadcrumb-skeleton": () => import("./chunks/breadcrumb-K3UM6PM7.js"),
-  "cds-button": () => import("./chunks/button-UVHSS2LG.js"),
-  "cds-button-set": () => import("./chunks/button-UVHSS2LG.js"),
-  "cds-button-set-base": () => import("./chunks/button-UVHSS2LG.js"),
-  "cds-button-skeleton": () => import("./chunks/button-UVHSS2LG.js"),
-  "cds-callout-notification": () => import("./chunks/notification-G6OZM5GQ.js"),
-  "cds-chat-button": () => import("./chunks/chat-button-E63QERCI.js"),
-  "cds-chat-button-skeleton": () => import("./chunks/chat-button-E63QERCI.js"),
-  "cds-checkbox": () => import("./chunks/checkbox-FXVUSMYJ.js"),
-  "cds-checkbox-group": () => import("./chunks/checkbox-FXVUSMYJ.js"),
-  "cds-checkbox-skeleton": () => import("./chunks/checkbox-FXVUSMYJ.js"),
-  "cds-clickable-tile": () => import("./chunks/tile-4YGVTVDW.js"),
-  "cds-code-snippet": () => import("./chunks/code-snippet-UERRWBHX.js"),
-  "cds-code-snippet-skeleton": () => import("./chunks/code-snippet-UERRWBHX.js"),
-  "cds-column": () => import("./chunks/grid-DIPRRZHH.js"),
-  "cds-column-hang": () => import("./chunks/grid-DIPRRZHH.js"),
-  "cds-combo-box": () => import("./chunks/combo-box-EJ2RH2NI.js"),
-  "cds-combo-box-item": () => import("./chunks/combo-box-EJ2RH2NI.js"),
-  "cds-combo-button": () => import("./chunks/combo-button-CO5R2V5U.js"),
-  "cds-contained-list": () => import("./chunks/contained-list-TA2QDFTU.js"),
-  "cds-contained-list-description": () => import("./chunks/contained-list-TA2QDFTU.js"),
-  "cds-contained-list-item": () => import("./chunks/contained-list-TA2QDFTU.js"),
-  "cds-content-switcher": () => import("./chunks/content-switcher-7PXWPNFX.js"),
-  "cds-content-switcher-item": () => import("./chunks/content-switcher-7PXWPNFX.js"),
-  "cds-copy": () => import("./chunks/copy-PLCFCI3U.js"),
-  "cds-copy-button": () => import("./chunks/copy-button-ZIYIU74W.js"),
-  "cds-date-picker": () => import("./chunks/date-picker-E5U4YHS6.js"),
-  "cds-date-picker-input": () => import("./chunks/date-picker-E5U4YHS6.js"),
-  "cds-date-picker-input-skeleton": () => import("./chunks/date-picker-E5U4YHS6.js"),
-  "cds-definition-tooltip": () => import("./chunks/tooltip-5JB36SJK.js"),
-  "cds-dismissible-tag": () => import("./chunks/tag-MR4LGHP4.js"),
-  "cds-dropdown": () => import("./chunks/dropdown-AFQUXAG6.js"),
-  "cds-dropdown-item": () => import("./chunks/dropdown-AFQUXAG6.js"),
-  "cds-dropdown-skeleton": () => import("./chunks/dropdown-AFQUXAG6.js"),
-  "cds-expandable-tile": () => import("./chunks/tile-4YGVTVDW.js"),
+  "cds-accordion": () => import("./chunks/accordion-2R2GJCV3.js"),
+  "cds-accordion-item": () => import("./chunks/accordion-2R2GJCV3.js"),
+  "cds-accordion-skeleton": () => import("./chunks/accordion-2R2GJCV3.js"),
+  "cds-actionable-notification": () => import("./chunks/notification-2F7XCZGW.js"),
+  "cds-actionable-notification-button": () => import("./chunks/notification-2F7XCZGW.js"),
+  "cds-ai-label": () => import("./chunks/ai-label-MSQQAO5J.js"),
+  "cds-ai-label-action-button": () => import("./chunks/ai-label-MSQQAO5J.js"),
+  "cds-ai-skeleton-icon": () => import("./chunks/ai-skeleton-OXJZMDKY.js"),
+  "cds-ai-skeleton-placeholder": () => import("./chunks/ai-skeleton-OXJZMDKY.js"),
+  "cds-ai-skeleton-text": () => import("./chunks/ai-skeleton-OXJZMDKY.js"),
+  "cds-badge-indicator": () => import("./chunks/badge-indicator-FRGJT4GI.js"),
+  "cds-breadcrumb": () => import("./chunks/breadcrumb-ZRKEJNPA.js"),
+  "cds-breadcrumb-item": () => import("./chunks/breadcrumb-ZRKEJNPA.js"),
+  "cds-breadcrumb-link": () => import("./chunks/breadcrumb-ZRKEJNPA.js"),
+  "cds-breadcrumb-overflow-menu": () => import("./chunks/breadcrumb-ZRKEJNPA.js"),
+  "cds-breadcrumb-skeleton": () => import("./chunks/breadcrumb-ZRKEJNPA.js"),
+  "cds-button": () => import("./chunks/button-WIA57XQ2.js"),
+  "cds-button-set": () => import("./chunks/button-WIA57XQ2.js"),
+  "cds-button-set-base": () => import("./chunks/button-WIA57XQ2.js"),
+  "cds-button-skeleton": () => import("./chunks/button-WIA57XQ2.js"),
+  "cds-callout-notification": () => import("./chunks/notification-2F7XCZGW.js"),
+  "cds-chat-button": () => import("./chunks/chat-button-2G6YFUUS.js"),
+  "cds-chat-button-skeleton": () => import("./chunks/chat-button-2G6YFUUS.js"),
+  "cds-checkbox": () => import("./chunks/checkbox-XMZATRAC.js"),
+  "cds-checkbox-group": () => import("./chunks/checkbox-XMZATRAC.js"),
+  "cds-checkbox-skeleton": () => import("./chunks/checkbox-XMZATRAC.js"),
+  "cds-clickable-tile": () => import("./chunks/tile-2HRIK5G3.js"),
+  "cds-code-snippet": () => import("./chunks/code-snippet-FEUR4BCG.js"),
+  "cds-code-snippet-skeleton": () => import("./chunks/code-snippet-FEUR4BCG.js"),
+  "cds-column": () => import("./chunks/grid-6F73WRNG.js"),
+  "cds-column-hang": () => import("./chunks/grid-6F73WRNG.js"),
+  "cds-combo-box": () => import("./chunks/combo-box-FIRTDL42.js"),
+  "cds-combo-box-item": () => import("./chunks/combo-box-FIRTDL42.js"),
+  "cds-combo-button": () => import("./chunks/combo-button-FST2OO6L.js"),
+  "cds-contained-list": () => import("./chunks/contained-list-YVSHYODL.js"),
+  "cds-contained-list-description": () => import("./chunks/contained-list-YVSHYODL.js"),
+  "cds-contained-list-item": () => import("./chunks/contained-list-YVSHYODL.js"),
+  "cds-content-switcher": () => import("./chunks/content-switcher-ER3U6PER.js"),
+  "cds-content-switcher-item": () => import("./chunks/content-switcher-ER3U6PER.js"),
+  "cds-copy": () => import("./chunks/copy-ZOTJNHXY.js"),
+  "cds-copy-button": () => import("./chunks/copy-button-OCNPAJB4.js"),
+  "cds-date-picker": () => import("./chunks/date-picker-P4JS6AZR.js"),
+  "cds-date-picker-input": () => import("./chunks/date-picker-P4JS6AZR.js"),
+  "cds-date-picker-input-skeleton": () => import("./chunks/date-picker-P4JS6AZR.js"),
+  "cds-definition-tooltip": () => import("./chunks/tooltip-EGI7YSGN.js"),
+  "cds-dismissible-tag": () => import("./chunks/tag-APKQYZAW.js"),
+  "cds-dropdown": () => import("./chunks/dropdown-YJLPY3C2.js"),
+  "cds-dropdown-item": () => import("./chunks/dropdown-YJLPY3C2.js"),
+  "cds-dropdown-skeleton": () => import("./chunks/dropdown-YJLPY3C2.js"),
+  "cds-expandable-tile": () => import("./chunks/tile-2HRIK5G3.js"),
   "feature-flags": () => import("./chunks/feature-flags-Q4NEPPKH.js"),
-  "cds-file-uploader": () => import("./chunks/file-uploader-JWOUPEOE.js"),
-  "cds-file-uploader-button": () => import("./chunks/file-uploader-JWOUPEOE.js"),
-  "cds-file-uploader-drop-container": () => import("./chunks/file-uploader-JWOUPEOE.js"),
-  "cds-file-uploader-item": () => import("./chunks/file-uploader-JWOUPEOE.js"),
-  "cds-file-uploader-skeleton": () => import("./chunks/file-uploader-JWOUPEOE.js"),
-  "cds-fluid-number-input": () => import("./chunks/fluid-number-input-FEWDUFMN.js"),
-  "cds-fluid-number-input-skeleton": () => import("./chunks/fluid-number-input-FEWDUFMN.js"),
-  "cds-fluid-search": () => import("./chunks/fluid-search-VSPFIQG2.js"),
-  "cds-fluid-search-skeleton": () => import("./chunks/fluid-search-VSPFIQG2.js"),
-  "cds-fluid-select": () => import("./chunks/fluid-select-JO3NURGO.js"),
-  "cds-fluid-select-skeleton": () => import("./chunks/fluid-select-JO3NURGO.js"),
-  "cds-fluid-text-input": () => import("./chunks/fluid-text-input-PLD3UWDK.js"),
-  "cds-fluid-text-input-skeleton": () => import("./chunks/fluid-text-input-PLD3UWDK.js"),
-  "cds-fluid-textarea": () => import("./chunks/fluid-textarea-23OONJME.js"),
-  "cds-fluid-textarea-skeleton": () => import("./chunks/fluid-textarea-23OONJME.js"),
-  "cds-fluid-time-picker": () => import("./chunks/fluid-time-picker-J4J2D4P7.js"),
-  "cds-fluid-time-picker-select": () => import("./chunks/fluid-time-picker-J4J2D4P7.js"),
-  "cds-fluid-time-picker-skeleton": () => import("./chunks/fluid-time-picker-J4J2D4P7.js"),
+  "cds-file-uploader": () => import("./chunks/file-uploader-VNKTDUIT.js"),
+  "cds-file-uploader-button": () => import("./chunks/file-uploader-VNKTDUIT.js"),
+  "cds-file-uploader-drop-container": () => import("./chunks/file-uploader-VNKTDUIT.js"),
+  "cds-file-uploader-item": () => import("./chunks/file-uploader-VNKTDUIT.js"),
+  "cds-file-uploader-skeleton": () => import("./chunks/file-uploader-VNKTDUIT.js"),
+  "cds-fluid-number-input": () => import("./chunks/fluid-number-input-IWRTOUZP.js"),
+  "cds-fluid-number-input-skeleton": () => import("./chunks/fluid-number-input-IWRTOUZP.js"),
+  "cds-fluid-search": () => import("./chunks/fluid-search-NPF4GUHH.js"),
+  "cds-fluid-search-skeleton": () => import("./chunks/fluid-search-NPF4GUHH.js"),
+  "cds-fluid-select": () => import("./chunks/fluid-select-P4L6GCTO.js"),
+  "cds-fluid-select-skeleton": () => import("./chunks/fluid-select-P4L6GCTO.js"),
+  "cds-fluid-text-input": () => import("./chunks/fluid-text-input-LW6FWXRV.js"),
+  "cds-fluid-text-input-skeleton": () => import("./chunks/fluid-text-input-LW6FWXRV.js"),
+  "cds-fluid-textarea": () => import("./chunks/fluid-textarea-UXUITDBU.js"),
+  "cds-fluid-textarea-skeleton": () => import("./chunks/fluid-textarea-UXUITDBU.js"),
+  "cds-fluid-time-picker": () => import("./chunks/fluid-time-picker-GDXLSOMH.js"),
+  "cds-fluid-time-picker-select": () => import("./chunks/fluid-time-picker-GDXLSOMH.js"),
+  "cds-fluid-time-picker-skeleton": () => import("./chunks/fluid-time-picker-GDXLSOMH.js"),
   "cds-form": () => import("./chunks/form-WNMMCCDI.js"),
-  "cds-form-group": () => import("./chunks/form-group-DNPJBARS.js"),
+  "cds-form-group": () => import("./chunks/form-group-5YN4VXTJ.js"),
   "cds-form-item": () => import("./chunks/form-WNMMCCDI.js"),
-  "cds-grid": () => import("./chunks/grid-DIPRRZHH.js"),
-  "cds-header": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-header-global-action": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-header-menu": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-header-menu-button": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-header-menu-item": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-header-name": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-header-nav": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-header-nav-item": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-header-panel": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-header-side-nav-items": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-heading": () => import("./chunks/heading-R4FXDBCU.js"),
-  "cds-icon": () => import("./chunks/icon-OJWOGILA.js"),
-  "cds-icon-button": () => import("./chunks/icon-button-L5KZTPGM.js"),
-  "cds-icon-indicator": () => import("./chunks/icon-indicator-YYM2EBRF.js"),
-  "cds-inline-loading": () => import("./chunks/inline-loading-G7ZLJYSZ.js"),
-  "cds-inline-notification": () => import("./chunks/notification-G6OZM5GQ.js"),
-  "cds-layer": () => import("./chunks/layer-DSIZK7IP.js"),
-  "cds-link": () => import("./chunks/link-MZUNZEYT.js"),
-  "cds-list-item": () => import("./chunks/list-LA4DQJUM.js"),
-  "cds-loading": () => import("./chunks/loading-OOMS55K5.js"),
-  "cds-menu": () => import("./chunks/menu-4GVHY5YN.js"),
-  "cds-menu-button": () => import("./chunks/menu-button-DIBQIM5T.js"),
-  "cds-menu-item": () => import("./chunks/menu-4GVHY5YN.js"),
-  "cds-menu-item-divider": () => import("./chunks/menu-4GVHY5YN.js"),
-  "cds-menu-item-group": () => import("./chunks/menu-4GVHY5YN.js"),
-  "cds-menu-item-radio-group": () => import("./chunks/menu-4GVHY5YN.js"),
-  "cds-menu-item-selectable": () => import("./chunks/menu-4GVHY5YN.js"),
-  "cds-modal": () => import("./chunks/modal-KDLOEU6G.js"),
-  "cds-modal-body": () => import("./chunks/modal-KDLOEU6G.js"),
-  "cds-modal-body-content": () => import("./chunks/modal-KDLOEU6G.js"),
-  "cds-modal-close-button": () => import("./chunks/modal-KDLOEU6G.js"),
-  "cds-modal-footer": () => import("./chunks/modal-KDLOEU6G.js"),
-  "cds-modal-footer-button": () => import("./chunks/modal-KDLOEU6G.js"),
-  "cds-modal-header": () => import("./chunks/modal-KDLOEU6G.js"),
-  "cds-modal-heading": () => import("./chunks/modal-KDLOEU6G.js"),
-  "cds-modal-label": () => import("./chunks/modal-KDLOEU6G.js"),
-  "cds-multi-select": () => import("./chunks/multi-select-UUBT6JJU.js"),
-  "cds-multi-select-item": () => import("./chunks/multi-select-UUBT6JJU.js"),
-  "cds-number-input": () => import("./chunks/number-input-SLBHWDPI.js"),
-  "cds-number-input-skeleton": () => import("./chunks/number-input-SLBHWDPI.js"),
-  "cds-operational-tag": () => import("./chunks/tag-MR4LGHP4.js"),
-  "cds-ordered-list": () => import("./chunks/list-LA4DQJUM.js"),
-  "cds-overflow-menu": () => import("./chunks/overflow-menu-BKCVDWB4.js"),
-  "cds-overflow-menu-body": () => import("./chunks/overflow-menu-BKCVDWB4.js"),
-  "cds-overflow-menu-item": () => import("./chunks/overflow-menu-BKCVDWB4.js"),
-  "cds-page-header": () => import("./chunks/page-header-G7TI2VXJ.js"),
-  "cds-page-header-breadcrumb": () => import("./chunks/page-header-G7TI2VXJ.js"),
-  "cds-page-header-content": () => import("./chunks/page-header-G7TI2VXJ.js"),
-  "cds-page-header-content-text": () => import("./chunks/page-header-G7TI2VXJ.js"),
-  "cds-page-header-hero-image": () => import("./chunks/page-header-G7TI2VXJ.js"),
-  "cds-page-header-tabs": () => import("./chunks/page-header-G7TI2VXJ.js"),
-  "cds-pagination": () => import("./chunks/pagination-J4QXKTTU.js"),
-  "cds-pagination-nav": () => import("./chunks/pagination-nav-MDIDPWB7.js"),
-  "cds-password-input": () => import("./chunks/password-input-EABYQXWU.js"),
-  "cds-password-input-skeleton": () => import("./chunks/password-input-EABYQXWU.js"),
-  "cds-popover": () => import("./chunks/popover-WWB4GOAF.js"),
-  "cds-popover-content": () => import("./chunks/popover-WWB4GOAF.js"),
-  "cds-progress-bar": () => import("./chunks/progress-bar-BP3JSOEB.js"),
-  "cds-progress-indicator": () => import("./chunks/progress-indicator-UO7NS4VO.js"),
-  "cds-progress-indicator-skeleton": () => import("./chunks/progress-indicator-UO7NS4VO.js"),
-  "cds-progress-step": () => import("./chunks/progress-indicator-UO7NS4VO.js"),
-  "cds-progress-step-skeleton": () => import("./chunks/progress-indicator-UO7NS4VO.js"),
-  "cds-radio-button": () => import("./chunks/radio-button-7VW7MWVM.js"),
-  "cds-radio-button-group": () => import("./chunks/radio-button-7VW7MWVM.js"),
-  "cds-radio-button-skeleton": () => import("./chunks/radio-button-7VW7MWVM.js"),
-  "cds-radio-tile": () => import("./chunks/tile-4YGVTVDW.js"),
-  "cds-search": () => import("./chunks/search-A3NANURN.js"),
-  "cds-select": () => import("./chunks/select-MWJ4JNPG.js"),
-  "cds-select-item": () => import("./chunks/select-MWJ4JNPG.js"),
-  "cds-select-item-group": () => import("./chunks/select-MWJ4JNPG.js"),
-  "cds-select-skeleton": () => import("./chunks/select-MWJ4JNPG.js"),
-  "cds-selectable-tag": () => import("./chunks/tag-MR4LGHP4.js"),
-  "cds-selectable-tile": () => import("./chunks/tile-4YGVTVDW.js"),
-  "cds-shape-indicator": () => import("./chunks/shape-indicator-EUXZRDGL.js"),
-  "cds-side-nav": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-side-nav-divider": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-side-nav-items": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-side-nav-link": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-side-nav-menu": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-side-nav-menu-item": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-side-panel": () => import("./chunks/side-panel-SWGWWLOB.js"),
+  "cds-grid": () => import("./chunks/grid-6F73WRNG.js"),
+  "cds-header": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-header-global-action": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-header-menu": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-header-menu-button": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-header-menu-item": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-header-name": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-header-nav": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-header-nav-item": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-header-panel": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-header-side-nav-items": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-heading": () => import("./chunks/heading-HVM5IX6X.js"),
+  "cds-icon": () => import("./chunks/icon-6U4GZJ3F.js"),
+  "cds-icon-button": () => import("./chunks/icon-button-KFVSHU4K.js"),
+  "cds-icon-indicator": () => import("./chunks/icon-indicator-QYPE4FEV.js"),
+  "cds-inline-loading": () => import("./chunks/inline-loading-LAPCIXTU.js"),
+  "cds-inline-notification": () => import("./chunks/notification-2F7XCZGW.js"),
+  "cds-layer": () => import("./chunks/layer-SBDSKLKE.js"),
+  "cds-link": () => import("./chunks/link-FSIPKGMT.js"),
+  "cds-list-item": () => import("./chunks/list-THT45XMZ.js"),
+  "cds-loading": () => import("./chunks/loading-AK3FSK5Y.js"),
+  "cds-menu": () => import("./chunks/menu-KSEZIFH4.js"),
+  "cds-menu-button": () => import("./chunks/menu-button-PXH7T572.js"),
+  "cds-menu-item": () => import("./chunks/menu-KSEZIFH4.js"),
+  "cds-menu-item-divider": () => import("./chunks/menu-KSEZIFH4.js"),
+  "cds-menu-item-group": () => import("./chunks/menu-KSEZIFH4.js"),
+  "cds-menu-item-radio-group": () => import("./chunks/menu-KSEZIFH4.js"),
+  "cds-menu-item-selectable": () => import("./chunks/menu-KSEZIFH4.js"),
+  "cds-modal": () => import("./chunks/modal-BZJKC4AL.js"),
+  "cds-modal-body": () => import("./chunks/modal-BZJKC4AL.js"),
+  "cds-modal-body-content": () => import("./chunks/modal-BZJKC4AL.js"),
+  "cds-modal-close-button": () => import("./chunks/modal-BZJKC4AL.js"),
+  "cds-modal-footer": () => import("./chunks/modal-BZJKC4AL.js"),
+  "cds-modal-footer-button": () => import("./chunks/modal-BZJKC4AL.js"),
+  "cds-modal-header": () => import("./chunks/modal-BZJKC4AL.js"),
+  "cds-modal-heading": () => import("./chunks/modal-BZJKC4AL.js"),
+  "cds-modal-label": () => import("./chunks/modal-BZJKC4AL.js"),
+  "cds-multi-select": () => import("./chunks/multi-select-QWXZZBSX.js"),
+  "cds-multi-select-item": () => import("./chunks/multi-select-QWXZZBSX.js"),
+  "cds-number-input": () => import("./chunks/number-input-W7YGOKJQ.js"),
+  "cds-number-input-skeleton": () => import("./chunks/number-input-W7YGOKJQ.js"),
+  "cds-operational-tag": () => import("./chunks/tag-APKQYZAW.js"),
+  "cds-ordered-list": () => import("./chunks/list-THT45XMZ.js"),
+  "cds-overflow-menu": () => import("./chunks/overflow-menu-4ICZIOY2.js"),
+  "cds-overflow-menu-body": () => import("./chunks/overflow-menu-4ICZIOY2.js"),
+  "cds-overflow-menu-item": () => import("./chunks/overflow-menu-4ICZIOY2.js"),
+  "cds-page-header": () => import("./chunks/page-header-FMPT57Y6.js"),
+  "cds-page-header-breadcrumb": () => import("./chunks/page-header-FMPT57Y6.js"),
+  "cds-page-header-content": () => import("./chunks/page-header-FMPT57Y6.js"),
+  "cds-page-header-content-text": () => import("./chunks/page-header-FMPT57Y6.js"),
+  "cds-page-header-hero-image": () => import("./chunks/page-header-FMPT57Y6.js"),
+  "cds-page-header-tabs": () => import("./chunks/page-header-FMPT57Y6.js"),
+  "cds-pagination": () => import("./chunks/pagination-DQHWKNQ6.js"),
+  "cds-pagination-nav": () => import("./chunks/pagination-nav-RZUMDEIZ.js"),
+  "cds-password-input": () => import("./chunks/password-input-2UWQATC4.js"),
+  "cds-password-input-skeleton": () => import("./chunks/password-input-2UWQATC4.js"),
+  "cds-popover": () => import("./chunks/popover-BXEYGX53.js"),
+  "cds-popover-content": () => import("./chunks/popover-BXEYGX53.js"),
+  "cds-progress-bar": () => import("./chunks/progress-bar-YSV2DDZ3.js"),
+  "cds-progress-indicator": () => import("./chunks/progress-indicator-G5G4HKR4.js"),
+  "cds-progress-indicator-skeleton": () => import("./chunks/progress-indicator-G5G4HKR4.js"),
+  "cds-progress-step": () => import("./chunks/progress-indicator-G5G4HKR4.js"),
+  "cds-progress-step-skeleton": () => import("./chunks/progress-indicator-G5G4HKR4.js"),
+  "cds-radio-button": () => import("./chunks/radio-button-R3FPM7DA.js"),
+  "cds-radio-button-group": () => import("./chunks/radio-button-R3FPM7DA.js"),
+  "cds-radio-button-skeleton": () => import("./chunks/radio-button-R3FPM7DA.js"),
+  "cds-radio-tile": () => import("./chunks/tile-2HRIK5G3.js"),
+  "cds-search": () => import("./chunks/search-LMVIKAH7.js"),
+  "cds-select": () => import("./chunks/select-2KPXSQMD.js"),
+  "cds-select-item": () => import("./chunks/select-2KPXSQMD.js"),
+  "cds-select-item-group": () => import("./chunks/select-2KPXSQMD.js"),
+  "cds-select-skeleton": () => import("./chunks/select-2KPXSQMD.js"),
+  "cds-selectable-tag": () => import("./chunks/tag-APKQYZAW.js"),
+  "cds-selectable-tile": () => import("./chunks/tile-2HRIK5G3.js"),
+  "cds-shape-indicator": () => import("./chunks/shape-indicator-W5S2UF7V.js"),
+  "cds-side-nav": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-side-nav-divider": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-side-nav-items": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-side-nav-link": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-side-nav-menu": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-side-nav-menu-item": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-side-panel": () => import("./chunks/side-panel-WEQMIBH5.js"),
   "cds-skeleton-icon": () => import("./chunks/skeleton-icon-BAJFTOAO.js"),
-  "cds-skeleton-placeholder": () => import("./chunks/skeleton-placeholder-GLAOEGK6.js"),
-  "cds-skeleton-text": () => import("./chunks/skeleton-text-JGG4LWJB.js"),
-  "cds-skip-to-content": () => import("./chunks/skip-to-content-TMBPGDUH.js"),
-  "cds-slider": () => import("./chunks/slider-U2HFJSDQ.js"),
-  "cds-slider-input": () => import("./chunks/slider-U2HFJSDQ.js"),
-  "cds-slider-skeleton": () => import("./chunks/slider-U2HFJSDQ.js"),
-  "cds-slug": () => import("./chunks/slug-NVWPRW6X.js"),
-  "cds-slug-action-button": () => import("./chunks/slug-NVWPRW6X.js"),
-  "cds-stack": () => import("./chunks/stack-TB3COKGA.js"),
-  "cds-structured-list": () => import("./chunks/structured-list-QH5LFT5W.js"),
-  "cds-structured-list-body": () => import("./chunks/structured-list-QH5LFT5W.js"),
-  "cds-structured-list-cell": () => import("./chunks/structured-list-QH5LFT5W.js"),
-  "cds-structured-list-head": () => import("./chunks/structured-list-QH5LFT5W.js"),
-  "cds-structured-list-header-cell": () => import("./chunks/structured-list-QH5LFT5W.js"),
-  "cds-structured-list-header-cell-skeleton": () => import("./chunks/structured-list-QH5LFT5W.js"),
-  "cds-structured-list-header-row": () => import("./chunks/structured-list-QH5LFT5W.js"),
-  "cds-structured-list-row": () => import("./chunks/structured-list-QH5LFT5W.js"),
-  "cds-switcher": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-switcher-divider": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-switcher-item": () => import("./chunks/ui-shell-JSHHNJB7.js"),
-  "cds-tab": () => import("./chunks/tabs-ZDXLIO2G.js"),
-  "cds-tab-skeleton": () => import("./chunks/tabs-ZDXLIO2G.js"),
-  "cds-table-batch-actions": () => import("./chunks/data-table-OS4A3UHV.js"),
-  "cds-table-body": () => import("./chunks/data-table-OS4A3UHV.js"),
-  "cds-table-cell": () => import("./chunks/data-table-OS4A3UHV.js"),
-  "cds-table-cell-content": () => import("./chunks/data-table-OS4A3UHV.js"),
-  "cds-table": () => import("./chunks/data-table-OS4A3UHV.js"),
-  "cds-table-expanded-row": () => import("./chunks/data-table-OS4A3UHV.js"),
-  "cds-table-head": () => import("./chunks/data-table-OS4A3UHV.js"),
-  "cds-table-header-cell": () => import("./chunks/data-table-OS4A3UHV.js"),
-  "cds-table-header-description": () => import("./chunks/data-table-OS4A3UHV.js"),
-  "cds-table-header-row": () => import("./chunks/data-table-OS4A3UHV.js"),
-  "cds-table-header-title": () => import("./chunks/data-table-OS4A3UHV.js"),
-  "cds-table-row": () => import("./chunks/data-table-OS4A3UHV.js"),
-  "cds-table-skeleton": () => import("./chunks/data-table-OS4A3UHV.js"),
-  "cds-table-toolbar": () => import("./chunks/data-table-OS4A3UHV.js"),
-  "cds-table-toolbar-content": () => import("./chunks/data-table-OS4A3UHV.js"),
-  "cds-table-toolbar-search": () => import("./chunks/data-table-OS4A3UHV.js"),
-  "cds-tabs": () => import("./chunks/tabs-ZDXLIO2G.js"),
-  "cds-tabs-skeleton": () => import("./chunks/tabs-ZDXLIO2G.js"),
-  "cds-tag": () => import("./chunks/tag-MR4LGHP4.js"),
-  "cds-tag-skeleton": () => import("./chunks/tag-MR4LGHP4.js"),
-  "cds-tearsheet": () => import("./chunks/tearsheet-VK77F6SG.js"),
-  "cds-text-input": () => import("./chunks/text-input-M4446D4L.js"),
-  "cds-text-input-skeleton": () => import("./chunks/text-input-M4446D4L.js"),
-  "cds-textarea": () => import("./chunks/textarea-42LRGUNO.js"),
-  "cds-textarea-skeleton": () => import("./chunks/textarea-42LRGUNO.js"),
-  "cds-tile": () => import("./chunks/tile-4YGVTVDW.js"),
-  "cds-tile-above-the-fold-content": () => import("./chunks/tile-4YGVTVDW.js"),
-  "cds-tile-below-the-fold-content": () => import("./chunks/tile-4YGVTVDW.js"),
-  "cds-tile-group": () => import("./chunks/tile-4YGVTVDW.js"),
-  "cds-time-picker": () => import("./chunks/time-picker-LC4GCUCV.js"),
-  "cds-time-picker-select": () => import("./chunks/time-picker-LC4GCUCV.js"),
-  "cds-toast-notification": () => import("./chunks/notification-G6OZM5GQ.js"),
-  "cds-toggle": () => import("./chunks/toggle-4UWM3LNA.js"),
-  "cds-toggle-skeleton": () => import("./chunks/toggle-4UWM3LNA.js"),
-  "cds-toggletip": () => import("./chunks/toggle-tip-WPLRQBTN.js"),
-  "cds-tooltip": () => import("./chunks/tooltip-5JB36SJK.js"),
-  "cds-tooltip-content": () => import("./chunks/tooltip-5JB36SJK.js"),
-  "cds-tree-node": () => import("./chunks/tree-view-WR5ISDO7.js"),
-  "cds-tree-view": () => import("./chunks/tree-view-WR5ISDO7.js"),
-  "cds-unordered-list": () => import("./chunks/list-LA4DQJUM.js")
+  "cds-skeleton-placeholder": () => import("./chunks/skeleton-placeholder-HVDWR6DS.js"),
+  "cds-skeleton-text": () => import("./chunks/skeleton-text-23HXVW3A.js"),
+  "cds-skip-to-content": () => import("./chunks/skip-to-content-JSXYJI2F.js"),
+  "cds-slider": () => import("./chunks/slider-G7ZBR5GO.js"),
+  "cds-slider-input": () => import("./chunks/slider-G7ZBR5GO.js"),
+  "cds-slider-skeleton": () => import("./chunks/slider-G7ZBR5GO.js"),
+  "cds-slug": () => import("./chunks/slug-GO3X3ES3.js"),
+  "cds-slug-action-button": () => import("./chunks/slug-GO3X3ES3.js"),
+  "cds-stack": () => import("./chunks/stack-2YKDPWSA.js"),
+  "cds-structured-list": () => import("./chunks/structured-list-APBQ42NU.js"),
+  "cds-structured-list-body": () => import("./chunks/structured-list-APBQ42NU.js"),
+  "cds-structured-list-cell": () => import("./chunks/structured-list-APBQ42NU.js"),
+  "cds-structured-list-head": () => import("./chunks/structured-list-APBQ42NU.js"),
+  "cds-structured-list-header-cell": () => import("./chunks/structured-list-APBQ42NU.js"),
+  "cds-structured-list-header-cell-skeleton": () => import("./chunks/structured-list-APBQ42NU.js"),
+  "cds-structured-list-header-row": () => import("./chunks/structured-list-APBQ42NU.js"),
+  "cds-structured-list-row": () => import("./chunks/structured-list-APBQ42NU.js"),
+  "cds-switcher": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-switcher-divider": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-switcher-item": () => import("./chunks/ui-shell-FTV4RIXD.js"),
+  "cds-tab": () => import("./chunks/tabs-JPMADR6A.js"),
+  "cds-tab-skeleton": () => import("./chunks/tabs-JPMADR6A.js"),
+  "cds-table-batch-actions": () => import("./chunks/data-table-MH6OQK2E.js"),
+  "cds-table-body": () => import("./chunks/data-table-MH6OQK2E.js"),
+  "cds-table-cell": () => import("./chunks/data-table-MH6OQK2E.js"),
+  "cds-table-cell-content": () => import("./chunks/data-table-MH6OQK2E.js"),
+  "cds-table": () => import("./chunks/data-table-MH6OQK2E.js"),
+  "cds-table-expanded-row": () => import("./chunks/data-table-MH6OQK2E.js"),
+  "cds-table-head": () => import("./chunks/data-table-MH6OQK2E.js"),
+  "cds-table-header-cell": () => import("./chunks/data-table-MH6OQK2E.js"),
+  "cds-table-header-description": () => import("./chunks/data-table-MH6OQK2E.js"),
+  "cds-table-header-row": () => import("./chunks/data-table-MH6OQK2E.js"),
+  "cds-table-header-title": () => import("./chunks/data-table-MH6OQK2E.js"),
+  "cds-table-row": () => import("./chunks/data-table-MH6OQK2E.js"),
+  "cds-table-skeleton": () => import("./chunks/data-table-MH6OQK2E.js"),
+  "cds-table-toolbar": () => import("./chunks/data-table-MH6OQK2E.js"),
+  "cds-table-toolbar-content": () => import("./chunks/data-table-MH6OQK2E.js"),
+  "cds-table-toolbar-search": () => import("./chunks/data-table-MH6OQK2E.js"),
+  "cds-tabs": () => import("./chunks/tabs-JPMADR6A.js"),
+  "cds-tabs-skeleton": () => import("./chunks/tabs-JPMADR6A.js"),
+  "cds-tag": () => import("./chunks/tag-APKQYZAW.js"),
+  "cds-tag-skeleton": () => import("./chunks/tag-APKQYZAW.js"),
+  "cds-tearsheet": () => import("./chunks/tearsheet-PSP4ULFK.js"),
+  "cds-text-input": () => import("./chunks/text-input-HOWHTNY7.js"),
+  "cds-text-input-skeleton": () => import("./chunks/text-input-HOWHTNY7.js"),
+  "cds-textarea": () => import("./chunks/textarea-IBPUY4LD.js"),
+  "cds-textarea-skeleton": () => import("./chunks/textarea-IBPUY4LD.js"),
+  "cds-tile": () => import("./chunks/tile-2HRIK5G3.js"),
+  "cds-tile-above-the-fold-content": () => import("./chunks/tile-2HRIK5G3.js"),
+  "cds-tile-below-the-fold-content": () => import("./chunks/tile-2HRIK5G3.js"),
+  "cds-tile-group": () => import("./chunks/tile-2HRIK5G3.js"),
+  "cds-time-picker": () => import("./chunks/time-picker-AOQHKT3I.js"),
+  "cds-time-picker-select": () => import("./chunks/time-picker-AOQHKT3I.js"),
+  "cds-toast-notification": () => import("./chunks/notification-2F7XCZGW.js"),
+  "cds-toggle": () => import("./chunks/toggle-LDE4223B.js"),
+  "cds-toggle-skeleton": () => import("./chunks/toggle-LDE4223B.js"),
+  "cds-toggletip": () => import("./chunks/toggle-tip-3KKDUK2W.js"),
+  "cds-tooltip": () => import("./chunks/tooltip-EGI7YSGN.js"),
+  "cds-tooltip-content": () => import("./chunks/tooltip-EGI7YSGN.js"),
+  "cds-tree-node": () => import("./chunks/tree-view-ZNQKUJFN.js"),
+  "cds-tree-view": () => import("./chunks/tree-view-ZNQKUJFN.js"),
+  "cds-unordered-list": () => import("./chunks/list-THT45XMZ.js")
 };
 
 // src/lib/_dynamic_loader_mapping_products.ts
 var productComponentImports = {
-  "c4p-about-modal": () => import("./chunks/about-modal-DXG5QQC5.js"),
-  "c4p-big-number": () => import("./chunks/big-number-AUGHTUCN.js"),
-  "c4p-big-number-skeleton": () => import("./chunks/big-number-AUGHTUCN.js"),
-  "c4p-checklist": () => import("./chunks/checklist-OXGTB6BJ.js"),
-  "c4p-checklist-chart": () => import("./chunks/checklist-OXGTB6BJ.js"),
-  "c4p-checklist-group": () => import("./chunks/checklist-OXGTB6BJ.js"),
-  "c4p-checklist-icon": () => import("./chunks/checklist-OXGTB6BJ.js"),
-  "c4p-checklist-item": () => import("./chunks/checklist-OXGTB6BJ.js"),
-  "c4p-coachmark": () => import("./chunks/coachmark-5SERGROR.js"),
-  "c4p-coachmark-beacon": () => import("./chunks/coachmark-beacon-Y64QK2EL.js"),
-  "c4p-coachmark-body": () => import("./chunks/coachmark-5SERGROR.js"),
-  "c4p-coachmark-header": () => import("./chunks/coachmark-5SERGROR.js"),
-  "c4p-coachmark-tagline": () => import("./chunks/coachmark-tagline-RNYU6DRV.js"),
-  "c4p-full-page-error": () => import("./chunks/full-page-error-VGXYHIWV.js"),
-  "c4p-guide-banner": () => import("./chunks/guide-banner-HKXKE5QI.js"),
-  "c4p-guide-banner-element": () => import("./chunks/guide-banner-HKXKE5QI.js"),
-  "c4p-interstitial-screen": () => import("./chunks/interstitial-screen-BNXKKM2N.js"),
-  "c4p-interstitial-screen-body": () => import("./chunks/interstitial-screen-BNXKKM2N.js"),
-  "c4p-interstitial-screen-body-item": () => import("./chunks/interstitial-screen-BNXKKM2N.js"),
-  "c4p-interstitial-screen-footer": () => import("./chunks/interstitial-screen-BNXKKM2N.js"),
-  "c4p-interstitial-screen-header": () => import("./chunks/interstitial-screen-BNXKKM2N.js"),
-  "c4p-notification": () => import("./chunks/notification-panel-TOFHJ5YC.js"),
-  "c4p-notification-footer": () => import("./chunks/notification-panel-TOFHJ5YC.js"),
-  "c4p-notification-panel": () => import("./chunks/notification-panel-TOFHJ5YC.js"),
-  "c4p-options-tile": () => import("./chunks/options-tile-GG5BFYWG.js"),
-  "c4p-page-header": () => import("./chunks/page-header-WHV3YVAQ.js"),
-  "c4p-page-header-breadcrumb": () => import("./chunks/page-header-WHV3YVAQ.js"),
-  "c4p-page-header-content": () => import("./chunks/page-header-WHV3YVAQ.js"),
-  "c4p-page-header-content-text": () => import("./chunks/page-header-WHV3YVAQ.js"),
-  "c4p-page-header-hero-image": () => import("./chunks/page-header-WHV3YVAQ.js"),
-  "c4p-page-header-scroller": () => import("./chunks/page-header-WHV3YVAQ.js"),
-  "c4p-page-header-tabs": () => import("./chunks/page-header-WHV3YVAQ.js"),
-  "c4p-page-header-title-breadcrumb": () => import("./chunks/page-header-WHV3YVAQ.js"),
-  "c4p-side-panel": () => import("./chunks/side-panel-WLKU5LK4.js"),
-  "c4p-tearsheet": () => import("./chunks/tearsheet-FM4BCZ2R.js"),
-  "c4p-truncated-text": () => import("./chunks/truncated-text-DBR7F4M6.js"),
-  "c4p-user-avatar": () => import("./chunks/user-avatar-3GX2SKZV.js")
+  "c4p-about-modal": () => import("./chunks/about-modal-WWH2S75W.js"),
+  "c4p-big-number": () => import("./chunks/big-number-BXKUTE5Y.js"),
+  "c4p-big-number-skeleton": () => import("./chunks/big-number-BXKUTE5Y.js"),
+  "c4p-checklist": () => import("./chunks/checklist-KPCRCKVU.js"),
+  "c4p-checklist-chart": () => import("./chunks/checklist-KPCRCKVU.js"),
+  "c4p-checklist-group": () => import("./chunks/checklist-KPCRCKVU.js"),
+  "c4p-checklist-icon": () => import("./chunks/checklist-KPCRCKVU.js"),
+  "c4p-checklist-item": () => import("./chunks/checklist-KPCRCKVU.js"),
+  "c4p-coachmark": () => import("./chunks/coachmark-SOPF44BO.js"),
+  "c4p-coachmark-beacon": () => import("./chunks/coachmark-beacon-HOG5BMHM.js"),
+  "c4p-coachmark-body": () => import("./chunks/coachmark-SOPF44BO.js"),
+  "c4p-coachmark-header": () => import("./chunks/coachmark-SOPF44BO.js"),
+  "c4p-coachmark-tagline": () => import("./chunks/coachmark-tagline-4363UVOB.js"),
+  "c4p-full-page-error": () => import("./chunks/full-page-error-DZ5GUW67.js"),
+  "c4p-guide-banner": () => import("./chunks/guide-banner-OO2OPQP6.js"),
+  "c4p-guide-banner-element": () => import("./chunks/guide-banner-OO2OPQP6.js"),
+  "c4p-interstitial-screen": () => import("./chunks/interstitial-screen-O2GMKY5G.js"),
+  "c4p-interstitial-screen-body": () => import("./chunks/interstitial-screen-O2GMKY5G.js"),
+  "c4p-interstitial-screen-body-item": () => import("./chunks/interstitial-screen-O2GMKY5G.js"),
+  "c4p-interstitial-screen-footer": () => import("./chunks/interstitial-screen-O2GMKY5G.js"),
+  "c4p-interstitial-screen-header": () => import("./chunks/interstitial-screen-O2GMKY5G.js"),
+  "c4p-notification": () => import("./chunks/notification-panel-HTIXKPHE.js"),
+  "c4p-notification-footer": () => import("./chunks/notification-panel-HTIXKPHE.js"),
+  "c4p-notification-panel": () => import("./chunks/notification-panel-HTIXKPHE.js"),
+  "c4p-options-tile": () => import("./chunks/options-tile-CJVNA6CY.js"),
+  "c4p-page-header": () => import("./chunks/page-header-6S7W4PAF.js"),
+  "c4p-page-header-breadcrumb": () => import("./chunks/page-header-6S7W4PAF.js"),
+  "c4p-page-header-content": () => import("./chunks/page-header-6S7W4PAF.js"),
+  "c4p-page-header-content-text": () => import("./chunks/page-header-6S7W4PAF.js"),
+  "c4p-page-header-hero-image": () => import("./chunks/page-header-6S7W4PAF.js"),
+  "c4p-page-header-scroller": () => import("./chunks/page-header-6S7W4PAF.js"),
+  "c4p-page-header-tabs": () => import("./chunks/page-header-6S7W4PAF.js"),
+  "c4p-page-header-title-breadcrumb": () => import("./chunks/page-header-6S7W4PAF.js"),
+  "c4p-side-panel": () => import("./chunks/side-panel-UXHGQKRA.js"),
+  "c4p-tearsheet": () => import("./chunks/tearsheet-LNAKKF4V.js"),
+  "c4p-truncated-text": () => import("./chunks/truncated-text-JZLHJMQ5.js"),
+  "c4p-user-avatar": () => import("./chunks/user-avatar-UCJRUJJV.js")
+};
+
+// src/lib/form_associated.ts
+var formSpecs = {
+  "cds-checkbox": {
+    baseTag: "cds-checkbox",
+    formTag: "cds-checkbox-form",
+    mode: "boolean",
+    checkedProp: "checked",
+    events: ["cds-checkbox-changed"]
+  },
+  "cds-toggle": {
+    baseTag: "cds-toggle",
+    formTag: "cds-toggle-form",
+    mode: "boolean",
+    checkedProp: "toggled",
+    events: ["cds-toggle-changed"]
+  },
+  "cds-radio-button-group": {
+    baseTag: "cds-radio-button-group",
+    formTag: "cds-radio-button-group-form",
+    mode: "value",
+    events: ["cds-radio-button-group-changed"]
+  },
+  "cds-number-input": {
+    baseTag: "cds-number-input",
+    formTag: "cds-number-input-form",
+    mode: "value",
+    events: ["cds-number-input"]
+  },
+  "cds-fluid-number-input": {
+    baseTag: "cds-fluid-number-input",
+    formTag: "cds-fluid-number-input-form",
+    mode: "value",
+    events: ["cds-number-input"]
+  },
+  "cds-text-input": {
+    baseTag: "cds-text-input",
+    formTag: "cds-text-input-form",
+    mode: "value"
+  },
+  "cds-fluid-text-input": {
+    baseTag: "cds-fluid-text-input",
+    formTag: "cds-fluid-text-input-form",
+    mode: "value"
+  },
+  "cds-password-input": {
+    baseTag: "cds-password-input",
+    formTag: "cds-password-input-form",
+    mode: "value"
+  },
+  "cds-textarea": {
+    baseTag: "cds-textarea",
+    formTag: "cds-textarea-form",
+    mode: "value"
+  },
+  "cds-fluid-textarea": {
+    baseTag: "cds-fluid-textarea",
+    formTag: "cds-fluid-textarea-form",
+    mode: "value"
+  },
+  "cds-search": {
+    baseTag: "cds-search",
+    formTag: "cds-search-form",
+    mode: "value",
+    events: ["cds-search-input"]
+  },
+  "cds-fluid-search": {
+    baseTag: "cds-fluid-search",
+    formTag: "cds-fluid-search-form",
+    mode: "value",
+    events: ["cds-search-input"]
+  },
+  "cds-select": {
+    baseTag: "cds-select",
+    formTag: "cds-select-form",
+    mode: "value",
+    events: ["cds-select-selected"]
+  },
+  "cds-fluid-select": {
+    baseTag: "cds-fluid-select",
+    formTag: "cds-fluid-select-form",
+    mode: "value",
+    events: ["cds-select-selected"]
+  },
+  "cds-dropdown": {
+    baseTag: "cds-dropdown",
+    formTag: "cds-dropdown-form",
+    mode: "value",
+    events: ["cds-dropdown-selected"]
+  },
+  "cds-combo-box": {
+    baseTag: "cds-combo-box",
+    formTag: "cds-combo-box-form",
+    mode: "value",
+    events: ["cds-combo-box-selected"]
+  },
+  "cds-multi-select": {
+    baseTag: "cds-multi-select",
+    formTag: "cds-multi-select-form",
+    mode: "json-list",
+    events: ["cds-multi-select-selected"],
+    parseEventValue: (event, el) => {
+      const detail = event.detail || {};
+      if (Array.isArray(detail.selectedItems)) {
+        const values = detail.selectedItems.map((item) => {
+          var _a;
+          return (_a = item == null ? void 0 : item.value) != null ? _a : item;
+        });
+        return JSON.stringify(values);
+      }
+      return JSON.stringify(parseMultiSelectValues(el));
+    }
+  },
+  "cds-date-picker": {
+    baseTag: "cds-date-picker",
+    formTag: "cds-date-picker-form",
+    mode: "value",
+    events: ["cds-date-picker-changed"]
+  },
+  "cds-time-picker": {
+    baseTag: "cds-time-picker",
+    formTag: "cds-time-picker-form",
+    mode: "value"
+  },
+  "cds-slider": {
+    baseTag: "cds-slider",
+    formTag: "cds-slider-form",
+    mode: "value",
+    events: ["cds-slider-changed"]
+  },
+  "cds-file-uploader": {
+    baseTag: "cds-file-uploader",
+    formTag: "cds-file-uploader-form",
+    mode: "json-list",
+    events: ["cds-file-uploader-button-changed", "cds-file-uploader-drop-container-changed"],
+    parseEventValue: (event) => {
+      const detail = event.detail || {};
+      const files = Array.isArray(detail.addedFiles) ? detail.addedFiles : [];
+      return JSON.stringify(parseFileNames2(files));
+    }
+  }
+};
+var importers = {
+  "cds-checkbox": () => import("./chunks/checkbox-DTZHC277.js"),
+  "cds-toggle": () => import("./chunks/toggle-JSBYOPYW.js"),
+  "cds-radio-button-group": () => import("./chunks/radio-button-group-GCZAF4JV.js"),
+  "cds-number-input": () => import("./chunks/number-input-TEE2JY6D.js"),
+  "cds-fluid-number-input": () => import("./chunks/fluid-number-input-PKBAM6JH.js"),
+  "cds-text-input": () => import("./chunks/text-input-EEEL3FG6.js"),
+  "cds-fluid-text-input": () => import("./chunks/fluid-text-input-L7TYJKV3.js"),
+  "cds-password-input": () => import("./chunks/password-input-2LI7XUW2.js"),
+  "cds-textarea": () => import("./chunks/textarea-AB3TYOMW.js"),
+  "cds-fluid-textarea": () => import("./chunks/fluid-textarea-6LZRL652.js"),
+  "cds-search": () => import("./chunks/search-7MMQN535.js"),
+  "cds-fluid-search": () => import("./chunks/fluid-search-W2HSR4H6.js"),
+  "cds-select": () => import("./chunks/select-IWALEUHS.js"),
+  "cds-fluid-select": () => import("./chunks/fluid-select-H7J4SSNI.js"),
+  "cds-dropdown": () => import("./chunks/dropdown-5YE57H5D.js"),
+  "cds-combo-box": () => import("./chunks/combo-box-WSOTJFE4.js"),
+  "cds-multi-select": () => import("./chunks/multi-select-HJQJ2PB7.js"),
+  "cds-date-picker": () => import("./chunks/date-picker-B4HIGEEK.js"),
+  "cds-time-picker": () => import("./chunks/time-picker-IX4JSJFB.js"),
+  "cds-slider": () => import("./chunks/slider-THJH7BXB.js"),
+  "cds-file-uploader": () => import("./chunks/file-uploader-64SAZ2WM.js")
+};
+var resolved = /* @__PURE__ */ new Set();
+var parseFileNames2 = (files) => {
+  return Array.from(files || []).map((file) => {
+    if (file && typeof file === "object" && "name" in file)
+      return file.name;
+    return String(file != null ? file : "");
+  });
+};
+var parseMultiSelectValues = (el) => {
+  const items = Array.from(el.querySelectorAll("cds-multi-select-item[selected]"));
+  if (items.length > 0) {
+    return items.map((item) => {
+      var _a, _b, _c;
+      return (_c = (_b = item == null ? void 0 : item.value) != null ? _b : (_a = item == null ? void 0 : item.getAttribute) == null ? void 0 : _a.call(item, "value")) != null ? _c : "";
+    }).filter(Boolean);
+  }
+  const rawValue = el.value;
+  if (typeof rawValue === "string" && rawValue.length > 0) {
+    return rawValue.split(",").map((value) => value.trim()).filter(Boolean);
+  }
+  if (Array.isArray(rawValue)) {
+    return rawValue.map((value) => String(value));
+  }
+  return [];
+};
+var toFormValue = (value) => {
+  if (Array.isArray(value))
+    return JSON.stringify(value);
+  if (value === null || typeof value === "undefined")
+    return "";
+  if (typeof value === "boolean")
+    return value ? "true" : "false";
+  return String(value);
+};
+var computeFormValue = (el, spec) => {
+  if (spec.mode === "boolean") {
+    const prop2 = spec.checkedProp || "checked";
+    return el[prop2] ? "true" : "false";
+  }
+  if (spec.mode === "json-list") {
+    return JSON.stringify(parseMultiSelectValues(el));
+  }
+  const prop = spec.valueProp || "value";
+  return toFormValue(el[prop]);
+};
+var normalizeTag = (tagName) => {
+  const lower = tagName.toLowerCase();
+  if (lower.endsWith("-form")) {
+    return { baseTag: lower.slice(0, -5), formTag: lower };
+  }
+  return { baseTag: lower, formTag: `${lower}-form` };
+};
+var emitNativeChange = (el) => {
+  const inputEvent = new Event("input", { bubbles: true, composed: true });
+  inputEvent.__grapheneSynthetic = true;
+  el.dispatchEvent(inputEvent);
+  const changeEvent = new Event("change", { bubbles: true, composed: true });
+  changeEvent.__grapheneSynthetic = true;
+  el.dispatchEvent(changeEvent);
+};
+var createFormAssociatedClass = (Base, spec) => {
+  class FormAssociatedElement extends Base {
+    constructor(...args) {
+      super(...args);
+      this._internals = null;
+      this._eventValue = null;
+      this._eventValueSet = false;
+      this._changeHandler = null;
+      this._boundEvents = [];
+      this._internals = this._attachInternals();
+    }
+    connectedCallback() {
+      if (super.connectedCallback) {
+        super.connectedCallback();
+      }
+      this._bindEvents();
+      this._syncFormValue();
+    }
+    disconnectedCallback() {
+      this._unbindEvents();
+      if (super.disconnectedCallback) {
+        super.disconnectedCallback();
+      }
+    }
+    updated(changedProperties) {
+      if (super.updated) {
+        super.updated(changedProperties);
+      }
+      if (this._shouldSync(changedProperties)) {
+        this._syncFormValue();
+      }
+    }
+    formDisabledCallback(disabled) {
+      if ("disabled" in this) {
+        this.disabled = disabled;
+      }
+    }
+    formResetCallback() {
+      this._resetFormValue();
+      this._syncFormValue();
+    }
+    formStateRestoreCallback(state) {
+      this._restoreFormValue(state);
+      this._syncFormValue();
+    }
+    get form() {
+      return this._internals && this._internals.form || this.closest("form");
+    }
+    _attachInternals() {
+      if (typeof this.attachInternals !== "function")
+        return null;
+      try {
+        return this.attachInternals();
+      } catch (_error) {
+        return null;
+      }
+    }
+    _shouldSync(changed) {
+      if (!changed)
+        return true;
+      if (spec.mode === "boolean") {
+        const checkedProp = spec.checkedProp || "checked";
+        return changed.has(checkedProp) || changed.has("checked") || changed.has("toggled");
+      }
+      const valueProp = spec.valueProp || "value";
+      return changed.has(valueProp) || changed.has("value");
+    }
+    _resolveEvents() {
+      const override = this.getAttribute("form-event");
+      if (override && override.trim().length > 0) {
+        return override.split(/[,\s]+/).map((event) => event.trim()).filter((event) => event.length > 0);
+      }
+      return spec.events || [];
+    }
+    _bindEvents() {
+      const events = this._resolveEvents();
+      if (events.length === 0)
+        return;
+      const handler = (event) => {
+        if (event.isTrusted === false && event.__grapheneSynthetic) {
+          return;
+        }
+        if (spec.parseEventValue) {
+          this._eventValue = spec.parseEventValue(event, this);
+          this._eventValueSet = true;
+        }
+        this._syncFormValue();
+        emitNativeChange(this);
+      };
+      this._changeHandler = handler;
+      this._boundEvents = events;
+      events.forEach((eventName) => this.addEventListener(eventName, handler));
+    }
+    _unbindEvents() {
+      if (!this._changeHandler)
+        return;
+      this._boundEvents.forEach(
+        (eventName) => this.removeEventListener(eventName, this._changeHandler)
+      );
+      this._boundEvents = [];
+      this._changeHandler = null;
+    }
+    _syncFormValue() {
+      var _a;
+      if (!this._internals || typeof this._internals.setFormValue !== "function")
+        return;
+      let value;
+      if (this._eventValueSet) {
+        value = (_a = this._eventValue) != null ? _a : "";
+        this._eventValueSet = false;
+      } else {
+        value = computeFormValue(this, spec);
+      }
+      this._internals.setFormValue(value);
+    }
+    _resetFormValue() {
+      if (spec.mode === "boolean") {
+        const prop = spec.checkedProp || "checked";
+        this[prop] = false;
+      } else {
+        const prop = spec.valueProp || "value";
+        if (prop in this) {
+          this[prop] = "";
+        }
+      }
+    }
+    _restoreFormValue(state) {
+      if (spec.mode === "boolean") {
+        const prop = spec.checkedProp || "checked";
+        this[prop] = state === "true" || state === true;
+      } else {
+        const prop = spec.valueProp || "value";
+        if (prop in this) {
+          this[prop] = state == null ? "" : String(state);
+        }
+      }
+    }
+  }
+  FormAssociatedElement.formAssociated = true;
+  FormAssociatedElement.shadowRootOptions = __spreadProps(__spreadValues({}, Base.shadowRootOptions), {
+    delegatesFocus: true
+  });
+  if (!Object.getOwnPropertyDescriptor(Base.prototype, "name")) {
+    Object.defineProperty(FormAssociatedElement.prototype, "name", {
+      configurable: true,
+      enumerable: true,
+      get() {
+        return this.getAttribute("name") || "";
+      },
+      set(value) {
+        if (value === null || value === void 0 || value === "") {
+          this.removeAttribute("name");
+        } else {
+          this.setAttribute("name", String(value));
+        }
+      }
+    });
+  }
+  return FormAssociatedElement;
+};
+var ensureFormAssociatedTag = async (tagName) => {
+  const { baseTag, formTag } = normalizeTag(tagName);
+  const spec = formSpecs[baseTag];
+  if (!spec)
+    return;
+  if (customElements.get(formTag)) {
+    resolved.add(formTag);
+    return;
+  }
+  if (resolved.has(formTag))
+    return;
+  resolved.add(formTag);
+  const importer = importers[baseTag];
+  if (!importer)
+    return;
+  const module = await importer();
+  const Base = module && (module.default || module);
+  if (!Base)
+    return;
+  if (!customElements.get(formTag)) {
+    const FormElement = createFormAssociatedClass(Base, spec);
+    customElements.define(formTag, FormElement);
+  }
 };
 
 // src/lib/dynamic_loader.ts
 var componentImports2 = __spreadValues(__spreadValues({}, componentImports), productComponentImports);
-var componentNames = Object.keys(componentImports2);
+var baseComponentNames = Object.keys(componentImports2);
+var formComponentNames = baseComponentNames.map((name) => `${name}-form`);
+var componentNames = [...baseComponentNames, ...formComponentNames];
 var componentSelector = componentNames.join(",");
 var componentSet = new Set(componentNames);
 var loadedComponents = {};
@@ -1246,27 +1658,39 @@ var notificationTags = /* @__PURE__ */ new Set(["c4p-notification"]);
 var patchedNumberInputs = /* @__PURE__ */ new Set();
 var definePatchFlag = "__graphenePatchedDefine";
 var originalDefine = customElements.define.bind(customElements);
+function normalizeTagName(tagName) {
+  const lower = tagName.toLowerCase();
+  if (lower.endsWith("-form")) {
+    return { tag: lower, base: lower.slice(0, -5), isForm: true };
+  }
+  return { tag: lower, base: lower, isForm: false };
+}
 function isComponentTag(tagName) {
   return componentSet.has(tagName.toLowerCase());
 }
 function importerForTag(tagName) {
-  return componentImports2[tagName.toLowerCase()];
+  const { base } = normalizeTagName(tagName);
+  return componentImports2[base];
 }
 function loadComponentByTag(tagName) {
-  const componentName = tagName.toLowerCase();
-  if (!loadedComponents[componentName]) {
-    const importer = importerForTag(componentName);
+  const { tag, base, isForm } = normalizeTagName(tagName);
+  if (!loadedComponents[base]) {
+    const importer = importerForTag(base);
     if (!importer) {
-      console.warn(`No importer found for component: ${componentName}`);
+      console.warn(`No importer found for component: ${base}`);
       return void 0;
     }
-    loadedComponents[componentName] = importer().then((module) => module).catch((err) => {
-      console.error(`Error loading ${componentName}:`, err);
-      delete loadedComponents[componentName];
+    loadedComponents[base] = importer().then((module) => module).catch((err) => {
+      console.error(`Error loading ${base}:`, err);
+      delete loadedComponents[base];
       throw err;
     });
   }
-  return loadedComponents[componentName];
+  const loadPromise = loadedComponents[base];
+  if (isForm) {
+    loadPromise.then(() => ensureFormAssociatedTag(tag));
+  }
+  return loadPromise;
 }
 function readNotificationTimestamp(el) {
   if (!el.hasAttribute("timestamp")) {
@@ -1302,7 +1726,8 @@ function normalizeNotificationTimestamp(el) {
 }
 function normalizeNumberInputStep(el) {
   const tagName = el.tagName.toLowerCase();
-  if (!numberInputTags.has(tagName)) {
+  const { base } = normalizeTagName(tagName);
+  if (!numberInputTags.has(base)) {
     return;
   }
   const step = el.getAttribute("step");
@@ -1402,7 +1827,8 @@ function scanAndLoad(root) {
   if (root instanceof Element && isComponentTag(root.tagName)) {
     normalizeNotificationTimestamp(root);
     normalizeNumberInputStep(root);
-    ensureNumberInputPatched(root.tagName.toLowerCase());
+    const { base } = normalizeTagName(root.tagName);
+    ensureNumberInputPatched(base);
     loadComponentByTag(root.tagName);
   }
   if (!componentSelector || !("querySelectorAll" in root)) {
@@ -1411,7 +1837,8 @@ function scanAndLoad(root) {
   root.querySelectorAll(componentSelector).forEach((el) => {
     normalizeNotificationTimestamp(el);
     normalizeNumberInputStep(el);
-    ensureNumberInputPatched(el.tagName.toLowerCase());
+    const { base } = normalizeTagName(el.tagName);
+    ensureNumberInputPatched(base);
     loadComponentByTag(el.tagName);
   });
 }

@@ -44,13 +44,17 @@ defmodule Graphene.CarbonComponents.StructuredList do
       assigns
       |> assign(:selected_set, MapSet.new(Enum.map(assigns.selected_ids || [], &to_string/1)))
 
+    component_attrs =
+      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, [
+        :condensed,
+        :flush,
+        :selection_name
+      ])
+
+    assigns = assign(assigns, :component_attrs, component_attrs)
+
     ~H"""
-    <CoreComponents.structured_list
-      condensed={@condensed}
-      flush={@flush}
-      selection_name={@selection_name}
-      {@rest}
-    >
+    <CoreComponents.structured_list {@component_attrs} {@rest}>
       <CoreComponents.structured_list_head>
         <CoreComponents.structured_list_header_row selection_name={@selection_name}>
           <CoreComponents.structured_list_header_cell :for={col <- @col}>

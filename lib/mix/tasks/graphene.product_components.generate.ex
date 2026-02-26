@@ -221,7 +221,12 @@ if Mix.env() == :dev do
         |> Kernel.<>(inner_block_slot(component.slots, extra_slots))
 
       patterns = Map.get(recipe, :patterns, [])
-      prelude = merge_prelude(assign_defaults_prelude(component.attrs), Map.get(recipe, :prelude))
+      attrs_prelude = auto_attrs_prelude(Map.get(recipe, :auto_attrs), component)
+
+      prelude =
+        assign_defaults_prelude(component.attrs)
+        |> merge_prelude(Map.get(recipe, :prelude))
+        |> merge_prelude(attrs_prelude)
       body = Map.get(recipe, :body, "")
 
       clauses =
@@ -265,6 +270,46 @@ if Mix.env() == :dev do
 
           "    assigns =\n      assigns\n" <> assigns <> "\n"
       end
+    end
+
+    defp auto_attrs_prelude(nil, _component), do: nil
+
+    defp auto_attrs_prelude(:component, component) do
+      keys = component_attr_keys(component)
+
+      "    component_attrs =\n" <>
+        "      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, #{inspect(keys)})\n" <>
+        "    assigns = assign(assigns, :component_attrs, component_attrs)\n"
+    end
+
+    defp auto_attrs_prelude(:html, component) do
+      bindings = component_attr_bindings(component)
+
+      "    component_attrs =\n" <>
+        "      Graphene.CodeGen.ComponentAttrs.build_html_attrs(assigns, #{inspect(bindings)})\n" <>
+        "    assigns = assign(assigns, :component_attrs, component_attrs)\n"
+    end
+
+    defp auto_attrs_prelude(:form, component) do
+      keys = component_attr_keys(component) ++ [:field, :form, :form_event]
+
+      "    component_attrs =\n" <>
+        "      Graphene.CodeGen.ComponentAttrs.build_component_attrs(assigns, #{inspect(keys)})\n" <>
+        "    assigns = assign(assigns, :component_attrs, component_attrs)\n"
+    end
+
+    defp auto_attrs_prelude(_mode, _component), do: nil
+
+    defp component_attr_keys(component) do
+      Enum.map(component.attrs, &attr_atom/1)
+    end
+
+    defp component_attr_bindings(component) do
+      Enum.map(component.attrs, fn attr -> {attr.htmlname, attr_atom(attr)} end)
+    end
+
+    defp attr_atom(attr) do
+      Code.string_to_quoted!(attr.atomname)
     end
 
     defp merge_prelude(nil, nil), do: nil
