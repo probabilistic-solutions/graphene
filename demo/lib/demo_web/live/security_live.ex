@@ -51,49 +51,51 @@ defmodule DemoWeb.SecurityLive do
       <:content_text subtitle="Continuous policy enforcement, identity hardening, and audit trails." />
     </.page_header>
 
-    <.grid>
+    <.grid full_width row_gap="07">
       <:column span="16">
-        <.grid full_width class="demo-section">
+        <.grid>
           <:column sm="4" md="4" lg="8">
-            <.tile class="demo-card">
-              <h3>Policy coverage</h3>
-              <.structured_list rows={@policies} condensed>
-                <:col :let={policy} label="Policy">{policy.name}</:col>
-                <:col :let={policy} label="Coverage">{policy.coverage}%</:col>
-                <:col :let={policy} label="Status">
-                  <.tag type={status_kind(policy.status)}>
-                    {policy.status}
-                  </.tag>
-                </:col>
-              </.structured_list>
+            <.tile>
+              <.stack gap="3">
+                <.heading>Policy coverage</.heading>
+                <.structured_list rows={@policies} condensed>
+                  <:col :let={policy} label="Policy">{policy.name}</:col>
+                  <:col :let={policy} label="Coverage">{policy.coverage}%</:col>
+                  <:col :let={policy} label="Status">
+                    <.tag type={status_kind(policy.status)}>
+                      {policy.status}
+                    </.tag>
+                  </:col>
+                </.structured_list>
+              </.stack>
             </.tile>
           </:column>
           <:column sm="4" md="4" lg="8">
-            <.tile class="demo-card demo-card--elevated">
-              <h3>Identity controls</h3>
-              <div>
-                <div class="demo-kicker">Required for production</div>
+            <.tile>
+              <.stack gap="4">
+                <.heading>Identity controls</.heading>
                 <.stack gap="3">
-                  <.checkbox
-                    id="security-mfa"
-                    name="security-mfa"
-                    label_text="MFA enforced"
-                    checked
-                  />
-                  <.checkbox
-                    id="security-review"
-                    name="security-review"
-                    label_text="Privileged access review"
-                    checked
-                  />
-                  <.checkbox
-                    id="security-keys"
-                    name="security-keys"
-                    label_text="Hardware security keys"
-                  />
+                  <.tag type="cool-gray">Required for production</.tag>
+                  <.stack gap="3">
+                    <.checkbox
+                      id="security-mfa"
+                      name="security-mfa"
+                      label_text="MFA enforced"
+                      checked
+                    />
+                    <.checkbox
+                      id="security-review"
+                      name="security-review"
+                      label_text="Privileged access review"
+                      checked
+                    />
+                    <.checkbox
+                      id="security-keys"
+                      name="security-keys"
+                      label_text="Hardware security keys"
+                    />
+                  </.stack>
                 </.stack>
-              </div>
-              <div class="demo-section">
                 <.radio_button_group
                   legend_text="Default access policy"
                   name="default-access-policy"
@@ -102,20 +104,20 @@ defmodule DemoWeb.SecurityLive do
                   <:item label="Balanced" value="balanced" />
                   <:item label="Open" value="open" />
                 </.radio_button_group>
-              </div>
-              <div class="demo-section">
-                <.button kind="primary" phx-click="rotate_keys">
-                  Rotate API keys
-                </.button>
-                <p class="demo-muted">Last rotated {@last_rotated}</p>
-              </div>
+                <.stack gap="2">
+                  <.button kind="primary" phx-click="rotate_keys">
+                    Rotate API keys
+                  </.button>
+                  <p>Last rotated {@last_rotated}</p>
+                </.stack>
+              </.stack>
             </.tile>
           </:column>
         </.grid>
       </:column>
 
       <:column span="16">
-        <div class="demo-section demo-card">
+        <.tile>
           <.accordion>
             <:item title="Network perimeter" open>
               Edge ingress is protected by WAF ruleset 6.2 with managed threat detection.
@@ -128,7 +130,7 @@ defmodule DemoWeb.SecurityLive do
               On-call rotation schedules are synchronized with PagerDuty and Opsgenie.
             </:item>
           </.accordion>
-        </div>
+        </.tile>
       </:column>
     </.grid>
     """

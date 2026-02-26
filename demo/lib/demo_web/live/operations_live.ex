@@ -72,71 +72,87 @@ defmodule DemoWeb.OperationsLive do
       <:content_text subtitle="Incident triage, deployments, and runtime safeguards." />
     </.page_header>
 
-    <.grid>
+    <.grid full_width row_gap="07">
       <:column span="16">
-        <div class="demo-section demo-card demo-card--elevated">
-          <.tabs type="container">
-            <:tab title="Incidents">
-              <.table_live id="incident-table" rows={@incidents} size="sm">
-                <:col :let={incident} label="ID">{incident.id}</:col>
-                <:col :let={incident} label="Title">{incident.title}</:col>
-                <:col :let={incident} label="Severity">
-                  <.tag type={severity_kind(incident.severity)}>
-                    {incident.severity}
-                  </.tag>
-                </:col>
-                <:col :let={incident} label="Status">
-                  <.tag type={status_kind(incident.status)}>
-                    {incident.status}
-                  </.tag>
-                </:col>
-                <:col :let={incident} label="Owner">{incident.owner}</:col>
-                <:col :let={incident} label="Opened">{incident.opened_at}</:col>
-                <:action :let={incident}>
-                  <.stack orientation="horizontal" gap="2">
-                    <.button
-                      kind="ghost"
-                      size="sm"
-                      phx-click="open_incident"
-                      phx-value-id={incident.id}
-                    >
-                      Details
-                    </.button>
-                    <.button
-                      kind="ghost"
-                      size="sm"
-                      phx-click="resolve_incident"
-                      phx-value-id={incident.id}
-                    >
-                      Resolve
-                    </.button>
-                  </.stack>
-                </:action>
-              </.table_live>
+        <.stack gap="4">
+          <.tabs id="operations-tabs" type="contained" value="incidents" phx-hook="TabsInit">
+            <:tab target="operations-panel-incidents" title="Incidents" value="incidents">
+              Incidents
             </:tab>
-            <:tab title="Deployments">
-              <.tile class="demo-card">
-                <h3>Deployment guardrails</h3>
-                <p class="demo-muted">Automatic rollbacks are enabled for production clusters.</p>
+            <:tab target="operations-panel-deployments" title="Deployments" value="deployments">
+              Deployments
+            </:tab>
+            <:tab target="operations-panel-maintenance" title="Maintenance" value="maintenance">
+              Maintenance
+            </:tab>
+          </.tabs>
+
+          <div id="operations-panel-incidents" role="tabpanel" hidden>
+            <.data_table id="incident-table" rows={@incidents} row_id={& &1.id} size="sm">
+              <:col :let={incident} label="ID">{incident.id}</:col>
+              <:col :let={incident} label="Title">{incident.title}</:col>
+              <:col :let={incident} label="Severity">
+                <.tag type={severity_kind(incident.severity)}>
+                  {incident.severity}
+                </.tag>
+              </:col>
+              <:col :let={incident} label="Status">
+                <.tag type={status_kind(incident.status)}>
+                  {incident.status}
+                </.tag>
+              </:col>
+              <:col :let={incident} label="Owner">{incident.owner}</:col>
+              <:col :let={incident} label="Opened">{incident.opened_at}</:col>
+              <:action :let={incident}>
+                <.stack orientation="horizontal" gap="2">
+                  <.button
+                    kind="ghost"
+                    size="sm"
+                    phx-click="open_incident"
+                    phx-value-id={incident.id}
+                  >
+                    Details
+                  </.button>
+                  <.button
+                    kind="ghost"
+                    size="sm"
+                    phx-click="resolve_incident"
+                    phx-value-id={incident.id}
+                  >
+                    Resolve
+                  </.button>
+                </.stack>
+              </:action>
+            </.data_table>
+          </div>
+
+          <div id="operations-panel-deployments" role="tabpanel" hidden>
+            <.tile>
+              <.stack gap="3">
+                <.heading>Deployment guardrails</.heading>
+                <p>Automatic rollbacks are enabled for production clusters.</p>
                 <.progress_indicator current_index="2">
                   <:step label="Build" />
                   <:step label="Test" />
                   <:step label="Canary" />
                   <:step label="Rollout" />
                 </.progress_indicator>
-              </.tile>
-            </:tab>
-            <:tab title="Maintenance">
-              <.tile class="demo-card">
-                <h3>Upcoming maintenance</h3>
+              </.stack>
+            </.tile>
+          </div>
+
+          <div id="operations-panel-maintenance" role="tabpanel" hidden>
+            <.tile>
+              <.stack gap="3">
+                <.heading>Upcoming maintenance</.heading>
                 <.inline_notification kind="info" open>
                   <:title>Region upgrade</:title>
                   <:subtitle>eu-west-1 scheduled for kernel patching at 02:00 UTC.</:subtitle>
                 </.inline_notification>
-              </.tile>
-            </:tab>
-          </.tabs>
-        </div>
+              </.stack>
+            </.tile>
+          </div>
+        </.stack>
       </:column>
     </.grid>
 
@@ -146,11 +162,13 @@ defmodule DemoWeb.OperationsLive do
           <.modal_label>{@modal_incident.id}</.modal_label>
           <.modal_heading>{@modal_incident.title}</.modal_heading>
         </.modal_header>
-        <p>
-          Severity: <strong>{@modal_incident.severity}</strong>
-          · Owner: <strong>{@modal_incident.owner}</strong>
-        </p>
-        <p class="demo-muted">Opened {@modal_incident.opened_at} — status {@modal_incident.status}</p>
+        <.stack gap="2">
+          <p>
+            Severity: <strong>{@modal_incident.severity}</strong>
+            · Owner: <strong>{@modal_incident.owner}</strong>
+          </p>
+          <p>Opened {@modal_incident.opened_at} — status {@modal_incident.status}</p>
+        </.stack>
       </:body>
       <:footer_button label="Close" attrs={%{:"phx-click" => "close_incident"}} />
       <:footer_button

@@ -14,7 +14,6 @@ type StorybookCustomEventsHook = {
   destroyed: () => void;
 };
 
-
 const parseEvents = (raw: string | undefined): string[] => {
   if (!raw) return [];
   try {

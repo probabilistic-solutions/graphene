@@ -84,7 +84,8 @@ __export(hooks_exports, {
   BasicComponentsTable: () => BasicComponentsTable,
   GrapheneCustomEvents: () => GrapheneCustomEvents,
   GrapheneEventsRoot: () => GrapheneEventsRoot,
-  GrapheneFormBridge: () => GrapheneFormBridge
+  GrapheneFormBridge: () => GrapheneFormBridge,
+  TabsInit: () => TabsInit
 });
 
 // src/lib/hooks/table.ts
@@ -930,6 +931,45 @@ var GrapheneEventsRoot = {
         });
       });
     });
+  }
+};
+
+// src/lib/hooks/tabs.ts
+var applyInitialSelection = (root) => {
+  const tabs = root;
+  const items = Array.from(tabs.querySelectorAll("cds-tab"));
+  if (items.length === 0)
+    return;
+  let selectedItem = items.find(
+    (item) => item.selected || item.hasAttribute("selected")
+  );
+  if (!selectedItem) {
+    const desiredValue = tabs.value || tabs.getAttribute("value") || items[0].getAttribute("value");
+    selectedItem = items.find(
+      (item) => item.value === desiredValue || item.getAttribute("value") === desiredValue
+    ) || items[0];
+    items.forEach((item) => {
+      const isSelected = item === selectedItem;
+      item.selected = isSelected;
+      if (isSelected) {
+        item.setAttribute("selected", "");
+      } else {
+        item.removeAttribute("selected");
+      }
+    });
+  }
+  const targetId = selectedItem == null ? void 0 : selectedItem.getAttribute("target");
+  if (targetId) {
+    const panel = document.getElementById(targetId);
+    panel == null ? void 0 : panel.removeAttribute("hidden");
+  }
+};
+var TabsInit = {
+  mounted() {
+    applyInitialSelection(this.el);
+  },
+  updated() {
+    applyInitialSelection(this.el);
   }
 };
 

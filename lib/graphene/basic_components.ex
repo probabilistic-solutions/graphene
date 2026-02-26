@@ -679,7 +679,7 @@ defmodule Graphene.BasicComponents do
   end
 
   attr :class, :any, default: ""
-  attr :size, :integer, default: 24
+  attr :size, :any, default: 24
 
   def icon(assigns) do
     ~H"""
