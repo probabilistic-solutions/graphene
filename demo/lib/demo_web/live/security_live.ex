@@ -40,15 +40,22 @@ defmodule DemoWeb.SecurityLive do
   def render(assigns) do
     ~H"""
     <.page_header>
-      <:breadcrumb>
+      <.page_header_breadcrumb>
         <.breadcrumb size="sm">
           <:item href={~p"/demo"} text="Cloud Admin" />
         </.breadcrumb>
-      </:breadcrumb>
-      <:content title="Security & Compliance">
-        <.tag type="cool-gray">Policy Pack v3.2</.tag>
-      </:content>
-      <:content_text subtitle="Continuous policy enforcement, identity hardening, and audit trails." />
+      </.page_header_breadcrumb>
+      <.page_header_content title="Security & Compliance">
+        <:contextual_actions>
+          <.tag type="cool-gray">Policy Pack v3.2</.tag>
+        </:contextual_actions>
+        <:page_actions>
+          <.button kind="primary" size="sm" phx-click="rotate_keys">
+            Rotate API keys
+          </.button>
+        </:page_actions>
+        <.page_header_content_text subtitle="Continuous policy enforcement, identity hardening, and audit trails." />
+      </.page_header_content>
     </.page_header>
 
     <.grid full_width row_gap="07">
@@ -74,28 +81,29 @@ defmodule DemoWeb.SecurityLive do
             <.tile>
               <.stack gap="4">
                 <.heading>Identity controls</.heading>
-                <.stack gap="3">
-                  <.tag type="cool-gray">Required for production</.tag>
-                  <.stack gap="3">
-                    <.checkbox
-                      id="security-mfa"
-                      name="security-mfa"
-                      label_text="MFA enforced"
-                      checked
-                    />
-                    <.checkbox
-                      id="security-review"
-                      name="security-review"
-                      label_text="Privileged access review"
-                      checked
-                    />
-                    <.checkbox
-                      id="security-keys"
-                      name="security-keys"
-                      label_text="Hardware security keys"
-                    />
-                  </.stack>
-                </.stack>
+                <.form_group
+                  legend_text="Required for production"
+                  message
+                  message_text="Applies to all production tenants."
+                >
+                  <.checkbox
+                    id="security-mfa"
+                    name="security-mfa"
+                    label_text="MFA enforced"
+                    checked
+                  />
+                  <.checkbox
+                    id="security-review"
+                    name="security-review"
+                    label_text="Privileged access review"
+                    checked
+                  />
+                  <.checkbox
+                    id="security-keys"
+                    name="security-keys"
+                    label_text="Hardware security keys"
+                  />
+                </.form_group>
                 <.radio_button_group
                   legend_text="Default access policy"
                   name="default-access-policy"
@@ -105,9 +113,6 @@ defmodule DemoWeb.SecurityLive do
                   <:item label="Open" value="open" />
                 </.radio_button_group>
                 <.stack gap="2">
-                  <.button kind="primary" phx-click="rotate_keys">
-                    Rotate API keys
-                  </.button>
                   <p>Last rotated {@last_rotated}</p>
                 </.stack>
               </.stack>
@@ -118,18 +123,21 @@ defmodule DemoWeb.SecurityLive do
 
       <:column span="16">
         <.tile>
-          <.accordion>
-            <:item title="Network perimeter" open>
-              Edge ingress is protected by WAF ruleset 6.2 with managed threat detection.
-              New rule proposals are staged in "Audit" mode for 24 hours.
-            </:item>
-            <:item title="Data protection">
-              All persistent volumes use envelope encryption with quarterly key rotation.
-            </:item>
-            <:item title="Incident response">
-              On-call rotation schedules are synchronized with PagerDuty and Opsgenie.
-            </:item>
-          </.accordion>
+          <.stack gap="3">
+            <.heading>Policy details</.heading>
+            <.accordion>
+              <:item title="Network perimeter" open>
+                Edge ingress is protected by WAF ruleset 6.2 with managed threat detection.
+                New rule proposals are staged in "Audit" mode for 24 hours.
+              </:item>
+              <:item title="Data protection">
+                All persistent volumes use envelope encryption with quarterly key rotation.
+              </:item>
+              <:item title="Incident response">
+                On-call rotation schedules are synchronized with PagerDuty and Opsgenie.
+              </:item>
+            </.accordion>
+          </.stack>
         </.tile>
       </:column>
     </.grid>

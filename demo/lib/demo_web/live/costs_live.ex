@@ -63,7 +63,7 @@ defmodule DemoWeb.CostsLive do
               <.stack gap="3">
                 <.heading>Budget health</.heading>
                 <p>Current month spend</p>
-                <h2>{format_money(@spend)}</h2>
+                <h3>{format_money(@spend)}</h3>
                 <.progress_bar value={@spend / @budget * 100} />
                 <p>Budget {format_money(@budget)}</p>
               </.stack>
@@ -74,13 +74,18 @@ defmodule DemoWeb.CostsLive do
               <.stack gap="3">
                 <.heading>Adjust budget</.heading>
                 <.form for={@budget_form} phx-change="update_budget">
-                  <.number_input
-                    field={@budget_form[:budget]}
-                    label="Monthly budget"
-                    min="0"
-                  />
+                  <.form_group
+                    legend_text="Monthly budget"
+                    message
+                    message_text="Changes apply immediately to forecasts and alerts."
+                  >
+                    <.number_input
+                      field={@budget_form[:budget]}
+                      label="Monthly budget"
+                      min="0"
+                    />
+                  </.form_group>
                 </.form>
-                <p>Changes apply immediately to forecasts and alerts.</p>
               </.stack>
             </.tile>
           </:column>
@@ -90,11 +95,33 @@ defmodule DemoWeb.CostsLive do
       <:column span="16">
         <.data_table id="cost-centers" rows={@cost_centers} row_id={& &1.id} size="sm">
           <:title>Cost centers</:title>
+          <:description>Monthly allocation trends by team.</:description>
+          <:toolbar>
+            <.table_toolbar>
+              <.table_toolbar_content>
+                <.table_toolbar_search placeholder="Search cost centers" size="sm" />
+                <.overflow_menu toolbar_action>
+                  <:icon>
+                    <Graphene.Icons.icon fit="width" name="overflow-menu--horizontal" />
+                  </:icon>
+                  <:tooltip_content>Filters</:tooltip_content>
+                  <:item>Month</:item>
+                  <:item>Team</:item>
+                </.overflow_menu>
+              </.table_toolbar_content>
+            </.table_toolbar>
+          </:toolbar>
           <:col :let={center} label="Team">{center.name}</:col>
           <:col :let={center} label="Month">{center.month}</:col>
           <:col :let={center} label="Spend">{format_money(center.spend)}</:col>
           <:col :let={center} label="Delta">
-            <.tag type={if(center.change >= 0, do: "purple", else: "cool-gray")}>
+            <.tag type={
+              cond do
+                center.change > 0 -> "green"
+                center.change < 0 -> "red"
+                true -> "cool-gray"
+              end
+            }>
               {delta_label(center.change)}
             </.tag>
           </:col>

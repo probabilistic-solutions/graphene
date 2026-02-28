@@ -61,34 +61,55 @@ defmodule DemoWeb.OperationsLive do
   def render(assigns) do
     ~H"""
     <.page_header>
-      <:breadcrumb>
+      <.page_header_breadcrumb>
         <.breadcrumb size="sm">
           <:item href={~p"/demo"} text="Cloud Admin" />
         </.breadcrumb>
-      </:breadcrumb>
-      <:content title="Operations">
-        <.tag type="green">On-call</.tag>
-      </:content>
-      <:content_text subtitle="Incident triage, deployments, and runtime safeguards." />
+      </.page_header_breadcrumb>
+      <.page_header_content title="Operations">
+        <:contextual_actions>
+          <.tag type="green">On-call</.tag>
+        </:contextual_actions>
+        <.page_header_content_text subtitle="Incident triage, deployments, and runtime safeguards." />
+      </.page_header_content>
+      <.page_header_tabs>
+        <.tabs id="operations-tabs" type="contained" value="incidents" phx-hook="TabsInit">
+          <:tab target="operations-panel-incidents" title="Incidents" value="incidents">
+            Incidents
+          </:tab>
+          <:tab target="operations-panel-deployments" title="Deployments" value="deployments">
+            Deployments
+          </:tab>
+          <:tab target="operations-panel-maintenance" title="Maintenance" value="maintenance">
+            Maintenance
+          </:tab>
+        </.tabs>
+      </.page_header_tabs>
     </.page_header>
 
     <.grid full_width row_gap="07">
       <:column span="16">
         <.stack gap="4">
-          <.tabs id="operations-tabs" type="contained" value="incidents" phx-hook="TabsInit">
-            <:tab target="operations-panel-incidents" title="Incidents" value="incidents">
-              Incidents
-            </:tab>
-            <:tab target="operations-panel-deployments" title="Deployments" value="deployments">
-              Deployments
-            </:tab>
-            <:tab target="operations-panel-maintenance" title="Maintenance" value="maintenance">
-              Maintenance
-            </:tab>
-          </.tabs>
-
           <div id="operations-panel-incidents" role="tabpanel" hidden>
             <.data_table id="incident-table" rows={@incidents} row_id={& &1.id} size="sm">
+              <:title>Active incidents</:title>
+              <:description>Track priority, ownership, and status.</:description>
+              <:toolbar>
+                <.table_toolbar>
+                  <.table_toolbar_content>
+                    <.table_toolbar_search placeholder="Search incidents" size="sm" />
+                    <.overflow_menu toolbar_action>
+                      <:icon>
+                        <Graphene.Icons.icon fit="width" name="overflow-menu--horizontal" />
+                      </:icon>
+                      <:tooltip_content>Filters</:tooltip_content>
+                      <:item>Severity</:item>
+                      <:item>Status</:item>
+                    </.overflow_menu>
+                    <.button kind="primary" size="sm">New incident</.button>
+                  </.table_toolbar_content>
+                </.table_toolbar>
+              </:toolbar>
               <:col :let={incident} label="ID">{incident.id}</:col>
               <:col :let={incident} label="Title">{incident.title}</:col>
               <:col :let={incident} label="Severity">
@@ -104,24 +125,18 @@ defmodule DemoWeb.OperationsLive do
               <:col :let={incident} label="Owner">{incident.owner}</:col>
               <:col :let={incident} label="Opened">{incident.opened_at}</:col>
               <:action :let={incident}>
-                <.stack orientation="horizontal" gap="2">
-                  <.button
-                    kind="ghost"
-                    size="sm"
-                    phx-click="open_incident"
-                    phx-value-id={incident.id}
-                  >
+                <.overflow_menu toolbar_action flipped>
+                  <:icon>
+                    <Graphene.Icons.icon fit="width" name="overflow-menu--horizontal" />
+                  </:icon>
+                  <:tooltip_content>Actions</:tooltip_content>
+                  <:item phx-click="open_incident" phx-value-id={incident.id}>
                     Details
-                  </.button>
-                  <.button
-                    kind="ghost"
-                    size="sm"
-                    phx-click="resolve_incident"
-                    phx-value-id={incident.id}
-                  >
+                  </:item>
+                  <:item phx-click="resolve_incident" phx-value-id={incident.id}>
                     Resolve
-                  </.button>
-                </.stack>
+                  </:item>
+                </.overflow_menu>
               </:action>
             </.data_table>
           </div>

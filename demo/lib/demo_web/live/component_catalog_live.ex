@@ -81,53 +81,55 @@ defmodule DemoWeb.ComponentCatalogLive do
 
     <.grid full_width row_gap="07">
       <:column span="16">
-        <.tile>
-          <.stack gap="3">
-            <.tag type="cool-gray">Graphene monitor</.tag>
-            <.heading>Assets & version</.heading>
-            <p>This panel refreshes every 2 seconds to surface regenerated assets.</p>
-            <.structured_list rows={@graphene_assets} condensed>
-              <:col :let={asset} label="Asset">{asset.name}</:col>
-              <:col :let={asset} label="Size">{asset.size || "Missing"}</:col>
-              <:col :let={asset} label="Updated">{asset.updated_at || "Missing"}</:col>
-            </.structured_list>
-            <p>Graphene v{@graphene_version}</p>
-          </.stack>
-        </.tile>
-      </:column>
-      <:column span="16">
         <.grid>
           <:column sm="4" md="4" lg="6">
-            <.tile>
-              <div style="max-height: 22rem; overflow-y: auto; padding-right: 0.25rem;">
-                <.contained_list kind="on-page" size="sm">
-                  <:label>
-                    <.stack orientation="horizontal" gap="2">
-                      <span>Components</span>
-                      <.tag type="cool-gray">{@component_count}</.tag>
-                    </.stack>
-                  </:label>
-                  <:action>
-                    <.form for={@filter_form} phx-change="filter">
-                      <.search
-                        field={@filter_form[:query]}
-                        label_text="Filter components"
-                        placeholder="Search by name"
-                        size="sm"
-                      />
-                    </.form>
-                  </:action>
-                  <.contained_list_item
-                    :for={component <- @filtered_components}
-                    clickable
-                    phx-click="select_component"
-                    phx-value-name={component.name}
-                  >
-                    {component.label}
-                  </.contained_list_item>
-                </.contained_list>
-              </div>
-            </.tile>
+            <.stack gap="3">
+              <.tile>
+                <.stack gap="2">
+                  <.stack orientation="horizontal" gap="2">
+                    <.heading>Assets</.heading>
+                    <.tag type="cool-gray">v{@graphene_version}</.tag>
+                  </.stack>
+                  <p>This panel refreshes every 2 seconds to surface regenerated assets.</p>
+                  <.structured_list rows={@graphene_assets} condensed>
+                    <:col :let={asset} label="Asset">{asset.name}</:col>
+                    <:col :let={asset} label="Size">{asset.size || "Missing"}</:col>
+                    <:col :let={asset} label="Updated">{asset.updated_at || "Missing"}</:col>
+                  </.structured_list>
+                </.stack>
+              </.tile>
+
+              <.tile>
+                <div style="max-height: 22rem; overflow-y: auto; padding-right: 0.25rem;">
+                  <.contained_list kind="on-page" size="sm">
+                    <:label>
+                      <.stack orientation="horizontal" gap="2">
+                        <span>Components</span>
+                        <.tag type="cool-gray">{@component_count}</.tag>
+                      </.stack>
+                    </:label>
+                    <:action>
+                      <.form for={@filter_form} phx-change="filter">
+                        <.search
+                          field={@filter_form[:query]}
+                          label_text="Filter components"
+                          placeholder="Search by name"
+                          size="sm"
+                        />
+                      </.form>
+                    </:action>
+                    <.contained_list_item
+                      :for={component <- @filtered_components}
+                      clickable
+                      phx-click="select_component"
+                      phx-value-name={component.name}
+                    >
+                      {component.label}
+                    </.contained_list_item>
+                  </.contained_list>
+                </div>
+              </.tile>
+            </.stack>
           </:column>
           <:column sm="4" md="4" lg="10">
             <.tile :if={@selected_component}>
@@ -136,9 +138,11 @@ defmodule DemoWeb.ComponentCatalogLive do
                   <.heading>{@selected_component.label}</.heading>
                   <.tag type="cool-gray">:{@selected_component.name}</.tag>
                 </.stack>
-                <div>
-                  {component_preview(@selected_component)}
-                </div>
+                <.layer level="1">
+                  <div style="padding: 1rem;">
+                    {component_preview(@selected_component)}
+                  </div>
+                </.layer>
               </.stack>
             </.tile>
           </:column>

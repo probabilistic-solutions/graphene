@@ -195,18 +195,27 @@ defmodule DemoWeb.InfrastructureLive do
           id="cluster-table"
           rows={@filtered_clusters}
           row_id={& &1.id}
-          size="md"
+          size="sm"
           on_search={&handle_search/2}
         >
           <:title>Clusters</:title>
+          <:description>Manage scaling, status, and version alignment.</:description>
           <:toolbar>
             <.table_toolbar>
               <.table_toolbar_content>
                 <.table_toolbar_search
                   placeholder="Search clusters"
                   value={@search}
-                  size="md"
+                  size="sm"
                 />
+                <.overflow_menu toolbar_action>
+                  <:icon>
+                    <Graphene.Icons.icon fit="width" name="overflow-menu--horizontal" />
+                  </:icon>
+                  <:tooltip_content>Filters</:tooltip_content>
+                  <:item>Environment</:item>
+                  <:item>Status</:item>
+                </.overflow_menu>
               </.table_toolbar_content>
             </.table_toolbar>
           </:toolbar>
@@ -221,24 +230,24 @@ defmodule DemoWeb.InfrastructureLive do
             </.tag>
           </:col>
           <:action :let={cluster}>
-            <.stack orientation="horizontal" gap="2">
-              <.button
-                kind="ghost"
-                size="sm"
+            <.overflow_menu toolbar_action flipped>
+              <:icon>
+                <Graphene.Icons.icon fit="width" name="overflow-menu--horizontal" />
+              </:icon>
+              <:tooltip_content>Actions</:tooltip_content>
+              <:item
                 phx-click="scale_cluster"
                 phx-value-id={cluster.id}
               >
                 Scale +2
-              </.button>
-              <.button
-                kind="ghost"
-                size="sm"
+              </:item>
+              <:item
                 phx-click="restart_cluster"
                 phx-value-id={cluster.id}
               >
                 Restart
-              </.button>
-            </.stack>
+              </:item>
+            </.overflow_menu>
           </:action>
         </.data_table>
       </:column>
