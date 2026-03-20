@@ -191,6 +191,21 @@
             Support
           </.side_nav_menu_item>
         </.side_nav_menu>
+        <.side_nav_menu
+          title="Devices"
+          expanded={true}
+          active={@active_page in [:devices]}
+        >
+        <:title_icon>
+          <.icon name="devices" size={16} />
+        </:title_icon>
+        <.side_nav_menu_item
+          href={~p"/demo/devices"}
+          active={@active_page == :devices}
+        >
+            Overview
+        </.side_nav_menu_item>
+        </.side_nav_menu>
         <.side_nav_link href={~p"/demo/components"} active={@active_page == :components}>
           <:title_icon_container>
             <.icon name="catalog" size={16} />
