@@ -64,12 +64,14 @@ defmodule Graphene.Internal.FormComponents do
   end
 
   defp normalize_checked(assigns, checked_attr) do
+    given = Map.get(assigns, :__given__, %{})
+
     value =
       cond do
-        Map.has_key?(assigns, checked_attr) and not is_nil(assigns[checked_attr]) ->
+        Map.has_key?(given, checked_attr) and not is_nil(assigns[checked_attr]) ->
           assigns[checked_attr]
 
-        Map.has_key?(assigns, :checked) and not is_nil(assigns[:checked]) ->
+        Map.has_key?(given, :checked) and not is_nil(assigns[:checked]) ->
           assigns[:checked]
 
         true ->
@@ -943,8 +945,8 @@ defmodule Graphene.Internal.FormComponents do
       form_input_assigns(assigns,
         name: :number_input,
         mode: :value,
-        value_attr: :value,
-        event: "cds-number-input"
+        event: "cds-number-input",
+        value_attr: :value
       )
 
     component_attrs =
@@ -1248,8 +1250,8 @@ defmodule Graphene.Internal.FormComponents do
       form_input_assigns(assigns,
         name: :fluid_number_input,
         mode: :value,
-        value_attr: :value,
-        event: "cds-number-input"
+        event: "cds-number-input",
+        value_attr: :value
       )
 
     component_attrs =
