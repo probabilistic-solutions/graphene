@@ -20,10 +20,13 @@
 // )
 
 export function mergeWebComponentsAttrs(from: HTMLElement, to: HTMLElement): void {
-    if (from.tagName.startsWith("cds-")) {
-        const attributes = [...Array.from(to.attributes), ...Array.from(from.attributes)];
-        attributes.forEach((attr) => {
-            to.setAttribute(attr.name, attr.value);
-        });
-    }
+  const tagName = from.tagName.toLowerCase();
+  if (!tagName.startsWith("cds-") && !tagName.startsWith("c4p-")) {
+    return;
+  }
+
+  const attributes = [...Array.from(to.attributes), ...Array.from(from.attributes)];
+  attributes.forEach((attr) => {
+    to.setAttribute(attr.name, attr.value);
+  });
 }

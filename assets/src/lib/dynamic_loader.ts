@@ -36,7 +36,7 @@ function normalizeTagName(tagName: string): { tag: string; base: string; isForm:
   return { tag: lower, base: lower, isForm: false };
 }
 
-function isComponentTag(tagName: string): boolean {
+export function isGrapheneComponentTag(tagName: string): boolean {
   return componentSet.has(tagName.toLowerCase());
 }
 
@@ -231,7 +231,7 @@ function scanAndLoad(root: ParentNode | null): void {
     return;
   }
 
-  if (root instanceof Element && isComponentTag(root.tagName)) {
+  if (root instanceof Element && isGrapheneComponentTag(root.tagName)) {
     normalizeNotificationTimestamp(root);
     normalizeNumberInputStep(root);
     const { base } = normalizeTagName(root.tagName);
@@ -261,7 +261,7 @@ function collectComponentTags(root: ParentNode | null): string[] {
 
   const tags = new Set<string>();
 
-  if (root instanceof Element && isComponentTag(root.tagName)) {
+  if (root instanceof Element && isGrapheneComponentTag(root.tagName)) {
     tags.add(root.tagName.toLowerCase());
   }
 
