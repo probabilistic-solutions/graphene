@@ -63,8 +63,7 @@ defmodule Demo.MixProject do
       ],
       "assets.build": [
         # our build requires build.js where esbuild is limited in CLI
-        "cmd --cd assets node build.js",
-        "cmd --cd assets node patch-number-input.js"
+        "cmd --cd assets node build.js"
       ],
       "assets.deploy": [
         # same as build but digests the output

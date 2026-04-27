@@ -1,6 +1,4 @@
 const esbuild = require("esbuild");
-const fs = require("fs");
-const path = require("path");
 const { sassPlugin } = require('esbuild-sass-plugin');
 // TODO
 // const postcss = require('postcss')
@@ -52,31 +50,6 @@ let opts = {
     inject: ["./process_polyfill.js"],
 };
 
-function patchNumberInputStep(outDir) {
-    const targets = ["js/app.js", "js/storybook.js"];
-    targets.forEach((file) => {
-        const filePath = path.join(outDir, file);
-        try {
-            let contents = fs.readFileSync(filePath, "utf8");
-            const replacements = [
-                [ /this\\._step\\.toString\\(\\)/g, '(this._step ?? "1").toString()' ],
-                [ /this\\._min\\.toString\\(\\)/g, '(this._min ?? "").toString()' ],
-                [ /this\\._max\\.toString\\(\\)/g, '(this._max ?? "").toString()' ],
-                [ /\\.requestUpdate\\(\\)/g, ".requestUpdate?.()" ],
-            ];
-            let patched = contents;
-            replacements.forEach(([pattern, replacement]) => {
-                patched = patched.replace(pattern, replacement);
-            });
-            if (patched !== contents) {
-                fs.writeFileSync(filePath, patched);
-            }
-        } catch (_error) {
-            // best-effort patch
-        }
-    });
-}
-
 if (deploy) {
     opts = {
         ...opts,
@@ -100,7 +73,6 @@ if (watch) {
 } else {
     const runBuild = async () => {
         await esbuild.build(opts);
-        patchNumberInputStep(opts.outdir);
     };
 
     runBuild().catch((_error) => {

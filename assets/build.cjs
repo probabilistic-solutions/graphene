@@ -81,7 +81,7 @@ const plugins = [
     },
   },
   {
-    name: "carbon-number-input-step-fix",
+    name: "carbon-number-input-guard",
     setup(build) {
       build.onLoad(
         {
@@ -89,10 +89,17 @@ const plugins = [
         },
         async (args) => {
           const contents = await fs.readFile(args.path, "utf8");
-          const patched = contents.replace(
-            "return this._step.toString();",
-            'return (this._step ?? "1").toString();'
-          );
+          const replacements = [
+            [/this\._step\.toString\(\)/g, '(this._step ?? "1").toString()'],
+            [/this\._min\.toString\(\)/g, '(this._min ?? "").toString()'],
+            [/this\._max\.toString\(\)/g, '(this._max ?? "").toString()'],
+            [/\.requestUpdate\(\)/g, ".requestUpdate?.()"],
+          ];
+
+          let patched = contents;
+          replacements.forEach(([pattern, replacement]) => {
+            patched = patched.replace(pattern, replacement);
+          });
 
           return { contents: patched, loader: "js" };
         }

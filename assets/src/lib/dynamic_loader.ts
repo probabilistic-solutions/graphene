@@ -22,11 +22,7 @@ const componentNames = [...baseComponentNames, ...formComponentNames];
 const componentSelector = componentNames.join(",");
 const componentSet = new Set(componentNames);
 const loadedComponents: Record<string, Promise<unknown>> = {};
-const numberInputTags = new Set(["cds-number-input", "cds-fluid-number-input"]);
 const notificationTags = new Set(["c4p-notification"]);
-const patchedNumberInputs = new Set<string>();
-const definePatchFlag = "__graphenePatchedDefine";
-const originalDefine = customElements.define.bind(customElements);
 
 function normalizeTagName(tagName: string): { tag: string; base: string; isForm: boolean } {
   const lower = tagName.toLowerCase();
@@ -110,122 +106,6 @@ function normalizeNotificationTimestamp(el: Element): void {
   }
 }
 
-function normalizeNumberInputStep(el: Element): void {
-  const tagName = el.tagName.toLowerCase();
-  const { base } = normalizeTagName(tagName);
-  if (!numberInputTags.has(base)) {
-    return;
-  }
-
-  const step = el.getAttribute("step");
-  const safeStep =
-    step === null || step === "" || step === "null" || step === "undefined"
-      ? "1"
-      : step;
-  el.setAttribute("step", safeStep);
-
-  const applyStep = () => {
-    (el as any)._step = safeStep;
-    (el as any).step = safeStep;
-  };
-
-  if (customElements.get(tagName)) {
-    applyStep();
-  } else {
-    customElements.whenDefined(tagName).then(applyStep);
-  }
-}
-
-function applyNumberInputDescriptor(proto: any): void {
-  const descriptor = Object.getOwnPropertyDescriptor(proto, "step");
-  if (!descriptor) {
-    return;
-  }
-
-  const originalGet = descriptor.get;
-  const originalSet = descriptor.set;
-
-  Object.defineProperty(proto, "step", {
-    configurable: descriptor.configurable ?? true,
-    enumerable: descriptor.enumerable ?? true,
-    get() {
-      const value = (this as any)._step;
-      if (value === null || value === undefined) {
-        return "1";
-      }
-      return originalGet ? originalGet.call(this) : String(value);
-    },
-    set(value: unknown) {
-      const safeValue =
-        value === null || value === undefined || value === "" ? "1" : value;
-      if (originalSet) {
-        originalSet.call(this, safeValue);
-      } else {
-        (this as any)._step = safeValue;
-      }
-    }
-  });
-
-  if (!proto.__grapheneStepPatched) {
-    const originalConnected = proto.connectedCallback;
-    proto.connectedCallback = function (...args: unknown[]) {
-      if (this._step === null || this._step === undefined) {
-        const step = this.getAttribute?.("step") || "1";
-        this._step = step;
-        try {
-          this.step = step;
-        } catch (_error) {
-          // ignore if the component rejects programmatic assignment
-        }
-      }
-      return originalConnected ? originalConnected.apply(this, args) : undefined;
-    };
-    proto.__grapheneStepPatched = true;
-  }
-}
-
-function patchNumberInputPrototype(tagName: string): void {
-  if (!numberInputTags.has(tagName) || patchedNumberInputs.has(tagName)) {
-    return;
-  }
-
-  const ctor = customElements.get(tagName) as { prototype?: any } | undefined;
-  if (!ctor?.prototype) {
-    return;
-  }
-
-  applyNumberInputDescriptor(ctor.prototype);
-  patchedNumberInputs.add(tagName);
-}
-
-function ensureNumberInputPatched(tagName: string): void {
-  if (!numberInputTags.has(tagName) || patchedNumberInputs.has(tagName)) {
-    return;
-  }
-
-  customElements.whenDefined(tagName).then(() => {
-    patchNumberInputPrototype(tagName);
-  });
-}
-
-function ensureDefinePatched(): void {
-  const registry = customElements as unknown as Record<string, unknown>;
-  if (registry[definePatchFlag]) {
-    return;
-  }
-
-  registry[definePatchFlag] = true;
-
-  customElements.define = (name, ctor, options) => {
-    if (numberInputTags.has(name) && ctor?.prototype) {
-      applyNumberInputDescriptor(ctor.prototype);
-      patchedNumberInputs.add(name);
-    }
-
-    return originalDefine(name, ctor, options);
-  };
-}
-
 function scanAndLoad(root: ParentNode | null): void {
   if (!root) {
     return;
@@ -233,9 +113,6 @@ function scanAndLoad(root: ParentNode | null): void {
 
   if (root instanceof Element && isGrapheneComponentTag(root.tagName)) {
     normalizeNotificationTimestamp(root);
-    normalizeNumberInputStep(root);
-    const { base } = normalizeTagName(root.tagName);
-    ensureNumberInputPatched(base);
     loadComponentByTag(root.tagName);
   }
 
@@ -247,9 +124,6 @@ function scanAndLoad(root: ParentNode | null): void {
     .querySelectorAll(componentSelector)
     .forEach((el) => {
       normalizeNotificationTimestamp(el);
-      normalizeNumberInputStep(el);
-      const { base } = normalizeTagName(el.tagName);
-      ensureNumberInputPatched(base);
       loadComponentByTag(el.tagName);
     });
 }
@@ -306,10 +180,6 @@ export class WebComponentManager {
           ready.finally(() => this.clearLoadingClass());
         }
       }
-
-      ensureDefinePatched();
-      ensureNumberInputPatched("cds-number-input");
-      ensureNumberInputPatched("cds-fluid-number-input");
       this.loadExistingComponents();
       this.observeDOM();
     };
@@ -391,7 +261,3 @@ export class WebComponentManager {
     document.documentElement?.classList.remove(className);
   }
 }
-
-ensureDefinePatched();
-ensureNumberInputPatched("cds-number-input");
-ensureNumberInputPatched("cds-fluid-number-input");
